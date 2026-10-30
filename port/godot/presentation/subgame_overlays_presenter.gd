@@ -1,10 +1,11 @@
 class_name SubgameOverlaysPresenter
 extends RefCounted
-## T-29018 / T-29024 (Lane 5): Authentic 320x240 presentation & scene-node builder for
+## T-29018 / T-29024 (Lane 5): 320x240 presentation & scene-node builder for
 ## the three interactive subgame overlays:
-## 1. RPG_BAT (src/ovl/rpg_battle/) — Party Battle HUD, Command Menu, Encounters & Message Box
-## 2. TACO    (src/ovl/shooter_3d/) — 3D Rail Shooter Horizon, Reticle, Bosses, Shield & Bomb HUD
-## 3. TT      (src/ovl/TT/)         — TwinBee Time Attack 256x232 Playfield, Bells, Boss & Rankings
+## 1. RPG_BAT (src/ovl/rpg_battle/): Party Battle HUD, Command Menu, Encounters & Message Box
+## 2. TACO    (src/ovl/shooter_3d/): 3D Rail Shooter Horizon, Reticle, Bosses, Shield & Bomb HUD
+## 3. TT      (src/ovl/TT/): TwinBee Time Attack 256x232 Playfield, Bells, Boss & Rankings
+## Missing resources can select diagnostic fallback art; rendering alone is not fidelity evidence.
 
 const Glyphs = preload("res://presentation/native_glyphs.gd")
 const Overlays = preload("res://overlays/subgame_overlays.gd")
@@ -1135,7 +1136,7 @@ func render_rpg_battle(state: Dictionary) -> Image:
 
 
 # ==============================================================================
-# 2. TACO — 3D Rail Shooter Horizon, TMD Models & VRAM HUD (320x240)
+# 2. TACO: 3D Rail Shooter Horizon, TMD Models & VRAM HUD (320x240)
 # ==============================================================================
 
 func _sample_taco_vram_tpage(tpage: int, clut: int, u: int, v: int) -> int:
@@ -1654,7 +1655,7 @@ func render_taco_shooter(state: Dictionary) -> Image:
 
 
 # ==============================================================================
-# 3. TT — TwinBee Time Attack Playfield & Scoreboard (320x240)
+# 3. TT: TwinBee Time Attack Playfield & Scoreboard (320x240)
 # ==============================================================================
 func render_tt_twinbee(state: Dictionary) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)

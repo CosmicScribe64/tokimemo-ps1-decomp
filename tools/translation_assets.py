@@ -1,0 +1,212 @@
+#!/usr/bin/env python3
+"""T-39004: audit versioned English artwork and build an optional external pack.
+
+This does not grant visual approval or establish actual-game coverage. Originals
+are identified by source container/frame/palette and their exact PNG hash.
+"""
+from __future__ import annotations
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import re
+import shutil
+import struct
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def encoded(value):
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+
+
+def inside(root, relative):
+    if not isinstance(relative, str) or not relative or '\\' in relative:
+        raise ValueError('invalid relative path')
+    parts = relative.split('/')
+    if any(p in ('', '.', '..') for p in parts):
+        raise ValueError('unsafe relative path')
+    path = root
+    for part in parts:
+        path /= part
+        if path.is_symlink():
+            raise ValueError('symlink in artwork path')
+    if not path.resolve().is_relative_to(root.resolve()):
+        raise ValueError('artwork path escaped root')
+    return path
+
+
+def png_info(path):
+    data = path.read_bytes()
+    if len(data) > 16 * 1024 * 1024 or len(data) < 33 or data[:8] != b'\x89PNG\r\n\x1a\n' or data[12:16] != b'IHDR':
+        raise ValueError('invalid or oversized PNG')
+    return digest(data), list(struct.unpack('>II', data[16:24]))
+
+
+def audit(snapshot_root):
+    manifest = json.loads((snapshot_root / 'manifest.json').read_text())
+    if manifest.get('schema') != 'tokimemo.translated-artwork-snapshot.v1':
+        raise ValueError('unsupported artwork snapshot')
+    history_bytes = (snapshot_root / 'style-decisions.jsonl').read_bytes()
+    if digest(history_bytes) != manifest['review_history_sha256']:
+        raise ValueError('review history identity differs')
+    history = [json.loads(line) for line in history_bytes.splitlines() if line]
+    latest = {}
+    for event in history:
+        if event.get('category') == 'style':
+            latest[event['asset_id']] = event
+    records, seen = [], set()
+    for version in manifest['versions']:
+        if not version.get('current'):
+            continue
+        for asset in version['assets']:
+            identity = 'draft:' + asset['id']
+            if identity in seen:
+                raise ValueError('duplicate current asset identity')
+            seen.add(identity)
+            path = inside(snapshot_root, asset['output'])
+            actual, size = png_info(path)
+            if actual != asset['output_sha256'] or size != asset['dimensions']:
+                raise ValueError('artwork bytes or dimensions differ: ' + identity)
+            revision = digest(encoded([identity, asset['source_sha256'], actual]))
+            event = latest.get(identity)
+            exact = bool(event and event.get('revision') == revision and event.get('source_sha256') == asset['source_sha256'] and event.get('output_sha256') == actual)
+            mapping = all(key in asset for key in ('source_container', 'source_container_sha256', 'frame', 'palette_id'))
+            records.append({'id': identity, 'batch': version['batch_id'], 'revision': revision,
+                'output': asset['output'], 'output_sha256': actual, 'dimensions': size,
+                'source_png_sha256': asset['source_sha256'],
+                'source_container': asset.get('source_container'), 'source_container_sha256': asset.get('source_container_sha256'),
+                'frame': int(asset['frame']) if 'frame' in asset else None, 'palette': asset.get('palette_id'),
+                'style': event['decision'] if exact else ('stale' if event else 'unreviewed'),
+                'exact_review_event': event['event_id'] if exact else None,
+                'mapping_complete': mapping, 'runtime_integrated': False, 'in_game_verified': False,
+                'context': asset.get('context', []), 'layout': asset.get('layout'),
+                'blockers': ([] if mapping else ['missing exact container/frame/palette mapping']) + ['actual-game verification pending']})
+    return {'schema': 'tokimemo.translation-asset-audit.v1', 'snapshot_sha256': digest((snapshot_root / 'manifest.json').read_bytes()),
+            'known_current_assets': len(records), 'approved_exact': sum(r['style'] == 'approve' for r in records),
+            'mapped': sum(r['mapping_complete'] for r in records), 'in_game_verified': 0,
+            'coverage_complete': False, 'limitations': ['snapshot is not a complete required-asset catalog', 'approval is not runtime acceptance'], 'assets': records}
+
+
+def new_output(output):
+    output = output.absolute()
+    if output.exists() or output.is_symlink():
+        raise ValueError('output must be a new immutable directory')
+    output.resolve().relative_to((ROOT / '.asset-cache').resolve())
+    # Reject a linked parent before creating any output.
+    current = output.parent
+    while current != current.parent:
+        if current.is_symlink():
+            raise ValueError('linked output parent')
+        current = current.parent
+    return output
+
+
+def build_pack(snapshot_root, output, include_drafts=False):
+    report = audit(snapshot_root)
+    output = new_output(output)
+    selected = [r for r in report['assets'] if r['mapping_complete'] and (include_drafts or r['style'] == 'approve')]
+    records, keys = [], set()
+    for row in selected:
+        key = '|'.join([row['source_container_sha256'], str(row['frame']), row['palette'], row['source_png_sha256']])
+        if key in keys:
+            raise ValueError('duplicate source replacement mapping')
+        keys.add(key)
+        filename = 'images/' + row['output_sha256'] + '.png'
+        records.append({**row, 'output': filename})
+    pack = {'schema': 'tokimemo.translated-image-pack.v1', 'language': 'en', 'development_drafts': include_drafts,
+            'snapshot_sha256': report['snapshot_sha256'], 'runtime_verified': False, 'assets': records}
+    output.mkdir(parents=True)
+    try:
+        (output / 'images').mkdir()
+        for row, record in zip(selected, records):
+            destination = output / record['output']
+            if not destination.exists():
+                shutil.copyfile(inside(snapshot_root, row['output']), destination)
+        (output / 'manifest.json').write_bytes(encoded(pack) + b'\n')
+    except Exception:
+        shutil.rmtree(output)
+        raise
+    return {'pack': str(output), 'manifest_sha256': digest((output / 'manifest.json').read_bytes()), 'assets': len(records)}
+
+
+def inventory(snapshot_root, catalog_path, option_sources=None):
+    """Keep grouped catalog scope explicit; matching a frame is not acceptance."""
+    report = audit(snapshot_root)
+    catalog_bytes = catalog_path.read_bytes()
+    rows = [json.loads(line) for line in catalog_bytes.splitlines() if line]
+    requirements = []
+    for index, row in enumerate(rows):
+        section = row['section']
+        container = row['container']
+        selector = next((row[k] for k in ('frame_id', 'frame_ids_normal___highlight',
+                        'frame___region_id', 'region___cell', 'asset_path') if k in row), '')
+        frames = []
+        if section.startswith(('1.', '2.')):
+            container = 'CDROM/FUKUTEST/' + ('MAINROM.NBN' if section.startswith('1.') else 'OPTION.NBN')
+            frames = [int(value) for value in re.findall(r'`(?:frame-)?(\d{4})`', selector)]
+            if len(frames) == 2 and ('..' in selector or '–' in selector):
+                frames = list(range(frames[0], frames[1] + 1))
+        matching = [asset for asset in report['assets']
+                    if asset['source_container'] == container and asset['frame'] in frames]
+        recommendation = row.get('suggested_graphic___abbreviation_same_size', '')
+        no_change = 'no change required' in recommendation.lower()
+        requirements.append({'id': 'catalog-' + digest(encoded([section, container, selector]))[:20],
+            'catalog_line': index + 1, 'section': section, 'container': container,
+            'selector': selector, 'frames': frames, 'scope': 'catalog-group',
+            'catalog_recommends_no_change': no_change,
+            'existing_asset_ids': [asset['id'] for asset in matching],
+            'status': 'catalog-no-change-needs-source-review' if no_change else ('existing-variants-need-context-verification' if matching else 'requires-source-and-artwork-review'),
+            'in_game_verified': False,
+            'blockers': ['palette variant coverage and actual route not verified'] if matching else ['source mapping and required replacement scope not verified']})
+    option_frames = []
+    if option_sources is not None:
+        sources = json.loads((option_sources / 'manifest.json').read_text())
+        frames_by_id = {r['frame_index']: r for r in sources['images'] if 'frame_index' in r}
+        for group in requirements:
+            if group['container'] != 'CDROM/FUKUTEST/OPTION.NBN':
+                continue
+            for frame in group['frames']:
+                source = frames_by_id[frame]
+                sha, dimensions = png_info(inside(option_sources, source['png']))
+                retained = [r for r in report['assets'] if r['source_container'] == group['container']
+                            and r['frame'] == frame and r['source_png_sha256'] == sha]
+                option_frames.append({'id': 'option-frame-%04d' % frame,
+                    'requirement': group['id'], 'frame': frame, 'source_png_sha256': sha,
+                    'dimensions': dimensions, 'source_png': source['png'],
+                    'existing_asset_ids': [r['id'] for r in retained],
+                    'replacement_required_by_catalog': not group['catalog_recommends_no_change'],
+                    'status': 'no-change-source-review-pending' if group['catalog_recommends_no_change'] else ('retained-exact-source' if retained else 'missing-artwork'),
+                    'in_game_verified': False, 'blockers': ['OPTION renderer route unavailable']})
+    return {'schema': 'tokimemo.translation-requirements.v1',
+            'catalog_sha256': digest(catalog_bytes), 'catalog_groups': len(rows),
+            'snapshot_sha256': report['snapshot_sha256'], 'coverage_complete': False,
+            'limitations': ['Grouped prose catalog includes suspected and already-Latin regions; groups are not atomic asset counts.',
+                           'Existing variants do not establish complete palette coverage or in-game acceptance.'],
+            'requirements': requirements, 'option_frames': option_frames}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('operation', choices=['audit', 'pack', 'inventory'])
+    parser.add_argument('--snapshot', type=Path, default=ROOT / 'translations/en/graphics/artwork')
+    parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--include-drafts', action='store_true')
+    parser.add_argument('--option-sources', type=Path, help='Restored source OPTION export directory')
+    args = parser.parse_args()
+    if args.operation in ('audit', 'inventory'):
+        args.output = new_output(args.output)
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        report = audit(args.snapshot) if args.operation == 'audit' else inventory(args.snapshot, ROOT / 'translations/en/graphics/image_text_catalog.jsonl', args.option_sources)
+        args.output.write_bytes(encoded(report) + b'\n')
+        print(json.dumps({k:v for k,v in report.items() if k not in ('assets', 'requirements', 'option_frames')}, sort_keys=True))
+    else:
+        print(json.dumps(build_pack(args.snapshot, args.output, args.include_drafts), sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

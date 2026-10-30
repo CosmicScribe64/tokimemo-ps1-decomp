@@ -4,11 +4,14 @@ extends RefCounted
 const Rules = preload("res://rules/new_game.gd")
 const Rng = preload("res://core/native_rng.gd")
 const CONTENT_SHA: String = "7458e8d0ee2d286c17ffe9b0d4201544ac716325273a97e02e5b12ab9fd660af"
+const EXPANDED_CONTENT_SHA: String = "c54066fcfebc3526abecab420a62c1817bca61e9d570c2fab391be6e8b6f8243"
 const TAB_DONE: int = 4
 var stage: int = 1
 var step_id: int = 0
 var cursor: int = 0
 var tab: int = 0
+var reading: int = 0
+var page_scroll: int = 0
 var error: String = ""
 var blocked: String = ""
 var names: Dictionary = {}
@@ -28,7 +31,7 @@ static func _byte_array(value: Variant, count: int = -1) -> bool:
 	return true
 
 static func content_valid(content: Dictionary) -> bool:
-	if content.size() != 6 or not _byte_array(content.get("space"),2): return false
+	if content.size() not in [6,9] or not _byte_array(content.get("space"),2): return false
 	for key in ["hiragana","katakana"]:
 		if not content.get(key) is Array or content[key].size() != 17: return false
 		for row in content[key]:
@@ -37,7 +40,16 @@ static func content_valid(content: Dictionary) -> bool:
 		if not content.get(key) is Array or content[key].size() != 15: return false
 		for row in content[key]:
 			if not _byte_array(row,12 if key == "preset_nickname" else 8) or row[-2] != 0 or row[-1] != 0: return false
+	if content.size() == 9:
+		for key: String in ["candidate_lists","reading_labels","reading_rows"]:
+			if not content.get(key) is Array or content[key].size() != (9 if key == "reading_rows" else 45): return false
+			for row in content[key]:
+				if not _byte_array(row) or row.size() > (916 if key == "candidate_lists" else 128): return false
+				if key != "reading_rows" and (row.is_empty() or row.size()%2 != 0 or row.has(0)): return false
 	return true
+
+static func content_identity(content: Dictionary) -> String:
+	return EXPANDED_CONTENT_SHA if content.size() == 9 else CONTENT_SHA
 
 static func load_content(path: String) -> Dictionary:
 	if not Rules._external_manifest_path_valid(path): return {}
@@ -47,7 +59,8 @@ static func load_content(path: String) -> Dictionary:
 	var bytes: PackedByteArray = file.get_buffer(length)
 	if bytes.size() != length or file.get_length() != length or not Rules._external_manifest_path_valid(path): return {}
 	var hash := HashingContext.new(); hash.start(HashingContext.HASH_SHA256); hash.update(bytes)
-	if hash.finish().hex_encode() != CONTENT_SHA: return {}
+	var actual_sha := hash.finish().hex_encode()
+	if actual_sha not in [CONTENT_SHA,EXPANDED_CONTENT_SHA]: return {}
 	var value: Variant = JSON.parse_string(bytes.get_string_from_utf8())
 	if not value is Dictionary: return {}
 	for key in value:
@@ -58,13 +71,14 @@ static func load_content(path: String) -> Dictionary:
 			for i in row.size():
 				if typeof(row[i]) not in [TYPE_INT,TYPE_FLOAT] or row[i] != int(row[i]): return {}
 				row[i] = int(row[i])
-	return value if content_valid(value) else {}
+	return value if content_valid(value) and content_identity(value) == actual_sha else {}
 
 func begin(tables: Dictionary, content: Dictionary, rng: Rng) -> String:
 	if not Rules._content_valid(tables) or not content_valid(content) or content.space != tables.space or not rng.configuration_error().is_empty():
 		return "New Game entry needs authenticated rule/entry packs and configured native RNG"
 	_tables = tables.duplicate(true); _content = content.duplicate(true); _rng = rng
 	stage = 1; step_id = 0; cursor = 0; tab = 0; error = ""; blocked = ""; trace.clear()
+	reading = 0; page_scroll = 0
 	names.clear()
 	for part in ["family","given","nickname"]:
 		var data := PackedByteArray()
@@ -95,11 +109,42 @@ func profile() -> Dictionary:
 	return player if stage == 1 else shiori
 
 func cell(column: int, row: int) -> PackedByteArray:
-	if tab not in [0,1] or column < 0 or column > 16 or row < 0 or row > 5: return PackedByteArray()
+	if column < 0 or column > 16 or row < 0 or row > 5: return PackedByteArray()
+	if tab in [2,3]:
+		if not _content.has("candidate_lists") or column >= 16: return PackedByteArray()
+		var index := 38 if tab == 2 else reading
+		var source: Array
+		var offset: int
+		if tab == 3 and reading != 38 and row == 0:
+			source = _content.reading_labels[index]; offset = column*2
+		else:
+			source = _content.candidate_lists[index]
+			offset = ((row-(1 if tab == 3 and reading != 38 else 0)+page_scroll)*16+column)*2
+		return PackedByteArray(source.slice(offset,offset+2)) if offset+1 < source.size() else PackedByteArray(_content.space)
+	if tab not in [0,1]: return PackedByteArray()
 	if column%6 == 5 or (row == 2 and column in [9,10]) or (row == 3 and column in [3,4]) or (row == 5 and column >= 11): return PackedByteArray(_content.space)
 	var source: Array = _content["hiragana" if tab == 0 else "katakana"][column/6+row*3]
 	var index: int = (column%6)*2
 	return PackedByteArray(source.slice(index,index+2)) if index+1 < source.size() else PackedByteArray()
+
+func reading_cell(column: int, row: int) -> PackedByteArray:
+	if not _content.has("reading_rows") or column < 0 or column > 16 or row < 0 or row > 2: return PackedByteArray()
+	if column%6 == 5: return PackedByteArray(_content.space)
+	var source: Array = _content.reading_rows[row*3+column/6]
+	var offset := column%6*2
+	return PackedByteArray(source.slice(offset,offset+2)) if offset+1 < source.size() else PackedByteArray(_content.space)
+
+func _clamp_page() -> void:
+	var index := 38 if tab == 2 else reading
+	var count: int = _content.candidate_lists[index].size()/2
+	var preceding_rows := 5 if tab == 2 or reading == 38 else 4
+	if count < page_scroll*16+preceding_rows*16:
+		page_scroll = maxi(0,(count>>4)-preceding_rows)
+
+func normalize_name_cursor() -> void:
+	if stage == 1 and step_id in [1,3,5]:
+		var limit := 3 if step_id == 1 else (6 if step_id == 3 else 11)
+		if cursor >= limit: cursor = 12
 
 func _finish_name() -> void:
 	# name_entry_name_finish draws unconditionally, even when no preset is copied.
@@ -117,6 +162,7 @@ func act(action: Dictionary) -> String:
 	# One queued logical action per tick. Presentation callbacks only enqueue.
 	if _rng == null: return "entry is not configured"
 	if not error.is_empty(): return error
+	normalize_name_cursor()
 	var before: int = _rng.state
 	var kind: String = str(action.get("kind",""))
 	if stage == 1 and step_id in [0,2,4,6,8]:
@@ -138,8 +184,23 @@ func act(action: Dictionary) -> String:
 		var start: int = 0 if step_id == 1 else (3 if step_id == 3 else 6)
 		var limit: int = 3 if step_id == 1 else (6 if step_id == 3 else 11)
 		if kind == "tab":
-			if typeof(action.get("value")) != TYPE_INT or action.value not in [0,1]: return "symbols/kanji grids and their scroll/reading rules require further original content"
+			if typeof(action.get("value")) != TYPE_INT or action.value not in [0,1,2,3]: return "name tab outside native index range"
+			if action.value in [2,3] and not _content.has("candidate_lists"): return "Symbols and Kanji require a rebuilt original name-entry content pack"
 			tab = action.value
+			if tab in [2,3]: _clamp_page()
+		elif kind == "reading":
+			if tab != 3 or typeof(action.get("column")) != TYPE_INT or typeof(action.get("row")) != TYPE_INT or action.column < 0 or action.column > 16 or action.row < 0 or action.row > 2: return "reading cell outside native grid"
+			var selected: int = action.row*15+action.column%6+action.column/6*5
+			if selected != reading: page_scroll = 0
+			reading = selected
+			_clamp_page()
+		elif kind == "scroll":
+			if tab not in [2,3] or typeof(action.get("delta")) != TYPE_INT or action.delta not in [-1,1]: return "scroll outside native candidate page"
+			page_scroll = maxi(0,page_scroll+action.delta)
+			_clamp_page()
+		elif kind == "slot":
+			if typeof(action.get("value")) != TYPE_INT or action.value < start or action.value >= limit: return "name slot outside active field"
+			cursor = action.value
 		elif kind == "cell":
 			if typeof(action.get("column")) != TYPE_INT or typeof(action.get("row")) != TYPE_INT: return "native cell requires integer coordinates"
 			var glyph: PackedByteArray = cell(action.column,action.row)

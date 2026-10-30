@@ -8,19 +8,36 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-39006-production-route-state-parity|T-39006 Restore production event state parity]]
+- [ ] [[tickets/T-39007-player-save-relaunch-recovery|T-39007 Complete Continue and save recovery]]
+
 
 - [ ] [[tickets/T-30001-modern-widescreen|T-30001 Add widescreen presentation]]
 
-- [ ] [[tickets/T-30002-modern-settings|T-30002 Provide comprehensive modern settings]]
 - [ ] [[tickets/T-30004-modern-achievements|T-30004 Design achievements for the native port]]
 
 ## In Progress
+
+- [ ] [[tickets/T-39008-synchronized-differential-captures|T-39008 Restore synchronized differential captures]]
+
+- [ ] [[tickets/T-39005-port-adversarial-review|T-39005 Independently review port and contributor experience]]
+
+- [ ] [[tickets/T-30002-modern-settings|T-30002 Provide comprehensive modern settings]]
+
+- [ ] [[tickets/T-39004-english-asset-completion|T-39004 Complete and test English translation assets]]
+
+- [ ] [[tickets/T-39003-deslop-repository|T-39003 Deslop repository prose]]
+
+- [ ] [[tickets/T-39002-restore-port-runtime|T-39002 Restore runtime and reproduce port acceptance]]
+
 
 - [ ] [[tickets/T-39000-local-disk-cleanup|T-39000 Remove obsolete local orchestrator state]]
 - [ ] [[tickets/T-31000-create-translated-image-assets|T-31000 Create same-size translated image assets and comparisons]]
 
 
 ## In Review
+
+- [ ] [[tickets/T-39001-fresh-checkout-assessment|T-39001 Assess fresh checkout and recovery priorities]]
 
 - [ ] [[tickets/T-31001-version-translated-artwork|T-31001 Version and publish translated artwork and review history]]
 - [ ] [[tickets/T-29033-reclaim-inactive-workspace-storage|T-29033 Reclaim inactive workspace storage]]

@@ -1,27 +1,29 @@
 extends SceneTree
-## T-29018 / T-29023 / Gate G4: Multi-Run 3-Year Playtesting Suite Across All 14 Routes
+## T-29018 / T-29023 / Gate G4: Model simulations across 14 three-year routes
 ## (All 13 Heroines 0..12 + Yoshio Bad Ending 13) with Real Disk Save/Reload & Clear-Save Persistence.
 ##
-## Driven by Imported PS1 Rule Tables (tokimemo.port-rule-tables.v1), Authentic New Game Entry State,
+## Driven by Imported PS1 Rule Tables (tokimemo.port-rule-tables.v1), New Game Entry State,
 ## Earned Heroine Emergence, Live Interactive Overlay Stepping, Real OverlayDispatcher TEL/DATE
 ## Delta Writebacks, and SaveService Disk Persistence + Reopened System/Album Verification.
 ##
-## Executes and verifies 14 full 3-year playthroughs (1995-04-04 -> 1998-03-01, 152 weeks,
+## The harness assigns command capabilities and injects resource-completion records;
+## these simulations do not establish installed-player route readiness.
+## Checks 14 three-year model runs (1995-04-04 -> 1998-03-01, 152 weeks,
 ## 1,062 days, 36/36 calendar months; 2,128 weeks / 14,868 days total):
-##   1.  Route 1  — Shiori Fujisaki (0): Literature Club (0), balanced stats (>= 130), dates >= 8 -> Legendary Tree
-##   2.  Route 2  — Mio Kisaragi (1): Literature Club (0), Liberal Arts (param[1]) focus + b26 -> Legendary Tree
-##   3.  Route 3  — Yuina Himoo (2): Science Club (2), Science (param[2]) focus + b26 -> Legendary Tree
-##   4.  Route 4  — Ayako Katagiri (3): Brass Band Club (5), Art (param[3]) focus + b26 -> Legendary Tree
-##   5.  Route 5  — Saki Nijino (4): Baseball Club (6), Athletics/Guts (param[4]/param[7]) focus + b26 -> Legendary Tree
-##   6.  Route 6  — Yukari Koshiki (5): Tennis Club (8), Fitness/Style/Art focus -> Legendary Tree
-##   7.  Route 7  — Nozomi Kiyokawa (6): Swimming Club (9), Fitness/Guts focus + b26 -> Legendary Tree
-##   8.  Route 8  — Mira Kagami (7): Drama Club (1), Style/Social/Art focus + b26 -> Legendary Tree
-##   9.  Route 9  — Yuko Asahina (8): Literature Club (0), Social/Style focus + b26 -> Legendary Tree
-##   10. Route 10 — Megumi Mikihara (9): Art Club (4), Liberal Arts/Science/Art/Social/Style focus -> Legendary Tree
-##   11. Route 11 — Yumi Saotome (10): Basketball Club (10), Year 2 emergence + Fitness/Social/Style + b26 -> Legendary Tree
-##   12. Route 12 — Miharu Tatebayashi (11): Earned story_stage=11 + scene_flags[0x4C/0x4E]=1 -> Secret Confession
-##   13. Route 13 — Rei Ijuin (12): Earned rei_subcount >= 70 + scene_flags[0x4F]=2 -> Chapel Confession
-##   14. Route 14 — Bad Ending / Yoshio (13): Rest-only low stats (command 7 x 152 weeks) -> Classroom Bad Ending
+##   1.  Route 1 : Shiori Fujisaki (0): Literature Club (0), balanced stats (>= 130), dates >= 8 -> Legendary Tree
+##   2.  Route 2 : Mio Kisaragi (1): Literature Club (0), Liberal Arts (param[1]) focus + b26 -> Legendary Tree
+##   3.  Route 3 : Yuina Himoo (2): Science Club (2), Science (param[2]) focus + b26 -> Legendary Tree
+##   4.  Route 4 : Ayako Katagiri (3): Brass Band Club (5), Art (param[3]) focus + b26 -> Legendary Tree
+##   5.  Route 5 : Saki Nijino (4): Baseball Club (6), Athletics/Guts (param[4]/param[7]) focus + b26 -> Legendary Tree
+##   6.  Route 6 : Yukari Koshiki (5): Tennis Club (8), Fitness/Style/Art focus -> Legendary Tree
+##   7.  Route 7 : Nozomi Kiyokawa (6): Swimming Club (9), Fitness/Guts focus + b26 -> Legendary Tree
+##   8.  Route 8 : Mira Kagami (7): Drama Club (1), Style/Social/Art focus + b26 -> Legendary Tree
+##   9.  Route 9 : Yuko Asahina (8): Literature Club (0), Social/Style focus + b26 -> Legendary Tree
+##   10. Route 10: Megumi Mikihara (9): Art Club (4), Liberal Arts/Science/Art/Social/Style focus -> Legendary Tree
+##   11. Route 11: Yumi Saotome (10): Basketball Club (10), Year 2 emergence + Fitness/Social/Style + b26 -> Legendary Tree
+##   12. Route 12: Miharu Tatebayashi (11): Earned story_stage=11 + scene_flags[0x4C/0x4E]=1 -> Secret Confession
+##   13. Route 13: Rei Ijuin (12): Earned rei_subcount >= 70 + scene_flags[0x4F]=2 -> Chapel Confession
+##   14. Route 14: Bad Ending / Yoshio (13): Rest-only low stats (command 7 x 152 weeks) -> Classroom Bad Ending
 
 const State = preload("res://rules/school_day_state.gd")
 const RouteState = preload("res://rules/new_game_route_state.gd")

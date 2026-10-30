@@ -194,6 +194,8 @@ struct Engine {
     std::vector<std::pair<uint32_t,uint32_t>> occupied,samples;
     uint64_t frames=0,replacements=0,busy_replacements=0,nonzero=0;
     uint32_t maximum_voices=0;int peak=0,wet_peak=0;bool stopped=false,initialized=false;
+    bool rei_loaded=false,rei_started=false,fade_active=false,fade_master=false;
+    int current_gain=0,full_gain=0,attenuation=0,fade_accumulator=0,fade_ticks=0;
     void copy(uint32_t target,const std::vector<uint8_t>& data){auto p=cpu.region(target,unsigned(data.size()));std::copy(data.begin(),data.end(),p);}
     void initialize(const std::array<std::vector<uint8_t>,6>& data,int gain) {
         if(gain!=93 && gain!=69)throw std::runtime_error("unsupported gain");
@@ -224,8 +226,54 @@ struct Engine {
         size_t table=0x820+half(0x12)*512;uint32_t address=0x11010;
         for(unsigned i=0;i<=half(0x16);++i){uint32_t bytes=half(table+i*2)*8;if(bytes){if(address+bytes>0x11010+data[4].size())throw std::runtime_error("VAG extent");samples.emplace_back(address,address+bytes);}address+=bytes;}
         reverb.reset(cpu.read(0x1f801da2,2)*8);initialized=true;cpu.capture=true;
+        current_gain=full_gain=gain;attenuation=gain==69?24:0;
+    }
+    void load_rei(const std::array<std::vector<uint8_t>,3>& data) {
+        if(!initialized || rei_loaded)throw std::runtime_error("Rei bank load requires one initialized arrival owner");
+        if(data[0].size()!=10272 || data[1].size()!=139680 || data[2].size()!=6416)throw std::runtime_error("Rei bank extent differs");
+        // Alternate source bank: SDK slot2, header0x16000, SPU0x39010.
+        // Keep slot1 and its sequence alive while the new bank is transferred.
+        copy(0x80016000,data[0]);copy(0x801b8000,data[1]);copy(0x8002e800,data[2]);
+        if(cpu.call(0x8008c1b0,{0x80016000,2,0x39010})!=2 || cpu.read(0x801293b2,1)!=2)throw std::runtime_error("Rei VAB open failed");
+        if(cpu.call(0x8008c620,{0x801b8000,2})!=2 || cpu.read(0x801293b2,1)!=1)throw std::runtime_error("Rei VAB transfer failed");
+        const auto& header=data[0];auto half=[&](size_t p){if(p+2>header.size())throw std::runtime_error("Rei VAB table");return uint32_t(header[p])|(uint32_t(header[p+1])<<8);};
+        size_t table=0x820+half(0x12)*512;uint32_t address=0x39010;
+        for(unsigned i=0;i<=half(0x16);++i){uint32_t bytes=half(table+i*2)*8;if(bytes){if(address+bytes>0x39010+data[1].size())throw std::runtime_error("Rei VAG extent");samples.emplace_back(address,address+bytes);}address+=bytes;}
+        rei_loaded=true;
+    }
+    void begin_rei_fade() {
+        if(!initialized || stopped || rei_started || fade_active)throw std::runtime_error("Rei fade requires active arrival sequence");
+        // audio_command5 + B1: fade accumulator0, rate256, decrement10.
+        fade_active=true;fade_master=true;fade_accumulator=0;fade_ticks=0;
+    }
+    void tick_rei_fade(bool xa_active) {
+        if(!fade_active || stopped)return;
+        fade_accumulator+=256;
+        if(!(fade_accumulator&0xff00))return;
+        fade_accumulator&=255;current_gain-=10;++fade_ticks;fade_master=!xa_active;
+        if(current_gain<0){if(fade_master){cpu.call(0x8008fd68,{0});cpu.call(0x8008b750,{0,0});}stop();fade_active=false;return;}
+        int master=full_gain==0?0:(current_gain*127)/full_gain;
+        if(fade_master)cpu.call(0x8008b750,{uint32_t(master),uint32_t(master)});
+        else cpu.call(0x8008c720,{0,uint32_t(current_gain),uint32_t(current_gain)});
+    }
+    void start_rei(bool xa_active) {
+        if(!initialized || !rei_loaded || rei_started)throw std::runtime_error("Rei start requires its completed alternate bank");
+        // The source starts bank1/sequence0 after CUT09/O09 completion. It
+        // selects SDKslot2 and preserves existing SPU/reverb instance state.
+        if(!stopped){
+            if(fade_active && !xa_active){cpu.call(0x8008fd68,{0});cpu.call(0x8008b750,{0,0});}
+            stop();
+        }
+        uint32_t offset=cpu.read(0x8002e800),depth=cpu.read(0x8002e840,1);
+        if(offset!=0x40 || depth!=58)throw std::runtime_error("Rei sequence index/reverb differs");
+        cpu.call(0x8008ff5c,{depth,depth});
+        if(cpu.call(0x800900a0,{0x8002e800+offset+0x10,2})!=0)throw std::runtime_error("Rei sequence open failed");
+        current_gain=full_gain=int(cpu.read(0x80016018,1))-25-attenuation;
+        cpu.call(0x8008b750,{127,127});cpu.call(0x8008c720,{0,uint32_t(current_gain),uint32_t(current_gain)});cpu.call(0x80090350,{0,1,1});
+        stopped=false;rei_started=true;fade_active=false;fade_master=false;
     }
     static int volume(uint32_t raw){if(raw&0x8000)throw std::runtime_error("volume sweep unsupported");return int(raw&0x7fff)-((raw&0x4000)?0x8000:0);}
+    static int master_sample(int sample,uint32_t raw){return int((int64_t(sample)*volume(raw))>>14);}
     void flush() {
         for(int i=0;i<24;++i)cpu.write(0x1f801c0c+i*16,voices[i].live?voices[i].env.level:0,2);
         cpu.writes.clear();cpu.call(0x8008e1d0);
@@ -243,7 +291,7 @@ struct Engine {
         flush();if(!stopped)cpu.call(0x80092500,{0,0});
         std::array<int16_t,1470> pcm{};uint32_t mask=cpu.read(0x1f801d98)&0xffffff;
         if(cpu.read(0x1f801d90)&0xfffffe || cpu.read(0x1f801d94))throw std::runtime_error("noise/pitch modulation unsupported");
-        for(int i=0;i<735;++i){int l=0,r=0,sl=0,sr=0;uint32_t count=0;for(int ch=0;ch<24;++ch){auto& v=voices[ch];if(!v.live)continue;++count;auto p=v.tick(sound);l+=p.first;r+=p.second;if(mask&(1u<<ch)){sl+=p.first;sr+=p.second;}}maximum_voices=std::max(maximum_voices,count);auto wet=wet_enabled?reverb.tick(sl,sr,cpu,sound):std::pair<int,int>{0,0};wet_peak=std::max({wet_peak,std::abs(wet.first),std::abs(wet.second)});l+=wet.first;r+=wet.second;peak=std::max({peak,std::abs(l),std::abs(r)});pcm[2*i]=int16_t(clamp16(l));pcm[2*i+1]=int16_t(clamp16(r));if(l || r)++nonzero;++frames;}
+        for(int i=0;i<735;++i){int l=0,r=0,sl=0,sr=0;uint32_t count=0;for(int ch=0;ch<24;++ch){auto& v=voices[ch];if(!v.live)continue;++count;auto p=v.tick(sound);l+=p.first;r+=p.second;if(mask&(1u<<ch)){sl+=p.first;sr+=p.second;}}maximum_voices=std::max(maximum_voices,count);auto wet=wet_enabled?reverb.tick(sl,sr,cpu,sound):std::pair<int,int>{0,0};wet_peak=std::max({wet_peak,std::abs(wet.first),std::abs(wet.second)});l+=wet.first;r+=wet.second;l=master_sample(l,cpu.read(0x1f801d80,2));r=master_sample(r,cpu.read(0x1f801d82,2));peak=std::max({peak,std::abs(l),std::abs(r)});pcm[2*i]=int16_t(clamp16(l));pcm[2*i+1]=int16_t(clamp16(r));if(l || r)++nonzero;++frames;}
         return pcm;
     }
     void stop(){if(!initialized || stopped)return;cpu.call(0x8008c720,{0,0,0});cpu.call(0x80090580,{0});cpu.call(0x800907e0,{0});stopped=true;}

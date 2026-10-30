@@ -5,8 +5,8 @@ class_name SystemOverlays
 ## 2. OLH (src/ovl/help/help_questions_and_answers_page.c)
 ## 3. ETC (src/ovl/misc_scenes/ & src/main/title_screen.c)
 ##
-## Provides complete state machines, settings persistence, input handling,
-## and authentic 320x240 PS1 rendering through VnScenePresenter.
+## Provides state machines, in-memory settings, input handling,
+## and 320x240 rendering through VnScenePresenter. Callers own persistence.
 
 const VnPresenter = preload("res://presentation/vn_scene_presenter.gd")
 

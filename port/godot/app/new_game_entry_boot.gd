@@ -13,6 +13,8 @@ const Diagnostics = preload("res://services/new_game_load_diagnostics.gd")
 const Glyphs = preload("res://presentation/native_glyphs.gd")
 const Canvas = preload("res://presentation/native_canvas.gd")
 const Presenter = preload("res://presentation/vn_scene_presenter.gd")
+const EntryImages = preload("res://presentation/name_entry_image_presenter.gd")
+const NamePointer = preload("res://flow/name_entry_pointer.gd")
 const LaunchProfile = preload("res://services/installed_launch_profile.gd")
 const Launch = preload("res://app/installed_launch.gd")
 signal profile_finished(entry: RefCounted, native_rng: RefCounted, launch_profile: Dictionary, live_context: Dictionary)
@@ -35,6 +37,13 @@ var queue: Array[Dictionary] = []
 var panel: VBoxContainer
 var canvas: Canvas
 var presenter: Presenter
+var entry_images: EntryImages
+var name_pointer := NamePointer.new()
+var native_hits: Control
+var navigation_cell := Vector2i.ZERO
+var navigation_visible := false
+var navigation_direction := 0
+var navigation_repeat := 0.0
 var last_rendered_image: Image
 var profile_complete: bool = false
 var failure: String = ""
@@ -55,14 +64,15 @@ func _notification(what: int) -> void:
 	focus_paused = not (_window_focused and _application_focused)
 	if focus_paused:
 		queue.clear()
+		navigation_direction = 0; navigation_repeat = 0.0
 		if is_instance_valid(_entry_pad): _entry_pad.clear_devices()
 
 func _ensure_native_presenter() -> void:
 	if canvas == null:
 		canvas = Canvas.new()
-		canvas.scale = Vector2(2, 2)
 		canvas.z_index = -10
 		add_child(canvas)
+		_layout_native_canvas()
 	if presenter != null:
 		return
 	var font_path: String = str(installed_launch_profile.get("paths", {}).get("font_root", ""))
@@ -81,14 +91,18 @@ func _ensure_native_presenter() -> void:
 				break
 	if font_path.is_empty() or not DirAccess.dir_exists_absolute(font_path):
 		return
-	var hud_manifest: String = str(installed_launch_profile.get("paths", {}).get("hud_manifest", ""))
-	if hud_manifest.is_empty() and installed_launch_profile.is_empty():
-		hud_manifest = OS.get_environment("TOKIMEMO_HUD_MANIFEST")
-	if not installed_launch_profile.is_empty() and hud_manifest.is_empty():
-		return
 	var cand_presenter := Presenter.new()
-	if cand_presenter.init_resources(font_path, hud_manifest).is_empty():
+	if cand_presenter.open_font_only(font_path):
 		presenter = cand_presenter
+		var image_path: String = str(installed_launch_profile.get("paths", {}).get("name_entry_media", ""))
+		if not image_path.is_empty():
+			var candidate := EntryImages.new()
+			if candidate.open_pack(image_path, FileAccess.get_sha256(image_path), presenter):
+				entry_images = candidate
+			else:
+				failure = candidate.media.error
+	else:
+		failure = "Original entry graphics could not load: " + cand_presenter.error
 
 func _ready() -> void:
 	_entry_pad = EntryPad.new()
@@ -101,8 +115,9 @@ func _ready() -> void:
 	_entry_ui_brightness = 128 # draw_brightness_reset; current entry renderer is full-bright.
 	var context_error: String = _entry_runtime.bind(_entry_model, _entry_clock, _entry_pad, entry_clock_policy)
 	if not context_error.is_empty(): failure = context_error
-	get_window().content_scale_size = Vector2i(1024,768)
-	get_window().size = Vector2i(1024,768)
+	# Native art owns its scale; desktop settings retain window-pixel UI space.
+	get_window().content_scale_size = Vector2i.ZERO
+	get_viewport().size_changed.connect(_layout_native_canvas)
 	_ensure_native_presenter()
 	panel = VBoxContainer.new(); panel.position = Vector2(24,16); panel.size = Vector2(950,660); add_child(panel)
 	debug_visible = OS.get_environment("TOKIMEMO_ENTRY_DEBUG") == "1"
@@ -144,26 +159,99 @@ func _ready() -> void:
 			var entry_error: String=controller.begin(tables,content,rng)
 			if not entry_error.is_empty(): failure="New Game could not start.";load_diagnostics.failed_gate="entry_begin";load_diagnostics.entry_error=entry_error
 			else:
-				_entry_residency = {"lba":0x95ea,"source_sha256":ContextOwner.NAME_ENT_SHA,"content_sha256":Entry.CONTENT_SHA,"ready":true}
+				_entry_residency = {"lba":0x95ea,"source_sha256":ContextOwner.NAME_ENT_SHA,"content_sha256":Entry.content_identity(content),"ready":true}
 	if debug_visible: print("T29012_ENTRY_LOAD_DIAGNOSTIC "+JSON.stringify(load_diagnostics))
+	var settings := get_node_or_null("/root/ModernSettings")
+	if settings != null:
+		settings.preferences_changed.connect(_preferences_changed)
 	_render()
+
+func _preferences_changed(_settings: Dictionary) -> void:
+	_layout_native_canvas()
+	if is_instance_valid(panel) and failure.is_empty(): _render_native_canvas()
+
+func _layout_native_canvas() -> void:
+	if canvas == null: return
+	var area := get_viewport_rect().size
+	var factor := minf(area.x/320.0,area.y/240.0)
+	var settings := get_node_or_null("/root/ModernSettings")
+	if settings != null and settings.preferences.effective_settings().display.filter == "integer" and factor >= 1.0: factor = floorf(factor)
+	canvas.scale = Vector2.ONE*factor
+	canvas.position = ((area-Vector2(320,240)*factor)/2.0).floor()
 
 func _send(action: Dictionary) -> void:
 	if not focus_paused: queue.append(action.duplicate(true))
 
-func _physics_process(_delta: float) -> void:
+func _source_pointer_ready() -> bool:
+	return entry_images != null and entry_images.media.manifest.has("cursors")
+
+func _name_input_active() -> bool:
+	return controller.stage == 1 and controller.step_id in [1,3,5]
+
+func differential_snapshot() -> Dictionary:
+	# Read-only observer. Desktop clock origin and missing native records remain
+	# explicit; this is not a reconstructed PS1 RAM image or a parity verdict.
+	var name_bytes: Dictionary = {}
+	for part in controller.names:
+		name_bytes[part] = PackedByteArray(controller.names[part]).hex_encode()
+	var sampled_input: Variant = null
+	if is_instance_valid(_entry_pad) and _entry_pad._latest_sample != null:
+		sampled_input = _entry_pad._latest_sample.snapshot()
+	var composed: Dictionary = {}
+	if last_rendered_image != null:
+		var digest := HashingContext.new()
+		digest.start(HashingContext.HASH_SHA256)
+		digest.update(last_rendered_image.get_data())
+		composed = {"width":last_rendered_image.get_width(),"height":last_rendered_image.get_height(),
+			"format":last_rendered_image.get_format(),"pixel_sha256":digest.finish().hex_encode()}
+	return {"schema":"tokimemo.entry-observation.v1","producer":"new_game_entry_boot.differential_snapshot",
+		"phase":"observer_call; caller must bind to frame_post_draw","scene":scene_file_path,
+		"state":{"stage":controller.stage,"step":controller.step_id,"cursor":controller.cursor,
+			"tab":controller.tab,"reading":controller.reading,"page_scroll":controller.page_scroll,
+			"names":name_bytes,"player":controller.player.duplicate(true),
+			"shiori":controller.shiori.duplicate(true)},
+		"clock":{"engine_physics_tick":tick,"native_clock":_entry_clock.snapshot(),
+			"model_frame_count":_entry_model.frame_count,"model_timer_ticks":_entry_model.timer_ticks,
+			"model_system_seed":_entry_model.system_seed,"policy":entry_clock_policy.duplicate(true)},
+		"rng":{"profile":rng.profile,"state":rng.state,"draw_count":rng.draw_count,"error":rng.error},
+		"sampled_input":sampled_input,"queued_actions":queue.duplicate(true),
+		"composed_image":composed,"failure":failure,
+		"native_canvas":{"scale":[canvas.scale.x,canvas.scale.y],"position":[canvas.position.x,canvas.position.y],"viewport_size":[get_viewport_rect().size.x,get_viewport_rect().size.y]},
+		"name_marker_draw_state":entry_images.markers.snapshot() if entry_images != null else {},
+		"name_pointer":name_pointer.snapshot() if _source_pointer_ready() else {"available":false,"reason":"legacy media lacks source cursor style inventory"},
+		"unavailable":["native_text_state","native_actor_memory","native_draw_order","PS1_boot_clock_origin"]}
+
+func _physics_process(delta: float) -> void:
 	if not failure.is_empty() or focus_paused or _completion_emitted: return
 	tick += 1
+	# Desktop events are sampled once before dispatch. The native prior-draw pad
+	# latch phase remains a differential-test question, not a parity assumption.
+	var current_pad: InputFrame = _entry_pad.sample(_entry_clock.logic_iterations)
+	var pointer_changed := false
+	if _source_pointer_ready() and _name_input_active(): pointer_changed = name_pointer.advance(current_pad)
+	controller.normalize_name_cursor()
+	# NAME updates slot actors before handling the character-insertion edge.
+	var marker_changed: bool = entry_images != null and entry_images.advance_markers(controller)
 	var automatic: bool = (controller.stage == 1 and controller.step_id in [0,2,4,6,8]) or (controller.stage == 2 and controller.step_id in [0,2,4])
 	if automatic:
 		failure = controller.act({"kind":"tick"}); _render()
 	elif not queue.is_empty():
 		var action: Dictionary = queue.pop_front()
-		var diagnostic: String = controller.act(action)
+		if action.get("kind") == "pointer_confirm": action = name_pointer.confirm(controller)
+		var diagnostic: String = "" if action.is_empty() else controller.act(action)
 		if not diagnostic.is_empty(): failure = diagnostic
 		_render()
-	# Snapshot the device owner after the completed entry dispatch/render.
-	var current_pad: InputFrame = _entry_pad.sample(_entry_clock.logic_iterations)
+	if marker_changed: _render_native_canvas()
+	elif pointer_changed: _render_native_canvas()
+	# Record that exact device sample only after completed dispatch/render.
+	var held_direction: int = current_pad.held & 0xf000
+	if held_direction == 0 or (_source_pointer_ready() and _name_input_active()): navigation_direction = 0
+	elif held_direction == navigation_direction:
+		navigation_repeat += delta
+		if navigation_repeat >= 0:
+			_navigate_entry(held_direction)
+			var settings := get_node_or_null("/root/ModernSettings")
+			navigation_repeat = -float(settings.preferences.settings.controls.repeat_interval) if settings != null else -0.08
 	var context_error: String = _entry_runtime.record_completed_iteration(current_pad, _entry_ui_brightness, _entry_residency)
 	if not context_error.is_empty():
 		failure = context_error
@@ -179,11 +267,131 @@ func _physics_process(_delta: float) -> void:
 		profile_finished.emit(controller, rng, installed_launch_profile.duplicate(true), live)
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_ENTER:
-			_send({"kind":"start"}); get_viewport().set_input_as_handled()
-		elif event.keycode == KEY_ESCAPE:
-			_send({"kind":"cross"}); get_viewport().set_input_as_handled()
+	if not is_instance_valid(_entry_pad) or focus_paused: return
+	if event is InputEventMouseMotion and _source_pointer_ready():
+		if name_pointer.place(Vector2i(canvas.get_local_mouse_position())): _render_native_canvas()
+		return
+	var mask: int = _entry_pad.action_mask(event)
+	if mask == 0: return
+	if _source_pointer_ready() and _name_input_active():
+		if mask & 0x800: _send({"kind":"start"})
+		elif mask & 0x40: _send({"kind":"cross"})
+		elif mask & 0x20: _send({"kind":"pointer_confirm"})
+		# Direction/Square state is consumed from the single mapped pad sample.
+		get_viewport().set_input_as_handled()
+		return
+	# Primary pointer confirmation belongs to the native coordinate hit regions.
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and mask == 0x20: return
+	if mask & 0x800: _send({"kind":"start"})
+	elif mask & 0x40: _send({"kind":"cross"})
+	elif mask & 0x20:
+		if controller.stage == 1 and controller.step_id in [1,3,5]:
+			if controller.cell(navigation_cell.x,navigation_cell.y).size() != 2: return
+			navigation_visible = true
+			_send({"kind":"cell", "column":navigation_cell.x, "row":navigation_cell.y})
+		elif (controller.stage == 1 and controller.step_id == 7) or (controller.stage == 2 and controller.step_id == 1): _send({"kind":"circle"})
+		elif (controller.stage == 1 and controller.step_id == 9) or (controller.stage == 2 and controller.step_id == 3): _send({"kind":"yes"})
+		else: return
+	elif mask & 0xf000:
+		var direction := mask & 0xf000
+		if navigation_direction != direction:
+			navigation_direction = direction
+			var settings := get_node_or_null("/root/ModernSettings")
+			navigation_repeat = -float(settings.preferences.settings.controls.repeat_delay) if settings != null else -0.4
+			_navigate_entry(direction)
+	elif mask & 0xc and controller.stage == 1 and controller.step_id in [1,3,5]:
+		_send({"kind":"tab", "value":1 - controller.tab if controller.tab in [0,1] else 0})
+	else: return
+	get_viewport().set_input_as_handled()
+
+func _navigate_entry(mask: int) -> void:
+	navigation_visible = true
+	if controller.stage == 1 and controller.step_id in [1,3,5]:
+		var direction := Vector2i(1,0) if mask & 0x2000 else (Vector2i(-1,0) if mask & 0x8000 else (Vector2i(0,1) if mask & 0x4000 else Vector2i(0,-1)))
+		for attempt: int in 102:
+			navigation_cell = Vector2i(posmod(navigation_cell.x + direction.x, 17), posmod(navigation_cell.y + direction.y, 6))
+			if controller.cell(navigation_cell.x, navigation_cell.y).size() == 2: break
+	elif (controller.stage == 1 and controller.step_id == 7) or (controller.stage == 2 and controller.step_id == 1):
+		var field: int = controller.cursor
+		var selected: int = controller.profile()[["month","day","blood"][field]]
+		if selected == 255: selected = 0
+		var columns: int = [6,11,4][field]
+		var amount := 1 if mask & 0x2000 else (-1 if mask & 0x8000 else (columns if mask & 0x4000 else -columns))
+		_send({"kind":"select", "value":posmod(selected + amount, [12,31,4][field])})
+	if is_instance_valid(canvas): _native_controls()
+
+func _native_button(rect: Rect2i, action: Dictionary, hint: String) -> void:
+	var button := Button.new()
+	button.position = rect.position
+	button.size = rect.size
+	button.tooltip_text = hint
+	button.focus_mode = Control.FOCUS_NONE
+	for state: String in ["normal","hover","pressed","focus","disabled"]:
+		button.add_theme_stylebox_override(state,StyleBoxEmpty.new())
+	button.pressed.connect(_send.bind(action))
+	native_hits.add_child(button)
+
+func _select_profile_field(field: int) -> void:
+	# Use the existing controller actions so each field transition is recorded.
+	for index: int in range(absi(field-controller.cursor)):
+		_send({"kind":"circle" if field > controller.cursor else "cross"})
+
+func _native_controls() -> void:
+	if native_hits != null:
+		canvas.remove_child(native_hits)
+		native_hits.queue_free()
+	native_hits = Control.new()
+	native_hits.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	canvas.add_child(native_hits)
+	if controller.stage == 1 and controller.step_id in [1,3,5]:
+		_native_button(Rect2i(3,72,27,15),{"kind":"tab","value":0},"Hiragana")
+		_native_button(Rect2i(3,104,27,15),{"kind":"tab","value":1},"Katakana")
+		_native_button(Rect2i(3,136,27,15),{"kind":"tab","value":2},"Symbols")
+		_native_button(Rect2i(3,168,27,15),{"kind":"tab","value":3},"Kanji")
+		_native_button(Rect2i(3,200,27,15),{"kind":"done"},"Finish this name")
+		var part: int = (controller.step_id-1)/2
+		for index: int in (5 if part == 2 else 3):
+			_native_button(Rect2i([57,113,233][part]+index*16,35,15,15),{"kind":"slot","value":[0,3,6][part]+index},"Edit name character")
+		for row: int in range(6):
+			for column: int in range(17):
+				if controller.cell(column,row).size() == 2:
+					_native_button(Rect2i(40+column*16,72+row*16,16,16),{"kind":"cell","column":column,"row":row},"")
+		if controller.tab in [2,3]:
+			_native_button(Rect2i(297,73,15,15),{"kind":"scroll","delta":-1},"Previous character row")
+			_native_button(Rect2i(297,137,15,15),{"kind":"scroll","delta":1},"Next character row")
+		if controller.tab == 3:
+			for row: int in range(3):
+				for column: int in range(17):
+					_native_button(Rect2i(40+column*16,176+row*16,16,16),{"kind":"reading","column":column,"row":row},"")
+	elif (controller.stage == 1 and controller.step_id == 7) or (controller.stage == 2 and controller.step_id == 1):
+		for field: int in range(3):
+			var label := Button.new()
+			label.position = [Vector2(40,64),Vector2(40,112),Vector2(40,176)][field]
+			label.size = Vector2(64,16)
+			label.focus_mode = Control.FOCUS_NONE
+			for state: String in ["normal","hover","pressed","focus"]: label.add_theme_stylebox_override(state,StyleBoxEmpty.new())
+			label.pressed.connect(_select_profile_field.bind(field))
+			native_hits.add_child(label)
+		var field: int = controller.cursor
+		for index: int in [12,31,4][field]:
+			var position: Vector2i
+			if field == 0: position = Vector2i(56+(index%6)*40,80+(index/6)*16)
+			elif field == 1: position = Vector2i(48+(index%11)*24,128+(index/11)*16)
+			else: position = Vector2i(64+index*64,192)
+			_native_button(Rect2i(position,Vector2i(24 if field == 1 else 32,16)),{"kind":"select","value":index},"")
+		_native_button(Rect2i(3,200,27,15),{"kind":"start"},"Finish birthday and blood type")
+	else:
+		_native_button(Rect2i(112,200,64,16),{"kind":"yes"},"Confirm")
+		_native_button(Rect2i(176,200,64,16),{"kind":"no"},"Edit")
+	if navigation_visible:
+		var outline := ReferenceRect.new(); outline.editor_only = false
+		outline.border_color = Color(1,0.9,0.2); outline.border_width = 1.0; outline.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		if controller.stage == 1 and controller.step_id in [1,3,5]:
+			outline.position = Vector2(40 + navigation_cell.x * 16,72 + navigation_cell.y * 16); outline.size = Vector2(16,16)
+		elif (controller.stage == 1 and controller.step_id == 7) or (controller.stage == 2 and controller.step_id == 1):
+			outline.position = [Vector2(40,64),Vector2(40,112),Vector2(40,176)][controller.cursor]; outline.size = Vector2(64,16)
+		else: outline.position = Vector2(112,200); outline.size = Vector2(64,16)
+		native_hits.add_child(outline)
 
 func _label(text: String) -> void:
 	var label := Label.new(); label.text = text; label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; panel.add_child(label)
@@ -228,58 +436,15 @@ func _render_native_canvas() -> void:
 	_ensure_native_presenter()
 	if presenter == null or canvas == null:
 		return
-	var img := Image.create(320, 240, false, Image.FORMAT_RGBA8)
+	if entry_images == null:
+		return
 	presenter.recorded_glyphs.clear()
 	presenter.bounding_box_violations.clear()
-
-	# 1. Authentic PS1 32x32 green checkerboard background (hud_screen_frame_draw)
-	presenter.draw_checkerboard_frame(img, 0, Vector2i((tick / 2) & 31, (tick / 2) & 31), 0)
-
-	# 2. Authentic PS1 POLY_G4 case 2 gradient base panel (cal_base_show) & bottom message window
-	presenter.draw_cal_base(img, Rect2i(16, 36, 288, 120), 224)
-	presenter.draw_message_window(img)
-
-	# 3. Top-left wooden title badge (message_window_title_update)
-	var badge_hex: String = _valid_glyph_hex(controller.names.get("family", PackedByteArray()), 3)
-	if badge_hex.is_empty() and presenter._manifest.get("content", {}).get("strings", {}).has("narration_prefix"):
-		badge_hex = str(presenter._manifest["content"]["strings"]["narration_prefix"].get("raw_hex", "")).substr(0, 8)
-	presenter.draw_title_badge(img, badge_hex, Vector2i.ZERO, maxi(2, badge_hex.length() / 4))
-
-	# 4. Entered player/Shiori name glyphs on the cal_base panel
-	var x_positions: Dictionary = {"family": 28, "given": 112, "nickname": 196}
-	for part: String in ["family", "given", "nickname"]:
-		if not controller.names.has(part):
-			continue
-		var part_hex: String = _valid_glyph_hex(controller.names[part], 5)
-		if not part_hex.is_empty():
-			presenter._draw_text_hex_checked(img, part_hex, Vector2i(int(x_positions[part]), 48), 0, "name_entry")
-
-	# Draw kana grid sample or birthday/blood-type selection rows inside cal_base
-	if controller.stage == 1 and controller.step_id in [1, 3, 5]:
-		for row_idx: int in range(4):
-			var row_bytes := PackedByteArray()
-			for col_idx: int in range(8):
-				var cell_pair: PackedByteArray = controller.cell(col_idx, row_idx)
-				if cell_pair.size() == 2:
-					row_bytes.append_array(cell_pair)
-			var row_hex: String = _valid_glyph_hex(row_bytes, 8)
-			if not row_hex.is_empty():
-				presenter._draw_text_hex_checked(img, row_hex, Vector2i(28, 72 + row_idx * 18), 0, "name_grid")
-
-	# 5. Birthday/blood-type and stage prompt inside the message window
-	var prompt_hex: String = ""
-	if presenter._manifest.get("content", {}).get("strings", {}).has("ordinary_command"):
-		prompt_hex = str(presenter._manifest["content"]["strings"]["ordinary_command"].get("raw_hex", "")).substr(0, 32)
-	if not prompt_hex.is_empty():
-		presenter.draw_vn_dialogue(img, "", [prompt_hex])
-
-	# 6. Authentic PS1 hand cursor (Frame 156) at controller.cursor
-	var cursor_pos := Vector2i(36 + clampi(controller.cursor, 0, 11) * 18, 62)
-	if (controller.stage == 1 and controller.step_id == 7) or (controller.stage == 2 and controller.step_id == 1):
-		cursor_pos = Vector2i(48 + clampi(controller.cursor, 0, 2) * 80, 104)
-	elif (controller.stage == 1 and controller.step_id == 9) or (controller.stage == 2 and controller.step_id in [3, 5]):
-		cursor_pos = Vector2i(72 + clampi(controller.cursor, 0, 1) * 80, 124)
-	presenter.draw_hand_cursor(img, cursor_pos)
+	var settings := get_node_or_null("/root/ModernSettings")
+	entry_images.translations = settings.translated_images if settings != null else null
+	entry_images.pointer = name_pointer if _source_pointer_ready() else null
+	var img := entry_images.render(controller)
+	if img == null: return
 
 	last_rendered_image = img
 	canvas.set("_textures", {})
@@ -292,6 +457,7 @@ func _render_native_canvas() -> void:
 
 func _render() -> void:
 	profile_complete = (controller.stage == 2 and controller.step_id == 5)
+	panel.visible = true
 	for child in panel.get_children(): panel.remove_child(child); child.queue_free()
 	_label("New Game")
 	if not failure.is_empty():
@@ -299,6 +465,10 @@ func _render() -> void:
 		_recovery_actions()
 		return
 	_render_native_canvas()
+	if entry_images != null and not debug_visible:
+		panel.hide()
+		_native_controls()
+		return
 	if debug_visible: _label("Stage %d / step %d · RNG draws %d"%[controller.stage,controller.step_id,rng.draw_count])
 	_name_line()
 	if not failure.is_empty():

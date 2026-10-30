@@ -11,6 +11,7 @@ var _active_line_id: int = -1
 var _active_speaker: int = -1
 var _active_clip_index: int = 0
 var _stream_levels_cache: Dictionary = {}
+var custom_voice_pack: RefCounted = null
 
 
 static func compute_stream_cd_levels(stream: AudioStreamWAV) -> Array[int]:
@@ -99,7 +100,10 @@ func play_event(service: RefCounted, event: Dictionary) -> String:
 	_active_line_id = int(event.get("line_id", event.get("voice_id", -1)))
 	_active_speaker = int(event.get("speaker", -1))
 	_active_clip_index = int(event.get("clip_index", 0))
-	if resolved.get("streams") is Array:
+	var replacement: AudioStreamWAV = custom_voice_pack.replacement(event) if custom_voice_pack != null else null
+	if replacement != null:
+		_pending.append(replacement)
+	elif resolved.get("streams") is Array:
 		for stream: AudioStreamWAV in resolved["streams"]:
 			_pending.append(stream)
 	else:

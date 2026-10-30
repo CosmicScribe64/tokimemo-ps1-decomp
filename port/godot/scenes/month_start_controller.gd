@@ -338,7 +338,7 @@ func stage_services(state: State, result: Session.FrameResult) -> Dictionary:
 		if not pending is Dictionary or not _matches_pending(state, pending) or pending["ready"]:
 			return {"error": "month-start resource staging lacks its pending native read"}
 		# Read/hash/decode happened during explicit source preflight. Completion
-		# truthfully reports that same immutable CALROM payload is available.
+		# reports that the same immutable CALROM payload is available.
 		var payload: Dictionary = pending.duplicate(true)
 		payload["ready"] = true
 		prepared.append({"service": SERVICE, "payload": payload})

@@ -1,5 +1,5 @@
 extends SceneTree
-## Comprehensive verification suite for T-29011:
+## Tests for T-29011:
 ## 1. Dialogue token substitutions & inline label extraction
 ## 2. Evidenced voice service gating & confirmation gates
 ## 3. DialogueTextboxPresenter native 320x240 rendering & NativeCanvas presentation

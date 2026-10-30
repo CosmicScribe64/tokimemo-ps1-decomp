@@ -3,7 +3,7 @@ import struct
 import tempfile
 import unittest
 from pathlib import Path
-from tools.assets.image_mdec import (ImageFormatError, _coefficients, _idct,
+from tools.assets.image_mdec import (ImageFormatError, _coefficients,
                                     export_mdec, probe_mdec)
 from tools.test_asset_images import png_pixels
 
@@ -23,6 +23,22 @@ def flat(count=720):
 
 
 class MdecTests(unittest.TestCase):
+    def test_reviewed_model_rounding_and_full_padding(self):
+        # DC16 produces Y=4; final round-to-five-bits gives17, expanded to140.
+        # Both active88 rows and all96 decoded rows must retain that value.
+        source = bs([format(dc, '010b') + '10' for dc in [0,0,16,16,16,16]] * 120)
+        with tempfile.TemporaryDirectory() as temporary:
+            result = export_mdec(source, temporary, 'rounded',
+                                 context={'width':320,'height':88,'evidence':['synthetic caller']})
+            metadata = result['metadata']
+            self.assertEqual(metadata['decoder_model']['id'], 'tokimemo-mdec-fixed-point-v1')
+            self.assertFalse(metadata['decoder_model']['redux_aan_pixel_parity_verified'])
+            active = png_pixels(Path(temporary) / result['files'][0])
+            padded = png_pixels(Path(temporary) / result['files'][2])
+            row = bytes([0]) + bytes([140,140,140,255]) * 320
+            self.assertEqual(active, row * 88)
+            self.assertEqual(padded, row * 96)
+
     def test_complete_frame_end_count_requires_source_geometry(self):
         source = flat()
         info = probe_mdec(source, 'invented.BS')
@@ -47,10 +63,6 @@ class MdecTests(unittest.TestCase):
         self.assertEqual(blocks[0][1], -16)
 
     def test_dc_idct_constant_and_gray_opaque_preview(self):
-        self.assertEqual(set(_idct([80] + [0] * 63)), {10})
-        horizontal = _idct([0, 80] + [0] * 62)
-        self.assertEqual(horizontal[:8], [14, 12, 8, 3, -3, -8, -12, -14])
-        self.assertEqual(horizontal[:8], horizontal[8:16])
         with tempfile.TemporaryDirectory() as temporary:
             result = export_mdec(flat(), temporary, 'invented', source_path='invented.BS',
                                  context={'width': 320, 'height': 88, 'evidence': ['synthetic caller']})

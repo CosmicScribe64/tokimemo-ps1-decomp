@@ -1,5 +1,5 @@
 extends RefCounted
-## T-29028. Immutable CALROM numeric prefixes from the original36-month source.
+## T-29028. Immutable CALROM numeric prefixes from the original 36-month source.
 ## hud_screens.c::calendar_month_load writes only count+1 bytes in each row.
 ## This reader supplies values; gameplay owns calendar rotation and completion.
 

@@ -5,6 +5,8 @@ const Context = preload("res://services/first_arrival_audio_context.gd")
 const State = preload("res://rules/new_game_route_state.gd")
 const Session = preload("res://core/game_session.gd")
 const Same = preload("res://services/first_arrival_launch_resources.gd")
+const AudioRules = preload("res://services/opening_audio_rules.gd")
+const ReiBank = preload("res://services/rei_bank_resources.gd")
 const LIBRARY := "res://bin/liboriginal_audio.linux.template_release.arm64.so"
 const LIBRARY_SHA := "f1eecf80c1c6538a33f6bee9c7d10a79553b1745d520688f556bbe60fb1687b9"
 const DESCRIPTOR := "res://original_audio.gdextension"
@@ -29,6 +31,14 @@ var _published_tick := -1
 var _last_pump_us := 0
 var _max_pump_gap_us := 0
 var _max_pump_gap_context: Dictionary = {}
+var _retained_banks: Dictionary = {}
+var _rei_epoch := 0
+var _rei_started := false
+var _rei_fade_ticks := 0
+var _rei_frame_tick := -1
+var _rei_result_id := 0
+var _rei_intents: Array = []
+var _rei_prepared: Dictionary = {}
 
 func prepare(audio: RefCounted, host: Node, source_root: String) -> String:
 	if _audio != null: return "original BGM owner was already initialized"
@@ -79,6 +89,8 @@ func bank_completed(state: State) -> String:
 	if audio == null: return "original BGM AudioService was disposed"
 	var context: Dictionary = audio.native_audio_context
 	var bank: Dictionary = state.opening.get("audio_bank",{})
+	if bank.get("role") == "prologue_rei":
+		return "" if bank.get("ready") == true and bank.get("epoch") == _rei_epoch and audio.active_bank_role == "prologue_rei" else "Rei completion differs from actual alternate publication"
 	if context.get("phase") != "prologue_bank_published" or bank.get("ready") != true or bank.get("epoch") != context.get("bank_epoch") or bank.get("role") != context.get("active_bank_role"):
 		return "consumed bank completion differs from actual native publication"
 	state.opening["native_audio_context"] = context.duplicate(true)
@@ -111,6 +123,11 @@ func prepare_pending(state: State, _events: Array[Session.ServiceEvent]) -> Stri
 	return ""
 
 func start(state: State, bank: int, sequence: int, result: Session.FrameResult) -> void:
+	if bank == 1 and sequence == 0:
+		if _rei_epoch == 0 or _rei_started or state.opening.get("audio_bank",{}).get("epoch") != _rei_epoch:
+			result.error = "Rei start has no owned completed alternate bank"; return
+		AudioRules.bank_start(state,bank,sequence,result)
+		return
 	if bank != 0 or sequence != 0 or _ticket == 0:
 		result.error = "original first-arrival BGM was not privately prepared"
 		return
@@ -140,6 +157,17 @@ func final_precommit(state: State, _rng, result: Session.FrameResult) -> void:
 			if not result.error.is_empty(): return
 	if _ticket == 0:
 		if starts != 0: result.error = "original BGM start has no private preparation"
+		if result.error.is_empty(): result.error = _preflight_rei(state,result)
+		if result.error.is_empty() and _has_rei_action(result.audio):
+			var session = _session.get_ref() if _session != null else null
+			if session == null or session.state != state or _rei_result_id != 0:
+				result.error = "Rei transition lost its unique Session publication barrier"; return
+			_rei_frame_tick = session.clock.logic_iterations
+			_rei_result_id = result.get_instance_id()
+			_rei_intents = result.audio.duplicate(true)
+			for event: Dictionary in result.audio:
+				if event.get("kind") == "bank_load" and event.get("role") == "prologue_rei":
+					_rei_prepared = _audio.get_ref().prepared_bank_roles.prologue_rei.duplicate(true)
 		return
 	# A prepared token is for exactly this next source start, never a later frame.
 	if starts != 1:
@@ -169,7 +197,17 @@ func publish(result: Session.FrameResult, tick: int) -> String:
 			starts += 1
 			if not Same._same(event,_intent): return "committed original BGM intent changed"
 	if _ticket == 0:
-		return "original BGM start token was consumed or missing" if starts != 0 else ""
+		if starts != 0: return "original BGM start token was consumed or missing"
+		if not _has_rei_action(result.audio) and _rei_result_id == 0: return ""
+		var session = _session.get_ref() if _session != null else null
+		if session == null or result.get_instance_id() != _rei_result_id or _rei_frame_tick != tick or session.clock.logic_iterations != tick+1 or result.state_hash != session.state_hash() or not Same._same(result.audio,_rei_intents):
+			return "Rei publication lost its exact validated frame, intents or state"
+		if not _rei_prepared.is_empty() and not Same._same(_rei_prepared,_audio.get_ref().prepared_bank_roles.get("prologue_rei")):
+			return "Rei prepared input changed after the final barrier"
+		_rei_frame_tick = -1; _rei_result_id = 0; _rei_intents.clear()
+		var outcome := _publish_rei(result)
+		_rei_prepared.clear()
+		return outcome
 	if starts != 1 or result.get_instance_id() != _barrier_result_id: return "original BGM publication lost its exact validated frame result"
 	var session = _session.get_ref()
 	if session == null or _barrier_tick != tick or session.clock.logic_iterations != tick+1 or result.state_hash != session.state_hash(): return "original BGM publication lost the same-stack final barrier"
@@ -181,6 +219,7 @@ func publish(result: Session.FrameResult, tick: int) -> String:
 	audio.native_audio_context = _after.duplicate(true)
 	audio.bgm_state = {"playing":true,"role":_owner.role,"bank":0,"sequence":0}
 	_committed_after = _after.duplicate(true)
+	_retained_banks = audio.vab_memory.banks.duplicate(true)
 	_last_pump_us = Time.get_ticks_usec()
 	_published_tick = tick
 	_ticket = 0
@@ -194,21 +233,76 @@ func abort_frame() -> void:
 	_before.clear()
 	_after.clear()
 	_intent.clear()
+	_rei_frame_tick = -1; _rei_result_id = 0; _rei_intents.clear()
+	_rei_prepared.clear()
 	if _committed_after.is_empty(): _owner.clear()
 
 func pump(state: State) -> String:
 	if _committed_after.is_empty(): return ""
 	var audio = _audio.get_ref()
 	if audio == null or not Same._same(audio.native_audio_context,_committed_after) or not Same._same(state.opening.get("native_audio_context"),_committed_after): return "active original BGM source after-context changed"
-	var bank: Variant = state.opening.get("audio_bank")
-	if not bank is Dictionary or bank.get("epoch") != _owner.get("epoch") or bank.get("role") != _owner.get("role") or bank.get("ready") != true or audio.active_bank_role != _owner.get("role") or audio.bank_ready.get(_owner.get("role")) != true:
+	var pending: Variant = state.opening.get("audio_bank")
+	var bank: Variant = state.opening.get("audio_banks",{}).get(_owner.get("role"),pending)
+	var allowed_pending: bool = pending is Dictionary and (pending == bank or (pending.get("role") == "prologue_rei" and pending.get("epoch") == int(_owner.epoch)+1 and pending.get("ready") is bool and state.opening.get("prologue_bgm_transition",{}).get("bank_epoch") == pending.epoch))
+	if not allowed_pending or not bank is Dictionary or bank.get("epoch") != _owner.get("epoch") or bank.get("role") != _owner.get("role") or bank.get("ready") != true or audio.active_bank_role != ("prologue_rei" if _rei_epoch != 0 else str(_owner.role)) or audio.bank_ready.get(_owner.get("role")) != true:
 		return "active original BGM actual bank changed"
+	for slot: int in [0,1]:
+		if audio.vab_memory.banks.get(slot) != _retained_banks.get(slot): return "active original BGM retained slot changed"
 	var now := Time.get_ticks_usec()
 	if now-_last_pump_us > _max_pump_gap_us:
 		_max_pump_gap_us = now-_last_pump_us
 		_max_pump_gap_context = {"frame":state.frame_count,"mode":state.game_mode,"stage":state.mode_stage,"step":state.mode_step,"substep":state.substep}
 	_last_pump_us = now
 	return _backend.pump(_owner)
+
+func _preflight_rei(state: State, result: Session.FrameResult) -> String:
+	if _committed_after.is_empty(): return ""
+	var audio = _audio.get_ref()
+	var seen: Dictionary = {}
+	for event: Dictionary in result.audio:
+		if _has_rei_action([event]):
+			if seen.has(event.get("kind")): return "Duplicate native Rei action in one frame"
+			seen[event.kind] = true
+		if event.get("kind") == "bank_load" and event.get("role") == "prologue_rei":
+			if _rei_epoch != 0 or event.get("bank_epoch") != int(_owner.epoch)+1 or state.mode_stage != 7 or state.substep != 5:
+				return "Rei load differs from original stage7 alternate-bank transition"
+			var probe := ReiBank.Memory.new()
+			var validation := ReiBank.publish(probe,audio.prepared_bank_roles.get("prologue_rei",{}))
+			if not validation.is_empty(): return validation
+		elif event.get("kind") == "native_bgm_fade":
+			if event.get("command") != 0xb1 or state.mode_stage != 7 or state.substep != 5 or (int(state.opening.get("audio_state_flags",0))&0x100000)==0 or not state.opening.get("bgm_fade") is Dictionary: return "Rei fade is outside its source command"
+		elif event.get("kind") == "native_bgm_fade_tick":
+			if not event.get("xa_active") is bool or event.xa_active != ((AudioRules.check_cd(state)&4)!=0) or event.get("tick") != _rei_fade_ticks+1 or event.get("tick") != state.opening.get("bgm_fade",{}).get("ticks") or event.get("gain") != state.opening.get("bgm_fade",{}).get("gain"):
+				return "Rei fade tick differs from source state"
+		elif event.get("kind") == "bgm_play":
+			if event.get("role") != "prologue_rei" or event.get("bank_epoch") != _rei_epoch or event.get("bank") != 1 or event.get("sequence") != 0 or _rei_started:
+				return "Rei play differs from its published alternate-bank owner"
+	return ""
+
+func _has_rei_action(events: Array) -> bool:
+	for event: Dictionary in events:
+		if event.get("kind") in ["native_bgm_fade","native_bgm_fade_tick","bgm_play"] or (event.get("kind") == "bank_load" and event.get("role") == "prologue_rei"): return true
+	return false
+
+func _publish_rei(result: Session.FrameResult) -> String:
+	var audio = _audio.get_ref() if _audio != null else null
+	for event: Dictionary in result.audio:
+		var outcome := ""
+		match event.get("kind"):
+			"bank_load":
+				if event.get("role") == "prologue_rei":
+					var inputs: Dictionary = audio.prepared_bank_roles.prologue_rei.inputs
+					outcome = _backend.rei_action(_owner,"load",[inputs.music_header,inputs.music_body,inputs.sequence])
+					if outcome.is_empty(): _rei_epoch = event.bank_epoch
+			"native_bgm_fade": outcome = _backend.rei_action(_owner,"fade")
+			"native_bgm_fade_tick":
+				outcome = _backend.rei_action(_owner,"tick",[],event.xa_active)
+				if outcome.is_empty(): _rei_fade_ticks = event.tick
+			"bgm_play":
+				outcome = _backend.rei_action(_owner,"start",[],(AudioRules.check_cd(_session.get_ref().state)&4)!=0)
+				if outcome.is_empty(): _rei_started = true
+		if not outcome.is_empty(): return outcome
+	return ""
 
 func pause(value: bool) -> void:
 	if _sink != null: _sink.pause(value)
@@ -224,3 +318,5 @@ func reset() -> void:
 	_generation += 1
 	_committed_after.clear()
 	_owner.clear()
+	_retained_banks.clear()
+	_rei_epoch = 0; _rei_started = false; _rei_fade_ticks = 0

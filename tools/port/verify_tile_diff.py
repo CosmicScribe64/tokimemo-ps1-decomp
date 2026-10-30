@@ -259,8 +259,8 @@ def compare_16x16_tiles(
             t_err = 0.0
             t_max = 0.0
             t_cnt = 0
-            for y in range(max(1, ty), ty + TILE_SIZE):
-                for x in range(max(1, tx), tx + TILE_SIZE):
+            for y in range(ty, ty + TILE_SIZE):
+                for x in range(tx, tx + TILE_SIZE):
                     pe = p_emu[x, y]
                     pg = p_gd[x, y]
                     d = (

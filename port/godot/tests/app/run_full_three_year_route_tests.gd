@@ -1,8 +1,10 @@
 extends SceneTree
-## T-29018 / T-29023 / P3.4 / P3.5 / P3.6: End-to-End 3-Year Playthrough (1995-04-04 -> 1998-03-01 Graduation Day)
-## Driven by Imported PS1 Rule Tables (tokimemo.port-rule-tables.v1) and Authentic New Game Entry State,
+## T-29018 / T-29023 / P3.4 / P3.5 / P3.6: Three-year model simulation (1995-04-04 -> 1998-03-01 Graduation Day)
+## Driven by Imported PS1 Rule Tables (tokimemo.port-rule-tables.v1) and New Game Entry State,
 ## Live Interactive Overlay Stepping, Mid-Route Save/Restore Continuation, Live Milestone State Captures,
-## Multi-Heroine Confession & Clear-Save/Album Matrix, and Full 27-GameMode / 26-Overlay Scenario Matrix.
+## Multi-Heroine Confession & Clear-Save/Album Matrix, and a 27-GameMode scenario matrix.
+## The harness assigns command capabilities and fast-steps model state; it does
+## not establish complete coverage of the 26 original overlays or installed-player readiness.
 
 const State = preload("res://rules/school_day_state.gd")
 const RouteState = preload("res://rules/new_game_route_state.gd")

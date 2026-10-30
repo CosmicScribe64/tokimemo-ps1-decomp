@@ -5,8 +5,9 @@ MDEC math: https://psx-spx.consoledev.net/macroblockdecodermdec/
 The Huffman/quant tables below are format constants, not copied decoder code.
 Game geometry comes from src/main/background_images.c and direct scene callers,
 not the extension or file size.
-This independent integer IDCT/color preview does not claim hardware pixel parity.
+The reviewed fixed-point model does not claim hardware or Redux pixel parity.
 """
+import copy
 import hashlib
 import re
 import struct
@@ -54,8 +55,6 @@ _SCALE_WORDS = (
  '471C 8275 18F8 6A6D 9592 E707 7D8A B8E3',
  '30FB 89BE 7641 CF04 CF04 7641 89BE 30FB',
  '18F8 B8E3 6A6D 8275 7D8A 9592 471C E707')
-SCALE = tuple(tuple((value - 65536 if value >= 32768 else value) >> 3
-                    for value in (int(word, 16) for word in row.split())) for row in _SCALE_WORDS)
 DC_CHROMA = {'00': 0, '01': 1, '10': 2, '110': 3, '1110': 4,
              '11110': 5, '111110': 6, '1111110': 7, '11111110': 8}
 DC_LUMA = {'100': 0, '00': 1, '01': 2, '101': 3, '110': 4,
@@ -227,44 +226,25 @@ def probe_mdec(data: bytes, source_path: str, context=None) -> dict:
         return {'status': 'invalid', 'format': 'sony-bs-mdec', 'reason': str(error)}
 
 
-def _idct(block):
-    temporary = [0] * 64
-    result = [0] * 64
-    for y in range(8):
-        for x in range(8):
-            temporary[y * 8 + x] = (sum(block[y * 8 + u] * SCALE[u][x] for u in range(8)) + 4095) >> 13
-    for y in range(8):
-        for x in range(8):
-            result[y * 8 + x] = (sum(temporary[u * 8 + x] * SCALE[u][y] for u in range(8)) + 4095) >> 13
-    return result
-
-
 def export_mdec(data: bytes, output_dir, asset_id: str, *, source_path='', context=None) -> dict:
-    """Export one source-context-proved background with deterministic preview math."""
+    """Export one source-context-proved background with an explicitly identified fixed-point numerical model."""
     blocks, metadata = _coefficients(data)
     width, height, padded = _context(metadata, context)
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,159}', asset_id):
         raise ImageFormatError('unsafe MDEC asset_id')
-    rgba = bytearray(width * height * 4)
+    # Import after format constants are initialized: the independent numerical
+    # model reuses this module's bounded BS parser and immutable SDK tables.
+    from .image_mdec_model import MODEL, decode_padded_words
+    model = copy.deepcopy(MODEL)
+    model["implementation_sha256"] = {name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
+                                       for name in ("image_mdec.py", "image_mdec_model.py")}
+    words = decode_padded_words(data, width, height)
     padded_rgba = bytearray(width * padded * 4)
-    rows = padded // 16
-    for index in range(metadata['macroblock_count']):
-        cr, cb, *luma = [_idct(block) for block in blocks[index * 6:index * 6 + 6]]
-        mx, my = index // rows * 16, index % rows * 16
-        for y in range(16):
-            for x in range(16):
-                c = (y // 2) * 8 + x // 2
-                luminance = luma[(y // 8) * 2 + x // 8][(y % 8) * 8 + x % 8]
-                colors = (luminance + ((1436 * cr[c]) >> 10),
-                          luminance - ((352 * cb[c] + 731 * cr[c]) >> 10),
-                          luminance + ((1815 * cb[c]) >> 10))
-                channels = [max(0, min(255, value + 128)) >> 3 for value in colors]
-                pixel = bytes([(v << 3) | (v >> 2) for v in channels] + [255])
-                padded_dest = ((my + y) * width + mx + x) * 4
-                padded_rgba[padded_dest:padded_dest + 4] = pixel
-                if my + y < height:
-                    active_dest = ((my + y) * width + mx + x) * 4
-                    rgba[active_dest:active_dest + 4] = pixel
+    for index, (word,) in enumerate(struct.iter_unpack('<H', words)):
+        channels = [(word >> shift) & 31 for shift in (0, 5, 10)]
+        padded_rgba[index * 4:index * 4 + 4] = bytes(
+            [(value << 3) | (value >> 2) for value in channels] + [255])
+    rgba = padded_rgba[:width * height * 4]
     png = asset_id + '.background.png'
     mask = asset_id + '.background.stp.png'
     padded_png = asset_id + '.background.padded.png'
@@ -289,12 +269,13 @@ def export_mdec(data: bytes, output_dir, asset_id: str, *, source_path='', conte
                                    'active_crop_height': height,
                                    'padded_rows_not_uploaded_by_caller': padded - height},
                     geometry_context=context, coefficient_order='column-major macroblocks; Cr,Cb,Ytop-left,Ytop-right,Ybottom-left,Ybottom-right',
-                    color_policy='SDK default quantization, deterministic 13-bit integer IDCT, full-range YCbCr approximation, RGB555 expansion',
+                    decoder_model=model,
+                    color_policy='reviewed fixed-point RGB555 model; PNG channels use bit replication (q<<3)|(q>>2); no screenshot normalization',
                     alpha_policy='opaque decoded background; no CLUT or source alpha',
                     source_output_bit15=1,
                     stp_policy='game DecDCT input mode2 forces output bit15=1 for every RGB555 pixel; runtime sprite blending external',
                     hardware_pixel_parity_verified=False, round_trip_verified=False,
-                    limitations=['hardware IDCT/color rounding parity not verified', 'padding rows cropped only by caller-proved height'],
+                    limitations=['hardware and Redux AAN pixel parity not verified', 'BS-to-runlevel transport not independently compared with game output', 'padding rows cropped only by caller-proved height'],
                     evidence=['src/main/memory_card.c:bg_still_decode_to_vram', 'src/main/background_images.c:dec_bg_decode_to_vram',
                               'asm/libpress_main.s:func_800869EC,func_800868BC',
                               'https://psx-spx.consoledev.net/cdromfileformats/',

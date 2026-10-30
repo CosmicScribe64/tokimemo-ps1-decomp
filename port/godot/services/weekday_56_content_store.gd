@@ -4,7 +4,7 @@ extends RefCounted
 ## Gameplay composition, timing and native rendered parity remain unverified.
 
 const SCHEMA := "tokimemo.weekday-56-content.v1"
-const MANIFEST_SHA := "7c67739f2dcbc5a9c644e670d0c0e5ea91869ab851d686e77cbfbf6e188105b1"
+const MANIFEST_SHA := "8cbe8f616abae286b37725c44eb54f40aee4a5839fe7d2fb65b788244ce0fad4"
 const MAX_MANIFEST := 8 * 1024 * 1024
 const MAX_PNG := 2 * 1024 * 1024
 const ExternalContentPath = preload("res://services/external_content_path.gd")

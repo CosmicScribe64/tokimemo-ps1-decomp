@@ -38,6 +38,17 @@ class DesktopStagingTests(unittest.TestCase):
             prepare(self.root, self.destination, "week")
         self.assertFalse(self.destination.exists())
 
+    def test_imported_script_identifiers_are_retained(self):
+        (self.project / "app/example.gd").write_text("extends Node\n")
+        (self.project / "app/example.gd.uid").write_text("uid://b123abc\n")
+        receipt = prepare(self.root, self.destination, "week")
+        self.assertIn("app/example.gd.uid", receipt["source_files"])
+
+    def test_orphan_uid_is_rejected(self):
+        (self.project / "app/missing.gd.uid").write_text("uid://b123abc\n")
+        with self.assertRaisesRegex(ValueError, "non-source"):
+            prepare(self.root, self.destination, "week")
+
     def test_symlinked_cache_cannot_write_outside(self):
         outside = Path(self.temporary.name) / "outside"
         outside.mkdir()

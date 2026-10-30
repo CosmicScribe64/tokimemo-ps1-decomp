@@ -49,5 +49,5 @@ def export_background_component(data, stage, entry, asset_id, context, native_ro
         "image": files[image["png"]], "stp_mask": files[image["stp_png"]],
         "padded_image": files[result["metadata"]["padded_decode"]["png"]],
         "padded_stp_mask": files[result["metadata"]["padded_decode"]["stp_png"]],
-        "geometry_context": context, "reader": "tools/assets/image_mdec.py:export_mdec",
+        "geometry_context": context, "decoder_model": result["metadata"]["decoder_model"], "reader": "tools/assets/image_mdec.py:export_mdec",
         "capability": "source_profiled_static_background_preview"}

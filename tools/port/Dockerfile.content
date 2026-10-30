@@ -1,0 +1,6 @@
+FROM debian:trixie@sha256:4c25275446ca371766b8b093c696782eabce06263fccacb8d5d813b3dc44b308
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pil python3-numpy 7zip ffmpeg ca-certificates && rm -rf /var/lib/apt/lists/*
+WORKDIR /work
+RUN apt-get update && apt-get install -y --no-install-recommends python3-venv build-essential python3-dev && rm -rf /var/lib/apt/lists/*
+RUN python3 -m venv --system-site-packages /opt/splat && /opt/splat/bin/pip install --no-cache-dir 'splat64[mips]==0.50.0' spimdisasm==1.42.4 rabbitizer==1.16.2
+ENV PATH=/opt/splat/bin:$PATH

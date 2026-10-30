@@ -1,10 +1,11 @@
 extends SceneTree
-## T-29018 / Interactive Multi-Heroine Verification Suite for the Unified PS1 OverlayDispatcher.
-## Verifies that every PS1 GameMode in OverlayDispatcher.OVERLAY_CATALOG (27 modes
-## spanning all 26 PS1 overlays in src/ovl/*) initializes cleanly, steps interactive
+## T-29018: OverlayDispatcher checks across heroines and input states.
+## Checks that every GameMode in OverlayDispatcher.OVERLAY_CATALOG (27 modes)
+## initializes cleanly, steps interactive
 ## state machines deterministically across PAD_UP/DOWN/LEFT/RIGHT/CIRCLE/CROSS,
 ## and renders distinct 320x240 RGBA8 frames across heroines (girl_id 0..4) and
 ## cursor/stage states with zero bounding-box violations.
+## These dispatcher checks do not prove complete overlay coverage or route fidelity.
 
 const OverlayDispatcher = preload("res://app/overlay_dispatcher.gd")
 

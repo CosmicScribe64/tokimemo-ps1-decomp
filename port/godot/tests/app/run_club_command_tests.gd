@@ -1,5 +1,5 @@
 extends SceneTree
-## T-29014: Comprehensive test suite for Command 4 Club gameplay wiring and rules.
+## T-29014: Tests for Command 4 Club gameplay wiring and rules.
 ## Verifies:
 ## 1. Adapter preflight, asset loading, and capability validation for all 11 clubs (0..10).
 ## 2. Parameter deltas and stress penalty math matching native club_activity_deltas.

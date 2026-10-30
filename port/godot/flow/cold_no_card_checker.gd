@@ -26,7 +26,7 @@ func prepare(session: Session, route: Dictionary) -> String:
 	var brightness: Variant = state.opening.get("screen_brightness")
 	if not brightness is int or brightness < 0 or brightness > 128 or not _default_scroll(state): return "checker prefix needs the source initial brightness and default player-flag branch"
 	var owner := "cold-title-no-card-session:"+str(session.get_instance_id())
-	# Before the first callback:65 hold ticks, floor(brightness/4) fades,
+	# Before the first callback: 65 hold ticks, floor(brightness/4) fades,
 	# one separate zero-brightness arm tick, then one game_mode_set tick.
 	var first_frame := Math.u32(state.frame_count+67+int(brightness/4))
 	state.opening[RECORD] = {"owner":owner,"source_flow_sha256":FLOW_SHA,"u":2,"v":255,

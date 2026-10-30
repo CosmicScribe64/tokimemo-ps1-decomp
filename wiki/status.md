@@ -1,9 +1,13 @@
 ---
 type: status
-updated: 2026-10-27
+updated: 2026-10-29
 ---
 
 # Status
+
+**Paused at user request, 2026-10-29:** All three workers settled their jobs and froze files for a full WIP publication. Latest local bundle is installed-runtime-v12, including fresh school media and O11; only holiday_scene and hud_context remain reported producer gaps. Actual opening reached stage9/substep10; the subsequent read fix has bounded tests but no actual rerun, and O11 final copy/setup remains unfinished. The translation checkpoint publishes136 PNGs (127 candidates plus9 reviewed NAME variants), not a completed translation. See [[port-pause-2026-10-29]] for authoritative continuation instructions and limits. Older current/paused statements below are historical.
+
+**Current work, 2026-10-29:** The user resumed port completion after cleanup. The paused/stopped-agent statements below describe historical checkpoints. Root coordinates integration and independent review; agents implement source-faithful opening progression, translation and asset repairs. The restored original emulator has reached NAME entry and the first school scene through controller input. Exact paired screenshots still fail; title/timing and decoder-model differences remain explicit. Actual installed-runtime-v9 gameplay reaches the Rei entrance at mode21/stage9/step0/substep0 with isolated reviewed native audio (.asset-cache/port/rei-integration-v6/rei-proof.json); later opening progression remains incomplete. A reviewed fixed-point image decoder is being integrated with regenerated asset identities. The bundle still lacks holiday_scene, hud_context and school_day_media roles. Actual required routes, persistent save/relaunch, native packaging and G5 acceptance remain incomplete. Current findings: [[port-adversarial-review]], [[tickets/T-39002-restore-port-runtime]], [[tickets/T-39004-english-asset-completion]], [[tickets/T-39008-synchronized-differential-captures]].
 
 **Next-session plan, 2026-10-26:** [[port-finish-plan]] defines ordered playable milestones with one manager/reviewer and one implementer. [[port-manager-handoff]] gives the first assignment and preserved web-server setup. This planning pass did not resume agents or gameplay development; the incoming manager reviews the plan before closing T-29034.
 
@@ -192,3 +196,21 @@ Two Sol 6.1 medium workers are active. The MAIN worker preserves the latest `snd
 ## Publication recorded (2026-10-25)
 
 Pushed reviewed source `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3` to `origin/main` at `182af9d13d418b159973e59fbeaedf5e39f87902`. All Phase 2 source and publication criteria are complete; separate asset tickets remain independent. T-27000 is Done.
+
+## Fresh checkout assessment (2026-10-29)
+
+Current clean source baseline was `f8497f8ca`, containing the October 27 integration beyond the older October 26 handoff. Original 7z and versioned translated artwork survive; ignored disc, runtime cache and orchestration evidence are absent. Docker is stopped, so historical G1–G4 results have not been reproduced here. Restore minimal original content and validate actual routes before G5 native packaging and Phase 4. See [[tickets/T-39001-fresh-checkout-assessment]] for recovery order and evidence limits.
+
+Restoration progress: Docker images rebuilt; original disc executable and all 27 overlays verified; generated main/overlay assembly restored. Core Godot suite passes 5/5. A clean-source/archive-backed setup reproduces 15 installed content roles, with five explicit producer gaps (room HUD manifest/context, holiday scene, school-day media, spring media). Connected opening is not accepted: initial run failed absent content and exposed a deleted-orchestration XA audio default. New setup entry point and diagnostics are documented in tools/port/SETUP.md; [[tickets/T-39002-restore-port-runtime]] remains In Progress.
+
+Further restoration: fresh source-backed spring command 1–3 content and HUD images now regenerate without deleted evidence packets. Independent bundle export has 17 roles and three explicit gaps: school-day media, HUD session context, holiday scene. HUD room pixels retain the pre-existing exact checksum; spring runtime checks pass 25 assertions, HUD original-content/tamper/reopen checks pass, and Python exporter suites pass 25 tests. The live HUD adapter still requires a captured-boundary development context; it must gain source-backed fresh-session initialization, not an invented replacement capture. Opening XA audio and actual gameplay verification remain open.
+
+## Required modern settings (2026-10-29)
+
+User explicitly requires the fully featured modern settings menu as part of port completion. T-30002 is now required release scope, superseding the earlier blanket hold on Phase 4 settings. A dedicated agent is assessing and implementing the existing wiki plan, including runtime effects, persistence and relaunch/failure-path validation. Other Phase 4 features remain separately scoped. Root continues base-port recovery; a separate agent owns translation asset completion and in-game checks under T-39004.
+
+## 2026-10-29 independent adversarial review
+
+[[port-adversarial-review]] is an active fresh-context port-wide review, including player UX, build/install UX and contributing. It invalidates any interpretation of synthetic three-year runs as actual whole-game acceptance: production handlers are replaced in those tests. Source inspection also identifies unimplemented companion activities, missing native macOS audio packaging, missing normal Continue/backup-recovery paths and clear-save persistence, and fabricated state inputs in event dispatch. These remain completion blockers pending implementation and actual-route proof. Modern settings and all required English assets tested in game are mandatory user requirements.
+
+Restored installed New Game now passes20 actual X11 keyboard/first-scene checks with a non-silent mixer capture; this is only a bounded opening checkpoint. Wider opening uncovered a required XA descriptor field omitted by the exporter; the corrected pack passes43-line/23-voiced production-schema and decode checks and is rebuilding for live retest. Review-driven repairs also cover paired Godot UID staging, shared Docker image defaults, copyable failure details, mono-effect ownership, display-preview preservation and saved entry resolution. Controller settings access and broader accessibility are under active testing.

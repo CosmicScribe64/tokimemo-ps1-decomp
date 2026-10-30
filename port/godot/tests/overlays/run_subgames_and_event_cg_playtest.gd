@@ -2,7 +2,7 @@ extends SceneTree
 ## T-29018: Multi-Run Interactive Playtest Suite for Subgame Overlays (RPG_BAT 0x57,
 ## TACO 0x59, TT 0x5A) and Event CG Scenes Overlay (EVENT 0x5E).
 ##
-## Exhaustively playtests and visually verifies:
+## Exercises the following cases and records rendered captures:
 ## 1. RPG_BAT (0x57):
 ##    - All 11 clubs (0..10) + Go-Home (11) special move banners & arena effects
 ##    - All 11 partner girls (0..10) Drama club assist cut-ins + Nozomi polite/rough variants

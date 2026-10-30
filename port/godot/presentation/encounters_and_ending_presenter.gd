@@ -1,5 +1,5 @@
 extends "res://presentation/prologue_presenter.gd"
-## T-29018: Authentic 320x240 PS1 Presenter for Lane 3 & 4 Overlays:
+## T-29018: 320x240 presenter for Lane 3 & 4 overlays:
 ## 1. After-School Walk Home (GEKO / 下校) 2-choice invitation prompt
 ##    (k_reset(1), x_taku_menu_set, x_taku_string_set, menu_bar_show, hand cursor).
 ## 2. Term Exam Results (MODE_EXAM / 結果発表) notebook scoreboard & reaction

@@ -4,6 +4,7 @@ extends RefCounted
 
 const VabMemory = preload("res://services/native_vab_memory.gd")
 const BankLoader = preload("res://services/native_bank_loader.gd")
+const ReiBank = preload("res://services/rei_bank_resources.gd")
 
 enum Phase { BEFORE_MODE, DRAW_BEFORE_INPUT, CD, AUDIO }
 
@@ -50,7 +51,7 @@ const NATIVE_EVENT_KINDS: Array[String] = [
 ]
 const SPU_POS_FILTER: Array[int] = [0, 60, 115, 98, 122]
 const SPU_NEG_FILTER: Array[int] = [0, 0, -52, -55, -60]
-const DEFAULT_OPENING_AUDIO_SHA: String = "1372367e6079772cbe6181166d1b15083a6fdd85e045cd5e234fea0e9cbdbacd"
+const DEFAULT_OPENING_AUDIO_SHA: String = "90c2277e4fc0c6bedf1f2dfc55cc6740be889f28669c8dfa58a81d92d213daf3"
 
 var queue: Array[Dictionary] = []
 var active: Dictionary = {}
@@ -210,6 +211,13 @@ func prepare_opening_bank_resources() -> String:
 	var before: Dictionary = checkpoint()
 	var prepared: Dictionary = {}
 	for role: String in opening_pack.get("bank_roles", {}):
+		if role == "prologue_rei":
+			var rei := ReiBank.prepare(opening_pack_root)
+			if not rei.error.is_empty():
+				restore(before)
+				return rei.error
+			prepared[role] = rei
+			continue
 		var installed: Dictionary = install_bank_role(role)
 		if not str(installed.get("error", "")).is_empty():
 			restore(before)
@@ -229,7 +237,7 @@ func prepare_opening_bank_resources() -> String:
 func publish_prepared_bank(role: String) -> String:
 	if not prepared_bank_roles.has(role):
 		return "opening bank resources are unavailable"
-	var error: String = vab_memory.restore(prepared_bank_roles[role]["memory"])
+	var error: String = ReiBank.publish(vab_memory,prepared_bank_roles[role]) if role == "prologue_rei" else vab_memory.restore(prepared_bank_roles[role]["memory"])
 	if not error.is_empty():
 		return error
 	if prepared_bank_roles[role].get("sequence") is PackedByteArray:
@@ -1105,7 +1113,10 @@ func _ensure_fallback_service() -> RefCounted:
 	var xa_pack: String = OS.get_environment("TOKIMEMO_ORIGINAL_OPENING_AUDIO_PACK").simplify_path()
 	var xa_sha: String = OS.get_environment("TOKIMEMO_ORIGINAL_OPENING_AUDIO_SHA")
 	if xa_pack.is_empty() or not FileAccess.file_exists(xa_pack.path_join("opening-audio.json")):
-		xa_pack = repo.path_join(".claude/orchestrator/state/T-29021/candidate-v4/.asset-cache/opening-audio-v2")
+		var installed_root := OS.get_environment("TOKIMEMO_INSTALLED_ROOT").simplify_path()
+		if installed_root.is_empty():
+			installed_root = repo.path_join(".asset-cache/port/installed-fresh")
+		xa_pack = installed_root.path_join("packs/opening_audio")
 	if xa_sha.is_empty():
 		xa_sha = DEFAULT_OPENING_AUDIO_SHA
 	if FileAccess.file_exists(xa_pack.path_join("opening-audio.json")):
@@ -1146,6 +1157,7 @@ func attach_player(player: AudioStreamPlayer, base_volume_db: float = 0.0) -> St
 	if player == null:
 		return "audio player is required"
 	_player = player
+	_player.bus = "Voice"
 	_base_volume_db = base_volume_db
 	if not _player.finished.is_connected(_on_player_finished):
 		_player.finished.connect(_on_player_finished)

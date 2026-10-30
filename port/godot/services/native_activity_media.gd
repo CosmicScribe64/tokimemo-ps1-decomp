@@ -60,8 +60,8 @@ func resolve(state: State) -> Dictionary:
 static func from_media(media: MediaStore, component: String) -> Dictionary:
 	var sequences: Dictionary = {}
 	var frames: Dictionary = {}
-	# The validated reader caps source sequence indices at32767. Original packs
-	# expose contiguous pointer-table records, with a finite maximum512 records.
+	# The validated reader caps source sequence indices at 32767. Original packs
+	# expose contiguous pointer-table records, with a finite maximum 512 records.
 	for slot: int in range(512):
 		var steps: Array = OrdinaryMedia._integers(media.get_sequence(component, slot))
 		if steps.is_empty():

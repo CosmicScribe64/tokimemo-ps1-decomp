@@ -1,12 +1,12 @@
 class_name TelephoneOverlayPresenter
 extends "res://presentation/date_appointment_presenter.gd"
-## T-29018: Authentic 320x240 PS1 Native Renderer for TEL Overlay screens:
+## T-29018: 320x240 presenter for TEL overlay screens:
 ## 1. Yoshio Saotome Girl Profile Notebook Screen (0x3E stage 0)
 ## 2. Telephone Date Place Selection Menu (phone_date_place_availability_build)
 ## 3. Telephone Date Day Selection Menu (phone_available_date_slots_build)
 ## 4. Girl Phone Call Response VN Scene (phone_date_invitation_resolve)
 ##
-## Fully compliant with CODING_STANDARDS.md Section 12a:
+## Rendering constraints from CODING_STANDARDS.md Section 12a:
 ## - Exact call-site coordinates (center origin x:160, y:120)
 ## - Exact CP932 hex byte encodings (never guessed)
 ## - Text shadow suppression for palette attributes 3, 4, 5, 14, 15

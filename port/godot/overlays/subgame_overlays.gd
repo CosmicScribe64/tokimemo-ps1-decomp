@@ -919,7 +919,7 @@ static func rpg_build_return_payload(state: Dictionary) -> Dictionary:
 
 
 # ==============================================================================
-# 2. TACO — 3D Rail Shooter (src/ovl/shooter_3d/ & include/ovl/shooter_3d.h)
+# 2. TACO: 3D Rail Shooter (src/ovl/shooter_3d/ & include/ovl/shooter_3d.h)
 # ==============================================================================
 
 const SHOOTER_STAGE_LOAD := 0
@@ -1535,7 +1535,7 @@ static func shooter_build_return_payload(state: Dictionary) -> Dictionary:
 
 
 # ==============================================================================
-# 3. TT — TwinBee Time Attack (src/ovl/TT/ & include/ovl/tt.h)
+# 3. TT: TwinBee Time Attack (src/ovl/TT/ & include/ovl/tt.h)
 # ==============================================================================
 
 const TT_STATE_INIT := 0
@@ -2146,7 +2146,7 @@ static func tt_apply_writeback_to_rule_state(arg0: Dictionary, arg1: Dictionary)
 
 
 # ==============================================================================
-# 4. Unified Subgame Overlay Entry / Step / Return Router
+# 4. Subgame Overlay Entry / Step / Return Router
 # ==============================================================================
 
 static func enter_overlay(subgame_id: Variant, config: Dictionary = {}) -> Dictionary:

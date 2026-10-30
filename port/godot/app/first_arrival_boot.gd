@@ -52,13 +52,17 @@ var _application_focused := true
 var _active := false
 
 func _ready() -> void:
+	get_window().content_scale_size = Vector2i.ZERO
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_display = TextureRect.new()
-	_display.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_display.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_display.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_display.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_display.stretch_mode = TextureRect.STRETCH_SCALE
+	_display.texture_filter = CanvasItem.TEXTURE_FILTER_PARENT_NODE
 	add_child(_display)
+	resized.connect(_layout_display)
+	var modern_settings := get_node_or_null("/root/ModernSettings")
+	if modern_settings != null: modern_settings.preferences_changed.connect(_layout_display)
+	_layout_display()
 	_message = Label.new()
 	_message.position = Vector2(24,24)
 	_message.size = Vector2(900,120)
@@ -93,12 +97,14 @@ func _ready() -> void:
 		_owned_runtime = {"scratch_owner":owner+":scratch","vram_owner":owner+":vram",
 			"scratch_words":cold.scratch_words,"vram_words":vram,"pending_gpu_effects":[]}
 		error = upload.prepare(media,resources.media_store,_owned_runtime,resources.board_store)
-		if error.is_empty(): error = actor_renderer.prepare(resources.media_store,upload)
+		if error.is_empty(): error = actor_renderer.prepare(resources.media_store,upload,resources.board_store)
 	if not error.is_empty():
 		_fail("runtime_buffers",error)
 		return
 	_voice_player = AudioStreamPlayer.new()
 	_bgm_player = AudioStreamPlayer.new()
+	_voice_player.bus = "Voice"
+	_bgm_player.bus = "BGM"
 	add_child(_voice_player)
 	add_child(_bgm_player)
 	error = audio_bridge.bind(resources.audio,_voice_player,_bgm_player)
@@ -135,39 +141,66 @@ func _entry_owned() -> void:
 	if not error.is_empty():
 		_fail("opening_handoff",error)
 		return
-	# Capture the actual desktop controls after their final rendered frame.
+	# Retain the native image actually submitted by entry after its final frame.
+	# Window letterboxing must not become part of the game's retained image.
 	# The retained pad has already moved synchronously; no logic ticks elapse
 	# while this platform presentation boundary waits for its framebuffer.
 	await RenderingServer.frame_post_draw
 	if not is_inside_tree() or not is_instance_valid(_entry): return
-	var viewport_image := get_viewport().get_texture().get_image()
-	if viewport_image == null or viewport_image.is_empty():
-		_fail("entry_framebuffer","The live entry framebuffer is unavailable")
+	var viewport_image: Variant = _entry.get("last_rendered_image")
+	if not viewport_image is Image or viewport_image.is_empty() or viewport_image.get_size() != Vector2i(320,240):
+		_fail("entry_framebuffer","The live native entry image is unavailable")
 		return
-	entry_frame_provenance = {"source":"actual-live-desktop-entry-viewport",
+	entry_frame_provenance = {"source":"actual-displayed-native-entry-image",
 		"original_size":[viewport_image.get_width(),viewport_image.get_height()],
 		"logical_size":[320,240],"render_frame":Engine.get_process_frames(),
 		"native_entry_pixel_parity":false,"initialization_profile":initialization_profile}
-	viewport_image.resize(320,240,Image.INTERPOLATE_NEAREST)
-	_entry_image = viewport_image
+	_entry_image = viewport_image.duplicate()
 	last_rendered_image = _entry_image.duplicate()
 	error = consumer.release_entry_scene()
 	_entry = null
 	if not error.is_empty(): _fail("entry_release",error)
 	else: _active = true
 
+func _layout_display(_settings: Dictionary = {}) -> void:
+	if not is_instance_valid(_display): return
+	var area := get_viewport_rect().size
+	var factor := minf(area.x/320.0,area.y/240.0)
+	var settings := get_node_or_null("/root/ModernSettings")
+	if settings != null and settings.preferences.effective_settings().display.filter == "integer" and factor >= 1.0:
+		factor = floorf(factor)
+	_display.size = Vector2(320,240)*factor
+	_display.position = (area-_display.size)*0.5
+
 func _services() -> Dictionary:
 	var result := media.callbacks()
 	for key: String in Live.Arrival.REQUIRED+Live.Reload.REQUIRED:
 		if not result.has(key): result[key] = _unsupported
 	result.merge({"bank_load_start":_bank_load,"bank_poll":_bank_poll,"bank_start":_bank_start,
+		"audio_command":AudioRules.audio_command,
 		"scene_reset":_scene_reset,"arrival_draw":_arrival_draw,"line_start":_line_start,"line_run":resources.lines.line_run,
 		"outer_draw":_outer_draw,"name_entry_exit_draw":_exit_draw,"overlay_draw":checker.overlay_draw,
 		"logical_draw":_logical_draw,"cd_tick":_cd_tick,"audio_tick":_audio_tick,"completion":_completion},true)
 	return result
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not _active or not is_physics_processing() or not failure.is_empty() or consumer == null or consumer.opening.session == null or not _window_focused or not _application_focused: return
+	var settings := get_node_or_null("/root/ModernSettings")
+	if settings != null:
+		audio_bridge.voice.custom_voice_pack = settings.voice_pack
+		presenter.text_translations = settings.text_pack
+		var skipping := false
+		if Input.is_action_just_pressed("port_skip"): skipping = settings.request_prologue_skip(consumer.input_owner)
+		var hold: bool = settings.pacing.step(consumer.opening.state.opening, delta)
+		settings.observe_prologue_read(consumer.opening.state.opening)
+		presenter.presentation_visible_count = settings.pacing.visible_count
+		if hold and not skipping:
+			var refreshed: Dictionary = presenter.render(consumer.opening.state, _draw_checker, _draw_front, upload.batch_ready, last_rendered_image)
+			if not refreshed.error.is_empty(): _fail("accessible_presentation", refreshed.error)
+			else:
+				last_rendered_image = refreshed.image
+				if _display.texture is ImageTexture: (_display.texture as ImageTexture).update(last_rendered_image)
+			return
 	var pre_pump := bgm.pump(consumer.opening.state)
 	if not pre_pump.is_empty():
 		_fail("bgm_pump",pre_pump)
@@ -294,6 +327,7 @@ func _cd_tick(state: State, _rng, result: Session.FrameResult) -> void:
 		result.error = bgm.pump(state)
 
 func _audio_tick(state: State, _rng, result: Session.FrameResult) -> void:
+	AudioRules.bgm_fade_tick(state,result)
 	result.error = audio_bridge.preflight(result,state)
 	if result.error.is_empty():
 		result.error = bgm.pump(state)
@@ -324,6 +358,9 @@ func _publish_frame(result: Session.FrameResult, tick: int) -> String:
 				var color := image.get_pixel(x,y)
 				image.set_pixel(x,y,Color8((color.r8*brightness)>>7,(color.g8*brightness)>>7,(color.b8*brightness)>>7,color.a8))
 	elif state.opening.has("arrival_media"):
+		var modern_settings := get_node_or_null("/root/ModernSettings")
+		if modern_settings != null:
+			presenter.configure_accessibility(modern_settings.preferences.settings.accessibility)
 		var composed := presenter.render(state,_draw_checker,_draw_front,upload.batch_ready,last_rendered_image)
 		if not composed.error.is_empty(): return composed.error
 		image = composed.image

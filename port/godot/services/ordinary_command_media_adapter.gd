@@ -1,5 +1,5 @@
 extends RefCounted
-## T-29014: Unified media adapter for ordinary commands 0–7 (including Command 4 Club and Seasonal/Condition Variants).
+## T-29014: Media adapter for ordinary commands 0–7, including Command 4 Club and seasonal/condition variants.
 ## Connects canonical MediaStore (commands 0, 7), SpringSchoolDayContentStore (1–3),
 ## Weekday56ContentStore (5, 6), ClubCommandContentStore (4, clubs 0..10), and SeasonalCommandContentStore (variants).
 

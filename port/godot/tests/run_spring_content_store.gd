@@ -1,7 +1,7 @@
 extends SceneTree
 
 const Store = preload("res://services/spring_school_day_content_store.gd")
-const EXPECTED_SHA := "b26ef7e5c0301633c45d9a6a898ca4bdb7be68ee30f163825eed827e4f5c0c28"
+const EXPECTED_SHA := Store.MANIFEST_SHA
 
 func _initialize() -> void:
 	var pack := OS.get_environment("T29014_SPRING_PACK")

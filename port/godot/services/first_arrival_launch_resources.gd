@@ -60,7 +60,7 @@ static func _prepare_first_arrival_voiced_lines(next_lines: Lines, next_text: Te
 	var lines: Dictionary = {}
 	var line_levels: Dictionary = {}
 	var clip_levels_by_key: Dictionary = {}
-	for line: int in range(12):
+	for line: int in range(15):
 		var prepared: Dictionary = next_audio.prepare_original_line(line)
 		if not str(prepared.get("error", "")).is_empty():
 			return str(prepared.error)

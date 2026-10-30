@@ -53,7 +53,8 @@ MAX_OUTPUT_FILE = 4 * 1024 * 1024
 MAX_OUTPUT_TOTAL = 16 * 1024 * 1024
 TOOL_SOURCE_PINS = {
     "tools/assets/input.py": "e876bd062eb367f636d9703935305993d6e6cc2f9a9800c84571015b351dcd52",
-    "tools/assets/image_mdec.py": "87361145f29582f78b9cd8d6ebc47f87000fcd75c0f5883e777d8a15702410a8",
+    "tools/assets/image_mdec.py": "6513b1e6434bdd1c65c804e5d637ae3db1f4fa11f69dd80b495cf05a2f8828ec",
+    "tools/assets/image_mdec_model.py": "3b8e5611bf6f763171b8bf3d5a22269211048b0ec21dc342088e90ec043d2222",
     "tools/assets/images.py": "0198a5cf61d9683757b81b2fa4ca190d70f173ef59a47d3328b4d60ae8111033",
     "tools/assets/image_packs_prologue.py": "032beeac8daf78def2024a2e1ee8de1bf9ddd8ec2a380219eed58505581fed20",
     "tools/assets/media_background_context.py": "40441716507a1a407260caec428ad3aba706ee534cd05de67beded68a2d9d95e",

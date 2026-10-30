@@ -46,7 +46,7 @@ static func snapshot_parameters(state: State) -> String:
 	for index: int in range(PARAMETER_COUNT):
 		for byte: int in range(PARAMETER_WORD_BYTES):
 			data["progress_state"][PARAMETER_SNAPSHOT_START + index * PARAMETER_WORD_BYTES + byte] = (data["params"][index] >> (8 * byte)) & 255
-	# The final0x20 source bytes of memcpy(+0xc4,0x7c) are the first0x20
+	# The final 0x20 source bytes of memcpy(+0xc4,0x7c) are the first 0x20
 	# progress bytes at GameState+0x120. They map to progress+0x7c..0x9b.
 	# Initial weekly command flag+0x15 consequently mirrors at+0x91.
 	for offset: int in range(MIRROR_SOURCE_BYTES):

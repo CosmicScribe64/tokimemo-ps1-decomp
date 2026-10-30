@@ -1,12 +1,12 @@
 # Local translated-image review
 
-Buildless Python stdlib + HTML/JS. No hosting, uploads, game-runtime changes or artwork edits. All original/translated images, manifests, compact inventory and review decisions stay ignored under `.asset-cache/`; this directory contains tooling only.
+The local review server uses the Python standard library and HTML/JS, with no build step or external hosting. It does not upload artwork, change the game runtime, or edit images. Original and translated images, manifests, the compact inventory, and live review decisions stay ignored under `.asset-cache/`. This directory contains tooling only; the versioned backup is described below.
 
-The server reads a compact inventory generated from the explicitly pinned canonical visual catalog, then reads the author's append-only `.asset-cache/translation-images/batch-manifests.jsonl`. Current data includes V7 batch001 and batch002. V7's recomposited source PNG hashes do not match the canonical preview PNG hashes, so it remains visibly unmapped; no inventory completion is inferred from those drafts. Batch002's explicit region links count only when original hash/frame/container match. Technical/runtime acceptance is never created by style review.
+The server reads a compact inventory generated from the pinned canonical visual catalog, then the author's append-only `.asset-cache/translation-images/batch-manifests.jsonl`. Current data includes V7 batch001 and batch002. V7's recomposited source PNG hashes differ from the canonical preview PNG hashes, so those drafts remain visibly unmapped and do not count toward inventory completion. Batch002's region links count only when the original hash, frame, and container match. Style review does not establish technical or runtime acceptance.
 
 ## Build once in Docker
 
-Create ignored `review-gallery-data` and `review-gallery-state` directories inside `.asset-cache/translation-images`; keep state0700. With repository at `$PWD` and this tooling applied:
+Create ignored `review-gallery-data` and `review-gallery-state` directories inside `.asset-cache/translation-images`. Keep the state directory's permissions at `0700`. With the repository at `$PWD`, run:
 
 ```sh
 docker run --rm --network none --cpus=2 --memory=1500m \
@@ -17,7 +17,7 @@ docker run --rm --network none --cpus=2 --memory=1500m \
   --repo-root /repo --output /out/inventory.json
 ```
 
-Build refuses to overwrite an existing output. Use a new filename for a new catalog/pin. Output is a2.6MB normalized inventory; the123MB source catalog is not repeatedly parsed by the live server. The JSON source catalog is SHA-bound; use explicit `--catalog`/`--catalog-sha256` for an independently reviewed successor.
+The build refuses to overwrite an existing output. Use a new filename for a new catalog or pin. It produces a 2.6 MB normalized inventory so the live server does not repeatedly parse the 123 MB source catalog. The JSON source catalog is checked by SHA. For an independently reviewed successor, pass explicit `--catalog` and `--catalog-sha256` values.
 
 ## Start persistent localhost review
 
@@ -34,7 +34,7 @@ docker run -d --name tokimemo-translation-review-8766 --restart unless-stopped \
   --state-root /state --bind 0.0.0.0 --port 8766
 ```
 
-Use `--port 8766` (separate arguments). Docker publishes only127.0.0.1; container0.0.0.0 is its internal listener. Host/Origin checks permit only localhost/127.0.0.1 at that configured port. Keep the gameplay progress page on its separate port. Stop with `docker stop tokimemo-translation-review-8766`. The review log remains in the separate mounted state directory across restarts; remove the container only when intentionally reconfiguring it. For browser QA mount an empty disposable state directory instead of the live state directory; do not seed or manufacture user decisions.
+Use `--port 8766` as separate arguments. Docker publishes only on `127.0.0.1`; `0.0.0.0` is the container's internal listener. Host/Origin checks permit only localhost or `127.0.0.1` at the configured port. Keep the gameplay progress page on its separate port. Stop with `docker stop tokimemo-translation-review-8766`. The review log survives restarts in the mounted state directory. Remove the container only when reconfiguring it. For browser QA, mount an empty disposable state directory instead of the live one. Do not seed or manufacture user decisions.
 
 ## Durable review semantics
 
@@ -42,7 +42,7 @@ POST `/api/reviews` accepts only `{asset_id,revision,decision,notes}`. Decisions
 
 `style-decisions.jsonl` is append-only/fsynced using a retained directory FD; its parent must exist and have no symlink components. Reads/writes refuse symlinks, special files and hard-linked writable state. Corrupt history fails closed instead of replacing it. Image media URLs are opaque tokens registered from validated descriptors; paths stay below `.asset-cache` and pass component-by-component no-follow opens plus exact hash/PNG dimension checks. Every media response checks current bytes. No arbitrary repository/static directory is exposed. Browsers receive no CORS permission and restrictive CSP/frame-ancestor policy.
 
-All active asset IDs must be unique. Revisions remain in the same batch; appending a replacement index row for an existing batch requires `supersedes_sha256` equal to its prior manifest hash. Manifest revisions preserve stable asset IDs and invalidate old approvals. The current catalog includes undecoded sources and suspected text: counts overlap and never form a whole-corpus completion percentage.
+All active asset IDs must be unique. Revisions remain in the same batch. A replacement index row for an existing batch requires `supersedes_sha256` equal to its prior manifest hash. Manifest revisions preserve stable asset IDs and invalidate old approvals. The current catalog includes undecoded sources and suspected text. Its overlapping counts cannot form a whole-corpus completion percentage.
 
 ## Focused tests
 
@@ -52,7 +52,7 @@ docker run --rm --network none --cpus=2 \
   python /tool/test_translation_gallery.py
 ```
 
-Synthetic tiny PNGs only; tests never record real user decisions or modify actual art. Browser checking remains separate from this backend suite.
+These tests use tiny synthetic PNGs. They never record real user decisions or modify actual art. Browser checks are separate from this backend suite.
 
 ## Versioned translated-art backup
 

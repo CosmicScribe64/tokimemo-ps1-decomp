@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-24
+updated: 2026-10-29
 sources: ["tools/dupes.py", "tools/neardupes.py", "tools/progress.py", "configure.py", "tools/rodata_pieces.py", "tools/rodata_island.py", "tools/data_island.py", "tools/data_pieces.py", "tools/data_split.py", "tools/object_layout.py", "tools/split_objects.py", "tools/object_boundaries.py", "tools/srcscan.py", "config/SLPM_86.053.yaml", "config/overlays.txt", "tools/gen_overlay_configs.py", "README.md"]
 ---
 
@@ -12,7 +12,13 @@ sources: ["tools/dupes.py", "tools/neardupes.py", "tools/progress.py", "configur
 
 `tools/docker.sh` builds and runs the image natively for the Docker host (`arm64` on Apple Silicon, `amd64` elsewhere). Setting `TOKIMEMO_PLATFORM=linux/amd64` forces the emulated `amd64` image, which is the only one carrying all old-gcc compilers. Both images produce identical binaries; see [[toolchain]] ("Native image", T-3310). A clean build takes about a third of the time natively on Apple Silicon.
 
-1. Put your copy of the game in `game/` (gitignored; BIN+CUE, CHD, ISO, or a `.zip`/`.7z` of those at any depth; see `game/README.md`). No manual extraction is needed because `configure.py` adds the Ninja step `build/disc.stamp` (rule `disc`, `tools/prepare_disc.py`, T-3300). It finds the image(s) in `game/`, identifies the release with `tools/identify_version.py`, and unpacks the one whose executable matches the SHA-1 of `config/SLPM_86.053.sha1` into `disc/files/` (`tools/extract_disc.py`, supporting raw 2352-byte or cooked 2048-byte sectors since the build needs only the files). Other releases (`rev1`, `rev2`, `rev4`, `shokai`) fail with a message naming what was found, and missing images with no `disc/files/SLPM_86.053` fail with a message pointing to `game/`. An already-populated `disc/` (in CI or via `extract_disc.py` by hand) is enough if `game/` is empty. The step reruns only when an image in `game/`, one of the tools, or `config/versions.txt` changes, and a new file in `game/` regenerates `build.ninja` (the directories are inputs of the generator). The splits depend on the stamp rather than on `disc/files/*`. The repo-root zip is no longer searched.
+1. Put your copy of the game in gitignored `game/`. BIN+CUE, CHD, ISO, or a `.zip`/`.7z` of those can be in any subfolder; see `game/README.md`. If `game/` is empty, an already-populated `disc/` from CI or a manual `extract_disc.py` run is sufficient. The repo-root zip is not searched.
+
+   No manual extraction is needed. `configure.py` adds the Ninja step `build/disc.stamp` (rule `disc`, `tools/prepare_disc.py`, T-3300). It finds images in `game/`, identifies their releases with `tools/identify_version.py`, and extracts the one whose executable matches the SHA-1 in `config/SLPM_86.053.sha1` into `disc/files/`. The extractor, `tools/extract_disc.py`, supports raw 2352-byte or cooked 2048-byte sectors because the build needs only the files.
+
+   Other releases (`rev1`, `rev2`, `rev4`, `shokai`) fail with a message naming what was found. If no image or `disc/files/SLPM_86.053` exists, the error points to `game/`.
+
+   Extraction reruns only when an image in `game/`, one of the tools, or `config/versions.txt` changes. Adding a file in `game/` regenerates `build.ninja` because the directories are generator inputs. The splits depend on the stamp, not on `disc/files/*`.
 2. Run `tools/docker.sh python3 configure.py` to write `build.ninja` (Ninja regenerates it when `configure.py` changes) and `objdiff.json`.
 3. Run `tools/docker.sh ninja` to split, assemble, compile, link, and check the SHA-1 of the main executable and all 26 overlays (the default target). `ninja overlays` builds only the overlays, and `ninja build/ovl/TT.ok` builds one overlay.
 

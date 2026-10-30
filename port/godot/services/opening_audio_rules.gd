@@ -100,21 +100,8 @@ static func matches_bank_load_args(role: String, bank_slot: int, se_h: int, se_b
 static func prepare_mid_prologue_bank_roles(audio: RefCounted) -> String:
 	if audio == null or not audio.get("prepared_bank_roles") is Dictionary:
 		return "audio service is unavailable for mid-prologue bank preparation"
-	if not audio.prepared_bank_roles.has("prologue_arrival"):
-		return ""
-	var arrival_entry: Dictionary = audio.prepared_bank_roles["prologue_arrival"]
-	if not arrival_entry.get("memory") is Dictionary:
-		return "prologue_arrival bank has no software sound RAM checkpoint"
-	for role: String in ["prologue_rei", "prologue_shiori"]:
-		if not audio.prepared_bank_roles.has(role):
-			var contract: Dictionary = bank_transition_contract(role)
-			var meta: Dictionary = arrival_entry.get("metadata", {}).duplicate(true)
-			meta["role"] = role
-			meta["contract"] = contract
-			audio.prepared_bank_roles[role] = {
-				"memory": arrival_entry["memory"].duplicate(true),
-				"metadata": meta,
-			}
+	if not audio.prepared_bank_roles.has("prologue_rei"):
+		return "Original Rei alternate bank was not prepared from authenticated inputs"
 	return ""
 
 
@@ -146,6 +133,10 @@ static func _completion_schema(event: RefCounted, service: String, fields: Array
 
 static func begin_bank(state: RefCounted, role: String, result: RefCounted) -> void:
 	var epoch: int = int(state.opening.get("audio_bank", {}).get("epoch", 0)) + 1
+	var slots: Dictionary = state.opening.get("audio_banks",{}).duplicate(true)
+	var previous: Dictionary = state.opening.get("audio_bank",{})
+	if previous.get("ready") == true: slots[previous.role] = previous.duplicate(true)
+	state.opening["audio_banks"] = slots
 	state.opening["audio_bank"] = {"epoch": epoch, "role": role, "ready": false}
 	state.opening["audio_profile"] = role
 	if role != "prologue_arrival" and BANK_TRANSITION_CONTRACTS.has(role):
@@ -169,6 +160,7 @@ static func bank_complete(event: RefCounted, state: RefCounted, result: RefCount
 		result.error = "stale, duplicate or mismatched opening bank completion"
 		return
 	bank["ready"] = true
+	state.opening.get_or_add("audio_banks",{})[bank.role] = bank.duplicate(true)
 	if state.opening.get("prologue_bgm_transition") is Dictionary:
 		var trans: Dictionary = state.opening["prologue_bgm_transition"]
 		if trans.get("role") == bank.get("role") and trans.get("bank_epoch") == bank.get("epoch"):
@@ -197,6 +189,10 @@ static func bank_start(state: RefCounted, bank_slot: int, sequence: int, result:
 		"sequence": sequence,
 		"bank_epoch": epoch,
 	}
+	if role == "prologue_rei" and state.opening.get("bgm_fade") is Dictionary:
+		# Source audio_command_bgm finishes an outstanding fade when the new
+		# sequence request arrives; it does not keep fading the new sequence.
+		state.opening.bgm_fade.active = false
 	if state.opening.get("prologue_bgm_transition") is Dictionary:
 		var trans: Dictionary = state.opening["prologue_bgm_transition"]
 		if trans.get("role") == role and trans.get("bank_epoch") == epoch:
@@ -216,7 +212,13 @@ static func audio_command(state: RefCounted, command: int, result: RefCounted) -
 	if command == 5:
 		state.opening["audio_state_flags"] = int(state.opening.get("audio_state_flags", 0)) | 0x100000
 		result.audio.append({"kind": "native_audio_control", "command": 5})
-	elif command in [0x71, 0xb1, 0xc1, 0xd1]:
+	elif command == 0xb1:
+		var context: Dictionary = state.opening.get("native_audio_context",{})
+		if not context.get("bgm_volume") is int:
+			result.error = "BGM fade requires the actual current sequence gain"; return
+		state.opening["bgm_fade"] = {"active":true,"gain":int(context.bgm_volume),"ticks":0}
+		result.audio.append({"kind":"native_bgm_fade","command":command})
+	elif command in [0x71, 0xc1, 0xd1]:
 		var bgm_state: Dictionary = state.opening.get("prologue_bgm_state", {}).duplicate(true)
 		bgm_state["playing"] = false
 		bgm_state["last_stop_command"] = command
@@ -230,6 +232,14 @@ static func audio_command(state: RefCounted, command: int, result: RefCounted) -
 	else:
 		result.error = "unsupported prologue audio command: " + str(command)
 
+
+static func bgm_fade_tick(state: RefCounted, result: RefCounted) -> void:
+	var fade: Dictionary = state.opening.get("bgm_fade",{})
+	if fade.get("active") != true: return
+	fade.gain -= 10
+	fade.ticks += 1
+	if fade.gain < 0: fade.active = false
+	result.audio.append({"kind":"native_bgm_fade_tick","xa_active":(check_cd(state)&4)!=0,"tick":fade.ticks,"gain":fade.gain})
 
 static func finish_cd_reset(state: RefCounted, result: RefCounted) -> void:
 	var audio: Dictionary = state.opening.get("audio", {})

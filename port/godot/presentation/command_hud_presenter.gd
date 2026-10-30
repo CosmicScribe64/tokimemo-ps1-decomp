@@ -7,6 +7,13 @@ const HudSeason = preload("res://services/native_hud_season.gd")
 const ExternalPath = preload("res://services/external_content_path.gd")
 const SCHEMA := "tokimemo.native-command-hud.v1"
 const PROFILE := "spring_type_a_ordinary.v1"
+# T-39002: exact original track and decoded pixels, regenerated without the
+# historical evidence-packet wrapper. The original proof remains supported.
+const FRESH_ROOM_PROOF := {
+	"track_sha256": "28c3c501b0c67b87ca1e30515da73619497d509ff6adc28ff722aa02897dfb72",
+	"image_sha256": "d43c4a35204a86a074cda80f8104dcd3a5275fed4c43d8681ee8a440e8fefb77",
+	"original_sha256": "ea4f9201486e8bfc21b03706b4427a2e3e0865f2be7a30f5057802618747ec96",
+}
 const INPUTS := {
 	"executable": ["SLPM_86.053", 667648, "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae"],
 	"mainrom": ["CDROM/FUKUTEST/MAINROM.NBN", 108544, "f425e1d19d64afcbafeadece7d72602e50e26ce88093047f73dbb0d21a9b9c1c"],
@@ -158,6 +165,7 @@ var last_coverage: Image
 var _manifest: Dictionary = {}
 var _root := ""
 var _images: Dictionary = {}
+var _source_images: Dictionary = {}
 var _specs: Dictionary = {}
 var _last_resources: Dictionary = {}
 var _font = Glyphs.new()
@@ -193,9 +201,46 @@ func open_manifest(path: String, expected_sha256: String, font_root: String) -> 
 		if not _glyphs_supported(str(text["raw_hex"]).hex_decode()):
 			return _fail("source narration references unavailable native glyphs")
 	_manifest = parsed.duplicate(true)
+	_source_images = _images.duplicate()
 	_compositor.configure(_manifest, _images, _font)
 	error = ""
 	return true
+
+func set_translated_images(store: RefCounted) -> int:
+	# T-39004: bind only exact single-part identities with opaque source semantics.
+	# A translated STP mask is required before supporting semi-transparent frames.
+	_images = _source_images.duplicate()
+	var count := 0
+	if _manifest.is_empty():
+		return count
+	if store != null:
+		var container_sha: String = _manifest["provenance"]["inputs"]["mainrom"]["sha256"]
+		for frame: Dictionary in _manifest["frames"].values():
+			if frame["parts"].size() != 1:
+				continue
+			var part: Dictionary = frame["parts"][0]
+			var replacement: Image = store.replacement(container_sha, int(frame["frame_index"]), frame["variant"], part["png"]["sha256"])
+			if replacement == null or replacement.get_size() != _source_images[part["png"]["path"]].get_size():
+				continue
+			var binary_alpha := true
+			for y: int in range(replacement.get_height()):
+				for x: int in range(replacement.get_width()):
+					if replacement.get_pixel(x, y).a8 not in [0, 255]:
+						binary_alpha = false
+			if not binary_alpha:
+				continue
+			var mask: Image = _source_images[part["stp_png"]["path"]]
+			var has_stp := false
+			for byte: int in mask.get_data():
+				if byte != 0:
+					has_stp = true
+					break
+			if has_stp:
+				continue
+			_images[part["png"]["path"]] = replacement
+			count += 1
+	_compositor.configure(_manifest, _images, _font)
+	return count
 
 func create_state(rule: Dictionary, context: Dictionary) -> Dictionary:
 	var state := {"rule": {}, "context": context.duplicate(true), "icon_steps": [], "icon_elapsed": []}
@@ -441,7 +486,7 @@ func _validate_manifest(value: Variant) -> bool:
 		if not _integer(profile[pair[0]]) or int(profile[pair[0]]) != pair[1]:
 			return _bad("HUD capability value differs")
 	var provenance: Variant = value["provenance"]
-	if not _keys(provenance, ["inputs", "readers", "source_evidence", "room_packet"]) or not _keys(provenance["inputs"], INPUTS.keys()) or provenance["readers"] != READERS or provenance["room_packet"] != ROOM_PROOF:
+	if not _keys(provenance, ["inputs", "readers", "source_evidence", "room_packet"]) or not _keys(provenance["inputs"], INPUTS.keys()) or provenance["readers"] != READERS or provenance["room_packet"] not in [ROOM_PROOF, FRESH_ROOM_PROOF]:
 		return _bad("HUD provenance fields differ")
 	for name: String in INPUTS:
 		var item: Variant = provenance["inputs"][name]
@@ -494,7 +539,7 @@ func _validate_manifest(value: Variant) -> bool:
 			if not _payload(part["png"], "color", int(part["width"]), int(part["height"])) or not _payload(part["stp_png"], "stp", int(part["width"]), int(part["height"])):
 				return false
 	var content: Variant = value["content"]
-	if not _keys(content, ["room", "calendar", "strings"]) or not _payload(content["room"], "color", 320, 88) or content["room"]["sha256"] != ROOM_PROOF["image_sha256"]:
+	if not _keys(content, ["room", "calendar", "strings"]) or not _payload(content["room"], "color", 320, 88) or content["room"]["sha256"] != provenance["room_packet"]["image_sha256"]:
 		return _bad("HUD room content differs")
 	if not content["calendar"] is Array or content["calendar"].size() != 72:
 		return _bad("HUD calendar content count differs")
@@ -541,6 +586,7 @@ func _reset() -> void:
 	_manifest.clear()
 	_root = ""
 	_images.clear()
+	_source_images.clear()
 	_specs.clear()
 	_last_resources.clear()
 	last_coverage = null

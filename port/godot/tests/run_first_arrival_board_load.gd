@@ -441,6 +441,8 @@ func _initialize() -> void:
 		check(str(rendered.get("error","")).is_empty() and rendered.get("image") is Image,"FirstArrivalScenePresenter renders stage 4 Rei scene + HUD + line 4 text: "+str(rendered.get("error","")))
 		state.opening["prologue_text_work"] = saved_work
 		state.opening.erase("prologue_text")
+	else:
+		print("SKIP: 7 installed-profile/resource/text-render checks require BOARD_INSTALLED_PROFILE_ROOT; remaining checks do not certify installed launch")
 	while state.mode_stage == 4 and state.substep == 2 and tick_idx < 2000:
 		var r := tick(true)
 		if not r.committed or not media.publish(r,tick_idx).is_empty() or not upload.publish(r,tick_idx).is_empty():
@@ -598,10 +600,11 @@ func _initialize() -> void:
 			var s7_img := Image.create(320,240,false,Image.FORMAT_RGBA8); s7_img.fill(Color.BLACK)
 			check(hud.draw_checker(s7_img,_hud_projection(state)).is_empty() and media.paint_background(s7_img,state,actor_renderer).is_empty() and actor_renderer.paint(s7_img,state,Vector2i(160,120)).is_empty() and hud.draw_front(s7_img,_hud_projection(state)).is_empty(),"stage 7 substep 2 renders 0xACEC background, color CUT_07 bg_layer_0, O_07 actor96 + actor97 mouth + actor98 hand, and HUD")
 	check(checked_s7_paint and state.mode_stage == 7 and state.substep == 3 and state.opening.get("actor96",{}).get("x") == -160 and state.opening.get("actor97",{}).get("x") == -160 and state.opening.get("actor98",{}).get("x") == -160,"stage 7 substep 2 slides actors 96, 97, 98 to x=-160 (-0xA0) and advances to substep 3")
-	var before_s7_state := session.state_hash()
-	var before_s7_rng := session.rng.checkpoint()
 	var before_s7_vram := runtime_hash()
 	var s7_boundary := tick(true)
-	check(not s7_boundary.committed and s7_boundary.error == "source-backed opening background/decode is unavailable for LBA ad00 slot 1" and session.state_hash() == before_s7_state and session.rng.checkpoint() == before_s7_rng and runtime_hash() == before_s7_vram,"stage 7 substep 3 dec_bg_cd_read(0xAD00, 1) stops cleanly at unprepared 0xAD00 (44288) boundary with full rollback")
+	if not s7_boundary.committed or state.substep != 4 or runtime_hash() != before_s7_vram:
+		printerr("AD00 diagnostic: ",s7_boundary.error," committed=",s7_boundary.committed," substep=",state.substep," runtime_changed=",runtime_hash() != before_s7_vram)
+	var ad00_publication := media.publish(s7_boundary,tick_idx) if s7_boundary.committed else s7_boundary.error
+	check(s7_boundary.committed and state.substep == 4 and runtime_hash() == before_s7_vram and ad00_publication.is_empty(),"stage 7 substep3 queues authenticated AD00 read without prematurely decoding or changing VRAM: " + ad00_publication)
 	print("PASS: %d first-arrival board-load checks" % checks if failures == 0 else "FAIL: %d/%d first-arrival board-load checks" % [failures,checks])
 	quit(0 if failures == 0 else 1)

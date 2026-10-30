@@ -59,7 +59,7 @@ func record_completed_iteration(sample: InputFrame, rendered_ui_brightness: int,
 	if sample.tick != clock.logic_iterations or sample.held > 0xffff: return "entry sample does not belong to this actual logic iteration"
 	if rendered_ui_brightness < 0 or rendered_ui_brightness > 128: return "entry UI brightness was not explicitly observed"
 	if residency.size() != 4 or not residency.has_all(["lba", "source_sha256", "content_sha256", "ready"]): return "NAME_ENT residency ownership is incomplete"
-	if not residency["lba"] is int or residency["lba"] != 0x95ea or not residency["source_sha256"] is String or residency["source_sha256"] != NAME_ENT_SHA or not residency["content_sha256"] is String or residency["content_sha256"] != Entry.CONTENT_SHA or not residency["ready"] is bool or not residency["ready"]: return "NAME_ENT source resources are not verified/prepared"
+	if not residency["lba"] is int or residency["lba"] != 0x95ea or not residency["source_sha256"] is String or residency["source_sha256"] != NAME_ENT_SHA or not residency["content_sha256"] is String or residency["content_sha256"] not in [Entry.CONTENT_SHA,Entry.EXPANDED_CONTENT_SHA] or not residency["ready"] is bool or not residency["ready"]: return "NAME_ENT source resources are not verified/prepared"
 	# Explicit desktop adaptation: one callback after dispatch and before the
 	# next input latch. Frequency/phase parity with the PS1 timer is unmeasured.
 	if policy["timer_observation_source"] == "desktop-one-timer-per-logic-v1":

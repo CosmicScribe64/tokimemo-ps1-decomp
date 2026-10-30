@@ -1,15 +1,16 @@
 class_name SchoolEventsPresenter
 extends "res://presentation/command_hud_presenter.gd"
-## T-29018 Lane 6: Authentic 320x240 PS1 presentation and rendering for:
+## T-29018 Lane 6: 320x240 presentation for:
 ## 1. Sports Festival Event Selection & Race HUD (体育祭)
 ## 2. Culture Festival Booth / Hallway Tour (文化祭)
 ## 3. School Trip Destination & Companion Prompt (修学旅行)
 ## 4. Club Practice Match / Summer Camp (練習試合 / 夏合宿)
 ##
-## Enforces:
+## Rendering constraints:
 ## - Exact CP932 hex byte encodings (computed via Python, never guessed)
-## - Zero glyph bounding-box violations
+## - Glyph bounding-box checks record violations for callers to inspect
 ## - Authentic PS1 HUD sprites (Frame 62 message window, Frame 113..115 title badge, Frame 156 hand cursor)
+## Runner and companion helpers include preview drawings; scene fidelity needs separate verification.
 
 const HUD_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
 const RUNNER_INPUT_SPEED_DEFAULT := 0x1000

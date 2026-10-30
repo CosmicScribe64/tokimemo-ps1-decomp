@@ -26,7 +26,7 @@ from tools.assets.visual_text_equivalence import _decode_png
 from tools.port.spring_command_content import _safe_output, _copy_png
 
 SCHEMA = "tokimemo.weekday-56-content.v1"
-MANIFEST_SHA = "7c67739f2dcbc5a9c644e670d0c0e5ea91869ab851d686e77cbfbf6e188105b1"
+MANIFEST_SHA = "8cbe8f616abae286b37725c44eb54f40aee4a5839fe7d2fb65b788244ce0fad4"
 MAX_JSON = 8 * 1024 * 1024
 MAX_PNG = 2 * 1024 * 1024
 NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,191}\.png$")
@@ -99,7 +99,7 @@ def _build_manifest(source, entries, stage, root):
                             "source_size",
                         )
                     },
-                    "reader": "tools/assets/image_mdec.py:export_mdec",
+                    "decoder_model": exported["metadata"]["decoder_model"], "reader": "tools/assets/image_mdec.py:export_mdec",
                 }
             else:
                 exported = export_sd_ui(data, exe, raw, asset["id"], source_entry=entry)

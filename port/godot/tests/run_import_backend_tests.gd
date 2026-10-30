@@ -1,8 +1,9 @@
 extends SceneTree
-## Comprehensive verification suite for T-29016 import backend and boot routing.
+## Tests for T-29016 import backend and boot routing.
 ## Tests synthetic negative cases, PS1 release diagnostics, container formats,
 ## actual disc import against workspace disc/files and track1.bin,
-## plus restart and offline boot routing without disc prompting.
+## plus entry-only restart routing. This does not exercise the default opening gate.
+## TOKIMEMO_TEST_CUE overrides the generated /workspace/disc/disc.cue fixture.
 
 const Flow = preload("res://app/first_launch_import_flow.gd")
 const Store = preload("res://services/installed_pack_store.gd")
@@ -368,9 +369,13 @@ func _test_actual_track_image_inspection() -> void:
 	_check(ev3.get("status") == "cancelled", "cancels cleanly after release verification of raw track")
 
 func _test_actual_cue_sheet_import() -> void:
-	var cue_path := "/workspace/disc/Tokimeki Memorial - Forever with You (Japan) (PlayStation the Best).cue"
+	var configured_cue := OS.get_environment("TOKIMEMO_TEST_CUE")
+	var cue_path := configured_cue if not configured_cue.is_empty() else "/workspace/disc/disc.cue"
 	if not FileAccess.file_exists(cue_path):
-		print("SKIP: cue sheet not present in environment")
+		if not configured_cue.is_empty():
+			_check(false, "configured TOKIMEMO_TEST_CUE does not exist: " + cue_path)
+		else:
+			print("SKIP: generated /workspace/disc/disc.cue not present; set TOKIMEMO_TEST_CUE to a valid CUE")
 		return
 	
 	var user_data := test_root.path_join("user_data_cue")

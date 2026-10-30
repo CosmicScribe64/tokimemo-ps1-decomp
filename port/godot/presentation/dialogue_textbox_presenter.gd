@@ -46,6 +46,10 @@ var hud_frames: Dictionary = {}
 var hud_images: Dictionary = {}
 var error: String = ""
 var _font_root: String = ""
+var backdrop_opacity := 1.0
+
+func configure_accessibility(value: Dictionary) -> void:
+	backdrop_opacity = clampf(float(value.get("backdrop", 1.0)), 0.0, 1.0)
 
 func _init() -> void:
 	font = Glyphs.new()
@@ -224,7 +228,9 @@ func render_textbox_background(target: Image) -> void:
 			var red: int = clampi((int(2 * factor) + d) >> 3, 0, 16)
 			var green: int = clampi((int(3 * factor) + d) >> 3, 0, 20)
 			var blue: int = clampi((int(8 * factor) + d) >> 3, 4, 31)
-			target.set_pixelv(TEXTBOX_INNER.position + Vector2i(x, y), Color8(red << 3, green << 3, blue << 3, 230))
+			var position := TEXTBOX_INNER.position + Vector2i(x, y)
+			var shade := Color8(red << 3, green << 3, blue << 3, 230)
+			target.set_pixelv(position, target.get_pixelv(position).lerp(shade, backdrop_opacity))
 
 	# Outer 1-pixel frame border
 	var border_top_left := Color8(140, 160, 200, 255)

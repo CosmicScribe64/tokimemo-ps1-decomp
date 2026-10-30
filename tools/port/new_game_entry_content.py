@@ -22,7 +22,9 @@ FIELDS={'hiragana':(0x8014CD28,17*4),'katakana':(0x8014CD6C,17*4),
         'preset_family':(0x8014CE6C,15*8),'preset_given':(0x8014CEE4,15*8),
         'preset_nickname':(0x8014CF5C,15*12)}
 # Only hashes of extracted payloads are distributed in code.
-PAYLOAD_SHA256='7458e8d0ee2d286c17ffe9b0d4201544ac716325273a97e02e5b12ab9fd660af'
+PAYLOAD_SHA256='c54066fcfebc3526abecab420a62c1817bca61e9d570c2fab391be6e8b6f8243'
+CANDIDATE_PATH='CDROM/FUKUTEST/NAME_KAN.NBN'
+CANDIDATE_SHA256='29c22ef10985a33a93acb2fef4a6bb6942c1b73e6aff7f4ea974a265213039a9'
 
 def build_bundle(input_path):
     base=original.build_bundle(input_path) # Release, reader/source and opcode proofs.
@@ -35,7 +37,9 @@ def build_bundle(input_path):
         entries=[e for e in source.entries()if e['path']==original.OVERLAY]
         if len(entries)!=1:raise ValueError('expected exact NAME_ENT overlay')
         overlay=source.read(entries[0])
+        candidates=source.read(next(e for e in source.entries() if e['path']==CANDIDATE_PATH))
     if hashlib.sha256(overlay).hexdigest()!=original.OVERLAY_SHA256:raise ValueError('overlay changed')
+    if hashlib.sha256(candidates).hexdigest()!=CANDIDATE_SHA256:raise ValueError('candidate source changed')
     data={'space':base['tables']['space']}
     proof={}
     for key,(address,size)in FIELDS.items():
@@ -58,6 +62,34 @@ def build_bundle(input_path):
             rows=[list(raw[i*width:(i+1)*width])for i in range(15)]
             if any(row[-2:]!=[0,0]for row in rows):raise ValueError('preset terminator tail differs from native editable width')
             data[key]=rows
+    # The original relocates50 pointers; only reading indices0..44 are selectable.
+    counts_pointer,pointers_pointer=struct.unpack_from('<2I',overlay,0x8014ce64-BASE)
+    if (counts_pointer,pointers_pointer)!=(0x801e0000,0x801e2b2c):
+        raise ValueError('candidate table locations changed')
+    counts=struct.unpack_from('<45H',candidates)
+    pointers=struct.unpack_from('<45I',candidates,0x2b2c)
+    lists=[]
+    for count,pointer in zip(counts,pointers):
+        end=pointer+count*2
+        if pointer<96 or end>=0x2b2c or candidates[end]!=0 or b'\0' in candidates[pointer:end]:
+            raise ValueError('candidate string extent/terminator differs')
+        lists.append(list(candidates[pointer:end]))
+    data['candidate_lists']=lists
+    def bounded_text(address):
+        start=address-BASE
+        if not 0<=start<len(overlay):raise ValueError('reading text pointer outside overlay')
+        end=overlay.find(b'\0',start,start+128)
+        if end<start or (end-start)%2:raise ValueError('reading text is not bounded pairs')
+        return list(overlay[start:end])
+    labels=struct.unpack_from('<45I',overlay,0x8014cdb0-BASE)
+    data['reading_labels']=[bounded_text(address) for address in labels]
+    data['reading_rows']=[row[:] for row in data['hiragana'][:9]]
+    data['reading_rows'][7]=bounded_text(0x8014b4b4)
+    proof['candidate_source']={'path':CANDIDATE_PATH,'sha256':CANDIDATE_SHA256,
+        'counts_offset':0,'pointers_offset':0x2b2c,'selected_readings':45,
+        'counts':list(counts),'pointers':list(pointers)}
+    proof['reading_labels']={'table_address':0x8014cdb0,'pointers':list(labels),
+        'reading_row7_address':0x8014b4b4}
     payload=json.dumps(data,sort_keys=True,separators=(',',':')).encode()
     sha=hashlib.sha256(payload).hexdigest()
     if PAYLOAD_SHA256 and sha!=PAYLOAD_SHA256:raise ValueError('entry payload differs from pinned original')

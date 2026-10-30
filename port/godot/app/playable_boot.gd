@@ -389,14 +389,17 @@ func _ensure_audio_players() -> void:
 	if bgm_player == null:
 		bgm_player = AudioStreamPlayer.new()
 		bgm_player.name = "BgmPlayer"
+		bgm_player.bus = "BGM"
 		add_child(bgm_player)
 	if se_player == null:
 		se_player = AudioStreamPlayer.new()
 		se_player.name = "SePlayer"
+		se_player.bus = "SFX"
 		add_child(se_player)
 	if voice_player == null:
 		voice_player = AudioStreamPlayer.new()
 		voice_player.name = "VoicePlayer"
+		voice_player.bus = "Voice"
 		add_child(voice_player)
 	if not playback_pause_changed.is_connected(_sync_audio_players_paused):
 		playback_pause_changed.connect(_sync_audio_players_paused)
@@ -439,6 +442,7 @@ func _play_committed_audio(audio_events: Array) -> void:
 					voice_player.stream_paused = playback_paused
 
 func _ready() -> void:
+	add_to_group("settings_save_hosts")
 	output_root = OS.get_environment("TOKIMEMO_PLAYABLE_OUTPUT")
 	smoke = OS.get_environment("TOKIMEMO_PLAYABLE_SMOKE") == "1"
 	smoke_command = int(OS.get_environment("TOKIMEMO_PLAYABLE_SMOKE_COMMAND"))
@@ -776,6 +780,11 @@ func _reset() -> String:
 	canvas.present([])
 	if hud != null:
 		hud.reset(state.rule_state)
+		var modern_settings := get_node_or_null("/root/ModernSettings")
+		if modern_settings != null:
+			hud.presenter.set_translated_images(modern_settings.translated_images)
+			if not modern_settings.preferences_changed.is_connected(_refresh_translation_images):
+				modern_settings.preferences_changed.connect(_refresh_translation_images)
 		error = _present_committed()
 		if not error.is_empty():
 			return error
@@ -783,6 +792,15 @@ func _reset() -> String:
 	status_label.hide()
 	detail_label.hide()
 	return ""
+
+func _refresh_translation_images(_preferences: Dictionary) -> void:
+	var modern_settings := get_node_or_null("/root/ModernSettings")
+	if hud == null or modern_settings == null:
+		return
+	hud.presenter.set_translated_images(modern_settings.translated_images)
+	var presentation_error := _present_committed()
+	if not presentation_error.is_empty():
+		_stop(presentation_error)
 
 func configure_month_start_services(notice_owner: Variant = null) -> String:
 	# Root's real AudioService factory supplies the native backend/profile. Merely
@@ -810,6 +828,9 @@ func _input(event: InputEvent) -> void:
 		detail_label.visible = not detail_label.visible
 	if not focus_paused and event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_R and stopped and not smoke:
 		_replay_requested = true
+
+func request_settings_save(load_game: bool) -> bool:
+	return save_controls.request(self, BoundarySaveControls.Request.LOAD if load_game else BoundarySaveControls.Request.SAVE)
 
 func _physics_process(_delta: float) -> void:
 	if focus_paused:
@@ -1357,8 +1378,20 @@ func _stop(message: String) -> void:
 	failure = message
 	if status_label != null:
 		status_label.position = Vector2(16, 454)
-		status_label.text = "Stopped · see log" if smoke else "Stopped · R: replay · see log"
+		status_label.text = "Game stopped" if smoke else "Game stopped · R: restart this session"
 		status_label.show()
+	if not smoke:
+		var dialog := AcceptDialog.new()
+		dialog.title = "Game could not continue"
+		dialog.dialog_text = message + "\n\nRestarting may encounter the same problem. Copy these details when reporting it.\nLog: " + ProjectSettings.globalize_path("user://logs/godot.log")
+		dialog.dialog_autowrap = true
+		dialog.add_button("Copy details", false, "copy")
+		dialog.custom_action.connect(func(action: String):
+			if action == "copy": DisplayServer.clipboard_set(dialog.dialog_text))
+		dialog.confirmed.connect(dialog.queue_free)
+		dialog.canceled.connect(dialog.queue_free)
+		add_child(dialog)
+		dialog.popup_centered(Vector2i(560, 280))
 	push_error(message)
 	if smoke:
 		if output_root.is_absolute_path() and DirAccess.dir_exists_absolute(output_root):

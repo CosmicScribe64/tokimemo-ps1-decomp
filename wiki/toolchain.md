@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-23
+updated: 2026-10-29
 sources: ["wiki/original-compiler.md", "tools/docker.sh", "tools/Dockerfile", "tools/m2c.py", "tools/permute.py", "tools/test_cc.py", "tools/trailing_pad.py", "tools/test_trailing_pad.py", "tools/sdk_aspsx_pass.py", "tools/test_sdk_aspsx_pass.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py"]
 ---
 
@@ -10,7 +10,27 @@ Everything runs in Docker (`tools/docker.sh <cmd>`). The image is built natively
 
 ## Pinned versions (tools/Dockerfile)
 
-The Docker image pins `splat64` 0.50.0, `spimdisasm` 1.42.4, `rabbitizer` 1.16.2, `pycparser` 3.11, `colorama` 0.4.6, `m2c` (git commit `708d2d2`), `PyYAML` 6.0.3, `tqdm` 4.67.1, `crcmod` 1.7, `ninja_syntax` 1.7.2, `binutils-mips-linux-gnu` 2.38, `ninja` 1.10.1, `make` 4.3, `git` 2.34.1, `maspsx` `e85ecb3`, `objdiff-cli` v3.8.2, `mkpsxiso`/`dumpsxiso` 2.30, `p7zip-full` `16.02+dfsg-8`, and `mame-tools` (`chdman`) `0.242+dfsg.1-1` (T-3300, for `tools/identify_version.py`; `amd64` and `arm64`). Compiler and matching tools live in `/opt/`: `decompals/old-gcc` 0.17 in `/opt/gcc/<ver>/` (`amd64` image only, covering `2.6.3-psx`, `2.7.2-psx`, `2.7.2-cdk`, `2.8.0-psx`, `2.8.1-psx`, `2.91.66-psx`, and `2.95.2-psx`), `decompals/ido-static-recomp` v1.2 (commit `9c242ad`) in `/opt/ido/5.3/` and `/opt/ido/7.1/`, `asm-processor` (simonlindholm) `f3b2f85` in `/opt/asm-processor`, and `decomp-permuter` (simonlindholm) `8556c81` in `/opt/decomp-permuter` with `toml` 0.10.2 and `Levenshtein` 0.27.1 (T-1330). Environment variables are `MASPSX_DIR=/opt/maspsx`, `GCC_DIR=/opt/gcc`, `IDO_DIR=/opt/ido`, `ASM_PROCESSOR_DIR=/opt/asm-processor`, and `PERMUTER_DIR=/opt/decomp-permuter`.
+The Docker image pins these versions:
+
+| Tools | Versions |
+| --- | --- |
+| `splat64`, `spimdisasm`, `rabbitizer` | 0.50.0, 1.42.4, 1.16.2 |
+| `pycparser`, `colorama`, `m2c` | 3.11, 0.4.6, git commit `708d2d2` |
+| `PyYAML`, `tqdm`, `crcmod`, `ninja_syntax` | 6.0.3, 4.67.1, 1.7, 1.7.2 |
+| `binutils-mips-linux-gnu`, `ninja`, `make`, `git` | 2.38, 1.10.1, 4.3, 2.34.1 |
+| `maspsx`, `objdiff-cli`, `mkpsxiso`/`dumpsxiso` | `e85ecb3`, v3.8.2, 2.30 |
+| `p7zip-full`, `mame-tools` (`chdman`) | `16.02+dfsg-8`, `0.242+dfsg.1-1` |
+
+The archive readers support `tools/identify_version.py` on `amd64` and `arm64` (T-3300). Compiler and matching tools live in `/opt/`:
+
+| Tool | Version and location |
+| --- | --- |
+| `decompals/old-gcc` | 0.17 in `/opt/gcc/<ver>/`; this release set is in the `amd64` image only: `2.6.3-psx`, `2.7.2-psx`, `2.7.2-cdk`, `2.8.0-psx`, `2.8.1-psx`, `2.91.66-psx`, and `2.95.2-psx`. |
+| `decompals/ido-static-recomp` | v1.2 (commit `9c242ad`) in `/opt/ido/5.3/` and `/opt/ido/7.1/`. |
+| `asm-processor` (simonlindholm) | `f3b2f85` in `/opt/asm-processor`. |
+| `decomp-permuter` (simonlindholm) | `8556c81` in `/opt/decomp-permuter`, with `toml` 0.10.2 and `Levenshtein` 0.27.1 (T-1330). |
+
+Environment variables are `MASPSX_DIR=/opt/maspsx`, `GCC_DIR=/opt/gcc`, `IDO_DIR=/opt/ido`, `ASM_PROCESSOR_DIR=/opt/asm-processor`, and `PERMUTER_DIR=/opt/decomp-permuter`.
 
 ## Native image (T-3310)
 

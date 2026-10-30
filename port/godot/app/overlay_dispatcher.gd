@@ -1,8 +1,9 @@
 class_name OverlayDispatcher
 extends RefCounted
-## T-29018: Unified PS1 GameMode & Overlay Dispatcher for the Godot 4.7.2 Port.
-## Connects all 26 PS1 overlays (src/ovl/*) and core modes into a single runtime
-## router with deterministic input stepping and authentic 320x240 frame rendering.
+## T-29018: GameMode and overlay dispatcher for the Godot 4.7.2 port.
+## Routes catalogued modes to input handlers and 320x240 presenters.
+## Catalog membership does not establish original-game fidelity or route readiness;
+## resource loading includes preview presenters.
 
 const VnPresenter = preload("res://presentation/vn_scene_presenter.gd")
 const SystemOverlays = preload("res://overlays/system_overlays.gd")

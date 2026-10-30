@@ -12,15 +12,36 @@ const BUTTON_MASKS: Dictionary = {JOY_BUTTON_DPAD_UP: 0x1000,
 
 var _devices: Dictionary = {}
 var _previous: int = 0
+var _requested_pulse := 0
+
+func request_button_pulse(mask: int) -> void:
+	_requested_pulse |= mask & 0xffff
+
+func _ready() -> void:
+	add_to_group("native_input_devices")
+	Input.joy_connection_changed.connect(_gamepad_connection_changed)
+
+func _gamepad_connection_changed(device: int, connected: bool) -> void:
+	if connected: return
+	for token: String in _devices.keys():
+		if token.begins_with("joy:%d:" % device) or token.begins_with("axis:%d:" % device): _devices.erase(token)
+	# Keep the previous sampled mask so the next source latch sees one release.
 
 func _input(event: InputEvent) -> void:
+	var settings := get_node_or_null("/root/ModernSettings") if is_inside_tree() else null
+	if settings != null:
+		if event is InputEventKey and event.echo: return
+		var token: String = settings.remaps.event_token(event)
+		if token != "": _devices[token] = settings.remaps.event_mask(event)
+		return
 	if event is InputEventKey and not event.echo and KEY_MASKS.has(event.physical_keycode):
 		_devices["key:%d" % event.physical_keycode] = int(KEY_MASKS[event.physical_keycode]) if event.pressed else 0
 	elif event is InputEventJoypadButton and BUTTON_MASKS.has(event.button_index):
 		_devices["joy:%d:%d" % [event.device, event.button_index]] = int(BUTTON_MASKS[event.button_index]) if event.pressed else 0
 
 func sample(iteration: int) -> RefCounted:
-	var held: int = 0
+	var held: int = _requested_pulse
+	_requested_pulse = 0
 	for value: int in _devices.values():
 		held |= value
 	var frame: RefCounted = InputFrame.new(iteration, held, _previous)
@@ -30,3 +51,4 @@ func sample(iteration: int) -> RefCounted:
 func clear_devices() -> void:
 	_devices.clear()
 	_previous = 0
+	_requested_pulse = 0

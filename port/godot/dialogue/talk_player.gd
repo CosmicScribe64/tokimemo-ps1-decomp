@@ -1,7 +1,7 @@
 extends RefCounted
 class_name NativeTalkPlayer
 ## Bounded SERIFU player with substitution resolution and evidenced voice service gating.
-## Preserves 100% fail-closed behavior by default when unvoiced.
+## Rejects voiced content by default unless voice support is enabled.
 
 const Tokens = preload("res://dialogue/text_tokens.gd")
 const PROFILE := "serifu-native-v1"

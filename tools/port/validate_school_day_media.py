@@ -5,6 +5,9 @@ import re
 import struct
 from pathlib import Path, PurePosixPath
 
+FRESH_SCHEMA = "tokimemo.school-day-media.v4"
+FRESH_MANIFEST_SHA = "70453a62d88bb6b9c1bf4478dee9d07a5be12fdd93b4225b5e7f7c4b26ad4839"
+FRESH_PROFILE = "source-checked-april-command0-7-extra15.v1"
 SCHEMA = "tokimemo.school-day-media.v1"
 COMMAND7_SCHEMA = "tokimemo.school-day-media.v2"
 HOLIDAY_SCHEMA = "tokimemo.school-day-media.v3"
@@ -78,6 +81,15 @@ def _int_vector(value, length, low, high):
     return isinstance(value, list) and len(value) == length and all(_exact_int(v, low, high) for v in value)
 
 
+def _valid_decoder_model(value):
+    from tools.assets.image_mdec_model import MODEL
+    expected = dict(MODEL)
+    folder = Path(__file__).resolve().parents[1] / "assets"
+    expected["implementation_sha256"] = {name: hashlib.sha256((folder / name).read_bytes()).hexdigest()
+        for name in ("image_mdec.py", "image_mdec_model.py")}
+    return _metadata_equal(value, expected)
+
+
 def validate_pack(pack: str):
     root = Path(pack).absolute()
     current = Path(root.anchor)
@@ -91,18 +103,22 @@ def validate_pack(pack: str):
     doc = json.loads(manifest.read_text(encoding="utf-8"))
     if not isinstance(doc, dict):
         raise ValueError("manifest JSON must be an object")
+    fresh = doc.get("schema") == FRESH_SCHEMA
+    if fresh and hashlib.sha256(manifest.read_bytes()).hexdigest() != FRESH_MANIFEST_SHA:
+        raise ValueError("fresh original-source manifest differs")
+    route_profile = FRESH_PROFILE if fresh else NATIVE_ROUTE_PROFILE
     holiday = doc.get("schema") == HOLIDAY_SCHEMA
     holiday_proof = json.loads(HOLIDAY_PROOF.read_text()) if holiday else None
     if set(doc) != {"schema", "version", "provenance", "route_capabilities", "unsupported", "components"} | ({"route_tables"} if holiday else set()):
         raise ValueError("manifest keys differ from v1 contract")
-    extended = doc.get("schema") in (COMMAND7_SCHEMA, HOLIDAY_SCHEMA)
-    if doc.get("schema") not in (SCHEMA, COMMAND7_SCHEMA, HOLIDAY_SCHEMA) or type(doc.get("version")) is not int or doc["version"] != (3 if holiday else 2 if extended else 1):
+    extended = doc.get("schema") in (COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA)
+    if doc.get("schema") not in (SCHEMA, COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA) or type(doc.get("version")) is not int or doc["version"] != (4 if fresh else 3 if holiday else 2 if extended else 1):
         raise ValueError("unsupported media schema/version")
     provenance = dict(EXPECTED_PROVENANCE)
     if holiday:
         provenance["holiday_profile_sha256"] = holiday_proof["native_profile_sha256"]
         provenance["readers"] = provenance["readers"] + ["tools/assets/holiday_content_profile.py:build_holiday_profile"]
-    if doc.get("provenance") != provenance:
+    if not fresh and doc.get("provenance") != provenance:
         raise ValueError("original input/reader provenance differs from reviewed source pins")
     if doc.get("route_capabilities") != EXPECTED_CAPABILITIES + (["command_7_static_background"] if extended else []) + (["holiday_room_static_background", "holiday_command_0_static_background", "holiday_command_0_sd_sequence_0"] if holiday else []):
         raise ValueError("route capabilities differ from bounded supported sources")
@@ -119,8 +135,10 @@ def validate_pack(pack: str):
         key = f"command_{command}_background"
         expected_id = "asset-cc9a7f7ff39dfb8c072ef6675934282792dfd7afef494b0c0b180643ea54135d" if command == 0 else "asset-737fb131adbd66af423adbcc776e651450043c0e953d6b83b64412b022d286aa"
         bg = doc["components"][key]
-        if not isinstance(bg, dict) or set(bg) != {"kind", "id", "source", "active_size", "padded_size", "active_crop", "native_route", "image", "stp_mask", "padded_image", "padded_stp_mask", "geometry_context", "reader", "capability"} | ({"native_read_extent"} if command == 7 else set()):
+        if not isinstance(bg, dict) or set(bg) != {"kind", "id", "source", "active_size", "padded_size", "active_crop", "native_route", "image", "stp_mask", "padded_image", "padded_stp_mask", "geometry_context", "reader", "capability", "decoder_model"} | ({"native_read_extent"} if command == 7 else set()):
             raise ValueError("background fields differ from v1 contract")
+        if not _valid_decoder_model(bg.get("decoder_model")):
+            raise ValueError("background decoder model differs")
         if (bg.get("kind") != "mdec_background" or bg.get("id") != expected_id
                 or bg.get("reader") != "tools/assets/image_mdec.py:export_mdec" or bg.get("capability") != "source_profiled_static_background_preview"
                 or not _int_vector(bg.get("active_size"), 2, 1, 8192)
@@ -130,7 +148,7 @@ def validate_pack(pack: str):
                 or bg["active_crop"] != [0, 0, 320, 88]):
             raise ValueError("invalid command background descriptor")
         _validate_source(key, bg)
-        _validate_native_route(bg, command)
+        _validate_native_route(bg, command, route_profile)
         _read_png(root, bg.get("image", {}), [320, 88])
         _read_png(root, bg.get("stp_mask", {}), [320, 88])
         _read_png(root, bg.get("padded_image", {}), [320, 96])
@@ -145,7 +163,7 @@ def validate_pack(pack: str):
             raise ValueError("holiday/weekday room route table dependencies differ")
         for key in ("holiday_room_background", "holiday_command_0_background"):
             bg = doc["components"][key]
-            if not _metadata_equal(bg, holiday_proof["components"][key]):
+            if not _valid_decoder_model(bg.get("decoder_model")) or not _metadata_equal(bg, holiday_proof["components"][key]):
                 raise ValueError("holiday background source/native/geometry descriptor differs")
             for field, size in (("image", [320, 88]), ("stp_mask", [320, 88]), ("padded_image", [320, 96]), ("padded_stp_mask", [320, 96])):
                 _read_png(root, bg[field], size)
@@ -169,7 +187,7 @@ def validate_pack(pack: str):
             raise ValueError("invalid SD source/profile descriptor")
         _validate_source(key, c)
         if not is_holiday:
-            _validate_native_route(c, 0 if key == "command_0_sd" else 7)
+            _validate_native_route(c, 0 if key == "command_0_sd" else 7, route_profile)
         if not SHA.fullmatch(c.get("source", {}).get("sha256", "")) or not SHA.fullmatch(c.get("source", {}).get("exe_sha256", "")):
             raise ValueError("invalid original SD source hashes")
         frames = c.get("frames")
@@ -309,7 +327,7 @@ def _validate_source(key, component):
         raise ValueError("SD source does not bind the reviewed executable")
 
 
-def _validate_native_route(component, command):
+def _validate_native_route(component, command, profile=NATIVE_ROUTE_PROFILE):
     route = component.get("native_route", {})
     if not isinstance(route, dict):
         raise ValueError("native route evidence must be an object")
@@ -317,7 +335,7 @@ def _validate_native_route(component, command):
         raise ValueError("native route fields differ from v1 contract")
     if (not _exact_int(route.get("command"),0,7) or route["command"] != command
             or not _exact_int(route.get("actual_last_command"),0,7) or route["actual_last_command"] != command
-            or not _int_vector(route.get("actors"),1,96,96) or route.get("profile") != NATIVE_ROUTE_PROFILE
+            or not _int_vector(route.get("actors"),1,96,96) or route.get("profile") != profile
             or not isinstance(route.get("evidence"), list) or not route["evidence"]):
         raise ValueError("component is not bound to reviewed native route evidence")
     if any(not isinstance(e, dict) or set(e) != {"path", "sha256", "size"}

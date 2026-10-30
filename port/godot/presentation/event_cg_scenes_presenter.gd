@@ -1,15 +1,17 @@
 class_name EventCgScenesPresenter
 extends "res://presentation/command_hud_presenter.gd"
-## T-29018 Lane 8: Authentic 320x240 PS1 Presentation for EVENT.EXN Date Spots & Special CG Scenes.
+## T-29018 Lane 8: 320x240 presenter for EVENT.EXN date spots and special CG scenes.
+## Missing scene images can fall back to park/Shiori assets; these previews
+## do not establish original scene fidelity or MDEC playback.
 ## Renders:
 ## 1. Shiori Special CG Scene (Scene 4: Kirameki Central Park Cherry Blossoms, scene_flags[0])
 ## 2. Ayako Special Date Scene (Scene 2: Karaoke Box Duet, scene_flags[0x13])
 ## 3. Amusement Park Ride Movie Scene (Ferris Wheel MDEC Viewport LBA 0x4332, spot_ride=2)
 ## 4. Miharu Date Encounter Scene (Scene 3: Park Arrival Bump, scene_flags[0x48])
 ##
-## Follows CODING_STANDARDS.md Section 12a strictly:
+## Rendering constraints from CODING_STANDARDS.md Section 12a:
 ## - All CP932 hex strings computed via Python .encode("cp932").hex()
-## - Zero glyph bounding-box violations
+## - Glyph bounding-box checks record violations for callers to inspect
 ## - Authentic PS1 HUD primitives:
 ##   * Mode 1 / Mode 2 checkerboard frames (hud_screen_frame_draw, hud_panels.c:1366)
 ##   * Wooden message window Frame 62 (OT 8..7) at (0, 75)

@@ -101,7 +101,7 @@ func publish(result: Session.FrameResult, tick: int) -> String:
 			var pumped_bg := _pump.execute_names_bg(_board_store,preview.names_bg_resource_id,preview.names_bg_batch_key,next)
 			if not pumped_bg.error.is_empty(): return pumped_bg.error
 		if preview.has("cut_batch_key"):
-			var pumped_cut := _pump.execute_cut_vram(_board_store,preview.cut_resource_id,preview.cut_batch_key,next)
+			var pumped_cut := _pump.execute_cut_vram(_board_store,preview.cut_resource_id,preview.cut_batch_key,next,preview.get("cut_white_palette",false))
 			if not pumped_cut.error.is_empty(): return pumped_cut.error
 		if preview.has("stage_actor_batches"):
 			for sa_item: Dictionary in preview.stage_actor_batches:
@@ -191,6 +191,7 @@ func _preview(result: Session.FrameResult, state: State) -> Dictionary:
 	var o12_restore_seen := false
 	var o06_copy_seen := false
 	var o07_copy_seen := false
+	var o08_copy_seen := false
 	for effect: Dictionary in result.presentation:
 		if effect.get("kind") == "first_arrival_native_upload": uploads.append(effect)
 		elif effect.get("kind") == "first_arrival_board_upload": board_uploads.append(effect)
@@ -200,6 +201,7 @@ func _preview(result: Session.FrameResult, state: State) -> Dictionary:
 		elif effect.get("kind") == "first_arrival_o12_restore": o12_restore_seen = true
 		elif effect.get("kind") == "first_arrival_o06_copy": o06_copy_seen = true
 		elif effect.get("kind") == "first_arrival_o07_copy": o07_copy_seen = true
+		elif effect.get("kind") == "first_arrival_o08_copy": o08_copy_seen = true
 	var stage_vram: int = 1 if (not names_uploads.is_empty() or not cut_uploads.is_empty() or not stage_actor_uploads.is_empty()) else 0
 	var batch_types := (1 if not uploads.is_empty() else 0) + (1 if not board_uploads.is_empty() else 0) + stage_vram
 	if batch_types > 1:
@@ -245,10 +247,13 @@ func _preview(result: Session.FrameResult, state: State) -> Dictionary:
 				return {"error":"first-arrival cut upload batch has already executed"}
 			var cut_transfer := _media.completed_cut_buffer(state,cut_id)
 			if not cut_transfer.error.is_empty(): return cut_transfer
-			var cut_val := temp_pump.execute_cut_vram(_board_store,cut_id,cut_key,cs_next)
+			var white_palette: Variant = cut_src.get("white_palette",false)
+			if not white_palette is bool: return {"error":"cut palette mode must be a source boolean"}
+			var cut_val := temp_pump.execute_cut_vram(_board_store,cut_id,cut_key,cs_next,white_palette)
 			if not cut_val.error.is_empty(): return cut_val
 			out_preview["cut_resource_id"] = cut_id
 			out_preview["cut_batch_key"] = cut_key
+			out_preview["cut_white_palette"] = white_palette
 		if not stage_actor_uploads.is_empty():
 			if stage_actor_uploads.size() > 3: return {"error":"actual stage actor upload exceeds max 3 slots per frame"}
 			var sa_batches: Array[Dictionary] = []
@@ -278,12 +283,17 @@ func _preview(result: Session.FrameResult, state: State) -> Dictionary:
 						owner_ok = a96_o07 is Dictionary and a96_o07.get("upload_batch_key_2") == sa_key
 					elif sa_slot == 7:
 						owner_ok = a96_o07 is Dictionary and a96_o07.get("upload_batch_key_3") == sa_key
+				elif sa_id == BoardStore.O_08_ID:
+					var a96_o08: Variant = state.opening.get("actor96")
+					owner_ok = sa_slot == 5 and a96_o08 is Dictionary and a96_o08.get("upload_batch_key") == sa_key
+				elif sa_id == BoardStore.O_09_ID:
+					owner_ok = _rei_entrance_owner(state,sa_slot,sa_off,sa_key) or _rei_crowd_owner(state,sa_slot,sa_off,sa_key)
 				else:
 					var actor_dict: Variant = state.opening.get("actor96" if sa_slot == 5 else "actor97")
 					owner_ok = actor_dict is Dictionary and actor_dict.get("upload_batch_key") == sa_key
 				if not owner_ok:
 					return {"error":"actual stage actor upload batch has no logical owner"}
-				var sa_transfer := _media.completed_stage_actor_buffer(state,sa_id,o12_restore_seen or o06_copy_seen or o07_copy_seen)
+				var sa_transfer := _media.completed_stage_actor_buffer(state,sa_id,o12_restore_seen or o06_copy_seen or o07_copy_seen or o08_copy_seen)
 				if not sa_transfer.error.is_empty(): return sa_transfer
 				var sa_val := temp_pump.execute_stage_actor_vram(_board_store,sa_id,sa_slot,sa_off,sa_key,cs_next)
 				if not sa_val.error.is_empty(): return sa_val
@@ -365,6 +375,21 @@ static func _fast_runtime_hash(owned: Dictionary) -> String:
 		"scratch":Store._sha(scratch) if scratch is PackedByteArray else scratch,
 		"pending":pending
 	}).sha256_text()
+
+static func _rei_entrance_owner(state: State, slot: int, offset: int, key: String) -> bool:
+	var actor: Variant = state.opening.get("actor96")
+	if state.game_mode != 0x15 or state.mode_stage != 9 or state.mode_step != 0 or state.substep != 0 or not actor is Dictionary or actor.get("profile") != "o09_rei_entrance" or actor.get("resource_id") != BoardStore.O_09_ID:
+		return false
+	return (slot == 5 and offset == 0x42c0 and actor.get("upload_batch_key") == key) or (slot == 6 and offset == 0x82c0 and actor.get("upload_batch_key_2") == key)
+
+static func _rei_crowd_owner(state: State, slot: int, offset: int, key: String) -> bool:
+	if state.game_mode != 0x15 or state.mode_stage != 9 or state.mode_step != 0 or state.substep != 3 or slot != 7 or offset != 0x150:
+		return false
+	for index in [99,100]:
+		var actor: Variant = state.opening.get("actor%d" % index)
+		if not actor is Dictionary or actor.get("profile") != "o10_rei_dialogue" or actor.get("index") != index or actor.get("resource_id") != BoardStore.O_09_ID or actor.get("source_sha256") != BoardStore.O_09_SHA or actor.get("upload_batch_key") != key or actor.get("frame_table") != 0x80180110 or actor.get("tpage_table") != 0x8018010c:
+			return false
+	return true
 
 static func _effects_hash(result: Session.FrameResult) -> String:
 	var effects: Array[Dictionary] = []

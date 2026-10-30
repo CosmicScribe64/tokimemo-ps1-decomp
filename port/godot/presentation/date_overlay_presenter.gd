@@ -1,6 +1,7 @@
 class_name DateOverlayPresenter
 extends "res://presentation/date_appointment_presenter.gd"
-## Authentic 320x240 PS1 presenter for DATE (0x50) and DATE2 (0x58) overlays.
+## 320x240 presenter for DATE (0x50) and DATE2 (0x58) overlays.
+## Missing venue images may use aquarium or park previews instead.
 ## Mirrors date_mode_handler (src/ovl/date/entry.c:714-743),
 ## normal_date_three_select_init / make_three_select (src/main/scene_library.c:1032-1114, 2212-2253),
 ## and amusement_karaoke_return_frame_update (src/ovl/amusement_park_date/karaoke_scene_and_return.c:110-121).

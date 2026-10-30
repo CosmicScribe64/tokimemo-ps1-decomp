@@ -1,11 +1,11 @@
 extends SceneTree
-## T-29018 Lane 8: Comprehensive Test Suite for EVENT.EXN Per-Girl Special CG & Ride Movie Scenes.
+## T-29018 Lane 8: Tests for EVENT.EXN per-girl special CG and ride movie scenes.
 ## Verifies:
 ## 1. Date spot state initialization across 21 spots (0..20) and 13 characters + Yoshio.
 ## 2. Special CG condition evaluation and scene_flags[0..0x4A] unlocking for all 13 girls.
 ## 3. Amusement Park Ride Movie dispatch and PS1 MDEC streaming LBAs for all 5 rides.
 ## 4. Dialogue choice branching, affection/tokimeki/syoushin deltas, and stage progression.
-## 5. Authentic 320x240 PS1 presentation rendering with zero glyph bounding-box violations.
+## 5. 320x240 presentation rendering with zero glyph bounding-box violations.
 ## 6. Saving 4 visual proof captures into captures/.
 
 const Overlay = preload("res://overlays/event_cg_scenes_overlay.gd")

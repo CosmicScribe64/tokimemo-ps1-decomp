@@ -1,6 +1,9 @@
 extends RefCounted
 ## Strict data-only loader for finite school-day-media v1/v2 external packs.
 
+const FRESH_SCHEMA := "tokimemo.school-day-media.v4"
+const FRESH_MANIFEST_SHA := "70453a62d88bb6b9c1bf4478dee9d07a5be12fdd93b4225b5e7f7c4b26ad4839"
+const FRESH_PROFILE := "source-checked-april-command0-7-extra15.v1"
 const SCHEMA := "tokimemo.school-day-media.v1"
 const COMMAND7_SCHEMA := "tokimemo.school-day-media.v2"
 const HOLIDAY_SCHEMA := "tokimemo.school-day-media.v3"
@@ -21,6 +24,7 @@ const SD_STP_POLICY := "source palette load mode1 leaves STP unchanged; separate
 const READER_PINS := ["tools/assets/input.py:open_input", "tools/assets/image_packs_sd.py:export_sd_ui", "tools/assets/bs_cohort_profile.py:build_profile_context", "tools/assets/image_mdec.py:export_mdec"]
 const ExternalContentPath = preload("res://services/external_content_path.gd")
 
+var _route_profile := "OpenBIOS d93840921b5ad7ed515e95b0e414f1b1e2038b1a"
 var _root := ""
 var _components: Dictionary = {}
 var _route_tables: Dictionary = {}
@@ -42,6 +46,9 @@ func open_pack(root: String) -> bool:
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
 	if not parsed is Dictionary:
 		return _fail("manifest JSON must be an object")
+	var fresh: bool = parsed.get("schema") == FRESH_SCHEMA
+	if fresh and FileAccess.get_sha256(manifest_path) != FRESH_MANIFEST_SHA: return _fail("fresh original-source manifest differs")
+	_route_profile = FRESH_PROFILE if fresh else "OpenBIOS d93840921b5ad7ed515e95b0e414f1b1e2038b1a"
 	var holiday: bool = parsed.get("schema") == HOLIDAY_SCHEMA
 	var holiday_proof: Dictionary = {}
 	var manifest_keys := ["schema", "version", "provenance", "route_capabilities", "unsupported", "components"]
@@ -53,9 +60,9 @@ func open_pack(root: String) -> bool:
 		holiday_proof = proof
 	if not _exact_keys(parsed, manifest_keys):
 		return _fail("manifest keys differ from v1 contract")
-	var extended: bool = parsed.get("schema") in [COMMAND7_SCHEMA, HOLIDAY_SCHEMA]
-	var version: int = 3 if holiday else 2 if extended else 1
-	if parsed.get("schema") not in [SCHEMA, COMMAND7_SCHEMA, HOLIDAY_SCHEMA] or not _exact_int(parsed.get("version"), version) or int(parsed["version"]) != version:
+	var extended: bool = parsed.get("schema") in [COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA]
+	var version: int = 4 if fresh else 3 if holiday else 2 if extended else 1
+	if parsed.get("schema") not in [SCHEMA, COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA] or not _exact_int(parsed.get("version"), version) or int(parsed["version"]) != version:
 		return _fail("unsupported schema/version")
 	var provenance: Variant = parsed.get("provenance")
 	var provenance_keys := ["original_input_sha256", "original_executable_sha256", "reviewed_media_manifest_sha256", "native_profile_sha256", "readers"]
@@ -63,7 +70,7 @@ func open_pack(root: String) -> bool:
 	if holiday:
 		provenance_keys.append("holiday_profile_sha256")
 		readers.append("tools/assets/holiday_content_profile.py:build_holiday_profile")
-	if not provenance is Dictionary or not _exact_keys(provenance, provenance_keys) or provenance.get("original_input_sha256") != TRACK_SHA or provenance.get("original_executable_sha256") != EXE_SHA or provenance.get("reviewed_media_manifest_sha256") != MEDIA_SHA or provenance.get("native_profile_sha256") != NATIVE_SHA or not _string_array_equals(provenance.get("readers"), readers):
+	if not fresh and (not provenance is Dictionary or not _exact_keys(provenance, provenance_keys) or provenance.get("original_input_sha256") != TRACK_SHA or provenance.get("original_executable_sha256") != EXE_SHA or provenance.get("reviewed_media_manifest_sha256") != MEDIA_SHA or provenance.get("native_profile_sha256") != NATIVE_SHA or not _string_array_equals(provenance.get("readers"), readers)):
 		return _fail("source provenance is not the reviewed route profile")
 	if holiday and provenance.get("holiday_profile_sha256") != holiday_proof["native_profile_sha256"]:
 		return _fail("holiday native profile SHA differs")
@@ -92,18 +99,19 @@ func open_pack(root: String) -> bool:
 	_root = root
 	for command in ([0, 7] if extended else [0]):
 		var bg: Variant = components["command_%d_background" % command]
-		var fields := ["kind", "id", "source", "active_size", "padded_size", "active_crop", "native_route", "image", "stp_mask", "padded_image", "padded_stp_mask", "geometry_context", "reader", "capability"]
+		var fields := ["kind", "id", "source", "active_size", "padded_size", "active_crop", "native_route", "image", "stp_mask", "padded_image", "padded_stp_mask", "geometry_context", "reader", "capability", "decoder_model"]
 		if command == 7:
 			fields.append("native_read_extent")
 		if not bg is Dictionary or not _exact_keys(bg, fields):
 			return _fail("background fields differ from media contract")
+		if not preload("res://services/mdec_model_identity.gd").valid(bg): return _fail("background decoder model differs")
 		if not _validate_background(bg, command):
 			return _fail(_error)
 	if holiday:
 		if not _validate_route_tables(parsed.get("route_tables"), holiday_proof["route_tables"]):
 			return _fail("holiday/weekday room dependency tables differ")
 		for key in ["holiday_room_background", "holiday_command_0_background"]:
-			if not _metadata_equal(components[key], holiday_proof["components"][key]):
+			if not preload("res://services/mdec_model_identity.gd").valid(components[key]) or not _metadata_equal(components[key], holiday_proof["components"][key]):
 				return _fail("holiday background source/native/geometry descriptor differs")
 	var sd_profiles := [["command_0_sd", 3], ["command_7_sd", 16]]
 	if holiday:
@@ -192,7 +200,7 @@ func _validate_background(bg: Variant, command: int) -> bool:
 		return false
 	var bg_evidence: Variant = native_route.get("evidence")
 	var bg_actors: Variant = native_route.get("actors")
-	if not _exact_int(native_route.get("command"), command) or int(native_route["command"]) != command or not _exact_int(native_route.get("actual_last_command"), command) or int(native_route["actual_last_command"]) != command or not bg_actors is Array or bg_actors.size() != 1 or not _exact_int(bg_actors[0], 96) or int(bg_actors[0]) != 96 or native_route.get("profile") != "OpenBIOS d93840921b5ad7ed515e95b0e414f1b1e2038b1a" or not _valid_evidence(bg_evidence):
+	if not _exact_int(native_route.get("command"), command) or int(native_route["command"]) != command or not _exact_int(native_route.get("actual_last_command"), command) or int(native_route["actual_last_command"]) != command or not bg_actors is Array or bg_actors.size() != 1 or not _exact_int(bg_actors[0], 96) or int(bg_actors[0]) != 96 or native_route.get("profile") != _route_profile or not _valid_evidence(bg_evidence):
 		_error = "background is not bound to reviewed native route evidence"
 		return false
 	if not _exact_int_array(bg.get("active_size"), [320, 88]) or not _exact_int_array(bg.get("padded_size"), [320, 96]) or not _exact_int_array(bg.get("active_crop"), [0, 0, 320, 88]):
@@ -224,7 +232,7 @@ func _validate_sd(sd: Dictionary, key: String) -> bool:
 			return false
 		var route_evidence: Variant = route.get("evidence")
 		var route_actors: Variant = route.get("actors")
-		if not _exact_int(route.get("command"), expected_command) or int(route["command"]) != expected_command or not _exact_int(route.get("actual_last_command"), expected_command) or int(route["actual_last_command"]) != expected_command or not route_actors is Array or route_actors.size() != 1 or not _exact_int(route_actors[0], 96) or int(route_actors[0]) != 96 or route.get("profile") != "OpenBIOS d93840921b5ad7ed515e95b0e414f1b1e2038b1a" or not _valid_evidence(route_evidence):
+		if not _exact_int(route.get("command"), expected_command) or int(route["command"]) != expected_command or not _exact_int(route.get("actual_last_command"), expected_command) or int(route["actual_last_command"]) != expected_command or not route_actors is Array or route_actors.size() != 1 or not _exact_int(route_actors[0], 96) or int(route_actors[0]) != 96 or route.get("profile") != _route_profile or not _valid_evidence(route_evidence):
 			_error = "SD source is not bound to reviewed native route evidence"
 			return false
 	var frames: Variant = sd.get("frames")

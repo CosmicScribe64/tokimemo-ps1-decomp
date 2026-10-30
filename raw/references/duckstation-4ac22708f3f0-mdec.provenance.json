@@ -1,0 +1,6 @@
+{
+  "url": "https://raw.githubusercontent.com/stenzek/duckstation/4ac22708f3f07f112b1e11877ee2401d0b670d6f/src/core/mdec.cpp",
+  "commit": "4ac22708f3f07f112b1e11877ee2401d0b670d6f",
+  "sha256": "84f2c4e08eee890213e29cf760c275dfff59468a094ea213a12a11d13eedc4be",
+  "retrieval_scope": "source analysis only; no code copied into implementation"
+}

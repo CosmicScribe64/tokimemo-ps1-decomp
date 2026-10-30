@@ -2,7 +2,8 @@ extends SceneTree
 ## T-29014: Integration test suite for seasonal, condition, and vacation command variants.
 ## Verifies:
 ## 1. SchoolDay.resolve_bg_and_sd exact native pair selection across all commands, clubs, seasons, condition, and vacation.
-## 2. Authentic asset extraction, loading, and rendering of all 33 backgrounds and 44 SD sets via SeasonalCommandContentStore.
+## 2. SeasonalCommandContentStore pack loading, with image/frame checks on selected
+##    samples from the 33 backgrounds and 44 SD sets; extraction and full rendering are not tested here.
 ## 3. OrdinaryCommandMediaAdapter variant validation and media delivery with the seasonal pack.
 ## 4. SchoolDayController setup and load descriptor emission for seasonal and condition variants.
 

@@ -1,5 +1,5 @@
 extends RefCounted
-## T-29018: Lane 4 — Ending (ENDING) & Club Master (MASTER) Overlays.
+## T-29018: Lane 4: Ending (ENDING) & Club Master (MASTER) Overlays.
 ## Decompiled witnesses:
 ## - src/main/menu_speaker_girl.c (get_h_tokimeki, get_h_yuukou, girl_points_shiori, girl_points_others, girl_scores)
 ## - src/ovl/ending/graduation_candidate_selection.c (ending_graduation_candidate_select, ending_candidate_flag_gate, ending_graduation_result_dialogue_select)
@@ -268,7 +268,7 @@ static func compute_girl_scores(
 
 
 # ============================================================================
-# 2. ENDING — Graduation Confession Candidate Selection & Stage Flow
+# 2. ENDING: Graduation Confession Candidate Selection & Stage Flow
 # ============================================================================
 
 static func select_graduation_candidate(
@@ -604,7 +604,7 @@ static func step_graduation_sequence(seq_state: Dictionary, pad_pressed: int, ru
 
 
 # ============================================================================
-# 3. MASTER — Club Master Tournament Grade & Companion Selection
+# 3. MASTER: Club Master Tournament Grade & Companion Selection
 # ============================================================================
 
 static func compute_master_tournament_grade(practice_points: int, current_flags: int = 0) -> Dictionary:

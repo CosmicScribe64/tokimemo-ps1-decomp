@@ -12,6 +12,30 @@
         88
       ],
       "capability": "source_profiled_static_background_preview",
+      "decoder_model": {
+        "arithmetic": "four fractional dequant bits; signed15 clamp; two rounded18-bit matrix passes; signed9 wrap and signed8 saturation; rounded RGB555",
+        "bs_versions": [
+          1,
+          2,
+          3
+        ],
+        "game_runlevel_transport_independently_verified": false,
+        "hardware_pixel_parity_verified": false,
+        "id": "tokimemo-mdec-fixed-point-v1",
+        "implementation_sha256": {
+          "image_mdec.py": "6513b1e6434bdd1c65c804e5d637ae3db1f4fa11f69dd80b495cf05a2f8828ec",
+          "image_mdec_model.py": "3b8e5611bf6f763171b8bf3d5a22269211048b0ec21dc342088e90ec043d2222"
+        },
+        "quantization": "SDK default table; positive scales1..63",
+        "redux_aan_pixel_parity_verified": false,
+        "reference": {
+          "path": "src/core/mdec.cpp",
+          "project": "DuckStation",
+          "revision": "4ac22708f3f07f112b1e11877ee2401d0b670d6f",
+          "scope": "accurate numeric model comparison; no copied implementation",
+          "source_sha256": "84f2c4e08eee890213e29cf760c275dfff59468a094ea213a12a11d13eedc4be"
+        }
+      },
       "geometry_context": {
         "evidence": [
           "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
@@ -307,8 +331,8 @@
       "id": "asset-0b8b9f9c3c35bd56459635d36c882f7503e544c24f7cc40bdc4ffe39291cc7d4",
       "image": {
         "path": "asset-0b8b9f9c3c35bd56459635d36c882f7503e544c24f7cc40bdc4ffe39291cc7d4.background.png",
-        "sha256": "33bf3085559a8de389788f27fe1a12ddcb1a801ddf4fb9cc9c14a33df83af06b",
-        "size": 34587
+        "sha256": "e6942734a711b429a887831a7eb0cfcc4e2820eb9d8f28016cb3958b67d06e39",
+        "size": 33911
       },
       "kind": "mdec_background",
       "native_read_extent": {
@@ -440,8 +464,8 @@
       },
       "padded_image": {
         "path": "asset-0b8b9f9c3c35bd56459635d36c882f7503e544c24f7cc40bdc4ffe39291cc7d4.background.padded.png",
-        "sha256": "8531215e351aa68d92399ea2217af256a78221e2cd3a993d8b09caec12834ba1",
-        "size": 34671
+        "sha256": "76d01328c9e1b7096ec16b81bbe5f20c1cacb0c90e9fe152b75fcf510abde257",
+        "size": 34125
       },
       "padded_size": [
         320,
@@ -779,6 +803,30 @@
         88
       ],
       "capability": "source_profiled_static_background_preview",
+      "decoder_model": {
+        "arithmetic": "four fractional dequant bits; signed15 clamp; two rounded18-bit matrix passes; signed9 wrap and signed8 saturation; rounded RGB555",
+        "bs_versions": [
+          1,
+          2,
+          3
+        ],
+        "game_runlevel_transport_independently_verified": false,
+        "hardware_pixel_parity_verified": false,
+        "id": "tokimemo-mdec-fixed-point-v1",
+        "implementation_sha256": {
+          "image_mdec.py": "6513b1e6434bdd1c65c804e5d637ae3db1f4fa11f69dd80b495cf05a2f8828ec",
+          "image_mdec_model.py": "3b8e5611bf6f763171b8bf3d5a22269211048b0ec21dc342088e90ec043d2222"
+        },
+        "quantization": "SDK default table; positive scales1..63",
+        "redux_aan_pixel_parity_verified": false,
+        "reference": {
+          "path": "src/core/mdec.cpp",
+          "project": "DuckStation",
+          "revision": "4ac22708f3f07f112b1e11877ee2401d0b670d6f",
+          "scope": "accurate numeric model comparison; no copied implementation",
+          "source_sha256": "84f2c4e08eee890213e29cf760c275dfff59468a094ea213a12a11d13eedc4be"
+        }
+      },
       "geometry_context": {
         "evidence": [
           "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
@@ -1074,8 +1122,8 @@
       "id": "asset-6acf635b0fa775c476ad8ee4e18488a041d6366b18f22c804c372fde7cf326cb",
       "image": {
         "path": "asset-6acf635b0fa775c476ad8ee4e18488a041d6366b18f22c804c372fde7cf326cb.background.png",
-        "sha256": "b4f603ee1155ed26c34a2e96018b6cef35e435d52977eb15eabcd55f7800b28c",
-        "size": 38396
+        "sha256": "eb1df277de1515da4329feef4deb93b233d6bd1b0afc72994008835d42c600d6",
+        "size": 38083
       },
       "kind": "mdec_background",
       "native_read_extent": {
@@ -1207,8 +1255,8 @@
       },
       "padded_image": {
         "path": "asset-6acf635b0fa775c476ad8ee4e18488a041d6366b18f22c804c372fde7cf326cb.background.padded.png",
-        "sha256": "c1fee2e41b30dfddbd759e8fcc4676129db7405e1ec104166a4fd3402a19a174",
-        "size": 38483
+        "sha256": "b58d42824a32f4f6216063cdc37b6e80d5ded890418cf0fe183c39e24ca7217e",
+        "size": 38316
       },
       "padded_size": [
         320,

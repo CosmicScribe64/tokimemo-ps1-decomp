@@ -6,7 +6,7 @@ const TRACK_SHA := "28c3c501b0c67b87ca1e30515da73619497d509ff6adc28ff722aa02897d
 const BG_SHA := "280b440f4f005d53340afd5389cd755a5bbb574fa30c36013df484d039fd7aab"
 const BG_TRANSFER_SHA := "7df0f23cba36accc6f4a5e2b73921def4b7eb986c11f556999f3b848f90b6922"
 const BG_ADJACENT_SHA := "5065feceb3135b339eae443d62322d3d70554f864e7dcf0652ba5785b2c18848"
-const BG_PNG_SHA := "01615ba01ae49c662040d7e1d91248862db3ee66d216088477e9a4098b8fb03b"
+const BG_PNG_SHA := "90202791f10f6cdaa555e756080a2f17283941cb73c4e91f143a40517173c18e"
 const ACTOR_SHA := "bb224a47fa1ac9c102dd4701d3d3e0819ba30cac1e5637183886b8be4f95340c"
 const BG_ID := "arrival-bg-494b-native10"
 const ACTOR_ID := "arrival-o01-hidden-stage0"
@@ -33,6 +33,9 @@ func open(root: String, approved_manifest_sha: String) -> String:
 		return "first-arrival media release/schema is unsupported"
 	if not parsed.get("runtime_profile") is Dictionary or not parsed.get("native_transfers") is Dictionary or not parsed.get("files") is Dictionary:
 		return "first-arrival native transfer profile is missing"
+	var model_background: Variant = parsed.get("background")
+	if not model_background is Dictionary or not model_background.get("export") is Dictionary or not preload("res://services/mdec_model_identity.gd").valid(model_background.export.get("metadata")):
+		return "first-arrival decoder model identity differs"
 	var profile: Dictionary = parsed.runtime_profile
 	if profile.get("id") is not String or profile.id != "stage0_hidden_actor.v1" or not _equals_int(profile.get("stage"),0) or not _equals_int(profile.get("actor96_initial_draw_flags"),0x24) or profile.get("actor96_visible_rendering") is not bool or profile.actor96_visible_rendering or not _equals_int(profile.get("background_slot"),1) or not _equals_int(profile.get("background_brightness"),128):
 		return "first-arrival runtime profile exceeds hidden stage0 support"

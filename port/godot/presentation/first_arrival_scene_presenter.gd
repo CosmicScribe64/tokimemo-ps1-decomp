@@ -11,12 +11,22 @@ var _painter: TextPainter
 var _actor: RefCounted
 var _last_text_key: String = ""
 var _last_text_region: Image
+var _accessibility: Dictionary = {}
+var presentation_visible_count := -1
+var text_translations: RefCounted = null
+var translation_error := ""
+
+func configure_accessibility(value: Dictionary) -> void:
+	if value == _accessibility: return
+	_accessibility = value.duplicate(true)
+	_last_text_key = ""
+	_last_text_region = null
 
 func prepare(media: Media, text: Store, painter: TextPainter, initial_state: State, actor_renderer: RefCounted = null) -> String:
 	if _media != null: return "first-arrival presenter already owns its prepared resources"
 	if media == null or media.resource_identity().is_empty() or text == null or text.initial_constants().is_empty() or painter == null or initial_state == null:
 		return "first-arrival presenter needs original media, text, font and live owned profile"
-	for line_idx in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]:
+	for line_idx in range(15):
 		var resolved_line := text.resolve(line_idx,initial_state.rule_state)
 		var error: String = painter.preflight(resolved_line)
 		if not error.is_empty(): return error
@@ -89,27 +99,56 @@ func render(state: State, checker: Callable, front: Callable, uploads_ready: Cal
 		image = previous_frame.duplicate()
 	var error := _draw(checker,image,view_state,snapshot)
 	if error.is_empty(): error = _media.paint_background(image,view_state,_actor)
-	if error.is_empty() and (view_state.opening.get("actor96_draw_flags") == 0xa4 or view_state.opening.get("actor97_draw_flags") == 0xa4 or view_state.opening.get("actor99_draw_flags") == 0xa4 or view_state.opening.get("prologue_petals") is Array):
+	if error.is_empty() and (view_state.opening.get("actor96_draw_flags") in [0x84,0xa4] or view_state.opening.get("actor97_draw_flags") == 0xa4 or view_state.opening.get("actor99_draw_flags") == 0xa4 or view_state.opening.get("prologue_petals") is Array):
 		if _actor == null or not _actor.has_method("paint"): error = "visible arrival has no prepared original actor painter"
 		else: error = _actor.paint(image,view_state,Vector2i(160,120))
+	if error.is_empty(): error = _paint_rei_flash(image,view_state)
+	if error.is_empty() and view_state.mode_stage == 9:
+		if _actor == null or not _actor.has_method("paint_rei_front"): error = "Rei front actor layer is unavailable"
+		else: error = _actor.paint_rei_front(image,view_state)
+	var backdrop: float = _accessibility.get("backdrop", 1.0)
+	var before_hud: Image = image.duplicate() if backdrop < 1.0 else null
 	if error.is_empty(): error = _draw(front,image,view_state,snapshot)
 	if not error.is_empty(): return {"error":error}
+	if before_hud != null:
+		for y: int in range(164, 220):
+			for x: int in range(27, 293):
+				image.set_pixel(x, y, before_hud.get_pixel(x, y).lerp(image.get_pixel(x, y), backdrop))
 	var msg_visible: bool = bool(view_state.opening.get("prologue_hud_live",{}).get("message_visible",true)) and not bool(view_state.opening.get("prologue_text_cleared",false))
 	if msg_visible and view_state.opening.get("prologue_text_work") is Dictionary:
-		var work: Dictionary = view_state.opening.prologue_text_work
+		var work: Dictionary = view_state.opening.prologue_text_work.duplicate(true)
 		var line_id: Variant = work.get("line_id")
 		var valid_line1: bool = line_id == 1 and (view_state.mode_stage == 1 or (view_state.mode_stage == 2 and view_state.substep == 0 and view_state.opening.get("names_media",{}).get("active_draw") == "board_scroll_transition"))
 		var valid_line2: bool = line_id == 2 and (view_state.mode_stage == 2 or (view_state.mode_stage == 3 and view_state.substep == 0 and not view_state.opening.has("bg_layer_0")))
 		var valid_line3: bool = line_id == 3 and (view_state.mode_stage == 3 or (view_state.mode_stage == 4 and view_state.substep == 0))
 		var valid_line4: bool = line_id == 4 and view_state.mode_stage == 4
 		var valid_line5_10: bool = line_id in [5, 6, 7, 8, 9, 10] and (view_state.mode_stage == 6 or (view_state.mode_stage == 7 and view_state.substep == 0))
-		var valid_line11: bool = line_id == 11 and view_state.mode_stage == 7
-		if not line_id is int or (line_id != 0 and not valid_line1 and not valid_line2 and not valid_line3 and not valid_line4 and not valid_line5_10 and not valid_line11): return {"error":"first-arrival presenter supports only the original first twelve lines"}
+		var valid_line11: bool = line_id == 11 and view_state.mode_stage in [7,8]
+		var valid_line12: bool = line_id == 12 and (view_state.mode_stage == 8 or (view_state.mode_stage == 9 and view_state.substep == 0))
+		var valid_rei_dialogue: bool = view_state.mode_stage == 9 and ((line_id == 13 and view_state.substep in [1,2,3,4,5,6,7]) or (line_id == 14 and view_state.substep in [8,9,10,11]))
+		if not line_id is int or (line_id != 0 and not valid_line1 and not valid_line2 and not valid_line3 and not valid_line4 and not valid_line5_10 and not valid_line11 and not valid_line12 and not valid_rei_dialogue): return {"error":"first-arrival presenter line is outside its original scene lifetime"}
 		var text_view := _text.resolve(int(line_id),view_state.rule_state)
+		if _accessibility.get("text_speed", "normal") == "slow" and presentation_visible_count >= 0:
+			work.pos = mini(work.total, presentation_visible_count)
+		match _accessibility.get("text_speed", "normal"):
+			"fast": work.pos = mini(int(work.total), int(work.pos) * 2)
+			"instant": work.pos = int(work.total)
 		var brightness: Variant = view_state.opening.get("screen_brightness")
 		if not brightness is int: return {"error":"first-arrival UI brightness has no owned value"}
 		var text_key := "%s:%s:%s:%s:%s" % [str(line_id), str(work.get("pos")), str(work.get("total")), str(brightness), JSON.stringify(work.get("entries", []))]
-		if _last_text_region != null and _last_text_key == text_key and text_view.get("error", "") == "":
+		var font_scale: float = _accessibility.get("font_scale", 1.0)
+		translation_error = ""
+		var translation: Dictionary = text_translations.replacement(Store.PAYLOAD_SHA, int(line_id)) if text_translations != null else {}
+		if not translation.is_empty():
+			var translated: Dictionary = _painter.render_translation(image, text_view, work, brightness, translation)
+			if not str(translated.get("error", "")).is_empty():
+				translation_error = str(translated.error)
+				var original: Dictionary = _painter.render_into(image, text_view, work, brightness)
+				if not str(original.get("error", "")).is_empty(): return original
+		elif font_scale > 1.0 or _accessibility.get("text_speed", "normal") != "normal":
+			var drawn: Dictionary = _painter.render_accessible(image, text_view, work, brightness, font_scale, _accessibility.get("backdrop", 1.0), _accessibility.get("text_speed", "normal") != "normal")
+			if not str(drawn.get("error", "")).is_empty(): return drawn
+		elif backdrop == 1.0 and _last_text_region != null and _last_text_key == text_key and text_view.get("error", "") == "":
 			image.blit_rect(_last_text_region, Rect2i(0, 0, 266, 52), Vector2i(27, 166))
 		else:
 			var drawn := _painter.render_into(image,text_view,work,brightness)
@@ -117,6 +156,12 @@ func render(state: State, checker: Callable, front: Callable, uploads_ready: Cal
 			_last_text_region = image.get_region(Rect2i(27, 166, 266, 52))
 			_last_text_key = text_key
 	if state.opening != snapshot.opening or view_state.opening != snapshot.opening or state.frame_count != snapshot.frame_count or view_state.frame_count != snapshot.frame_count: return {"error":"first-arrival drawing changed simulation state"}
+	if _accessibility.get("reduce_flashes", false) and previous_frame != null and previous_frame.get_size() == image.get_size():
+		for y: int in image.get_height():
+			for x: int in image.get_width():
+				var previous := previous_frame.get_pixel(x, y)
+				var current := image.get_pixel(x, y)
+				image.set_pixel(x, y, Color(clampf(current.r, previous.r - 0.12, previous.r + 0.12), clampf(current.g, previous.g - 0.12, previous.g + 0.12), clampf(current.b, previous.b - 0.12, previous.b + 0.12), current.a))
 	return {"error":"","image":image}
 
 static func _draw(callback: Callable, target: Image, state: State, snapshot: Dictionary) -> String:
@@ -125,3 +170,25 @@ static func _draw(callback: Callable, target: Image, state: State, snapshot: Dic
 	if outcome is String: return outcome
 	if outcome is Dictionary and outcome.get("error") is String: return outcome.error
 	return "first-arrival HUD renderer returned an unknown result"
+
+static func _paint_rei_flash(target: Image, state: State) -> String:
+	var effect: Variant = state.opening.get("rei_banner_primitive")
+	if effect == null: return ""
+	if not effect is Dictionary or effect.get("kind") not in ["flash","white"] or effect.get("frame_count") != state.frame_count:
+		return "Rei primitive is not owned by this committed source frame"
+	if effect.kind == "white": return ""
+	if not effect.get("level") is int or effect.level < 0 or effect.level > 255:
+		return "Rei flash level is outside native byte range"
+	# prologue_flash_boxes_draw queues two flat G4s at OT11, then a dither
+	# tpage with ABR1. actor96 is later head-inserted at OT11, so it draws
+	# before the additive flash; the HUD remains in front at smaller slots.
+	const DITHER := [-4,0,-3,1,2,-2,3,-1,-3,1,-4,0,3,-1,2,-2]
+	for y: int in 160:
+		for x: int in 320:
+			var foreground := clampi((int(effect.level)+DITHER[(y&3)*4+(x&3)])>>3,0,31)
+			var old := target.get_pixel(x,y)
+			var red := mini(31,(old.r8>>3)+foreground)
+			var green := mini(31,(old.g8>>3)+foreground)
+			var blue := mini(31,(old.b8>>3)+foreground)
+			target.set_pixel(x,y,Color8((red<<3)|(red>>2),(green<<3)|(green>>2),(blue<<3)|(blue>>2)))
+	return ""

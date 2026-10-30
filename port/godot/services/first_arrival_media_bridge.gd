@@ -8,13 +8,14 @@ const State = preload("res://rules/new_game_route_state.gd")
 const Session = preload("res://core/game_session.gd")
 const Math = preload("res://core/native_math.gd")
 const AudioRules = preload("res://services/opening_audio_rules.gd")
+const TextWork = preload("res://rules/prologue_text_work.gd")
 const BOARD_ID := "prologue.board.0x4954"
 const APPROVAL_META := &"first_arrival_media_preflight_v1"
 const OWN_INTENTS := ["opening_media_request","opening_background_select","opening_arrival_actor_setup",
 	"opening_board_decode","opening_media_reset","opening_scene_reset","first_arrival_background_draw",
 	"first_arrival_native_upload","first_arrival_board_upload","first_arrival_board_scroll_draw",
 	"first_arrival_names_bg_upload","first_arrival_names_crossfade_draw",
-	"first_arrival_cut_upload","first_arrival_o12_backup","first_arrival_o12_restore","first_arrival_o06_copy","first_arrival_o07_copy","first_arrival_stage_actor_upload"]
+	"first_arrival_cut_upload","first_arrival_o12_backup","first_arrival_o12_restore","first_arrival_o06_copy","first_arrival_o07_copy","first_arrival_o08_copy","first_arrival_stage_actor_upload"]
 var queue := Queue.new()
 var _store: Store
 var _board_store: BoardStore
@@ -50,6 +51,7 @@ func prepare(store: Store, board_store: BoardStore = null) -> String:
 			[BoardStore.BG_ACF6_ID, 0xacf6, BoardStore.BG_ACF6_TRANSFER_SHA, [704,0,320,160], 0, BoardStore.BG_ACF6_WORD_SHA],
 			[BoardStore.BG_ACD4_ID, 0xacd4, BoardStore.BG_ACD4_TRANSFER_SHA, [320,256,320,160], 1, BoardStore.BG_ACD4_WORD_SHA],
 			[BoardStore.BG_ACEC_ID, 0xacec, BoardStore.BG_ACEC_TRANSFER_SHA, [704,0,320,160], 0, BoardStore.BG_ACEC_WORD_SHA],
+			[BoardStore.BG_AD00_ID, 0xad00, BoardStore.BG_AD00_TRANSFER_SHA, [320,256,320,160], 1, BoardStore.BG_AD00_WORD_SHA],
 		]:
 			var bg_tr := board_store.background_transfer(spec[0])
 			var bg_up := board_store.background_software_upload(spec[0])
@@ -58,12 +60,13 @@ func prepare(store: Store, board_store: BoardStore = null) -> String:
 			if not bg_up.get("error") is String or not bg_up.error.is_empty() or bg_up.get("rectangle") != spec[3] or bg_up.get("buffer") != spec[4] or not bg_up.get("words") is PackedByteArray or bg_up.words.size() != 102400 or Store._sha(bg_up.words) != spec[5]:
 				return "first-arrival names background software upload descriptor differs from source"
 		var bg_descs := board_store.background_descriptions()
-		if bg_descs.size() != 7 or not bg_descs.has(str(0x495d)) or not bg_descs.has(str(0x4966)) or not bg_descs.has(str(0xacdd)) or not bg_descs.has(str(0xace6)) or not bg_descs.has(str(0xacf6)) or not bg_descs.has(str(0xacd4)) or not bg_descs.has(str(0xacec)):
+		if bg_descs.size() != 8 or not bg_descs.has(str(0x495d)) or not bg_descs.has(str(0x4966)) or not bg_descs.has(str(0xacdd)) or not bg_descs.has(str(0xace6)) or not bg_descs.has(str(0xacf6)) or not bg_descs.has(str(0xacd4)) or not bg_descs.has(str(0xacec)) or not bg_descs.has(str(0xad00)):
 			return "first-arrival names background descriptions are missing"
 		resources.backgrounds.merge(bg_descs, true)
 		var actor_descs := board_store.actor_descriptions()
-		if actor_descs.size() != 8:
-			return "first-arrival stage 2..6 actor descriptions are missing"
+		var expected_transfers := ["49:2149203968:43800","17:2149056512:44095","49:2149203968:43555","9:2149056512:43960","49:2149203968:43604","25:2149515264:43978","49:2149203968:43653","25:2149515264:44003","49:2149203968:43702","9:2149515264:44028","49:2149203968:43751","25:2149056512:44037","33:2149482496:44062"]
+		if actor_descs.size() != expected_transfers.size() or not actor_descs.has_all(expected_transfers):
+			return "first-arrival stage 2..8 actor descriptions are missing"
 		resources.actors.merge(actor_descs, true)
 		boards[str(0x4954)] = {"id":BOARD_ID,"sha256":BoardStore.SOURCE_SHA,"lba":0x4954,"sectors":9,"destination":0x80162000,"manifest_sha256":BoardStore.MANIFEST_SHA}
 	var error: String = queue.prepare(resources.backgrounds,resources.actors,{},boards)
@@ -113,6 +116,10 @@ func callbacks() -> Dictionary:
 	services["stage_06_to_07_setup"] = stage_06_to_07_setup
 	services["stage_07_cd_wait"] = stage_07_cd_wait
 	services["stage_07_lip_sync_line_11"] = stage_07_lip_sync_line_11
+	services["stage_07_to_08_setup"] = stage_07_to_08_setup
+	services["rei_banner_effect"] = rei_banner_effect
+	services["rei_lines_effect"] = rei_lines_effect
+	services["cd_audio_state"] = AudioRules.check_cd
 	services["audio_command"] = stage_05_audio_command
 	return services
 
@@ -278,6 +285,25 @@ func background_decode(state: State, slot: int, result: Session.FrameResult) -> 
 		result.presentation.append({"kind":"opening_background_select","slot":1,"resource_id":BoardStore.BG_ACEC_ID,"buffer":0})
 		result.presentation.append({"kind":"first_arrival_names_bg_upload","batch_key":batch_key,"resource_id":BoardStore.BG_ACEC_ID,"buffer":0,"decode_rect":[704,0,320,160],"word_sha256":BoardStore.BG_ACEC_WORD_SHA})
 		return 0
+	if state.mode_stage == 7 and state.mode_step == 0 and state.substep == 7:
+		var names_media: Variant = state.opening.get("names_media")
+		if not names_media is Dictionary or names_media.get("bg_show_1") != 0 or not names_media.get("buffer_0") is Dictionary or names_media.buffer_0.get("lba") != 0xacec:
+			result.error = "first-arrival 0xad00 decode requires buffer 0 active with 0xacec in stage 7 substep 7"
+			return -1
+		var media: Variant = state.opening.get("media")
+		var request: Variant = media.get("requests",{}).get(media.get("background_pending",{}).get("1","")) if media is Dictionary else null
+		if not request is Dictionary or request.get("kind") != "background" or request.get("resource_id") != BoardStore.BG_AD00_ID or request.get("status") not in ["ready","retry"]:
+			result.error = "opening background decode has no matching completed AD00 read"
+			return -1
+		if request.status == "retry": return -1
+		var batch_key := JSON.stringify([media.epoch,request.request_id,BoardStore.BG_AD00_ID,BoardStore.BG_AD00_TRANSFER_SHA,BoardStore.BG_AD00_WORD_SHA,[320,256,320,160]]).sha256_text()
+		media.decoded["1"] = {"resource_id":BoardStore.BG_AD00_ID,"resource_sha256":BoardStore.BG_AD00_TRANSFER_SHA,"buffer":1}
+		names_media["buffer_1"] = {"lba":0xad00,"resource_id":BoardStore.BG_AD00_ID,"transfer_sha256":BoardStore.BG_AD00_TRANSFER_SHA,"word_sha256":BoardStore.BG_AD00_WORD_SHA,"decode_rect":[320,256,320,160],"upload_batch_key":batch_key}
+		names_media["bg_show_1"] = 1
+		state.opening["names_media"] = names_media
+		result.presentation.append({"kind":"opening_background_select","slot":1,"resource_id":BoardStore.BG_AD00_ID,"buffer":1})
+		result.presentation.append({"kind":"first_arrival_names_bg_upload","batch_key":batch_key,"resource_id":BoardStore.BG_AD00_ID,"buffer":1,"decode_rect":[320,256,320,160],"word_sha256":BoardStore.BG_AD00_WORD_SHA})
+		return 1
 	result.error = "first-arrival background decode is outside its source stage"
 	return -1
 
@@ -349,7 +375,13 @@ func before_line0(state: State, line: int, result: Session.FrameResult) -> void:
 	if line == 11 and _board_store != null and state.game_mode == 0x15 and state.mode_stage == 7 and state.mode_step == 0 and state.substep == 0 and state.opening.get("arrival_media") is Dictionary and state.opening.arrival_media.get("back_clear") == false and state.opening.get("bg_layer_0") is Dictionary and state.opening.get("actor96") is Dictionary and state.opening.actor96.get("profile") == "o07_yoshio_body":
 		state.opening.erase("prologue_text_cleared")
 		return
-	result.error = "first-arrival line0 setup is outside the source dispatch"
+	if line == 12 and _board_store != null and state.game_mode == 0x15 and state.mode_stage == 8 and state.mode_step == 0 and state.substep == 2 and state.opening.get("actor96",{}).get("profile") == "o08_rei_banner" and state.opening.get("cut_media",{}).get("resource_id") == BoardStore.CUT_08_ID:
+		state.opening.erase("prologue_text_cleared")
+		return
+	if line in [13,14] and _board_store != null and state.game_mode == 0x15 and state.mode_stage == 9 and state.mode_step == 0 and state.substep == (0 if line == 13 else 7) and state.opening.get("actor96",{}).get("profile") == "o09_rei_entrance" and state.opening.get("cut_media",{}).get("resource_id") == BoardStore.CUT_09_ID:
+		state.opening.erase("prologue_text_cleared")
+		return
+	result.error = "first-arrival line setup is outside the source dispatch"
 
 func prologue_palette_adjust(state: State, result: Session.FrameResult) -> void:
 	if _board_store == null or state.game_mode != 0x15 or not state.opening.get("media") is Dictionary:
@@ -809,6 +841,199 @@ func stage_06_to_07_setup(state: State, decoded: int, result: Session.FrameResul
 	result.presentation.append({"kind":"first_arrival_stage_actor_upload","batch_key":batch_key_96_6,"resource_id":BoardStore.O_07_ID,"slot":6,"source_offset":0x4190})
 	result.presentation.append({"kind":"first_arrival_stage_actor_upload","batch_key":batch_key_96_7,"resource_id":BoardStore.O_07_ID,"slot":7,"source_offset":0x8190})
 
+func stage_07_to_08_setup(state: State, result: Session.FrameResult) -> void:
+	if _board_store == null or state.game_mode != 0x15 or state.mode_stage != 7 or state.mode_step != 0 or state.substep != 7 or not state.opening.get("media") is Dictionary or not state.opening.get("arrival_media") is Dictionary:
+		result.error = "Rei transition requires source stage7/substep7 and prepared media"
+		return
+	var media: Dictionary = state.opening.media
+	var requests: Dictionary = media.get("requests",{})
+	var pending: Dictionary = media.get("actor_pending",{})
+	var cut_id := str(pending.get(str(0x801a4000),""))
+	var actor_id := str(pending.get(str(0x801f0000),""))
+	var cut: Variant = requests.get(cut_id)
+	var actor: Variant = requests.get(actor_id)
+	if not cut is Dictionary or cut.get("status") != "ready" or cut.get("kind") != "actors" or cut.get("resource_id") != BoardStore.CUT_08_ID or cut.get("resource_sha256") != BoardStore.CUT_08_SHA:
+		result.error = "Rei transition lacks completed original CUT09 read"
+		return
+	if not actor is Dictionary or actor.get("status") != "ready" or actor.get("kind") != "actors" or actor.get("resource_id") != BoardStore.O_08_ID or actor.get("resource_sha256") != BoardStore.O_08_SHA:
+		result.error = "Rei transition lacks completed original O09 backup read"
+		return
+	# Source memcpy precedes decode; publication applies these only after the
+	# complete frame passes validation and commits.
+	result.presentation.append({"kind":"first_arrival_o08_copy","resource_id":BoardStore.O_08_ID,"sha256":BoardStore.O_08_SHA,"bytes":18432})
+	var decoded := background_decode(state, 1, result)
+	if not result.error.is_empty() or decoded != 1:
+		if result.error.is_empty(): result.error = "Rei transition did not select original alternate background"
+		return
+	for index in range(96,160):
+		state.opening.erase("actor%d" % index)
+		state.opening.erase("actor%d_draw_flags" % index)
+		state.opening.erase("actor%d_source_draw" % index)
+	state.opening.erase("o07_batches")
+	state.opening["bg_brightness"] = 0
+	state.opening["prologue_text_cleared"] = true
+	state.opening["prologue_scene_counter"] = 0
+	for component in ["D_801220E0","D_801220E1","D_801220E2"]: state.opening[component] = 0
+	var cut_key := JSON.stringify([media.epoch,cut_id,BoardStore.CUT_08_ID,"white_palette"]).sha256_text()
+	var actor_key := JSON.stringify([media.epoch,actor_id,BoardStore.O_08_ID,5,0xa0]).sha256_text()
+	state.opening["cut_media"] = {"resource_id":BoardStore.CUT_08_ID,"sha256":BoardStore.CUT_08_SHA,"request_id":cut_id,"upload_batch_key":cut_key,"white_palette":true}
+	state.opening["bg_layer_0"] = {"enabled":1,"palette_flag":1,"clut_row":494,"attribute":0x41000000,"resource_id":BoardStore.CUT_08_ID,"cut_batch_key":cut_key}
+	state.opening["actor96"] = {"profile":"o08_rei_banner","index":96,"unk_01":12,"flags":0x40,"quad_flags":0x41000000,"draw_flags":0x84,"frame_table":0x80180078,"sequence_table":0x80180088,"tpage_table":0x80180074,"frame_index":0,"sequence_counter":0,"x":-160,"y":-120,"brightness":0,"clut_row":494,"tpage_slot":5,"resource_id":BoardStore.O_08_ID,"source_sha256":BoardStore.O_08_SHA,"upload_batch_key":actor_key}
+	state.opening["actor96_draw_flags"] = 0x84
+	result.presentation.append({"kind":"first_arrival_cut_upload","batch_key":cut_key,"resource_id":BoardStore.CUT_08_ID,"sha256":BoardStore.CUT_08_SHA})
+	result.presentation.append({"kind":"first_arrival_stage_actor_upload","batch_key":actor_key,"resource_id":BoardStore.O_08_ID,"slot":5,"source_offset":0xa0})
+
+func rei_banner_effect(state: State, kind: String, value: int, result: Session.FrameResult) -> void:
+	if _board_store == null or state.game_mode != 0x15 or state.mode_stage != 8 or state.mode_step != 0:
+		result.error = "Rei banner effect requires original stage8 media"
+		return
+	match kind:
+		"flash", "white":
+			if kind == "white" and state.substep == 3:
+				# Source case3 waits for CD playback and does not call line_run.
+				# Account for that exact skipped text tick without revealing ink.
+				var work: Variant = state.opening.get("prologue_text_work")
+				if not work is Dictionary or work.get("line_id") != 12 or work.get("next_frame") != state.frame_count:
+					result.error = "Rei voice wait lost its expected text frame"; return
+				work.next_frame = Math.u32(state.frame_count+1)
+			state.opening["rei_banner_primitive"] = {"kind":kind,"level":clampi(value,0,255),"frame_count":Math.u32(state.frame_count+1)}
+		"color_cut":
+			if state.substep != 1 or not state.opening.get("actor96") is Dictionary or state.opening.get("cut_media",{}).get("resource_id") != BoardStore.CUT_08_ID:
+				result.error = "Rei color cut has no source white-palette owner"; return
+			state.opening.actor96["clut_row"] = 504
+			state.opening.actor96["brightness"] = 128
+			state.opening.actor96["scale"] = 128
+			var key := JSON.stringify([state.opening.media.epoch,BoardStore.CUT_08_ID,"stage8_color"]).sha256_text()
+			state.opening.cut_media["upload_batch_key"] = key
+			state.opening.cut_media["white_palette"] = false
+			state.opening.bg_layer_0["cut_batch_key"] = key
+			state.opening.bg_layer_0["clut_row"] = 495
+			result.presentation.append({"kind":"first_arrival_cut_upload","batch_key":key,"resource_id":BoardStore.CUT_08_ID,"sha256":BoardStore.CUT_08_SHA})
+		"lip_sync":
+			if not state.opening.get("actor96") is Dictionary:
+				result.error = "Rei lip synchronization lost actor96"; return
+			var lip: Dictionary = state.opening.get("prologue_lip_sync",{})
+			if lip.get("variant") != "rei": lip = AudioRules.lip_sync_rei(state)
+			if (AudioRules.check_cd(state) & 4) != 0:
+				state.opening.actor96["unk_01"] = 9
+				state.opening.actor96["draw_flags"] = 0xa4
+				state.opening["actor96_draw_flags"] = 0xa4
+				state.opening.actor96["clut_row"] = 504
+				state.opening.actor96["frame_index"] = int(lip.get("ring_frame",0))
+			else: state.opening.actor96["frame_index"] = 0
+		"clear_for_read":
+			state.opening.bg_layer_0["enabled"] = 0
+			state.opening.erase("actor96"); state.opening.erase("actor96_source_draw")
+			state.opening["actor96_draw_flags"] = 0
+		"next_scene":
+			_rei_entrance_setup(state,result)
+		_: result.error = "Unknown source Rei banner effect"
+
+func _rei_entrance_setup(state: State, result: Session.FrameResult) -> void:
+	# prologue.c::prologue_rei_banner_run case7: these are direct primary
+	# reads. Unlike O09, O10 must never be copied from the backup buffer.
+	if state.substep != 7 or not state.opening.get("media") is Dictionary:
+		result.error = "Rei entrance requires source stage8/substep7"; return
+	var media: Dictionary = state.opening.media
+	var pending: Dictionary = media.get("actor_pending",{})
+	var requests: Dictionary = media.get("requests",{})
+	var cut_id := str(pending.get(str(0x801a4000),""))
+	var actor_id := str(pending.get(str(0x80180000),""))
+	for expected: Array in [[cut_id,BoardStore.CUT_09_ID,BoardStore.CUT_09_SHA],[actor_id,BoardStore.O_09_ID,BoardStore.O_09_SHA]]:
+		var request: Variant = requests.get(expected[0])
+		if not request is Dictionary or request.get("status") != "ready" or request.get("kind") != "actors" or request.get("resource_id") != expected[1] or request.get("resource_sha256") != expected[2]:
+			result.error = "Rei entrance lacks completed original CUT10/O10 read"; return
+	for index in range(96,160):
+		state.opening.erase("actor%d" % index)
+		state.opening.erase("actor%d_draw_flags" % index)
+		state.opening.erase("actor%d_source_draw" % index)
+	var cut_key := JSON.stringify([media.epoch,cut_id,BoardStore.CUT_09_ID]).sha256_text()
+	var key5 := JSON.stringify([media.epoch,actor_id,BoardStore.O_09_ID,5,0x42c0]).sha256_text()
+	var key6 := JSON.stringify([media.epoch,actor_id,BoardStore.O_09_ID,6,0x82c0]).sha256_text()
+	state.opening["bg_brightness"] = 128
+	state.opening["cut_media"] = {"resource_id":BoardStore.CUT_09_ID,"sha256":BoardStore.CUT_09_SHA,"request_id":cut_id,"upload_batch_key":cut_key,"white_palette":false}
+	state.opening["bg_layer_0"] = {"enabled":0,"palette_flag":1,"clut_row":495,"attribute":0x41000000,"resource_id":BoardStore.CUT_09_ID,"cut_batch_key":cut_key}
+	state.opening["actor96"] = {"profile":"o09_rei_entrance","index":96,"unk_01":10,"flags":0x40,"quad_flags":0x41000000,"draw_flags":0xa4,"frame_table":0x80184288,"sequence_table":0x801842ac,"tpage_table":0x80184280,"frame_index":0,"sequence_counter":0,"x":-160,"y":-120,"brightness":128,"clut_row":505,"resource_id":BoardStore.O_09_ID,"source_sha256":BoardStore.O_09_SHA,"upload_batch_key":key5,"upload_batch_key_2":key6}
+	state.opening["actor96_draw_flags"] = 0xa4
+	result.presentation.append({"kind":"first_arrival_cut_upload","batch_key":cut_key,"resource_id":BoardStore.CUT_09_ID,"sha256":BoardStore.CUT_09_SHA})
+	result.presentation.append({"kind":"first_arrival_stage_actor_upload","batch_key":key5,"resource_id":BoardStore.O_09_ID,"slot":5,"source_offset":0x42c0})
+	result.presentation.append({"kind":"first_arrival_stage_actor_upload","batch_key":key6,"resource_id":BoardStore.O_09_ID,"slot":6,"source_offset":0x82c0})
+
+func rei_lines_effect(state: State, kind: String, value: int, result: Session.FrameResult) -> Variant:
+	if _board_store == null or state.game_mode != 0x15 or state.mode_stage != 9 or state.mode_step != 0 or state.opening.get("actor96",{}).get("profile") != "o09_rei_entrance":
+		result.error = "Rei dialogue effect requires its original O10 actor owner"; return null
+	var allowed := {"flash":[1,2,3],"wait_voice":[1],"lip_sync":[2,3,4,8,9],"page_boundary":[2,3],"page_transition":[3],"animate_exit":[4],"exit_done":[5],"line14_setup":[7],"line14_hold":[8],"blink":[1,2,3,4,5]}
+	if not allowed.has(kind) or state.substep not in allowed[kind]:
+		result.error = "Rei dialogue effect is outside its source substep"; return null
+	match kind:
+		"flash":
+			if value < 0 or value > 255:
+				result.error = "Rei dialogue flash exceeds its source byte"; return null
+			state.opening["rei_banner_primitive"] = {"kind":"flash","level":value,"frame_count":Math.u32(state.frame_count+1)}
+		"wait_voice":
+			var work: Variant = state.opening.get("prologue_text_work")
+			if not work is Dictionary or work.get("line_id") != 13 or work.get("next_frame") != state.frame_count:
+				result.error = "Rei line13 voice wait lost its expected text tick"; return null
+			work.next_frame = Math.u32(state.frame_count+1)
+		"page_boundary":
+			var work: Variant = state.opening.get("prologue_text_work")
+			if not work is Dictionary or work.get("line_id") != 13 or not TextWork._work_is_valid(work):
+				result.error = "Rei page boundary requires original line13 text state"; return null
+			return TextWork._get_now_k(work) == int(work.first_line)+3
+		"lip_sync":
+			var lip := AudioRules.lip_sync_rei_lines_13_and_14(state)
+			state.opening.erase("actor97"); state.opening.erase("actor97_source_draw")
+			state.opening["actor97_draw_flags"] = 0
+			if lip.cd_active:
+				var actor := _rei_dialogue_actor(state,97)
+				actor["flags"] = 0x40; actor["frame_index"] = int(lip.ring_frame)+5
+				state.opening["actor97"] = actor; state.opening["actor97_draw_flags"] = 0xa4
+		"blink":
+			var actor: Dictionary = state.opening.get("actor98",{})
+			if (int(actor.get("flags",0)) & 1) == 0:
+				if actor.is_empty(): actor = _rei_dialogue_actor(state,98)
+				actor["flags"] = 3; actor["draw_flags"] = 0xac
+				state.opening["actor98"] = actor; state.opening["actor98_draw_flags"] = 0xac
+		"line14_setup":
+			var actor: Dictionary = state.opening.get("actor98",{})
+			# If RNG never initialized98, actor_clear's draw_flags remains0:
+			# the source changes its sequence cursor but draws no sprite.
+			if actor.is_empty():
+				actor = {"profile":"cleared","index":98,"draw_flags":0}
+				state.opening["actor98"] = actor
+				state.opening["actor98_draw_flags"] = 0
+			actor["flags"] = 1; actor["seq_step"] = 3; actor["frame_index"] = 4; actor["sequence_counter"] = 0
+		"line14_hold":
+			var actor: Variant = state.opening.get("actor98")
+			if not actor is Dictionary:
+				result.error = "Rei line14 lost its initialized actor98"; return null
+			if actor.get("seq_step") == 3: actor["flags"] = 0
+		"page_transition":
+			if state.opening.has("actor99") or state.opening.has("actor100"):
+				result.error = "Rei crowd setup cannot replay"; return null
+			var key := JSON.stringify([state.opening.media.epoch,BoardStore.O_09_ID,7,0x150]).sha256_text()
+			for index in [99,100]:
+				var actor := _rei_dialogue_actor(state,index)
+				actor["upload_batch_key"] = key
+				actor.erase("upload_batch_key_2")
+				state.opening["actor%d" % index] = actor; state.opening["actor%d_draw_flags" % index] = 0xa4
+			state.opening.bg_layer_0["enabled"] = 1
+			result.presentation.append({"kind":"first_arrival_stage_actor_upload","batch_key":key,"resource_id":BoardStore.O_09_ID,"slot":7,"source_offset":0x150})
+		"animate_exit", "exit_done":
+			if not state.opening.get("actor99") is Dictionary or not state.opening.get("actor100") is Dictionary:
+				result.error = "Rei crowd animation lacks both source actors"; return null
+			if kind == "exit_done": return state.opening.actor99.flags == 0
+			state.opening.actor100["flags"] = 5; state.opening.actor99["flags"] = 5
+	return null
+
+static func _rei_dialogue_actor(state: State, index: int) -> Dictionary:
+	var crowd := index in [99,100]
+	return {"profile":"o10_rei_dialogue","index":index,"unk_01":12 if crowd else 9,"flags":0,"quad_flags":0x41000000,"draw_flags":0xa4,
+		"frame_table":0x80180110 if crowd else 0x80184288,"sequence_table":0x80180130 if crowd else 0x801842ac,"tpage_table":0x8018010c if crowd else 0x80184280,
+		"sequence":"crowd_left" if index == 99 else ("crowd_right" if index == 100 else "blink"),"sequence_slot":1 if index == 100 else 0,
+		"seq_step":0,"frame_index":4 if index == 100 else (0 if index == 99 else 1),"sequence_counter":0,"speed":1,"x":-160,"y":-120,"brightness":128,"clut_row":506 if crowd else 505,
+		"resource_id":BoardStore.O_09_ID,"source_sha256":BoardStore.O_09_SHA,"upload_batch_key":state.opening.actor96.upload_batch_key,"upload_batch_key_2":state.opening.actor96.upload_batch_key_2}
+
 func stage_07_cd_wait(state: State, result: Session.FrameResult) -> void:
 	if _board_store == null or state.game_mode != 0x15 or state.mode_stage != 7 or state.mode_step != 0 or state.substep != 1:
 		result.error = "first-arrival stage 7 CD wait is outside stage 7 substep 1"
@@ -860,10 +1085,10 @@ func board_scroll_draw(state: State, counter: int, result: Session.FrameResult) 
 	result.presentation.append({"kind":"first_arrival_board_scroll_draw","scroll_x":counter,"rect":[-160,-120,320,160],"tpage_args":[5,2,0,0,0,0,13]})
 
 func arrival_draw(state: State, slot: int, result: Session.FrameResult, visible_renderer: RefCounted = null) -> void:
-	if state.game_mode == 0x15 and state.mode_stage in [2, 3, 4, 5, 6, 7] and state.mode_step == 0 and state.opening.get("names_media") is Dictionary:
+	if state.game_mode == 0x15 and state.mode_stage in [2, 3, 4, 5, 6, 7, 8, 9] and state.mode_step == 0 and state.opening.get("names_media") is Dictionary:
 		if state.mode_stage == 2 and state.substep in [0, 1, 2, 5, 6, 7, 8]:
 			state.opening.names_media["active_draw"] = "dec_bg_draw"
-		elif state.mode_stage in [3, 4, 5, 6, 7]:
+		elif state.mode_stage in [3, 4, 5, 6, 7, 8, 9]:
 			state.opening.names_media["active_draw"] = "dec_bg_draw"
 	var visible_boundary := _visible_boundary_error(state,visible_renderer)
 	var flags: Variant = state.opening.get("actor96_draw_flags",0)
@@ -887,7 +1112,7 @@ func crossfade_draw(state: State, slot: int, result: Session.FrameResult) -> voi
 	result.presentation.append({"kind":"first_arrival_names_crossfade_draw","slot":1,"fade_amount":fade})
 
 func _visible_boundary_error(state: State, renderer: RefCounted) -> String:
-	if state.game_mode != 0x15 or state.mode_stage not in [1, 2, 3, 4, 5, 6, 7] or not state.opening.get("actor96_draw_flags") is int:
+	if state.game_mode != 0x15 or state.mode_stage not in [1, 2, 3, 4, 5, 6, 7, 8, 9] or not state.opening.get("actor96_draw_flags") is int:
 		return "arrival background is outside its exact visible boundary"
 	var flags: int = state.opening.actor96_draw_flags
 	if state.mode_stage == 1:
@@ -916,7 +1141,7 @@ func _visible_boundary_error(state: State, renderer: RefCounted) -> String:
 		var names_media3: Variant = state.opening.get("names_media")
 		var layer0: Variant = state.opening.get("bg_layer_0")
 		var stage2_to_3_transition: bool = state.mode_stage == 3 and state.mode_step == 0 and state.substep == 0 and not state.opening.has("bg_layer_0") and state.opening.get("prologue_petals") is Array and state.opening.prologue_petals.size() == 8 and flags == 0
-		var stage35_active: bool = not state.opening.has("prologue_petals") and layer0 is Dictionary and layer0.get("enabled") == 1
+		var stage35_active: bool = not state.opening.has("prologue_petals") and layer0 is Dictionary and (layer0.get("enabled") == 1 or (((state.mode_stage == 8 and state.substep == 7) or (state.mode_stage == 9 and state.substep in [0,1,2])) and layer0.get("enabled") == 0))
 		var stage35_ok: bool = _board_store != null and state.mode_step == 0 and state.opening.get("D_800B3DB0") == 1 and state.opening.get("prologue_hud_live",{}).get("date_visible") == false and names_media3 is Dictionary and names_media3.get("bg_show_1") in [0, 1] and names_media3.get("active_draw") == "dec_bg_draw" and (stage2_to_3_transition or stage35_active)
 		if not stage35_ok:
 			return "arrival background is outside its exact visible boundary"
@@ -961,6 +1186,7 @@ func preflight(result: Session.FrameResult, state: State) -> String:
 	var o12_restore_count := 0
 	var o06_copy_count := 0
 	var o07_copy_count := 0
+	var o08_copy_count := 0
 	var stage_actor_upload_count := 0
 	var reset_seen := false
 	for intent: Dictionary in result.presentation:
@@ -971,7 +1197,7 @@ func preflight(result: Session.FrameResult, state: State) -> String:
 				error = _request(intent,state)
 				if not error.is_empty(): return error
 			"opening_background_select":
-				var allowed_bg: bool = intent.get("resource_id") == Store.BG_ID or (_board_store != null and intent.get("resource_id") in [BoardStore.BG_495D_ID, BoardStore.BG_4966_ID, BoardStore.BG_ACDD_ID, BoardStore.BG_ACE6_ID, BoardStore.BG_ACF6_ID, BoardStore.BG_ACD4_ID, BoardStore.BG_ACEC_ID])
+				var allowed_bg: bool = intent.get("resource_id") == Store.BG_ID or (_board_store != null and intent.get("resource_id") in [BoardStore.BG_495D_ID, BoardStore.BG_4966_ID, BoardStore.BG_ACDD_ID, BoardStore.BG_ACE6_ID, BoardStore.BG_ACF6_ID, BoardStore.BG_ACD4_ID, BoardStore.BG_ACEC_ID, BoardStore.BG_AD00_ID])
 				if intent.get("slot") != 1 or not allowed_bg:
 					return "first-arrival background selection is outside its prepared source"
 			"opening_arrival_actor_setup":
@@ -1011,6 +1237,7 @@ func preflight(result: Session.FrameResult, state: State) -> String:
 					BoardStore.BG_ACF6_ID: expected_tr_sha = BoardStore.BG_ACF6_TRANSFER_SHA
 					BoardStore.BG_ACD4_ID: expected_tr_sha = BoardStore.BG_ACD4_TRANSFER_SHA
 					BoardStore.BG_ACEC_ID: expected_tr_sha = BoardStore.BG_ACEC_TRANSFER_SHA
+					BoardStore.BG_AD00_ID: expected_tr_sha = BoardStore.BG_AD00_TRANSFER_SHA
 				if _board_store == null or expected_tr_sha.is_empty() or not names_src is Dictionary or not names_src.get(buf_key) is Dictionary or names_src[buf_key].get("upload_batch_key") != intent.batch_key or not _buffers.has(str(0x80162000)) or _buffers[str(0x80162000)].get("resource_id") != intent.resource_id or _buffers[str(0x80162000)].get("sha256") != expected_tr_sha:
 					return "first-arrival names background upload lacks completed read or matching batch"
 			"first_arrival_names_crossfade_draw":
@@ -1039,9 +1266,15 @@ func preflight(result: Session.FrameResult, state: State) -> String:
 				o07_copy_count += 1
 				if _board_store == null or not _buffers.has(str(0x801f0000)) or _buffers[str(0x801f0000)].get("resource_id") != BoardStore.O_07_ID or _buffers[str(0x801f0000)].get("sha256") != BoardStore.O_07_SHA:
 					return "first-arrival O_07 copy lacks completed O_07 read at 0x801f0000"
+			"first_arrival_o08_copy":
+				o08_copy_count += 1
+				if _board_store == null or not _buffers.has(str(0x801f0000)) or _buffers[str(0x801f0000)].get("resource_id") != BoardStore.O_08_ID or _buffers[str(0x801f0000)].get("sha256") != BoardStore.O_08_SHA:
+					return "first-arrival O_08 copy lacks completed original read at 0x801f0000"
 			"first_arrival_stage_actor_upload":
 				stage_actor_upload_count += 1
 				var has_actor_buf: bool = (_buffers.has(str(0x80180000)) and _buffers[str(0x80180000)].get("resource_id") == intent.resource_id) or (o12_restore_count == 1 and intent.resource_id == BoardStore.O_12_ID and _buffers.has(str(0x801f0000)) and _buffers[str(0x801f0000)].get("resource_id") == BoardStore.O_12_ID) or (o06_copy_count == 1 and intent.resource_id == BoardStore.O_06_ID and _buffers.has(str(0x801f0000)) and _buffers[str(0x801f0000)].get("resource_id") == BoardStore.O_06_ID) or (o07_copy_count == 1 and intent.resource_id == BoardStore.O_07_ID and _buffers.has(str(0x801f0000)) and _buffers[str(0x801f0000)].get("resource_id") == BoardStore.O_07_ID)
+				if o08_copy_count == 1 and intent.resource_id == BoardStore.O_08_ID and _buffers.has(str(0x801f0000)) and _buffers[str(0x801f0000)].get("resource_id") == BoardStore.O_08_ID:
+					has_actor_buf = true
 				if _board_store == null or not has_actor_buf:
 					return "first-arrival stage actor upload lacks resident NBN buffer at 0x80180000"
 			"opening_media_reset":
@@ -1056,7 +1289,7 @@ func preflight(result: Session.FrameResult, state: State) -> String:
 		return "first-arrival names background decode requires one isolated upload batch"
 	if cut_upload_count > 1 or (cut_upload_count == 1 and (reset_seen or setup_count != 0 or board_decode_count != 0)):
 		return "first-arrival cut upload requires one isolated upload batch"
-	if stage_actor_upload_count > 3 or o12_backup_count > 1 or o12_restore_count > 1 or o06_copy_count > 1 or o07_copy_count > 1:
+	if stage_actor_upload_count > 3 or o12_backup_count > 1 or o12_restore_count > 1 or o06_copy_count > 1 or o07_copy_count > 1 or o08_copy_count > 1:
 		return "first-arrival stage actor upload or backup/restore cannot repeat in one frame"
 	if board_scroll_draw_count > 1 or (board_scroll_draw_count == 1 and (reset_seen or setup_count != 0 or board_decode_count != 0 or names_crossfade_draw_count != 0)):
 		return "first-arrival board scroll draw cannot combine with setup or reset"
@@ -1108,6 +1341,7 @@ func _intent_schema(intent: Dictionary) -> String:
 		"first_arrival_o12_restore": fields = ["kind","resource_id","sha256","bytes"]
 		"first_arrival_o06_copy": fields = ["kind","resource_id","sha256","bytes"]
 		"first_arrival_o07_copy": fields = ["kind","resource_id","sha256","bytes"]
+		"first_arrival_o08_copy": fields = ["kind","resource_id","sha256","bytes"]
 		"first_arrival_stage_actor_upload": fields = ["kind","batch_key","resource_id","slot","source_offset"]
 		_:
 			return "unsupported first-arrival media intent" if kind.begins_with("opening_media_") else ""
@@ -1133,7 +1367,8 @@ func _intent_schema(intent: Dictionary) -> String:
 		var valid_acf6: bool = intent.resource_id == BoardStore.BG_ACF6_ID and intent.buffer == 0 and Store._same(intent.decode_rect,[704,0,320,160]) and intent.word_sha256 == BoardStore.BG_ACF6_WORD_SHA
 		var valid_acd4: bool = intent.resource_id == BoardStore.BG_ACD4_ID and intent.buffer == 1 and Store._same(intent.decode_rect,[320,256,320,160]) and intent.word_sha256 == BoardStore.BG_ACD4_WORD_SHA
 		var valid_acec: bool = intent.resource_id == BoardStore.BG_ACEC_ID and intent.buffer == 0 and Store._same(intent.decode_rect,[704,0,320,160]) and intent.word_sha256 == BoardStore.BG_ACEC_WORD_SHA
-		if not valid_495d and not valid_4966 and not valid_acdd and not valid_ace6 and not valid_acf6 and not valid_acd4 and not valid_acec:
+		var valid_ad00: bool = intent.resource_id == BoardStore.BG_AD00_ID and intent.buffer == 1 and Store._same(intent.decode_rect,[320,256,320,160]) and intent.word_sha256 == BoardStore.BG_AD00_WORD_SHA
+		if not valid_495d and not valid_4966 and not valid_acdd and not valid_ace6 and not valid_acf6 and not valid_acd4 and not valid_acec and not valid_ad00:
 			return "first-arrival names background upload descriptor is invalid"
 		return ""
 	if kind == "first_arrival_cut_upload":
@@ -1141,7 +1376,9 @@ func _intent_schema(intent: Dictionary) -> String:
 		var valid_cut05: bool = intent.resource_id == BoardStore.CUT_05_ID and intent.sha256 == BoardStore.CUT_05_SHA
 		var valid_cut06: bool = intent.resource_id == BoardStore.CUT_06_ID and intent.sha256 == BoardStore.CUT_06_SHA
 		var valid_cut07: bool = intent.resource_id == BoardStore.CUT_07_ID and intent.sha256 == BoardStore.CUT_07_SHA
-		if _board_store == null or not Store._sha_string(intent.batch_key) or (not valid_cut12 and not valid_cut05 and not valid_cut06 and not valid_cut07):
+		var valid_cut09: bool = intent.resource_id == BoardStore.CUT_09_ID and intent.sha256 == BoardStore.CUT_09_SHA
+		var valid_cut08: bool = intent.resource_id == BoardStore.CUT_08_ID and intent.sha256 == BoardStore.CUT_08_SHA
+		if _board_store == null or not Store._sha_string(intent.batch_key) or (not valid_cut12 and not valid_cut05 and not valid_cut06 and not valid_cut07 and not valid_cut08 and not valid_cut09):
 			return "first-arrival cut upload descriptor is invalid"
 		return ""
 	if kind in ["first_arrival_o12_backup", "first_arrival_o12_restore"]:
@@ -1156,6 +1393,10 @@ func _intent_schema(intent: Dictionary) -> String:
 		if _board_store == null or intent.resource_id != BoardStore.O_07_ID or intent.sha256 != BoardStore.O_07_SHA or intent.bytes != 51200:
 			return "first-arrival O_07 copy descriptor is invalid"
 		return ""
+	if kind == "first_arrival_o08_copy":
+		if _board_store == null or intent.resource_id != BoardStore.O_08_ID or intent.sha256 != BoardStore.O_08_SHA or intent.bytes != 18432:
+			return "first-arrival O_08 copy descriptor is invalid"
+		return ""
 	if kind == "first_arrival_stage_actor_upload":
 		var valid_o12_96: bool = intent.resource_id == BoardStore.O_12_ID and intent.slot == 5 and intent.source_offset == 0x0120
 		var valid_o12_97: bool = intent.resource_id == BoardStore.O_12_ID and intent.slot == 6 and intent.source_offset == 0x41a0
@@ -1166,7 +1407,9 @@ func _intent_schema(intent: Dictionary) -> String:
 		var valid_o07_96_s5: bool = intent.resource_id == BoardStore.O_07_ID and intent.slot == 5 and intent.source_offset == 0x0190
 		var valid_o07_96_s6: bool = intent.resource_id == BoardStore.O_07_ID and intent.slot == 6 and intent.source_offset == 0x4190
 		var valid_o07_96_s7: bool = intent.resource_id == BoardStore.O_07_ID and intent.slot == 7 and intent.source_offset == 0x8190
-		if _board_store == null or not Store._sha_string(intent.batch_key) or (not valid_o12_96 and not valid_o12_97 and not valid_o05_96 and not valid_o06_96_s5 and not valid_o06_96_s6 and not valid_o06_99_s7 and not valid_o07_96_s5 and not valid_o07_96_s6 and not valid_o07_96_s7):
+		var valid_o09_96: bool = intent.resource_id == BoardStore.O_09_ID and ((intent.slot == 5 and intent.source_offset == 0x42c0) or (intent.slot == 6 and intent.source_offset == 0x82c0) or (intent.slot == 7 and intent.source_offset == 0x150))
+		var valid_o08_96: bool = intent.resource_id == BoardStore.O_08_ID and intent.slot == 5 and intent.source_offset == 0xa0
+		if _board_store == null or not Store._sha_string(intent.batch_key) or (not valid_o12_96 and not valid_o12_97 and not valid_o05_96 and not valid_o06_96_s5 and not valid_o06_96_s6 and not valid_o06_99_s7 and not valid_o07_96_s5 and not valid_o07_96_s6 and not valid_o07_96_s7 and not valid_o08_96 and not valid_o09_96):
 			return "first-arrival stage actor upload descriptor is invalid"
 		return ""
 	if kind == "first_arrival_names_crossfade_draw":
@@ -1184,7 +1427,7 @@ func _intent_schema(intent: Dictionary) -> String:
 		elif kind == "opening_board_decode":
 			if intent.resource_id != BOARD_ID: return "first-arrival intent selects another prepared resource"
 		elif kind == "opening_background_select":
-			var valid_bg_sel: bool = intent.resource_id == Store.BG_ID or (_board_store != null and ((intent.resource_id in [BoardStore.BG_495D_ID, BoardStore.BG_ACE6_ID, BoardStore.BG_ACF6_ID, BoardStore.BG_ACEC_ID] and intent.buffer == 0) or (intent.resource_id in [BoardStore.BG_4966_ID, BoardStore.BG_ACDD_ID, BoardStore.BG_ACD4_ID] and intent.buffer == 1)))
+			var valid_bg_sel: bool = intent.resource_id == Store.BG_ID or (_board_store != null and ((intent.resource_id in [BoardStore.BG_495D_ID, BoardStore.BG_ACE6_ID, BoardStore.BG_ACF6_ID, BoardStore.BG_ACEC_ID] and intent.buffer == 0) or (intent.resource_id in [BoardStore.BG_4966_ID, BoardStore.BG_ACDD_ID, BoardStore.BG_ACD4_ID, BoardStore.BG_AD00_ID] and intent.buffer == 1)))
 			if not valid_bg_sel: return "first-arrival intent selects another prepared resource"
 		elif intent.resource_id != Store.BG_ID:
 			return "first-arrival intent selects another prepared resource"
@@ -1210,7 +1453,8 @@ func _intent_schema(intent: Dictionary) -> String:
 		var bg_acf6: bool = _board_store != null and request.resource_id == BoardStore.BG_ACF6_ID and request.resource_sha256 == BoardStore.BG_ACF6_TRANSFER_SHA and args.lba == 0xacf6
 		var bg_acd4: bool = _board_store != null and request.resource_id == BoardStore.BG_ACD4_ID and request.resource_sha256 == BoardStore.BG_ACD4_TRANSFER_SHA and args.lba == 0xacd4
 		var bg_acec: bool = _board_store != null and request.resource_id == BoardStore.BG_ACEC_ID and request.resource_sha256 == BoardStore.BG_ACEC_TRANSFER_SHA and args.lba == 0xacec
-		if not bg_494b and not bg_495d and not bg_4966 and not bg_acdd and not bg_ace6 and not bg_acf6 and not bg_acd4 and not bg_acec:
+		var bg_ad00: bool = _board_store != null and request.resource_id == BoardStore.BG_AD00_ID and request.resource_sha256 == BoardStore.BG_AD00_TRANSFER_SHA and args.lba == 0xad00
+		if not bg_494b and not bg_495d and not bg_4966 and not bg_acdd and not bg_ace6 and not bg_acf6 and not bg_acd4 and not bg_acec and not bg_ad00:
 			return "first-arrival background arguments differ from source"
 	elif request.kind == "actors":
 		if args.size() != 3 or not args.has_all(["lba","sectors","destination"]): return "first-arrival actor arguments differ from source"
@@ -1224,8 +1468,13 @@ func _intent_schema(intent: Dictionary) -> String:
 		var act_aa54: bool = _board_store != null and request.resource_id == BoardStore.CUT_06_ID and request.resource_sha256 == BoardStore.CUT_06_SHA and args.lba == 0xaa54 and args.sectors == 49 and args.destination == 0x801a4000
 		var act_abca: bool = _board_store != null and request.resource_id == BoardStore.O_06_ID and request.resource_sha256 == BoardStore.O_06_SHA and args.lba == 0xabca and args.sectors == 25 and args.destination == 0x801f0000
 		var act_aa85: bool = _board_store != null and request.resource_id == BoardStore.CUT_07_ID and request.resource_sha256 == BoardStore.CUT_07_SHA and args.lba == 0xaa85 and args.sectors == 49 and args.destination == 0x801a4000
+		var act_aab6: bool = _board_store != null and request.resource_id == BoardStore.CUT_08_ID and request.resource_sha256 == BoardStore.CUT_08_SHA and args.lba == 0xaab6 and args.sectors == 49 and args.destination == 0x801a4000
 		var act_abe3: bool = _board_store != null and request.resource_id == BoardStore.O_07_ID and request.resource_sha256 == BoardStore.O_07_SHA and args.lba == 0xabe3 and args.sectors == 25 and args.destination == 0x801f0000
-		if not act_abab and not act_ab18 and not act_ac3f and not act_aa23 and not act_abb8 and not act_aa54 and not act_abca and not act_aa85 and not act_abe3:
+		var act_aae7: bool = _board_store != null and request.resource_id == BoardStore.CUT_09_ID and request.resource_sha256 == BoardStore.CUT_09_SHA and args.lba == 0xaae7 and args.sectors == 49 and args.destination == 0x801a4000
+		var act_ac05: bool = _board_store != null and request.resource_id == BoardStore.O_09_ID and request.resource_sha256 == BoardStore.O_09_SHA and args.lba == 0xac05 and args.sectors == 25 and args.destination == 0x80180000
+		var act_ac1e: bool = _board_store != null and request.resource_id == BoardStore.O_11_ID and request.resource_sha256 == BoardStore.O_11_SHA and args.lba == 0xac1e and args.sectors == 33 and args.destination == 0x801e8000
+		var act_abfc: bool = _board_store != null and request.resource_id == BoardStore.O_08_ID and request.resource_sha256 == BoardStore.O_08_SHA and args.lba == 0xabfc and args.sectors == 9 and args.destination == 0x801f0000
+		if not act_abab and not act_ab18 and not act_ac3f and not act_aa23 and not act_abb8 and not act_aa54 and not act_abca and not act_aa85 and not act_abe3 and not act_aab6 and not act_abfc and not act_aae7 and not act_ac05 and not act_ac1e:
 			return "first-arrival actor read extent differs from source"
 	elif request.kind == "board":
 		if _board_store == null or request.resource_id != BOARD_ID or request.resource_sha256 != BoardStore.SOURCE_SHA or args.size() != 3 or not args.has_all(["lba","sectors","destination"]): return "first-arrival board arguments differ from source"
@@ -1291,13 +1540,13 @@ func publish(result: Session.FrameResult, tick: int) -> String:
 					next_buffers[str(desc.destination)] = {"bytes":desc.payload,"sha256":BoardStore.SOURCE_SHA,"resource_id":BOARD_ID}
 					next_pending.append({"epoch":request.epoch,"request_id":request.request_id,"request_key":request.request_key,
 						"status":"ready","resource_id":request.resource_id})
-				elif request.kind == "background" and request.resource_id in [BoardStore.BG_495D_ID, BoardStore.BG_4966_ID, BoardStore.BG_ACDD_ID, BoardStore.BG_ACE6_ID, BoardStore.BG_ACF6_ID, BoardStore.BG_ACD4_ID, BoardStore.BG_ACEC_ID]:
+				elif request.kind == "background" and request.resource_id in [BoardStore.BG_495D_ID, BoardStore.BG_4966_ID, BoardStore.BG_ACDD_ID, BoardStore.BG_ACE6_ID, BoardStore.BG_ACF6_ID, BoardStore.BG_ACD4_ID, BoardStore.BG_ACEC_ID, BoardStore.BG_AD00_ID]:
 					var bg_transfer := _board_store.background_transfer(request.resource_id)
 					if not str(bg_transfer.get("error","")).is_empty(): return str(bg_transfer.error)
 					next_buffers[str(bg_transfer.destination)] = {"bytes":bg_transfer.bytes,"sha256":bg_transfer.sha256,"resource_id":request.resource_id}
 					next_pending.append({"epoch":request.epoch,"request_id":request.request_id,"request_key":request.request_key,
 						"status":"ready","resource_id":request.resource_id})
-				elif request.kind == "actors" and request.resource_id in [BoardStore.CUT_12_ID, BoardStore.O_12_ID, BoardStore.CUT_05_ID, BoardStore.O_05_ID, BoardStore.CUT_06_ID, BoardStore.O_06_ID, BoardStore.CUT_07_ID, BoardStore.O_07_ID]:
+				elif request.kind == "actors" and request.resource_id in [BoardStore.CUT_12_ID, BoardStore.O_12_ID, BoardStore.CUT_05_ID, BoardStore.O_05_ID, BoardStore.CUT_06_ID, BoardStore.O_06_ID, BoardStore.CUT_07_ID, BoardStore.O_07_ID, BoardStore.CUT_08_ID, BoardStore.O_08_ID, BoardStore.CUT_09_ID, BoardStore.O_09_ID, BoardStore.O_11_ID]:
 					var st_transfer := _board_store.stage_transfer(request.resource_id)
 					if not str(st_transfer.get("error","")).is_empty(): return str(st_transfer.error)
 					next_buffers[str(st_transfer.destination)] = {"bytes":st_transfer.bytes,"sha256":st_transfer.sha256,"resource_id":request.resource_id}
@@ -1340,7 +1589,7 @@ func publish(result: Session.FrameResult, tick: int) -> String:
 				next_cut_uploads[intent.batch_key] = {"batch_key":intent.batch_key,"resource_id":intent.resource_id,"sha256":intent.sha256}
 			"first_arrival_o12_backup":
 				next_buffers[str(0x801f0000)] = next_buffers[str(0x80180000)].duplicate(true)
-			"first_arrival_o12_restore", "first_arrival_o06_copy", "first_arrival_o07_copy":
+			"first_arrival_o12_restore", "first_arrival_o06_copy", "first_arrival_o07_copy", "first_arrival_o08_copy":
 				next_buffers[str(0x80180000)] = next_buffers[str(0x801f0000)].duplicate(true)
 			"first_arrival_stage_actor_upload":
 				next_stage_actor_uploads[intent.batch_key] = {"batch_key":intent.batch_key,"resource_id":intent.resource_id,"slot":intent.slot,"source_offset":intent.source_offset}
@@ -1366,7 +1615,7 @@ func board_resource_identity() -> String:
 
 func completed_names_bg_buffer(state: State, resource_id: String) -> Dictionary:
 	var owner: Session = _session.get_ref() as Session if _session != null else null
-	if _board_store == null or owner == null or owner.state != state or resource_id not in [BoardStore.BG_495D_ID, BoardStore.BG_4966_ID, BoardStore.BG_ACDD_ID, BoardStore.BG_ACE6_ID, BoardStore.BG_ACF6_ID, BoardStore.BG_ACD4_ID, BoardStore.BG_ACEC_ID]:
+	if _board_store == null or owner == null or owner.state != state or resource_id not in [BoardStore.BG_495D_ID, BoardStore.BG_4966_ID, BoardStore.BG_ACDD_ID, BoardStore.BG_ACE6_ID, BoardStore.BG_ACF6_ID, BoardStore.BG_ACD4_ID, BoardStore.BG_ACEC_ID, BoardStore.BG_AD00_ID]:
 		return {"error":"completed names background buffer belongs to another or unbound Session"}
 	var expected_sha := ""
 	match resource_id:
@@ -1377,6 +1626,7 @@ func completed_names_bg_buffer(state: State, resource_id: String) -> Dictionary:
 		BoardStore.BG_ACF6_ID: expected_sha = BoardStore.BG_ACF6_TRANSFER_SHA
 		BoardStore.BG_ACD4_ID: expected_sha = BoardStore.BG_ACD4_TRANSFER_SHA
 		BoardStore.BG_ACEC_ID: expected_sha = BoardStore.BG_ACEC_TRANSFER_SHA
+		BoardStore.BG_AD00_ID: expected_sha = BoardStore.BG_AD00_TRANSFER_SHA
 	var media: Variant = state.opening.get("media")
 	if not media is Dictionary or not media.get("epoch") is int or not media.get("requests") is Dictionary or not media.get("background_pending") is Dictionary:
 		return {"error":"completed names background transfer has no owned request"}
@@ -1396,12 +1646,14 @@ func completed_names_bg_buffer(state: State, resource_id: String) -> Dictionary:
 
 func completed_cut_buffer(state: State, resource_id: String) -> Dictionary:
 	var owner: Session = _session.get_ref() as Session if _session != null else null
-	if _board_store == null or owner == null or owner.state != state or resource_id not in [BoardStore.CUT_12_ID, BoardStore.CUT_05_ID, BoardStore.CUT_06_ID, BoardStore.CUT_07_ID]:
+	if _board_store == null or owner == null or owner.state != state or resource_id not in [BoardStore.CUT_12_ID, BoardStore.CUT_05_ID, BoardStore.CUT_06_ID, BoardStore.CUT_07_ID, BoardStore.CUT_08_ID, BoardStore.CUT_09_ID]:
 		return {"error":"completed cut buffer belongs to another or unbound Session"}
 	var expected_sha := BoardStore.CUT_12_SHA
 	if resource_id == BoardStore.CUT_05_ID: expected_sha = BoardStore.CUT_05_SHA
 	elif resource_id == BoardStore.CUT_06_ID: expected_sha = BoardStore.CUT_06_SHA
 	elif resource_id == BoardStore.CUT_07_ID: expected_sha = BoardStore.CUT_07_SHA
+	elif resource_id == BoardStore.CUT_08_ID: expected_sha = BoardStore.CUT_08_SHA
+	elif resource_id == BoardStore.CUT_09_ID: expected_sha = BoardStore.CUT_09_SHA
 	var buffer: Variant = _buffers.get(str(0x801a4000))
 	if not buffer is Dictionary or buffer.get("resource_id") != resource_id or buffer.get("sha256") != expected_sha or not buffer.get("bytes") is PackedByteArray or buffer.bytes.size() != 100352 or Store._sha(buffer.bytes) != expected_sha:
 		return {"error":"completed cut transfer has no published authentic bytes at 0x801a4000"}
@@ -1409,7 +1661,7 @@ func completed_cut_buffer(state: State, resource_id: String) -> Dictionary:
 
 func completed_stage_actor_buffer(state: State, resource_id: String, allow_backup_restore: bool = false) -> Dictionary:
 	var owner: Session = _session.get_ref() as Session if _session != null else null
-	if _board_store == null or owner == null or owner.state != state or resource_id not in [BoardStore.O_12_ID, BoardStore.O_05_ID, BoardStore.O_06_ID, BoardStore.O_07_ID]:
+	if _board_store == null or owner == null or owner.state != state or resource_id not in [BoardStore.O_12_ID, BoardStore.O_05_ID, BoardStore.O_06_ID, BoardStore.O_07_ID, BoardStore.O_08_ID, BoardStore.O_09_ID]:
 		return {"error":"completed stage actor buffer belongs to another or unbound Session"}
 	var expected_sha := BoardStore.O_12_SHA
 	var expected_size := 34816
@@ -1421,6 +1673,12 @@ func completed_stage_actor_buffer(state: State, resource_id: String, allow_backu
 		expected_size = 51200
 	elif resource_id == BoardStore.O_07_ID:
 		expected_sha = BoardStore.O_07_SHA
+		expected_size = 51200
+	elif resource_id == BoardStore.O_08_ID:
+		expected_sha = BoardStore.O_08_SHA
+		expected_size = 18432
+	if resource_id == BoardStore.O_09_ID:
+		expected_sha = BoardStore.O_09_SHA
 		expected_size = 51200
 	var buffer: Variant = _buffers.get(str(0x80180000))
 	if allow_backup_restore and (not buffer is Dictionary or buffer.get("resource_id") != resource_id):
@@ -1492,7 +1750,7 @@ func paint_background(target: Image, state: State, visible_renderer: RefCounted 
 			return "first-arrival board scroll requires a prepared board renderer"
 		var scroll_err: Variant = visible_renderer.call("paint_board_scroll",target,state,_board_store.preview())
 		return scroll_err if scroll_err is String else "board scroll renderer returned an unknown result"
-	if state.mode_stage in [2, 3, 4, 5, 6, 7] and state.mode_step == 0:
+	if state.mode_stage in [2, 3, 4, 5, 6, 7, 8, 9] and state.mode_step == 0:
 		if _board_store == null or visible_renderer == null or not visible_renderer.has_method("paint_names_background"):
 			return "first-arrival names background requires a prepared names renderer"
 		var names_err: Variant = visible_renderer.call("paint_names_background",target,state)

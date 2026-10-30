@@ -229,6 +229,7 @@ def build_pack(disc_path: Path, exe_path: Path, out_dir: Path) -> dict:
         png_path = bg_dir / bg_res["images"][0]["png"]
         exported_bgs.append({
             **bg,
+            "decoder_model": bg_res["metadata"]["decoder_model"],
             "png": png_path.relative_to(out_dir).as_posix(),
             "png_sha256": _sha256_file(png_path),
         })
@@ -274,6 +275,7 @@ def build_pack(disc_path: Path, exe_path: Path, out_dir: Path) -> dict:
         "schema": "tokimemo.port.date_preview.v1",
         "holiday_room_background": {
             **HOLIDAY_ROOM_BG,
+            "decoder_model": room_res["metadata"]["decoder_model"],
             "png": room_png.relative_to(out_dir).as_posix(),
             "png_sha256": _sha256_file(room_png),
         },

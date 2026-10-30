@@ -190,6 +190,10 @@ func execute_names_bg(board_store: BoardStore, resource_id: String, batch_key: S
 		expected_rect = [704,0,320,160]
 		expected_sha = BoardStore.BG_ACEC_WORD_SHA
 		expected_buffer = 0
+	elif resource_id == BoardStore.BG_AD00_ID:
+		expected_rect = [320,256,320,160]
+		expected_sha = BoardStore.BG_AD00_WORD_SHA
+		expected_buffer = 1
 	else:
 		return _reject("native GPU names background pump received an unsupported resource_id")
 	var upload := board_store.background_software_upload(resource_id)
@@ -259,12 +263,15 @@ static func _gray_clut(source_clut: PackedByteArray) -> PackedByteArray:
 		out.encode_u16(i * 2, c)
 	return out
 
-func execute_cut_vram(board_store: BoardStore, resource_id: String, batch_key: String, owned: Dictionary) -> Dictionary:
+func execute_cut_vram(board_store: BoardStore, resource_id: String, batch_key: String, owned: Dictionary, white_palette: bool = false) -> Dictionary:
 	if board_store == null or not Store._sha_string(batch_key): return _reject("native GPU cut pump needs an authenticated board store and batch key")
+	if white_palette and resource_id != BoardStore.CUT_08_ID: return _reject("white cut palette is only defined for the source Rei transition")
 	if not _owners(owned) or not owned.get("vram_known_mask") is PackedByteArray or owned.vram_known_mask.size() != VRAM_BYTES:
 		return _reject("native GPU cut pump requires prior owned VRAM and known mask")
 	if _cut_receipts.has(batch_key): return _reject("native GPU cut batch already executed; query its receipt instead of replaying")
 	var expected_sha := BoardStore.CUT_12_SHA if resource_id == BoardStore.CUT_12_ID else (BoardStore.CUT_05_SHA if resource_id == BoardStore.CUT_05_ID else (BoardStore.CUT_06_SHA if resource_id == BoardStore.CUT_06_ID else (BoardStore.CUT_07_SHA if resource_id == BoardStore.CUT_07_ID else "")))
+	if resource_id == BoardStore.CUT_08_ID: expected_sha = BoardStore.CUT_08_SHA
+	if resource_id == BoardStore.CUT_09_ID: expected_sha = BoardStore.CUT_09_SHA
 	if expected_sha.is_empty(): return _reject("native GPU cut pump received an unsupported resource_id")
 	var transfer := board_store.stage_transfer(resource_id)
 	if not transfer.get("error") is String or not transfer.error.is_empty() or not transfer.get("bytes") is PackedByteArray or transfer.bytes.size() != 100352 or Store._sha(transfer.bytes) != expected_sha:
@@ -290,6 +297,12 @@ func execute_cut_vram(board_store: BoardStore, resource_id: String, batch_key: S
 	var color_pal := _mode2_stp(raw_pal)
 	var gray_raw := _gray_clut(color_pal)
 	var gray_pal := _mode2_stp(gray_raw)
+	# prologue_white_palette_set follows the cut upload in stage7/substep7.
+	# Keep both operations atomic, and bind the receipt to their final pixels.
+	if white_palette:
+		var white := PackedByteArray(); white.resize(512)
+		for index in range(1, 256): white.encode_u16(index * 2, 0x7fff)
+		gray_pal = _mode2_stp(white)
 	scratch = gray_pal.duplicate()
 	var row495_dst := (495 * 1024) * 2
 	var row494_dst := (494 * 1024) * 2
@@ -329,7 +342,7 @@ func cut_batch_ready(batch_key: String, owned: Dictionary) -> String:
 
 func execute_stage_actor_vram(board_store: BoardStore, resource_id: String, slot: int, source_offset: int, batch_key: String, owned: Dictionary) -> Dictionary:
 	if board_store == null or not Store._sha_string(batch_key) or slot not in [5, 6, 7]:
-		return _reject("native GPU stage actor pump needs an authenticated board store, slot 5..7, and batch key")
+		return _reject("native GPU stage actor pump needs an authenticated board store, source slot and batch key")
 	if not _owners(owned) or not owned.get("vram_known_mask") is PackedByteArray or owned.vram_known_mask.size() != VRAM_BYTES:
 		return _reject("native GPU stage actor pump requires prior owned VRAM and known mask")
 	if _stage_actor_receipts.has(batch_key): return _reject("native GPU stage actor batch already executed; query its receipt instead of replaying")
@@ -342,9 +355,13 @@ func execute_stage_actor_vram(board_store: BoardStore, resource_id: String, slot
 	var valid_o07_96_0 := resource_id == BoardStore.O_07_ID and slot == 5 and source_offset == 0x0190
 	var valid_o07_96_1 := resource_id == BoardStore.O_07_ID and slot == 6 and source_offset == 0x4190
 	var valid_o07_96_2 := resource_id == BoardStore.O_07_ID and slot == 7 and source_offset == 0x8190
-	if not valid_o12_96 and not valid_o12_97 and not valid_o05_96 and not valid_o06_96_0 and not valid_o06_96_1 and not valid_o06_99 and not valid_o07_96_0 and not valid_o07_96_1 and not valid_o07_96_2:
+	var valid_o09_96 := resource_id == BoardStore.O_09_ID and ((slot == 5 and source_offset == 0x42c0) or (slot == 6 and source_offset == 0x82c0) or (slot == 7 and source_offset == 0x150))
+	var valid_o08_96 := resource_id == BoardStore.O_08_ID and slot == 5 and source_offset == 0x00a0
+	if not valid_o12_96 and not valid_o12_97 and not valid_o05_96 and not valid_o06_96_0 and not valid_o06_96_1 and not valid_o06_99 and not valid_o07_96_0 and not valid_o07_96_1 and not valid_o07_96_2 and not valid_o08_96 and not valid_o09_96:
 		return _reject("native GPU stage actor pump received an unsupported resource/slot/offset combination")
 	var expected_sha := BoardStore.O_12_SHA if resource_id == BoardStore.O_12_ID else (BoardStore.O_05_SHA if resource_id == BoardStore.O_05_ID else (BoardStore.O_06_SHA if resource_id == BoardStore.O_06_ID else BoardStore.O_07_SHA))
+	if resource_id == BoardStore.O_08_ID: expected_sha = BoardStore.O_08_SHA
+	if resource_id == BoardStore.O_09_ID: expected_sha = BoardStore.O_09_SHA
 	var transfer := board_store.stage_transfer(resource_id)
 	if not transfer.get("error") is String or not transfer.error.is_empty() or not transfer.get("bytes") is PackedByteArray or Store._sha(transfer.bytes) != expected_sha:
 		return _reject("native GPU stage actor pump received malformed actor NBN payload")

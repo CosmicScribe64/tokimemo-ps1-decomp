@@ -22,10 +22,13 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 
 ## Port references
 
+- [[port-pause-2026-10-29]] - latest user-requested WIP pause, translated-artwork publication and exact continuation instructions
 - [[port-finish-plan]] - current finish sequence, failure lessons and one-manager/one-implementer workflow
 - [[port-manager-handoff]] - next manager's first assignment, retained candidates and local-page operations
 - [[port-readiness-review]] - independent baseline blockers and actual-route acceptance requirements
+- [[port-adversarial-review]] - fresh-context review of player routes, installation, packaging and contributor experience
 - [[port-testing]] - testing layers, required route coverage and reviewed evidence gate
+- [[notes/name-entry-visual-checkpoints]] - original NAME entry state addresses and corresponding native/translated visual checkpoints
 - [[archive/port-status-claims-2026-10-26]] - superseded port completion claims and historical checkpoints; not acceptance evidence
 
 - [[port-checkpoint]] - reviewed low-usage publication checkpoint and exact remaining integration work
@@ -116,5 +119,5 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[SCHEMA]] - wiki layout and rules
 - `tools/wiki.py` - `rotate-log`, `rotate-notes`, `catalog` (ticket catalog, notes sections, function index), `lint` (broken links, kanban mismatches, large pages)
 - [[tickets/T-30001-modern-widescreen|T-30001]] Phase 4 (`P4.1`) widescreen presentation (`16:9` / `16:10` / `21:9` safe-frame apertures and responsive HUD/dialogue reflow) (Ready).
-- [[tickets/T-30002-modern-settings|T-30002]] Phase 4 (`P4.2`) comprehensive modern settings, input remapping, 5-bus audio, and translation/voice pack selector (Ready).
+- [[tickets/T-30002-modern-settings|T-30002]] Phase 4 (`P4.2`) comprehensive modern settings, input remapping, 5-bus audio, and translation/voice pack selector (In Progress; bounded UI/playback checks pass, full-game/platform acceptance remains open).
 - [[tickets/T-30004-modern-achievements|T-30004]] Phase 4 (`P4.3`) deterministic native achievement system and spoiler-aware gallery (Ready); see [[phase4]] and [[status]].

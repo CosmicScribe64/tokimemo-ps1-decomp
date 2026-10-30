@@ -7,6 +7,9 @@ run/max_fps=60
 run/main_scene="res://shell.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
+[autoload]
+ModernSettings="*res://services/settings_runtime.gd"
+
 [display]
 window/size/viewport_width=640
 window/size/viewport_height=480

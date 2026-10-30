@@ -2,9 +2,14 @@
 # Build and invoke the pinned Godot toolchain. Run from the repository root.
 set -eu
 
-IMAGE=${GODOT_PORT_IMAGE:-tokimemo-port-foundation-candidate}
+IMAGE=${GODOT_PORT_IMAGE:-tokimemo-port}
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 PROJECT="$ROOT/port/godot"
+
+if [ "${1:-test}" != build ] && ! docker image inspect "$IMAGE" >/dev/null 2>&1; then
+  echo "Godot image '$IMAGE' is unavailable. Start Docker, then run: sh tools/port/run.sh build" >&2
+  exit 1
+fi
 
 case "${1:-test}" in
   build)

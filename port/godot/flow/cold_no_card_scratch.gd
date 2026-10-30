@@ -14,7 +14,7 @@ static func initialize(route: Dictionary) -> Dictionary:
 	var bytes := PackedByteArray()
 	bytes.resize(512) # game_state_init(1), then hud_vram_init, clear128 words.
 	# File-select calls make_color_bar16(DF7FCF,DF7FCF,16,0). Equal endpoints
-	# give15 non-black entries; the source then clears entry0 and all16 STP bits.
+	# give 15 non-black entries; the source then clears entry 0 and all 16 STP bits.
 	var word := (0xdf>>3) | ((0x7f>>3)<<5) | ((0xcf>>3)<<10)
 	for color in range(1,16): bytes.encode_u16(color*2,word)
 	var known := PackedByteArray()

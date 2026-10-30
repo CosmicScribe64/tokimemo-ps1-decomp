@@ -10,7 +10,9 @@ fi
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd -P)
 PROJECT=${TOKIMEMO_PLAYABLE_PROJECT:-"$ROOT/port/godot"}
-IMAGE=${GODOT_PORT_IMAGE:-tokimemo-port-foundation-candidate}
+IMAGE=${GODOT_PORT_IMAGE:-tokimemo-port}
+BOUNDARY_SHA=$2
+TABLES_SHA=$4
 BOUNDARY=$(realpath "$1")
 TABLES=$(realpath "$3")
 MEDIA=$(realpath "$5")
@@ -39,35 +41,33 @@ case "$USER_DATA" in
 esac
 mkdir -p "$USER_DATA"
 
-HUD_MOUNTS=""
-HUD_ENV=""
+set --
 if [ -n "${TOKIMEMO_HUD_MANIFEST:-}" ]; then
   test -f "$TOKIMEMO_HUD_MANIFEST"
   HUD_DIR=$(realpath "$(dirname "$TOKIMEMO_HUD_MANIFEST")")
   HUD_FILE=$(basename "$TOKIMEMO_HUD_MANIFEST")
-  HUD_MOUNTS="$HUD_MOUNTS -v $HUD_DIR:/inputs/hud:ro"
-  HUD_ENV="$HUD_ENV -e TOKIMEMO_HUD_MANIFEST=/inputs/hud/$HUD_FILE -e TOKIMEMO_HUD_SHA=${TOKIMEMO_HUD_SHA:-}"
+  set -- "$@" -v "$HUD_DIR:/inputs/hud:ro" \
+    -e "TOKIMEMO_HUD_MANIFEST=/inputs/hud/$HUD_FILE" -e "TOKIMEMO_HUD_SHA=${TOKIMEMO_HUD_SHA:-}"
 fi
 if [ -n "${TOKIMEMO_FONT_ROOT:-}" ]; then
   test -d "$TOKIMEMO_FONT_ROOT"
   FONT_DIR=$(realpath "$TOKIMEMO_FONT_ROOT")
-  HUD_MOUNTS="$HUD_MOUNTS -v $FONT_DIR:/runtime/.asset-cache/port/fonts/native-font-v2:ro"
-  HUD_ENV="$HUD_ENV -e TOKIMEMO_FONT_ROOT=/runtime/.asset-cache/port/fonts/native-font-v2"
+  set -- "$@" -v "$FONT_DIR:/runtime/.asset-cache/port/fonts/native-font-v2:ro" \
+    -e TOKIMEMO_FONT_ROOT=/runtime/.asset-cache/port/fonts/native-font-v2
 fi
 if [ -n "${TOKIMEMO_HUD_CONTEXT:-}" ]; then
   test -f "$TOKIMEMO_HUD_CONTEXT"
   CTX_FILE=$(realpath "$TOKIMEMO_HUD_CONTEXT")
-  HUD_MOUNTS="$HUD_MOUNTS -v $CTX_FILE:/inputs/hud-context.json:ro"
-  HUD_ENV="$HUD_ENV -e TOKIMEMO_HUD_CONTEXT=/inputs/hud-context.json -e TOKIMEMO_HUD_CONTEXT_SHA=${TOKIMEMO_HUD_CONTEXT_SHA:-}"
+  set -- "$@" -v "$CTX_FILE:/inputs/hud-context.json:ro" \
+    -e TOKIMEMO_HUD_CONTEXT=/inputs/hud-context.json -e "TOKIMEMO_HUD_CONTEXT_SHA=${TOKIMEMO_HUD_CONTEXT_SHA:-}"
 fi
 if [ -n "${TOKIMEMO_REQUIRE_HUD:-}" ]; then
-  HUD_ENV="$HUD_ENV -e TOKIMEMO_REQUIRE_HUD=$TOKIMEMO_REQUIRE_HUD"
+  set -- "$@" -e "TOKIMEMO_REQUIRE_HUD=$TOKIMEMO_REQUIRE_HUD"
 fi
 
 # Read-only inputs, writable ignored captures, Xvfb + llvmpipe real rendering.
 # The container is visible through its captures. Interactive launchers may expose
 # this X display using their own existing desktop transport.
-# shellcheck disable=SC2086
 docker run --rm --cpus=2 \
   -v "$PROJECT:/workspace:ro" \
   -v "$BOUNDARY:/inputs/boundary.json:ro" \
@@ -75,10 +75,9 @@ docker run --rm --cpus=2 \
   -v "$MEDIA:/inputs/media:ro" \
   -v "$OUTPUT:/out" \
   -v "$USER_DATA:/userdata" -e XDG_DATA_HOME=/userdata \
-  $HUD_MOUNTS \
-  $HUD_ENV \
-  -e TOKIMEMO_BOUNDARY=/inputs/boundary.json -e TOKIMEMO_BOUNDARY_SHA="$2" \
-  -e TOKIMEMO_TABLES=/inputs/tables.json -e TOKIMEMO_TABLES_SHA="$4" \
+  "$@" \
+  -e TOKIMEMO_BOUNDARY=/inputs/boundary.json -e TOKIMEMO_BOUNDARY_SHA="$BOUNDARY_SHA" \
+  -e TOKIMEMO_TABLES=/inputs/tables.json -e TOKIMEMO_TABLES_SHA="$TABLES_SHA" \
   -e TOKIMEMO_MEDIA_PACK=/inputs/media -e TOKIMEMO_PLAYABLE_OUTPUT=/out \
   -e TOKIMEMO_PLAYABLE_SMOKE="${TOKIMEMO_PLAYABLE_SMOKE:-0}" \
   -e TOKIMEMO_PLAYABLE_RECORD="${TOKIMEMO_PLAYABLE_RECORD:-0}" \

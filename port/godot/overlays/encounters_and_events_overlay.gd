@@ -1,5 +1,5 @@
 extends RefCounted
-## T-29018: Lane 3 — Girl Encounters (GEKO), Seasonal Visits (OMIMAI, VALEN, SHOUGATU),
+## T-29018: Lane 3: Girl Encounters (GEKO), Seasonal Visits (OMIMAI, VALEN, SHOUGATU),
 ## and Annual Events / Term Exams (MODE_EXAM / GYOZI) overlay state machines and rules.
 ## Decompiled witnesses:
 ## - src/ovl/girl_encounters/walk_home.c, walk_home_entry.c, walk_home_followup.c
@@ -51,7 +51,7 @@ const EXAM_ROW_Y: Array[int] = [
 
 
 # ============================================================================
-# 1. GEKO — After-School Walk Home State Machine
+# 1. GEKO: After-School Walk Home State Machine
 # ============================================================================
 
 static func evaluate_geko_judge(
@@ -275,7 +275,7 @@ static func apply_nickname_prompt_choice(
 
 
 # ============================================================================
-# 2. MODE_EXAM / GYOZI — Term Exams & Annual Events Scoring and Ranking
+# 2. MODE_EXAM / GYOZI: Term Exams & Annual Events Scoring and Ranking
 # ============================================================================
 
 static func compute_exam_correction_bonus(year: int, month: int, rand_val: int) -> int:
@@ -486,7 +486,7 @@ static func build_exam_ranking(
 
 
 # ============================================================================
-# 3. VALEN / SHOUGATU / OMIMAI — Seasonal Visits
+# 3. VALEN / SHOUGATU / OMIMAI: Seasonal Visits
 # ============================================================================
 
 static func select_valentine_candidates(

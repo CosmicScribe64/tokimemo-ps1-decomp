@@ -1,10 +1,12 @@
 ---
 type: plan
-updated: 2026-10-27
+updated: 2026-10-29
 links: ["[[port-manager-handoff]]", "[[port-testing]]", "[[tickets/T-29034-plan-single-worker-port-completion]]"]
 ---
 
 # Finish the original port: one manager, one implementer
+
+**Current acceptance correction, 2026-10-29:** Work has resumed under the user's later instruction to delegate implementation and keep root focused on orchestration and review. The paused-work and single-implementer instructions below are historical. The later section labeled `G1`–`G4` verified is also a historical claim, not accepted completion evidence: independent review found synthetic route tests, missing startup Continue and persistent clear-save behavior, and an incomplete installed opening-to-gameplay handoff. See [[port-adversarial-review]] (R1, R10, R11, R21), [[status]] and [[port-testing]]. Current actual opening evidence reaches the Rei sequence; the stage8/substep7 upload-owner failure in `.asset-cache/port/rei-integration-v5/rei-failure.json` is under repair. No gate may inherit acceptance from the historical test totals below.
 
 The shortest credible route is to connect the existing source-backed components into real gameplay, then expand that connected route systematically. Keep the current core, use one implementation agent, and have the manager independently review and run each delivered change. Do not restart the old agent fleet or rebuild the project around a new architecture.
 

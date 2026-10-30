@@ -1,6 +1,6 @@
 ---
 type: verification
-updated: 2026-10-26
+updated: 2026-10-29
 ---
 
 # Port testing and acceptance
@@ -23,17 +23,25 @@ Keep all five. Reuse `tools/port/run.sh`, `compare_trace.py`, and `verify_tile_d
 
 Run the original PS1 executable and the port with the same documented starting state and input sequence. Compare ordered mode/stage/step transitions, calendar and relationship effects, RNG state and draw count, input edges, and service/audio requests and completions. Use the original executable as the reference; a second implementation of the same formulas can repeat the same mistake.
 
-`tools/port/compare_trace.py` already reports the first divergent record and field. The readiness work adds a bound comparison report so the gate can verify the traces and rerun that comparison rather than trusting a `passed` flag. Pin the projection, original executable, producer scripts, initial state and inputs. Missing/truncated traces, unequal results or missing required fields fail. Do not resynchronize after divergent RNG or drop inconvenient events. Intentional adaptations need a reviewed projection or tolerance, recorded separately from exact baseline behavior.
+`tools/port/compare_trace.py` reports the first divergent record and field. The readiness work adds a comparison report tied to the traces, so the gate can verify them and rerun the comparison. A `passed` flag alone is insufficient. Pin the projection, original executable, producer scripts, initial state and inputs. Missing or truncated traces, unequal results, and missing required fields fail. Do not resynchronize after divergent RNG or drop events to obtain a match. Record intentional adaptations separately from exact baseline behavior, with a reviewed projection or tolerance.
 
 Compare visuals and audible output separately at corresponding gameplay checkpoints. Integer state and RNG should compare exactly; PS1/software-rendered color, mixing and presentation timing need specific justified tolerances. A numeric trace pass cannot waive missing graphics or audio, and a matching image cannot waive incorrect simulation. Captured-boundary differential cases complement normal-start routes without replacing them.
 
 ## Required coverage
 
+### Paired baseline playthrough
+
+The user explicitly requires running the game in both the emulator and the port to confirm baseline behavior and appearance. Start with Japanese original presentation and default gameplay timing, with translation packs and optional pacing adaptations disabled. Record the same player decisions through normal New Game, the complete route, ending and save/relaunch. Bounded captures help diagnose differences but do not replace this paired route.
+
+Keep host elapsed time, emulator CPU cycles, vsync count, game-update count and CD/audio completion separate. Match checkpoints by ordered source state and input history, then inspect animation phase and displayed-buffer identity before comparing images. Measure different wait durations as discrepancies; do not silently delete wait frames, force service completion, reseed RNG or shift to a nicer-looking frame. Document intentional host adaptations separately. OpenBIOS can change hardware-service timing, so its timing is a measured reference with that limitation rather than a claim of exact console timing.
+
+For translation verification, first establish the corresponding Japanese render, then compare the translated version against that baseline: only intended text/art regions may change. Original dialogue must not remain beneath an unrelated opaque panel. Modern settings need actual menu captures and keyboard/controller navigation review in addition to persistence and value tests.
+
 ### Preflight before long gameplay runs
 
 Under [[tickets/T-29032-plan-port-by-reachable-boundaries]], distinguish **known unsupported**, **implemented but untested**, **regression**, and **verified for a bounded case**. Before extending a route, inspect its upcoming source predicates and list expected unsupported stops with their service dependencies and owners. For month-start, ordinary May coverage does not cover quarter June, September notice, year rollover or vacation bank selection. Target those branches with original-backed short cases before spending another full run rediscovering an explicit guard. Targeted setup is test evidence, not a normal-start playthrough.
 
-Keep actual player-input runs afterward: they catch integration, lifetime and accumulated-state failures that preflight cannot prove away. The preflight must not skip a known unsupported branch, fabricate its service completion, shrink the readiness policy, or turn a failed continuation into an overall pass. Use original-source/native behavior as the reference; tests that merely reproduce the implementation or image-generation template are insufficient.
+Follow preflight with actual player-input runs to catch integration, lifetime and accumulated-state failures. Preflight cannot establish their absence. It must not skip a known unsupported branch, fabricate its service completion, shrink the readiness policy, or turn a failed continuation into an overall pass. Use original-source/native behavior as the reference. Tests that merely reproduce the implementation or image-generation template are insufficient.
 
 The provisional policy at `port/verification/readiness-policy.json` is a starting checklist, not an exhaustive certification. Before acceptance, map original reachable modes, event conditions and endings to concrete scenarios, noting genuinely unreachable development code separately. Review that map against `src/main/game_mode.c`, the scheduler/loader, overlay source and [[phase3]]. Expand broad scenario families into named branch cases. No shrinking the checklist to match what happens to work.
 
@@ -44,8 +52,8 @@ Require a normal New Game success route through three years, the source-selected
 The source proposal for T-29029 contains 235 unexecuted case records, not 235 accepted scenarios or an exhaustive reachability audit. Preserve every existing broad family and expand it with named source branches. Per-girl dialogue/date/seasonal callbacks, career and album paths, subgame caller/result families and exact media/service selectors still need closure before any audited-policy claim.
 
 1. Preserve the existing three-year success route and its credits requirement. The proposal's conservative normal failure reference is useful separately; it cannot satisfy that success/credits route. Failure evidence must positively demonstrate the original C2-to-C4 bypass, rather than fabricate credits or waive a failed checkpoint.
-2. Add Rei12 as a separate required ending family. The original selector preempts ordinary ranking when Shiori points<500, Rei flags byte3>=70 and scene flag79==2. Preserve captured-boundary eligibility diagnostics and add actual normal New Game histories for all13 supported heroine IDs0..12 plus Yoshio failure13. Injected relationship/candidate/date fields do not establish earned route reachability.
-3. Preserve successful-ending clear-save obligations while separating last-photo paths: normal input0x860 chooses clear-save; neutral timeout reaches album; replay/options_dirty returns title. Choose source input for the required save route and test timeout/replay separately. Save counters changing in memory do not prove persistence: require acknowledged game/system writes, restart, reopen/reload and matching continuation.
+2. Add Rei12 as a separate required ending family. The original selector preempts ordinary ranking when Shiori points < 500, Rei flags byte3 >= 70 and scene flag79 == 2. Preserve captured-boundary eligibility diagnostics and add actual normal New Game histories for all 13 supported heroine IDs 0..12 plus Yoshio failure13. Injected relationship/candidate/date fields do not establish earned route reachability.
+3. Preserve successful-ending clear-save obligations and test the last-photo paths separately. Normal input 0x860 chooses clear-save; neutral timeout reaches album; replay/options_dirty returns title. Choose source input for the required save route and test timeout/replay separately. Require acknowledged game/system writes, restart, reopen/reload and matching continuation. Save counters changing in memory do not prove persistence.
 4. Expand telephone stages, scheduler priorities, health transitions, seasonal/club callers and borrowed overlay/subgame returns from the source inventory. Imported callback tables and per-girl predicates must remain blocking gaps until resolved. Static loader/table word matches prove mapping constants only; function probes do not establish player reachability.
 
 The proposed policy additions remain provisional and deliberately have no invented raw-check IDs, native snapshots, input hashes or executed receipts. Bind those only after reviewing real producers and captures. Actual state/RNG, corresponding viewport and audible output are separate mandatory evidence; no fixture, branch count or metadata assertion substitutes for them.
@@ -56,7 +64,7 @@ Every acceptance run records its runtime file inventory, engine/container identi
 
 Missing, failed, skipped, unsupported, stale or unreviewed required results block acceptance. Synthetic evidence cannot satisfy real-input requirements. Required checkpoints must all be reached; a clean process exit is insufficient. A changed runtime or asset invalidates the prior run. A bounded passing rerun does not erase another unresolved mandatory failure.
 
-Freeze and externally pin the reviewed policy hash when running the gate. Reviewers must inspect raw artifacts and implementation, bind their decision to the exact receipt/policy/runtime hashes and resolve findings. Producer and reviewer must differ. Names in JSON are audit metadata, not authentication; the coordinator verifies who performed the review. Checksums detect changed evidence, not false evidence.
+Freeze and externally pin the reviewed policy hash when running the gate. Reviewers must inspect raw artifacts and the implementation, bind their decision to the exact receipt/policy/runtime hashes, and resolve findings. Producer and reviewer must differ. The coordinator verifies who performed the review; names in JSON are audit metadata, not authentication. Checksums detect changed evidence, not false evidence.
 
 The gate reports accepted evidence for its named scope and missing coverage. It does not set the roadmap to Done or calculate a full-port percentage. Final completion also requires an independently reviewed reachability audit, all mandatory scenarios, packaged builds on the declared desktop targets and a reviewed list of fidelity deviations. Neither an agent's summary nor a large passing assertion count can replace that decision.
 
@@ -76,7 +84,7 @@ docker run --rm -e PYTHONDONTWRITEBYTECODE=1 \
 
 These check the framework, not the game's completeness. The separate real-failure integration check requires the ignored T-29023 capture and is explicitly invoked as `tools.port.test_readiness.ReadinessTests.actual_red_receipts_never_pass`, with `ACTUAL_RED_RECEIPTS` set to that run's container path. Absence of the capture is a failure of that integration invocation, not a skipped success.
 
-Use `python -m tools.port.readiness --help` and `python -m tools.port.differential --help` inside Docker for the evidence commands. Readiness requires the externally approved policy hash and separate receipt/review directories. Its content root must be an isolated input bundle exhaustively listed in the policy, not the entire asset cache. The current policy is deliberately provisional: execution/content/projection pins and raw-check mappings still require the source coverage audit. No acceptance command should promote it automatically.
+Use `python -m tools.port.readiness --help` and `python -m tools.port.differential --help` inside Docker for the evidence commands. Readiness requires the externally approved policy hash and separate receipt/review directories. Its content root must be an isolated input bundle exhaustively listed in the policy, not the entire asset cache. The current policy remains provisional because execution/content/projection pins and raw-check mappings still require the source coverage audit. No acceptance command should promote it automatically.
 
 Installed verification on 2026-10-26: 41 offline framework tests pass without skips; the separate actual failed-phone-run rejection check passes. Independent Standards and Spec reviews accepted this bounded tooling. The expanded provisional policy requires 55 scenario families; none has accepted evidence. The pre-adoption checklist contained 38 broad families, all preserved in this expansion. That is a coverage-accounting result, not a claim that no individual game functions work.
 

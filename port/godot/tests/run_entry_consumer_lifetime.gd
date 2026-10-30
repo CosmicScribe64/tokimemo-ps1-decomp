@@ -42,17 +42,29 @@ func key_event(held: bool) -> InputEventKey:
 	event.pressed = held
 	return event
 
+func stop_if_failed() -> bool:
+	if failures == 0: return false
+	printerr("entry_consumer_lifetime stopped at first failed prerequisite; failures=",failures)
+	quit(1)
+	return true
+
 func run_lifetime() -> void:
 	var install_root := OS.get_environment("ENTRY_INSTALL_ROOT")
-	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(install_root.path_join("manifest.json")))
+	if install_root.is_empty() or not FileAccess.file_exists(install_root.path_join("manifest.json")):
+		check(false,"ENTRY_INSTALL_ROOT must name an existing installed bundle with manifest.json")
+		stop_if_failed(); return
+	var manifest: Variant = JSON.parse_string(FileAccess.get_file_as_string(install_root.path_join("manifest.json")))
+	if not manifest is Dictionary:
+		check(false,"installed manifest is not a JSON object")
+		stop_if_failed(); return
 	var profile: Dictionary = Profile.read_pack(install_root,manifest)
-	check(profile.get("valid",false),"original installed entry profile authenticates")
+	check(profile.get("valid",false),"original installed entry profile authenticates: "+str(profile.get("error","")))
+	if stop_if_failed(): return
 	var text_root := OS.get_environment("PROLOGUE_TEXT_ROOT")
 	var text := TextStore.new()
-	check(text.open(text_root,"5e9c0b09e1afca9a62f6441c78ac0731e8da9bae8af65a655f578322af4f99dc").is_empty(),"original mascot/text resource authenticates")
-	if failures != 0:
-		quit(1)
-		return
+	var text_error := text.open(text_root,"5e9c0b09e1afca9a62f6441c78ac0731e8da9bae8af65a655f578322af4f99dc")
+	check(text_error.is_empty(),"original mascot/text resource authenticates: "+text_error)
+	if stop_if_failed(): return
 	var old_entry := EntryApp.new()
 	old_entry.installed_launch_profile = profile
 	old_entry.profile_text_store = text
@@ -61,6 +73,7 @@ func run_lifetime() -> void:
 	root.add_child(old_entry)
 	old_entry.set_physics_process(false)
 	check(old_entry.failure.is_empty(),"actual entry app initializes from installed original resources: "+old_entry.failure)
+	if stop_if_failed(): return
 	var successor := Consumer.new()
 	root.add_child(successor)
 	var probe := Consumer.new()
@@ -68,6 +81,7 @@ func run_lifetime() -> void:
 	var rejected_callback: Callable = rejected_handoffs.bind(old_entry,probe)
 	old_entry.profile_finished.connect(rejected_callback)
 	check(successor.watch_entry(old_entry).is_empty(),"minimal signal consumer watches actual entry scene")
+	if stop_if_failed(): return
 	successor.entry_owned.connect(func() -> void: ownership_events += 1)
 	check(old_entry._entry_pad.get_parent() == old_entry,"pad really begins as a child of the scene that will be freed")
 	# Select an actual source code unit for each name, then confirm each form.
@@ -87,6 +101,8 @@ func run_lifetime() -> void:
 		dispatch(old_entry,{"kind":"circle"})
 	dispatch(old_entry)
 	check(old_entry.controller.stage == 2 and old_entry.controller.step_id == 3,"queued UI fixture reaches actual final confirmation")
+	check(old_entry.failure.is_empty(),"entry dispatch: "+old_entry.failure)
+	if stop_if_failed(): return
 	old_entry._entry_pad._input(key_event(true))
 	old_entry._input(key_event(true))
 	dispatch(old_entry)
@@ -100,6 +116,7 @@ func run_lifetime() -> void:
 	dispatch(old_entry)
 	old_entry.profile_finished.disconnect(rejected_callback)
 	check(successor.error.is_empty() and successor.entry != null,"real profile_finished signal consumes live entry context")
+	if stop_if_failed(): return
 	check(successor.input_owner == pad_weak.get_ref() and successor.input_owner.get_parent() == successor,"same pad is synchronously reparented before deletion")
 	var live: Dictionary = successor.live_handoff()
 	var retained_rng: Dictionary = successor.rng.checkpoint()
@@ -121,6 +138,7 @@ func run_lifetime() -> void:
 	check(successor.live_handoff().context == retained_context,"live timer/frame/brightness/residency context remains unchanged by deletion")
 	var peer := Provider.new()
 	check(successor.begin_opening(peer.services(),[peer],[peer.publish]).is_empty(),"retained actual entry starts source exit with explicitly invented service fixture")
+	if stop_if_failed(): return
 	check(successor.opening.session.rng == successor.rng and successor.opening.state.frame_count == retained_context.frame_count and successor.opening.state.timer_ticks == retained_context.timer_ticks and successor.opening.state.system_seed == retained_context.system_seed,"new session preserves exact RNG and independent frame/timer words")
 	check(successor.opening.session.latched_input.held == 0x800 and successor.opening.session.latched_input.pressed == 0,"held commit START has no new native edge")
 	var held: InputFrame = successor.input_owner.sample(0)

@@ -271,9 +271,9 @@ func scene_reset(state: Dictionary, result: Dictionary) -> String:
 static func source_frame_argument(state: Dictionary) -> int:
 	if typeof(state.get("game_mode")) != TYPE_INT or state.game_mode != 21 or typeof(state.get("mode_stage")) != TYPE_INT: return -1
 	if state.mode_stage == 0: return 0
-	if state.mode_stage not in [1, 2, 3, 4, 5, 6, 7] or typeof(state.get("mode_step")) != TYPE_INT or typeof(state.get("substep")) != TYPE_INT: return -1
+	if state.mode_stage not in [1, 2, 3, 4, 5, 6, 7, 8, 9] or typeof(state.get("mode_step")) != TYPE_INT or typeof(state.get("substep")) != TYPE_INT: return -1
 	var opening: Variant = state.get("opening")
-	if not opening is Dictionary or typeof(opening.get("actor96_draw_flags")) != TYPE_INT or typeof(opening.get("prologue_line")) != TYPE_INT or opening.prologue_line not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]: return -1
+	if not opening is Dictionary or typeof(opening.get("actor96_draw_flags")) != TYPE_INT or typeof(opening.get("prologue_line")) != TYPE_INT or opening.prologue_line not in range(15): return -1
 	var media: Variant = opening.get("arrival_media")
 	var work: Variant = opening.get("prologue_text_work")
 	if not media is Dictionary or not media.get("actor_initialized") is bool or not media.actor_initialized or not media.get("upload_batch_key") is String or media.upload_batch_key.is_empty(): return -1
@@ -313,7 +313,7 @@ static func source_frame_argument(state: Dictionary) -> int:
 	if state.mode_stage == 3 and state.substep == 0 and not opening.has("bg_layer_0"):
 		return 2 if opening.prologue_line == 2 and work.pos == work.total and opening.actor96_draw_flags == 0 and opening.get("prologue_petals") is Array else -1
 	var layer0: Variant = opening.get("bg_layer_0")
-	if not layer0 is Dictionary or layer0.get("enabled") != 1 or opening.has("prologue_petals"):
+	if not layer0 is Dictionary or (layer0.get("enabled") != 1 and not (((state.mode_stage == 8 and state.substep == 7) or (state.mode_stage == 9 and state.substep in [0,1,2])) and layer0.get("enabled") == 0)) or opening.has("prologue_petals"):
 		return -1
 	if state.mode_stage == 3:
 		return 2 if state.substep in [0, 1, 2, 3, 4] and opening.prologue_line == 3 and opening.actor96_draw_flags == 0xa4 and (state.substep not in [2, 3, 4] or work.pos == work.total) else -1
@@ -334,9 +334,21 @@ static func source_frame_argument(state: Dictionary) -> int:
 	if state.mode_stage == 7:
 		if state.substep == 0:
 			return 2 if opening.prologue_line == 10 and work.pos == work.total and opening.actor96_draw_flags == 0xa4 and not opening.has("actor99") and live.get("message_visible") == true else -1
-		if state.substep in [1, 2, 3]:
-			return 2 if opening.prologue_line == 11 and opening.actor96_draw_flags == 0xa4 and not opening.has("actor99") and (state.substep != 3 or work.pos == work.total) and live.get("message_visible") == true else -1
+		if state.substep in [1, 2, 3, 4, 5, 6, 7]:
+			return 2 if opening.prologue_line == 11 and opening.actor96_draw_flags == 0xa4 and not opening.has("actor99") and (state.substep < 3 or work.pos == work.total) and live.get("message_visible") == true else -1
 		return -1
+	if state.mode_stage == 9:
+		if opening.actor96_draw_flags != 0xa4 or opening.get("actor96",{}).get("profile") != "o09_rei_entrance": return -1
+		if state.substep == 0: return 2 if opening.prologue_line == 12 and work.pos == work.total else -1
+		if state.substep in [1,2,3,4,5,6,7]: return 2 if opening.prologue_line == 13 else -1
+		if state.substep in [8,9,10,11]: return 2 if opening.prologue_line == 14 else -1
+		return -1
+	if state.mode_stage == 8:
+		if state.substep in [0,1,2]:
+			return 2 if opening.prologue_line == 11 and work.pos == work.total and opening.get("prologue_text_cleared") == true and opening.actor96_draw_flags == 0x84 else -1
+		if state.substep in [3,4,5,6,7]:
+			return 2 if opening.prologue_line == 12 and opening.actor96_draw_flags in [0,0x84,0xa4] and live.get("message_visible") == true else -1
+
 	return -1
 
 func advance_outer(state: Dictionary, rng: Object, result: Dictionary, screen_frame_argument: int = 0) -> String:

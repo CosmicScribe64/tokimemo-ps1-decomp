@@ -204,6 +204,18 @@ func stop(current: Dictionary) -> String:
 	history.append({"kind": "bgm_stop", "epoch": _owner["epoch"], "generation": generation})
 	return ""
 
+func rei_action(current: Dictionary, action: String, inputs: Array = [], xa_active: bool = false) -> String:
+	if _engine == null or current != _owner or sink.generation != _active_sink_generation:
+		return "Rei operation lost its original engine/sink ownership"
+	var validation: String = sink.validate_active(_active_sink_generation)
+	if not validation.is_empty(): return validation
+	match action:
+		"load": return _engine.load_rei_bank(inputs)
+		"fade": return _engine.begin_rei_fade()
+		"tick": return _engine.tick_rei_fade(xa_active)
+		"start": return _engine.start_rei(xa_active)
+	return "Unknown original Rei operation"
+
 func diagnostics() -> Dictionary:
 	return _engine.diagnostics() if _engine != null else {}
 

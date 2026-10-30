@@ -22,8 +22,29 @@ protected:
         ClassDB::bind_method(D_METHOD("stop_sequence"),&OriginalAudioEngine::stop_sequence);
         ClassDB::bind_method(D_METHOD("diagnostics"),&OriginalAudioEngine::diagnostics);
         ClassDB::bind_method(D_METHOD("dispose"),&OriginalAudioEngine::dispose);
+        ClassDB::bind_method(D_METHOD("load_rei_bank","inputs"),&OriginalAudioEngine::load_rei_bank);
+        ClassDB::bind_method(D_METHOD("begin_rei_fade"),&OriginalAudioEngine::begin_rei_fade);
+        ClassDB::bind_method(D_METHOD("tick_rei_fade","xa_active"),&OriginalAudioEngine::tick_rei_fade);
+        ClassDB::bind_method(D_METHOD("start_rei","xa_active"),&OriginalAudioEngine::start_rei);
     }
 public:
+    String load_rei_bank(Array inputs) {
+        if(!engine || poisoned)return "engine is disposed or failed";
+        if(inputs.size()!=3)return "exact original IJYU_VOL inputs required";
+        static constexpr const char* hashes[]={"f5ae3b750f10fec1a1cd0698ab1b2540de93bde3f5b4bb62dfa8da23848e489c","be8281abca7901556494ded265dd7f686cd5e58179db2f0d7dcb0ae95f90bb21","18dd4e4a9050cdf2fea53c4ab799c301a64c0bc36e4a059d9d5f3717b0628574"};
+        std::array<std::vector<uint8_t>,3> data;
+        for(int i=0;i<3;++i){
+            if(inputs[i].get_type()!=Variant::PACKED_BYTE_ARRAY)return "Rei input must be original bytes";
+            PackedByteArray bytes=inputs[i];if(bytes.is_empty() || bytes.size()>0x28000)return "Rei input extent differs";
+            Ref<HashingContext> context;context.instantiate();
+            if(context->start(HashingContext::HASH_SHA256)!=OK || context->update(bytes)!=OK || context->finish().hex_encode()!=hashes[i])return "Rei original input identity differs";
+            data[i].assign(bytes.ptr(),bytes.ptr()+bytes.size());
+        }
+        try{engine->load_rei(data);return "";}catch(const std::exception& e){poisoned=true;return String(e.what());}
+    }
+    String begin_rei_fade(){if(!engine || poisoned)return "engine is disposed or failed";try{engine->begin_rei_fade();return "";}catch(const std::exception& e){poisoned=true;return String(e.what());}}
+    String tick_rei_fade(bool xa_active){if(!engine || poisoned)return "engine is disposed or failed";try{engine->tick_rei_fade(xa_active);return "";}catch(const std::exception& e){poisoned=true;return String(e.what());}}
+    String start_rei(bool xa_active){if(!engine || poisoned)return "engine is disposed or failed";try{engine->start_rei(xa_active);return "";}catch(const std::exception& e){poisoned=true;return String(e.what());}}
     String initialize_inputs(Array inputs,int64_t gain) {
         if(engine || poisoned)return "engine initialization is single-use";
         if(gain!=69 && gain!=93)return "unsupported exact native gain";
@@ -55,6 +76,7 @@ public:
     Dictionary diagnostics() const {
         Dictionary d;d["initialized"]=bool(engine);d["failed"]=poisoned;d["hardware_PCM_parity"]=false;
         if(!engine)return d;
+        d["rei_loaded"]=engine->rei_loaded;d["rei_started"]=engine->rei_started;d["fade_active"]=engine->fade_active;d["fade_ticks"]=engine->fade_ticks;d["sequence_gain"]=engine->current_gain;
         d["frames"]=int64_t(engine->frames);d["note_operations"]=int64_t(engine->cpu.notes);d["allocator_calls"]=int64_t(engine->cpu.allocations);d["maximum_voices"]=int(engine->maximum_voices);d["peak"]=engine->peak;d["wet_peak"]=engine->wet_peak;d["stopped"]=engine->stopped;d["replacements"]=int64_t(engine->replacements);d["busy_replacements"]=int64_t(engine->busy_replacements);
         PackedByteArray header;header.resize(9760);std::memcpy(header.ptrw(),engine->cpu.ram.data()+0x12000,9760);d["mutated_music_header"]=header;
         PackedByteArray registers;registers.resize(512);std::memcpy(registers.ptrw(),engine->cpu.regs.data(),512);d["SPU_registers"]=registers;

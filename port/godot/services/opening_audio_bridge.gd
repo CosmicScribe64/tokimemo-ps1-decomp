@@ -26,6 +26,8 @@ const INTENT_FIELDS: Dictionary = {
 	"bgm_stop": ["kind", "command"],
 	"se_play": ["kind", "command"],
 	"native_audio_control": ["kind", "command"],
+	"native_bgm_fade": ["kind", "command"],
+	"native_bgm_fade_tick": ["kind", "xa_active", "tick", "gain"],
 	"native_stop_xa_if_active": ["kind", "epoch"],
 }
 
@@ -36,9 +38,10 @@ func _schema(event: Dictionary) -> String:
 	var fields: Array = INTENT_FIELDS[event["kind"]]
 	if event.size() != fields.size() or not event.has_all(fields):
 		return "opening audio intent fields differ from its supported schema"
-	for key: String in ["voice_id", "speaker", "epoch", "line_id", "clip_index", "command", "bank", "sequence", "bank_epoch", "request_serial", "session_generation"]:
+	for key: String in ["voice_id", "speaker", "epoch", "line_id", "clip_index", "command", "bank", "sequence", "bank_epoch", "request_serial", "session_generation", "tick", "gain"]:
 		if event.has(key) and not event[key] is int:
 			return "opening audio field requires an exact integer: " + key
+	if event.has("xa_active") and not event.xa_active is bool: return "fade XA ownership requires a boolean"
 	for key: String in ["request_key", "role"]:
 		if event.has(key) and (not event[key] is String or not audio._matches(AudioService.ID_PATTERN, event[key])):
 			return "opening audio field requires a bounded identity: " + key
@@ -105,8 +108,11 @@ func mid_prologue_bgm_diagnostics() -> Dictionary:
 
 func _preflight_service_event(raw: Dictionary) -> String:
 	var kind: String = str(raw.get("kind", ""))
+	if kind in ["native_bgm_fade","native_bgm_fade_tick"]:
+		return "" if audio.original_bgm_service != null else "Native fade has no original engine owner"
 	if kind == "bank_load" and str(raw.get("role", "")) in ["prologue_rei", "prologue_shiori"]:
-		AudioRules.prepare_mid_prologue_bank_roles(audio)
+		var preparation := AudioRules.prepare_mid_prologue_bank_roles(audio)
+		if not preparation.is_empty(): return preparation
 	if kind == "bgm_stop" and int(raw.get("command", -1)) in [5, 0xb1, 0xc1, 0xd1]:
 		return ""
 	if kind == "bgm_play":
@@ -181,6 +187,10 @@ func preflight(result: Session.FrameResult, state: RefCounted = null) -> String:
 			"native_audio_control":
 				if raw["command"] != 5 or (int(state.opening.get("audio_state_flags", 0)) & 0x100000) == 0:
 					return "audio control differs from transactional native flags"
+			"native_bgm_fade":
+				if raw.command != 0xb1 or not state.opening.get("bgm_fade") is Dictionary: return "Native fade lacks source command ownership"
+			"native_bgm_fade_tick":
+				if raw.xa_active != ((AudioRules.check_cd(state)&4)!=0): return "Native fade XA flag differs from source playback"
 		if raw.get("kind") == "voice_play":
 			if state == null:
 				return "voice preflight requires current transactional state"
@@ -315,7 +325,7 @@ func publish(result: Session.FrameResult, logical_tick: int) -> String:
 				voice.stop_clip()
 				_active_request.clear()
 				_pending = _pending.filter(func(value: Dictionary) -> bool: return value["service"] != "opening.audio")
-			"native_audio_control":
+			"native_audio_control", "native_bgm_fade", "native_bgm_fade_tick":
 				pass
 			_:
 				return "unsupported opening audio publication kind"

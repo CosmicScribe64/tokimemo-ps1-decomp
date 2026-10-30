@@ -1,10 +1,8 @@
 extends "res://presentation/command_hud_presenter.gd"
 class_name VnScenePresenter
-## T-29018: Unified VN Scene and Overlay Presenter.
-## Consolidates all verified PS1 320x240 presentation primitives into a single reusable
-## presenter class so all VN and overlay screens (TEL, DATE, DATE2, GEKO, EVENT, OMIMAI,
-## VALEN, SHOUGATU, ENDING, OPTION, OLH, ETC) can render authentic native framebuffers
-## without duplicating boilerplate.
+## T-29018: Shared 320x240 VN scene and overlay presentation primitives.
+## Used by TEL, DATE, DATE2, GEKO, EVENT, OMIMAI, VALEN, SHOUGATU, ENDING,
+## OPTION, OLH and ETC presenters. Each scene still needs fidelity verification.
 
 const HUD_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
 
@@ -38,6 +36,13 @@ const STAT_LAYOUT := [
 var _checker_tile: Image
 var recorded_glyphs: Array[Dictionary] = []
 var bounding_box_violations: Array[String] = []
+
+func open_font_only(font_root: String) -> bool:
+	# NAME_ENT owns its actors/backgrounds and uses only this native text painter.
+	recorded_glyphs.clear()
+	bounding_box_violations.clear()
+	error = _font.open_external_font(font_root)
+	return error.is_empty()
 
 func init_resources(font_root: String, hud_manifest_path: String = "") -> String:
 	recorded_glyphs.clear()
@@ -306,10 +311,10 @@ func draw_menu_bar_highlight(target: Image, rect: Rect2i, style_idx: int = 0) ->
 # VN Dialogue Presentation Primitive
 # ==============================================================================
 
-## Unified VN Dialogue renderer supporting both:
+## VN dialogue renderer supporting both:
 ## - sndisp layout: Y = 170, 186, 202 (is_vn_layout = false)
 ## - talk_render layout: Y = 168, 184, 200 (is_vn_layout = true)
-## With text_shadow_palette_0/1 shadow suppression and Actor 2 Frame 0xF0 wait marker at (276, 192 + marker_bob_y).
+## With text_shadow_palette_0/1 shadow suppression and Actor 2 Frame 1 wait marker at (276, 192 + marker_bob_y).
 func draw_vn_dialogue(target: Image, speaker_hex: String, body_lines_hex: Array[String],
 		is_vn_layout: bool = false, marker_bob_y: int = -1) -> void:
 	var y_slots: Array = [168, 184, 200] if is_vn_layout else [170, 186, 202]

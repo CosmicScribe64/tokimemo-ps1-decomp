@@ -6,12 +6,63 @@ const Presenter = preload("res://presentation/command_hud_presenter.gd")
 const MANIFEST_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
 const CONTEXT_SHA := "2ec736f93177c47d7d0dce13444183215cbc65a88b40a065319c73bee9ce0451"
 const BOUNDARY_SHA := "cddc10f6e6ff93ff9f667fb2c8ed6d3e1ab42d09ec6c0ee0e7f2317750b03ce5"
+const FRESH_MANIFEST_SHA := "55336d7e593fc9077f697184c6029da23c320aae2000447fbe6fb40c9bcb47e2"
 var error: String = ""
 var presenter: Presenter = Presenter.new()
 var profile: Dictionary = {}
 var initial_icons: Array = []
 var initial_params: Array = []
 var _opened: bool = false
+
+func open_fresh(manifest_path: String, font_root: String, rule: Dictionary,
+	core: Dictionary, opening: Dictionary, cursor_style: int) -> bool:
+	# T-39002: caller owns committed New Game state. This initializes the
+	# existing settled-hover presenter; it does not certify entrance animation.
+	profile.clear()
+	initial_icons.clear()
+	initial_params.clear()
+	_opened = false
+	presenter = Presenter.new()
+	error = "fresh HUD requires the completed source New Game command boundary"
+	if opening.get("origin") != "source-fresh-no-card-direct-entry-development-v1" or opening.get("command_ready") != true or opening.get("icon_mode") != 0 or opening.get("icon_count") != 14:
+		return false
+	if core.get("game_mode") != 0x34 or core.get("mode_stage") != 1 or core.get("mode_step") != 0:
+		return false
+	var raw_name: Variant = rule.get("profile_family_bytes")
+	if not raw_name is Array or raw_name.size() != 8:
+		return false
+	var name_bytes := PackedByteArray()
+	for byte: Variant in raw_name:
+		if not byte is int or byte < 0 or byte > 255:
+			return false
+		name_bytes.append(byte)
+	var terminator := -1
+	for offset: int in range(0, 8, 2):
+		if name_bytes[offset] == 0 and name_bytes[offset + 1] == 0:
+			terminator = offset
+			break
+	if terminator < 2 or terminator > 6:
+		return false
+	var candidate = Presenter.new()
+	if not candidate.open_manifest(manifest_path, FRESH_MANIFEST_SHA, font_root):
+		error = candidate.error
+		return false
+	var context := {"game_mode": 0x34, "mode_stage": 1, "mode_step": 0,
+		"icon_mode": 0, "icon_count": 14, "cursor_style": cursor_style,
+		"hover_ticks": 32, "family_name_hex": name_bytes.slice(0, terminator).hex_encode()}
+	var view: Dictionary = candidate.create_state(rule, context)
+	if view.is_empty():
+		error = candidate.error
+		return false
+	# hud_icon_bar_init calls actor_clear for each icon before assigning its
+	# sequence slot; the initial phase comes from the presenter's zeroed state.
+	profile = context.duplicate(true)
+	profile["icon_steps"] = view["icon_steps"].duplicate()
+	profile["icon_elapsed"] = view["icon_elapsed"].duplicate()
+	presenter = candidate
+	_opened = true
+	error = reset(rule)
+	return error.is_empty()
 
 func open(manifest_path: String, manifest_sha: String, font_root: String,
 	context_path: String, context_sha: String) -> bool:

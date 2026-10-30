@@ -7,11 +7,13 @@
 This project is a matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`), and an eventual English-translated Godot port of the game.
 
 The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) rebuild identically, and every game function is now
-written in C. Much of that C still uses placeholder names and needs cleaning up, which is the next phase. See
-[ROADMAP.md](ROADMAP.md) for where this project is going.
+written in C. The source naming/readability phase is recorded as complete. Work now focuses on the Godot port,
+fresh-install content generation, and actual gameplay verification. See [wiki/status.md](wiki/status.md) for the
+current evidence and [ROADMAP.md](ROADMAP.md) for the broader plan.
 
-**This repository contains no game data.** You need your own copy of the disc. The build reads the executables from
-it and nothing else is shipped here. The disassembly is not in the repository either. You generate it locally.
+**You need your own copy of the disc.** Original disc images, executables, extracted originals, and generated
+disassembly are not included. Versioned English artwork edits and review history are backed up under
+[translations/en/graphics/artwork](translations/en/graphics/artwork/README.md); they are not a complete runtime asset pack.
 
 This project is independent. It is not affiliated with or endorsed by Konami.
 
@@ -74,3 +76,7 @@ same rules, in [CODING_STANDARDS.md](CODING_STANDARDS.md) and [AGENTS.md](AGENTS
 The project's own code, tools and documentation are released under [CC0 1.0 Universal](LICENSE), a public-domain
 dedication. That covers our work only. It does not cover the game, its executables, its data or its assets, which
 belong to their rights holders, and none of them are included here.
+
+## Restoring the Godot port after a fresh clone
+
+See [the container-only content setup guide](tools/port/SETUP.md). It accepts the original two-track 7z and regenerates the source evidence required by exporters. The current output is a partial developer bundle; native release and full fresh-install readiness remain under verification.

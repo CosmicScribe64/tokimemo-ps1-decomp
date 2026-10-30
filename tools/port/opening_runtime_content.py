@@ -147,6 +147,31 @@ def build_pack(input_path: str | os.PathLike[str]) -> tuple[dict, dict[str, byte
                 "playback_capability": False,
             }
 
+        # prologue_line_11_run loads the alternate music bank while arrival
+        # music still owns the first bank. Authenticate all three real files;
+        # an arrival-memory copy is not a Rei bank.
+        source_text = (ROOT / "src/ovl/name_entry/prologue.c").read_text(encoding="utf-8")
+        if "audio_bank_load_start(1, 0, 0, 0xCCCB, 0xCC86, 0xCC82);" not in source_text:
+            raise OpeningPackError("Rei bank source request changed")
+        rei_assets = {}
+        for field, lba, size, digest in (
+            ("music_header", 0xcccb, 10272, "f5ae3b750f10fec1a1cd0698ab1b2540de93bde3f5b4bb62dfa8da23848e489c"),
+            ("music_body", 0xcc86, 139680, "be8281abca7901556494ded265dd7f686cd5e58179db2f0d7dcb0ae95f90bb21"),
+            ("sequence", 0xcc82, 6416, "18dd4e4a9050cdf2fea53c4ab799c301a64c0bc36e4a059d9d5f3717b0628574"),
+        ):
+            matches = [entry for entry in entries if entry.get("location", {}).get("lba") == lba]
+            if len(matches) != 1:
+                raise OpeningPackError("Rei original bank file is missing or ambiguous")
+            data = source.read(matches[0])
+            if len(data) != size or _sha(data) != digest:
+                raise OpeningPackError("Rei original bank bytes differ")
+            relative = f"reads/prologue_rei-{field}.bin"
+            files[relative] = data
+            rei_assets[field] = {"path": relative, "size": size, "sha256": digest,
+                                 "source_path": matches[0]["path"], "source_lba": lba}
+        bank_roles["prologue_rei"] = {"assets": rei_assets, "source_request": "prologue_line_11_run",
+                                      "bank": 1, "playback_capability": False}
+
     opening = {
         "schema": SCHEMA,
         "bank_roles": bank_roles,

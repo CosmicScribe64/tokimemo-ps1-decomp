@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import sys
 
 MODULE = Path(__file__).with_name("build_installed_runtime.py")
 SPEC = importlib.util.spec_from_file_location("build_installed_runtime", MODULE)
@@ -13,6 +14,14 @@ SPEC.loader.exec_module(runtime)
 
 
 class InstalledRuntimeBundleTests(unittest.TestCase):
+    def test_exporter_failure_preserves_bounded_actionable_diagnostic(self):
+        ok, reason = runtime._run([sys.executable, "-c",
+            "import sys; sys.stderr.write('x' * 3000 + ' missing asm/proof.s'); sys.exit(7)"], "rules")
+        self.assertFalse(ok)
+        self.assertIn("exit 7", reason)
+        self.assertTrue(reason.endswith("missing asm/proof.s"))
+        self.assertLess(len(reason), 2100)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="installed-runtime-test-")
         self.root = Path(self.temp.name)

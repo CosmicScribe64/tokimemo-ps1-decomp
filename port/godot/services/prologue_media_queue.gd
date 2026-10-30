@@ -111,7 +111,14 @@ func actor_read(state: State, sectors: int, destination: int, lba: int, result: 
 		return
 	var hidden_arrival: bool = resource.get("hidden_stage0_profile") is String and resource.hidden_stage0_profile == "o01_hidden.v1" and lba == 0xabab and sectors == 13 and destination == 0x80180000 and state.game_mode == 0x15 and state.mode_stage == 0 and state.mode_step == 1 and state.substep == 3
 	var stage_2_to_6_nbn: bool = state.game_mode == 0x15 and ((lba == 0xab18 and sectors == 49 and destination == 0x801a4000 and ((state.mode_stage == 2 and state.substep == 4) or (state.mode_stage == 4 and state.substep == 3))) or (lba == 0xac3f and sectors == 17 and destination == 0x80180000 and state.mode_stage == 2 and state.substep == 6) or (lba == 0xaa23 and sectors == 49 and destination == 0x801a4000 and state.mode_stage == 3 and state.substep == 2) or (lba == 0xabb8 and sectors == 9 and destination == 0x80180000 and state.mode_stage == 4 and state.substep == 0) or (lba == 0xaa54 and sectors == 49 and destination == 0x801a4000 and state.mode_stage == 5 and state.substep == 1) or (lba == 0xabca and sectors == 25 and destination == 0x801f0000 and state.mode_stage == 5 and state.substep == 4) or (lba == 0xaa85 and sectors == 49 and destination == 0x801a4000 and state.mode_stage == 6 and state.substep == 14) or (lba == 0xabe3 and sectors == 25 and destination == 0x801f0000 and state.mode_stage == 6 and state.substep == 15))
-	if not stage_2_to_6_nbn and (not resource.get("native_composition") is bool or (not resource.native_composition and not hidden_arrival)):
+	var rei_nbn: bool = state.game_mode == 0x15 and state.mode_step == 0 and (
+		(lba == 0xaab6 and sectors == 49 and destination == 0x801a4000 and state.mode_stage == 7 and state.substep == 5)
+		or (lba == 0xabfc and sectors == 9 and destination == 0x801f0000 and state.mode_stage == 7 and state.substep == 6)
+		or (lba == 0xaae7 and sectors == 49 and destination == 0x801a4000 and state.mode_stage == 8 and state.substep == 5)
+		or (lba == 0xac05 and sectors == 25 and destination == 0x80180000 and state.mode_stage == 8 and state.substep == 6)
+		or (lba == 0xaa85 and sectors == 49 and destination == 0x801a4000 and state.mode_stage == 9 and state.substep == 9)
+		or (lba == 0xac1e and sectors == 33 and destination == 0x801e8000 and state.mode_stage == 9 and state.substep == 10))
+	if not stage_2_to_6_nbn and not rei_nbn and (not resource.get("native_composition") is bool or (not resource.native_composition and not hidden_arrival)):
 		result.error = "source-backed visible actor composition is unavailable for LBA %x" % lba
 		return
 	var identity := _request(state,"actors",{"lba":lba,"sectors":sectors,"destination":destination},resource,result)

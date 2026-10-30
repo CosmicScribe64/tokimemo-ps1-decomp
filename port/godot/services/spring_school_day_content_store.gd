@@ -2,7 +2,9 @@ extends RefCounted
 ## Strict reader for the isolated April command 1–3 content pack.
 
 const SCHEMA := "tokimemo.spring-school-day-content.v1"
-const MANIFEST_SHA := "b26ef7e5c0301633c45d9a6a898ca4bdb7be68ee30f163825eed827e4f5c0c28"
+const MANIFEST_SHA := "e5d3e8034bb8ece4ba7f0b7da66a8650f189a3aba9b83023eee4d76170d8a874"
+const LEGACY_MANIFEST_SHA := "b26ef7e5c0301633c45d9a6a898ca4bdb7be68ee30f163825eed827e4f5c0c28"
+const FRESH_TABLES_SHA := "e9b83b8d2ad902430628791146d32daad7aacc66a6ac53ac628c3b70d00bb362"
 const TRACK_SHA := "28c3c501b0c67b87ca1e30515da73619497d509ff6adc28ff722aa02897dfb72"
 const EXE_SHA := "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae"
 const TABLES_SHA := "a1f30e57ef4f40ee7f9786043ccc5e007cfe316ba42fbd2c3e6896bf1d5f7060"
@@ -20,7 +22,7 @@ var _error := ""
 
 func open_pack(root: String, expected_manifest_sha256: String = MANIFEST_SHA) -> bool:
 	_clear()
-	if expected_manifest_sha256 != MANIFEST_SHA:
+	if expected_manifest_sha256 not in [MANIFEST_SHA, LEGACY_MANIFEST_SHA]:
 		return _fail("spring content requires the reviewed manifest identity")
 	if not _canonical_posix_path(root):
 		return _fail("spring content path must be a canonical absolute POSIX path")
@@ -50,7 +52,10 @@ func open_pack(root: String, expected_manifest_sha256: String = MANIFEST_SHA) ->
 	if parsed.get("schema") != SCHEMA or parsed.get("version") != 1:
 		return _fail("unsupported spring content schema")
 	var provenance: Variant = parsed.get("provenance")
-	if not provenance is Dictionary or provenance.get("original_input_sha256") != TRACK_SHA or provenance.get("original_executable_sha256") != EXE_SHA or provenance.get("rule_tables_manifest_sha256") != TABLES_SHA or provenance.get("reviewed_media_publication_sha256") != MEDIA_SHA or provenance.get("readers") != READERS:
+	var fresh := expected_manifest_sha256 == MANIFEST_SHA
+	var expected_tables := FRESH_TABLES_SHA if fresh else TABLES_SHA
+	var expected_media: Variant = null if fresh else MEDIA_SHA
+	if not provenance is Dictionary or provenance.get("original_input_sha256") != TRACK_SHA or provenance.get("original_executable_sha256") != EXE_SHA or provenance.get("rule_tables_manifest_sha256") != expected_tables or provenance.get("reviewed_media_publication_sha256") != expected_media or provenance.get("readers") != READERS:
 		return _fail("spring content provenance differs from reviewed inputs")
 	if parsed.get("route_capabilities") != CAPABILITIES:
 		return _fail("spring route capability set differs from reviewed tranche")
@@ -91,8 +96,9 @@ func error_message() -> String:
 	return _error
 
 func _valid_background(value: Variant, command: int, expected_lba: int) -> bool:
-	if not value is Dictionary or not _keys(value, ["source", "geometry_context", "reader", "files"]) or value.get("reader") != "tools/assets/image_mdec.py:export_mdec":
+	if not value is Dictionary or not _keys(value, ["source", "geometry_context", "reader", "files", "decoder_model"]) or value.get("reader") != "tools/assets/image_mdec.py:export_mdec":
 		return false
+	if not preload("res://services/mdec_model_identity.gd").valid(value): return false
 	var source: Variant = value.get("source")
 	var expected_path := "CDROM/BS/C_01_%02d.BS" % (27 + command)
 	if not source is Dictionary or source.get("path") != expected_path or source.get("location", {}).get("lba") != expected_lba or source.get("size", 0) < 1 or not _sha_ok(source.get("sha256")):

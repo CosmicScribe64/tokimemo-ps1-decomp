@@ -1678,3 +1678,390 @@ Ran `python3 tools/wiki.py lint` in Docker (`tokimemo-media:latest`): `0` broken
 ## [2026-10-27] ticket | Mark T-29025 Done, stop all subagents, and checkpoint canonical main
 
 Per user request to stop at a clean verified checkpoint and push all work, stopped all 5 worker subagents, moved [[tickets/T-29025-connect-installed-content-to-new-game]] to Done on [[kanban]] (`playable_boot.gd` connected New Game -> 22-stage opening -> Week 1 & Week 2 + Save/Load verified in `port/godot/tests/run_connected_opening_route.gd` `169/169` PASS and `port/godot/tests/app/run_live_desktop_full_game_tests.gd` `54/54` PASS; `first_arrival_boot.gd` verified through `stage 7 / step 0 / substep 3` in `yoshio-greeting-v1` with follow-on Step 8 candidate preserved in `.claude/orchestrator/state/T-29025/rei-banner-and-entrance-v1/`), updated [[status]], and verified `python3 tools/wiki.py lint` (`0` broken links, `0` status mismatches).
+
+## [2026-10-29] query | Fresh checkout assessment
+
+Created T-39001 In Progress, inspected [[status]], [[port-finish-plan]], [[port-manager-handoff]], source history and Tokimemo Orchestration chat context. Recorded newer October 27 integration, surviving original archive/artwork, missing ignored inputs/evidence and unavailable Docker daemon. Added recovery and G5 priorities to [[tickets/T-39001-fresh-checkout-assessment]] and [[status]]. Moved ticket to In Review with matching board card; no runtime claims renewed or development resumed. Git whitespace validation passed; Docker wiki lint unavailable while daemon stopped.
+
+## [2026-10-29] setup | Resume port restoration
+
+Created [[tickets/T-39002-restore-port-runtime]] In Progress with board card after user authorized continuing toward completion. Read coding standards; started Docker Desktop with required sandbox escalation. Will inventory images and regenerate minimum content before renewing acceptance claims.
+
+## [2026-10-29] build | Restore original disc and container tooling
+
+[[tickets/T-39002-restore-port-runtime]]: no Docker images survived. Built minimal content helper and rebuilt pinned port image with verified download hashes. Original 7z extraction passed; 1,355 files restored and original raw tracks retained. Version checker confirms Best executable and 27/27 overlay matches. Runtime export launched using required identical raw input/track binding. No host dependencies or copyrighted files staged.
+
+## [2026-10-29] build | Fresh port baseline exposes missing evidence dependencies
+
+[[tickets/T-39002-restore-port-runtime]]: Godot imported and core suites passed 5/5. Installed bundle is explicitly partial (seven roles). Connected opening failed missing tables/voice then errored on absent holiday JSON; stopped hung test. Direct export traceback identifies missing generated assembly evidence. Building pinned splat helper to restore evidence rather than bypass provenance. Historical G1–G4 claims remain unrenewed.
+
+## [2026-10-29] decision | Make fresh-clone restoration reproducible
+
+User expanded [[tickets/T-39002-restore-port-runtime]] to close setup gaps discovered during recovery. Add repeatable tooling and diagnostics with clean-cache checks; manual recovery alone is insufficient. Pinned splat helper now builds after supplying container-only compiler dependencies.
+
+## [2026-10-29] build | Validate repeatable fresh-clone content recovery
+
+[[tickets/T-39002-restore-port-runtime]]: added container-only setup entry point, content Dockerfile, guide and bounded exporter diagnostics with partial-bundle warnings. Clean isolated source tree plus read-only original archive regenerated 15 roles without historical caches; five producer gaps remain. Builder regression suite passes 12/12. Wiki lint: zero broken links/status mismatches, two existing oversized pages. Final wrapper additionally exits 3 on incomplete coverage; validation rerun underway. No full-port acceptance claimed.
+
+## [2026-10-29] build | Confirm partial-setup failure signal
+
+[[tickets/T-39002-restore-port-runtime]] final wrapper rerun returned expected exit 3 with five named gaps and preserved output. Shell syntax and Git whitespace checks pass. Self-review recorded; ticket remains In Progress because content completeness, actual gameplay, native package and independent change review remain open.
+
+## [2026-10-29] decision | Resume port producers and delegate prose cleanup
+
+Continuing [[tickets/T-39002-restore-port-runtime]] with a fresh-source spring exporter candidate; legacy reviewed-manifest path remains intact. User separately requested repository-wide use of the deslop skill. Delegated [[tickets/T-39003-deslop-repository]] to one agent, which read the linked skill and confirmed its scope is prose/comments/docstrings only, never executable code. Added In Progress board card; root retains port-file ownership.
+
+## [2026-10-29] build | Restore source-backed spring command content
+
+[[tickets/T-39002-restore-port-runtime]] now regenerates April command 1–3 content without historical media census. Original-track, executable, table evidence and weekly geometry/route checks remain; runtime accepts only old and new exact manifest pins. Godot store passes 25 assertions; exporter/bundle tests 17/17. Integrated into fresh bundle pipeline; isolated verification running. No gameplay/visual acceptance claimed.
+
+## [2026-10-29] build | Restore exact HUD pixels and correct spring provenance
+
+[[tickets/T-39002-restore-port-runtime]] regenerated the original HUD room with the unchanged pixel checksum; runtime validates fresh and legacy provenance. Added original-content positive/tamper/reopen checks, all passing; combined Python suites 25/25. Final spring pin supersedes candidate after correcting table serialization and independently reproduces. Connected route preflight now fails promptly with actual missing prerequisites. Integrated HUD/spring clean-tree export running; actual scene/route fidelity remains unaccepted.
+
+## [2026-10-29] lint | Review initial prose cleanup batches
+
+[[tickets/T-39003-deslop-repository]] used the requested external deslop skill. Root reviewed initial changes to tools/translation_gallery/README.md, [[cloud-matching]], [[assets-input]], [[emulator]] and [[port-testing]]: clearer prose, duplicate instruction removal and numeric spacing; no acceptance criteria, original facts or executable code changes identified. Agent reports Docker heading/link/command comparisons and whitespace checks passing. Historical/source-pinned text stays protected. Further active-document review continues; repository-wide completion is not claimed.
+
+## [2026-10-29] build | Confirm 17-role independent content bundle
+
+[[tickets/T-39002-restore-port-runtime]] independent export now includes spring media and HUD manifest with adjacent image payloads. HUD output naming initially violated the existing immutable-directory contract; corrected the composer path rather than relaxing that guard. Three content-role gaps remain. Inspection identified HUD context as a captured-boundary runtime dependency, not a missing room-image producer; diagnostics now say so. Spring final-pin loader checks pass. Gameplay, XA audio and native packaging remain open.
+
+## [2026-10-29] lint | Complete active-document review and port checkpoint
+
+[[tickets/T-39003-deslop-repository]] agent recorded dispositions for all 58 top-level wiki pages and other active standalone guides, with seven safe prose edits. Root reviewed final [[toolchain]] and [[build-system]] changes; requirements and commands retained. Protected history, source-pinned comments and unreviewed scanner findings remain open. Root reconciled README phase/artwork claims against [[status]] and translations/en/graphics/artwork/README.md.
+
+[[tickets/T-39002-restore-port-runtime]] independent bundle has 17 roles and three named gaps. Final spring loader, fresh HUD checks, 25 Python tests and five core suites pass; wiki lint has zero broken links/status mismatches. Exact content identities and remaining XA/session/scene work recorded in ticket. All changes remain local; no full gameplay, native packaging or publication acceptance claimed.
+
+## [2026-10-29] decision | Continue until port completion
+
+User explicitly directed uninterrupted work until the port is complete. Continue [[tickets/T-39002-restore-port-runtime]] and subsequent bounded tickets through actual fresh-install, route, audio/save and native-package acceptance. Do not substitute partial exporter or synthetic-test success for the G5 completion gate.
+
+## [2026-10-29] ticket | Complete translation assets alongside port
+
+User explicitly requested a sustained agent assignment until all required translation assets are made and tested in-game. Created board card for [[tickets/T-39004-english-asset-completion]] (agent created ticket In Progress). Initial inventory reports 59 current assets, 97 PNGs and 71 review events; preserve exact revisions and approvals. Agent owns translation work, coordinated separately from root port/runtime changes. Missing live routes do not justify claiming asset integration complete.
+
+## [2026-10-29] build | Add fresh-session HUD initializer
+
+[[tickets/T-39002-restore-port-runtime]] added a candidate live HUD initializer consuming committed New Game state instead of a captured development snapshot. Source references: src/main/hud_panels.c hud_icon_bar_init, src/main/actor_sprites.c actor_clear, and command reload adapter. Focused synthetic caller tests with real content pass, including incomplete-boundary/unterminated-name rejection and failed-reopen clearing. Existing presenter remains limited to settled hover; no entrance-animation or actual-route acceptance implied. App wiring remains next.
+
+## [2026-10-29] decision | Make modern settings mandatory for completion
+
+User explicitly promoted the modern settings menu to required port scope and authorized a dedicated agent. Assigned existing [[tickets/T-30002-modern-settings]] plan for implementation and actual-runtime/persistence testing. This supersedes the earlier hold on settings expansion; no blanket acceptance of other Phase 4 work. Agents must coordinate translation-pack providers and base-runtime integration without overlapping writes.
+
+## [2026-10-29] ticket | Start mandatory modern settings implementation
+
+[[tickets/T-30002-modern-settings]] moved Ready to In Progress (agent owns ticket frontmatter; root moved board). No existing settings/remapping modules found. Agent owns new settings services/menu/tests plus project.godot autoload registration and ui/native_pad.gd, with runtime/audio integration coordinated before overlapping edits.
+
+## [2026-10-29] build | Reconstruct opening voice from original XA requests
+
+[[tickets/T-39002-restore-port-runtime]] source audit found no PRO_01.XA in this disc; earlier audio descriptions are superseded by actual per-character XA inventory. Added original-table/native-filter exporter, generating 43 line mappings and 24 unique clips; runtime resolves 23 voiced lines and rejects unknown requests. Added bounded arithmetic tests and original-content audio test. Source/sector/PCM checks do not yet establish audible playback timing. Integrated role into fresh builder; application resources already consume installed opening_audio.
+
+## [2026-10-29] ticket | Independent adversarial port review
+
+Created [[tickets/T-39005-port-adversarial-review]] at the user's request and assigned a fresh-context reviewer. Scope includes source-faithful routes, player UX/UI, modern settings/accessibility, first installation, build/export failures, contributor workflows, and independent completion evidence. Review findings must distinguish reproduced defects from untested risks. Settings and translation implementation continue concurrently.
+
+## [2026-10-29] build | Translation inventory and settings audio integration
+
+[[tickets/T-39004-english-asset-completion]] restored 59 exact approved snapshots, with 56 mapped assets and 12 weekday HUD bindings. Inventory expansion identifies 64 missing OPTION frame variants; no OPTION rendering route is yet present. These are implementation candidates, not in-game acceptance. Wired opening/playable audio players to BGM, SFX and Voice buses created by [[tickets/T-30002-modern-settings]]; runtime verification remains pending.
+
+## [2026-10-29] build | Independent review catches desktop staging failure
+
+[[tickets/T-39005-port-adversarial-review]] reproduced rejection of Godot-generated `.gd.uid` files. `prepare_desktop.py` now accepts validated identifiers paired with script sources; all eight Docker staging tests pass. Native extension/platform packaging remains unresolved. Reviewer also found the three-year fixture replaces production handlers, so it cannot certify player-route completion.
+
+## [2026-10-29] build | Real keyboard opening reaches first line, audio capture fails
+
+Under [[tickets/T-39002-restore-port-runtime]], the fresh restored installed bundle progressed through all seven observed entry steps via X11 keyboard input into the first source opening line. The observer rejected an empty Master-bus recording with the Dummy audio driver. This is a failed acceptance run; a container PulseAudio sink is being prepared to exercise the real mixer. Added a bounded reusable keyboard driver and isolated GUI-test Docker image; no host dependency installed.
+
+## [2026-10-29] build | Independent exporter review and translation binding
+
+[[port-adversarial-review]] independently checked opening XA request arithmetic against original C, source and track pins, coding validation and immutable outputs; no blocker found in that bounded exporter review. Ten combined staging/arithmetic tests pass. Audible timing/full-route voice remain unverified. Added production playable HUD binding to ModernSettings image-pack selection and preference changes; actual reachable HUD validation remains open under [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-29] build | Actual opening exposes settings audio-effect ownership bug
+
+Both Dummy and PulseAudio opening runs reached the first line but recorded no mixer data. Integration inspection found settings toggled the last Master effect, unintentionally disabling the observer's later-added recorder on focus updates. Settings owner fixed lookup by mono-effect identity and added a regression preserving another effect. Retesting actual opening. Wired live first-arrival accessibility presentation and added copyable stopped-game diagnostics with the resolved log path, addressing [[port-adversarial-review]] R6; review/GUI validation pending.
+
+## [2026-10-29] build | Restored installed opening passes actual X11 and mixer checks
+
+After the audio-effect ownership fix, `drive_installed_first_scene.py` passed all 20 actual installed first-scene checks using the independently rebuilt original-content pack, real X11 key events, and PulseAudio virtual sink. Receipt/capture: `.asset-cache/port/first-scene-fixed/entry-keyboard-status.json`, `first-scene.png`, `first-scene-mix.wav`. Recording contains 581632 PCM bytes at 44100 Hz, non-silent; native BGM active_skips=0. Inspected screenshot: original school entrance, date frame and fully revealed narrator text. This verifies only the bounded opening checkpoint, not hardware PCM/pixel parity, native macOS playback, whole-game progression, or translation completion. Godot import and git diff whitespace checks pass.
+
+## [2026-10-29] build | Adversarial lifecycle review and shared Docker defaults
+
+[[port-adversarial-review]] now includes actual settings/diagnostic UI checks. Reviewer reproduced display preview reverting when another settings category changed; settings owner repaired effective-preview emissions with regression. Ordinary HUD pack hookup and copyable failure dialog received bounded review; all-scene translation remains open. Unified engine/export wrapper defaults with documented tokimemo-port and tokimemo-content images, added actionable missing-image errors, and removed obsolete maintainer image names/digest. Public run.sh test passes five core suites. Fresh-player onboarding, interruption recovery and native packaging are still incomplete.
+
+## [2026-10-29] build | Wider opening identifies voice descriptor integration gap
+
+Real keyboard next-boundary observer reached stage6 but rejected the first voiced request because the new exporter omitted required source_lba. The raw source is the whole track beginning at LBA0; added that explicit descriptor field and schema regression, regenerating voice content. This run failed, including BGM skips in its accelerated observation, and does not certify stages1–7. Setup now accepts a validated fresh --output directory for retries without deleting an earlier bundle or cloning again. Interrupted extraction recovery remains open.
+
+## [2026-10-29] decision | Port-wide review remains part of completion gate
+
+Updated [[status]] with independent findings from [[port-adversarial-review]], including missing Continue/backup recovery/clear-save persistence and hardcoded event inputs reported by the reviewer. Fixed raw-track XA descriptor passes43-line/23-voiced schema/decode test; new installed runtime rebuilding. Setup retry validation rejects existing outputs and traversal before extraction; no original files modified. Settings owner verified saved1280x720 entry resolution and controller gesture with actual runtime tests; these do not establish global settings/route completion.
+
+## [2026-10-29] ticket | Convert adversarial blockers into implementation work
+
+Created [[tickets/T-39006-production-route-state-parity]] and [[tickets/T-39007-player-save-relaunch-recovery]] as Ready, with actual-route, persistence and independent-review acceptance. [[port-adversarial-review]] now records15 findings; resolved bounded repairs remain distinct from unresolved whole-game blockers. These tickets are required completion work, not optional post-release improvements.
+
+## [2026-10-29] build | Opening progresses through original line11 at normal clock
+
+Corrected installed-runtime-v3 passed actual keyboard next-boundary observer through original opening stages1–7 and line11, with zero reported BGM skips. Capture/receipt `.asset-cache/port/next-boundary-v3/entry-keyboard-status.json`; next explicit source blocker is background LBA0xad00 slot1. Removed observer's forced180Hz speed-up, retaining normal production clock. This is a verified bounded stopping point, not full opening completion.
+
+## [2026-10-29] query | Expanded independent port review
+
+[[port-adversarial-review]] now records17 findings covering player routes, setup/build/contributor UX, settings, production-state parity, saves and startup. Additional save blocker: installed club media advertises command4 separately from ordinary resources, while save adapter demands identical resource/capability sets, preventing valid saves. Title adapter also suppresses neutral-frame timers. Five core suites,37 save-codec checks and bounded lifecycle/counterexample tests are evidence only for their stated scope. Wiki lint: zero broken links/status mismatches; two existing oversized pages.
+
+## [2026-10-29] build | Restore next prologue background with source-order correction
+
+Under [[tickets/T-39002-restore-port-runtime]], exported original P_01_07B.BS at LBA0xad00:8656 logical bytes, exact20480-byte native transfer (including original adjacent bytes), software320x160 words. Generic context extraction cannot resolve the nested decoder; pinned original C explicitly proves substep7 decode/show after actor reads. Corrected premature substep4 decode to CD polling, extended exact reader/transfer guards and HUD pending-transfer scope. Independent review accepted the bounded resource/order change; original-resource/unit test passes. Full145-check media regression and actual installed route are running; later actor acquisition and substep7 initialization are not implemented yet.
+
+Added optional name_entry_media file role to installed builder/profile, preserving all adjacent source images. installed-runtime-v4 contains this new source-backed role plus corrected voice and next-background content. Translation owner is implementing authentic entry rendering and optional English bindings.
+
+## [2026-10-29] build | AD00 media integration regression passes
+
+Full original-media `run_first_arrival_board_load.gd` now passes145 checks with installed-runtime-v4. Integration caught two additional omissions: HUD source-stage validation stopped at substep3, and publication lacked AD00 in its exact resource list. Both corrected, preserving original completed-line/actor guards. Earlier GUI run loaded the incomplete publication path and failed at stage7/substep4; a new current-code GUI run is in progress. No claim of full opening acceptance. Modern settings owner separately reports13 real X11 slow-text/held-state checks; independent review and broader route coverage remain required.
+
+## [2026-10-29] build | Acquire source actor transfers after line11
+
+Extended board exporter/reader with exact CUT_09.NBN (LBA0xaab6,49sectors) and O_09.NBN (LBA0xabfc,9sectors), retaining native destinations and strict identities. New board manifest1b4ef7014824a6ff50232bdb3eb56fcfc639879aaeb3126bc44dae94511b554c passes resource/order test. installed-runtime-v5 includes current actor resources and latest original NAME_ENT prompts/digits. Previous GUI run now proves next blocker is stage7/substep4 audio_command callback; bound existing AudioRules handler. Source substep7 may no longer skip its missing actor-copy/decode/palette setup: it requires an explicit service before advancing. That service is still under implementation, so no new scene-completion claim.
+
+## [2026-10-29] lint | Bound Godot dispatcher and presenter coverage claims
+
+Reviewed seven comment-only changes from [[tickets/T-39003-deslop-repository]] against actual dispatcher/presenter behavior. They preserve source sites and render constraints while removing unsupported blanket fidelity/coverage claims and documenting preview fallbacks. Agent Docker comparison confirms executable lines unchanged. These documentation changes do not fix gameplay limitations; repo-wide prose inventory continues.
+
+## [2026-10-29] build | Restore source same-frame poll after AD00 read
+
+Original C case3 falls through into case4. Factored the source wait/bank request sequence and invoked it on the read frame, retaining decode at the later actor-setup boundary. Focused original-resource test now checks exact CUT09/O09 request identities, same-frame read/poll order, no premature decode, and no stage advance without required actor-copy/palette setup. Passes on installed-runtime-v5; full145-check regression running. Translation/settings GUI tests use v5 because earlier board manifests no longer contain the required new actor resources.
+
+## [2026-10-29] build | Current original media sequence retains145 checks
+
+installed-runtime-v5 passes the complete145-check first-arrival media integration regression after exact actor-transfer additions and original case3-to-case4 fallthrough. Bounded line11 resource/order/missing-setup checks also pass. Actual v4 GUI run terminated at audio_command's unbound callback at stage7/substep4; callback now bound, next actual progression retest still required. The seven-state entry translation GUI test separately passes original/English/original restoration; root inspected English name-screen capture and verified labels remain within visible native controls, without claiming emulator pixel parity or all-assets completion.
+
+## [2026-10-29] build | Correct Rei banner source control flow
+
+Under [[tickets/T-39002-restore-port-runtime]], replaced invented stage8 waits/read sizes with original flash/fade/postincrement sequencing, voice readiness and exact49/25-sector reads. Required rendering/setup callbacks remain explicit unsupported boundaries.78 source-flow assertions pass; fresh-context reviewer independently confirmed the bounded controller against C. This is mocked callback evidence, not actual scene acceptance.
+
+## [2026-10-29] decision | Require paired baseline playthrough and native translation presentation
+
+User reiterated full original-emulator versus port playthrough, behavior and visual comparison, timing isolation, and rejected generic black-panel translated dialogue and current settings menu design. Settings owner confirmed screenshot is test content rendered by production overlay; native text replacement and menu UX revision are required. Fresh-context adversarial agent continues independent review under [[tickets/T-39005-port-adversarial-review]].
+
+## [2026-10-29] setup | Restore emulator for synchronized differential captures
+
+Created [[tickets/T-39008-synchronized-differential-captures]] and started pinned Docker emulator rebuild; image absent after cleanup. Screenshot records now bind requested memory ranges, PC and CPU cycles at capture vsync rather than borrowing an earlier breakpoint hit. Python syntax check passes; actual emulator validation and independent review pending. [[emulator]] records input/capture phase and original NAME entry checkpoints. Full paired playthrough remains mandatory and unexecuted.
+
+## [2026-10-29] query | Bind NAME checkpoints and paired-playthrough expectations
+
+Linked [[notes/name-entry-visual-checkpoints]] from the index; translation owner recorded exact source state/text/actor addresses for seven original entry checkpoints. Expanded [[port-testing]] with the user's paired normal-start baseline route requirement and separate host, vsync, simulation and service clocks. Translation verification follows a Japanese baseline and must preserve native presentation; settings require actual visual/navigation review.
+
+## [2026-10-29] lint | Fresh review and capture validation
+
+Fresh-context reviewer independently passed78 stage8 source-flow checks and18 differential/tile framework tests, recorded R18 native translation presentation failure and settings value/focus/custom-resolution defects in [[port-adversarial-review]]. Requested memory dumps now reject unreadable/cross-region ranges and record explicit length/status;2 tests covering16 cases pass in Docker and independent review accepts this bounded repair. Actual emulator capture validation remains pending. Wiki lint reports0 broken links,0 status mismatches and2 pre-existing large pages.
+
+## [2026-10-29] build | Preserve playable launcher paths as arguments
+
+Fresh review found optional HUD/font/context mounts split paths containing spaces and an obsolete image default in tools/port/run_playable.sh. Replaced concatenated shell argument strings with quoted positional arguments, preserved content hashes before resetting positional parameters, and selected tokimemo-port by default. Independent Docker argv regression passes8 assertions including spaces, brackets, wildcard characters, hashes and image selection. This fixes the explicit-boundary launcher, not normal-start route completeness.
+
+## [2026-10-29] build | Upload original Rei scene resources at native destinations
+
+Under [[tickets/T-39002-restore-port-runtime]], GPU pump now accepts exact AD00 alternate background, CUT09 six-page layout and O09 actor payload at source slot12/offset0xa0. Original-pack test verifies bytes, known masks, unrelated VRAM preservation and wrong-slot rejection. Added source-gated stage7/substep7 AD00 decode and completed-buffer ownership mapping; line11 regression passes. Transition palette/setup and complete stage8 rendering remain unwired, so this is resource-transfer evidence only.
+
+## [2026-10-29] build | Select usable restored CUE and repair import evidence fixture
+
+Emulator automatic selection now considers CUEs whose track members exist and rejects ambiguity rather than choosing a stale original filename lexically.3 Docker tests pass including valid generated CUE beside immutable stale source CUE. Independent reviewer repaired import test to use generated disc/disc.cue with explicit override/missing-input failure; root reviewed its bounded change,57 original-backed checks pass. Those checks override the capability to entry-only and do not establish default installed gameplay. Review records native importer/launch mismatch and later opening-to-gameplay handoff as remaining blockers.
+
+## [2026-10-29] build | Validate original Rei buffer ownership
+
+Extended completed CUT09/O09 buffer readers with exact hashes and18432-byte O09 extent. Original-resource test also checks synthetic session ownership: foreign state rejected, backup cannot masquerade as primary without copy authorization. Tests pass; actual CD-copy/intents/setup/render path remains under implementation. Independent review confirmed native slot12 and O09 pointer0x801800A0 directly from original bytes.
+
+## [2026-10-29] build | Replace generic translated dialogue panel with native text
+
+Settings owner removed the opaque generic overlay after user rejection. Current v2 actual installed capture preserves original speaker/frame and uses source Latin bitmap glyphs/palette/shadow/14-pixel advance;21 checks include no changes outside native text bounds at the same frozen checkpoint and exact Japanese restoration. Root inspected captures. Width follows text_system.c two-byte glyph path and NAME entry advance0xE; no narrow ASCII path is assumed. Original emulator differential remains pending; this is a port Japanese/English comparison only. Settings menu visual redesign continues.
+
+## [2026-10-29] decision | Correct Rei texture-slot interpretation
+
+Correction to prior Rei upload entries: actor byte0x01=12 selects ordering-table depth11, not texture slot12. Root caught this in actor_sprites.c; independent reviewer traced tpage reset/default locks and ascending actor allocation to first-free slot5 for the retained prologue HUD state. O09 pointer0x801800A0 remains correct; code/tests now use slot5 while preserving actor order12. Live emulator tpage capture remains required to confirm retained-state assumptions. Original resource and setup tests pass cleanly. Stage7 O09 read destination also corrected to backup0x801f0000 before source memcpy.
+
+## [2026-10-29] build | Prepare original Rei palette and transition intents
+
+Added exact source white-palette operation (transparent first entry, white color, final16 STP entries), receipt validation of resulting pixels, O09 backup-copy intent/schema/publication, native actor initialization and AD00 decode setup. Current tests verify white palette/scratch, buffer ownership, source destination and descriptor validity. Callback intentionally not connected to production until renderer/HUD coverage supports stage8; no full-scene acceptance.
+
+## [2026-10-29] build | Restore native emulator and repair visual comparison edges
+
+Pinned tokimemo-emu Docker build completed; original4500-vsync boot capture running with generated valid CUE, screenshots and same-callback memory metadata. Independent reviewer fixed verify_tile_diff top-row/left-column omission; root reviewed and independently ran20 differential/tile tests successfully, including border-only rejection and exact255 full-screen error. Previous comparator results cannot prove border fidelity.
+
+## [2026-10-29] query | Verify date and message border geometry
+
+Source HUD investigation confirms fills do not overlap: date[294,45,20,114], message[27,166,266,52]. Original frame60 decorative border reaches y176 and intersects the message frame's visible upper-right border; date actor order4 draws ahead of message order7. This supports the visible corner overlap as original layout rather than a small-window artifact. Native screenshot comparison remains pending. User separately approved compact Latin spacing while preserving original Japanese layout and glyph styling; settings owner is implementing that translation-specific adaptation.
+
+## [2026-10-29] setup | Diagnose restored emulator CUE incompatibility
+
+First restored boot reached OpenBIOS shell only: pinned Redux rejects FLAGS DCP. Its screenshots/state are explicitly excluded from gameplay evidence. Added a run-local compatibility CUE with absolute existing track paths, removal only of DCP permission directives, unchanged track/index lines and source/generated hashes; later version also records track hashes and rejects other FLAGS.4 unit tests pass. Original CUE/tracks remain untouched. A second actual boot is running in build/emu/restored-boot-v2.
+
+## [2026-10-29] build | Original emulator gameplay restored
+
+Compatibility-CUE boot completed4500vsyncs in91seconds, loaded NAME_ENT at3538 and produced actual320x240 original attract-prologue screenshots. Root inspected school/classroom images and live mode0x11/text-state records. This establishes emulator recovery, not a normal New Game comparison. Following the source-era recipe, a460-frame state continuation with START pulses is running to reach the original title menu.
+
+## [2026-10-29] build | Compact Latin translation and original-resource regression
+
+User-requested Latin spacing now derives from native bitmap ink widths with integer bearings and word wrapping, retaining Japanese speaker/native Japanese spacing and original palette/shadow. Root inspected settings-native-text-v3 actual capture;21 checks pass for bounded same-checkpoint English/Japanese restoration and unchanged outside-text pixels. Menu redesign is rendered and under independent UX review. Root's current board integration suite reports138 passing assertions; historical145count difference is being audited before interpreting coverage.
+
+## [2026-10-29] ingest | Translation source audit expands sports and battle drafts
+
+T39004 owner corrected stale sports instructions from original cards and generated five native-lettered drafts; restored battle source identifies40semantic variants rather than old catalog45. Thirty battle command variants are local unapproved drafts, with ten tiny miss variants still unresolved. Current total127newdrafts is inventory only; actual tested in-game coverage remains9NAMEframes. No asset completion or emulator parity claim.
+
+## [2026-10-29] build | Restore full board regression scope and reach original title
+
+The138/145difference was a missing BOARD_INSTALLED_PROFILE_ROOT test input, not gameplay randomness. Re-running with the installed root restores all145passing checks, including actual installed profile/native line/presenter checks. Reviewer is making absent optional coverage explicit. Original emulator continuation reached the real title menu; Circle selection entered source cold-start mode0x13. A neutral continuation is running toward NAME entry; no claim of prologue-entry parity yet.
+
+## [2026-10-29] build | Add live memory samples and port observation hook
+
+T39008 emulator --sample-every now records requested ranges every boundedNvsyncs to hashed memory-samples.jsonl with frame/cycles/PC/phase.5unit tests pass; translation owner verified360actual NAME samples in name-family-v1 (1.9MiB), no RAMpatch. Added read-only new_game_entry_boot.differential_snapshot with actual controller names/profile/cursor/tab, clock policy, model timer/frame/systemseed, RNGstate/count, sampled input, queued actions and native composed-image hash. Godot parsecheck passes. Native text/actor/draw-order and PS1clock-origin gaps remain explicit. Native-memory decoder and actual portdraw-call instrumentation are in progress; no full differential verdict yet.
+
+## [2026-10-29] query | Confirm overlap in actual original capture
+
+Original-disc normal NewGame path reached prologue through physical explicitprofile inputs. build/emu/original-prologue-explicit-v1/shot_300.png visibly confirms date decorative border overlapping the message-frame corner at native320x240. This is original reference evidence for the overlap, not whole-scene parity; title motion phase and text readiness differ from prior port screenshot.
+
+## [2026-10-29] build | Rebuild repaired NAME media and review observation tooling
+
+Built .asset-cache/port/installed-runtime-v6 from the original raw track with opening-only scope. It includes the translation owner's authenticated NAME_SAK.BS background and source selected-tab backing repair; actual in-game comparison is assigned to that owner and remains pending. Full producer-scope v7 is building separately. Original first-school paired capture exposes title visibility/timer and text-count differences (native32 includes five title glyphs, port27 excludes them), not parity. Root independently reviewed native_memory_projection.py and reproduced13 passing projection/emulator tests; extraction preserves capture metadata and rejects missing/overlapping ranges, but does not authenticate live overlay identity or establish parity. Lifecycle annotation verification is assigned to the reviewer. See [[tickets/T-39008-synchronized-differential-captures]] and [[notes/name-entry-visual-checkpoints]].
+
+## [2026-10-29] decision | Delegate opening integration and repeat adversarial review
+
+User requested root focus on orchestration and review. Assigned the settings implementer source-faithful stage7-to8 Rei production integration; assigned the independent reviewer a new pass across settings and translation, including actual input/rendering and evidence limitations. Translation owner continues actual repaired NAME checks. Settings current bounded controller save/load and real custom-voice playback evidence do not establish full gameplay save/relaunch or later-route voice identity. All port completion gates remain open.
+
+## [2026-10-29] build | Full asset bundle and restore lifecycle verification
+
+Full producer-scope installed-runtime-v7 built from the original track with repaired NAME background. It retains the same three unavailable roles as v5: holiday_scene, hud_context and school_day_media; it is not a complete installation. Reviewer independently verified four actual restore samples with all declared map ranges in build/emu/review-restore-lifecycle-v1, retaining the before_restore sample and explicit cycle discontinuity. Full projection passes. Zero-dimensional pre-restore screenshot is unusable and remains a diagnostic finding. Updated [[emulator]] with sampling, projection, provenance and lifecycle workflow. Root viewed the first-school side-by-side: scene geometry aligns visually while title visibility and checker phase differ; no pixel or timing parity accepted.
+
+## [2026-10-29] lint | Refresh current status and review bundle checks
+
+Updated [[status]] with the resumed current work so historical paused-agent statements cannot be read as current state. Wiki lint reports0 broken links,0 status mismatches and2 existing oversized pages. Root independently ran12 installed-runtime builder tests successfully; these exercise manifest/provenance/path behavior with fixtures and do not prove full installation. User highlighted visible first-school differences; reviewer is implementing explicit failing paired-image/state reports with raw clocks retained and incompatible field semantics identified, rather than treating a montage as acceptance.
+
+## [2026-10-29] build | Reject unusable emulator screenshots
+
+R24 repair under [[tickets/T-39008-synchronized-differential-captures]] validates positive bounded dimensions, supported16/24bpp and exact raw payload length before creating PNGs. New result records explicitly mark image_status unavailable with a diagnostic, or ok with PNG path/hash; state observations remain intact. Historical records without validation are reported as unvalidated, not silently advertised as usable. Three new screenshot tests plus existing sampling/projection tests pass16 total. Independent review and an actual short restore run requested; not yet accepted as closed.
+
+## [2026-10-29] query | Review repaired entry and assign missing native interactions
+
+Root inspected .asset-cache/port/name-emulator-pair-v5/entry-source-comparison.png: floral background and selected-tab backing are restored, but original cursor/active-name indication still differ. Independent v7 review reproduces seven-state Japanese/English/restoration and custom-voice playback; these are bounded checks. R25 identifies visible Symbols/Kanji tabs without input routes. Assigned full source-backed NAME interaction/rendering repair to translation owner and requested native320x240 framebuffer evidence alongside viewport captures so comparison need not silently resize. See [[port-adversarial-review]] and [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-29] query | Verify setup scope and remaining package boundary
+
+Reviewed setup_content.sh/setup_content.py against tools/port/SETUP.md: fresh-clone wrapper invokes the full exporter, not opening-only, preserves outputs and reports partial coverage. Translation owner identified opening-only NAME failure as an unnecessary HUD-manifest dependency for font initialization; approved a font-only initialization repair retaining font authentication and requested actual opening-only retest. Rechecked native packaging: original_audio.gdextension still defines only Linux arm64 libraries while desktop preset targets universal macOS, so R4 remains a required G5 blocker. Corrected stale settings Ready label in [[index]] to match In Progress ticket; no new platform acceptance claimed.
+
+## [2026-10-29] build | Independent screenshot repair acceptance and failing pair report
+
+Reviewer accepted R24 after actual review-shot-validity-v1 restore: pre-restore shot is unavailable with raw retained/noPNG; restored shot is320x240 with matching PNG hash. Root independently ran compare_capture_pair on first-school v3 and reproduced exit1: dimensions differ, title timer differs, text count domains incompatible, synchronization unverified. Requested stricter semantic type/schema handling before accepting comparator code. Translation owner reports actual opening-only v6 seven-state/first-school pass after font-only initialization; root reviewed that small method retaining NativeGlyphs authentication. Native320 frame evidence is now available for the next exact comparison. These remain bounded repairs, not full scene parity.
+
+## [2026-10-29] build | Accept bounded exact pair comparator and measure actual mismatch
+
+Root reviewed compare_capture_pair.py and README.capture-pair.md, requested strict equivalent-value types and malformed-record handling, then independently reproduced18 passing comparator/projection/screenshot tests after repair. Actual native320 first-school comparison exits1 with56273/76800 differingRGBA pixels, title184 versus116, incompatible native/port text-count domains and unverified synchronization. No resize, mask, tolerance or phase shift. Root diagnostic school-background region differs22943/22950 pixels, commonly+7 perchannel; dialogue region16032/18850 pixels matches. These regions are investigative only and do not alter acceptance. Assigned color-conversion/MDEC diagnosis to reviewer; synchronization evidence remains externally reviewed, not established by hashing its declaration. See [[tickets/T-39008-synchronized-differential-captures]].
+
+## [2026-10-29] query | Distinguish scanout capture from generating game state
+
+Reviewed boot_loop/draw_frame and original libgs assembly. Mode dispatch and game frame increment precede draw construction/submission; CD/audio pumps follow. libgs func_8009AC20 toggles its buffer index. Updated [[emulator]] to distinguish simultaneous VSync memory/image observation from proven generating-frame correlation and require dispatch/submission/buffer binding before synchronization acceptance. Also documented accepted R24 live repair and exact failed pair workflow. No arbitrary frame alignment introduced.
+
+## [2026-10-29] build | Restore native audio compiler and expanded installed resources
+
+Full installed-runtime-v8 exported successfully with expanded source-backed NAME content and CUT10/O10 resources; three required producer gaps remain. Restored pinned godot-cpp/SCons into ignored .asset-cache/native-audio-build using TLS certificate verification and checked recorded SHA256s. Reused tokimemo-recovery-splat g++14.2.0/Python3.13.5, avoiding host installs/newimages. Isolated unchanged baseline extension compiled and loaded in Godot4.7.2; registration and uninitialized rejection pass. No production library replaced and no PCM/platform acceptance claimed. Build inputs/compiler/dependency receipt and log retained for implementer.
+
+## [2026-10-29] query | Correct unsupported mid-prologue music claims
+
+Source review and implementer investigation found shipped native engine supports arrival only; later bank APIs in GDScript target an unavailable successor. prepare_mid_prologue_bank_roles relabels an arrival checkpoint instead of loading actual Rei/Shiori resources, so its readiness checks do not establish native support. Source command0xB1 fades the prior sequence rather than stopping immediately. Assigned real authenticated slot2 preparation, fade and owned bank transition, with source order preserved. See [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] build | Make native audio rebuild reproducible from a clone
+
+Added tools/port/native_audio/build.sh and build.py under [[tickets/T-39002-restore-port-runtime]]. The Docker-only command restores size/SHA-pinned dependencies with TLS verification, builds an isolated new ignored candidate, records source/compiler/output identities, and never publishes a runtime library. Three failure-boundary tests pass for output overwrite/traversal, download identity and archive extraction. Updated native README with exact command and scope. Actual clean command build is running in native-audio-repro-v1; independent review pending.
+
+## [2026-10-29] build | Reproduce clean native-audio build command
+
+The new Docker wrapper completed from an empty candidate directory with verified downloads and exit0; build-result.json records compiler and library hash in .asset-cache/native-audio-repro-v1. No production library publication. Requested independent tooling review from the audio implementer and added the evidence/limits to [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] build | Review native builder and verify decoded-word oracle
+
+Audio implementer independently reviewed the new build helper and reran3 tests with no blocking finding in bounded scope. Reviewer captured20 original MDEC output strips at the load-delay-safe instruction before GPU upload; rejected earlier stale-a1 capture is retained separately. Root verified result/output SHA256,102400byte extent and exact22950/22950 school-region correspondence between decodedRGB555words and final emulator image. Port differs15978 codes in that region, isolating decoder output from GPU/timing there. Requested second independent original asset before accepting a candidate decoder. Evidence build/emu/review-mdec-school-strips-v2; [[tickets/T-39008-synchronized-differential-captures]] remains In Progress.
+
+## [2026-10-29] build | Reject diagnostic-only native fade candidate
+
+Root reviewed new native fade and found SPU master-volume writes were not applied by Engine.render's final mixer. Independently reproduced with immutable candidatea49bdad0...: two authenticated original arrival engines warmed60blocks, then nine fade ticks produced identical PCM9/9 despite reported gain3. Failure script/library retained at .asset-cache/recovery/rei-fade-review; expected exit1. Implementation owner confirmed and is adding master mixing plus paired PCM regression and source XA-active branch handling. Previous gain10tick/nonzeroRei test does not prove audible fade. No candidate published; [[tickets/T-39002-restore-port-runtime]] remains open.
+
+## [2026-10-29] query | Review master-volume fixed-point correction
+
+Root found a second issue in the proposed fade repair: signed15bit direct-volume value was multiplied with a15bit shift, halving output relative to the existing voice path's14bit shift. PSX-SPX direct-volume register specification identifies stored value as volume/2: https://psx-spx.consoledev.net/soundprocessingunitspu/#0x1f801d80-mvoll-main-volume-left . Requested explicit hardware-gain boundary tests (zero, half, maximum, negative), in addition to paired audible-fade tests. Updated native README to distinguish historical V2 qualification, current candidate sources and unchanged packaged library; no candidate acceptance yet.
+
+## [2026-10-29] build | Review native gain correction and entry startup regression
+
+Root independently compiled/reran test_master.cpp with strict warnings: explicit zero/maximum/half/negative direct-volume cases pass after Q14 correction. Audible candidate rerun remains pending its immutable receipt. Root also traced new NAME test timeout to media bridge still requiring10 actor descriptions while expanded BoardStore exposes12; implementer repaired that startup guard. Installed v8 data was coherent and no scene-route override was needed. Translation owner is rerunning actual Symbols/Kanji controls. Experimental MDEC candidate remains separate and fails exact reference comparison; requested independent accurate-model execution before considering production changes.
+
+## [2026-10-29] build | Independent revised PCM test and publication review
+
+Root pinned candidate19b48b82... with source/test receipt, reran real original-input native tests and reproduced passing paired fade PCM, XA master preservation, alternate-bank playback and gain checks. Snapshot/log retained in rei-fade-review-v2. Candidate remains unpublished: early-start source fade completion is being corrected, and root found missing exact-frame publication binding/replay rejection plus unvalidated prepared.inputs/xa_active at the new native boundary. Requested before-commit validation and mutation/replay regressions. Independently reran14 experimental MDEC/color/comparator tests; candidate decoder is still not production or hardware acceptance. Combined v9 resource export is running.
+
+## [2026-10-29] build | Independently verify final isolated Rei candidate and decoder model
+
+Root verified d937156a... candidate/source receipt and independently reran original PCM/early-start and publication mutation/replay suites successfully. Actual v9 continuation passed previous bank failure and stopped on older actor-read whitelist at stage7/substep5; owner is extending only exact source admissions. Candidate remains isolated. Root also reran the pinned newer decoder reference executable, verifying harness/binary hashes and exact51200school/76800NAMEword equality with the independent candidate. This establishes agreement with that numeric model, not physical hardware or exactRedux rendering. Older emulator residuals remain explicit. Translation discovered a separate actual960x720 cropping defect from1024x768 logical viewport plus integerstretch; coordinated nativecanvas fitting and actualpixel UI repair, with multi-resolution input tests required.
+## [2026-10-29] query | Review failed visual pair and current repair evidence
+
+Exact native-resolution first-school comparison remains failed at56273/76800 RGBA pixels; matching coarse scene values does not establish visual parity. Root reran24 candidate BS decoder, existing parser, RGB555 diagnostic and exact-pair regressions in Docker: all pass. Experimental BSv3 predictor handling reuses the owned parser; four original assets match the pinned accurate-model reference, with physical-hardware and Redux differences still explicitly unresolved. Production decoder is unchanged. Translation owner reports physical NAME input checks passing at960x720,1024x768 and1280x720, plus exact Japanese restoration; root inspected the default-size Symbols capture and assigned independent adversarial review. Default cursor frame0 still needs the expanded source-style export. Opening owner reached actual stage8/substeps0–2 using the isolated reviewed audio candidate and is repairing the source line12 preload boundary. See [[port-adversarial-review]], [[tickets/T-39004-english-asset-completion]] and [[tickets/T-39008-synchronized-differential-captures]].
+
+## [2026-10-29] build | Independently execute both BSv3 reference comparisons
+
+Root verified the reference binary, candidate and original-file receipt hashes, executed the pinned accurate-model reference in Docker for both original TACO BSv3 inputs, and compared candidate output byte-for-byte:76800/76800 words each. Retained outputs are .asset-cache/mdec-reference/duckstation-4ac22708f3f0/taco0.root-review.bin and taco1.root-review.bin. The numeric candidate is accepted for a controlled exporter migration with explicit model identity, padded output preservation and regenerated consumer/content hashes; migration has not started and raw Redux screenshot parity remains failed. Shared BS-to-runlevel transport still needs independent original-game capture. Independent reviewer is currently checking NAME resize/input/handoff before taking the migration task. See [[port-adversarial-review]] and [[tickets/T-39008-synchronized-differential-captures]].
+
+## [2026-10-29] build | Review Rei CD wait and resolve display preview findings
+
+Root compared prologue_rei_banner_run case3/4 in src/ovl/name_entry/prologue.c with the line12 text-frame carry: source CD-start wait draws white boxes without advancing ink, then case4 resumes line_run. Independently ran run_rei_vram.gd against installed-runtime-v9 in Docker; original transfer and wrong-stage/line/duplicate wait regressions pass. Actual opening continuation and resized scene handoff remain required. Fresh reviewer found R27 pending display-filter preview used persisted settings and R28 obsolete logical-viewport assertions; owners repaired both and reviewer independently reran both actual X11 tests successfully. Decoder/export/store owners have coordinated a freeze for the controlled numeric-model migration. See [[port-adversarial-review]] and [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] lint | Correct stale completion claims in the finish plan
+
+Root found the finish plan still presenting historical G1–G4 verification and paused/single-implementer guidance without a current correction. Added a prominent precedence note linking the actual adversarial findings and unchanged acceptance requirements. Current installed-route evidence includes an explicit stage8/substep7 actor-upload owner failure; historical synthetic route totals cannot establish complete gameplay, Continue or persistent clear saves. No gate or ticket was closed. See [[port-finish-plan]], [[port-adversarial-review]] and [[status]].
+
+## [2026-10-29] query | Review source entrance ownership and decoder provenance boundaries
+
+Root localized the actual stage8/substep7 upload rejection to the absent O10 branch: slot6 fell through to actor97 although original entrance actor96 owns both pages. Owner added exact stage9/substep0, resource/profile, slot5/offset0x42c0/key1 and slot6/offset0x82c0/key2 validation with rejection tests; root reviewed the branch against source case7 and awaits actual route confirmation. Decoder migration review also required binding both parser and new numerical-module hashes in export proofs, plus preserving padded rows. Translation pointer integration must sample once before movement/confirm dispatch and retain that exact sample through completed-iteration handoff; native latch-phase parity remains unproved. Wiki lint passes with0 broken links and0 status mismatches;2 existing oversized pages remain. See [[port-adversarial-review]] and [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] build | Independently verify migrated decoder arithmetic and export padding
+
+Root ran40 BS parser, numerical-model and media-export regressions in Docker with both repository/tool import roots; all pass. Independently decoded four original files through the new production numerical module and compared against retained root-executed reference output: school51200, NAME76800 and both TACO76800 words each match exactly. Reviewed complete padded RGB555 decoding, active-row crop and emitted hashes for both parser/export and numerical source modules. Consumer schema/hash rebuild remains underway after discovering HUD-room and weekday56 pins; no installed-bundle or raw screenshot parity acceptance follows from these arithmetic checks. See [[port-adversarial-review]] and [[tickets/T-39008-synchronized-differential-captures]].
+
+## [2026-10-29] build | Actual opening reaches Rei entrance after owner repair
+
+Actual v9 run .asset-cache/port/rei-integration-v6/rei-proof.json reports13 checks, failed=false and final mode21/stage9/step0/substep0 after all eight stage8 substeps. Root inspected the retained320x240 entrance image: original Rei actor, white backing, native textbox and retained Japanese line12. This resolves the earlier actor-page owner stop for this run. Isolated d937 native candidate remains unpublished; next migrated asset bundle needs its own route rerun. Resized handoff, original-emulator visual/PCM comparison, stage9 continuation and complete gameplay remain open. Requested entry-consumer tests fail immediately on authenticated-pack startup failure instead of cascading or hanging. See [[tickets/T-39002-restore-port-runtime]] and [[port-adversarial-review]].
+
+## [2026-10-29] query | Catch unrelated SD schema regression during decoder migration
+
+Root found decoder_model accidentally added to SD-animation exact-field contracts in school_day_media_store.gd and validate_school_day_media.py, although media_components.py emits it only for BS backgrounds. Requested removal from SD contracts and consistent Python model-value validation; whole-store checks are required before bundle acceptance. Separately independently ran entry-consumer lifetime tests in Docker: absent install exits1 with the manifest setup requirement, and v9 exits1 with the single NAME_ENT decoder model identity error; neither cascades or hangs. Matching new-bundle success remains pending. Stage9 implementation owner identified the existing eight-step flow as synthetic versus twelve source steps and is replacing it using exact CD extents/actor/page timing. See [[port-adversarial-review]] and [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] decision | Reconstruct missing school-media inputs instead of depending on deleted fixtures
+
+Decoder owner corrected both unrelated SD model requirements and reports77 producer tests passing with9 real school-media cases skipped because old fixtures are absent; skipped cases do not establish acceptance. Current school_day_media producer still requires reviewed legacy media/native-profile files lost during cleanup. Authorized reconstructing a source-bound fresh producer path from preserved original track/current decompilation, with a distinct authenticated identity and unchanged source/route checks. Requested validated v11 entry/board roles be shared promptly so controller/opening checks can proceed independently. Root also reviewed stage9 source: retain duplicated actor99 completion predicate, post-switch RNG ordering and32-iteration postincrement hold. See [[tickets/T-39002-restore-port-runtime]], [[port-adversarial-review]] and [[port-finish-plan]].
+
+## [2026-10-29] build | Verify entry handoff against the migrated bundle
+
+Root independently ran run_entry_consumer_lifetime.gd against installed-runtime-v11 and its prologue_text role:38 actual lifetime/ownership checks pass, complementing missing/stale-content fail-fast checks. Independently ran NAME pointer movement/style/confirm tests successfully and reviewed the movement/clamp/style rules against hud_cursor_update in src/main/hud_screens.c. Desktop event sampling remains explicitly distinct from the unresolved PS1 latch phase. Decoder owner released v11 to both implementation owners after board integration145 checks, Rei uploads and NAME store tests; those are owner-reported checks, not full route acceptance. Fresh school-media recovery proceeds separately. See [[port-adversarial-review]] and [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-29] build | Review native cursor capture and actual resized handoff
+
+Root independently ran22 stage9 source control-flow checks successfully; actor/media callbacks remain explicit doubles, so this is not actual stage9 gameplay acceptance. Inspected the actual v11 keyboard-only NAME default-cursor capture; translation owner reports physical Arrow/Space navigation through Symbols, scrolling, Kanji, readings, candidates and name slots. Settings-pause/focus checks remain pending. Both actual handoff runs (960x720 and1280x800) logged23 passing first-scene checks. Root independently decoded retained-entry-native.png in Docker and verified its320x240 RGBA bytes against both recorded last-entry and retained hashes, plus identical entry/opening offsets (0,0 and160,40). No screenshot resizing or emulator parity claim was used. See [[tickets/T-39004-english-asset-completion]], [[tickets/T-39002-restore-port-runtime]] and [[port-adversarial-review]].
+
+## [2026-10-29] query | Review finite fresh school-media source selectors
+
+Root reviewed school_day_media_fresh.py against pinned school_day.c: extra15 selects non-summer variant1 for command0; command7 uses fixed selector13; command7 or extra15 suppresses companion actor97, leaving actor96. Producer checks original track/EXE/component identities, source-file hashes, selector-table LBAs and existing BS/SD export proofs instead of inventing the deleted emulator-profile identity. Requested whole-pack mutation/reopen checks and explicit finite April command0/7 coverage. New source-font English NAME assets are being tested separately; historical approvals remain preserved. See [[tickets/T-39002-restore-port-runtime]] and [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-29] build | Independently validate fresh school pack and Rei sequences
+
+Root independently validated school-day-fresh-model-v1 (manifest70453a62d88bb6b9c1bf4478dee9d07a5be12fdd93b4225b5e7f7c4b26ad4839), ran all4 fresh real-pack Python checks and the Godot model/store suite successfully. Whole school backgrounds/SD frames/sequences load; tampered SD reopening rejects and clears old data; current NAME/spring/club/weekday and stale NAME rejection pass. Accepted finite source-backed command0/7 recovery, pending next full bundle/setup integration. Root also found failed Rei sequence reprepare retained old tables; owner cleared them and added regressions. Independent original-resource sequence test now passes draw-before-advance, blink/crowd completion and failed-reprepare checks. Source speed0x80 modulus behavior was verified and retained. Actual stage9 rendering/progression is still under integration. See [[tickets/T-39002-restore-port-runtime]] and [[port-adversarial-review]].
+
+## [2026-10-29] build | Review original-font English NAME artwork and restoration
+
+Root visually reviewed native320 English name/birthday captures from name-native-english-v11 and independently reran the14-frame source-palette/dimension/untouched-pixel test successfully. Reviewed exact original12-row Latin glyph decoding with horizontal bearing trim and no rescale. Independently compared all7 native/English/restored image triplets: English differs and restored RGBA bytes exactly equal native at the explicitly held-animation checkpoints. Bounded agent artwork/style review is accepted; no human approval was fabricated. Japanese header prompts and5label frames without observed use remain explicit gaps. Translation owner reports actual settings/focus pause and held-input recovery checks passing; root has not independently rerun those. O11 original33-sector export is running for next bundle. Reviewer found pre-existing seasonal image path/hash validation gaps; authorized scoped repair with rejection tests after coherent bundle publication. See [[tickets/T-39004-english-asset-completion]] and [[port-adversarial-review]].
+
+## [2026-10-29] build | Review O11 launch inventory and refresh setup coverage guidance
+
+Root independently ran the original Rei resource/VRAM test against first-arrival-board-o11-v1 plus v11 arrival media: expanded original33-sector O11 identity and launch preparation pass. Full v12 builder is running under reviewer session74341 with stable O11 and fresh school roles; no completed-bundle claim yet. Updated tools/port/SETUP.md to describe the independently verified finite school producer and remaining HUD-context/holiday producer gaps, while retaining partial-exit behavior and generated-coverage authority. See [[tickets/T-39002-restore-port-runtime]] and [[port-adversarial-review]].
+
+## [2026-10-29] build | Recover capacity interruption and verify v12 publication
+
+All three worker turns ended with model-capacity errors; root resumed them and required job-handle revalidation before restarting any work. Reviewer confirmed existing build session74341 completed; root inspected installed-runtime-v12 directly:20 available roles, including fresh school_day_media manifest70453a62… and O11 board manifestba385b57…. Remaining reported producer gaps are holiday_scene and hud_context. Full gameplay/coverage is not implied. Translation remains incomplete:59 historical assets retained (56mapped/3unmapped),127 candidate records, and9 NAME frames with bounded agent review/in-game evidence. Missing battle/FILESEL assets and unresolved catalog groups prevent a reliable total remainder. Requested a finite per-asset completion ledger while production/testing continues. See [[tickets/T-39004-english-asset-completion]], [[tickets/T-39002-restore-port-runtime]] and [[port-adversarial-review]].
+
+## [2026-10-29] decision | Prepare full WIP publication and user-requested pause
+
+User requested all work be pushed, including translated assets, followed by a pause and continuation prompt. All three workers froze files and settled jobs; Docker inventory is empty. Added [[port-pause-2026-10-29]] and precedence links in manager handoff/status/index. Root independently verified136 published translated PNG hashes/dimensions and manifest identities; original extracts are excluded. Core5 suites and differential26 tests pass; wiki lint reports0 broken links/0 status mismatches and2 existing oversized pages. Full source/runtime changes remain a WIP checkpoint with unresolved route, translation, parity, save and packaging gates, not completed tickets. Publication preserves independently licensed unchanged research references and excludes original game data, local captures, caches and adapted research harnesses. Agent handoffs and exact next steps are retained in their tickets.

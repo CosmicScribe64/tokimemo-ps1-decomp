@@ -6,6 +6,8 @@ links: ["[[port-finish-plan]]", "[[port-checkpoint]]", "[[tickets/T-29034-plan-s
 
 # Handoff to the next port manager
 
+**Superseded at the user's 2026-10-29 pause:** Start with [[port-pause-2026-10-29]]. The baseline, retained resources, worker policy and first assignment below describe an older session. The latest handoff preserves current work and acceptance gaps.
+
 You are continuing `/Users/lila/Documents/Projects/tokimemo-decomp`. Work with exactly **one implementation agent**. You manage scope, inspect original behavior, independently review the worker's code, run canonical acceptance checks, integrate and report results. The worker implements and fixes findings. Neither of you creates additional agents or resumes the old chats. The recurring automation stays paused. Starting this handoff authorizes resuming port work; it does not authorize restarting the former orchestration fleet.
 
 ## Read first

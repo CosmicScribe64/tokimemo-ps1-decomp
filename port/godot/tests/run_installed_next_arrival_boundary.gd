@@ -85,10 +85,6 @@ func _process(_delta: float) -> bool:
 		return false
 	var app := current_scene as App
 	if app == null: return false
-	if app._active and Engine.physics_ticks_per_second != 180:
-		Engine.max_fps = 30
-		Engine.physics_ticks_per_second = 180
-		Engine.max_physics_steps_per_frame = 16
 	if not observer_bound:
 		app.frame_published.connect(_frame_published.bind(app))
 		observer_bound = true

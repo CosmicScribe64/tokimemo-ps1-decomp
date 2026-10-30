@@ -1,5 +1,5 @@
 extends SceneTree
-## T-29014: Comprehensive test suite for ordinary commands 1–3 and 5–6 gameplay wiring.
+## T-29014: Tests for ordinary commands 1–3 and 5–6 gameplay wiring.
 ## Verifies:
 ## 1. Mapped-input selection and execution of commands 1, 2, 3, 5, 6 through first result.
 ## 2. Ordinary-week continuation to April 8 completion for commands 1, 2, 3, 5, 6.

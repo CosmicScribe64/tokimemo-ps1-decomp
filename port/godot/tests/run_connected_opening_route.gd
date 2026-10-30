@@ -300,7 +300,7 @@ func _initialize() -> void:
 	var receipt_path: String = OS.get_environment("TOKIMEMO_WITNESS_RECEIPT")
 	var xa_audio_pack: String = OS.get_environment("TOKIMEMO_ORIGINAL_OPENING_AUDIO_PACK").simplify_path()
 	if xa_audio_pack.is_empty() or not FileAccess.file_exists(xa_audio_pack.path_join("opening-audio.json")):
-		xa_audio_pack = repo_root.path_join(".claude/orchestrator/state/T-29021/candidate-v4/.asset-cache/opening-audio-v2")
+		xa_audio_pack = installed_root.path_join("packs/opening_audio")
 	var xa_audio_sha: String = OS.get_environment("TOKIMEMO_ORIGINAL_OPENING_AUDIO_SHA")
 	if xa_audio_sha.is_empty():
 		xa_audio_sha = AudioService.DEFAULT_OPENING_AUDIO_SHA
@@ -308,6 +308,20 @@ func _initialize() -> void:
 	check(not pack_path.is_empty() and FileAccess.file_exists(pack_path.path_join("opening.json")), "Auto-resolved opening pack path: " + pack_path)
 	check(not table_path.is_empty() and FileAccess.file_exists(table_path), "Auto-resolved school-day rule tables path: " + table_path)
 	check(DirAccess.dir_exists_absolute(installed_root), "Auto-resolved installed-clean-v1 root: " + installed_root)
+	# T-39002: unavailable original content is a failed prerequisite, not a
+	# synthetic route pass or a later JSON error that leaves Godot running.
+	check(FileAccess.file_exists(xa_audio_pack.path_join("opening-audio.json")), "Original opening XA audio pack is required; set TOKIMEMO_ORIGINAL_OPENING_AUDIO_PACK")
+	var installed_manifest_path := installed_root.path_join("manifest.json")
+	var installed_manifest: Variant = JSON.parse_string(FileAccess.get_file_as_string(installed_manifest_path)) if FileAccess.file_exists(installed_manifest_path) else null
+	check(installed_manifest is Dictionary, "Installed runtime manifest must be present and valid JSON")
+	if installed_manifest is Dictionary:
+		var installed_roles: Dictionary = installed_manifest.get("roles", {})
+		for role: String in ["rule_tables", "school_day_media", "spring_media", "hud_manifest", "hud_context", "holiday_scene", "holiday_text"]:
+			check(installed_roles.has(role), "Installed runtime requires role: " + role)
+	if failures:
+		printerr("Connected opening prerequisites failed; gameplay was not exercised.")
+		quit(1)
+		return
 
 	var rng: Rng = Rng.new()
 	rng.configure(Rng.OPENBIOS_PROFILE, 19950404)
@@ -529,7 +543,7 @@ func _initialize() -> void:
 	var audio_svc: AudioService = AudioService.new()
 	if FileAccess.file_exists(xa_audio_pack.path_join("opening-audio.json")):
 		var xa_cfg_err: String = audio_svc.configure_original_opening_audio_pack(xa_audio_pack, xa_audio_sha)
-		check(xa_cfg_err.is_empty(), "Configured AudioService with original PRO_01.XA opening voice pack: " + xa_cfg_err)
+		check(xa_cfg_err.is_empty(), "Configured AudioService with original native XA opening voice pack: " + xa_cfg_err)
 
 	var full_out: Dictionary = PlayableBoot.run_new_game_opening_to_command_ready(
 		entry,
@@ -546,7 +560,7 @@ func _initialize() -> void:
 		check(visited.size() == 22 and visited[0] == 0 and visited[-1] == 21, "PlayableBoot non-skip opening visited all 22 prologue stages (0..21)")
 		check(joined_state.game_mode == 0x34 and joined_state.mode_stage == 1 and bool(joined_state.opening["command_ready"]), "PlayableBoot non-skip opening reached 0x34 stage 1 command_ready")
 
-		# Verify AudioService produced real non-zero PCM audio bytes for PRO_VOL, PRO_01.XA voiced lines, SfxId 14, and COM_MIX + SPRING
+		# Verify AudioService produced real non-zero PCM audio bytes for PRO_VOL, native XA voiced lines, SfxId 14, and COM_MIX + SPRING
 		var pro_vol_stream: AudioStreamWAV = audio_svc.last_decoded_streams.get("bgm.1.0")
 		var spring_stream: AudioStreamWAV = audio_svc.last_decoded_streams.get("bgm.0.0")
 		check(pro_vol_stream != null and pro_vol_stream.data.size() > 0 and _non_zero_pcm_samples(pro_vol_stream.data) > 100, "AudioService decoded non-zero PCM stream for PRO_VOL prologue BGM")
@@ -556,7 +570,7 @@ func _initialize() -> void:
 		for v_entry: Dictionary in audio_svc.voice_log:
 			if int(v_entry.get("decoded_pcm_bytes", 0)) > 0 and str(v_entry.get("source", "")) == "original_xa_pcm":
 				voiced_count += 1
-		check(voiced_count >= 16, "AudioService decoded >= 16 PRO_01.XA voiced lines with non-zero PCM bytes (got %d)" % voiced_count)
+		check(voiced_count >= 16, "AudioService decoded >= 16 native XA voiced lines with non-zero PCM bytes (got %d)" % voiced_count)
 
 		var sfx14_tick: int = int(joined_state.frame_count)
 		check(audio_svc.queue_se_play(SFX_ID_14_CONFIRM_CMD, sfx14_tick, AudioService.Phase.AUDIO).is_empty(), "Queued SfxId 14 (0x050e) confirm chime on COM_MIX SE bank")

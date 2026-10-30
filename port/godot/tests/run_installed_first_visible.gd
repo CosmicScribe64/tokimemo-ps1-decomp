@@ -113,7 +113,7 @@ func _finish(app: App) -> void:
 	check(not bgm.engine.is_empty() and bgm.sink.capacity > 0 and bgm.sink.queued <= 5145,"native engine and bounded real sink are unavailable")
 	check(state.frame_count == ((context.frame_count+session.clock.logic_iterations)&0xffffffff),"actual owned frame count was reconstructed or advanced outside Session")
 	check(state.opening.cold_no_card_checker_prefix.loader_calls == 2 and state.opening.cold_no_card_checker_prefix.handed_off,"actual loader checker prefix was not consumed once")
-	check(app.entry_frame_provenance.get("source") == "actual-live-desktop-entry-viewport" and app.entry_frame_provenance.get("native_entry_pixel_parity") == false,"desktop framebuffer provenance was lost")
+	check(app.entry_frame_provenance.get("source") == "actual-displayed-native-entry-image" and app.entry_frame_provenance.get("native_entry_pixel_parity") == false,"displayed native entry image provenance was lost")
 	if failed: return
 	await RenderingServer.frame_post_draw
 	var image := root.get_texture().get_image()

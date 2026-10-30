@@ -282,7 +282,7 @@ def export_club_pack(
                             "sha256": _sha(bg_data),
                         },
                         "geometry_context": bg_context,
-                        "reader": "tools/assets/image_mdec.py:export_mdec",
+                        "decoder_model": bg_result["metadata"]["decoder_model"], "reader": "tools/assets/image_mdec.py:export_mdec",
                         "files": bg_files,
                     },
                     "sd": {

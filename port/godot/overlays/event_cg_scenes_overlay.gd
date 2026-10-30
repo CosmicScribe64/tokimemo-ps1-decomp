@@ -1,7 +1,7 @@
 class_name EventCgScenesOverlay
 extends RefCounted
 ## T-29018 Lane 8: EVENT.EXN Per-Girl Special CG & Ride Movie Scenes State Machine.
-## Faithfully mirrors:
+## Source references:
 ## - src/ovl/date_spots/girl_scene_entry.c (spot_girl_scene_frame, spot_talk_step, dispatch)
 ## - src/ovl/date_spots/place_scene_entry.c (spot_place_scene_frame, arrival, place runners)
 ## - src/ovl/date_spots/place_scenes.c (evaluation of special CG scenes and scene_flags[0..0x4A])
@@ -593,7 +593,8 @@ func evaluate_date_spot_special_scene() -> bool:
 # Amusement Park Ride Movies (ride_movies.c:40-58)
 # ==============================================================================
 
-## Triggers an amusement park ride movie (0: Roller Coaster, 1: Ghost House, 2: Ferris Wheel, 3: Scream Ride, 4: Virtual Ship)
+## Selects ride movie state and returns its LBA; this method does not stream video.
+## Rides: 0: Roller Coaster, 1: Ghost House, 2: Ferris Wheel, 3: Scream Ride, 4: Virtual Ship.
 func trigger_ride_movie(ride_id: int) -> Dictionary:
 	spot_ride = clampi(ride_id, 0, 4)
 	active_movie_lba = RIDE_MOVIE_LBAS.get(spot_ride, 0x4330)

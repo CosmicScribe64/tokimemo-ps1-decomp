@@ -5,6 +5,8 @@ const Store = preload("res://services/first_arrival_media_store.gd")
 const State = preload("res://rules/new_game_route_state.gd")
 const Session = preload("res://core/game_session.gd")
 const Upload = preload("res://services/first_arrival_upload_bridge.gd")
+const ReiRenderer = preload("res://presentation/rei_actor_renderer.gd")
+var _rei := ReiRenderer.new()
 const VRAM_BYTES := 1024*512*2
 const DRAW_KEY := "actor96_source_draw"
 const PETALS_DRAW_KEY := "petals_source_draw"
@@ -25,7 +27,7 @@ var _stage35_actor_cache_bg_key: String = ""
 var _stage35_bg_a96_cache_image: Image
 var _stage35_bg_a96_cache_key: String = ""
 
-func prepare(store: Store, upload_owner: Upload) -> String:
+func prepare(store: Store, upload_owner: Upload, board_store = null) -> String:
 	if not _source.is_empty(): return "O_01 renderer already owns its source"
 	if store == null or store.identity().is_empty() or upload_owner == null: return "O_01 needs authentic store and upload owner"
 	var context := upload_owner.actor_render_context(store)
@@ -71,7 +73,14 @@ func prepare(store: Store, upload_owner: Upload) -> String:
 	_runtime = owned_runtime
 	_upload = upload_owner
 	_store = store
+	if board_store != null:
+		var rei_transfer: Dictionary = board_store.stage_transfer("prologue.o_09.0xac05")
+		if not rei_transfer.get("bytes") is PackedByteArray: return "Rei renderer has no original O10 resource"
+		return _rei.source.prepare(rei_transfer.bytes)
 	return ""
+
+func paint_rei_front(target: Image, state: State) -> String:
+	return _rei.paint(target,state,_runtime,_upload,true)
 
 static func _runtime_error(runtime: Dictionary) -> String:
 	if not runtime.get("vram_owner") is String or runtime.vram_owner.is_empty() or not runtime.get("vram_words") is PackedByteArray or runtime.vram_words.size() != VRAM_BYTES: return "O_01 requires explicitly owned VRAM"
@@ -122,10 +131,12 @@ func _petals_error(state: State) -> String:
 	return ""
 
 func _stage35_error(state: State, require_uploaded: bool = false) -> String:
-	if _source.is_empty() or state == null or state.game_mode != 0x15 or state.mode_stage not in [3, 4, 5, 6, 7] or state.mode_step != 0:
+	if state != null and state.mode_stage == 9:
+		return _rei.preflight(state,_upload if require_uploaded else null)
+	if _source.is_empty() or state == null or state.game_mode != 0x15 or state.mode_stage not in [3, 4, 5, 6, 7, 8, 9] or state.mode_step != 0:
 		return "stage 3..7 renderer is outside its prepared source mode"
 	var layer0: Variant = state.opening.get("bg_layer_0")
-	if not layer0 is Dictionary or layer0.get("enabled") != 1 or layer0.get("clut_row") not in [494, 495] or not layer0.get("cut_batch_key") is String or str(layer0.cut_batch_key).is_empty():
+	if not layer0 is Dictionary or (layer0.get("enabled") != 1 and not (((state.mode_stage == 8 and state.substep == 7) or (state.mode_stage == 9 and state.substep == 0)) and layer0.get("enabled") == 0)) or layer0.get("clut_row") not in [494, 495] or not layer0.get("cut_batch_key") is String or str(layer0.cut_batch_key).is_empty():
 		return "stage 3..7 renderer lacks bg_layer_0 state"
 	if require_uploaded:
 		var cut_ready: Variant = _upload.batch_ready(str(layer0.cut_batch_key))
@@ -133,9 +144,17 @@ func _stage35_error(state: State, require_uploaded: bool = false) -> String:
 			return cut_ready if cut_ready is String else "stage 3..7 cut upload owner returned malformed readiness"
 	if state.opening.has("actor96"):
 		var a96: Variant = state.opening.get("actor96")
-		if not a96 is Dictionary or a96.get("profile") not in ["o12_rei_hallway", "o05_rei_eyes", "o06_yoshio_body", "o07_yoshio_body"] or not a96.get("upload_batch_key") is String or str(a96.upload_batch_key).is_empty() or state.opening.get("actor96_draw_flags") != 0xa4:
+		if not a96 is Dictionary or a96.get("profile") not in ["o12_rei_hallway", "o05_rei_eyes", "o06_yoshio_body", "o07_yoshio_body", "o08_rei_banner", "o09_rei_entrance"] or not a96.get("upload_batch_key") is String or str(a96.upload_batch_key).is_empty():
 			return "stage 3..7 actor96 state is malformed"
-		if a96.get("profile") in ["o06_yoshio_body", "o07_yoshio_body"] and (not a96.get("upload_batch_key_2") is String or str(a96.upload_batch_key_2).is_empty()):
+		if a96.get("profile") == "o08_rei_banner":
+			if state.mode_stage != 8 or state.opening.get("actor96_draw_flags") not in [0x84,0xa4] or a96.get("clut_row") not in [494,504] or a96.get("frame_index") not in [0,1,2,3] or not a96.get("brightness") is int or a96.brightness < 0 or a96.brightness > 128:
+				return "Rei banner actor differs from its source draw state"
+		elif a96.get("profile") == "o09_rei_entrance":
+			if state.mode_stage != 9 or state.substep != 0 or state.opening.get("actor96_draw_flags") != 0xa4 or a96.get("frame_index") != 0 or a96.get("clut_row") != 505:
+				return "Rei entrance is outside its original transition frame"
+		elif state.opening.get("actor96_draw_flags") != 0xa4:
+			return "stage 3..7 actor96 draw flags differ from source"
+		if a96.get("profile") in ["o06_yoshio_body", "o07_yoshio_body", "o09_rei_entrance"] and (not a96.get("upload_batch_key_2") is String or str(a96.upload_batch_key_2).is_empty()):
 			return "stage 6..7 actor96 lacks second tpage upload batch"
 		if a96.get("profile") == "o07_yoshio_body" and (not a96.get("upload_batch_key_3") is String or str(a96.upload_batch_key_3).is_empty()):
 			return "stage 7 actor96 lacks third tpage upload batch"
@@ -143,7 +162,7 @@ func _stage35_error(state: State, require_uploaded: bool = false) -> String:
 			var a96_ready: Variant = _upload.batch_ready(str(a96.upload_batch_key))
 			if not a96_ready is String or not a96_ready.is_empty():
 				return a96_ready if a96_ready is String else "stage 3..7 actor96 upload owner returned malformed readiness"
-			if a96.get("profile") in ["o06_yoshio_body", "o07_yoshio_body"]:
+			if a96.get("profile") in ["o06_yoshio_body", "o07_yoshio_body", "o09_rei_entrance"]:
 				var a96_ready2: Variant = _upload.batch_ready(str(a96.upload_batch_key_2))
 				if not a96_ready2 is String or not a96_ready2.is_empty():
 					return a96_ready2 if a96_ready2 is String else "stage 6..7 actor96 second upload owner returned malformed readiness"
@@ -206,7 +225,7 @@ static func _s16(value: int) -> int:
 func preflight_visible(state: State) -> String:
 	# Pure source/owner validation for the mode callback before draw_frame.
 	# The actual sequence counter changes only in logical_draw below.
-	if state != null and state.mode_stage in [3, 4, 5, 6, 7] and state.opening.get("bg_layer_0") is Dictionary:
+	if state != null and state.mode_stage in [3, 4, 5, 6, 7, 8, 9] and state.opening.get("bg_layer_0") is Dictionary:
 		return _stage35_error(state)
 	if not state.opening.has("actor96"):
 		var petal_failure := _petals_error(state)
@@ -221,8 +240,11 @@ func preflight_visible(state: State) -> String:
 	return _visible_error(state)
 
 func logical_draw(state: State, _rng, result: Session.FrameResult) -> void:
+	if state != null and state.mode_stage == 9:
+		result.error = _rei.logical_draw(state)
+		return
 	# draw_frame runs after game_mode_dispatch's frame_count increment.
-	if state != null and state.mode_stage in [3, 4, 5, 6, 7] and state.opening.get("bg_layer_0") is Dictionary:
+	if state != null and state.mode_stage in [3, 4, 5, 6, 7, 8, 9] and state.opening.get("bg_layer_0") is Dictionary:
 		result.error = _stage35_error(state)
 		if not result.error.is_empty(): return
 		if state.opening.has("actor96"):
@@ -422,7 +444,8 @@ func paint(target: Image, state: State, normalized_draw_origin: Vector2i) -> Str
 	# Caller owns the draw-buffer offset normalization. Source initializes native
 	# origins (160,360)/(160,120); normalized viewport origin is (160,120).
 	if target == null or target.get_size() != Vector2i(320,240) or normalized_draw_origin != Vector2i(160,120): return "O_01 target/origin is unsupported"
-	if state != null and state.mode_stage in [3, 4, 5, 6, 7] and state.opening.get("bg_layer_0") is Dictionary:
+	if state != null and state.mode_stage == 9: return _rei.paint(target,state,_runtime,_upload,false)
+	if state != null and state.mode_stage in [3, 4, 5, 6, 7, 8, 9] and state.opening.get("bg_layer_0") is Dictionary:
 		var err35 := _stage35_error(state, true)
 		if not err35.is_empty(): return err35
 		var actor_sig: Array = [_last_names_bg_key]
@@ -438,7 +461,7 @@ func paint(target: Image, state: State, normalized_draw_origin: Vector2i) -> Str
 				if a_val.has("upload_batch_key_3") and d_val.get("batch_key_3") != a_val.get("upload_batch_key_3"):
 					return "stage 3..7 %s needs this committed frame's third draw record" % a_key
 				actor_sig.append([a_key, a_val.get("profile"), d_val.get("frame_index"), d_val.get("x", a_val.get("x")), d_val.get("y", a_val.get("y")), d_val.get("clut_row", a_val.get("clut_row")), d_val.get("batch_key"), d_val.get("batch_key_2", ""), d_val.get("batch_key_3", "")])
-		var can_cache_stage35: bool = target.get_instance_id() == _last_names_bg_target_id and not _last_names_bg_key.is_empty()
+		var can_cache_stage35: bool = state.mode_stage != 8 and target.get_instance_id() == _last_names_bg_target_id and not _last_names_bg_key.is_empty()
 		if can_cache_stage35 and _stage35_actor_cache_bg_key != _last_names_bg_key:
 			_stage35_actor_cache.clear()
 			_stage35_actor_cache_bg_key = _last_names_bg_key
@@ -457,7 +480,7 @@ func paint(target: Image, state: State, normalized_draw_origin: Vector2i) -> Str
 				return "stage 3..7 actor96 needs this committed frame's original draw record"
 			var profile96: String = str(a96.get("profile",""))
 			var f_idx: int = int(d96.get("frame_index", 0))
-			if profile96 == "o06_yoshio_body" and d96.get("batch_key_2") != a96.get("upload_batch_key_2"):
+			if profile96 in ["o06_yoshio_body","o09_rei_entrance"] and d96.get("batch_key_2") != a96.get("upload_batch_key_2"):
 				return "stage 6 actor96 needs this committed frame's second draw record"
 			if profile96 == "o07_yoshio_body" and (d96.get("batch_key_2") != a96.get("upload_batch_key_2") or d96.get("batch_key_3") != a96.get("upload_batch_key_3")):
 				return "stage 7 actor96 needs this committed frame's second and third draw records"
@@ -473,6 +496,12 @@ func paint(target: Image, state: State, normalized_draw_origin: Vector2i) -> Str
 				elif profile96 == "o05_rei_eyes":
 					clut_row96 = 498
 					parts96 = [{"x": 136, "y": 40, "u": f_idx * 32, "v": 0, "w": 32, "h": 32, "slot_x": 320}]
+				elif profile96 == "o08_rei_banner":
+					clut_row96 = int(a96.clut_row)
+					parts96 = [{"x":176,"y":80,"u":f_idx * 32,"v":0,"w":32,"h":32,"slot_x":320}]
+				elif profile96 == "o09_rei_entrance":
+					clut_row96 = 505
+					parts96 = [{"x":128,"y":0,"u":0,"v":0,"w":80,"h":80,"slot_x":320},{"x":88,"y":80,"u":0,"v":0,"w":80,"h":80,"slot_x":384},{"x":168,"y":80,"u":0,"v":80,"w":64,"h":48,"slot_x":384},{"x":168,"y":128,"u":64,"v":96,"w":64,"h":32,"slot_x":384}]
 				elif profile96 == "o06_yoshio_body":
 					clut_row96 = 500
 					parts96 = [
@@ -509,6 +538,11 @@ func paint(target: Image, state: State, normalized_draw_origin: Vector2i) -> Str
 							var py: int = base_py96 + y
 							if px < 0 or px >= 320 or py < 0 or py >= 160: continue
 							var r: int = color & 31; var g: int = (color >> 5) & 31; var b: int = (color >> 10) & 31
+							if profile96 == "o08_rei_banner":
+								var tint: int = int(state.opening.get("screen_brightness",128)) if (int(a96.draw_flags) & 0x20) != 0 else int(a96.brightness)
+								r = mini(31,(r * tint) >> 7)
+								g = mini(31,(g * tint) >> 7)
+								b = mini(31,(b * tint) >> 7)
 							if (color & 0x8000) != 0:
 								var back: Color = stage_img.get_pixel(px, py)
 								r = mini(31, ((back.r8 >> 3) + r) >> 1)
@@ -894,7 +928,7 @@ func paint_board_scroll(target: Image, state: State, board_preview: Image) -> St
 func paint_names_background(target: Image, state: State) -> String:
 	if target == null or target.get_size() != Vector2i(320,240):
 		return "O_01 names background target is unsupported"
-	if state != null and state.mode_stage in [3, 4, 5, 6, 7] and state.opening.get("bg_layer_0") is Dictionary:
+	if state != null and state.mode_stage in [3, 4, 5, 6, 7, 8, 9] and state.opening.get("bg_layer_0") is Dictionary:
 		var err35 := _stage35_error(state, true)
 		if not err35.is_empty(): return err35
 		var nm35: Variant = state.opening.get("names_media")
@@ -914,7 +948,9 @@ func paint_names_background(target: Image, state: State) -> String:
 		var clut_row: int = int(layer0.clut_row)
 		var bg_bri: int = int(state.opening.get("bg_brightness", 128))
 		var d_bri: int = int(state.opening.get("D_801220E0", 128))
-		var cache_key35 := "%s:%d:%s:%d:%d" % [b_key35, bg_bri, cut_key, clut_row, d_bri]
+		var primitive: Dictionary = state.opening.get("rei_banner_primitive",{})
+		var white_back: bool = primitive.get("kind") == "white"
+		var cache_key35 := "%s:%d:%s:%d:%d:%s:%s" % [b_key35, bg_bri, cut_key, clut_row, d_bri, white_back, layer0.enabled]
 		if _names_bg_cache_image == null or _names_bg_cache_key != cache_key35:
 			var vram35: PackedByteArray = _runtime.vram_words
 			var known35: PackedByteArray = _runtime.vram_known_mask
@@ -932,7 +968,10 @@ func paint_names_background(target: Image, state: State) -> String:
 					var g: int = mini(31, (((color >> 5) & 31) * bg_bri) >> 7)
 					var b: int = mini(31, (((color >> 10) & 31) * bg_bri) >> 7)
 					img35.set_pixel(x, y, Color8((r << 3) | (r >> 2), (g << 3) | (g >> 2), (b << 3) | (b >> 2), 255))
+			# White POLY_G4 is OT13, behind the cut at OT12.
+			if white_back: img35.fill(Color8(255,255,255))
 			for y in 160:
+				if layer0.enabled == 0: continue
 				var row_page: int = 0 if y < 128 else 1
 				var py: int = y if y < 128 else y - 128
 				for x in 320:

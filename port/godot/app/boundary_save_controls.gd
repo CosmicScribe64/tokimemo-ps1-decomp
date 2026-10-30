@@ -58,16 +58,22 @@ func configure(app: Node, user_root: String) -> String:
 func handle_input(app: Node, event: InputEvent) -> bool:
 	if not event is InputEventKey or not event.pressed or event.echo or event.physical_keycode not in [KEY_F5, KEY_F9]:
 		return false
+	request(app, Request.SAVE if event.physical_keycode == KEY_F5 else Request.LOAD)
+	return true
+
+## Keyboard and pause-menu actions share the same admission and boundary guards.
+func request(app: Node, action: Request) -> bool:
+	if action not in [Request.SAVE, Request.LOAD]: return false
 	if storage == null:
 		_error("Save controls are unavailable.")
-		return true
+		return false
 	if not _idle_and_focused(app):
 		_error("Return focus and release the controls before saving or loading.")
-		return true
+		return false
 	if pending != Request.NONE:
 		_error("A save or load request is already queued.")
-		return true
-	pending = Request.SAVE if event.physical_keycode == KEY_F5 else Request.LOAD
+		return false
+	pending = action
 	last_error = ""
 	_message("Save queued." if pending == Request.SAVE else "Load queued.", true)
 	return true
@@ -90,7 +96,7 @@ func process_queued(app: Node) -> bool:
 	if action == Request.SAVE:
 		last_checkpoint = _checkpoint(app)
 		if last_checkpoint.is_empty():
-			_error("Save unavailable here. Use F5 at command selection or the first result.")
+			_error("Save unavailable here. Save at command selection or the first result.")
 			return true
 		var captured: Dictionary = adapter.capture(app, last_checkpoint)
 		if not captured["error"].is_empty():

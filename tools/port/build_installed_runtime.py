@@ -23,6 +23,7 @@ PROFILE = "original-ja-ps-the-best"
 SCHEMA = "tokimemo.installed-runtime.v1"
 ROLE_KINDS = {
     "name_entry_rules": "file", "name_entry_content": "file",
+    "name_entry_media": "file",
     "font_root": "dir", "rule_tables": "file",
     "school_day_media": "dir", "spring_media": "dir",
     "weekday56_media": "dir", "club_media": "dir",
@@ -119,14 +120,17 @@ def _manifest(root: Path, executable: Path, track: Path | None,
 
 
 def _run(command: list[str], label: str) -> tuple[bool, str]:
-    """Run a canonical exporter without exposing its output to the terminal."""
+    """Retain a bounded diagnostic when a canonical exporter fails (T-39002)."""
     try:
         proc = subprocess.run(command, cwd=ROOT, stdout=subprocess.DEVNULL,
-                              stderr=subprocess.DEVNULL, check=False)
+                              stderr=subprocess.PIPE, text=True, check=False)
     except OSError:
         return False, label + ": exporter could not start"
-    return proc.returncode == 0, ("" if proc.returncode == 0 else
-                                  label + ": exporter rejected this source/profile")
+    if proc.returncode == 0:
+        return True, ""
+    diagnostic = proc.stderr.strip()[-2000:]
+    return False, label + ": exporter failed (exit %d): %s" % (
+        proc.returncode, diagnostic or "no stderr diagnostic")
 
 
 def _copy_pack(source: Path, destination: Path) -> None:
@@ -271,10 +275,12 @@ def build(input_path: Path, executable: Path, output: Path,
     # cache. These fresh sibling packs are composed into the requested bundle.
     token = hashlib.sha256((str(output) + _sha(executable)).encode()).hexdigest()[:12]
     work_dirs = {key: cache / (".runtime-" + token + "-" + key)
-                 for key in ("rules", "entry_rules", "entry", "weekday", "club",
+                 for key in ("rules", "entry_rules", "entry", "weekday", "club", "spring", "hud",
                              "date", "holiday", "opening", "prologue_text",
                              "first_arrival_media", "first_arrival_board",
-                             "prologue_hud", "opening_audio")}
+                             "prologue_hud", "opening_audio", "name_entry_media")}
+    # HUD's immutable-directory contract requires an alphanumeric first byte.
+    work_dirs["hud"] = cache / ("runtime-" + token + "-hud")
     if any(p.exists() or p.is_symlink() for p in work_dirs.values()):
         raise BundleError("fresh exporter work path already exists")
     stage = Path(tempfile.mkdtemp(prefix=".runtime-bundle-", dir=cache))
@@ -286,6 +292,17 @@ def build(input_path: Path, executable: Path, output: Path,
     py = sys.executable
     src = str(input_path)
     commands = [
+        ("opening_audio", "opening_audio", [py, "tools/port/opening_voice_content.py",
+                                            "--track", str(track or input_path),
+                                            "--output", str(work_dirs["opening_audio"])]),
+        ("hud", "hud_manifest", [py, "tools/port/hud_content.py", "--repository", str(ROOT),
+                                  "--executable", str(executable),
+                                  "--mainrom", str(original_root / "files/CDROM/FUKUTEST/MAINROM.NBN"),
+                                  "--calendar", str(original_root / "files/CDROM/FUKUTEST/CALROM.NBN"),
+                                  "--fresh-room-track", str(track or input_path),
+                                  "--output", str(work_dirs["hud"])]),
+        ("spring", "spring_media", [py, "tools/port/spring_command_content.py", "--input", src,
+                                    "--fresh-source", "--output", str(work_dirs["spring"])]),
         ("rules", "rule_tables", [py, "tools/port/school_day_tables.py", "--input", src,
                                      "--output", str(work_dirs["rules"])]),
         ("entry_rules", "name_entry_rules", [py, "tools/port/new_game_tables.py", "--input", src,
@@ -309,8 +326,10 @@ def build(input_path: Path, executable: Path, output: Path,
         ("first_arrival_board", "first_arrival_board", [py, "tools/port/first_arrival_board_content.py", "--input", str(track or input_path),
                                                         "--source-root", str(ROOT), "--output", str(work_dirs["first_arrival_board"])]),
     ]
+    commands.append(("name_entry_media", "name_entry_media", [py, "tools/port/name_entry_media.py",
+                    "--input", src, "--output", str(work_dirs["name_entry_media"])]))
     if opening_only:
-        needed = {"entry_rules", "entry", "opening", "prologue_text", "first_arrival_media", "first_arrival_board"}
+        needed = {"entry_rules", "entry", "name_entry_media", "opening", "opening_audio", "prologue_text", "first_arrival_media", "first_arrival_board"}
         for key, role, _command in commands:
             if key not in needed:
                 gaps[role] = "outside the requested first-arrival resource scope"
@@ -389,15 +408,24 @@ def build(input_path: Path, executable: Path, output: Path,
             _discard_partial_role(stage, "audio/first-arrival")
             gaps["original_first_arrival_bgm"] = reason or "fresh original BGM source export failed"
 
-        # The original command-0/7 media and HUD room packs need publication
-        # artifacts with no matching fresh producer. Do not reuse an old cache.
-        gaps["school_day_media"] = "fresh command-0/7 route/profile publication inputs unavailable"
-        gaps["spring_media"] = "fresh media/profile hashes for the spring exporter are not established"
-        gaps["hud_manifest"] = "fresh room-manifest producer is unavailable"
-        gaps["hud_context"] = "fresh room-manifest producer is unavailable"
+        if not opening_only:
+            school_destination = stage / "packs" / "school_day_media"
+            ok, reason = _run([py, "tools/port/school_day_media_fresh.py", "--input", src,
+                               "--output", str(school_destination)], "school_day_media")
+            if ok and school_destination.is_dir():
+                roles["school_day_media"] = "packs/school_day_media"
+            else:
+                _discard_partial_role(stage, "packs/school_day_media")
+                gaps["school_day_media"] = reason or "fresh source-checked school media export failed"
+        gaps["hud_context"] = "live HUD still requires a captured-boundary context; fresh-session initialization is unavailable"
         gaps["holiday_scene"] = "no separate holiday-scene pack producer is available"
 
         for role, source_dir in successes.items():
+            if role in ("hud_manifest", "name_entry_media"):
+                # The file role owns its adjacent images as one immutable pack.
+                _copy_pack(source_dir, stage / "packs" / role)
+                roles[role] = "packs/" + role + "/manifest.json"
+                continue
             # Rules are a manifest file; other products remain pack directories.
             if role in ("rule_tables", "name_entry_rules", "name_entry_content", "holiday_text"):
                 filename = "entry.json" if role == "name_entry_content" else "manifest.json"
@@ -462,6 +490,13 @@ def main() -> int:
         print("installed-runtime export failed: " + str(exc), file=sys.stderr)
         return 2
     print("installed-runtime manifest: " + str(result.relative_to(ROOT)))
+    coverage = json.loads(result.read_text())["coverage"]
+    missing = coverage.get("unavailable_roles", {})
+    if missing:
+        print("WARNING: partial runtime bundle; unavailable roles:", file=sys.stderr)
+        for role, reason in sorted(missing.items()):
+            print("  " + role + ": " + reason, file=sys.stderr)
+        print("This is not a complete playable installation.", file=sys.stderr)
     return 0
 
 

@@ -78,7 +78,7 @@ func _finish(app: App) -> void:
 	check(not state.opening.has("prologue_text_work") and not state.opening.arrival_media.actor_initialized,"missing BGM started text or actor setup")
 	check(state.frame_count == ((context.frame_count+session.clock.logic_iterations)&0xffffffff),"actual owned frame count was reconstructed or advanced outside Session")
 	check(state.opening.cold_no_card_checker_prefix.loader_calls == 2 and state.opening.cold_no_card_checker_prefix.handed_off,"actual loader checker prefix was not consumed once")
-	check(app.entry_frame_provenance.get("source") == "actual-live-desktop-entry-viewport" and app.entry_frame_provenance.get("native_entry_pixel_parity") == false,"desktop framebuffer provenance was lost")
+	check(app.entry_frame_provenance.get("source") == "actual-displayed-native-entry-image" and app.entry_frame_provenance.get("native_entry_pixel_parity") == false,"displayed native entry image provenance was lost")
 	check(not app.upload.diagnostics().batch_complete and not app.upload.diagnostics().vram_ready,"BGM rejection manufactured an upload readiness receipt")
 	if failed: return
 	await RenderingServer.frame_post_draw

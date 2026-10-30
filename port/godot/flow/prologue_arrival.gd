@@ -1,8 +1,8 @@
 extends RefCounted
-## Full 22-stage prologue controller (stages 0..21).
+## Prologue stage dispatch (stages 0..21); production service coverage is incomplete.
 ## Source: src/ovl/name_entry/prologue.c, lines 1..2822.
-## Supports both normal non-skip progression across stages 0..21 and optional
-## PAD_START (0x800) skip from any active stage/step after stage 0 step 0.
+## Source-flow checks do not establish connected playback through every stage.
+## PAD_START (0x800) requests the original skip after stage 0 step 0.
 
 const State = preload("res://rules/new_game_route_state.gd")
 const Rng = preload("res://core/native_rng.gd")
@@ -56,6 +56,7 @@ const REQUIRED: Array[String] = [
 
 static func step(state: State, rng: Rng, pressed: int, services: Dictionary) -> Session.FrameResult:
 	var out: Session.FrameResult = Session.FrameResult.new()
+	state.opening.erase("rei_banner_primitive")
 	if state.game_mode != MODE_PROLOGUE or state.mode_stage < STAGE_ARRIVAL or state.mode_stage > STAGE_FINISH or not rng.configuration_error().is_empty():
 		out.error = "prologue requires native mode 0x15 stage 0..21 and configured RNG"
 		return out
@@ -845,6 +846,14 @@ static func _stage_06_yoshio_greeting(state: State, services: Dictionary, out: S
 		services["outer_draw"].call(state, 2, out)
 
 
+static func _stage_07_background_wait(state: State, services: Dictionary, out: Session.FrameResult) -> void:
+	# prologue_line_11_run case4; case3 falls through to this poll.
+	if _poll_cd_ready(state, services, out, "stage 7 bg"):
+		services["bank_load_start"].call(state, "prologue_rei", out)
+		if out.error.is_empty(): _emit_audio_command(state, AUDIO_CMD_SYSTEM_FLAG, services, out)
+		if out.error.is_empty(): _emit_audio_command(state, AUDIO_CMD_FADE_B1, services, out)
+		if out.error.is_empty(): state.substep += 1
+
 static func _stage_07_line_11(state: State, services: Dictionary, out: Session.FrameResult) -> void:
 	if state.mode_step == 0:
 		match state.substep:
@@ -853,7 +862,6 @@ static func _stage_07_line_11(state: State, services: Dictionary, out: Session.F
 				services["line_start"].call(state, 11, out)
 				if out.error.is_empty():
 					state.substep += 1
-					services["arrival_draw"].call(state, 1, out)
 			1:
 				if services.has("stage_07_cd_wait"):
 					services["stage_07_cd_wait"].call(state, out)
@@ -862,7 +870,6 @@ static func _stage_07_line_11(state: State, services: Dictionary, out: Session.F
 				if out.error.is_empty():
 					if state.opening.get("actor96") is Dictionary and int(state.opening.actor96.get("x", -160)) < -160:
 						state.opening.actor96["x"] = int(state.opening.actor96["x"]) + 1
-					services["arrival_draw"].call(state, 1, out)
 			2:
 				services["line_run"].call(state, out)
 				if out.error.is_empty() and services.has("stage_07_lip_sync_line_11"):
@@ -874,19 +881,14 @@ static func _stage_07_line_11(state: State, services: Dictionary, out: Session.F
 						state.opening.actor97["x"] = next_x
 					if state.opening.get("actor98") is Dictionary:
 						state.opening.actor98["x"] = next_x
-				if out.error.is_empty():
-					services["arrival_draw"].call(state, 1, out)
 			3:
 				services["background_read"].call(state, 0xad00, 1, out)
 				if out.error.is_empty():
 					state.substep += 1
-					services["arrival_draw"].call(state, 1, out)
+					_stage_07_background_wait(state, services, out)
 			4:
-				if _decode_bg_and_check(state, 1, 0xad00, services, out, "stage 7 bg"):
-					services["bank_load_start"].call(state, "prologue_rei", out)
-					_emit_audio_command(state, AUDIO_CMD_SYSTEM_FLAG, services, out)
-					_emit_audio_command(state, AUDIO_CMD_FADE_B1, services, out)
-					state.substep += 1
+				# Source defers decode/show until substep7, after both actor reads.
+				_stage_07_background_wait(state, services, out)
 			5:
 				var status: Variant = services["bank_poll"].call(state, out)
 				if out.error.is_empty() and typeof(status) != TYPE_INT:
@@ -896,82 +898,197 @@ static func _stage_07_line_11(state: State, services: Dictionary, out: Session.F
 					state.substep += 1
 			6:
 				if _poll_cd_ready(state, services, out, "stage 7 actor 0"):
-					services["actor_read"].call(state, 9, ACTOR_DEST_PRIMARY, 0xabfc, out)
+					services["actor_read"].call(state, 9, 0x801f0000, 0xabfc, out)
 					state.substep += 1
 			7:
 				if _poll_cd_ready(state, services, out, "stage 7 actor 1"):
-					services["bank_start"].call(state, 1, 0, out)
-					state.next_stage()
+					if not services.get("stage_07_to_08_setup") is Callable:
+						out.error = "source line11 actor copy, decode and palette setup is unavailable"
+						return
+					services["stage_07_to_08_setup"].call(state, out)
+					if out.error.is_empty():
+						services["bank_start"].call(state, 1, 0, out)
+					if out.error.is_empty(): state.next_stage()
 			_:
 				out.error = "prologue stage 7 substep outside source dispatch"
 	else:
 		out.error = "prologue stage 7 step outside source dispatch"
+	if out.error.is_empty(): services["arrival_draw"].call(state,1,out)
 	if out.error.is_empty():
 		services["outer_draw"].call(state, 2, out)
 
+
+static func _stage_08_tint(state: State, value: int) -> void:
+	for key: String in ["D_801220E0", "D_801220E1", "D_801220E2"]:
+		state.opening[key] = value & 255
+	if state.opening.get("actor96") is Dictionary:
+		state.opening.actor96["brightness"] = value & 255
 
 static func _stage_08_rei_banner(state: State, services: Dictionary, out: Session.FrameResult) -> void:
+	# prologue_rei_banner_run: preserve pre/post increment and native read order.
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 7:
+		out.error = "prologue stage 8 is outside source dispatch"
+		return
+	if not services.get("rei_banner_effect") is Callable:
+		out.error = "source Rei banner presentation and actor setup is unavailable"
+		return
+	var effect: Callable = services.rei_banner_effect
 	var counter: int = int(state.opening.get("prologue_scene_counter", 0))
-	if not _run_line_pair(state, 12, 4, services, out):
-		match state.substep:
-			0:
+	effect.call(state, "flash" if state.substep == 0 else "white", counter, out)
+	if not out.error.is_empty(): return
+	match state.substep:
+		0:
+			counter += 4
+			if counter >= 0x100:
+				state.substep += 1
+				counter = 0
+			else:
+				_stage_08_tint(state, counter / 4)
+			state.opening["prologue_scene_counter"] = counter
+		1:
+			state.opening["prologue_scene_counter"] = counter + 1
+			if counter >= 0xB:
+				effect.call(state, "color_cut", 0, out)
+				if out.error.is_empty():
+					state.substep += 1
+					state.opening["prologue_scene_counter"] = 0
+		2:
+			_stage_08_tint(state, counter)
+			counter += 8
+			state.opening["prologue_scene_counter"] = counter
+			if counter >= 0x81:
+				state.opening["prologue_line"] = 12
 				state.opening["prologue_scene_counter"] = 0
-				state.substep += 1
-			1, 2:
-				counter += 0x10
-				if counter >= FLASH_MAX:
-					counter = 0
-					state.substep += 1
-				state.opening["prologue_scene_counter"] = counter
-			3:
-				counter += 2
-				state.opening["prologue_scene_counter"] = counter
-				if counter >= SHORT_HOLD_FRAMES:
-					state.substep += 1
-			6:
-				services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xaae7, out)
-				state.substep += 1
-			7:
-				if _poll_cd_ready(state, services, out, "stage 8 actor 0"):
-					services["actor_read"].call(state, 13, ACTOR_DEST_SECONDARY, 0xac05, out)
-					state.substep += 1
-			8:
-				if _poll_cd_ready(state, services, out, "stage 8 actor 1"):
-					state.next_stage()
-			_:
-				out.error = "prologue stage 8 substep outside source dispatch"
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+				services["line_start"].call(state, 12, out)
+				if out.error.is_empty(): state.substep += 1
+		3:
+			if not services.get("cd_audio_state") is Callable:
+				out.error = "Rei banner requires source voice playback status"
+			else:
+				var status: Variant = services.cd_audio_state.call(state)
+				if not status is int: out.error = "Rei banner voice status is not an integer"
+				elif (status & 4) != 0: state.substep += 1
+		4:
+			services["line_run"].call(state, out)
+			if out.error.is_empty(): effect.call(state, "lip_sync", 0, out)
+		5:
+			services["actor_read"].call(state, 0x31, 0x801a4000, 0xaae7, out)
+			if out.error.is_empty(): state.substep += 1
+		6:
+			if _poll_cd_ready(state, services, out, "stage 8 actor 0"):
+				effect.call(state, "clear_for_read", 0, out)
+				if out.error.is_empty(): services["actor_read"].call(state, 0x19, ACTOR_DEST_PRIMARY, 0xac05, out)
+				if out.error.is_empty(): state.substep += 1
+		7:
+			if _poll_cd_ready(state, services, out, "stage 8 actor 1"):
+				effect.call(state, "next_scene", 0, out)
+				if out.error.is_empty(): state.next_stage()
+	if out.error.is_empty(): services["arrival_draw"].call(state, 1, out)
+	if out.error.is_empty(): services["outer_draw"].call(state, 2, out)
 
 
 static func _stage_09_rei_lines(state: State, rng: Rng, services: Dictionary, out: Session.FrameResult) -> void:
-	var current_substep: int = state.substep
-	if _run_line_pair(state, 13, 0, services, out):
-		pass
-	elif state.substep == 2:
-		state.mode_step_timer = Math.add32(state.mode_step_timer, 1)
-		if Math.u32(state.mode_step_timer) >= SHORT_HOLD_FRAMES:
+	# prologue_rei_lines_13_and_14_run: twelve source substeps, including
+	# native text-page and actor-animation boundaries; never timer stand-ins.
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 11:
+		out.error = "prologue stage9 is outside source dispatch"; return
+	if not services.get("rei_lines_effect") is Callable:
+		out.error = "source Rei dialogue actor services are unavailable"; return
+	var effect: Callable = services.rei_lines_effect
+	var counter: int = int(state.opening.get("prologue_scene_counter",0))
+	match state.substep:
+		0:
+			state.opening["prologue_line"] = 13
+			services.line_start.call(state,13,out)
+			if not out.error.is_empty(): return
+			state.opening["prologue_scene_counter"] = 0
 			state.substep += 1
-	elif _run_line_pair(state, 14, 3, services, out):
-		pass
-	elif state.substep == 5:
-		services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xaa85, out)
-		state.substep += 1
-	elif state.substep == 6:
-		if _poll_cd_ready(state, services, out, "stage 9 actor 0"):
-			services["actor_read"].call(state, 17, ACTOR_DEST_SECONDARY, 0xac1e, out)
-			state.substep += 1
-	elif state.substep == 7:
-		if _poll_cd_ready(state, services, out, "stage 9 actor 1"):
-			state.next_stage()
-	else:
-		out.error = "prologue stage 9 substep outside source dispatch"
-	if out.error.is_empty() and current_substep < 6:
-		var blink_draw: int = rng.next("prologue_stage9:blink")
-		if (blink_draw & BLINK_MASK_FF) == BLINK_MASK_FF:
-			state.opening["prologue_blink"] = 1
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+			services.arrival_draw.call(state,1,out)
+		1:
+			if counter < 0xff:
+				counter += 1; state.opening["prologue_scene_counter"] = counter
+				effect.call(state,"flash",counter,out)
+			if not out.error.is_empty(): return
+			effect.call(state,"wait_voice",0,out)
+			if not out.error.is_empty(): return
+			if not services.get("cd_audio_state") is Callable:
+				out.error = "Rei line13 requires original CD playback state"; return
+			var status: Variant = services.cd_audio_state.call(state)
+			if not status is int:
+				out.error = "Rei line13 CD state is not an integer"; return
+			if (status & 4) != 0: state.substep += 1
+			services.arrival_draw.call(state,1,out)
+		2:
+			if counter < 0xff:
+				counter += 1; state.opening["prologue_scene_counter"] = counter
+			effect.call(state,"flash",counter,out)
+			if not out.error.is_empty(): return
+			services.line_run.call(state,out)
+			if not out.error.is_empty(): return
+			services.arrival_draw.call(state,1,out)
+			if not out.error.is_empty(): return
+			effect.call(state,"lip_sync",0,out)
+			if not out.error.is_empty(): return
+			var boundary: Variant = effect.call(state,"page_boundary",0,out)
+			if not out.error.is_empty(): return
+			if not boundary is bool:
+				out.error = "Rei line13 requires actual get_now_k page boundary"; return
+			if boundary:
+				state.substep += 1
+				effect.call(state,"page_transition",0,out)
+				if not out.error.is_empty(): return
+				effect.call(state,"flash",counter,out)
+		3:
+			if counter >= 4:
+				effect.call(state,"flash",counter,out)
+				if not out.error.is_empty(): return
+				state.opening["prologue_scene_counter"] = counter-4
+			services.line_run.call(state,out)
+			if not out.error.is_empty(): return
+			effect.call(state,"lip_sync",0,out)
+		4:
+			effect.call(state,"animate_exit",0,out)
+			if out.error.is_empty(): state.substep += 1
+		5:
+			# C checks actor99.flags twice; actor100 must not become an added gate.
+			var done: Variant = effect.call(state,"exit_done",0,out)
+			if not out.error.is_empty(): return
+			if not done is bool:
+				out.error = "Rei exit requires actual actor99 completion"; return
+			if done:
+				state.substep += 1; state.opening["prologue_scene_counter"] = 0
+		6:
+			state.opening["prologue_scene_counter"] = counter+1
+			if counter >= 0x1f: state.substep += 1
+		7:
+			effect.call(state,"line14_setup",0,out)
+			if not out.error.is_empty(): return
+			state.opening["prologue_line"] = 14
+			services.line_start.call(state,14,out)
+			if out.error.is_empty(): state.substep += 1
+		8:
+			effect.call(state,"line14_hold",0,out)
+			if not out.error.is_empty(): return
+			services.line_run.call(state,out)
+			if not out.error.is_empty(): return
+			effect.call(state,"lip_sync",0,out)
+		9:
+			services.actor_read.call(state,0x31,0x801a4000,0xaa85,out)
+			if out.error.is_empty(): state.substep += 1
+		10:
+			if _poll_cd_ready(state,services,out,"stage9 O11"):
+				services.actor_read.call(state,0x21,0x801e8000,0xac1e,out)
+				if out.error.is_empty(): state.substep += 1
+		11:
+			if _poll_cd_ready(state,services,out,"stage9 O11 copy"):
+				effect.call(state,"next_scene",0,out)
+				if out.error.is_empty(): state.next_stage()
+	if not out.error.is_empty(): return
+	# Source tests the post-switch substep, including next_stage resetting it.
+	if state.substep < 6:
+		var blink_draw := rng.next("prologue_stage9:blink")
+		if (blink_draw & 0xff) == 0xff: effect.call(state,"blink",0,out)
+	if out.error.is_empty(): services.outer_draw.call(state,2,out)
 
 
 static func _stage_10_lines_15_16(state: State, services: Dictionary, out: Session.FrameResult) -> void:

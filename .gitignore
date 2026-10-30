@@ -6,6 +6,7 @@
 /build/
 /expected/
 /.asset-cache/
+/.asset-cache-import.log
 /tools/bin/
 .DS_Store
 __pycache__/

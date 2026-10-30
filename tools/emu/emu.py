@@ -25,6 +25,7 @@ start of the run (frame 1 loads --state).
 
 import argparse
 import glob
+import hashlib
 import json
 import os
 import re
@@ -325,7 +326,12 @@ def unwind(hit, image, syms, overlay, depth=16):
 # ---------------------------------------------------------------- outputs
 
 def png_from_raw(raw_path, width, height, bpp, png_path):
-    raw = open(raw_path, "rb").read()
+    if any(type(value) is not int for value in (width, height, bpp)) or not (0 < width <= 1024 and 0 < height <= 512) or bpp not in (16, 24):
+        raise ValueError("unsupported screenshot dimensions or pixel format")
+    with open(raw_path, "rb") as stream:
+        raw = stream.read()
+    if len(raw) != width * height * (bpp // 8):
+        raise ValueError("screenshot payload length differs from dimensions")
     rows = []
     for y in range(height):
         if bpp == 16:
@@ -347,6 +353,24 @@ def png_from_raw(raw_path, width, height, bpp, png_path):
         f.write(chunk(b"IDAT", zlib.compress(b"".join(rows), 6)))
         f.write(chunk(b"IEND", b""))
     os.remove(raw_path)
+
+
+def prepare_shot(shot, out):
+    """Keep state observations even when no usable GPU image was captured."""
+    raw = os.path.join(out, os.path.basename(shot["path"]))
+    png = os.path.splitext(raw)[0] + ".png"
+    try:
+        png_from_raw(raw, shot["width"], shot["height"], shot["bpp"], png)
+    except (OSError, ValueError) as exc:
+        shot["image_status"] = "unavailable"
+        shot["image_error"] = str(exc)
+        shot.pop("png", None)
+        shot.pop("png_sha256", None)
+    else:
+        shot["image_status"] = "ok"
+        shot["png"] = os.path.basename(png)
+        with open(png, "rb") as stream:
+            shot["png_sha256"] = hashlib.file_digest(stream, "sha256").hexdigest()
 
 
 def as_list(x):
@@ -427,11 +451,11 @@ def report(result_path, verbose=False):
             print("memory at end, %s:" % (syms.describe(d["addr"]) or "0x%08X" % d["addr"]))
             print("\n".join(hexdump(d["addr"], d["data"], 1 << 20)))
     for s in as_list(res.get("shots")):
-        raw = os.path.join(out, os.path.basename(s["path"]))
-        png = os.path.splitext(raw)[0] + ".png"
-        if os.path.exists(raw):
-            png_from_raw(raw, s["width"], s["height"], s["bpp"], png)
-        print("screenshot frame %d: %s (%dx%d)" % (s["frame"], os.path.relpath(png, ROOT), s["width"], s["height"]))
+        if s.get("image_status") == "ok":
+            png = os.path.join(out, s["png"])
+            print("screenshot frame %d: %s (%dx%d)" % (s["frame"], os.path.relpath(png, ROOT), s["width"], s["height"]))
+        else:
+            print("screenshot frame %d: unavailable or unvalidated (%s)" % (s["frame"], s.get("image_error", "legacy capture lacks image validation")))
     if res.get("saved_state"):
         print("saved state: %s" % os.path.relpath(res["saved_state"].replace("/work", ROOT, 1), ROOT))
     for n in as_list(res.get("notes")):
@@ -485,9 +509,17 @@ def find_iso(args):
     if args.iso:
         return os.path.abspath(args.iso)
     cues = sorted(glob.glob(os.path.join(ROOT, "disc", "*.cue")))
-    if not cues:
-        die("no disc/*.cue; pass --iso")
-    return cues[0]
+    usable = []
+    for cue in cues:
+        with open(cue, encoding="utf-8-sig") as source:
+            members = re.findall(r'^\s*FILE\s+(?:"([^"]+)"|(\S+))\s+\S+\s*$',
+                                 source.read(), re.MULTILINE | re.IGNORECASE)
+        if members and all(os.path.isfile(os.path.join(os.path.dirname(cue), quoted or plain))
+                           for quoted, plain in members):
+            usable.append(cue)
+    if len(usable) != 1:
+        die("expected one disc/*.cue with existing track files; found %d; pass --iso PATH explicitly" % len(usable))
+    return usable[0]
 
 
 def parse_target(spec, syms, image, default_overlay):
@@ -500,6 +532,7 @@ def parse_target(spec, syms, image, default_overlay):
 
 
 def build_job(args, out, image, syms):
+    validate_sampling(args.sample_every, args.frames, args.dump, args.cmd)
     if args.save_state:
         os.makedirs(os.path.dirname(os.path.abspath(args.save_state)), exist_ok=True)
     if args.state and not os.path.exists(args.state):
@@ -539,6 +572,8 @@ def build_job(args, out, image, syms):
     job = {
         "out": out, "frames": args.frames, "breaks": breaks, "inputs": parse_inputs(args),
         "shots": [int(x) for x in (args.shot or "").split(",") if x],
+        "capture_dumps": [[a, n] for a, n in args.dump],
+        "sample_every": args.sample_every,
         "final_shot": args.cmd == "boot" or args.final_shot,
         "final_dumps": [[a, n] for a, n in args.dump] if args.cmd == "boot" else [],
         "load_state": os.path.abspath(args.state) if args.state else None,
@@ -557,13 +592,49 @@ def build_job(args, out, image, syms):
     return job
 
 
+def prepare_emulator_cue(source, out):
+    """Redux's pinned CUE reader rejects DCP; preserve raw input and track layout."""
+    if not source.lower().endswith(".cue"):
+        return source
+    with open(source, "rb") as cue:
+        raw = cue.read()
+    lines = []
+    removed = []
+    tracks = []
+    for line in raw.decode("utf-8-sig").splitlines():
+        if re.fullmatch(r"\s*FLAGS\s+DCP\s*", line, re.IGNORECASE):
+            removed.append(line.strip())
+            continue
+        if re.match(r"\s*FLAGS\b", line, re.IGNORECASE):
+            die("unsupported CUE FLAGS directive requires explicit review: " + line.strip())
+        match = re.fullmatch(r'\s*FILE\s+(?:"([^"]+)"|(\S+))\s+(\S+)\s*', line, re.IGNORECASE)
+        if match:
+            track = os.path.abspath(os.path.join(os.path.dirname(source), match[1] or match[2]))
+            if not os.path.isfile(track) or any(c in track for c in ('"', '\n', '\r')):
+                die("CUE track is missing or cannot be represented safely: " + track)
+            with open(track, "rb") as original:
+                digest = hashlib.file_digest(original, "sha256").hexdigest()
+            tracks.append({"path": track, "bytes": os.path.getsize(track), "sha256": digest})
+            line = 'FILE "%s" %s' % (track, match[3])
+        lines.append(line)
+    payload = ("\n".join(lines) + "\n").encode("utf-8")
+    target = os.path.join(out, "emulator.cue")
+    with open(target, "xb") as generated:
+        generated.write(payload)
+    with open(os.path.join(out, "cue-provenance.json"), "x") as provenance:
+        json.dump({"source": source, "source_sha256": hashlib.sha256(raw).hexdigest(),
+                   "generated_sha256": hashlib.sha256(payload).hexdigest(),
+                   "tracks": tracks, "removed_copy_permission_directives": removed}, provenance, indent=2)
+    return target
+
+
 def run_emulator(args, job, out, extra=()):
     lua = "JOB = %s\n" % lua_value(job) + open(os.path.join(os.path.dirname(__file__), "emu.lua")).read()
     job_path = os.path.join(out, "job.lua")
     open(job_path, "w").write(lua)
     cards = os.path.join(ROOT, "build/emu")
     cmd = [REDUX, "-no-ui", "-stdout", "-lua_stdout", "-run", "-interpreter", "-debugger", "-bios", BIOS,
-           "-iso", find_iso(args), "-memcard1", os.path.join(cards, "memcard1.mcd"),
+           "-iso", prepare_emulator_cue(find_iso(args), out), "-memcard1", os.path.join(cards, "memcard1.mcd"),
            "-memcard2", os.path.join(cards, "memcard2.mcd"), "-dofile", job_path] + list(extra)
     log_path = os.path.join(out, "emulator.log")
     env = dict(os.environ, SDL_AUDIO_DRIVER="dummy", SDL_AUDIODRIVER="dummy", SDL_VIDEO_DRIVER="dummy")
@@ -581,17 +652,53 @@ def run_emulator(args, job, out, extra=()):
         die("no result.json (run stopped before its end); emulator log tail:\n" + "\n".join(tail[-15:]))
     # carry each breakpoint's overlay and kind into its hits, for symbols and the call stack
     res = json.load(open(result))
+    samples = as_list(res.pop("samples", []))
+    if job.get("sample_every", 0):
+        sample_path = os.path.join(out, "memory-samples.jsonl")
+        with open(sample_path, "x") as stream:
+            for sample in samples:
+                stream.write(json.dumps(sample, sort_keys=True) + "\n")
+        with open(sample_path, "rb") as stream:
+            sample_sha = hashlib.file_digest(stream, "sha256").hexdigest()
+        res["memory_samples"] = {"path": sample_path, "count": len(samples), "sha256": sample_sha,
+                                 "every_vsync": job["sample_every"]}
     by_label = {b["label"]: b for b in job["breaks"]}
     for h in as_list(res.get("hits")):
         b = by_label.get(h.get("label"), {})
         h["overlay"], h["kind"] = b.get("overlay"), b.get("kind")
+    for shot in as_list(res.get("shots")):
+        prepare_shot(shot, out)
     json.dump(res, open(result, "w"))
     report(result, args.verbose)
 
 
+def validate_sampling(every, frames, dumps, command):
+    if every < 0:
+        raise ValueError("sample interval must be nonnegative")
+    if not every:
+        return
+    if command == "gdb" or not dumps or frames < 1:
+        raise ValueError("bounded memory sampling needs --dump and a finite non-GDB run")
+    samples = frames // every
+    if samples < 1 or samples > 4096 or samples * sum(length * 2 + 128 for _, length in dumps) > 64 * 1024 * 1024:
+        raise ValueError("memory samples must fit 1..4096 records and 64 MiB; shorten run or increase interval")
+
+
 def parse_dump(spec):
     a, _, n = spec.partition(":")
-    return int(a, 16), int(n or "64", 0)
+    try:
+        address, length = int(a, 16), int(n or "64", 0)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("dump requires HEXADDR[:positive byte length]") from exc
+    if not 0 <= address <= 0xffffffff or not 0 < length <= 0x200000:
+        raise argparse.ArgumentTypeError("dump address or length is outside PS1 memory bounds")
+    physical = address & 0x1fffffff
+    ram = physical < 0x800000 and (physical & 0x1fffff) + length <= 0x200000
+    scratch = 0x1f800000 <= physical and physical + length <= 0x1f800400
+    bios = 0x1fc00000 <= physical and physical + length <= 0x1fc80000
+    if address + length > 0x100000000 or not (ram or scratch or bios):
+        raise argparse.ArgumentTypeError("dump must fit one readable RAM, scratchpad or BIOS region")
+    return address, length
 
 
 def main():
@@ -599,6 +706,8 @@ def main():
     p.add_argument("cmd", choices=["boot", "break", "watch", "trace", "report", "gdb"])
     p.add_argument("targets", nargs="*")
     p.add_argument("--frames", type=int, default=3600, help="stop after this many vsyncs (default 3600)")
+    p.add_argument("--sample-every", type=int, default=0,
+                   help="write requested --dump memory every N vsyncs (0 disables; bounded to 4096 records/64 MiB)")
     p.add_argument("--hits", type=int, default=1, help="hits to record; the run stops after them")
     p.add_argument("--width", type=lambda s: int(s, 0), default=4,
                    help="break: bytes covered from TARGET (e.g. 0x30000: any code run in the overlay slot)")

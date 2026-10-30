@@ -91,7 +91,7 @@ def _copy_png(source: Path, destination: Path) -> dict:
 
 
 def export_april_commands(input_path: str, table_manifest_path: str,
-                          media_manifest_path: str, output_path: str) -> dict:
+                          media_manifest_path: str, output_path: str, *, fresh_source: bool = False) -> dict:
     root_value = os.environ.get("TOKIMEMO_ROOT")
     if root_value:
         root = Path(root_value).resolve()
@@ -101,25 +101,41 @@ def export_april_commands(input_path: str, table_manifest_path: str,
         if root is None:
             raise ValueError("repository root unavailable; set TOKIMEMO_ROOT")
     sys.path.insert(0, str(root))
-    from tools.assets.input import open_input
-    from tools.assets.image_packs_sd import export_sd_ui
-    from tools.assets.image_mdec import export_mdec
-    from tools.assets.bs_cohort_profile import build_profile_context
+    if fresh_source:
+        # T-39002: regenerate proofs from the pinned original, not lost caches.
+        from tools.port.school_day_tables import build_bundle
+        tables_doc = build_bundle(input_path)
+        tables_hash = _sha((json.dumps(tables_doc, sort_keys=True, indent=2) + "\n").encode())
+        media_doc = None
+    else:
+        return _legacy_export(input_path, table_manifest_path, media_manifest_path, output_path, root)
+    return _export_verified(input_path, output_path, root, tables_doc, tables_hash, media_doc)
 
+
+def _legacy_export(input_path, table_manifest_path, media_manifest_path, output_path, root):
     for path, expected, label in ((Path(table_manifest_path), TABLES_SHA, "rule-table manifest"),
                                   (Path(media_manifest_path), MEDIA_SHA, "media manifest")):
         if path.is_symlink() or not path.is_file() or path.stat().st_size > MAX_JSON or _sha(path.read_bytes()) != expected:
             raise ValueError(label + " does not match the reviewed source publication")
     tables_doc = json.loads(Path(table_manifest_path).read_text(encoding="utf-8"))
+    media_doc = json.loads(Path(media_manifest_path).read_text(encoding="utf-8"))
+    return _export_verified(input_path, output_path, root, tables_doc, TABLES_SHA, media_doc)
+
+
+def _export_verified(input_path, output_path, root, tables_doc, tables_hash, media_doc):
+    from tools.assets.input import open_input
+    from tools.assets.image_packs_sd import export_sd_ui
+    from tools.assets.image_mdec import export_mdec
+    from tools.assets.bs_cohort_profile import build_profile_context
+    from tools.assets.manifest import asset_id
     if tables_doc.get("schema") != "tokimemo.port-rule-tables.v1" or tables_doc.get("provenance", {}).get("release_executable", {}).get("sha256") != EXE_SHA:
         raise ValueError("rule tables do not identify the reviewed original executable")
     tables = tables_doc.get("tables")
     if not isinstance(tables, dict):
         raise ValueError("rule-table manifest is malformed")
-    media_doc = json.loads(Path(media_manifest_path).read_text(encoding="utf-8"))
-    if media_doc.get("schema") != "tokimemo.media.v1" or media_doc.get("input", {}).get("source_sha256") != TRACK_SHA:
+    if media_doc is not None and (media_doc.get("schema") != "tokimemo.media.v1" or media_doc.get("input", {}).get("source_sha256") != TRACK_SHA):
         raise ValueError("reviewed media inventory has the wrong source identity")
-    original = {a["source"]["path"]: a for a in media_doc.get("assets", [])
+    original = {a["source"]["path"]: a for a in (media_doc or {}).get("assets", [])
                 if isinstance(a, dict) and isinstance(a.get("source"), dict)}
     out = _safe_output(root, output_path)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -148,6 +164,13 @@ def export_april_commands(input_path: str, table_manifest_path: str,
                 bg_entry = by_path.get(bg_path)
                 bg_data = source.read(bg_entry) if bg_entry else b""
                 indexed_bg = original.get(bg_path)
+                if media_doc is None:
+                    # Whole-track identity, source-code pins and table/profile
+                    # agreement above bind this exact entry without a census.
+                    if bg_entry is None or bg_entry.get("location", {}).get("lba") != route["background_lba"]:
+                        raise ValueError("source background LBA differs from the route table")
+                    indexed_bg = {"id": asset_id(bg_path, _sha(bg_data)),
+                                  "source": {"sha256": _sha(bg_data), "location": bg_entry["location"]}}
                 if (not indexed_bg or indexed_bg["source"].get("sha256") != _sha(bg_data)
                         or indexed_bg["source"].get("location", {}).get("lba") != route["background_lba"]):
                     raise ValueError("background differs from the reviewed original media inventory")
@@ -185,7 +208,7 @@ def export_april_commands(input_path: str, table_manifest_path: str,
                     raise ValueError("selected source pack has no decoded sequence prefix")
                 key = f"command_{command}"
                 components[key] = {"route": route, "background": {"source": bg_profile["source"],
-                    "geometry_context": bg_context, "reader": "tools/assets/image_mdec.py:export_mdec", "files": bgfiles},
+                    "geometry_context": bg_context, "decoder_model": bg_result["metadata"]["decoder_model"], "reader": "tools/assets/image_mdec.py:export_mdec", "files": bgfiles},
                     "sd": {"source": {"path": sd_entry["path"], "lba": route["sd_lba"], "size": len(sd_data), "sha256": _sha(sd_data), "exe_sha256": EXE_SHA},
                     "source_id": sd_id, "profile_index": route["sd_set_id"], "frames": frames,
                     "sequences": meta["source_sequence_prefix"], "palette_mode": meta["actor_runtime_palette_mode"],
@@ -193,7 +216,7 @@ def export_april_commands(input_path: str, table_manifest_path: str,
                 routes.append(route)
         manifest = {"schema": SCHEMA, "version": 1,
                     "provenance": {"original_input_sha256": TRACK_SHA, "original_executable_sha256": EXE_SHA,
-                                   "rule_tables_manifest_sha256": TABLES_SHA, "reviewed_media_publication_sha256": MEDIA_SHA,
+                                   "rule_tables_manifest_sha256": tables_hash, "reviewed_media_publication_sha256": MEDIA_SHA if media_doc is not None else None,
                                    "readers": ["tools/assets/input.py:open_input", "tools/assets/image_packs_sd.py:export_sd_ui",
                                                "tools/assets/bs_cohort_profile.py:build_profile_context", "tools/assets/image_mdec.py:export_mdec"]},
                     "route_capabilities": ["command_1_april_school_day", "command_2_april_school_day", "command_3_april_school_day"],
@@ -218,11 +241,14 @@ def export_april_commands(input_path: str, table_manifest_path: str,
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", required=True, help="original MODE2 track or accepted input container")
-    parser.add_argument("--tables", required=True, help="exact reviewed school-day table manifest")
-    parser.add_argument("--media-manifest", required=True, help="exact reviewed original media inventory")
+    parser.add_argument("--tables", help="exact reviewed school-day table manifest")
+    parser.add_argument("--media-manifest", help="exact reviewed original media inventory")
+    parser.add_argument("--fresh-source", action="store_true", help="regenerate source proofs from the pinned original disc")
     parser.add_argument("--output", required=True, help="new directory under ignored .asset-cache/port")
     args = parser.parse_args()
-    print(json.dumps(export_april_commands(args.input, args.tables, args.media_manifest, args.output), sort_keys=True))
+    if not args.fresh_source and (not args.tables or not args.media_manifest):
+        parser.error("provide --fresh-source or both --tables and --media-manifest")
+    print(json.dumps(export_april_commands(args.input, args.tables, args.media_manifest, args.output, fresh_source=args.fresh_source), sort_keys=True))
 
 
 if __name__ == "__main__":

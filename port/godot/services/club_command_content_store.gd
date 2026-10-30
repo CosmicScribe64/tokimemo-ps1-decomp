@@ -3,7 +3,7 @@ extends RefCounted
 ## Supports all 11 non-summer club activities (clubs 0..10) for opening week solo activity.
 
 const SCHEMA := "tokimemo.club-command-content.v1"
-const MANIFEST_SHA := "00b844999ad42c174a4163906ca6552929d48ebbe9b96e12d6285b7e2aae65d9"
+const MANIFEST_SHA := "ebee4b0aa1d4d4de18dc66ceb3101ea90b1a2002ad6fe7e35c195f613e10290f"
 const TRACK_SHA := "28c3c501b0c67b87ca1e30515da73619497d509ff6adc28ff722aa02897dfb72"
 const EXE_SHA := "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae"
 const READERS := [
@@ -139,8 +139,9 @@ func error_message() -> String:
 	return _error
 
 func _valid_background(value: Variant, club_id: int, expected_lba: int) -> bool:
-	if not value is Dictionary or not _keys(value, ["source", "geometry_context", "reader", "files"]) or value.get("reader") != "tools/assets/image_mdec.py:export_mdec":
+	if not value is Dictionary or not _keys(value, ["source", "geometry_context", "reader", "files", "decoder_model"]) or value.get("reader") != "tools/assets/image_mdec.py:export_mdec":
 		return false
+	if not preload("res://services/mdec_model_identity.gd").valid(value): return false
 	var source: Variant = value.get("source")
 	if not source is Dictionary or source.get("lba") != expected_lba or source.get("size", 0) < 1 or not _sha_ok(source.get("sha256")):
 		return false

@@ -17,6 +17,7 @@ import shutil
 import stat
 import struct
 import sys
+import tempfile
 
 SCHEMA = 'tokimemo.native-command-hud.v1'
 PROFILE = 'spring_type_a_ordinary.v1'
@@ -29,6 +30,7 @@ INPUTS = {
 ROOM_MANIFEST_SHA = '27eff05f51fcd4904a5c54215bcd9d0506d413d131143c3ff51f864ea1823e63'
 ROOM_METADATA_SHA = '4d37c46cf3b582e40d94206d509255340a7c9af236f2a3d6facc130185a5a510'
 ROOM_IMAGE_SHA = 'd1e8cc097c6602e257923b8c2cb422c6b476e0666fad8e4e568e697df1160202'
+CURRENT_ROOM_IMAGE_SHA = 'd43c4a35204a86a074cda80f8104dcd3a5275fed4c43d8681ee8a440e8fefb77'
 ROOM_IMAGE_NAME = 'assets/spring-room/asset-2223d133624701512989264fd4cfdcf74bd30490999c09cd0fe34529940fca51.background.png'
 READERS = ['tools.assets.image_packs._parse', 'tools.assets.image_packs_calendar.export_calendar_ui',
            'tools.assets.text_binary._spans']
@@ -142,6 +144,37 @@ def verified_room(manifest_path: Path, expected_sha: str) -> tuple[bytes, dict]:
                    'image_sha256': ROOM_IMAGE_SHA, 'original_sha256': INPUTS['room'][2]}
 
 
+def verified_source_room(track: Path, repo: Path) -> tuple[bytes, dict]:
+    """T-39002: regenerate the exact reviewed room pixels from original sectors."""
+    if str(repo) not in sys.path:
+        sys.path.insert(0, str(repo))
+    from tools.assets.input import open_input
+    from tools.assets.bs_cohort_profile import build_profile_context, TRACK_SHA256
+    from tools.assets.image_mdec import export_mdec
+    from tools.assets.manifest import asset_id
+    with open_input(str(track)) as source:
+        require(source.describe().get('source_sha256') == TRACK_SHA256, 'room track differs')
+        entries = source.entries()
+        profile = build_profile_context(source, entries, repo, 'seasonal')
+        path, size, expected = INPUTS['room']
+        records = [entry for entry in entries if entry.get('path') == path]
+        require(len(records) == 1, 'room source entry is ambiguous or missing')
+        original = source.read(records[0])
+        require(len(original) == size and digest(original) == expected, 'room original differs')
+        backgrounds = [entry for entry in profile['assets'] if entry.get('path') == path]
+        require(len(backgrounds) == 1, 'room source profile is missing')
+        context = {'width': 320, 'height': 88, 'padded_height': 96,
+                   'source_profile': profile['source_profile'], 'geometry': profile['geometry'],
+                   'evidence': backgrounds[0]['source_evidence']}
+        with tempfile.TemporaryDirectory(prefix='tokimemo-room-') as scratch:
+            identity = asset_id(path, expected)
+            export_mdec(original, Path(scratch), identity, source_path=path, context=context)
+            image = (Path(scratch) / (identity + '.background.png')).read_bytes()
+    require(digest(image) == CURRENT_ROOM_IMAGE_SHA and png_size(image) == (320, 88), 'regenerated room preview differs')
+    return image, {'track_sha256': TRACK_SHA256, 'image_sha256': CURRENT_ROOM_IMAGE_SHA,
+                   'original_sha256': INPUTS['room'][2]}
+
+
 def source_strings(repo: Path, exe: bytes, spans_reader) -> dict:
     result = {}
     binary = (exe, 0x80041000, 0x800, INPUTS['executable'][2], INPUTS['executable'][0])
@@ -174,7 +207,7 @@ def output_directory(repo: Path, output: Path) -> Path:
 
 def export_hud(repository: str | Path, executable: str | Path, mainrom: str | Path,
                calendar: str | Path, room_manifest: str | Path, room_manifest_sha256: str,
-               output: str | Path, profile: str = PROFILE) -> dict:
+               output: str | Path, profile: str = PROFILE, fresh_room_track: str | Path | None = None) -> dict:
     repo = safe_absolute(repository)
     require(repo.is_dir() and (repo / 'tools/assets/image_packs.py').is_file(), 'repository has no canonical asset reader')
     require(profile == PROFILE, 'unsupported HUD export profile')
@@ -183,7 +216,9 @@ def export_hud(repository: str | Path, executable: str | Path, mainrom: str | Pa
     for key, path in [('executable', executable), ('mainrom', mainrom), ('calendar', calendar)]:
         _, size, expected = INPUTS[key]
         source_bytes[key] = read_checked(path, expected, size)
-    room, room_proof = verified_room(safe_absolute(room_manifest), room_manifest_sha256)
+    room, room_proof = (verified_source_room(safe_absolute(fresh_room_track), repo)
+                        if fresh_room_track is not None else
+                        verified_room(safe_absolute(room_manifest), room_manifest_sha256))
     source_proof = [{'path': name, 'sha256': digest(safe_absolute(repo / name).read_bytes())}
                     for name in sorted(set(SOURCE_FILES + [v[0] for v in STRING_LABELS.values()]))]
     if str(repo) not in sys.path:
@@ -284,10 +319,15 @@ def export_hud(repository: str | Path, executable: str | Path, mainrom: str | Pa
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ['repository', 'executable', 'mainrom', 'calendar', 'room-manifest', 'room-manifest-sha256', 'output']:
+    for name in ['repository', 'executable', 'mainrom', 'calendar', 'output']:
         parser.add_argument('--' + name, required=True)
+    parser.add_argument('--room-manifest')
+    parser.add_argument('--room-manifest-sha256')
+    parser.add_argument('--fresh-room-track')
     parser.add_argument('--profile', default=PROFILE, choices=[PROFILE])
     args = parser.parse_args(argv)
+    if not args.fresh_room_track and (not args.room_manifest or not args.room_manifest_sha256):
+        parser.error('provide --fresh-room-track or both room manifest arguments')
     try:
         result = export_hud(**vars(args))
     except (ValueError, OSError, json.JSONDecodeError) as error:

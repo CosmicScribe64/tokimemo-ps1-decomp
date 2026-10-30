@@ -26,6 +26,9 @@ NAMES_ACD4_TRANSFER_SHA='a2f0c71eb50a70d2028aa48f6bcfaea65b5524369eb9cc5aaf1362f
 NAMES_ACEC_SOURCE='CDROM/PROLODIR/P_01_06.BS'
 NAMES_ACEC_SOURCE_SHA='5feccf3ed08b49ed918458c4772c870b8c1533e7fbc0391df314e59172c7858c'
 NAMES_ACEC_TRANSFER_SHA='f2acadc280ae1d94841c9c08f455c5ece893dc371988ff56bcceacbfe68d80b9'
+NAMES_AD00_SOURCE='CDROM/PROLODIR/P_01_07B.BS'
+NAMES_AD00_SOURCE_SHA='184c047fce1e4da8f736980e8d25a38aec0b4fc41d8297095b8a2bea9e50a774'
+NAMES_AD00_TRANSFER_SHA='03b1b7225d0a7c512642f209e3dab711941b397b0fbf086b9dddd811c91815bb'
 CUT_12_SOURCE='CDROM/PROLODIR/CUT_12.NBN'
 CUT_12_SHA='43b8e386cd4588a67c3a8ac9c71c7ac0416bfce3a340cb502ac508764606bd97'
 O_12_SOURCE='CDROM/PROLODIR/O_12.NBN'
@@ -42,16 +45,27 @@ CUT_07_SOURCE='CDROM/PROLODIR/CUT_08.NBN'
 CUT_07_SHA='444165354346eeac36f2614a3375bd24e3ff5b457924b1d81705b4e174c3e3ca'
 O_07_SOURCE='CDROM/PROLODIR/O_08.NBN'
 O_07_SHA='239a20180cd00bd8c117603075505147fff5d1e1f5769eb94323c7d0fd78de77'
+CUT_09_SOURCE='CDROM/PROLODIR/CUT_10.NBN'
+CUT_09_SHA='4feef785ad85d06129b0e13ac88c7984e3284ae71d9dfac8c272d300835341c7'
+O_09_SOURCE='CDROM/PROLODIR/O_10.NBN'
+O_09_SHA='dacf206a52a5396872e759effd471f9a21a769b2a57c9a141edc221789fb3ead'
+O_11_SOURCE='CDROM/PROLODIR/O_11.NBN'
+O_11_SHA='3e901c18b0ed186323446151f35892bdb66e477d8a419e772034fd2b61be0628'
+CUT_08_SOURCE='CDROM/PROLODIR/CUT_09.NBN'
+CUT_08_SHA='9c4a73089b11368c754de62a546344668182fb2b37ba9862e5bed0263d9cbd0b'
+O_08_SOURCE='CDROM/PROLODIR/O_09.NBN'
+O_08_SHA='6dcde1bbf652c9cf5ca77c9c68547afe723ce08b56bfe6c08bf3048fa85ac331'
 TRACK_SHA='28c3c501b0c67b87ca1e30515da73619497d509ff6adc28ff722aa02897dfb72'
 PINS={
  'src/ovl/name_entry/prologue.c':'cce3a4abaf102b745e0b116fcd1331ec63b35234d45b5bab4cbd9c39fc10470e',
  'src/main/memory_card.c':'32fd2c5f413038eee79d940c3a964e47652b472935b34f8597231c60d5979811',
  'src/main/screen_layers.c':'03cafa4cc4a0b868bbcc77cba636c262732fabdea6aee2da619663a635363db3',
  'src/main/background_images.c':'7eea24dfee7fd3503beedbd1b2f633c40f19102d21f992557d626cba3d036402',
- 'tools/assets/image_mdec.py':'87361145f29582f78b9cd8d6ebc47f87000fcd75c0f5883e777d8a15702410a8',
+ 'tools/assets/image_mdec.py':'6513b1e6434bdd1c65c804e5d637ae3db1f4fa11f69dd80b495cf05a2f8828ec',
+ 'tools/assets/image_mdec_model.py':'3b8e5611bf6f763171b8bf3d5a22269211048b0ec21dc342088e90ec043d2222',
  'tools/assets/media_background_context.py':'40441716507a1a407260caec428ad3aba706ee534cd05de67beded68a2d9d95e',
  'tools/assets/visual_text_equivalence.py':'1dfb936326536a29c8d65c050591f8e3df0a80a207c2395210ae01221dfb05b5',
- 'tools/port/first_arrival_content.py':'45b3b46d7405b73556d179fcddce3908409cedc55eed380b5f8dd7e1ead728cd'}
+ 'tools/port/first_arrival_content.py':'8751e359d2c567edf3155b3bac3bc1b04cce9850324c7048fdea225880204ac1'}
 class Invalid(ValueError):pass
 def require(ok,message):
  if not ok:raise Invalid(message)
@@ -129,6 +143,23 @@ def _pack_words(png_bytes,expected_size):
   require(alpha==255,'MDEC background unexpectedly has nonopaque pixels')
   struct.pack_into('<H',words,index*2,0x8000|(red>>3)|((green>>3)<<5)|((blue>>3)<<10))
  return words
+def line11_background_context(repo,data):
+ from tools.assets import media_background_context as contexts,image_mdec
+ inventory={'schema':'tokimemo.media.v1','input':{'source_sha256':TRACK_SHA,'format':'mode2-2352'},'assets':[
+  {'id':'names_ad00','source':{'path':NAMES_AD00_SOURCE,'size':len(data),'sha256':sha(data),'location':{'lba':0xad00}}}]}
+ report=contexts.build_background_contexts(inventory,{rel:(repo/rel).read_text()for rel in ['src/ovl/name_entry/prologue.c','src/main/background_images.c']})
+ uses=[u for stream in report['streams'] for u in stream['contexts'] if u['function']=='prologue_line_11_run']
+ require(len(uses)==1 and [uses[0][key] for key in ['lba','layer','read_sector_count','physical_read_bytes']]==[0xad00,1,10,20480],'line11 background source read differs')
+ # The generic extractor does not bind a decoder nested inside show_set.
+ # Both source files are hash-pinned by source_context before this function.
+ source=(repo/'src/ovl/name_entry/prologue.c').read_text()
+ function=source.split('void prologue_line_11_run(void) {',1)[1].split('void prologue_mode_stage_line_11',1)[0]
+ require('dec_bg_show_set(1, dec_bg_decode_to_vram(1));' in function.split('case 7:',1)[1],'line11 delayed decode/show call differs')
+ context={'width':320,'height':160,'evidence':['src/ovl/name_entry/prologue.c:prologue_line_11_run reads 0xAD00 at substep3, decodes at substep7','src/main/background_images.c:dec_bg_decode_to_vram alternate buffer 320,256,320,160']}
+ probe=image_mdec.probe_mdec(data,NAMES_AD00_SOURCE,context)
+ require(probe['status']=='supported' and probe['metadata']['macroblock_count']==200,'line11 background VLC/geometry differs')
+ return context,uses[0]
+
 def build(repo,input_path,output):
  repo,source,target=output_path(repo,input_path,output);sys.path[:0]=[str(repo),str(repo/'tools')]
  from tools.assets.input import open_input
@@ -168,6 +199,10 @@ def build(repo,input_path,output):
   xfer_acec,transport_acec=_native_extent(original,e_acec,TRACK_SHA,10,0xacec)
   require(len(raw_acec)==18492 and sha(raw_acec)==NAMES_ACEC_SOURCE_SHA and len(xfer_acec)==20480 and sha(xfer_acec)==NAMES_ACEC_TRANSFER_SHA and xfer_acec[:18492]==raw_acec,'0xacec logical or 10-sector transfer differs')
   e_cut12=_file_entry(entries,CUT_12_SOURCE,0xab18,100352,CUT_12_SHA)
+  e_ad00=_file_entry(entries,NAMES_AD00_SOURCE,0xad00,8656,NAMES_AD00_SOURCE_SHA)
+  raw_ad00=original.read(e_ad00)
+  xfer_ad00,transport_ad00=_native_extent(original,e_ad00,TRACK_SHA,10,0xad00)
+  require(len(xfer_ad00)==20480 and sha(xfer_ad00)==NAMES_AD00_TRANSFER_SHA and xfer_ad00[:8656]==raw_ad00,'0xad00 original transfer differs')
   xfer_cut12,transport_cut12=_native_extent(original,e_cut12,TRACK_SHA,49,0xab18)
   require(len(xfer_cut12)==100352 and sha(xfer_cut12)==CUT_12_SHA,'0xab18 CUT_12.NBN transfer differs')
   e_o12=_file_entry(entries,O_12_SOURCE,0xac3f,34816,O_12_SHA)
@@ -191,7 +226,21 @@ def build(repo,input_path,output):
   e_o07=_file_entry(entries,O_07_SOURCE,0xabe3,51200,O_07_SHA)
   xfer_o07,transport_o07=_native_extent(original,e_o07,TRACK_SHA,25,0xabe3)
   require(len(xfer_o07)==51200 and sha(xfer_o07)==O_07_SHA,'0xabe3 O_08.NBN transfer differs')
+  e_cut08=_file_entry(entries,CUT_08_SOURCE,0xaab6,100352,CUT_08_SHA)
+  xfer_cut08,transport_cut08=_native_extent(original,e_cut08,TRACK_SHA,49,0xaab6)
+  e_o08=_file_entry(entries,O_08_SOURCE,0xabfc,18432,O_08_SHA)
+  xfer_o08,transport_o08=_native_extent(original,e_o08,TRACK_SHA,9,0xabfc)
+  require(sha(xfer_cut08)==CUT_08_SHA and sha(xfer_o08)==O_08_SHA,'line11 actor transfers differ')
+  e_cut09=_file_entry(entries,CUT_09_SOURCE,0xaae7,100352,CUT_09_SHA)
+  xfer_cut09,transport_cut09=_native_extent(original,e_cut09,TRACK_SHA,49,0xaae7)
+  e_o09=_file_entry(entries,O_09_SOURCE,0xac05,51200,O_09_SHA)
+  xfer_o09,transport_o09=_native_extent(original,e_o09,TRACK_SHA,25,0xac05)
+  require(sha(xfer_cut09)==CUT_09_SHA and sha(xfer_o09)==O_09_SHA,'Rei entrance actor transfers differ')
+  e_o11=_file_entry(entries,O_11_SOURCE,0xac1e,67584,O_11_SHA)
+  xfer_o11,transport_o11=_native_extent(original,e_o11,TRACK_SHA,33,0xac1e)
+  require(len(xfer_o11)==0x10800 and sha(xfer_o11)==O_11_SHA,'Rei next-scene backup transfer differs')
  context,use=source_context(repo,data)
+ ctx_ad00,use_ad00=line11_background_context(repo,raw_ad00)
  (ctx_495d,use_495d),(ctx_4966,use_4966),(ctx_acdd,use_acdd),(ctx_ace6,use_ace6),(ctx_acf6,use_acf6),(ctx_acd4,use_acd4),(ctx_acec,use_acec)=names_context(repo,raw_495d,raw_4966,raw_acdd,raw_ace6,raw_acf6,raw_acd4,raw_acec)
  from tools.assets import image_mdec
  target.parent.mkdir(parents=True,exist_ok=True)
@@ -228,6 +277,10 @@ def build(repo,input_path,output):
   (stage/'names_acec.transfer.bin').write_bytes(xfer_acec)
   dec_acec=image_mdec.export_mdec(raw_acec,stage,'names_acec',source_path=NAMES_ACEC_SOURCE,context=ctx_acec)
   (stage/'names_acec.rgb555.bin').write_bytes(_pack_words((stage/'names_acec.background.png').read_bytes(),(320,160)))
+  (stage/'names_ad00.bs').write_bytes(raw_ad00)
+  (stage/'names_ad00.transfer.bin').write_bytes(xfer_ad00)
+  dec_ad00=image_mdec.export_mdec(raw_ad00,stage,'names_ad00',source_path=NAMES_AD00_SOURCE,context=ctx_ad00)
+  (stage/'names_ad00.rgb555.bin').write_bytes(_pack_words((stage/'names_ad00.background.png').read_bytes(),(320,160)))
   (stage/'cut_12.nbn').write_bytes(xfer_cut12)
   (stage/'o_12.nbn').write_bytes(xfer_o12)
   (stage/'cut_05.nbn').write_bytes(xfer_cut05)
@@ -236,6 +289,11 @@ def build(repo,input_path,output):
   (stage/'o_06.nbn').write_bytes(xfer_o06)
   (stage/'cut_07.nbn').write_bytes(xfer_cut07)
   (stage/'o_07.nbn').write_bytes(xfer_o07)
+  (stage/'cut_08.nbn').write_bytes(xfer_cut08)
+  (stage/'o_08.nbn').write_bytes(xfer_o08)
+  (stage/'cut_09.nbn').write_bytes(xfer_cut09)
+  (stage/'o_09.nbn').write_bytes(xfer_o09)
+  (stage/'o_11.nbn').write_bytes(xfer_o11)
   files={p.name:{'sha256':sha(p.read_bytes()),'bytes':p.stat().st_size}for p in stage.iterdir()}
   names_backgrounds={
    '0x495d':{'source':{'path':NAMES_495D_SOURCE,'sha256':NAMES_495D_SOURCE_SHA,'bytes':16392},'read':{'lba':0x495d,'sectors':10,'destination':0x80162000,'transfer_sha256':NAMES_495D_TRANSFER_SHA,'transfer_bytes':20480},'transport':transport_495d,'source_use':use_495d,'decode':{'slot':1,'buffer':0,'destination':[704,0,320,160],'format':'rgb555-stp1','clut':None,'software_preview':dec_495d,'hardware_pixel_parity_verified':False}},
@@ -245,7 +303,13 @@ def build(repo,input_path,output):
    '0xacf6':{'source':{'path':NAMES_ACF6_SOURCE,'sha256':NAMES_ACF6_SOURCE_SHA,'bytes':19568},'read':{'lba':0xacf6,'sectors':10,'destination':0x80162000,'transfer_sha256':NAMES_ACF6_TRANSFER_SHA,'transfer_bytes':20480},'transport':transport_acf6,'source_use':use_acf6,'decode':{'slot':1,'buffer':0,'destination':[704,0,320,160],'format':'rgb555-stp1','clut':None,'software_preview':dec_acf6,'hardware_pixel_parity_verified':False}},
    '0xacd4':{'source':{'path':NAMES_ACD4_SOURCE,'sha256':NAMES_ACD4_SOURCE_SHA,'bytes':17016},'read':{'lba':0xacd4,'sectors':10,'destination':0x80162000,'transfer_sha256':NAMES_ACD4_TRANSFER_SHA,'transfer_bytes':20480},'transport':transport_acd4,'source_use':use_acd4,'decode':{'slot':1,'buffer':1,'destination':[320,256,320,160],'format':'rgb555-stp1','clut':None,'software_preview':dec_acd4,'hardware_pixel_parity_verified':False}},
    '0xacec':{'source':{'path':NAMES_ACEC_SOURCE,'sha256':NAMES_ACEC_SOURCE_SHA,'bytes':18492},'read':{'lba':0xacec,'sectors':10,'destination':0x80162000,'transfer_sha256':NAMES_ACEC_TRANSFER_SHA,'transfer_bytes':20480},'transport':transport_acec,'source_use':use_acec,'decode':{'slot':1,'buffer':0,'destination':[704,0,320,160],'format':'rgb555-stp1','clut':None,'software_preview':dec_acec,'hardware_pixel_parity_verified':False}}}
+  names_backgrounds['0xad00']={'source':{'path':NAMES_AD00_SOURCE,'sha256':NAMES_AD00_SOURCE_SHA,'bytes':8656},'read':{'lba':0xad00,'sectors':10,'destination':0x80162000,'transfer_sha256':NAMES_AD00_TRANSFER_SHA,'transfer_bytes':20480},'transport':transport_ad00,'source_use':use_ad00,'decode':{'slot':1,'buffer':1,'destination':[320,256,320,160],'format':'rgb555-stp1','clut':None,'software_preview':dec_ad00,'hardware_pixel_parity_verified':False}}
   stage_02_04_transfers={
+   '0xaae7':{'file':'cut_09.nbn','source':{'path':CUT_09_SOURCE,'sha256':CUT_09_SHA,'bytes':100352},'read':{'lba':0xaae7,'sectors':49,'destination':0x801a4000,'transfer_sha256':CUT_09_SHA,'transfer_bytes':100352},'transport':transport_cut09},
+   '0xac05':{'file':'o_09.nbn','source':{'path':O_09_SOURCE,'sha256':O_09_SHA,'bytes':51200},'read':{'lba':0xac05,'sectors':25,'destination':0x80180000,'transfer_sha256':O_09_SHA,'transfer_bytes':51200},'transport':transport_o09},
+   '0xac1e':{'file':'o_11.nbn','source':{'path':O_11_SOURCE,'sha256':O_11_SHA,'bytes':67584},'read':{'lba':0xac1e,'sectors':33,'destination':0x801e8000,'transfer_sha256':O_11_SHA,'transfer_bytes':67584},'transport':transport_o11},
+   '0xaab6':{'file':'cut_08.nbn','source':{'path':CUT_08_SOURCE,'sha256':CUT_08_SHA,'bytes':100352},'read':{'lba':0xaab6,'sectors':49,'destination':0x801a4000,'transfer_sha256':CUT_08_SHA,'transfer_bytes':100352},'transport':transport_cut08},
+   '0xabfc':{'file':'o_08.nbn','source':{'path':O_08_SOURCE,'sha256':O_08_SHA,'bytes':18432},'read':{'lba':0xabfc,'sectors':9,'destination':0x801f0000,'transfer_sha256':O_08_SHA,'transfer_bytes':18432},'transport':transport_o08},
    '0xab18':{'file':'cut_12.nbn','source':{'path':CUT_12_SOURCE,'sha256':CUT_12_SHA,'bytes':100352},'read':{'lba':0xab18,'sectors':49,'destination':0x801a4000,'transfer_sha256':CUT_12_SHA,'transfer_bytes':100352},'transport':transport_cut12},
    '0xac3f':{'file':'o_12.nbn','source':{'path':O_12_SOURCE,'sha256':O_12_SHA,'bytes':34816},'read':{'lba':0xac3f,'sectors':17,'destination':0x80180000,'transfer_sha256':O_12_SHA,'transfer_bytes':34816},'transport':transport_o12},
    '0xaa23':{'file':'cut_05.nbn','source':{'path':CUT_05_SOURCE,'sha256':CUT_05_SHA,'bytes':100352},'read':{'lba':0xaa23,'sectors':49,'destination':0x801a4000,'transfer_sha256':CUT_05_SHA,'transfer_bytes':100352},'transport':transport_cut05},

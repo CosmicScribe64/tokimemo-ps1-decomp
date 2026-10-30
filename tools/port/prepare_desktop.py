@@ -48,7 +48,14 @@ def prepare(repository: Path, destination: Path, scene: str) -> dict:
             continue
         if path.name == "PORTING.md":
             continue
-        if path.name != "project.godot" and path.suffix not in SOURCE_SUFFIXES:
+        # Godot writes these stable script identifiers on the first editor import.
+        # Retain them only alongside a selected script, not as arbitrary payloads.
+        script_uid = path.name.endswith(".gd.uid") and path.with_suffix("").is_file()
+        if script_uid:
+            uid = path.read_text().strip()
+            if not uid.startswith("uid://") or not uid[6:].isalnum():
+                raise ValueError(f"invalid script UID: {relative}")
+        if path.name != "project.godot" and path.suffix not in SOURCE_SUFFIXES and not script_uid:
             raise ValueError(f"non-source project file requires explicit review: {relative}")
         selected.append((path, relative))
     if not any(str(relative) == SCENES[scene].removeprefix("res://") for _, relative in selected):

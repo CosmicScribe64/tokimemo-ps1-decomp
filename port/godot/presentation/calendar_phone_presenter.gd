@@ -1,12 +1,12 @@
 extends "res://presentation/command_hud_presenter.gd"
-## T-29013: Presentation and authentic rendering for:
+## T-29013: Presentation for:
 ## 1. Calendar Screen (icon 12)
 ## 2. Holiday Phone Book Screen (icon 8)
 ## 3. Holiday Magazine Screen (icon 10)
 ##
-## Produces bit-exact 320x240 authentic PS1 native framebuffers matching
-## the hardware emulator reference screenshots (emu_calendar.png,
+## Renders 320x240 frames for comparison with emulator reference screenshots (emu_calendar.png,
 ## emu_phone_book.png, emu_phone_shiori.png, emu_magazine.png).
+## The calendar-phone test uses image-error thresholds, not bit-exact equality.
 
 const Rules = preload("res://rules/calendar_phone_screens.gd")
 

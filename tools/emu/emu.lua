@@ -14,9 +14,10 @@ local GPR = { 'r0', 'at', 'v0', 'v1', 'a0', 'a1', 'a2', 'a3', 't0', 't1', 't2', 
     's0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 't8', 't9', 'k0', 'k1', 'gp', 'sp', 'fp', 'ra' }
 
 local frame = 0
+local loadedState = false
 local finishing = nil -- stop reason, set once; the next vsync writes the outputs and quits
 local releases = {}
-local result = { hits = {}, counts = {}, shots = {}, notes = {} }
+local result = { hits = {}, counts = {}, shots = {}, samples = {}, lifecycle = {}, notes = {} }
 
 local function u32(x) return tonumber(ffi.cast('uint32_t', x)) end
 
@@ -154,15 +155,33 @@ local function press(buttons, hold)
     end
 end
 
+local function captureState(tag)
+    -- Bind the displayed image to state at this capture, not an earlier breakpoint.
+    local captured = { tag = tag, frame = frame, cycles = tonumber(PCSX.getCPUCycles()),
+        pc = u32(regs.pc), mode = readRaw(JOB.mode_addr, 1):byte(), dumps = {},
+        state_load_phase = JOB.load_state and (loadedState and 'restored' or 'before_restore') or 'cold_boot',
+        phase = 'vsync_after_input_override_before_next_cpu_tick' }
+    for _, d in ipairs(JOB.capture_dumps or {}) do
+        local bytes = readRaw(d[1], d[2])
+        captured.dumps[#captured.dumps + 1] = { addr = d[1], length = d[2], data = hex(bytes),
+            status = bytes ~= nil and 'ok' or 'unreadable' }
+    end
+    return captured
+end
+
 local function screenshot(tag)
+    local captured = captureState(tag)
     local ss = PCSX.GPU.takeScreenShot()
     local path = string.format('%s/shot_%s.raw', JOB.out, tag)
     local f = openOut(path)
     if f == nil then return end
     f:writeMoveSlice(ss.data)
     f:close()
-    result.shots[#result.shots + 1] = { tag = tag, frame = frame, path = path, width = tonumber(ss.width),
-        height = tonumber(ss.height), bpp = (tonumber(ss.bpp) == 0) and 16 or 24 }
+    captured.path = path
+    captured.width = tonumber(ss.width)
+    captured.height = tonumber(ss.height)
+    captured.bpp = (tonumber(ss.bpp) == 0) and 16 or 24
+    result.shots[#result.shots + 1] = captured
 end
 
 local function saveState(path)
@@ -225,7 +244,11 @@ local function onVsync()
     logSlots()
     if frame == 1 and JOB.load_state then
         PCSX.nextTick(function()
+            local before = tonumber(PCSX.getCPUCycles())
             PCSX.loadSaveState(Support.File.open(JOB.load_state))
+            loadedState = true
+            result.lifecycle[#result.lifecycle + 1] = { kind = 'state_restore', frame = frame,
+                cycles_before = before, cycles_after = tonumber(PCSX.getCPUCycles()), path = JOB.load_state }
             note('loaded state ' .. JOB.load_state)
         end)
     end
@@ -234,6 +257,9 @@ local function onVsync()
         releases[frame] = nil
     end
     for _, e in ipairs(inputAt[frame] or {}) do press(e.buttons, e.hold) end
+    if (JOB.sample_every or 0) > 0 and frame % JOB.sample_every == 0 then
+        result.samples[#result.samples + 1] = captureState('sample_' .. tostring(frame))
+    end
     if shotAt[frame] then screenshot(tostring(frame)) end
     if finishing == nil and frame >= JOB.frames then finish('frames') end
     if finishing ~= nil then
