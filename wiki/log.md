@@ -2537,3 +2537,7 @@ Results:
 - 53 missing `.gd.uid` sidecars were generated.
 
 Committed as 2a0f784ba on `port/opening-to-gameplay`; working tree clean. The next blocker is unchanged: the mode 0x30 draw after the first confirm, owned by the dedicated main-loop workflow.
+
+## [2026-10-30] build | Weekday art redrawn to clear the date panel brackets
+
+The user saw the English weekday letters clipping the date panel parentheses. The clear interior measures 10 px (9 ink columns plus shadow). Set A (two-letter Mo-Su) fits with no bracket contact in all 20 in-place renders, uses the source shadow rule, and covers every shown palette including the plain Monday. Set B (narrow three-letter) can only fit Fri legibly; the other six words abut, so it is labelled not recommended. Draft tool `tools/translation_weekday_drafts.py` has 18 tests. Patch is `.asset-cache/weekday-fix/weekday.v2.patch`; the sheet was sent to the user. The date column style (month name versus YR/MO/DAY captions) is still the user's call; both need port changes (13-part frame-60 swap, month-name calendar draw). See [[tickets/T-39004-english-asset-completion]].
