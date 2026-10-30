@@ -2517,3 +2517,23 @@ Review found 6 findings:
 Tests: 14 Godot runs, 52 plus 106 Python tests, and core pass.
 
 Root note for integration: the proposed "Hook 0" (fall back to `Time.get_ticks_usec()` for the new-game seed) contradicts the determinism fix already in main (seed from `file_select_seed`, file_select.c:735). It will NOT be applied; route invariance uses the source seed instead.
+
+## [2026-10-30] build | Phase 4 and lane B merged, verified and committed
+
+The join workflow merged lane B (hover pulse exact against emulator golden, school-day command capabilities, first-confirm wiring) into main on top of lane A's phase 4 merge and boot wiring. Lane A review fixed 7 findings:
+- the modern box now follows the native window;
+- an explicit Latin typing mode;
+- the English speaker position;
+- the relaunch matrix;
+- the visual QA settings draft;
+- box slivers;
+- switch-frame wings.
+
+Results:
+- Frame timing pad 2: 0 mismatches.
+- The default playtest is byte-identical to the verified route.
+- English + wide + modern runs keep every native frame and state identical.
+- Join review found no functional defects.
+- 53 missing `.gd.uid` sidecars were generated.
+
+Committed as 2a0f784ba on `port/opening-to-gameplay`; working tree clean. The next blocker is unchanged: the mode 0x30 draw after the first confirm, owned by the dedicated main-loop workflow.
