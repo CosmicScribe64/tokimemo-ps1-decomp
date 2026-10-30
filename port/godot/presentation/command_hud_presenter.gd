@@ -186,7 +186,10 @@ var _compositor = NativeCompositor.new()
 ## T-39016: translated narration run, empty while the original bytes apply.
 var _narration_translation: Dictionary = {}
 ## Validated scaled hover texels (open_hover_texels); empty = scaled path refused.
+## set_translated_images drops replaced frames from this working copy.
 var _hover_texels: Dictionary = {}
+## The texels as opened, kept so English off restores every scaled frame.
+var _source_hover_texels: Dictionary = {}
 ## Why the last set_translated_text call kept the original narration.
 var text_rejection := ""
 
@@ -232,6 +235,8 @@ func open_manifest(path: String, expected_sha256: String, font_root: String) -> 
 ## HUD manifest part (colour and STP); without it the scaled path is refused.
 func open_hover_texels(path: String, expected_sha256: String) -> String:
 	_compositor.hover_texels = {}
+	_hover_texels = {}
+	_source_hover_texels = {}
 	if _manifest.is_empty():
 		return "hover texels need the HUD manifest first"
 	if not _sha_string(expected_sha256) or not _safe_path(path) or not FileAccess.file_exists(path) or FileAccess.get_size(path) > 1024 * 1024 or FileAccess.get_sha256(path) != expected_sha256:
@@ -283,8 +288,9 @@ func open_hover_texels(path: String, expected_sha256: String) -> String:
 						return "hover texel STP differs from the HUD manifest part: " + key
 			parts.append({"image": color, "stp": stp})
 		texels[key] = parts
-	_hover_texels = texels
-	_compositor.hover_texels = texels
+	_source_hover_texels = texels
+	_hover_texels = texels.duplicate()
+	_compositor.hover_texels = _hover_texels
 	return ""
 
 func _hover_frame(icon: int, state: Dictionary) -> int:
@@ -303,43 +309,62 @@ func _hover_image(root: String, spec: Variant, size: Vector2i) -> Image:
 	return image
 
 func set_translated_images(store: RefCounted) -> int:
-	# T-39004: bind only exact single-part identities with opaque source semantics.
+	# T-39004: bind only exact identities with opaque source semantics. A
+	# single-part frame binds by its part PNG sha; a part of a multi-part frame
+	# binds only when the pack row lists every part sha of that frame, and parts
+	# without a row stay the original. Returns the number of replaced parts.
 	# A translated STP mask is required before supporting semi-transparent frames.
 	_images = _source_images.duplicate()
+	# Every call starts from the opened hover texels, so a frame dropped while
+	# English was on gets its scaled phase back when English is off.
+	_hover_texels = _source_hover_texels.duplicate()
+	_compositor.hover_texels = _hover_texels
 	var count := 0
 	if _manifest.is_empty():
 		return count
 	if store != null:
 		var container_sha: String = _manifest["provenance"]["inputs"]["mainrom"]["sha256"]
+		var multi_part: bool = store.has_method("part_replacement")
 		for frame: Dictionary in _manifest["frames"].values():
-			if frame["parts"].size() != 1:
-				continue
-			var part: Dictionary = frame["parts"][0]
-			var replacement: Image = store.replacement(container_sha, int(frame["frame_index"]), frame["variant"], part["png"]["sha256"])
-			if replacement == null or replacement.get_size() != _source_images[part["png"]["path"]].get_size():
-				continue
-			var binary_alpha := true
-			for y: int in range(replacement.get_height()):
-				for x: int in range(replacement.get_width()):
-					if replacement.get_pixel(x, y).a8 not in [0, 255]:
-						binary_alpha = false
-			if not binary_alpha:
-				continue
-			var mask: Image = _source_images[part["stp_png"]["path"]]
-			var has_stp := false
-			for byte: int in mask.get_data():
-				if byte != 0:
-					has_stp = true
-					break
-			if has_stp:
-				continue
-			_images[part["png"]["path"]] = replacement
-			# The scaled hover texels are the original part; a replaced icon
-			# frame has no scaled counterpart, so its scaled phase is refused.
-			_hover_texels.erase("%d:%s" % [int(frame["frame_index"]), frame["variant"]])
-			count += 1
+			var index := int(frame["frame_index"])
+			var variant: String = frame["variant"]
+			var parts: Array = frame["parts"]
+			var shas: Array = []
+			for part: Dictionary in parts:
+				shas.append(part["png"]["sha256"])
+			var replaced := 0
+			for part_index: int in range(parts.size()):
+				var part: Dictionary = parts[part_index]
+				var replacement: Image = null
+				if parts.size() == 1:
+					replacement = store.replacement(container_sha, index, variant, part["png"]["sha256"])
+				elif multi_part:
+					replacement = store.part_replacement(container_sha, index, variant, part_index, shas)
+				if replacement == null or not _part_replaceable(part, replacement):
+					continue
+				_images[part["png"]["path"]] = replacement
+				replaced += 1
+			if replaced > 0:
+				# The scaled hover texels are the original part; a replaced icon
+				# frame has no scaled counterpart, so its scaled phase is refused.
+				_hover_texels.erase("%d:%s" % [index, variant])
+				count += replaced
 	_compositor.configure(_manifest, _images, _font)
 	return count
+
+## A replacement must have the part's size and binary alpha, and the source
+## part must carry no STP bit (the translated image has no STP mask).
+func _part_replaceable(part: Dictionary, replacement: Image) -> bool:
+	if replacement.get_size() != _source_images[part["png"]["path"]].get_size():
+		return false
+	for y: int in range(replacement.get_height()):
+		for x: int in range(replacement.get_width()):
+			if replacement.get_pixel(x, y).a8 not in [0, 255]:
+				return false
+	for byte: int in _source_images[part["stp_png"]["path"]].get_data():
+		if byte != 0:
+			return false
+	return true
 
 ## T-39016: bind the English narration from a text layer (services/
 ## text_layer_store.gd) at the point the original strings are decoded. Both
@@ -755,6 +780,7 @@ func _reset() -> void:
 	last_coverage = null
 	_narration_translation.clear()
 	_hover_texels = {}
+	_source_hover_texels = {}
 	text_rejection = ""
 	_font = Glyphs.new()
 	_compositor = NativeCompositor.new()

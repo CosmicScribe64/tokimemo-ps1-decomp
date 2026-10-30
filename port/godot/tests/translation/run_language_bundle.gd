@@ -69,6 +69,26 @@ func members_standard() -> Dictionary:
 	var drafts := image_pack("drafts", 2, true); drafts.coverage = {"draft_images": 2}
 	return {"ui_text": ui, "dialogue": lines, "images": approved, "draft_images": drafts}
 
+## T-39004: a draft frame row that names a reviewed output in
+## supersedes_output_sha256 (same source identity) stands in for it; a wrong
+## or absent supersede still reports the reviewed image as missing.
+func _check_superseded_reviewed(approved: Dictionary) -> void:
+	var reviewed := {"path": folder.path_join(approved.path), "sha256": approved.sha256}
+	var row: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(reviewed.path)).assets[0]
+	for case: Array in [[row.output_sha256, ""], ["0".repeat(64), "lacks 1 reviewed images"], [null, "lacks 1 reviewed images"]]:
+		var draft := row.duplicate()
+		draft.output = "superseding.png"
+		draft.output_sha256 = write_png(folder.path_join("superseding.png"), 99)
+		draft.style = "draft"
+		if case[0] != null:
+			draft.supersedes_output_sha256 = case[0]
+		var path := folder.path_join("superseding.json")
+		var sha := write_json(path, {"schema": "tokimemo.translated-image-pack.v1", "language": "en", "development_drafts": true,
+			"snapshot_sha256": "9".repeat(64), "assets": [draft]})
+		var problem: String = Bundle._missing_reviewed(reviewed, {"path": path, "sha256": sha})
+		var expected: String = case[1]
+		check(problem.is_empty() if expected.is_empty() else problem.contains(expected), "superseding draft %s: %s" % [str(case[0]), problem])
+
 ## Polls once per frame; returns frames until the switch settles.
 func settle(service: RefCounted, limit: int = 600) -> int:
 	var frames := 0
@@ -137,6 +157,7 @@ func run() -> void:
 	check(service.request("en", {"bundle_path": bundle(thin), "allow_drafts": true}), "draft pack without the reviewed asset requested")
 	await settle(service)
 	check(service.choice == "en" and service.images.asset_count() == 1 and not service.coverage.draft_images_active and service.notice.contains("lacks 1 reviewed images") and warnings.size() == 2, "a draft pack missing reviewed art keeps the reviewed pack: " + service.notice)
+	_check_superseded_reviewed(members.images)
 	path = bundle(members)
 
 	# Failures keep the previous language and its packs.

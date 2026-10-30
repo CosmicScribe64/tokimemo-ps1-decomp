@@ -12,6 +12,9 @@ identity and to the English counterpart, and gives every item exactly one status
   unmapped                   asset or text exists but its exact source cannot be bound yet
   deliberately-untranslated  no English needed, with a stated reason
 
+A candidate that a newer ledger names in its `supersedes` list leaves the
+evidence and is listed under `superseded_records` instead.
+
 Agent acceptance is never recorded as human approval. Runtime verification is a
 separate field. Operations (all Docker, Python 3 with Pillow not required):
 
@@ -39,7 +42,8 @@ LEDGERS = [SNAPSHOT / 'checkpoints/T39004-2026-10-29/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-pass3/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-battle-miss-v1/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-filesel-v3/ledger.json',
-           SNAPSHOT / 'checkpoints/T39004-bs-v1/ledger.json']
+           SNAPSHOT / 'checkpoints/T39004-bs-v1/ledger.json',
+           SNAPSHOT / 'checkpoints/T39004-date-panel-v1/ledger.json']
 TEXT_MAIN = ROOT / 'translations/en/returned-v3.jsonl'
 TEXT_SUPP = ROOT / 'translations/en/supplemental.jsonl'
 TEXT_MANIFEST = ROOT / 'translations/en/manifest.json'
@@ -58,6 +62,9 @@ TAIIKU_LINES = {'kasetu': 123, 'ninsetu': 124, 'spsetu': 125, 'tasetu': 126}
 # Groups whose original files cannot be hashed locally (stated in inventory_decisions.json).
 NO_CONTAINER_HASH = ('catalog-152', 'catalog-153')
 LEDGER_STATUSES = ('draft', 'agent-reviewed-in-game')
+# Weekday drafts name their day; frame 0x52 + weekday (Monday first) is the HUD weekday frame.
+WEEKDAYS = ('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun')
+WEEKDAY_FRAME0 = 82
 NO_CHANGE = ('no change required', 'no japanese text present')
 
 
@@ -148,6 +155,13 @@ def candidate_key(entry):
         if entry.get('frame') != int(m[1]) or entry.get('palette_id') != m[2]:
             raise ValueError('candidate id disagrees with its frame or palette: ' + cid)
         return 'mainrom-%04d' % int(m[1]), 'MAINROM', int(m[1]), m[2]
+    # Alternates (a `-partNN` suffix is one edited part of a multi-part frame) and weekday drafts.
+    m = re.fullmatch(r'mainrom-(?:alt-(\d{4})-[a-z]+(?:-part\d{2})?|weekday-[a-z]+(?:-[a-z]+)*-(%s))\.([a-z]+(?:-\d+)?)' % '|'.join(WEEKDAYS), cid)
+    if m:
+        frame = int(m[1]) if m[1] else WEEKDAY_FRAME0 + WEEKDAYS.index(m[2])
+        if entry.get('frame') != frame or entry.get('palette_id') != m[3]:
+            raise ValueError('candidate id disagrees with its frame or palette: ' + cid)
+        return 'mainrom-%04d' % frame, 'MAINROM', frame, m[3]
     m = re.fullmatch(r'vs_(habu|kuma|robo|sika|ufo)-miss-(\d)', cid)
     if m:
         return 'battle-%s-miss-%s' % (m[1], m[2]), 'BATTLE', None, None
@@ -214,6 +228,41 @@ def load_ledgers(ledgers=None):
     return entries
 
 
+def split_superseded(entries, ledgers=None):
+    """(active, superseded) ledger entries.
+
+    A ledger's `supersedes` list names older candidates ({ledger, id, revision,
+    output_sha256}) that a newer draft replaces; they leave the candidate
+    evidence but stay listed. A reference into a loaded ledger must match one
+    entry exactly; references into ledgers that are not loaded are ignored.
+    """
+    replaced = {}
+    for path in (LEDGERS if ledgers is None else ledgers):
+        if not path.exists():
+            continue
+        by = str(path.relative_to(ROOT)) if path.resolve().is_relative_to(ROOT) else path.name
+        for ref in load_json(path).get('supersedes', []):
+            key = (ref['ledger'], ref['id'], ref['revision'])
+            if key in replaced:
+                raise ValueError('candidate superseded twice: %s' % (key,))
+            replaced[key] = {**ref, 'superseded_by': by}
+    loaded = {e['ledger'] for e in entries}
+    active, superseded, seen = [], [], set()
+    for entry in entries:
+        ref = replaced.get((entry['ledger'], entry['id'], entry['revision']))
+        if ref is None:
+            active.append(entry)
+            continue
+        if ref['output_sha256'] != entry['output_sha256'] or ref['superseded_by'] == entry['ledger']:
+            raise ValueError('superseded reference differs from its candidate: ' + entry['id'])
+        seen.add((entry['ledger'], entry['id'], entry['revision']))
+        superseded.append({**entry, 'superseded_by': ref['superseded_by']})
+    missing = sorted(key for key in replaced if key[0] in loaded and key not in seen)
+    if missing:
+        raise ValueError('superseded reference names no candidate: %s' % (missing[0],))
+    return active, superseded
+
+
 def historical(report):
     """Attach the container key (None for legacy assets without source mapping)."""
     out = []
@@ -237,7 +286,8 @@ def build(catalog=CATALOG, decisions_path=DECISIONS, sources_path=SOURCES, snaps
     rows = [json.loads(l) for l in catalog.read_bytes().splitlines() if l]
     report = audit(snapshot)
     hist = historical(report)
-    ledger = load_ledgers(ledgers)
+    all_entries = load_ledgers(ledgers)
+    ledger, superseded = split_superseded(all_entries, ledgers)
     atoms = {}
     order = []
 
@@ -395,21 +445,27 @@ def build(catalog=CATALOG, decisions_path=DECISIONS, sources_path=SOURCES, snaps
                            'status': 'candidate-only', 'atom': atom_id,
                            'review_level': 'agent-bounded-in-game' if entry['status'] == 'agent-reviewed-in-game' else 'none',
                            'human_approved': entry['human_approved']})
+    sup_items = [{'id': entry['id'], 'revision': entry['revision'], 'path': entry['path'], 'ledger': entry['ledger'],
+                  'output_sha256': entry['output_sha256'], 'source_png_sha256': entry['source_png_sha256'],
+                  'palette': entry.get('palette_id'), 'atom': candidate_key(entry)[0], 'status': 'superseded',
+                  'superseded_by': entry['superseded_by'], 'human_approved': entry['human_approved']}
+                 for entry in superseded]
     approval = decisions.get('text_approval')
     text = text_groups(text_main, text_supplemental, sources.get('text_blank_checks', {}), approval is not None)
     summary = summarize(items, hist_items, cand_items, text)
+    summary['superseded_records'] = len(sup_items)
     return {'schema': 'tokimemo.translation-inventory.v1',
             'inputs': {'catalog_sha256': digest(catalog.read_bytes()),
                        'snapshot_sha256': report['snapshot_sha256'],
                        'decisions_sha256': digest(decisions_path.read_bytes()),
                        'sources_sha256': digest(sources_path.read_bytes()),
-                       'ledgers': {e['ledger']: e['ledger_sha256'] for e in ledger},
+                       'ledgers': {e['ledger']: e['ledger_sha256'] for e in all_entries},
                        'text_main_sha256': digest(text_main.read_bytes()),
                        'text_supplemental_sha256': digest(text_supplemental.read_bytes())},
             'statuses': list(STATUSES), 'coverage_complete': False,
             'limitations': decisions['limitations'],
             'summary': summary, 'artwork_items': items, 'historical_assets': hist_items,
-            'candidate_records': cand_items, 'text_groups': text['groups'], 'text_blank_evidence': text['evidence'], 'text_approval': approval,
+            'candidate_records': cand_items, 'superseded_records': sup_items, 'text_groups': text['groups'], 'text_blank_evidence': text['evidence'], 'text_approval': approval,
             'name_header_prompts': [{**q, 'wording_status': 'english-approved' if approval else 'candidate-only'} for q in decisions['name_header_prompts']]}
 
 
@@ -620,6 +676,9 @@ def validate(inventory):
                 problems.append('candidate %s claims approval' % item['id'])
             if section == 'historical_assets' and status == 'unmapped' and not item.get('resolution'):
                 problems.append('unmapped asset %s has no recorded resolution' % item['id'])
+    for item in inventory.get('superseded_records', []):
+        if item.get('human_approved') or item.get('status') != 'superseded' or not item.get('superseded_by'):
+            problems.append('superseded candidate %s lacks its replacement or claims approval' % item['id'])
     hist = {h['id']: h for h in inventory['historical_assets']}
     cand = {(c['id'], c['revision']): c for c in inventory['candidate_records']}
     for item in inventory['artwork_items']:

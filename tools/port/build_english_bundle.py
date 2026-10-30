@@ -21,7 +21,13 @@ output is a new directory holding `english_bundle.json` and its members:
 - `draft_images` (only with --with-drafts): a development pack with every
   mapped snapshot asset plus the page/bs draft directories given with
   --draft-source (v2 when it holds page/bs rows). The runtime opens it only
-  with allow_drafts.
+  with allow_drafts. Committed checkpoints whose ledger sets `runtime_hud`
+  (the T39004-date-panel-v1 date panel style) are bound to the installed HUD
+  manifest (tools/translation_draft_pack.py hud_checkpoint_rows): each
+  committed part of a multi-part frame becomes a `frame_part` row (v2). A checkpoint row that names a reviewed
+  snapshot image in `supersedes_output_sha256` replaces it in this pack only;
+  the approved pack keeps it. Without the installed HUD manifest these rows are
+  left out and the coverage says why.
 
 The manifest follows the contract of the settings language bundle service
 (port/godot/services/language_bundle_service.gd, T-30002 WP2): a top-level
@@ -285,12 +291,53 @@ def approved_images(stage: Path, snapshot: Path, translations: Path) -> dict:
     return _member(stage, 'images/manifest.json', manifest['schema'], ART_DISCLOSURE, coverage, development_drafts=False)
 
 
-def draft_images(stage: Path, snapshot: Path, sources: list[Path]) -> dict:
+def _hud_checkpoints(snapshot: Path) -> list[Path]:
+    return [ledger.parent for ledger in sorted(snapshot.glob('checkpoints/*/ledger.json'))
+            if json.loads(ledger.read_bytes()).get('runtime_hud')]
+
+
+def _supersede(rows: list, files: list, hud_rows: list) -> int:
+    """Drop the snapshot rows that HUD checkpoint rows name as superseded; returns the count."""
+    index = {assets.v2_identity(row): n for n, row in enumerate(rows)}
+    dropped = set()
+    for row in hud_rows:
+        n = index.get(assets.v2_identity(row))
+        if 'supersedes_output_sha256' not in row:
+            if n is not None:
+                raise BundleError('checkpoint draft collides with a snapshot image it does not supersede: ' + row['id'])
+            continue
+        if n is None or rows[n]['output_sha256'] != row['supersedes_output_sha256']:
+            raise BundleError('superseded snapshot image differs from the checkpoint ledger: ' + row['id'])
+        dropped.add(n)
+    rows[:] = [row for n, row in enumerate(rows) if n not in dropped]
+    files[:] = [path for n, path in enumerate(files) if n not in dropped]
+    return len(dropped)
+
+
+def draft_images(stage: Path, snapshot: Path, sources: list[Path], hud_manifest: Path | None = None) -> dict:
     report = assets.audit(snapshot)
     selected = [row for row in report['assets'] if row['mapping_complete']]
     rows = [{**row, 'kind': 'frame', 'output': 'images/' + row['output_sha256'] + '.png'} for row in selected]
     files = [assets.inside(snapshot, row['output']) for row in selected]
     inputs = [report['snapshot_sha256']]
+    hud_coverage = {'hud_checkpoint_rows': 0, 'superseded_reviewed_images': 0}
+    checkpoints = _hud_checkpoints(snapshot)
+    if checkpoints and (hud_manifest is None or not hud_manifest.is_file()):
+        hud_coverage['hud_checkpoints_omitted'] = 'installed HUD manifest is unavailable'
+    elif checkpoints:
+        hud_rows, hud_files = [], []
+        for checkpoint in checkpoints:
+            try:
+                found, found_files, bound = draft_pack.hud_checkpoint_rows(checkpoint, hud_manifest)
+            except (KeyError, ValueError) as exc:
+                raise BundleError('HUD checkpoint %s: %s' % (checkpoint.name, exc)) from exc
+            hud_rows += found
+            hud_files += found_files
+            inputs += [bound['ledger_sha256'], bound['hud_manifest_sha256']]
+        hud_coverage['superseded_reviewed_images'] = _supersede(rows, files, hud_rows)
+        rows += hud_rows
+        files += hud_files
+        hud_coverage['hud_checkpoint_rows'] = len(hud_rows)
     for source in sources:
         manifest_bytes = (source / 'manifest.json').read_bytes()
         manifest = json.loads(manifest_bytes)
@@ -317,7 +364,8 @@ def draft_images(stage: Path, snapshot: Path, sources: list[Path]) -> dict:
     assets.write_pack(stage / 'draft_images', rows, files, schema=schema, development_drafts=True,
                       snapshot_sha256=snapshot_sha)
     manifest = json.loads((stage / 'draft_images/manifest.json').read_text())
-    coverage = {**_pack_coverage(manifest), 'draft_images': sum(row.get('style') != 'approve' for row in manifest['assets'])}
+    coverage = {**_pack_coverage(manifest), **hud_coverage,
+                'draft_images': sum(row.get('style') != 'approve' for row in manifest['assets'])}
     return _member(stage, 'draft_images/manifest.json', schema, DRAFT_DISCLOSURE, coverage,
                    development_drafts=True, opt_in='allow_drafts', default_enabled=False)
 
@@ -356,7 +404,8 @@ def build(output: Path, *, translations: Path | None = None, files: Path | None 
         else:
             members['images'] = approved_images(stage, snapshot, translations)
         if with_drafts and 'images' in members:
-            members['draft_images'] = draft_images(stage, snapshot, [Path(source) for source in draft_sources])
+            hud = installed / 'packs/hud_manifest/manifest.json' if installed is not None else None
+            members['draft_images'] = draft_images(stage, snapshot, [Path(source) for source in draft_sources], hud)
         elif with_drafts:
             omitted['draft_images'] = 'the approved image pack is unavailable'
         inputs = {name: _sha((translations / name).read_bytes()) for name in

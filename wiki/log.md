@@ -2553,3 +2553,18 @@ The fast route mode (`.asset-cache/fast-route/fast-route.v2.patch`, review fixes
 - dev-only exact save/resume checkpoints that acceptance and Parity gates refuse.
 
 See [[tickets/T-39018-playtest-differential-harness]].
+
+## [2026-10-30] build | English date panel shipped as drafts
+
+Per the user's choice, the YR/MO/DAY captions and two-letter weekdays are in the repository as drafts. Checkpoint `translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1` holds only the three edited frame-60 parts per palette (caption texels only, no original pixels) plus 35 weekday cells. It records the style decision, with no art approval claimed.
+
+The port now supports multi-part frame replacement (CommandHudPresenter/TranslatedImageStore, bound per part with hash guards). The English bundle builder includes the art. Review found and fixed:
+- original composites committed;
+- a hover-texel restore after toggling English.
+
+Verification:
+- In place through the production path, for 13 dates: only the date column changes; Japanese output is byte-identical and restored exactly when English is turned off.
+- Emulator tile diff of the date pillar, English off: MAE 0.215, max 5.33, no pixel off by more than 10.
+- 220 translation tests (2 pre-existing tree errors), English bundle 15 tests, core 6 suites, inventory check OK.
+
+An actual-game X11 capture with draft art enabled is still open. See [[tickets/T-39004-english-asset-completion]].

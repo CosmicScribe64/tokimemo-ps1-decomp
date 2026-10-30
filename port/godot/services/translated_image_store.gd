@@ -9,6 +9,11 @@ extends RefCounted
 ## - "bs": an MDEC still (container sha, bs index, decoder identity, sha256 of
 ##   the decoded source RGBA8 bytes) that replaces pixels only inside its edit
 ##   regions.
+## - "frame_part": one part of a multi-part HUD frame (container sha, frame,
+##   palette, part index, the part's source PNG sha and `frame_parts_sha256`,
+##   every part PNG sha of that frame in part order). It binds only when the
+##   caller's whole frame has exactly those parts; parts without a row stay the
+##   original (part_replacement).
 ## Both kinds compose onto the caller's source image only when that image's
 ## RGBA8 bytes hash to the row's recorded source; the caller's sha is a key,
 ## never trusted on its own. A page replacement leaves every pixel the STP mask
@@ -20,21 +25,24 @@ const ExternalPath = preload("res://services/external_content_path.gd")
 const MdecIdentity = preload("res://services/mdec_model_identity.gd")
 const SCHEMA_V1 := "tokimemo.translated-image-pack.v1"
 const SCHEMA_V2 := "tokimemo.translated-image-pack.v2"
-const KINDS := ["frame", "page", "bs"]
+const KINDS := ["frame", "page", "bs", "frame_part"]
 const MAX_MANIFEST := 4 * 1024 * 1024
 const MAX_IMAGE := 16 * 1024 * 1024
 const MAX_ASSETS := 4096
 const MAX_REGIONS := 64
 const MAX_DECODED_BYTES := 256 * 1024 * 1024
+const MAX_FRAME_PARTS := 64
 var error: String = ""
 var language: String = ""
 var schema: String = ""
 var _images: Dictionary = {}
 var _pages: Dictionary = {}
 var _stills: Dictionary = {}
+var _parts: Dictionary = {}
 
 func clear() -> void:
 	_images.clear()
+	_parts.clear()
 	_pages.clear()
 	_stills.clear()
 	language = ""
@@ -70,6 +78,18 @@ static func _index(value: Variant) -> bool:
 
 static func _key(container_sha: String, frame: int, palette: String, png_sha: String) -> String:
 	return container_sha + "|" + str(frame) + "|" + palette + "|" + png_sha
+
+static func _part_key(container_sha: String, frame: int, palette: String, part_index: int, png_sha: String) -> String:
+	return container_sha + "|part|" + str(frame) + "|" + palette + "|" + str(part_index) + "|" + png_sha
+
+static func _part_shas(value: Variant) -> Array:
+	# Every part PNG sha of one frame, in part order; an invalid list returns [].
+	if not value is Array or value.size() < 2 or value.size() > MAX_FRAME_PARTS:
+		return []
+	for sha: Variant in value:
+		if not _hash(sha):
+			return []
+	return value.duplicate()
 
 static func _page_key(container_sha: String, page: int, png_sha: String) -> String:
 	return container_sha + "|page|" + str(page) + "|" + png_sha
@@ -146,6 +166,7 @@ func open_pack(manifest_path: String, expected_sha256: String, allow_drafts: boo
 	var frames: Dictionary = {}
 	var pages: Dictionary = {}
 	var stills: Dictionary = {}
+	var parts: Dictionary = {}
 	var decoded_bytes := 0
 	for row: Variant in parsed["assets"]:
 		if not row is Dictionary:
@@ -164,12 +185,18 @@ func open_pack(manifest_path: String, expected_sha256: String, allow_drafts: boo
 		var height := int(size[1])
 		var key := ""
 		var regions: Array = []
-		if kind == "frame":
+		var frame_shas: Array = []
+		if kind == "frame" or kind == "frame_part":
 			if not _hash(row.get("source_png_sha256")) or not _index(row.get("frame")):
 				return _fail("invalid translation source identity")
 			if not row.get("palette") is String or row["palette"].is_empty() or row["palette"].contains("|"):
 				return _fail("invalid translation mapping or output path")
 			key = _key(row["source_container_sha256"], int(row["frame"]), row["palette"], row["source_png_sha256"])
+			if kind == "frame_part":
+				frame_shas = _part_shas(row.get("frame_parts_sha256"))
+				if frame_shas.is_empty() or not _index(row.get("part_index")) or int(row["part_index"]) >= frame_shas.size() or frame_shas[int(row["part_index"])] != row["source_png_sha256"]:
+					return _fail("invalid frame part identity")
+				key = _part_key(row["source_container_sha256"], int(row["frame"]), row["palette"], int(row["part_index"]), row["source_png_sha256"])
 		elif kind == "page":
 			if not _hash(row.get("source_png_sha256")) or not _index(row.get("page")) or not _hash(row.get("source_rgba_sha256")):
 				return _fail("invalid page source identity")
@@ -195,10 +222,13 @@ func open_pack(manifest_path: String, expected_sha256: String, allow_drafts: boo
 		var image := Image.new()
 		if image.load_png_from_buffer(FileAccess.get_file_as_bytes(path)) != OK or image.get_width() != width or image.get_height() != height:
 			return _fail("translation PNG dimensions/format differ")
-		if frames.has(key) or pages.has(key) or stills.has(key):
+		if frames.has(key) or pages.has(key) or stills.has(key) or parts.has(key):
 			return _fail("duplicate translation source mapping")
 		if kind == "frame":
 			frames[key] = image
+			continue
+		if kind == "frame_part":
+			parts[key] = {"image": image, "frame_parts_sha256": frame_shas}
 			continue
 		image = _rgba(image)
 		if image == null or not _binary_alpha(image, kind == "bs"):
@@ -208,6 +238,7 @@ func open_pack(manifest_path: String, expected_sha256: String, allow_drafts: boo
 		else:
 			stills[key] = {"image": image, "regions": regions, "source_rgba_sha256": row["source_rgba_sha256"]}
 	_images = frames
+	_parts = parts
 	_pages = pages
 	_stills = stills
 	language = "en"
@@ -217,6 +248,17 @@ func open_pack(manifest_path: String, expected_sha256: String, allow_drafts: boo
 func replacement(container_sha: String, frame: int, palette: String, source_png_sha: String) -> Image:
 	var value: Image = _images.get(_key(container_sha, frame, palette, source_png_sha))
 	return value.duplicate() if value != null else null
+
+## One part of a multi-part frame. `frame_part_shas` is the caller's PNG sha of
+## every part of that frame in part order; the row binds only when it equals the
+## row's list exactly. Null keeps the original part.
+func part_replacement(container_sha: String, frame: int, palette: String, part_index: int, frame_part_shas: Array) -> Image:
+	if part_index < 0 or part_index >= frame_part_shas.size():
+		return null
+	var record: Variant = _parts.get(_part_key(container_sha, frame, palette, part_index, str(frame_part_shas[part_index])))
+	if record == null or record["frame_parts_sha256"] != frame_part_shas:
+		return null
+	return record["image"].duplicate()
 
 static func _mask_set(mask: Image, x: int, y: int) -> bool:
 	var color := mask.get_pixel(x, y)
@@ -283,7 +325,7 @@ func bs_replacement(container_sha: String, bs_index: int, decoder_identity_sha: 
 	return _compose(record, source, null)
 
 func asset_count() -> int:
-	return _images.size() + _pages.size() + _stills.size()
+	return _images.size() + _pages.size() + _stills.size() + _parts.size()
 
 func kind_counts() -> Dictionary:
-	return {"frame": _images.size(), "page": _pages.size(), "bs": _stills.size()}
+	return {"frame": _images.size(), "page": _pages.size(), "bs": _stills.size(), "frame_part": _parts.size()}

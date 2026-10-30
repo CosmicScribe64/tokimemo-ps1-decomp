@@ -7,6 +7,8 @@ tools/port/build_english_bundle.py) is built from the committed translations/en
 into `<output>/language/en`, where the settings language bundle service looks
 for it (LanguageBundleService.BUNDLE_RELATIVE); `--english-output` puts it in
 another new directory below .asset-cache/port and `--no-english` skips it.
+The bundle carries the draft image pack too (`--with-drafts`); the runtime
+opens it only when the player enables draft English artwork.
 Exit codes: 0 complete, 3 partial installed coverage, 4 installed content
 complete but the English bundle failed, 2 setup failure.
 """
@@ -72,7 +74,7 @@ def main():
     english_failed = False
     if english is not None:
         built = subprocess.run([sys.executable, 'tools/port/build_english_bundle.py', '--files', str(disc / 'files'),
-                                '--installed', str(output), '--output', str(english)], cwd=ROOT)
+                                '--installed', str(output), '--with-drafts', '--output', str(english)], cwd=ROOT)
         english_failed = built.returncode != 0
         if english_failed:
             print('English bundle was not built; Japanese content is unaffected.', file=sys.stderr)

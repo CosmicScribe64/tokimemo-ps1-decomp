@@ -46,3 +46,15 @@ python3 tools/translation_draft_pack.py --source .asset-cache/translation-assets
 ```
 
 The review is hash-bound: changed source images, glyphs or output images require a new review. The pack remains development-only and cannot impersonate human approval. Actual observer runs select it explicitly with `TOKIMEMO_TEST_TRANSLATED_IMAGES` pointing to its absolute `manifest.json`; ordinary runtime language selection continues to reject unapproved drafts. Source-font generation never scales occupied glyph pixels, and leaves borders, palettes and unrelated pixels unchanged.
+
+## Date panel (style chosen 2026-10-30)
+
+The user chose the date panel style: "95 YR / 4 MO / 4 DAY" (frame 60, captions) with two-letter weekdays (Mo Tu We Th Fr Sa Su, frames 82-88). `checkpoints/T39004-date-panel-v1` holds those drafts: frame 60 in all six palette variants, as 18 part PNGs (three per variant), and 35 weekday PNGs. The ledger records the decision. It covers the style only, so every asset keeps `human_approved: false`. The month-name form and the three-letter weekdays were not published. Older weekday drafts from pass2 and pass3 are listed under `supersedes`.
+
+The captions change three of frame 60's 13 parts: the 16x16 kanji cells 3, 4 and 5 (年 月 日 become YR MO DAY). Only those parts are committed, one PNG per variant and part, each holding the caption texels only with the kanji cleared. The 40x139 composite and the ten unedited parts (border, brackets, weekday cell) are original art and are not committed. The base-palette part rows also record `source_part_sha256` and `frame_parts_sha256`, the installed HUD hashes they bind to. The English bundle's draft pack (`build_english_bundle.py --with-drafts`, which setup_content.py now passes) turns each base part into a `frame_part` row. Each row carries the hash of every part in the frame, and the other ten parts stay original. The draft pack also replaces the twelve approved three-letter weekdays where the ledger names their output hash. The approved pack keeps them. To rebuild the checkpoint from the local drafts, run this in the Pillow tooling image:
+
+```sh
+python3 tools/translation_date_panel_checkpoint.py --frame60 <mainrom port-made draft dir> --weekdays <translation_weekday_drafts.py output> --hud-manifest <installed>/packs/hud_manifest/manifest.json --original-mainrom <original MAINROM frame export> --output <new dir>
+```
+
+To see the whole frame-60 composite, rebuild it locally from the installed HUD with `--hud-manifest <installed>/packs/hud_manifest/manifest.json --preview <new png>`.

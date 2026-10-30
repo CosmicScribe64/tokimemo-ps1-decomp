@@ -50,7 +50,9 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual((by_status['english-reviewed'], by_status['unmapped']), (56, 3))
         ledger_ids = {(e['ledger'], e['id'], e['revision']) for e in subject.load_ledgers()}
         inv_ids = {(c['ledger'], c['id'], c['revision']) for c in self.built['candidate_records']}
-        self.assertEqual(ledger_ids, inv_ids)
+        superseded = {(c['ledger'], c['id'], c['revision']) for c in self.built['superseded_records']}
+        self.assertFalse(inv_ids & superseded)
+        self.assertEqual(ledger_ids, inv_ids | superseded)
         referenced = {c['id'] + '@' + c['revision'] for i in self.built['artwork_items'] for c in i['english']['candidates']}
         self.assertEqual(referenced, {c['id'] + '@' + c['revision'] for c in self.built['candidate_records']})
 
@@ -70,7 +72,8 @@ class InventoryTests(unittest.TestCase):
     def test_unmapped_assets_record_resolution_and_do_not_transfer_approval(self):
         unmapped = [h for h in self.built['historical_assets'] if h['status'] == 'unmapped']
         self.assertEqual(len(unmapped), 3)
-        candidates = {c['id'] for c in self.built['candidate_records']}
+        # A rebind may since be superseded by a newer draft; it stays listed there.
+        candidates = {c['id'] for c in self.built['candidate_records'] + self.built['superseded_records']}
         for asset in unmapped:
             self.assertIn(asset['resolution']['rebind_candidate'], candidates)
             self.assertIn('approval', asset['resolution']['why_not_exact'])
@@ -96,10 +99,11 @@ class PinnedCountTests(unittest.TestCase):
         summary = subject.build()['summary']
         self.assertEqual(summary['artwork_items']['total'], 271)
         self.assertEqual(summary['artwork_items']['by_status'], {
-            'english-reviewed': 44, 'candidate-only': 173, 'missing': 25, 'unmapped': 0, 'deliberately-untranslated': 29})
+            'english-reviewed': 44, 'candidate-only': 174, 'missing': 24, 'unmapped': 0, 'deliberately-untranslated': 29})
         self.assertEqual(summary['historical_assets']['by_status']['english-reviewed'], 56)
         self.assertEqual(summary['historical_assets']['by_status']['unmapped'], 3)
-        self.assertEqual(summary['candidate_records'], {'total': 299, 'distinct_assets': 290, 'agent_reviewed_revisions': 9, 'human_approved': 0})
+        self.assertEqual(summary['candidate_records'], {'total': 329, 'distinct_assets': 320, 'agent_reviewed_revisions': 9, 'human_approved': 0})
+        self.assertEqual(summary['superseded_records'], 23)
         self.assertEqual(summary['text_records']['total'], 55911)
         self.assertEqual(summary['text_records']['by_class'], {
             'english-approved': 55094, 'deliberately-untranslated': 817})
@@ -164,6 +168,59 @@ class PinnedCountTests(unittest.TestCase):
                          {'all-c-banner.source-page-%d' % n for n in (3, 4, 5)})
         with self.assertRaisesRegex(ValueError, 'disagrees with its frame or palette'):
             subject.candidate_key({'id': 'mainrom-draft-0057.base', 'frame': 58, 'palette_id': 'base'})
+
+    def test_date_panel_style_drafts_replace_older_weekday_drafts(self):
+        built = subject.build()
+        items = {i['id']: i for i in built['artwork_items']}
+        date_panel = next(p for p in subject.LEDGERS if 'date-panel' in str(p))
+        ledger = json.loads(date_panel.read_text())
+        self.assertIn('style only', ledger['style_decision']['scope'])
+        self.assertTrue(all(a['human_approved'] is False and a['status'] == 'draft' and a['port_made'] for a in ledger['assets']))
+        frame60 = items['mainrom-0060']
+        self.assertEqual(frame60['status'], 'candidate-only')
+        self.assertEqual(set(frame60['variant_status'].values()), {'candidate-only'})
+        self.assertTrue(all(c['id'].startswith('mainrom-alt-0060-captions-part') for c in frame60['english']['candidates']))
+        self.assertEqual(len(frame60['english']['candidates']), 18)
+        for frame in range(82, 89):
+            candidates = items['mainrom-%04d' % frame]['english']['candidates']
+            self.assertEqual({c['revision'] for c in candidates}, {'date-panel-drafts-v1'}, frame)
+            self.assertEqual(len(candidates), 5, frame)
+        superseded = built['superseded_records']
+        self.assertEqual({s['superseded_by'] for s in superseded}, {str(date_panel.relative_to(subject.ROOT))})
+        self.assertTrue(all(s['atom'] in ['mainrom-%04d' % n for n in range(82, 89)] for s in superseded))
+        # The month-name form of frame 60 was dropped, never published.
+        self.assertFalse([c for c in built['candidate_records'] if c['id'].startswith('mainrom-draft-0060')])
+
+    def test_superseded_reference_must_match_its_candidate(self):
+        source = next(p for p in subject.LEDGERS if 'date-panel' in str(p))
+        for change in ('output', 'unknown'):
+            with tempfile.TemporaryDirectory() as directory:
+                ledger = json.loads(source.read_text())
+                if change == 'output':
+                    ledger['supersedes'][0]['output_sha256'] = '0' * 64
+                else:
+                    ledger['supersedes'][0]['id'] = 'mainrom-draft-0082.nothing'
+                target = Path(directory) / 'ledger.json'
+                target.write_text(json.dumps(ledger))
+                entries = subject.load_ledgers(subject.LEDGERS[:-1])
+                with self.assertRaisesRegex(ValueError, 'superseded reference'):
+                    subject.split_superseded(entries, subject.LEDGERS[:-1] + [target])
+
+    def test_weekday_and_alternate_ids_check_frame_and_palette(self):
+        self.assertEqual(subject.candidate_key({'id': 'mainrom-weekday-two-letter-sun.hud-44', 'frame': 88, 'palette_id': 'hud-44'}),
+                         ('mainrom-0088', 'MAINROM', 88, 'hud-44'))
+        self.assertEqual(subject.candidate_key({'id': 'mainrom-alt-0060-captions.base', 'frame': 60, 'palette_id': 'base'})[0],
+                         'mainrom-0060')
+        self.assertEqual(subject.candidate_key({'id': 'mainrom-alt-0060-captions-part03.hud-43', 'frame': 60, 'palette_id': 'hud-43'}),
+                         ('mainrom-0060', 'MAINROM', 60, 'hud-43'))
+        for wrong in ({'id': 'mainrom-alt-0060-captions-part03.base', 'frame': 61, 'palette_id': 'base'},
+                      {'id': 'mainrom-alt-0060-captions-part3.base', 'frame': 60, 'palette_id': 'base'}):
+            with self.assertRaises(ValueError):
+                subject.candidate_key(wrong)
+        for wrong in ({'id': 'mainrom-weekday-two-letter-sun.base', 'frame': 82, 'palette_id': 'base'},
+                      {'id': 'mainrom-alt-0060-captions.base', 'frame': 60, 'palette_id': 'hud-43'}):
+            with self.assertRaisesRegex(ValueError, 'disagrees with its frame or palette'):
+                subject.candidate_key(wrong)
 
     def _bs_ledger(self, directory, change):
         source = next(p for p in subject.LEDGERS if 'bs-v1' in str(p))

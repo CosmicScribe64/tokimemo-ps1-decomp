@@ -15,11 +15,13 @@ import struct
 
 ROOT = Path(__file__).resolve().parents[1]
 PACK_V1 = 'tokimemo.translated-image-pack.v1'
-# v2 adds a `kind` per row: frame (the v1 row), page and bs. The runtime reader
-# is port/godot/services/translated_image_store.gd.
+# v2 adds a `kind` per row: frame (the v1 row), page, bs and frame_part (one
+# part of a multi-part HUD frame). The runtime reader is
+# port/godot/services/translated_image_store.gd.
 PACK_V2 = 'tokimemo.translated-image-pack.v2'
-KINDS = ('frame', 'page', 'bs')
+KINDS = ('frame', 'page', 'bs', 'frame_part')
 MAX_REGIONS = 64
+MAX_FRAME_PARTS = 64
 # Pinned MDEC model identity; must equal port/godot/services/mdec_model_identity.gd.
 MDEC_MODEL_ID = 'tokimemo-mdec-fixed-point-v1'
 MDEC_IMPLEMENTATIONS = {'image_mdec.py': '6513b1e6434bdd1c65c804e5d637ae3db1f4fa11f69dd80b495cf05a2f8828ec',
@@ -167,6 +169,8 @@ def v2_identity(row):
         return (kind, row['source_container_sha256'], row['frame'], row['palette'], row['source_png_sha256'])
     if kind == 'page':
         return (kind, row['source_container_sha256'], row['page'], row['source_png_sha256'])
+    if kind == 'frame_part':
+        return (kind, row['source_container_sha256'], row['frame'], row['palette'], row['part_index'], row['source_png_sha256'])
     return (kind, row['source_container_sha256'], row['bs_index'], row['decoder_identity_sha256'], row['source_rgba_sha256'])
 
 
@@ -184,16 +188,25 @@ def check_v2_row(row):
     size = row.get('dimensions')
     if not isinstance(size, list) or len(size) != 2 or not all(isinstance(v, int) and not isinstance(v, bool) and 1 <= v <= 4096 for v in size):
         raise ValueError('invalid replacement dimensions')
-    if kind == 'frame':
+    if 'supersedes_output_sha256' in row and (kind != 'frame' or not _hash(row['supersedes_output_sha256'])):
+        raise ValueError('invalid superseded output identity')
+    if kind in ('frame', 'frame_part'):
         if not _hash(row.get('source_png_sha256')) or not _index(row.get('frame')) or not isinstance(row.get('palette'), str) or not row['palette'] or '|' in row['palette']:
             raise ValueError('invalid frame source identity')
+    if kind == 'frame_part':
+        # The row binds only to the exact frame: every part PNG hash, in part order.
+        shas = row.get('frame_parts_sha256')
+        if not isinstance(shas, list) or not 1 < len(shas) <= MAX_FRAME_PARTS or not all(_hash(v) for v in shas) \
+                or not _index(row.get('part_index')) or row['part_index'] >= len(shas) \
+                or shas[row['part_index']] != row['source_png_sha256']:
+            raise ValueError('invalid frame part identity')
     elif kind == 'page':
         # source_rgba_sha256 binds the row to the source page pixels; the
         # runtime refuses a source image whose RGBA8 bytes hash differently.
         if not _hash(row.get('source_png_sha256')) or not _index(row.get('page')) or not _hash(row.get('source_rgba_sha256')):
             raise ValueError('invalid page source identity')
         check_regions(row.get('regions'), size)
-    else:
+    elif kind == 'bs':
         if not _index(row.get('bs_index')) or not _hash(row.get('decoder_identity_sha256')) or not _hash(row.get('source_rgba_sha256')):
             raise ValueError('invalid bs source identity')
         check_regions(row.get('regions'), size)

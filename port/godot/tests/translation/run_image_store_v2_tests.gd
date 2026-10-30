@@ -1,6 +1,7 @@
 extends SceneTree
 ## Phase 4 WP-B: translated image pack v2 record kinds (page, bs) with v1
-## back-compat. Synthetic images only; no original content is read.
+## back-compat. Synthetic images only; no original content is read. The
+## frame_part kind has its own suite (run_frame_part_tests.gd).
 ## Optional: TRANSLATION_IMAGE_V2_MANIFEST/_SHA256 (+ _ALLOW_DRAFTS=1) opens a
 ## pack emitted by tools/translation_draft_pack.py and checks each row resolves.
 const Store = preload("res://services/translated_image_store.gd")
@@ -83,7 +84,7 @@ func _initialize() -> void:
 	# v2 with all three kinds.
 	var store := Store.new()
 	check(_open(store, "v2.json", _pack(Store.SCHEMA_V2, [frame_row, page_row, still_row])), "v2 pack opens: " + store.error)
-	check(store.schema == Store.SCHEMA_V2 and store.kind_counts() == {"frame": 1, "page": 1, "bs": 1}, "v2 counts each kind")
+	check(store.schema == Store.SCHEMA_V2 and store.kind_counts() == {"frame": 1, "page": 1, "bs": 1, "frame_part": 0}, "v2 counts each kind")
 	check(store.replacement(CONTAINER, 3, "base", "3".repeat(64)) != null, "v2 frame resolves")
 	check(store.replacement(CONTAINER, 3, "base", "0".repeat(64)) == null, "v2 frame mismatch falls back")
 
@@ -214,6 +215,9 @@ func _check_emitted_pack() -> void:
 		var kind: String = row.get("kind", "frame")
 		if kind == "frame":
 			check(store.replacement(row["source_container_sha256"], int(row["frame"]), row["palette"], row["source_png_sha256"]) != null, "emitted frame resolves")
+			continue
+		if kind == "frame_part":
+			check(store.part_replacement(row["source_container_sha256"], int(row["frame"]), row["palette"], int(row["part_index"]), row["frame_parts_sha256"]) != null, "emitted frame part resolves")
 			continue
 		if sources.is_empty() or not row.has("source_png"):
 			continue

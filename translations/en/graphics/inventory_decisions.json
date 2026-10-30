@@ -366,10 +366,13 @@
   },
   "mainrom-0060": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "the month-name form (\"95 / Apr / 4\") is not published",
+    "integrate part-wise only: the captions change frame-60 parts 3, 4 and 5; the other ten parts stay the original (kind frame_part rows, never a MAINROM sheet patch: parts 4 and 5 share texels with weekday frames 82 and 88)"
    ],
-   "reason": "date suffix panel 年/月/日/(): English date order and suffix form are an open translation/layout decision; 13-part panel overlaps kanji cells. Not drafted.",
-   "status": "missing"
+   "reason": "captions draft \"95 YR / 4 MO / 4 DAY\" in every palette variant; port-made caps5 lettering; unreviewed, human_approved false",
+   "status": "candidate-only"
   },
   "mainrom-0061": {
    "notes": [
@@ -381,53 +384,67 @@
   },
   "mainrom-0082": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval",
+    "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack",
     "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: edited texels are also drawn, unedited, by frames [60]"
    ],
-   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
    "status": "candidate-only"
   },
   "mainrom-0083": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack"
    ],
-   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
    "status": "candidate-only"
   },
   "mainrom-0084": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack"
    ],
-   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
    "status": "candidate-only"
   },
   "mainrom-0085": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack"
    ],
-   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
    "status": "candidate-only"
   },
   "mainrom-0086": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack"
    ],
-   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
    "status": "candidate-only"
   },
   "mainrom-0087": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack"
    ],
-   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
    "status": "candidate-only"
   },
   "mainrom-0088": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval",
+    "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack",
     "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: edited texels are also drawn, unedited, by frames [60]"
    ],
-   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
    "status": "candidate-only"
   },
   "mainrom-0118": {
@@ -939,6 +956,13 @@
   }
  ],
  "runtime": {
+  "date_panel_drafts": {
+   "atoms": [
+    "mainrom-0060"
+   ],
+   "note": "Captions parts 3-5 bind through the development draft pack (kind frame_part) to the production CommandHudPresenter; agent render check, no actual-game visual acceptance.",
+   "state": "presenter-hook-tested"
+  },
   "name_observed": {
    "atoms": [
     "name_ent-0000",
@@ -964,7 +988,7 @@
     "mainrom-0087",
     "mainrom-0088"
    ],
-   "note": "Twelve approved weekday variants replace native HUD images in the isolated presenter hook (loader/presenter tests); no actual-game visual acceptance.",
+   "note": "Twelve approved weekday variants replace native HUD images in the reviewed pack; with draft art enabled the two-letter drafts (set A) replace all 21 drawn variants (loader/presenter tests); no actual-game visual acceptance.",
    "state": "presenter-hook-tested"
   }
  },

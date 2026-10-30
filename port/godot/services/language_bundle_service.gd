@@ -169,7 +169,7 @@ static func open_english(path: String, allow_drafts: bool) -> Dictionary:
 static func _image_identity(row: Variant) -> String:
 	if not row is Dictionary: return ""
 	var parts: Array = []
-	for key: String in ["kind", "source_container_sha256", "frame", "palette", "page", "bs_index", "decoder_identity_sha256", "source_png_sha256", "source_rgba_sha256", "output_sha256"]:
+	for key: String in ["kind", "source_container_sha256", "frame", "palette", "part_index", "page", "bs_index", "decoder_identity_sha256", "source_png_sha256", "source_rgba_sha256", "output_sha256"]:
 		var value: Variant = row.get(key, "frame" if key == "kind" else null)
 		parts.append(str(int(value)) if (value is float or value is int) else str(value))
 	return "|".join(parts)
@@ -180,13 +180,20 @@ static func _image_rows(member: Dictionary) -> Variant:
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(member.path))
 	return parsed.assets if parsed is Dictionary and parsed.get("assets") is Array else null
 
-## "" when every reviewed asset is also in the draft pack, else the reason.
+## "" when every reviewed asset is also in the draft pack, else the reason. A
+## draft frame row that names a reviewed output in `supersedes_output_sha256`
+## (same source identity) stands in for that reviewed asset (T-39004 date panel).
 static func _missing_reviewed(reviewed: Dictionary, draft: Dictionary) -> String:
 	var approved: Variant = _image_rows(reviewed)
 	var drafts: Variant = _image_rows(draft)
 	if approved == null or drafts == null: return "an image manifest changed after opening"
 	var present := {}
-	for row: Variant in drafts: present[_image_identity(row)] = true
+	for row: Variant in drafts:
+		present[_image_identity(row)] = true
+		if row is Dictionary and row.get("kind", "frame") == "frame" and row.get("supersedes_output_sha256") is String:
+			var replaced: Dictionary = row.duplicate()
+			replaced["output_sha256"] = row["supersedes_output_sha256"]
+			present[_image_identity(replaced)] = true
 	var missing := 0
 	for row: Variant in approved:
 		if not present.has(_image_identity(row)): missing += 1

@@ -260,6 +260,75 @@ class EnglishBundleTests(unittest.TestCase):
         self.assertEqual(code, 1)  # synthetic executable is not the verified release
         self.assertFalse((self.root / 'cli').exists())
 
+    def test_hud_checkpoints_need_the_installed_hud(self):
+        result = self.build('nohud', with_drafts=True)
+        coverage = result['members']['draft_images']['coverage']
+        self.assertEqual(coverage['hud_checkpoints_omitted'], 'installed HUD manifest is unavailable')
+        self.assertEqual((coverage['hud_checkpoint_rows'], coverage['superseded_reviewed_images']), (0, 0))
+
+    def _hud_checkpoint(self, supersedes=True, superseded_sha=None):
+        """Replace the committed HUD checkpoint by a synthetic one bound to a synthetic installed HUD.
+
+        Its frame-60 draft edits part 0; its weekday draft has the source of an
+        approved snapshot image (frame 82 hud-44) and supersedes it when asked.
+        """
+        import test_translation_draft_pack as synthetic
+        artwork = self.translations / 'graphics/artwork'
+        shutil.rmtree(artwork / 'checkpoints/T39004-date-panel-v1')
+        approved = next(row for row in assets.audit(artwork)['assets']
+                        if row['mapping_complete'] and row['style'] == 'approve' and row['frame'] == 82 and row['palette'] == 'hud-44')
+        work = self.root / 'synthetic'
+        hud, original = synthetic.synthetic_hud(work, weekday_sha=approved['source_png_sha256'])
+        manifest = json.loads(hud.read_text())
+        manifest['provenance']['inputs']['mainrom']['sha256'] = approved['source_container_sha256']
+        manifest['frames']['82:hud-44'] = manifest['frames'].pop('82:base')
+        hud.write_text(json.dumps(manifest))
+        draft = original.copy()
+        draft.putpixel((2, 3), synthetic.INK)
+        record = manifest['frames']['60:base']
+        shas = [part['png']['sha256'] for part in record['parts']]
+        checkpoint = synthetic.synthetic_checkpoint(work, hud, draft, [0], shas)
+        ledger = json.loads((checkpoint / 'ledger.json').read_text())
+        for row in ledger['assets']:
+            row['source_container_sha256'] = approved['source_container_sha256']
+        weekday = ledger['assets'][1]
+        weekday.update({'id': 'mainrom-weekday-two-letter-mon.hud-44', 'palette_id': 'hud-44', 'palette_ids': ['hud-44'],
+                        'source_png_sha256': approved['source_png_sha256']})
+        if supersedes:
+            weekday['supersedes_output_sha256'] = {'hud-44': superseded_sha or approved['output_sha256']}
+        (checkpoint / 'ledger.json').write_text(json.dumps(ledger))
+        shutil.copytree(checkpoint, artwork / 'checkpoints/T39004-synthetic-hud')
+        (self.installed / 'packs/hud_manifest').mkdir(parents=True)
+        shutil.copytree(hud.parent / 'assets', self.installed / 'packs/hud_manifest/assets')
+        shutil.copyfile(hud, self.installed / 'packs/hud_manifest/manifest.json')
+        return approved
+
+    def test_hud_checkpoint_parts_and_superseded_reviewed_image(self):
+        approved = self._hud_checkpoint()
+        result = self.build('hud', with_drafts=True)
+        member = result['members']['draft_images']
+        self.assertEqual(member['schema'], assets.PACK_V2)
+        self.assertEqual((member['coverage']['hud_checkpoint_rows'], member['coverage']['superseded_reviewed_images']), (2, 1))
+        self.assertNotIn('hud_checkpoints_omitted', member['coverage'])
+        drafts = json.loads((self.root / 'hud' / member['path']).read_text())
+        part = next(row for row in drafts['assets'] if row.get('kind') == 'frame_part')
+        self.assertEqual((part['frame'], part['palette'], part['part_index']), (60, 'base', 0))
+        self.assertTrue((self.root / 'hud/draft_images' / part['output']).is_file())
+        outputs = [row['output_sha256'] for row in drafts['assets']]
+        self.assertNotIn(approved['output_sha256'], outputs)
+        weekday = next(row for row in drafts['assets'] if row['id'] == 'mainrom-weekday-two-letter-mon.hud-44')
+        self.assertEqual(weekday['supersedes_output_sha256'], approved['output_sha256'])
+        reviewed = json.loads((self.root / 'hud' / result['members']['images']['path']).read_text())
+        self.assertIn(approved['output_sha256'], [row['output_sha256'] for row in reviewed['assets']])
+
+    def test_hud_checkpoint_collision_without_matching_supersede_fails(self):
+        self._hud_checkpoint(supersedes=False)
+        self.assertFailsCleanly('collide', 'does not supersede', with_drafts=True)
+
+    def test_hud_checkpoint_superseding_another_output_fails(self):
+        self._hud_checkpoint(superseded_sha='0' * 64)
+        self.assertFailsCleanly('stale', 'superseded snapshot image differs', with_drafts=True)
+
     def _page_draft_source(self):
         source = self.root / 'page-drafts'
         source.mkdir()
