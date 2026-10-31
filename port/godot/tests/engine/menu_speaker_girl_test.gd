@@ -30,6 +30,8 @@ func run() -> Array[String]:
 	_test_choice_menus()
 	_test_girl_queries()
 	_test_text()
+	_test_voice()
+	_test_refusals_and_layout()
 	for engine in _made:
 		engine.shutdown()
 	_made.clear()
@@ -265,3 +267,114 @@ func _test_text() -> void:
 	finished[0] = 1
 	engine.call_c("text_wait_confirm")
 	_check(engine.gs_get("substep") == 4, "finished text advances the substep")
+
+func _voice_engine():
+	var engine = _new()
+	var log: Array = []
+	for n: String in ["k_disp_inc", "get_now_k", "k_disp_goto_line_end", "hud_text_marker_set", "hud_text_marker_bob", "audio_command", "cd_audio_command", "cd_audio_request_set"]:
+		engine.set_stub(n, func(a: Array) -> int:
+			log.append([n, a.duplicate()])
+			return 1 if n == "k_disp_inc" else 0)
+	return [engine, log]
+
+func _test_voice() -> void:
+	# talk_voice_play, voice on
+	var pair = _voice_engine()
+	var engine = pair[0]
+	var log: Array = pair[1]
+	var m = engine.memory
+	engine.gs_set("voice_mode", 1)
+	engine.call_c("talk_voice_play", [0x80160000, 0x80161000, -1, 0x3])
+	_check(log == [["cd_audio_request_set", [0x80160000, 0x80161000, 3]], ["audio_command", [0x300]]] and m.read_global("speaker_voice_state") == 0 and m.read_global("speaker_voice_index") == -1, "clip -1: request (a, b, selector), audio_command(0x300), state PENDING: %s" % [log])
+	log.clear()
+	m.write_u32(0x80160000 + 8, 111)
+	m.write_u32(0x80160000 + 12, 222)
+	engine.call_c("talk_voice_play", [0x80160000, 0x80161000, 1, 0x3])
+	_check(log[0] == ["cd_audio_request_set", [111, 222, 3]] and m.read_global("speaker_voice_index") == 1, "clip 1: the request words come from source_a[clip * 2], [clip * 2 + 1]")
+	log.clear()
+	engine.call_c("talk_voice_play", [0x80160000, 0x80161000, 1, 0xF])
+	_check(log.is_empty() and m.read_global("speaker_voice_state") == 2, "selector & 15 == 15: no request, state DONE")
+	engine.gs_set("voice_mode", 0)
+	engine.call_c("talk_voice_play", [0x80160000, 0x80161000, -1, 0x3])
+	_check(log.is_empty() and m.read_global("speaker_voice_state") == 0, "voice off: no request, state still PENDING")
+	# talk_text_step with voice on
+	var p2 = _voice_engine()
+	var e = p2[0]
+	var l: Array = p2[1]
+	var mm = e.memory
+	var cd_state: Array = [0]
+	e.set_stub("cd_audio_state", func(_a: Array) -> int: return cd_state[0])
+	var request: int = 0x80150000
+	e.set_stub("cd_audio_request_get", func(_a: Array) -> int: return request)
+	e.gs_set("voice_mode", 1)
+	e.gs_set("text_scroll_state", 0)
+	mm.write_global("speaker_voice_state", 0) # PENDING
+	e.call_c("talk_text_step")
+	_check(not l.any(func(x: Array) -> bool: return x[0] == "k_disp_inc"), "voice 1 and PENDING: the typewriter does not advance")
+	cd_state[0] = 4
+	e.call_c("talk_text_step")
+	_check(mm.read_global("speaker_voice_state") == 1, "PENDING + playback flag (bit 2) -> PLAYING")
+	# PLAYING, finished (bit 1), a second part exists and matches the request: chain it
+	var src_a: int = 0x80160000
+	var src_b: int = 0x80161000
+	mm.write_global("speaker_voice_source_a", src_a)
+	mm.write_global("speaker_voice_source_b", src_b)
+	mm.write_global("speaker_voice_index", 1)
+	mm.write_u32(src_a + 8, 500)
+	mm.write_u32(src_b + 8, 600)
+	mm.write_u32(src_b + 12, 700)
+	mm.write_u32(request + 8, 500)
+	e.gs_set("current_girl", 4)
+	cd_state[0] = 2
+	l.clear()
+	e.call_c("talk_text_step")
+	_check(l.any(func(x: Array) -> bool: return x[0] == "cd_audio_request_set" and x[1] == [600, 700, 4]) and l.any(func(x: Array) -> bool: return x[0] == "audio_command" and x[1] == [0x300]) and mm.read_global("speaker_voice_state") == 0, "PLAYING + finished, a differs from b and a == request[2]: request b, audio_command(0x300), PENDING again")
+	mm.write_global("speaker_voice_state", 1)
+	mm.write_u32(request + 8, 999)
+	e.call_c("talk_text_step")
+	_check(mm.read_global("speaker_voice_state") == 2, "PLAYING + finished, request no longer a: DONE")
+	mm.write_global("speaker_voice_state", 1)
+	mm.write_global("speaker_voice_index", -1)
+	e.call_c("talk_text_step")
+	_check(mm.read_global("speaker_voice_state") == 2, "PLAYING + finished with no index: DONE")
+	# DONE and text complete: marker, then a confirm press advances
+	mm.write_global("speaker_voice_state", 2)
+	e.gs_set("substep", 5)
+	e.gs_set("pad_pressed", 0x20)
+	l.clear()
+	e.call_c("talk_text_step")
+	_check(e.gs_get("substep") == 6 and e.gs_get("text_scroll_state") == 0 and l.any(func(x: Array) -> bool: return x[0] == "hud_text_marker_set" and x[1] == [0]), "voice 1, DONE, text complete, confirm: marker off, substep + 1")
+	mm.write_global("speaker_voice_state", 0)
+	e.gs_set("substep", 5)
+	e.gs_set("voice_mode", 1)
+	e.call_c("talk_text_step") # PENDING: the typewriter is gated, text not complete -> confirm only jumps to the line end
+	_check(e.gs_get("substep") == 5, "voice 1, PENDING, confirm: substep unchanged")
+	# CROSS with voice 2 stops the voice
+	e.gs_set("voice_mode", 2)
+	mm.write_global("speaker_voice_state", 2)
+	e.gs_set("pad_pressed", 0x40)
+	l.clear()
+	e.call_c("talk_text_step")
+	_check(l.any(func(x: Array) -> bool: return x[0] == "audio_command" and x[1] == [0x74]) and l.any(func(x: Array) -> bool: return x[0] == "cd_audio_command" and x[1] == [9, 0, 0]) and mm.read_global("speaker_voice_state") == 2, "CROSS, text complete, voice 2: audio_command(0x74), cd_audio_command(9, 0, 0), state DONE")
+
+func _test_refusals_and_layout() -> void:
+	var engine = _new()
+	engine.call_c("x_taku_string_set", [1, 2, 3, 3])
+	_check(engine.refusal.contains("set_kanji_string"), "x_taku_string_set refuses at the unported set_kanji_string: %s" % engine.refusal)
+	var e2 = _new()
+	e2.call_c("sndi", [0x80150000, 0, 0xFF])
+	_check(e2.refusal.contains("set_kanji_string"), "sndi refuses at set_kanji_string: %s" % e2.refusal)
+	var e3 = _new()
+	e3.call_c("get_near_menu", [2, 1, 0])
+	_check(e3.refusal.contains("axis_distances is uninitialised"), "get_near_menu on an axis other than 0/1 refuses: %s" % e3.refusal)
+	var e4 = _new()
+	e4.call_c("menu_cursor_update", [0]) # menu_mode 0 calls the ported hud_cursor_update: no refusal
+	_check(not e4.halted(), "menu_cursor_update in mode 0 runs on ported code")
+	var e5 = _new()
+	e5.gs_set("menu_mode", 3)
+	e5.gs_set("pad_pressed", 0x1000)
+	e5.memory.write_u8(0x800E6280 + 0x1090, 2)
+	e5.call_c("menu_cursor_update", [0])
+	_check(e5.refusal.contains("abs") or not e5.halted(), "menu_mode 3 reaches get_near_menu (abs is an SDK call and refuses when needed)")
+	var c: Dictionary = engine.modules["menu_speaker_girl"].get_script().get_script_constant_map()
+	_check(c["MENU_ITEMS"] == engine.gs_address("menu_items") and c["MENU_COUNT"] == engine.gs_address("menu_count_0") and c["MENU_MODE"] == engine.gs_address("menu_mode") and c["MENU_CURSOR_0"] == engine.gs_address("menu_cursor_0") and c["MENU_HIT"] == engine.gs_address("menu_hit") and c["GAME_STATE"] == engine.gs_address("video_width"), "menu constants equal the layout")

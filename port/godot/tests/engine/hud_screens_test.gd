@@ -32,6 +32,7 @@ func run() -> Array[String]:
 	_test_club_menu()
 	_test_misc()
 	_test_magazine_and_light()
+	_test_refusals_and_layout()
 	for engine in _made:
 		engine.shutdown()
 	_made.clear()
@@ -63,7 +64,6 @@ func _test_appointments() -> void:
 		engine.memory.fill(a[0], a[1], 0)
 		return 0)
 	_set_entries(engine, [_entry(6, 20, 3, true), _entry(5, 9, 4, true), _entry(7, 1, 3, false), _entry(5, 2, 3, true)])
-	_check(engine.call_c("hud_appointment_find_today", [5, 9, 3]) == 0 or true, "placeholder")
 	_check(engine.call_c("hud_appointment_find_today", [0x60, 5, 9]) == 2, "find_today: month 5 day 9 is entry index 1 -> 2")
 	_check(engine.call_c("hud_appointment_find_today", [0x60, 8, 9]) == 0, "find_today: no match -> 0")
 	_check(engine.call_c("hud_appointment_find_today", [0x60, 0xC, 0x18]) == -1 and engine.call_c("hud_appointment_find_today", [0x60, 1, 1]) == -1 and engine.call_c("hud_appointment_find_today", [0x60, 0xD, 1]) == -1, "find_today: Christmas Eve and New Year's Day are -1")
@@ -192,7 +192,6 @@ func _test_command_roll() -> void:
 	_check(engine.call_c("hud_command_roll_poor_result", [0]) == 1, "three zero waves divide the score by four")
 	engine.set_stub("rand", func(_a: Array) -> int: return 0)
 	engine.memory.write_u32(engine.gs_address("last_command"), 7)
-	_check(engine.call_c("hud_command_roll_poor_result", [0]) == 0 or true, "command 7 runs")
 
 func _test_month_load() -> void:
 	var engine = _new()
@@ -382,3 +381,42 @@ func _test_magazine_and_light() -> void:
 	_check(m.s16(actor60 + 0x18) == 0x76 and m.u8(actor60 + 1) == 5 and m.s16(actor60 + 0x2A) == -0x28, "actor 0x60 is the page backdrop (frame 0x76)")
 	_check(kanji.size() >= 2 and kanji[0] == [-0x9E, -0x3C, 3, 0x800B5E0C, 0] and kanji[1] == [-0x9E, -0x2C, 3, 0x800B5E25, 0], "year 0x5F quarter 1 writes the two preview lines first")
 	_check(tail[tail.size() - 1] == ["sndisp", [0x80170000, 0, 0x1F]] and tail[tail.size() - 2][0] == "gnsx" and tail[tail.size() - 3] == ["k_sub_disp_start", [0]], "the page ends with k_sub_disp_start(0), gnsx(player name), sndisp(D_800B66A4[issue], 0, 0x1F)")
+
+func _test_refusals_and_layout() -> void:
+	# An unported callee is a refusal at its call, with nothing stored after it.
+	var engine = _new()
+	engine.call_c("hud_save_slot_info_show", [0, 0])
+	_check(engine.refusal.contains("k_sub_reset"), "hud_save_slot_info_show refuses at the unported k_sub_reset: %s" % engine.refusal)
+	var engine2 = _new()
+	engine2.call_c("hud_cursor_actor_init", [0])
+	_check(engine2.refusal.contains("actor_clear") and engine2.memory.u8(0x8011ECD0 + 1) == 0, "hud_cursor_actor_init refuses at actor_clear and writes nothing after it")
+	# magazine_issue_index is uninitialised in the C for unassigned year/month combinations: refusal by name.
+	var engine3 = _new()
+	for n: String in ["actor_clear_upper", "actor_clear", "set_kanji_string"]:
+		engine3.set_stub(n, func(_a: Array) -> int: return 0)
+	engine3.gs_set("year", 0x63)
+	engine3.gs_set("month", 3)
+	engine3.call_c("hud_magazine_page_build")
+	_check(engine3.refusal.contains("magazine_issue_index is uninitialised"), "year 0x63: %s" % engine3.refusal)
+	for combo: Array in [[0x62, 6], [0x62, 9], [0x62, 12], [0x5F, 1], [0x5F, 13]]:
+		var e = _new()
+		for n: String in ["actor_clear_upper", "actor_clear", "set_kanji_string"]:
+			e.set_stub(n, func(_a: Array) -> int: return 0)
+		e.gs_set("year", combo[0])
+		e.gs_set("month", combo[1])
+		e.call_c("hud_magazine_page_build")
+		_check(e.refusal.contains("uninitialised"), "year 0x%02X month %d leaves magazine_issue_index unset -> refusal" % combo)
+	# Division by zero is a refusal: rand() % (score + 4) with score = -4.
+	var e2 = _new()
+	e2.set_stub("hud_biorhythm_value", func(_a: Array) -> int: return -10)
+	e2.set_stub("rand", func(_a: Array) -> int: return 5)
+	e2.memory.write_u32(e2.gs_address("last_command"), 7) # command 7: score 16 + 6 + 4 > 0, so use command 0 with a very negative value
+	e2.memory.write_u32(e2.gs_address("last_command"), 0)
+	e2.memory.write_u16(e2.gs_address("param_liberal_arts") + 2, 0)
+	e2.call_c("hud_command_roll_poor_result", [0])
+	_check(e2.refusal.contains("modulo by zero"), "score + 4 == 0 is a refusal, never a result: %s" % e2.refusal)
+	# constants against the layout
+	var c: Dictionary = engine.modules["hud_screens"].get_script().get_script_constant_map()
+	var m = engine.memory
+	_check(c["ACTOR_POOL"] == m.global_address("actor_pool") and c["SPRITE_QUADS"] == m.global_address("sprite_quads") and c["SYSTEM_DATA"] == m.global_address("system_data") and c["BLOCK"] == m.global_address("memory_card_block"), "ACTOR_POOL / SPRITE_QUADS / SYSTEM_DATA / BLOCK equal the layout")
+	_check(c["GAME_STATE"] == engine.gs_address("video_width") and c["GAME_STATE"] + 0x56C == engine.gs_address("scene_flags") and c["GAME_STATE"] + 0x54C + 0x20 == c["GAME_STATE"] + 0x56C, "GAME_STATE base and the +0x54C appointment words (8 words end at scene_flags +0x56C)")

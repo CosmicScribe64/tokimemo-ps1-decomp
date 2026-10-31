@@ -3,6 +3,7 @@ extends RefCounted
 ## BIOS memory-card events, the card job pollers (check, scan, system/save read and write), the file jobs on
 ## "bu00:" and the system / game save images in the 0x2000-byte card block (memory_card_block), plus the two
 ## MDEC still-image helpers (bg_still_*) that share the original object.
+## Return values the C leaves undefined (ret_undefined) are 0: an unobserved placeholder, every caller discards them.
 ## Contract: wiki/engine-porting-contract.md. Tests: tests/engine/memory_card_test.gd (invented memory, from the
 ## C) and config/port/engine-diff/memory_card.json (emulator captures).
 ##
@@ -98,7 +99,7 @@ const BANK_SIZE: int = 0xF00
 const BLOCK_SIZE: int = 0x2000
 const SYSTEM_DATA: int = 0x800E7D10 # system_data
 const SLOT_STATUS: int = 0x800E7D14 # D_800E7D14 == system_data.slot_status
-const SYS_SAVE_SPIN_LIMIT: int = 0x4000 # bound of the polling spins (a hardware wait cannot be modelled)
+const SYS_SAVE_SPIN_LIMIT: int = 0x400 # guard of the polling spins: nothing in the model changes the polled card state, so a spin that sees no change would never end; real polls answer within a few passes (captures: at most 3)
 
 var engine # GameEngine; set when the engine registers the module
 

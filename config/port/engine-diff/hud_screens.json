@@ -22,13 +22,18 @@
    "exclude": [
     {
      "start": "0x800DD680",
-     "length": 64,
-     "reason": "libgpu queue state advanced by the GPU/DMA interrupt after the replayed LoadSquare calls returned (the callee's own effect is replayed; the interrupt-time changes are timing)"
+     "length": 20,
+     "reason": "libgpu queue state changed by the GPU/DMA interrupts that fire after the replayed LoadSquare calls returned; the port never writes there"
     },
     {
      "start": "0x800E3450",
-     "length": 432,
-     "reason": "libgpu queue state advanced by the GPU/DMA interrupt after the replayed LoadSquare calls returned (timing)"
+     "length": 148,
+     "reason": "SDK state of interrupt handlers (libetc callbacks) changed by the interrupts that fire while the function runs; the port never writes there"
+    },
+    {
+     "start": "0x800E35FC",
+     "length": 4,
+     "reason": "SDK state of interrupt handlers (libetc callback table) changed by the interrupts that fire while the function runs; the port never writes there"
     }
    ]
   }

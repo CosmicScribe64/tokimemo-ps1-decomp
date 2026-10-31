@@ -3,6 +3,9 @@ extends RefCounted
 ## Menu registration, hit tests and cursor movement (menu 0 and 1 share the interleaved MenuItem table at
 ## GameState +0xF90: item (i, menu) lives at menu_items + (i * 2 + menu) * 8), speaker labels and narration
 ## text, girl name / state / score queries and the talk-text and voice steps.
+## Return values the C leaves undefined (functions with ret_undefined or ret_defined) are 0, an unobserved placeholder
+## (every caller discards them), except where the asm makes the leftover v0 deterministic (menu_check_2,
+## girl_points_others; both verified against the captures).
 ## Contract: wiki/engine-porting-contract.md. Tests: tests/engine/menu_speaker_girl_test.gd and
 ## config/port/engine-diff/menu_speaker_girl.json.
 
@@ -21,9 +24,9 @@ const C_FUNCTIONS: Array[String] = [
 const C_UNPORTED: Array[String] = []
 const C_SIGNATURES: Dictionary = {
 	"menu_set": {"args": ["s32", "u8", "ptr", "ptr", "ptr", "ptr"], "ret": "s32", "ret_defined": [-1]},
-	"menu_check": {"args": ["s32", "s16", "s16"], "ret": "s32", "ret_undefined": "returns the v0 of menu_check_2, an s32 function without a return value, when L1 is held in menu_mode 2"},
+	"menu_check": {"args": ["s32", "s16", "s16"], "ret": "s32"},
 	"menu_check_1": {"args": ["s32", "s16", "s16"], "ret": "s32"},
-	"menu_check_2": {"args": ["s32", "s32", "s32"], "ret": "s32", "ret_undefined": "s32 in the C with no return statement"},
+	"menu_check_2": {"args": ["s32", "s32", "s32"], "ret": "s32"},
 	"menu_cursor_update": {"args": ["s32"], "ret": "void"},
 	"menu_cursor_to_edge": {"args": ["s32", "s32"], "ret": "s32"},
 	"get_near_menu": {"args": ["s32", "s32", "s32"], "ret": "s32"},
@@ -51,8 +54,8 @@ const C_SIGNATURES: Dictionary = {
 	"birth_day_check": {"args": ["s32"], "ret": "void"},
 	"birth_day_check_days": {"args": ["s32", "s32", "s32"], "ret": "s32"},
 	"girl_points_shiori": {"args": ["ptr", "ptr"], "ret": "s32", "ret_defined": [0]},
-	"girl_points_others": {"args": ["ptr", "ptr"], "ret": "s32", "ret_undefined": "s32 in the C with no return statement"},
-	"girl_scores": {"args": ["ptr", "ptr"], "ret": "s32", "ret_undefined": "returns the v0 of girl_points_others, which has no return value"},
+	"girl_points_others": {"args": ["ptr", "ptr"], "ret": "s32"},
+	"girl_scores": {"args": ["ptr", "ptr"], "ret": "s32"},
 	"girl_player_sports_club_check": {"args": [], "ret": "s32"},
 	"girl_find_by_club": {"args": ["s32"], "ret": "s32"},
 }
@@ -157,7 +160,7 @@ func menu_set(menu: int, count: int, x: int, y: int, w: int, h: int) -> int:
 		m.write_u8(item + 6, 0) # hover
 	return 0
 
-## In mode 2 with L1 held the C returns menu_check_2's value, which that function does not define.
+## In mode 2 with L1 held the C returns menu_check_2's v0 (&game_state + menu, see menu_check_2).
 func menu_check(checked_menu: int, check_pointer_x: int, check_pointer_y: int) -> int:
 	var menu: int = Math.s32(checked_menu)
 	var px: int = Math.s16(check_pointer_x)
@@ -220,7 +223,8 @@ func menu_check_2(cursor_menu: int, _arg1: int, _arg2: int) -> int:
 				break
 	if (engine.gs_get("pad_held") & PAD_L1) == 0 and cursor_item != -1:
 		m.write_u8(MENU_HIT + menu, cursor_item)
-	return 0
+	# v0 at the exit (asm menu_check_2.s): &game_state, plus menu when count[menu] != 0 (the loop's base register).
+	return GAME_STATE + (menu if _count(menu) != 0 else 0)
 
 ## Wraps current[menu] into 0..count-1 and skips disabled items in `direction` (at most 16 steps).
 func _wrap_current(menu: int) -> void:
@@ -362,9 +366,12 @@ func get_near_menu(axis: int, direction: int, menu: int) -> int:
 	distances.resize(16)
 	distances.fill(0)
 	var field: int = 0 if Math.s32(axis) == 0 else 2
-	if Math.s32(axis) == 0 or Math.s32(axis) == 1:
-		for i: int in item_count:
-			distances[i] = Math.s16(m.s16(_item(i, menu_i) + field) - m.s16(cur + field))
+	if Math.s32(axis) != 0 and Math.s32(axis) != 1:
+		# The C's axis switch leaves axis_distances uninitialised (stale stack) for any other axis: no value is invented.
+		engine.refuse("get_near_menu", "axis %d: axis_distances is uninitialised" % Math.s32(axis))
+		return -1
+	for i: int in item_count:
+		distances[i] = Math.s16(m.s16(_item(i, menu_i) + field) - m.s16(cur + field))
 	if Math.s32(direction) == -1:
 		for i: int in item_count:
 			if distances[i] > 0:
@@ -989,7 +996,7 @@ func girl_points_shiori(closeness_by_girl: int, points_by_girl: int) -> int:
 	if m.s16(girl0 + 0xA) >= 0x33:
 		return 0
 	m.write_u16(points_by_girl, 0x311)
-	return 0
+	return 0 # unobserved placeholder: the C falls off the end here (v0 is a leftover), all callers discard it
 
 ## girl_points[11] is the s16 array at sp+0x48 of the 0x80 frame.
 func girl_points_others(closeness_by_girl: int, points_by_girl: int) -> int:
@@ -1030,7 +1037,8 @@ func girl_points_others(closeness_by_girl: int, points_by_girl: int) -> int:
 			m.write_u16(points + g * 2, 0)
 	for g: int in range(1, 11):
 		m.write_u16(points_by_girl + g * 2, m.s16(points + g * 2))
-	return 0
+	# v0 at the exit (asm girl_points_others.s): the loop's end pointer, sp + 0x5E.
+	return engine.frame_base() + 0x5E
 
 ## weighted_affection[16] at sp+0x44 and weighted_tokimeki[16] at sp+0x54 of the 0x68 frame.
 func girl_scores(closeness_by_girl: int, points_by_girl: int) -> int:

@@ -5,6 +5,7 @@ extends RefCounted
 ## display_records.h Actor) are written at actor_pool + 0x44 * index; bit-fields are little-endian LSB first
 ## (include/game/schedule_records.h: AppointmentBits active = bit 29, girl = bits 25..28; AppointmentDate
 ## month = bits 12..15, day = bits 16..20; BirthdayBits month = bits 0..3, day = bits 4..8).
+## Return values the C leaves undefined (ret_undefined) are 0: an unobserved placeholder, every caller discards them.
 ## Contract: wiki/engine-porting-contract.md. Tests: tests/engine/hud_screens_test.gd and
 ## config/port/engine-diff/hud_screens.json.
 
@@ -78,6 +79,8 @@ const ACTOR_SIZE: int = 0x44
 const GAME_STATE: int = 0x800E6280
 const SPRITE_QUADS: int = 0x801217D0 # sprite_quads (SpriteQuad, 0x24 bytes)
 const SYSTEM_DATA: int = 0x800E7D10
+## strncat count observed in a2 at the two-argument club-name call (captures wpc-sn-save, wpc-sn-load).
+const CLUB_NAME_STRNCAT_COUNT: int = 8
 const BLOCK: int = 0x80123120 # memory_card_block
 const PAD_R1: int = 0x0008
 const PAD_R2: int = 0x0002
@@ -632,9 +635,11 @@ func cal_sprite_init() -> void:
 # ---- save slot panel
 
 ## Frame 0xF8: text buffers slot_date sp+0xC8, player_name sp+0xA8, nickname sp+0x88, club sp+0x68,
-## clear_count sp+0x48. The C calls strncat(club_name_text, club_name) with no count: the count register is
-## whatever the caller left, which no source gives; 0x20 reproduces the original whenever it is at least the
-## club name's length (the names are short), see the ticket notes.
+## clear_count sp+0x48. The C calls strncat(club_name_text, club_name) with two arguments, so the count is
+## whatever a2 held (left by the preceding strcpy). Captured with strncat as a listed callee (wpc-sn-save,
+## wpc-sn-load; OpenBIOS strcpy): a2 was 8 at both club-name calls. The longest club name (table
+## club_name_table[0..11]) is 8 bytes, so a count of 8 copies every name whole; with the retail BIOS the
+## leftover is not observed. See the ticket.
 func hud_save_slot_info_show(arg0: int, left_summary_column: int) -> void:
 	var m = engine.memory
 	var base: int = engine.frame_base()
@@ -678,7 +683,7 @@ func hud_save_slot_info_show(arg0: int, left_summary_column: int) -> void:
 				engine.call_c("set_kanji_string", [summary_x, -0x30, 0xF, name_text, 0])
 				engine.call_c("set_kanji_string", [summary_x, -0x20, 0xF, nick_text, 0])
 				engine.call_c("strcpy", [club_text, S_CLUB])
-				engine.call_c("strncat", [club_text, m.u32(_gaddr("club_name_table") + m.u8(SYSTEM_DATA + 0xEC8 + sel) * 4), 0x20])
+				engine.call_c("strncat", [club_text, m.u32(_gaddr("club_name_table") + m.u8(SYSTEM_DATA + 0xEC8 + sel) * 4), CLUB_NAME_STRNCAT_COUNT])
 				engine.call_c("set_kanji_string", [summary_x, -0x10, 0xF, club_text, 0])
 				_clear_count_text(clear_text, cleared, S_CLEARED)
 				engine.call_c("set_kanji_string", [summary_x, 0, 0xF, clear_text, 0])
@@ -708,7 +713,7 @@ func hud_save_slot_info_show(arg0: int, left_summary_column: int) -> void:
 			engine.call_c("set_kanji_string", [summary_x, -0x30, 0xF, name_text, 0])
 			engine.call_c("set_kanji_string", [summary_x, -0x20, 0xF, nick_text, 0])
 			engine.call_c("strcpy", [club_text, S2_CLUB])
-			engine.call_c("strncat", [club_text, m.u32(_gaddr("club_name_table") + (m.u16(record + 0x2BC) >> 12) * 4), 0x20])
+			engine.call_c("strncat", [club_text, m.u32(_gaddr("club_name_table") + (m.u16(record + 0x2BC) >> 12) * 4), CLUB_NAME_STRNCAT_COUNT])
 			engine.call_c("set_kanji_string", [summary_x, -0x10, 0xF, club_text, 0])
 			_clear_count_text(clear_text, cleared, S2_CLEARED)
 			engine.call_c("set_kanji_string", [summary_x, 0, 0xF, clear_text, 0])
@@ -818,7 +823,7 @@ func hud_magazine_page_build() -> void:
 		_a16(idx, 0x2A, 0x100)
 		_a8(idx, 7, 0x80)
 	var cursor: int = 0x61 # calendar_actor_index
-	var issue: int = 0 # magazine_issue_index (uninitialised in the C for years outside 0x5F..0x62)
+	var issue: int = -1 # magazine_issue_index: uninitialised in the C unless a year/month arm below sets it (-1 = unset)
 	var year: int = engine.gs_get("year")
 	var month: int = engine.gs_get("month")
 	var progress: int = _gs("progress_state")
@@ -927,6 +932,10 @@ func hud_magazine_page_build() -> void:
 	if engine.gs_get("year") != 0x5F or engine.gs_get("month") >= 6:
 		_mag(cursor, 0x77, 0, -0x28)
 		cursor += 1
+	if issue == -1:
+		# First use of magazine_issue_index in the C reads an uninitialised stack word: no value is invented.
+		engine.refuse("hud_magazine_page_build", "magazine_issue_index is uninitialised for this year/month")
+		return
 	if engine.gs_get("year") == 0x5F:
 		_mag(cursor, issue + 0x97, 0, -0x28)
 		cursor += 1

@@ -31,6 +31,7 @@ func run() -> Array[String]:
 	_test_hw_test_refusal()
 	_test_write_sync()
 	_test_bg_still()
+	_test_layout_constants()
 	for engine in _made:
 		engine.shutdown()
 	_made.clear()
@@ -221,7 +222,7 @@ func _test_file_name_build() -> void:
 	_check(engine.call_c("memory_card_file_name_build", [buf, 0]) == 1 and _read_cstring(engine, buf) == "bu00:BISLPS-00060", "index 0 -> prefix + 0")
 	_check(engine.call_c("memory_card_file_name_build", [buf, 10]) == 1 and _read_cstring(engine, buf) == "bu00:BISLPS-0006A", "index 10 -> A")
 	_check(engine.call_c("memory_card_file_name_build", [buf, 15]) == 1 and _read_cstring(engine, buf) == "bu00:BISLPS-0006F", "index 15 -> F")
-	_check(engine.memory.u8(buf + 0x14) == 0x55 or true, "only the first 0x14 bytes are cleared before the prefix copy")
+	_check(engine.memory.u8(buf + 0x14) == 0x55, "only the first 0x14 bytes are cleared before the prefix copy")
 	_check(engine.call_c("memory_card_file_name_build", [buf, 16]) == 0 and _read_cstring(engine, buf) == "bu00:BISLPS-0006", "index 16 -> default: prefix only, returns 0")
 	_check(engine.call_c("memory_card_file_name_build", [buf, -1]) == 0, "negative index -> 0")
 
@@ -560,3 +561,16 @@ func _test_bg_still() -> void:
 	m.write_u32(0x80164004, 0x00010000)
 	rects.clear()
 	_check(engine.call_c("bg_still_decode_to_vram", [0x100, 0, 0, 0x10]) == 1 and rects.is_empty(), "width 0: no strip (the C tests rect.x < end first)")
+
+## The module's hard-coded addresses must equal the generated layout (the layout names them; the constants only
+## spare a lookup per call).
+func _test_layout_constants() -> void:
+	var engine = _new()
+	var m = engine.memory
+	var c: Dictionary = engine.modules["memory_card"].get_script().get_script_constant_map()
+	_check(c["BLOCK"] == m.global_address("memory_card_block") and c["BLOCK_VERSION"] == m.global_address("D_80123122") and c["BLOCK_ICON_FLAGS"] == m.global_address("D_80123123"), "block header constants")
+	_check(c["BLOCK_TITLE"] == m.global_address("D_80123124") and c["BLOCK_RESERVED"] == m.global_address("D_80123164") and c["BLOCK_PALETTE"] == m.global_address("D_80123180") and c["BLOCK_ICON"] == m.global_address("D_801231A0"), "block title / palette / icon constants")
+	_check(c["BANKS"] == m.global_address("D_80123320") and c["BANKS"] == c["BLOCK"] + 0x200, "bank base is memory_card_block + 0x200")
+	_check(c["SYSTEM_DATA"] == m.global_address("system_data") and c["SLOT_STATUS"] == m.global_address("D_800E7D14") and c["SLOT_STATUS"] == c["SYSTEM_DATA"] + 4, "system_data and its slot_status")
+	_check(m.global_address("D_800E7D11") == 0x800E7D11 and m.global_address("D_800E7D13") == 0x800E7D13 and m.global_address("D_800E7D16") == 0x800E7D16, "the D_800E7D1x bytes used by the probes and state_reset")
+	_check(m.global_address("memory_card_icon_palettes") == 0x800B4390 and m.global_address("memory_card_icon_images") == 0x800B58B0 and m.global_address("D_800B32CC") == 0x800B32CC, "icon palette / image / label tables")
