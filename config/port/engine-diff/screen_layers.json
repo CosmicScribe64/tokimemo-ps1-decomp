@@ -1,0 +1,19 @@
+{
+ "captures": ["wpa-sl1"],
+ "exclude": [
+  {"start": "0x80000000", "length": 65536, "reason": "BIOS/kernel RAM (OpenBIOS handlers, event and thread tables) changed by the vertical-blank interrupt handlers while a hit runs; the port never writes below 0x80010000"},
+  {"start": "0x800E5B10", "length": 64, "reason": "SDK counters bumped by the vertical-blank interrupt while the function runs"}
+ ],
+ "functions": {},
+ "untested": {
+  "srn_vram_set": "never reached from the sampled states (title, school first line, prologue, name entry); covered by tests/engine/screen_layers_test.gd",
+  "mod_trans_vram": "never reached from the sampled states; covered by tests/engine/screen_layers_test.gd",
+  "get_fnt": "only called by mod_trans_vram, which no sampled state reaches; covered by tests/engine/screen_layers_test.gd",
+  "func_8004DAC4": "no caller in src/; the body is an argument spill into the caller's home area (nothing observable); covered by tests/engine/screen_layers_test.gd",
+  "mod_set_gpu": "never reached from the sampled states; covered by tests/engine/screen_layers_test.gd",
+  "mod_set": "never reached from the sampled states; covered by tests/engine/screen_layers_test.gd",
+  "srn_set": "never reached from the sampled states; covered by tests/engine/screen_layers_test.gd",
+  "srn_init": "never reached from the sampled states; covered by tests/engine/screen_layers_test.gd",
+  "layer_tileset_init": "never reached from the sampled states; covered by tests/engine/screen_layers_test.gd"
+ }
+}
