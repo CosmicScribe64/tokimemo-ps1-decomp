@@ -16,6 +16,8 @@ usage (Docker, e.g. the tokimemo-recovery image):
   python3 -I tools/port/gen_game_memory.py [--check] [--out PATH]
 """
 import argparse
+import ast
+import operator
 import re
 import sys
 from pathlib import Path
@@ -37,6 +39,36 @@ PRIMITIVES = {"s8": (1, True), "u8": (1, False), "s16": (2, True), "u16": (2, Fa
 
 class ParseError(Exception):
     pass
+
+
+_BINARY = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul, ast.FloorDiv: operator.floordiv,
+           ast.LShift: operator.lshift, ast.RShift: operator.rshift, ast.BitOr: operator.or_,
+           ast.BitAnd: operator.and_, ast.BitXor: operator.xor}
+
+
+def eval_int(text, where="constant"):
+    """Integer constant expression (literals, + - * / << >> | & ^, unary - and ~, parentheses); nothing else."""
+    try:
+        tree = ast.parse(text.replace("/", "//"), mode="eval")
+    except SyntaxError:
+        raise ParseError("%s: cannot evaluate constant %r" % (where, text))
+
+    def walk(node):
+        if isinstance(node, ast.Expression):
+            return walk(node.body)
+        if isinstance(node, ast.Constant) and type(node.value) is int:
+            return node.value
+        if isinstance(node, ast.BinOp) and type(node.op) in _BINARY:
+            right = walk(node.right)
+            if isinstance(node.op, ast.FloorDiv) and right == 0:
+                raise ParseError("%s: division by zero in %r" % (where, text))
+            return _BINARY[type(node.op)](walk(node.left), right)
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.USub, ast.Invert, ast.UAdd)):
+            value = walk(node.operand)
+            return -value if isinstance(node.op, ast.USub) else ~value if isinstance(node.op, ast.Invert) else value
+        raise ParseError("%s: cannot evaluate constant %r" % (where, text))
+
+    return walk(tree)
 
 
 # ---------------------------------------------------------------- tokenizing
@@ -344,9 +376,9 @@ class Parser:
         while self.peek() not in ("]", ";", ",", ")", None):
             toks.append(self.take())
         text = " ".join(toks)
-        if not re.fullmatch(r"[0-9xXa-fA-F\s+\-*()<>/]*", text) or not text.strip():
-            raise ParseError("%s: cannot evaluate constant %r" % (self.rel, text))
-        return int(eval(text, {"__builtins__": {}}, {}))  # numeric literals and operators only
+        if not text.strip():
+            raise ParseError("%s: empty constant expression" % self.rel)
+        return eval_int(text, self.rel)
 
     def member(self):
         offset = None

@@ -28,7 +28,7 @@ static func dump(state: Object, out_dir: String, key: String, frame_count: int, 
 		"origin": "port memory model: core/game_state_boot.gd defaults, then rule_state/core fields through core/rule_state_bridge.gd",
 		"executable_loaded": not exe_path.is_empty() and exe_error.is_empty(),
 		"executable_error": exe_error, "memory_error": mem.error, "write_error": write_error,
-		"mapped_keys": Bridge.MAPPED_KEYS, "port_only_keys": Bridge.PORT_ONLY_KEYS,
+		"unsourced_keys": Bridge.unsourced_keys(state), "mapped_keys": Bridge.MAPPED_KEYS, "port_only_keys": Bridge.PORT_ONLY_KEYS,
 	}
 	var file := FileAccess.open(directory.path_join(stem + ".json"), FileAccess.WRITE)
 	if file != null:

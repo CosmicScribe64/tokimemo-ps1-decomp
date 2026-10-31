@@ -80,6 +80,21 @@ class CompareTest(unittest.TestCase):
         self.assertEqual(glob[0]["differing"][0]["emulator"], -1)
         self.assertTrue(glob[1]["equal"] and glob[1]["elements"] == 15)
 
+    def test_unsourced_globals_are_not_compared(self):
+        port, emu = self.images()
+        self.put(emu, 0x801230D0, 4, -1024)                         # scene_work
+        glob = cmp.compare_globals(self.parser, ["scene_work", "icon_enabled"], port, emu, {}, {"scene_work"})
+        self.assertTrue(glob[0]["unsourced"] and "equal" not in glob[0] and "differing" not in glob[0])
+        self.assertTrue(glob[1]["equal"])
+        import tempfile, json
+        with tempfile.TemporaryDirectory() as tmp:
+            a, b = Path(tmp) / "k.ram.bin", Path(tmp) / "emu.bin"
+            a.write_bytes(bytes(port))
+            b.write_bytes(bytes(emu))
+            self.assertEqual(cmp.main([str(a), str(b)]), 1)         # scene_work differs and is sourced
+            (Path(tmp) / "k.json").write_text(json.dumps({"unsourced_keys": ["scene_work"]}))
+            self.assertEqual(cmp.main([str(a), str(b)]), 0)         # sibling metadata marks it unsourced
+
     def test_main_returns_one_on_difference(self):
         import tempfile
         port, emu = self.images()

@@ -85,17 +85,22 @@ const CORE_FLAGS: Dictionary = {
 # ---- public
 
 ## state -> memory. `state` is a core/game_state.gd object (rule_state and opening are
-## used when the object has them).
-static func push(state: Object, mem: Memory) -> void:
-	for field: String in CORE_FIELDS:
-		var row: Array = CORE_FIELDS[field]
-		mem.write_int(_address(row[0]), row[1], int(state.get(field)))
-	for field: String in CORE_FLAGS:
-		mem.write_u8(GS + CORE_FLAGS[field], 1 if state.get(field) else 0)
+## used when the object has them). with_core false skips the core fields (a caller whose
+## state never set them, so the memory keeps the C defaults).
+static func push(state: Object, mem: Memory, with_core: bool = true) -> void:
+	if with_core:
+		for field: String in CORE_FIELDS:
+			var row: Array = CORE_FIELDS[field]
+			mem.write_int(_address(row[0]), row[1], int(state.get(field)))
+		for field: String in CORE_FLAGS:
+			mem.write_u8(GS + CORE_FLAGS[field], 1 if state.get(field) else 0)
 	var rule: Variant = state.get("rule_state")
 	var opening: Variant = state.get("opening")
 	if rule is Dictionary:
-		_push_rule_state(rule, mem, _placeholders(opening))
+		var view: Dictionary = rule.duplicate()
+		for key: String in unsourced_keys(state):
+			view.erase(key)
+		_push_rule_state(view, mem)
 	if opening is Dictionary:
 		for key: String in OPENING_FIELDS:
 			if opening.has(key):
@@ -116,7 +121,13 @@ static func pull(mem: Memory, state: Object) -> void:
 	var rule: Variant = state.get("rule_state")
 	var opening: Variant = state.get("opening")
 	if rule is Dictionary:
-		_pull_rule_state(mem, rule, _placeholders(opening))
+		var kept: Dictionary = {}
+		for key: String in unsourced_keys(state):
+			if rule.has(key):
+				kept[key] = rule[key].duplicate(true) if rule[key] is Array else rule[key]
+		_pull_rule_state(mem, rule)
+		for key: String in kept:
+			rule[key] = kept[key]
 	if opening is Dictionary:
 		for key: String in OPENING_FIELDS:
 			if opening.has(key):
@@ -127,13 +138,26 @@ static func pull(mem: Memory, state: Object) -> void:
 
 # ---- helpers
 
-## Keys the state holds only as a placeholder (opening.unread_before_owned_write, written by
-## flow/new_game_state_adapter.gd: never read before an owned write). The original's value
-## for them is the initial data/bss value, so neither direction touches them.
+## Keys the state holds only as a placeholder: opening.unread_before_owned_write (never read
+## before an owned write) and the key names of opening.unsourced (stored "0 is a placeholder"
+## by flow/new_game_state_adapter.gd). The original's value for them is the loaded data section
+## or zero, so neither direction touches them.
 static func _placeholders(opening: Variant) -> Array:
-	if opening is Dictionary and opening.get("unread_before_owned_write") is Array:
-		return opening["unread_before_owned_write"]
-	return []
+	var out: Array = []
+	if opening is Dictionary:
+		if opening.get("unread_before_owned_write") is Array:
+			out.append_array(opening["unread_before_owned_write"])
+		if opening.get("unsourced") is Dictionary:
+			out.append_array(opening["unsourced"].keys())
+	return out
+
+## Names of the placeholder keys that have a RAM home (for dump metadata).
+static func unsourced_keys(state: Object) -> Array:
+	var out: Array = []
+	for key: String in _placeholders(state.get("opening")):
+		if key in MAPPED_KEYS:
+			out.append(key)
+	return out
 
 static func _address(offset_or_address: int) -> int:
 	return offset_or_address if offset_or_address >= 0x80000000 else GS + offset_or_address
@@ -195,7 +219,7 @@ static func _get_words(rule: Dictionary, key: String, mem: Memory, address: int,
 
 # ---- rule_state
 
-static func _push_rule_state(rule: Dictionary, mem: Memory, placeholders: Array) -> void:
+static func _push_rule_state(rule: Dictionary, mem: Memory) -> void:
 	_push_scalar(rule, "year", mem, GS + Layout.GAME_STATE_YEAR, 1)
 	_push_scalar(rule, "month", mem, GS + Layout.GAME_STATE_MONTH, 1)
 	_push_scalar(rule, "day", mem, GS + Layout.GAME_STATE_DAY, 1)
@@ -217,8 +241,7 @@ static func _push_rule_state(rule: Dictionary, mem: Memory, placeholders: Array)
 	_push_scalar(rule, "menu_mode", mem, GS + Layout.GAME_STATE_MENU_MODE, 1)
 	_push_scalar(rule, "event_log_count", mem, GS + Layout.GAME_STATE_EVENT_LOG_COUNT, 1)
 	_push_scalar(rule, "current_girl", mem, GS + Layout.GAME_STATE_CURRENT_GIRL, 1)
-	if "last_picked_girl" not in placeholders:
-		_push_scalar(rule, "last_picked_girl", mem, mem.global_address("schedule_last_picked_girl"), 1)
+	_push_scalar(rule, "last_picked_girl", mem, mem.global_address("schedule_last_picked_girl"), 1)
 	_push_scalar(rule, "scene_work", mem, mem.global_address("scene_work"), 4)
 	_push_scalar(rule, "background_show", mem, mem.global_address("dec_bg_show"), 1)
 	_put_bytes(rule, "progress_state", mem, GS + Layout.GAME_STATE_PROGRESS_STATE, 0x9c)
@@ -238,7 +261,7 @@ static func _push_rule_state(rule: Dictionary, mem: Memory, placeholders: Array)
 	_push_event_log(rule, mem)
 	_push_menu_disabled(rule, mem)
 
-static func _pull_rule_state(mem: Memory, rule: Dictionary, placeholders: Array) -> void:
+static func _pull_rule_state(mem: Memory, rule: Dictionary) -> void:
 	_pull_scalar(rule, "year", mem, GS + Layout.GAME_STATE_YEAR, 1, false)
 	_pull_scalar(rule, "month", mem, GS + Layout.GAME_STATE_MONTH, 1, false)
 	_pull_scalar(rule, "day", mem, GS + Layout.GAME_STATE_DAY, 1, false)
@@ -260,8 +283,7 @@ static func _pull_rule_state(mem: Memory, rule: Dictionary, placeholders: Array)
 	_pull_scalar(rule, "menu_mode", mem, GS + Layout.GAME_STATE_MENU_MODE, 1, false)
 	_pull_scalar(rule, "event_log_count", mem, GS + Layout.GAME_STATE_EVENT_LOG_COUNT, 1, false)
 	_pull_scalar(rule, "current_girl", mem, GS + Layout.GAME_STATE_CURRENT_GIRL, 1, false)
-	if "last_picked_girl" not in placeholders:
-		_pull_scalar(rule, "last_picked_girl", mem, mem.global_address("schedule_last_picked_girl"), 1, true)
+	_pull_scalar(rule, "last_picked_girl", mem, mem.global_address("schedule_last_picked_girl"), 1, true)
 	_pull_scalar(rule, "scene_work", mem, mem.global_address("scene_work"), 4, true)
 	_pull_scalar(rule, "background_show", mem, mem.global_address("dec_bg_show"), 1, false)
 	_get_bytes(rule, "progress_state", mem, GS + Layout.GAME_STATE_PROGRESS_STATE, 0x9c)

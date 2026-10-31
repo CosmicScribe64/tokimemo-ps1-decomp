@@ -72,7 +72,9 @@ func _frame_published(tick: int, app: App) -> void:
 		_check_timing()
 		app.last_rendered_image.save_png("/out/command-select.png")
 		# T-39300: dev dump of the memory model at this key for tools/port/compare_game_memory.py (read only).
-		GameMemoryDump.dump(state,"/out",key,int(state.frame_count))
+		# Opt in with TOKIMEMO_DUMP_GAME_MEMORY=1: the 2 MiB image holds executable text and stays in ignored data.
+		if OS.get_environment("TOKIMEMO_DUMP_GAME_MEMORY") == "1":
+			GameMemoryDump.dump(state, "/out", key, int(state.frame_count))
 		_status({"phase":"command_select","frame":state.frame_count})
 		return
 	if _select_frame < 0 or finishing: return

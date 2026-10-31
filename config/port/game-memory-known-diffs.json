@@ -26,6 +26,8 @@
  "GameState.ovl_palette_a": "pointer stored by the NAME_ENT overlay: T-39301 overlay loader",
  "GameState.ovl_image_buffer": "pointer stored by the NAME_ENT overlay: T-39301 overlay loader",
  "GameState.ovl_palette_b": "pointer stored by the NAME_ENT overlay: T-39301 overlay loader",
- "scene_work": "0x801230D0 = -1024: mode 0x13 file select (file_select_init_settings 0xFF, minus 1 per frame); the port's entry does not run file select (flow/new_game_state_adapter.gd _unsourced): T-39301 file select / boot path",
- "clock": "frame_count, timer_ticks and SystemData.seed carry the boot/title/file-select history (port frame 13863 against emulator 21333, the same gap as tools/port/compare_newgame_golden.py reports); not counted"
+ "scene_work": "placeholder in the port (opening.unsourced; the adapter stores 0), so reported as unsourced and not compared. The original holds -1024 at 0x801230D0 from mode 0x13 file select (file_select_init_settings 0xFF, minus 1 per frame); the port's entry does not run file select. Follow-up: T-39301 file select / boot path",
+ "clock": "frame_count, timer_ticks and SystemData.seed carry the boot/title/file-select history (port frame 13863 against emulator 21333, the same gap as tools/port/compare_newgame_golden.py reports); not counted",
+ "bg_lba_cache": "placeholder in the port (opening.unsourced), reported as unsourced; the prologue's background loads and the command-room read are not performed: T-39301 background_images.c",
+ "dec_bg_show": "placeholder in the port (opening.unsourced), reported as unsourced; the command-room decode is not performed: T-39301 background_images.c"
 }

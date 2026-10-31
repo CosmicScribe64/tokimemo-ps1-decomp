@@ -10,6 +10,8 @@ const Layout = preload("res://core/game_layout.gd")
 const Boot = preload("res://core/game_state_boot.gd")
 const RouteState = preload("res://rules/new_game_route_state.gd")
 
+const ORIGIN := "source-fresh-no-card-direct-entry-development-v1"
+
 var failures: Array[String] = []
 var _seed: int = 12345
 
@@ -24,6 +26,8 @@ func run() -> Array[String]:
 	_test_port_only_keys_untouched()
 	_test_boot_defaults()
 	_test_placeholders()
+	_test_unsourced_keys()
+	_test_non_adapter_state()
 	return failures
 
 func _check(condition: bool, message: String) -> void:
@@ -90,7 +94,7 @@ func _fixture() -> Dictionary:
 func _state() -> RouteState:
 	var state := RouteState.new()
 	state.rule_state = _fixture()
-	state.opening = {"icon_mode": 1, "icon_count": 14, "screen_brightness": 0x80, "origin": "synthetic"}
+	state.opening = {"icon_mode": 1, "icon_count": 14, "screen_brightness": 0x80, "origin": ORIGIN}
 	state.game_mode = 0x34
 	state.mode_stage = 1
 	state.frame_count = 21333
@@ -122,13 +126,13 @@ func _test_round_trip() -> void:
 	# A different state with every mapped value scrambled must become the source again.
 	var other := RouteState.new()
 	other.rule_state = _fixture()
-	other.opening = {"icon_mode": 0, "icon_count": 0, "screen_brightness": 7, "origin": "synthetic"}
+	other.opening = {"icon_mode": 0, "icon_count": 0, "screen_brightness": 7, "origin": ORIGIN}
 	_check(JSON.stringify(other.rule_state) != JSON.stringify(source.rule_state), "scrambled state differs")
 	Bridge.pull(mem, other)
 	for key: String in Bridge.MAPPED_KEYS:
 		_check(JSON.stringify(other.rule_state[key]) == JSON.stringify(source.rule_state[key]), "memory -> state restores key " + key)
 	_check(other.game_mode == 0x34 and other.mode_stage == 1 and other.frame_count == 21333, "core fields restored")
-	_check(other.opening["icon_count"] == 14 and other.opening["origin"] == "synthetic", "opening fields restored, others kept")
+	_check(other.opening["icon_count"] == 14 and other.opening["origin"] == ORIGIN, "opening fields restored, others kept")
 	var mem2 := Memory.new()
 	Bridge.push(other, mem2)
 	_check(mem.ram == mem2.ram, "state -> memory is stable after the trip")
@@ -238,3 +242,31 @@ func _test_placeholders() -> void:
 	state.opening.erase("unread_before_owned_write")
 	Bridge.push(state, mem)
 	_check(mem.s8(0x800b6740) == 0, "without the marker the key is pushed")
+
+func _test_unsourced_keys() -> void:
+	var state := _state()
+	state.opening["unsourced"] = {"scene_work": "placeholder", "background_cache": "placeholder",
+		"background_show": "placeholder", "girls[1].flags.club": "rand draw"}
+	var mem := Memory.new()
+	mem.write_s32(0x800b5920 + 4, 16361) # the data section's own bytes
+	mem.write_u8(0x800b5938, 1)
+	Bridge.push(state, mem)
+	_check(mem.s32(0x800b5920 + 4) == 16361 and mem.u8(0x800b5938) == 1 and mem.s32(0x801230d0) == 0, "unsourced keys are not pushed")
+	_check(mem.s32(0x800e6280 + 0x1bc * 0 + 0xfc) == state.rule_state["params"][0], "sourced keys still are")
+	var before: String = JSON.stringify([state.rule_state["scene_work"], state.rule_state["background_cache"], state.rule_state["background_show"]])
+	Bridge.pull(mem, state)
+	_check(JSON.stringify([state.rule_state["scene_work"], state.rule_state["background_cache"], state.rule_state["background_show"]]) == before, "unsourced keys are not pulled")
+	_check(Bridge.unsourced_keys(state) == ["scene_work", "background_cache", "background_show"], "unsourced_keys lists mapped keys only")
+
+func _test_non_adapter_state() -> void:
+	var plain := RouteState.new()
+	plain.rule_state = _fixture()
+	var mem: Memory = Boot.new_game_memory(plain)
+	_check(mem.error.contains("not built by the New Game adapter"), "a state without the adapter's origin is refused")
+	_check(mem.u8(0x800e6280 + 0x34) == 0 and mem.u8(0x800e6280 + 0x3e) == 0 and mem.u16(0x800e6280) == 0, "the refused memory is untouched")
+	# Bridge.push without the core fields keeps the C defaults a caller wrote.
+	var defaults := Memory.new()
+	Boot.apply_game_state_init(defaults)
+	Bridge.push(plain, defaults, false)
+	_check(defaults.u8(0x800e6280 + 0x34) == 1 and defaults.u8(0x800e6280 + 0x1108) == 0x10, "push(with_core=false) keeps sound_active 1 and game_mode 0x10")
+	_check(defaults.u8(0x800e6280 + 0x3e) == 0x5f, "rule_state keys are still pushed")

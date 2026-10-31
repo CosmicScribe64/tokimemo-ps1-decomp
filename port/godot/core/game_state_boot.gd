@@ -117,12 +117,25 @@ static func apply_profile_full_name(mem: Memory) -> void:
 	full.resize(0x10)
 	mem.write_bytes(GS + Layout.GAME_STATE_PLAYER_FULL_NAME, full)
 
+## origin value flow/new_game_state_adapter.gd stores in `opening`: the state's core fields
+## and rule_state keys are sourced by the New Game route.
+const ADAPTER_ORIGIN_PREFIX: String = "source-fresh-no-card"
+
+static func built_by_adapter(state: Object) -> bool:
+	var opening: Variant = state.get("opening")
+	return opening is Dictionary and str(opening.get("origin", "")).begins_with(ADAPTER_ORIGIN_PREFIX)
+
 ## Fills `mem` (a fresh Memory when omitted; load the executable into it first when the
 ## installed one is available) for a New Game state: defaults, then the state's sourced
-## values, then derived names.
+## values, then derived names. A state the New Game adapter did not build never set the
+## core fields, so it is refused (mem.error set, nothing written) rather than letting
+## its zeroes replace the C defaults (sound_active 1, game_mode 0x10).
 static func new_game_memory(state: Object, mem: Memory = null) -> Memory:
 	if mem == null:
 		mem = Memory.new()
+	if not built_by_adapter(state):
+		mem._fault("state was not built by the New Game adapter (opening.origin); its core fields are not sourced")
+		return mem
 	apply_game_state_init(mem)
 	apply_boot_settings_defaults(mem)
 	Bridge.push(state, mem)

@@ -16,7 +16,9 @@ generated global. Fields of the "clock" group depend on boot/title/file-select t
 the port does not run (absolute frame_count, timer_ticks, the main-loop seed); they are
 listed but counted separately, as tools/port/compare_newgame_golden.py does.
 
-Exit 0 when everything compared is equal (clock fields excepted), 1 otherwise.
+Globals whose rule_state key the port stores only as a placeholder (the dump metadata's
+"unsourced_keys": scene_work, background_cache, background_show) are reported as unsourced and
+never compared. Exit 0 when everything compared is equal (clock fields excepted), 1 otherwise.
 
 usage (Docker): python3 -I tools/port/compare_game_memory.py <port.ram.bin> <emulator.ram.bin>
                 [--json out.json] [--limit N] [--known known-diffs.json] [--all-globals]
@@ -34,6 +36,10 @@ RAM_SIZE = 0x200000
 GAME_STATE = 0x800E6280
 CLOCK_FIELDS = {"frame_count", "timer_ticks", "seed"}
 BRIDGED_GLOBALS = ["schedule_last_picked_girl", "scene_work", "bg_lba_cache", "dec_bg_show", "icon_enabled"]
+# rule_state key -> global it maps to (core/rule_state_bridge.gd); a key the port stores only as a
+# placeholder (the dump's "unsourced_keys") is reported as unsourced, never as equal or different.
+KEY_GLOBALS = {"scene_work": "scene_work", "background_cache": "bg_lba_cache", "background_show": "dec_bg_show",
+               "last_picked_girl": "schedule_last_picked_girl"}
 GLOBAL_EXTENT = {"dec_bg_show": 1, "icon_enabled": 15}      # declared without an extent in the headers
 
 
@@ -158,13 +164,16 @@ def summarize(name, fields, base, size, port, emu):
     }
 
 
-def compare_globals(parser, names, port, emu, known=None):
+def compare_globals(parser, names, port, emu, known=None, unsourced=()):
     known = known or {}
     out = []
     for name in names:
         g = parser.globals.get(name)
         if g is None or g.address is None:
             out.append({"name": name, "error": "unknown global"})
+            continue
+        if name in unsourced:
+            out.append({"name": name, "address": "0x%08X" % g.address, "unsourced": True, "reason": known.get(name, "")})
             continue
         count = 1
         for d in g.dims:
@@ -229,6 +238,9 @@ def render(report, limit):
     for g in report["globals"]:
         if "error" in g:
             lines.append("  %s: %s" % (g["name"], g["error"]))
+        elif g.get("unsourced"):
+            lines.append("  %s @%s: unsourced (the port holds a placeholder; not compared)%s" % (
+                g["name"], g["address"], "  [" + g["reason"] + "]" if g.get("reason") else ""))
         elif g["equal"]:
             lines.append("  %s @%s: equal (%d elements)" % (g["name"], g["address"], g["elements"]))
         else:
@@ -251,6 +263,7 @@ def main(argv=None):
     ap.add_argument("--limit", type=int, default=40, help="differing fields to print per struct")
     ap.add_argument("--known", type=Path, help="JSON {\"GameState.field\": \"reason\"} printed beside differing fields")
     ap.add_argument("--all-globals", action="store_true")
+    ap.add_argument("--port-meta", type=Path, help="dump metadata JSON (default: <port ram stem>.json beside the dump)")
     args = ap.parse_args(argv)
     port = args.port_ram.read_bytes()
     emu = args.emulator_ram.read_bytes()
@@ -259,6 +272,11 @@ def main(argv=None):
             print("%s RAM image is %d bytes, expected %d" % (label, len(data), RAM_SIZE), file=sys.stderr)
             return 2
     known = json.loads(args.known.read_text()) if args.known else {}
+    meta_path = args.port_meta
+    if meta_path is None and args.port_ram.name.endswith(".ram.bin"):
+        meta_path = args.port_ram.with_name(args.port_ram.name[:-len(".ram.bin")] + ".json")
+    meta = json.loads(meta_path.read_text()) if meta_path is not None and meta_path.is_file() else {}
+    unsourced = {KEY_GLOBALS[k] for k in meta.get("unsourced_keys", []) if k in KEY_GLOBALS}
     parser = gen.load_model()
     state = parser.structs["GameState"]
     fields = compare_struct(parser, "GameState", GAME_STATE, port, emu, known)
@@ -272,7 +290,7 @@ def main(argv=None):
             {"summary": summarize("GameState", fields, GAME_STATE, state.size, port, emu), "fields": fields},
             {"summary": summarize("SystemData.seed", seed, sysdata_base, 4, port, emu), "fields": seed},
         ],
-        "globals": compare_globals(parser, BRIDGED_GLOBALS, port, emu, known),
+        "globals": compare_globals(parser, BRIDGED_GLOBALS, port, emu, known, unsourced),
         "system_data_summary": summarize("SystemData", sysdata, sysdata_base, parser.structs["SystemData"].size, port, emu),
     }
     if args.all_globals:
@@ -283,7 +301,7 @@ def main(argv=None):
         sd["fields_total"], sd["bytes_equal"], sd["bytes_total"], sd["fields_equal"], sd["fields_counted"]))
     if args.json:
         args.json.write_text(json.dumps(report, indent=1) + "\n")
-    bad = report["structs"][0]["summary"]["fields_differing"] or any(not g.get("equal", False) for g in report["globals"])
+    bad = report["structs"][0]["summary"]["fields_differing"] or any(not g.get("equal", False) and not g.get("unsourced") for g in report["globals"])
     return 1 if bad else 0
 
 

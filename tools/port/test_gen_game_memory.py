@@ -72,6 +72,29 @@ class GameLayoutTest(unittest.TestCase):
         fields = {m.name: m for m in flags.members}
         self.assertEqual((fields["story_stage"].bit_shift, fields["story_stage"].bits), (9, 3))
 
+    def test_bit_positions_against_independent_sources(self):
+        """Bit positions inside a unit are not covered by the offset comments; these come from other text."""
+        def bits(struct, name):
+            member = {m.name: m for m in self.parser.structs[struct].members}[name]
+            return member.offset, member.bit_shift, member.bits
+        # include/game/word_views.h BirthdayBits: month bits 0-3, day bits 4-8; blood_type follows (bits 9-10),
+        # as port/godot/rules/new_game.gd _birthday stores it: month & 15 | day << 4 | blood << 9.
+        self.assertEqual(bits("BirthdayBits", "month"), (0, 0, 4))
+        self.assertEqual(bits("BirthdayBits", "day"), (0, 4, 5))
+        self.assertEqual(bits("BirthdayBits", "blood_type"), (0, 9, 2))
+        # include/game/girl.h GirlFlagBits: "reads bits 9-11 as one value" (story_stage); met is bit 1.
+        self.assertEqual(bits("GirlFlagBits", "story_stage"), (0, 9, 3))
+        self.assertEqual(bits("GirlFlagBits", "met"), (0, 1, 1))
+        # include/game/display_records.h ColorPair555: the second colour starts at bit 16 (comment 0x02).
+        self.assertEqual(bits("ColorPair555", "r1"), (0, 16, 5))
+
+    def test_constant_evaluator_refuses_everything_but_integers(self):
+        self.assertEqual(gen.eval_int("0x10 * (2 + 1) << 1"), 96)
+        self.assertEqual(gen.eval_int("7 / 2"), 3)
+        for text in ("__import__('os')", "a + 1", "1.5", "2 ** 3", "(1", "1 / 0", "[1]"):
+            with self.assertRaises(gen.ParseError):
+                gen.eval_int(text)
+
     def test_globals_resolve_to_addresses(self):
         self.assertIn('"schedule_last_picked_girl": [0x800B6740, 1, true, 1, "", 1]', self.text)
         self.assertIn('"game_state": [0x800E6280, 6800, false, 1, "GameState", 6800]', self.text)
