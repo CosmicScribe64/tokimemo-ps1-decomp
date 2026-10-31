@@ -22,7 +22,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 DEFAULT_OUT = REPO / "port/godot/core/game_layout.gd"
-HEADER_GLOBS = ["include/*.h", "include/game/*.h", "include/main/*.h"]
+HEADER_GLOBS = ["include/*.h", "include/game/*.h", "include/main/*.h", "include/main/import_views/*.h"]
 SYMBOL_FILES = ["config/symbol_addrs.txt", "config/symbol_addrs_sdk.txt", "config/symbol_addrs_obin.txt",
                 "config/symbol_addrs_main.txt", "config/symbol_addrs_hypotheses.txt",
                 "config/symbol_addrs_main_hypotheses.txt", "config/symbol_addrs_types.txt"]
@@ -500,7 +500,7 @@ def load_model(repo=REPO):
 # ---------------------------------------------------------------- emission
 
 def snake_upper(name):
-    s = re.sub(r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])", "_", name)
+    s = re.sub(r"(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])", "_", name)
     return s.upper()
 
 

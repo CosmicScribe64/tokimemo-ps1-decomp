@@ -24,6 +24,7 @@ extends "res://tests/opening/run_opening_frame_timing_route.gd"
 ## While a command select waits for its pick, the periodic CIRCLE is held back.
 ## When the list is used up, the remaining entries take the hovered icon.
 ## Runner: ROUTE_OBSERVER=playtest sh tools/port/run_installed_route.sh <out> ...
+const GameMemoryDump = preload("res://tests/support/game_memory_dump.gd")
 const PAD_CIRCLE := 0x20
 var all_transitions: Array = []
 var _last_key := ""
@@ -70,6 +71,8 @@ func _frame_published(tick: int, app: App) -> void:
 		target = 0x7fffffff
 		_check_timing()
 		app.last_rendered_image.save_png("/out/command-select.png")
+		# T-39300: dev dump of the memory model at this key for tools/port/compare_game_memory.py (read only).
+		GameMemoryDump.dump(state,"/out",key,int(state.frame_count))
 		_status({"phase":"command_select","frame":state.frame_count})
 		return
 	if _select_frame < 0 or finishing: return

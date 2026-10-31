@@ -4,6 +4,7 @@ const OPTIONAL_SUITES: Array[String] = [
     "res://tests/core/run_core_tests.gd",
     "res://tests/core/run_state_digest_tests.gd",
     "res://tests/core/run_game_memory_tests.gd",
+    "res://tests/core/run_rule_state_bridge_tests.gd",
     "res://tests/content/run_content_tests.gd",
     "res://tests/rules/run_rule_tests.gd",
     "res://tests/week/run_week_tests.gd",
