@@ -87,6 +87,14 @@
 #              which replaces the source line of that path),
 #              ROUTE_ASSET_CACHE (a checkout's .asset-cache, bound read-only
 #              at .asset-cache for a worktree that has none).
+#              ROUTE_OBSERVER=long (route driver: the same route from command
+#              select on, driven by tests/route/run_installed_long_route.gd with
+#              the expanded input-script v2 ROUTE_SCRIPT, a file under the
+#              repository, e.g. config/port/input-scripts/three_year_default.json;
+#              ROUTE_FRAMES caps the iterations past command select; the run
+#              passes only on script completion or on a stop pinned in the
+#              script's port "unsupported" rows; tools/port/run_route_driver.sh
+#              wraps this).
 # The tracked native library and bridge are never modified.
 set -eu
 cd "$(dirname "$0")/../.."
@@ -181,6 +189,13 @@ case ${ROUTE_OBSERVER:-} in
 	playtest) OBSERVER=res://tests/opening/run_installed_command_playtest.gd ;;
 	modern) OBSERVER=res://tests/qa/run_modern_command_route.gd ;;
 	playthrough) OBSERVER=res://tests/qa/run_english_playthrough.gd ;;
+	long)
+		OBSERVER=res://tests/route/run_installed_long_route.gd
+		[ -f "${ROUTE_SCRIPT:-}" ] || { echo "ROUTE_OBSERVER=long needs ROUTE_SCRIPT (a file under the repository)" >&2; exit 2; }
+		case $ROUTE_SCRIPT in /*) ROUTE_SCRIPT_ABS=$ROUTE_SCRIPT ;; *) ROUTE_SCRIPT_ABS=$ROOT/$ROUTE_SCRIPT ;; esac
+		case $ROUTE_SCRIPT_ABS in "$ROOT"/*) ;; *) echo "ROUTE_SCRIPT must be under $ROOT" >&2; exit 2 ;; esac
+		ROUTE_SCRIPT_IN=/work/${ROUTE_SCRIPT_ABS#"$ROOT"/}
+		printf 'route-script %s %s\n' "$(sha "$ROUTE_SCRIPT_ABS")" "$ROUTE_SCRIPT" >>"$OUT/candidate-hashes.txt" ;;
 	*) OBSERVER= ;;
 esac
 if [ -n "$OBSERVER" ]; then
@@ -190,6 +205,7 @@ if [ -n "$OBSERVER" ]; then
 		-e PLAYTEST_EXPECT_STOP="${PLAYTEST_EXPECT_STOP:-}" -e PLAYTEST_COMMANDS="${PLAYTEST_COMMANDS:-}" \
 		-e ROUTE_PREFS="${ROUTE_PREFS:-}" -e ROUTE_WINDOW="${ROUTE_WINDOW:-}" -e VISUAL_QA="${VISUAL_QA:-}" \
 		-e PLAYTHROUGH_CAPTURES="${PLAYTHROUGH_CAPTURES:-}" -e PLAYTHROUGH_EVERY="${PLAYTHROUGH_EVERY:-}" -e ROUTE_SCREEN="${ROUTE_SCREEN:-1280x1024x24}" \
+		-e ROUTE_SCRIPT="${ROUTE_SCRIPT_IN:-}" -e ROUTE_FRAMES="${ROUTE_FRAMES:-}" \
 		-e GODOT_SILENCE_ROOT_WARNING=1 -e TOKIMEMO_ENTRY_DEBUG=1 -e DEADLINE="${TOKIMEMO_ROUTE_DEADLINE:-2400}" \
 		-e TOKIMEMO_FAST_ROUTE="$FAST" -e GODOT_MODE_ARGS="$GODOT_MODE_ARGS" -e ROUTE_AUDIO_WAV="${ROUTE_AUDIO_WAV:-}" \
 		-e TOKIMEMO_DEV_CHECKPOINT_SAVE="$DEV_SAVE" -e TOKIMEMO_DEV_RESUME="$DEV_RESUME" -e TOKIMEMO_DEV_IDENTITY="$DEV_IDENTITY" \
@@ -206,7 +222,7 @@ if [ -n "$OBSERVER" ]; then
 		fi
 		status=0
 		timeout "$DEADLINE" godot --path /work/port/godot $GODOT_MODE_ARGS --script "$OBSERVER" > /out/godot.log 2>&1 || status=$?
-		grep -E "opening frame timing|^PASS|^FAIL|^PLAYTEST|^DEV |SCRIPT ERROR|stopped at|New Game stopped|dev (resume|checkpoint)" /out/godot.log | head -20
+		grep -E "opening frame timing|^PASS|^FAIL|^PLAYTEST|^ROUTE|^DEV |SCRIPT ERROR|stopped at|New Game stopped|dev (resume|checkpoint)" /out/godot.log | head -20
 		exit $status'
 fi
 exec docker run --rm --name "tokimemo-route-$(basename "$OUT")" --cpus=4 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE="${REI_TARGET_STAGE:-10}" -e TOKIMEMO_ROUTE_DEADLINE="${TOKIMEMO_ROUTE_DEADLINE:-900}" \

@@ -1,0 +1,67 @@
+{
+ "schema": "tokimemo.route-strategy.v1",
+ "name": "three_year_default",
+ "description": "Default long-route strategy: a balanced weekly study plan from the first command select (1995-04-04) through three school years, no club, invitations and scene choices answered with the default cursor (circle).",
+ "start": {
+  "native": ".asset-cache/emu/newgame-golden-v1/states/setA/command-stage1.sstate (golden set A, first 0x34/1/0 dispatch)",
+  "port": "installed route, golden set A timed entry (TIMED_ENTRY_PAD=2), unskipped opening, first committed 0x34/1/0"
+ },
+ "first_select": {"date": "1995-04-04", "cursor": 0},
+ "weeks": 156,
+ "commands": {
+  "names": {"0": "liberal arts", "1": "science", "2": "art", "3": "athletics", "4": "club", "5": "trivia", "6": "looks", "7": "rest"},
+  "note": "Icon index = SCHOOL_DAY_COMMAND_* (include/game_enums.h). Club (4) is never planned: the strategy joins no club, so icon 4 stays locked (m-sysmenu 3.2 row 7)."
+ },
+ "plan": [
+  {"from": "1995-04", "cycle": [0, 0, 1, 7]},
+  {"from": "1995-06", "cycle": [0, 1, 3, 7]},
+  {"from": "1995-09", "cycle": [0, 1, 6, 3, 7]},
+  {"from": "1996-01", "cycle": [1, 0, 5, 7]},
+  {"from": "1996-04", "cycle": [0, 1, 3, 6, 7]},
+  {"from": "1996-09", "cycle": [2, 0, 1, 6, 7]},
+  {"from": "1997-01", "cycle": [0, 1, 6, 3, 7]},
+  {"from": "1997-04", "cycle": [0, 1, 0, 6, 7]}
+ ],
+ "timing": {
+  "confirm_offset": 30,
+  "confirm_every": 60,
+  "confirm_max": 3,
+  "cursor_offset": 30,
+  "cursor_every": 10,
+  "cursor_max": 14,
+  "advance_button": "CIRCLE",
+  "advance_offset": 40,
+  "advance_every": 40,
+  "advance_max": 400,
+  "week_timeout": 2000,
+  "hold": 2,
+  "advance_skip_modes": ["0x34", "0x02"],
+  "note": "confirm_offset 30 is the circle press of the T-39002 playtest (select + 30). advance presses circle every 40 iterations except while mode 0x34 or 0x02 is observed, so text, notices, invitations and scene choices take the default cursor and the press never lands on the next command screen. advance_max 400 (16000 iterations; an ordinary week takes about 600) turns a scene the default answers cannot finish into an exact pulse-exhausted stop. Mode 0x02 (overlay loader) is skipped because the original does not sample the pad on its last iteration: route-golden-three_year_default_continuous-v1 (first capture) lost a circle due on the first 0x5B iteration after 0x02 (input slip at frame_count 29520, week 7)."
+ },
+ "checkpoints": [
+  {"id": "select", "when": {"game_mode": "0x34", "mode_stage": 1, "mode_step": 0}, "recurring": true, "limit": 200, "ram": true, "note": "every weekly command select"},
+  {"id": "month", "when": {"game_mode": "0x38", "mode_stage": 0, "mode_step": 0}, "recurring": true, "limit": 40, "ram": true, "save_state": true, "note": "every month start (queue type 0xFE); native writes a save state for targeted later captures"},
+  {"id": "enter-30", "when": {"game_mode": "0x30", "mode_stage": 0, "mode_step": 0}, "recurring": true, "limit": 2, "ram": true},
+  {"id": "enter-31", "when": {"game_mode": "0x31", "mode_stage": 0, "mode_step": 0}, "recurring": true, "limit": 8, "ram": true},
+  {"id": "enter-40", "when": {"game_mode": "0x40", "mode_stage": 0, "mode_step": 0}, "recurring": true, "limit": 6, "ram": true},
+  {"id": "enter-32", "when": {"game_mode": "0x32", "mode_stage": 0, "mode_step": 0}, "recurring": true, "limit": 2, "ram": true},
+  {"id": "enter-46", "when": {"game_mode": "0x46", "mode_stage": 0, "mode_step": 0}, "recurring": true, "limit": 2, "ram": true},
+  {"id": "enter-39", "when": {"game_mode": "0x39", "mode_stage": 0, "mode_step": 0}, "recurring": true, "limit": 6, "ram": true},
+  {"id": "exam", "when": {"game_mode": "0x35", "mode_stage": 0, "mode_step": 0}, "recurring": true, "limit": 12, "ram": true, "note": "queue type 0x40 starts mode 0x35"}
+ ],
+ "save_relaunch": {"first_after_week": 4, "every_weeks": 13, "slot": 0,
+  "note": "G4: in-game save (data icon 13) and power-cycle reload at the command select after these weeks. Both players stop there with their pinned refusal until the capability exists; the compiler's --continuous variant leaves these segments out (for goldens that must run past them) and says so in its provenance."},
+ "unsampled_ok": [
+  {"when": {"game_mode": "0x02"}, "evidence": "route-golden-three_year_default_continuous-v1: CIRCLE due for iteration 29520 (first 0x5B iteration) is not in pad_held; the boundary before it (29519) is 0x02/0/0, the overlay loader's last iteration"},
+  {"when": {"game_mode": "0x46", "mode_stage": 1, "mode_step": 0}, "evidence": "route-golden-three_year_default_continuous-v2 and -v5: CIRCLE due for iteration 31691 is not in pad_held; the boundary before it (31690) is 0x46/1/0, the first iteration after 0x46/0/1 (holiday_open_wait_bg); pad_held has it at 31692"}
+ ],
+ "unsupported": [
+  {"side": "port", "stop": "source_transaction: required route content capability is unavailable for selected command", "at_segment": "w001-confirm", "reason": "first weekly confirm: the installed app opens no ordinary-command media adapter, so the school-day controller has no command capabilities (concurrent 0x30/0x31/0x40 lane)", "ticket": "T-39002"},
+  {"side": "port", "stop": "publication: hover pulse scale 0x1191 needs the scaled sprite path, which this HUD does not rasterize", "at_segment": "w003-cursor", "reason": "first planned command-screen cursor move (week 3, 1995-04-16): command_hud_presenter.gd cannot draw the func_80098680 scaled quad", "ticket": "T-39002"},
+  {"side": "port", "stop": "save_relaunch: installed launches have no Continue capability", "at_segment": "w004-save", "reason": "Continue needs a captured boundary and table SHAs; a fresh New Game has no save identity (T-39007)", "ticket": "T-39007"},
+  {"side": "native", "stop": "save_relaunch: emulator card save and power-cycle reload not scripted", "at_segment": "w004-save", "reason": "G4 (in-game save through icon 13 and reload from the card after a power cycle) is not captured yet; the native player stops at the segment"}
+ ],
+ "known_gaps": [
+  {"side": "port", "gap": "mode 0x39 day notice, 0x30 save poll, PRODUCTION_REJECTIONS overlay modes", "reason": "no 0x39 handler, no schedule_memory_card_save_poll, and 20 overlay modes are refused on saved state (app/overlay_dispatcher.gd PRODUCTION_REJECTIONS); forced events (TAIIKU, BUNKAKEN, SHOUGATU, ...) would stop the route at the first one. Not pinned: no port run has reached them, so their exact stop text and segment are unknown; pin each once a run records it."}
+ ]
+}

@@ -137,3 +137,50 @@ The port mixes colour expansions. Presenters use v<<3 in calendar, date,
 event and ending, and bit replication in `first_arrival_actor_renderer.gd`.
 This is recorded as finding T-39020-F1 in the checkpoint catalog. No presenter
 changes until the user picks a rule.
+## Long-route driver (input-script v2)
+
+One deterministic input script plays the installed port and the original game
+from the first command select (golden set A) for up to three years and pairs
+their checkpoints by id.
+
+- Strategy to script: `python3 -I tools/port/route_strategy.py
+  config/port/route-strategies/three_year_default.json --out
+  config/port/input-scripts/three_year_default.json` (add `--continuous` for
+  the variant without `save_relaunch` segments, used for goldens that must run
+  past them). `tools/emu/route_script.py validate|expand|preflight|simulate|verdict`
+  checks a script, unrolls `repeat`, lists the pinned stops (with their
+  segments), the unpinned `known_gaps` and `unsampled_ok`, re-runs the shared
+  boundary rule on a recorded `route-trace.jsonl`, and recomputes a run's
+  pass/fail from its `route.json`.
+- Both sides: `sh tools/port/run_route_driver.sh <new-out> <script> --both`
+  (from a worktree set `TOKIMEMO_ROOT` to the main checkout). `--port` with
+  `ROUTE_NATIVE=<existing native run>` reuses a golden instead of rerunning the
+  emulator; `--emu` captures the original only.
+- Port side alone: `ROUTE_OBSERVER=long ROUTE_SCRIPT=<script>
+  sh tools/port/run_installed_route.sh <new-out> <bundle> <so> <bridge>`. It
+  passes only when the script completes or a port `unsupported` row pins the
+  stop: its `stop` equals the stop text and its `at_segment` is the segment
+  the player was on. The same text at another segment (another week) fails,
+  and a new stop fails until the script pins it. The emulator player applies
+  the same rule to native rows.
+- Missed presses: a press absent from the pad mask the game sampled for its
+  iteration stops the run (input slip). The only exception is a pulse press
+  after a boundary state listed in the script's `unsampled_ok` (loading states
+  where the original was seen to skip the pad read, each with its run and
+  frame as evidence). That press is recorded in `route.json` `unsampled`.
+- Emulator side alone: `tools/emu/route_driver/run.sh <new-out> <script>
+  [vsyncs]` (starts from `newgame-golden-v1/states/setA/stage20-entry.sstate`
+  so it observes the switch into the first 0x34/1/0 as the port does).
+- Compare: `python3 -I tools/port/compare_route_checkpoints.py <port-out>
+  <native-run> --json report.json`. Per checkpoint: state fields through the
+  `compare_newgame_golden.py` projection, the first differing field, the
+  frame_count offset (native minus port) and its drift since the first pair
+  (n/a with a single pair), and exact pixel equality. It also matches the
+  port's `unsampled` presses to the native run's by checkpoint interval and
+  button, and fails on a port-only one.
+- Tests (synthetic, T0): `python3 -I -m unittest discover -s tools/emu -p
+  'test_route_script.py'`, `python3 -I -m unittest discover -s tools/port -p
+  'test_compare_route_checkpoints.py'` (one class runs the real projection on
+  the synthetic `tools/port/fixtures/route_compare_state.json`), and `godot --headless --path
+  port/godot --script res://tests/route/run_route_script_player_tests.gd`
+  (GDScript player parity with the Python rule).
