@@ -1,16 +1,18 @@
 {
- "captures": ["wpa-as1", "wpa-as2"],
- "exclude": [
-  {"start": "0x80000000", "length": 65536, "reason": "BIOS/kernel RAM (OpenBIOS handlers, event and thread tables) changed by the vertical-blank interrupt handlers while a hit runs; the port never writes below 0x80010000"},
-  {"start": "0x800E5B10", "length": 64, "reason": "SDK counters bumped by the vertical-blank interrupt while the function runs"}
+ "captures": [
+  "wpa-as1",
+  "wpa-as2",
+  "wpa-s5",
+  "wpa-ad1",
+  "wpa-ad2"
  ],
+ "exclude": [],
  "functions": {},
  "untested": {
   "draw_shake_start": "never reached from the sampled states; covered by tests/engine/actor_sprites_test.gd",
-  "draw_shake_update": "never reached from the sampled states (title, school first line); covered by tests/engine/actor_sprites_test.gd",
   "tpage_buf_clear_all": "never reached from the sampled states; covered by tests/engine/actor_sprites_test.gd",
   "search_load_tpage_buf_lock": "never reached from the sampled states; covered by tests/engine/actor_sprites_test.gd",
-  "search_tpage_multi": "never reached from the sampled states (its caller mod_set_gpu/mod_set is not reached either); covered by tests/engine/actor_sprites_test.gd",
+  "search_tpage_multi": "called from the name_entry overlay (name_entry.c:391) and mod_set_gpu, not reached from the sampled states; covered by tests/engine/actor_sprites_test.gd",
   "tpage_buffer_print": "debug print behind PAD_R2, never reached from the sampled states; covered by tests/engine/actor_sprites_test.gd",
   "actor_clear_range": "never reached from the sampled states; covered by tests/engine/actor_sprites_test.gd",
   "draw_brightness_reset": "never reached from the sampled states; covered by tests/engine/actor_sprites_test.gd",

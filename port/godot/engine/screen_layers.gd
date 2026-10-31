@@ -86,6 +86,11 @@ func _show_quad(semi: int, uv: Array, xy: Array, tpage_args: Array, arg6: int, a
 	var xy_at: Array = [0x8, 0xA, 0x10, 0x12, 0x18, 0x1A, 0x20, 0x22]
 	for i: int in 8:
 		m.write_s16(poly + xy_at[i], xy[i])
+	if tpage_args.is_empty():
+		# the tpage argument uses the C's uninitialised divisor / pageWidth (colour mode outside 0..2): refuse at the
+		# first use, after the work area, SetPolyFT4, SetShadeTex and the stores ran like in the original
+		engine.refuse("srn_tpage_show", "colour mode outside 0..2: the C leaves divisor and pageWidth uninitialised")
+		return
 	m.write_u16(poly + 0x16, engine.call_c("func_8009ECB0", tpage_args))
 	m.write_u16(poly + 0xE, engine.call_c("func_8009ED74", [arg6, arg7]))
 	engine.call_c("AddPrim", [slot, poly])
@@ -103,6 +108,7 @@ func srn_tpage_show(arg0: int, arg1: int, arg2: int, arg3: int, arg4: int, arg5:
 	arg7 = Math.s16(arg7)
 	var divisor: int
 	var page_width: int
+	var valid: bool = true
 	match arg1:
 		0:
 			divisor = 4
@@ -114,15 +120,16 @@ func srn_tpage_show(arg0: int, arg1: int, arg2: int, arg3: int, arg4: int, arg5:
 			divisor = 1
 			page_width = 0x100
 		_:
-			engine.refuse("srn_tpage_show", "arg1 = %d: the C leaves divisor and pageWidth uninitialised for a colour mode outside 0..2" % arg1)
-			return
+			divisor = 0
+			page_width = 0
+			valid = false
 	var m: Object = engine.memory
 	var rx: int = m.s16(arg3 + 0)
 	var ry: int = m.s16(arg3 + 2)
 	var h: int = m.s16(arg3 + 6)
 	var v: int = (arg0 & 0x20) * 4
 	var scroll: int = arg4 & 0xFF
-	var page_x: int = ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor
+	var page_x: int = ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor if valid else 0
 	var page_y: int = (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4
 	var col_u: int = arg4 / 256 * 4
 	var tp_low: int = arg2 & 3
@@ -131,7 +138,7 @@ func srn_tpage_show(arg0: int, arg1: int, arg2: int, arg3: int, arg4: int, arg5:
 	var oy: int = _oy(_db())
 	_show_quad(arg2, [0, v, 0xFF, v, 0, v + h, 0xFF, v + h],
 		[ox - scroll + rx, oy + ry, ox - scroll + rx + 0xFF, oy + ry, ox - scroll + rx, oy + ry + h, ox - scroll + rx + 0xFF, oy + ry + h],
-		[arg1, tp_low, page_x, page_y], arg6, arg7, _ot(_db(), arg8))
+		[arg1, tp_low, page_x, page_y] if valid else [], arg6, arg7, _ot(_db(), arg8))
 	if engine.halted():
 		return
 	# 1-pixel column after the left page

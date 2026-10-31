@@ -1,29 +1,15 @@
 {
  "captures": [
   "wpa-tx1",
-  "wpa-tx2"
+  "wpa-tx2",
+  "wpa-s5"
  ],
- "exclude": [
-  {
-   "start": "0x80000000",
-   "length": 65536,
-   "reason": "BIOS/kernel RAM (OpenBIOS handlers, event and thread tables) changed by the vertical-blank interrupt handlers while a hit runs; the port never writes below 0x80010000"
-  },
-  {
-   "start": "0x800E5B10",
-   "length": 64,
-   "reason": "SDK counters bumped by the vertical-blank interrupt while the function runs"
-  }
- ],
+ "exclude": [],
  "functions": {},
  "untested": {
-  "k_disp_switch": "not reached from the sampled states (title, school first line); covered by tests/engine/text_system_test.gd",
-  "get_ksys": "not reached from the sampled states (title, school first line); covered by tests/engine/text_system_test.gd",
   "set_k_work": "not reached from the sampled states (title, school first line); covered by tests/engine/text_system_test.gd",
   "k_sub_reset_point_set": "not reached from the sampled states (title, school first line); covered by tests/engine/text_system_test.gd",
   "k_disp_goto_line_end": "not reached from the sampled states (title, school first line); covered by tests/engine/text_system_test.gd",
-  "get_k_speed": "not reached from the sampled states (title, school first line); covered by tests/engine/text_system_test.gd",
-  "check_end_k": "not reached from the sampled states (title, school first line); covered by tests/engine/text_system_test.gd",
   "text_unused_stub": "empty function with no caller in src/; covered by tests/engine/text_system_test.gd"
  }
 }

@@ -10,6 +10,10 @@ extends RefCounted
 ## config/port/engine-diff/actor_sprites.json.
 
 const Math = preload("res://core/native_math.gd")
+## rsin and abs are libgte/libc leaf functions called in the C. They are NOT routed through call_c: they are
+## pure (no memory, no state), core/native_math.gd already ports rsin from asm/libgte_8009FA5C.s (Math.rsin,
+## checked by its own tests and the taco-tables witness) and abs is absi. A call_c would only refuse until an SDK
+## module lists them; this is the one deliberate deviation from "every call goes through call_c".
 const Layout = preload("res://core/game_layout.gd")
 
 const C_FILE: String = "src/main/actor_sprites.c"
@@ -77,6 +81,8 @@ const SPR_FRAME_OFFSET: int = 0xC8
 const I_FRAME_OFFSET: int = 0x90
 ## Slot of the `gs` local (sw t6, 0xEC(sp) at the function start); func_80098680 receives the bytes behind spr.
 const GS_FRAME_OFFSET: int = 0xEC
+## The `tpage` local starts as the stale u16 at +0x8E (asm: lhu s2, 0x8E(sp)).
+const TPAGE_FRAME_OFFSET: int = 0x8E
 ## The loop bound of actor_draw_all: *(s32 *)&game_state.menu_hit[3] (0x800E7318).
 const MENU_HIT_BOUND_OFFSET: int = 0x1098
 ## Rodata strings (asm/data/main/actor_sprites.rodata.s)
@@ -137,7 +143,8 @@ func draw_shake_update() -> void:
 ## part of the current frame as a sprite quad (func_80098680), then advance the animation and the position.
 ## An actor whose texture or frame table pointer has bit 31 clear prints "cls..." and is skipped. The C's
 ## `tpage` local is uninitialised when the quad flags select neither 0 nor 0x01000000 before the first
-## assignment: the port refuses there instead of inventing a value.
+## assignment: like the original it then holds the stale halfword at frame +0x8E (and later the previous
+## record's page).
 @warning_ignore("integer_division")
 func actor_draw_all() -> void:
 	var m: Object = engine.memory
@@ -147,7 +154,8 @@ func actor_draw_all() -> void:
 	var col: int = engine.call_c("draw_brightness_get")
 	# search_tpage(0x7FFF, i, 0) with i uninitialised: the C reads its own stack slot (lw a1, 0x90(sp))
 	engine.call_c("search_tpage", [0x7FFF, m.s32(engine.frame_base() + I_FRAME_OFFSET), 0])
-	var tpage: int = -1 # unset: uninitialised in the C until the first assignment
+	# `tpage` (u16 local in $s2) starts as the stale halfword at +0x8E of the frame (lhu s2, 0x8E(sp)), like `i` above.
+	var tpage: int = m.u16(engine.frame_base() + TPAGE_FRAME_OFFSET)
 	var i: int = 0
 	while i <= m.s32(gs + MENU_HIT_BOUND_OFFSET):
 		if engine.halted():
@@ -242,9 +250,7 @@ func actor_draw_all() -> void:
 							0x01000000:
 								tpage = engine.call_c(which, [m.s16(part + 4), i, 1]) & 0xFFFF
 							_:
-								if tpage == -1:
-									engine.refuse("actor_draw_all", "quad_flags & 0x03000000 = 0x%X before any tpage was assigned: the C's tpage local is uninitialised" % (m.s32(a + A_QUAD_FLAGS) & 0x03000000))
-									return
+								pass # 0x02000000 / 0x03000000: no assignment, the previous (or stale stack) tpage is used
 						var tpx: int = tpage & 0x1F
 						var tpy: int = (tpage & 0x20) * 4
 						m.write_s16(spr + 0xC, tpx)

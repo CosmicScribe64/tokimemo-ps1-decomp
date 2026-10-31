@@ -1,9 +1,14 @@
 {
- "captures": ["wpa-gp1", "wpa-gp2"],
- "exclude": [
-  {"start": "0x80000000", "length": 65536, "reason": "BIOS/kernel RAM (OpenBIOS handlers, event and thread tables): libgpu's real calls (AddPrim and friends) never touch it, but the VBlank interrupt handlers run during a hit and change it; the port never writes below 0x80010000"},
-  {"start": "0x800E5B10", "length": 64, "reason": "SDK counters bumped by the vertical-blank interrupt while the function runs"}
+ "captures": [
+  "wpa-gp1",
+  "wpa-gp2",
+  "wpa-s1",
+  "wpa-s2",
+  "wpa-s5",
+  "wpa-s6",
+  "wpa-s7"
  ],
+ "exclude": [],
  "functions": {},
  "untested": {
   "sprite_set_gpu_poly_ft4": "no caller in src/ and never reached from the sampled states (title, school first line); covered by tests/engine/gpu_primitives_test.gd",

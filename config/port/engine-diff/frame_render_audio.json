@@ -1,20 +1,15 @@
 {
  "captures": [
   "wpa-fr1",
-  "wpa-fr2"
+  "wpa-fr2",
+  "wpa-s1",
+  "wpa-s2",
+  "wpa-s5",
+  "wpa-s6",
+  "wpa-s7",
+  "wpa-fr3"
  ],
- "exclude": [
-  {
-   "start": "0x80000000",
-   "length": 65536,
-   "reason": "BIOS/kernel RAM (OpenBIOS handlers, event and thread tables) changed by the vertical-blank interrupt handlers while a hit runs; the port never writes below 0x80010000"
-  },
-  {
-   "start": "0x800E5B10",
-   "length": 64,
-   "reason": "SDK counters bumped by the vertical-blank interrupt while the function runs"
-  }
- ],
+ "exclude": [],
  "functions": {},
  "untested": {
   "load_csr_ab": "no caller in src/ (only reachable through function pointers or never); covered by tests/engine/frame_render_audio_test.gd",

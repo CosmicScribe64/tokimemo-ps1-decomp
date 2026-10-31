@@ -11,6 +11,10 @@ extends RefCounted
 ## Tests: tests/engine/gpu_primitives_test.gd (hand checks), config/port/engine-diff/gpu_primitives.json.
 
 const Math = preload("res://core/native_math.gd")
+## rsin and abs are libgte/libc leaf functions called in the C. They are NOT routed through call_c: they are
+## pure (no memory, no state), core/native_math.gd already ports rsin from asm/libgte_8009FA5C.s (Math.rsin,
+## checked by its own tests and the taco-tables witness) and abs is absi. A call_c would only refuse until an SDK
+## module lists them; this is the one deliberate deviation from "every call goes through call_c".
 const Layout = preload("res://core/game_layout.gd")
 
 const C_FILE: String = "src/main/gpu_primitives.c"

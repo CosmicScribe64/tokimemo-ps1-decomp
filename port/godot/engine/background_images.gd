@@ -128,6 +128,9 @@ func dec_bg_decode_to_vram(arg0: int) -> int:
 			1:
 				m.write_global("bg_decode_result", engine.call_c("bg_still_decode_to_vram", [0x140, 0x100, 0x140, 0xA0]))
 				return 1
+	# Unobserved placeholder: the C falls off the end here (layer outside 0..1, or a shown flag other than 0/1), so
+	# the original's v0 is whatever the last callee left (the asm was not followed further). The signature says
+	# ret_defined [0, 1]: the harness does not compare v0 on this path; no capture reached it.
 	return 0
 
 ## Copies the current draw buffer's top arg0 rows (RECT {0, buffer * 0xF0, 0x140, arg0} on the stack) into the

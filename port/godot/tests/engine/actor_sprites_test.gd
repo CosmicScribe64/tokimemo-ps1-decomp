@@ -324,14 +324,19 @@ func _test_actor_draw_all() -> void:
 	s.check(snaps[0].slice(8, 12) == [17, 0, 9, 0], "both scales != 0x1000: w = unk_0A + 1, h = unk_0C + 1")
 	# scale multiply: unk_1C = 0x2000 * (-0x1000 / 0x1000) = -0x2000, unk_1E = 0x3000 * -1 = -0x3000
 	s.check(snaps[0].slice(0x1C, 0x20) == [0x00, 0xE0, 0x00, 0xD0], "scales: unk_1A * (spr.unk_1C / 0x1000) and unk_1C * (spr.unk_1E / 0x1000): %s" % [snaps[0].slice(0x1C, 0x20)])
-	# the unset tpage local refuses
+	# the uninitialised tpage local is the stale halfword at frame + 0x8E (lhu s2, 0x8E(sp))
 	var e2 = s.new_engine()
 	_setup_actor(e2)
 	e2.memory.write_s32(e2.memory.global_address("actor_pool") + 0x38, 0x02000000)
+	e2.memory.write_u16(e2.sp - 0xF0 + 0x8E, 0x25)
+	var snap2: Array = []
 	e2.set_stub("search_tpage", func(_args: Array) -> int:
 		return 0)
+	e2.set_stub("func_80098680", func(args: Array) -> int:
+		snap2.append(s.bytes(e2, args[0], 0x24))
+		return 0)
 	e2.call_c("actor_draw_all")
-	s.check(e2.halted() and e2.refusal.contains("tpage"), "quad flags 0x02000000 with no earlier tpage: refused (%s)" % e2.refusal)
+	s.check(not e2.halted() and snap2.size() == 1 and snap2[0][0xC] == 5 and snap2[0][0xF] == 0x80, "quad flags 0x02000000: no search, tpage = stale 0x25 (x 5, y 0x80): %s" % [snap2])
 	# a table pointer without bit 31 prints and skips the record
 	var e3 = s.new_engine()
 	var a3: Dictionary = _setup_actor(e3)
