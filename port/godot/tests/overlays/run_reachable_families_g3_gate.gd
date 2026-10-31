@@ -12,10 +12,12 @@ const Registry = preload("res://core/native_route_registry.gd")
 const State = preload("res://rules/school_day_state.gd")
 const Controller = preload("res://scenes/school_day_controller.gd")
 const Calendar = preload("res://rules/calendar.gd")
+const CalromMonths = preload("res://tests/fixtures/calrom_months.gd")
 const OrdinaryWeek = preload("res://rules/ordinary_week.gd")
 const SchoolDay = preload("res://rules/school_day.gd")
 const WeekEnd = preload("res://rules/week_end.gd")
 const DayEventModes = preload("res://rules/day_event_modes.gd")
+const SeasonalModes = preload("res://rules/seasonal_mode_identity.gd")
 const OverlayDispatcher = preload("res://app/overlay_dispatcher.gd")
 const TelephoneOverlay = preload("res://overlays/telephone_overlay.gd")
 const DateOverlay = preload("res://overlays/date_overlay.gd")
@@ -141,7 +143,7 @@ func _create_live_controller_session(tables: Dictionary) -> Dictionary:
 	state.rule_state["girls"][0]["affection_word"] = 90 << 16
 	state.rule_state["girls"][0]["tokimeki_word"] = 90 << 16
 	state.rule_state["girls"][0]["flags"] = 2
-	Calendar.populate_month_calendar(state.rule_state, 95, 5)
+	CalromMonths.install_or_report(state.rule_state, 95, 5)
 
 	var repo_root: String = _resolve_repo_root()
 	var hud_manifest: String = repo_root.path_join(".asset-cache/port/hud-production-v1/manifest.json")
@@ -230,6 +232,24 @@ func _preview(controller: Controller, mode: int, overlay_state: Dictionary, pads
 
 ## An entered family refused in production: checks the refusal, then a preview
 ## run that populates `key`, renders 320x240 and exits without rewards.
+## A main-executable seasonal mode: entered from the queue with no overlay
+## state, then refused by the router because it has no implemented handler.
+func _check_main_executable_refusal(ctx: Dictionary, opcode: int, native_mode: int, label: String) -> void:
+	var state: State = ctx["state"]
+	var mode: int = _queue_day_event_and_step(ctx, opcode, 0, 0, 0)
+	var ovl: Variant = state.rule_state.get("overlay_state")
+	_check(mode == native_mode and (not ovl is Dictionary or (ovl as Dictionary).is_empty()),
+		"%s: queue 0x%02X enters native 0x%02X with no overlay" % [label, opcode, native_mode])
+	var before: Dictionary = state.rule_state.duplicate(true)
+	var before_core: Array = [state.game_mode, state.mode_stage, state.mode_step]
+	var res: Session.FrameResult = _step_pad(ctx["session"], PAD_CIRCLE)
+	_check(res.error == "unsupported native mode 0x%02x: no implemented handler" % native_mode,
+		"%s (0x%02X) is refused by name (%s)" % [label, native_mode, res.error])
+	_check(state.rule_state == before and [state.game_mode, state.mode_stage, state.mode_step] == before_core,
+		"%s (0x%02X) refusal leaves rule_state and mode/stage/step unchanged" % [label, native_mode])
+	state.reset_game_mode_fields(0x31)
+
+
 func _check_refused_family(ctx: Dictionary, native_mode: int, render_mode_id: int, label: String, key: String, key_pads: Array, exit_pads: Array, refused_pads: Array = [PAD_CIRCLE, PAD_CROSS, PAD_DOWN]) -> void:
 	var state: State = ctx["state"]
 	var controller: Controller = ctx["controller"]
@@ -621,14 +641,9 @@ func _test_e_seasonal_and_school_events(tables: Dictionary) -> void:
 	var session: Session = ctx["session"]
 	controller.overlay_dispatcher.title_overlay = InGameEtcOverlay.new()
 
-	# 1. Entrance / Semester Ceremony Notice (event 0xFD -> native 0x39 -> dispatcher 0x3F ETC)
-	var mode_notice: int = _queue_day_event_and_step(ctx, 0xFD, 0, 0, 0)
-	_check(mode_notice == 0x39 and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x3F,
-		"Ceremony notice event 0xFD dispatches live to native 0x39 -> dispatcher 0x3F")
-	_step_pad(session, 0)
-	_check(state.game_mode == 0x39, "Ceremony notice (0x39) waits on neutral input")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "Ceremony notice (0x39) returns cleanly to 0x31")
+	# 1. Day notice (event 0xFD -> native 0x39, main-executable schedule_day_notice_mode_handler).
+	# It is not an overlay and has no port handler yet, so the router refuses it by name.
+	_check_main_executable_refusal(ctx, 0xFD, 0x39, "Day notice")
 
 	# T-39006: the families below have no source-backed production handler yet (fixed inputs,
 	# the invented roster or fixed rewards in step_mode). With saved state each one is refused
@@ -708,11 +723,13 @@ func _test_e_seasonal_and_school_events(tables: Dictionary) -> void:
 	_check(int(state.rule_state["day_count"]) == day_count_before_trip, "SHUGAKU refusal does not advance the calendar")
 
 	# 7. Holiday / Seasonal Encounters via queue opcodes:
-	#    0x2C -> 0x41 (KANGEI 0x4D), 0x28 -> 0x42 (SHOUGATU 0x4E), 0x31 -> 0x54 (VALEN 0x4F),
+	#    0x31 -> 0x54 (VALEN 0x4F),
 	#    0x47 -> 0x61 (OMIMAI 0x4B), 0x25 -> 0x74 (MASTER 0x52)
+	# 0x2C -> native 0x41 (New Year prep) and 0x28 -> native 0x42 (Christmas prep)
+	# are main-executable modes in home_screens.c, not KANGEI/SHOUGATU overlays.
+	_check_main_executable_refusal(ctx, 0x2C, 0x41, "New Year prep")
+	_check_main_executable_refusal(ctx, 0x28, 0x42, "Christmas prep")
 	var seasonal_cases: Array = [
-		[0x2C, 0x41, 0x4D, "camp_day"],
-		[0x28, 0x42, 0x4E, "christmas_girls"],
 		[0x31, 0x54, 0x4F, "valentine_candidates"],
 		[0x47, 0x61, 0x4B, "sick_visit_dialogue"],
 		[0x25, 0x74, 0x52, "master_grade"],
@@ -904,10 +921,15 @@ func _test_h_graduation_and_ending_flows(tables: Dictionary) -> void:
 	state_win.rule_state["girls"][0]["counters"][1] = 8
 	state_win.reset_game_mode_fields(0x31)
 
-	# Step 0x31 step 0 -> step 1 -> mode 0x5C (ENDING)
+	# Step 0x31 step 0 -> step 1 (day_event_dispatch date gate). Step 1 is
+	# schedule_ending_start (hud_season_bgm_load, bank wait, audio 0x200, mode
+	# 0x63), which is not ported: the route refuses there. The ending overlay
+	# below is then started overlay-locally; it is not route evidence.
 	_step_pad(session_win, 0)
-	_step_pad(session_win, 0)
-	_check(state_win.game_mode == 0x5C, "Graduation Day 1998-03-01 transitions live to mode 0x5C (ENDING)")
+	var grad_res: Session.FrameResult = _step_pad(session_win, 0)
+	_check(state_win.game_mode == 0x31 and state_win.mode_step == 1 and grad_res.error.begins_with("schedule_ending_start:"),
+		"Graduation Day 1998-03-01 reaches schedule_ending_start and refuses its unported bank wait")
+	controller_win.start_overlay(state_win, 0x5C, {}, [0x21, 0, 0, 0])
 	_step_pad(session_win, 0)
 	_check(state_win.game_mode == 0x5C and int(state_win.rule_state.get("ending_completed", 0)) == 0,
 		"ENDING (0x5C) waits for player input on neutral frames")
@@ -947,8 +969,10 @@ func _test_h_graduation_and_ending_flows(tables: Dictionary) -> void:
 	state_bad.reset_game_mode_fields(0x31)
 
 	_step_pad(session_bad, 0)
-	_step_pad(session_bad, 0)
-	_check(state_bad.game_mode == 0x5C, "Ineligible Graduation Day transitions to mode 0x5C (ENDING)")
+	var bad_res: Session.FrameResult = _step_pad(session_bad, 0)
+	_check(state_bad.mode_step == 1 and bad_res.error.begins_with("schedule_ending_start:"),
+		"Ineligible Graduation Day reaches schedule_ending_start and refuses its unported bank wait")
+	(ctx_bad["controller"] as Controller).start_overlay(state_bad, 0x5C, {}, [0x21, 0, 0, 0])
 	for _step in range(2):
 		_step_pad(session_bad, PAD_CIRCLE)
 	# T-39007: cross answers "no" to the clear-save prompt, so nothing is stored.
@@ -1012,8 +1036,8 @@ func _reconcile_and_emit_g3_lists() -> void:
 		var m: int = DayEventModes.mode_for(op, 0)
 		var dm: int = DayEventModes.dispatcher_mode_for(m, op)
 		var is_core_scheduler: bool = m in [0x32, 0x34, 0x38, 0x40, 0x46]
-		_check(is_core_scheduler or OverlayDispatcher.OVERLAY_CATALOG.has(dm),
-			"Day event opcode 0x%02X resolves to valid core mode 0x%02X or OVERLAY_CATALOG dispatcher mode 0x%02X" % [op, m, dm])
+		_check(is_core_scheduler or SeasonalModes.is_main_executable(m) or OverlayDispatcher.OVERLAY_CATALOG.has(dm),
+			"Day event opcode 0x%02X resolves to a core/main-executable mode 0x%02X or OVERLAY_CATALOG dispatcher mode 0x%02X" % [op, m, dm])
 		day_event_table.append({
 			"day_event_opcode_hex": "0x%02X" % op,
 			"native_mode_hex": "0x%02X" % m,

@@ -14,6 +14,7 @@ const TelephoneOverlay = preload("res://overlays/telephone_overlay.gd")
 const TelephonePresenter = preload("res://presentation/telephone_overlay_presenter.gd")
 const EndingOverlay = preload("res://overlays/ending_overlay.gd")
 const Calendar = preload("res://rules/calendar.gd")
+const CalromMonths = preload("res://tests/fixtures/calrom_months.gd")
 const PlayableBoot = preload("res://app/playable_boot.gd")
 const Canvas = preload("res://presentation/native_canvas.gd")
 const ClearSave = preload("res://services/clear_save_transaction.gd")
@@ -144,7 +145,7 @@ func _test_external_portrait_and_live_context() -> void:
 	state.rule_state["weekday"] = 6
 	state.rule_state["day_count"] = 592
 	state.rule_state["params"] = [115 << 16, 142 << 16, 138 << 16, 129 << 16, 131 << 16, 145 << 16, 122 << 16, 95 << 16, 14 << 16]
-	Calendar.populate_month_calendar(state.rule_state, 96, 11)
+	CalromMonths.install_or_report(state.rule_state, 96, 11)
 
 	var tel_session: TelephoneOverlay.TelephoneSessionState = TelephoneOverlay.create_session_from_live_state(state.rule_state, 0)
 	_check(tel_session.live_year == 96 and tel_session.live_month == 11 and tel_session.live_day == 17,
@@ -182,7 +183,7 @@ func _test_live_interactive_overlay_dispatch() -> void:
 	state.rule_state["girls"][0]["affection_word"] = 70 << 16
 	state.rule_state["girls"][0]["tokimeki_word"] = 75 << 16
 	state.rule_state["girls"][0]["flags"] = 2
-	Calendar.populate_month_calendar(state.rule_state, 95, 5)
+	CalromMonths.install_or_report(state.rule_state, 95, 5)
 
 	# Queue: [0] = 0x46 (GEKO invitation), [1] = 0x44 (GEKO walk-home), [2] = 0x80 (DATE), [3] = 0xff (end of queue)
 	var queue: Array = []
@@ -336,10 +337,15 @@ func _test_graduation_confession_and_bad_ending() -> void:
 	session_ok.audio_logic = _empty
 	state_ok.reset_game_mode_fields(0x31)
 
-	# Step 0x31 step 0 -> step 1 -> mode 0x5C (ENDING)
+	# Step 0x31 step 0 -> step 1 (day_event_dispatch date gate). Step 1 is
+	# schedule_ending_start, whose bank wait is not ported: the route refuses
+	# there. The ending overlay is then started overlay-locally (not route evidence).
 	session_ok.step(InputFrame.new(session_ok.clock.logic_iterations, 0), [])
-	session_ok.step(InputFrame.new(session_ok.clock.logic_iterations, 0), [])
-	_check(state_ok.game_mode == 0x5c, "Graduation Day 1998-03-01 transitions to mode 0x5C (ENDING)")
+	var grad_res = session_ok.step(InputFrame.new(session_ok.clock.logic_iterations, 0), [])
+	_check(state_ok.mode_step == 1 and String(grad_res.error).begins_with("schedule_ending_start:"),
+		"Graduation Day 1998-03-01 reaches schedule_ending_start and refuses its unported bank wait")
+	controller_ok.start_overlay(state_ok, 0x5c, {}, [0x21, 0, 0, 0])
+	_check(state_ok.game_mode == 0x5c, "Overlay-local ending start enters mode 0x5C (ENDING)")
 	_check(String(state_ok.rule_state["overlay_state"].get("phase", "")) == "confession",
 		"Graduation overlay starts in 'confession' phase for eligible heroine")
 
@@ -430,8 +436,11 @@ func _test_graduation_confession_and_bad_ending() -> void:
 	state_bad.reset_game_mode_fields(0x31)
 
 	session_bad.step(InputFrame.new(session_bad.clock.logic_iterations, 0), [])
-	session_bad.step(InputFrame.new(session_bad.clock.logic_iterations, 0), [])
-	_check(state_bad.game_mode == 0x5c, "Ineligible Graduation Day transitions to mode 0x5C (ENDING)")
+	var bad_res = session_bad.step(InputFrame.new(session_bad.clock.logic_iterations, 0), [])
+	_check(state_bad.mode_step == 1 and String(bad_res.error).begins_with("schedule_ending_start:"),
+		"Ineligible Graduation Day reaches schedule_ending_start and refuses its unported bank wait")
+	controller_bad.start_overlay(state_bad, 0x5c, {}, [0x21, 0, 0, 0])
+	_check(state_bad.game_mode == 0x5c, "Overlay-local ending start enters mode 0x5C (ENDING)")
 	_check(String(state_bad.rule_state["overlay_state"].get("phase", "")) == "yoshio_bad_ending",
 		"Ineligible graduation starts in 'yoshio_bad_ending' phase")
 
@@ -463,7 +472,7 @@ func _test_subgames_and_playable_boot_live_overlay() -> void:
 	state.rule_state["day"] = 18
 	state.rule_state["weekday"] = 4
 	state.rule_state["params"] = [110 << 16, 125 << 16, 130 << 16, 120 << 16, 140 << 16, 135 << 16, 118 << 16, 105 << 16, 12 << 16]
-	Calendar.populate_month_calendar(state.rule_state, 96, 10)
+	CalromMonths.install_or_report(state.rule_state, 96, 10)
 
 	var session := Session.new()
 	session.rng.configure(Rng.OPENBIOS_PROFILE, 19)

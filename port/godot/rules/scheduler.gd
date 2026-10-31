@@ -337,8 +337,9 @@ static func build_week(state: State, tables: Dictionary, rng: Rng) -> String:
 	var month_off: int = 0
 	var month_days: int = data["calendar"][0]["day_kind"][0]
 	if month_days <= 0:
-		month_days = Calendar.days_in_month(data["year"], month)
-		Calendar.populate_month_calendar(data, data["year"], month)
+		# day_event_queue_build_week reads month_calendar rows loaded from CALROM;
+		# an unloaded row has no source value to invent.
+		return "week queue requires the loaded original CALROM month rows"
 	var wd: int = (data["weekday"] + 1) % 7
 	var queue: Array = []
 	if day >= month_days:

@@ -216,14 +216,11 @@ func _test_date_rollover(app: Boot) -> void:
 		"date advance preserves source identity and defers load/completion/mode ownership")
 	var legacy_error: String = Calendar.advance_day(legacy)
 	var legacy_data: Dictionary = legacy.rule_state
-	check(legacy_error.is_empty() and [legacy_data["year"], legacy_data["month"], legacy_data["day"], legacy_data["weekday"]] == [95, 5, 1, 0],
-		"legacy no-source date advance still crosses to May1")
-	check(legacy_data["calendar"] != old_records and legacy_data["calendar"][0]["day_kind"][0] == 31
-		and legacy_data["calendar"][1]["day_kind"][0] == 30
-		and legacy_data["calendar"][0]["marker"][0] == 0 and legacy_data["calendar"][1]["marker"][0] == 3,
-		"legacy no-source rollover still synthesizes May/June records")
-	check(legacy_data["calendar"][0]["marker"][30] != 0x17,
-		"legacy synthesis replaces the old April-only marker rather than silently retaining stale rows")
+	check(legacy_error == "calendar month rollover requires the validated original CALROM source"
+		and [legacy_data["year"], legacy_data["month"], legacy_data["day"]] == [95, 4, 30],
+		"no-source month rollover is refused before any date write")
+	check(legacy_data["calendar"] == old_records and legacy_data["day_count"] == old_count,
+		"no-source rollover never generates calendar rows")
 
 func _test_month_phase(app: Boot) -> void:
 	var state: Boot.State = _month_fixture(app)

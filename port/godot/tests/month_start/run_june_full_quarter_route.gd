@@ -18,6 +18,7 @@ const MonthStart = preload("res://scenes/month_start_controller.gd")
 const CalendarSource = preload("res://services/native_calendar_source.gd")
 const BankRequest = preload("res://services/month_start_bank_request.gd")
 const Calendar = preload("res://rules/calendar.gd")
+const DayNotice = preload("res://rules/day_notice.gd")
 const Scheduler = preload("res://rules/scheduler.gd")
 const SaveService = preload("res://services/save_service.gd")
 const AudioService = preload("res://services/audio_service.gd")
@@ -485,68 +486,41 @@ func _verify_g2_predicates(
 	check(int(dec95["marker"][24]) == 0x0d and int(dec95["marker"][25]) == 0x0e and int(dec95["day_kind"][25]) == 3 and int(jan96["marker"][8]) == 0x10, "G2 predicate (e): CALROM 95-12-24..25 and 96-01-08 carry exact winter vacation markers/day_kind")
 	check(int(mar96["marker"][24]) == 0x14 and int(mar96["day_kind"][20]) == 2 and int(mar96["day_kind"][25]) == 3, "G2 predicate (e): CALROM 96-03-20..25 carry exact spring vacation markers/day_kind")
 
+	# Vacation changes only in schedule_vacation_notice_step (queue 0xFD, native
+	# mode 0x39) on the CALROM notice markers; calendar_advance_day never writes it.
 	var vac_cases: Array = [
-		{
-			"name": "summer_vacation",
-			"before_date": [95, 7, 19],
-			"start_date": [95, 7, 20],
-			"end_before": [95, 8, 31],
-			"end_after": [95, 9, 1],
-			"vacation_id": 1,
-			"expected_bank": [0xd7d1, 0xd7af, 0xd7a4],
-		},
-		{
-			"name": "winter_vacation",
-			"before_date": [95, 12, 24],
-			"start_date": [95, 12, 25],
-			"end_before": [96, 1, 7],
-			"end_after": [96, 1, 8],
-			"vacation_id": 2,
-			"expected_bank": [0xd73f, 0xd71e, 0xd717],
-		},
-		{
-			"name": "spring_vacation",
-			"before_date": [96, 3, 19],
-			"start_date": [96, 3, 20],
-			"end_before": [96, 4, 4],
-			"end_after": [96, 4, 5],
-			"vacation_id": 3,
-			"expected_bank": [0xd780, 0xd752, 0xd743],
-		},
+		{"name": "summer_vacation", "start_notice": [95, 7, 24, 6], "end_notice": [95, 9, 1, 0x0a],
+			"vacation_id": 1, "expected_bank": [0xd7d1, 0xd7af, 0xd7a4]},
+		{"name": "winter_vacation", "start_notice": [95, 12, 25, 0x0e], "end_notice": [96, 1, 8, 0x10],
+			"vacation_id": 2, "expected_bank": [0xd73f, 0xd71e, 0xd717]},
+		{"name": "spring_vacation", "start_notice": [96, 3, 24, 0x14], "end_notice": [96, 4, 4, 2],
+			"vacation_id": 3, "expected_bank": [0xd780, 0xd752, 0xd743]},
 	]
 	for vc: Dictionary in vac_cases:
-		var b_date: Array = vc["before_date"]
-		var s_date: Array = vc["start_date"]
-		var eb_date: Array = vc["end_before"]
-		var ea_date: Array = vc["end_after"]
-		var st_vac: State = _make_month_start_state(template_state, cal_source, int(b_date[0]), int(b_date[1]), 0)
-		st_vac.rule_state["day"] = int(b_date[2])
-		st_vac.rule_state["weekday"] = Calendar.weekday_for_date(int(b_date[0]), int(b_date[1]), int(b_date[2]))
-		Calendar.update_vacation_for_date(st_vac.rule_state)
-		check(int(st_vac.rule_state["vacation"]) == 0, "G2 predicate (e): %s before start (%s) has vacation=0" % [vc["name"], str(b_date)])
-		check(Calendar.advance_day(st_vac).is_empty(), "G2 predicate (e): %s advances to start date %s" % [vc["name"], str(s_date)])
-		check(
-			[st_vac.rule_state["year"], st_vac.rule_state["month"], st_vac.rule_state["day"], st_vac.rule_state["vacation"]]
-			== [int(s_date[0]), int(s_date[1]), int(s_date[2]), int(vc["vacation_id"])],
-			"G2 predicate (e): %s start date %s selects vacation=%d" % [vc["name"], str(s_date), vc["vacation_id"]]
-		)
+		var s_note: Array = vc["start_notice"]
+		var e_note: Array = vc["end_notice"]
+		check(int(cal_source.month(int(s_note[0]), int(s_note[1]))["marker"][int(s_note[2])]) == int(s_note[3])
+			and int(cal_source.month(int(e_note[0]), int(e_note[1]))["marker"][int(e_note[2])]) == int(e_note[3]),
+			"G2 predicate (e): %s notice markers come from CALROM" % vc["name"])
+		var st_vac: State = _make_month_start_state(template_state, cal_source, int(s_note[0]), int(s_note[1]), 0)
+		st_vac.rule_state["day"] = int(s_note[2]) - 1
+		st_vac.rule_state["weekday"] = Calendar.weekday_for_date(int(s_note[0]), int(s_note[1]), int(s_note[2]) - 1)
+		check(Calendar.advance_day(st_vac).is_empty() and int(st_vac.rule_state["vacation"]) == 0,
+			"G2 predicate (e): %s date advance alone leaves vacation=0" % vc["name"])
+		var started: Dictionary = DayNotice.vacation_notice(st_vac.rule_state)
+		check(started["error"].is_empty() and int(st_vac.rule_state["vacation"]) == int(vc["vacation_id"]),
+			"G2 predicate (e): %s notice %s selects vacation=%d" % [vc["name"], str(s_note), vc["vacation_id"]])
 		var bank_req: Dictionary = BankRequest.build(st_vac.rule_state)
 		check(
 			[bank_req["binding"]["music_header"], bank_req["binding"]["music_body"], bank_req["binding"]["sequence"]] == vc["expected_bank"],
 			"G2 predicate (e): %s BankRequest selects %s" % [vc["name"], str(vc["expected_bank"])]
 		)
-		st_vac.rule_state["year"] = int(eb_date[0])
-		st_vac.rule_state["month"] = int(eb_date[1])
-		st_vac.rule_state["day"] = int(eb_date[2])
-		st_vac.rule_state["weekday"] = Calendar.weekday_for_date(int(eb_date[0]), int(eb_date[1]), int(eb_date[2]))
-		Calendar.update_vacation_for_date(st_vac.rule_state)
-		check(int(st_vac.rule_state["vacation"]) == int(vc["vacation_id"]), "G2 predicate (e): %s last day %s retains vacation=%d" % [vc["name"], str(eb_date), vc["vacation_id"]])
-		check(Calendar.advance_day(st_vac).is_empty(), "G2 predicate (e): %s advances past end date to %s" % [vc["name"], str(ea_date)])
-		check(
-			[st_vac.rule_state["year"], st_vac.rule_state["month"], st_vac.rule_state["day"], st_vac.rule_state["vacation"]]
-			== [int(ea_date[0]), int(ea_date[1]), int(ea_date[2]), 0],
-			"G2 predicate (e): %s end transition %s restores vacation=0" % [vc["name"], str(ea_date)]
-		)
+		st_vac.rule_state["year"] = int(e_note[0])
+		st_vac.rule_state["month"] = int(e_note[1])
+		st_vac.rule_state["day"] = int(e_note[2])
+		var ended: Dictionary = DayNotice.vacation_notice(st_vac.rule_state)
+		check(ended["error"].is_empty() and ended["notice"] == DayNotice.NOTICE_NEW_TERM and int(st_vac.rule_state["vacation"]) == 0,
+			"G2 predicate (e): %s notice %s restores vacation=0" % [vc["name"], str(e_note)])
 		summary["vacation_banks"].append("%s:%d" % [vc["name"], vc["vacation_id"]])
 
 	return summary

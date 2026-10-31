@@ -259,6 +259,15 @@ func _overlay_mode(base: CoreState, input: InputFrame, rng: Rng, result: Session
 		# Fail closed: saved state is untouched and the overlay stays where it was.
 		result.error = step_out["error"]
 		return
+	# SHUGAKU (6 trip days) and RENSYU (1 camp day) advance the calendar on
+	# completion. A refused month rollover must leave the overlay, deltas, date
+	# and queue untouched, so it is checked before any write.
+	if bool(step_out.get("completed", false)):
+		var calendar_days: int = _completion_calendar_days(int(step_out.get("dispatcher_mode", mode)))
+		var calendar_error: String = Calendar.advance_days_source_error(data, calendar_days)
+		if not calendar_error.is_empty():
+			result.error = calendar_error
+			return
 	var updated_ovl: Dictionary = step_out.get("state", ovl_state)
 	data["overlay_state"] = updated_ovl
 	var is_completed: bool = bool(step_out.get("completed", false))
@@ -290,14 +299,13 @@ func _overlay_mode(base: CoreState, input: InputFrame, rng: Rng, result: Session
 		state.set_stage(0xff)
 		return
 
-	var completed_disp_mode: int = int(step_out.get("dispatcher_mode", mode))
-	if completed_disp_mode == OverlayDispatcher.GAME_MODE_SHUGAKU:
-		# School Trip (SHUGAKU, native 0x51 / dispatcher 0x4C) spans 6 days (Mon..Sat -> Sun)
-		for _trip_day: int in range(6):
-			Calendar.advance_day(state)
-	elif completed_disp_mode == OverlayDispatcher.GAME_MODE_RENSYU:
-		# Club Camp (RENSYU, native 0x5F / dispatcher 0x51) advances 1 calendar day per camp record
-		Calendar.advance_day(state)
+	# School Trip (SHUGAKU, native 0x51 / dispatcher 0x4C) spans 6 days (Mon..Sat -> Sun);
+	# Club Camp (RENSYU, native 0x5F / dispatcher 0x51) advances 1 day per camp record.
+	for _calendar_day: int in range(_completion_calendar_days(int(step_out.get("dispatcher_mode", mode)))):
+		var advance_error: String = Calendar.advance_day(state)
+		if not advance_error.is_empty():
+			result.error = advance_error
+			return
 
 	# Advance queue record only after interactive overlay completes
 	if data["day_event_index"] < 31:
@@ -306,6 +314,13 @@ func _overlay_mode(base: CoreState, input: InputFrame, rng: Rng, result: Session
 	data["voice_wait_frames"] = 0
 	data["message_title_visible"] = false
 	result.transitions.append({"kind": "native_mode", "mode": 0x31, "day_event_index": data["day_event_index"]})
+
+static func _completion_calendar_days(disp_mode: int) -> int:
+	if disp_mode == OverlayDispatcher.GAME_MODE_SHUGAKU:
+		return 6
+	if disp_mode == OverlayDispatcher.GAME_MODE_RENSYU:
+		return 1
+	return 0
 
 func _prologue(base: CoreState, input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)
@@ -429,15 +444,19 @@ func _day_screen(base: CoreState, input: InputFrame, rng: Rng, result: Session.F
 	if data.get("overlay_state") is Dictionary and not (data["overlay_state"] as Dictionary).is_empty():
 		_overlay_mode(base, input, rng, result)
 		return
-	if state.mode_step == 1 and data.get("allow_multi_week", false) and int(data.get("year", 95)) >= 98 and int(data.get("month", 4)) >= 3 and int(data.get("day", 1)) != 0:
-		state.reset_game_mode_fields(0x5c)
-		data["overlay_state"] = overlay_dispatcher.init_overlay(0x5c, data, [0x21, 0, 0, 0], rng)
-		result.transitions.append({"kind": "native_mode", "mode": 0x5c})
+	if state.mode_step == 1:
+		# schedule_day_screen_step_dispatch step 1 -> schedule_ending_start
+		# (scheduler.c:1549-1561): hud_season_bgm_load, bank wait,
+		# audio_command(0x200), then GAME_MODE_ENDING (0x63).
+		result.error = "schedule_ending_start: hud_season_bgm_load bank wait and audio_command(0x200) are not ported"
 		return
 	OrdinaryWeek.dispatch(state, result)
 	# schedule_day_screen_handler tail (scheduler.c:1534-1540): hud_icon_bar_update(0).
 	_hud_icon_bar_tail(state, input, result)
-	if result.error.is_empty() and state.game_mode not in [0x30, 0x31, 0x32, 0x34, 0x38, 0x40, 0x46]:
+	# 0x39 (day notice) and 0x41/0x42 (New Year/Christmas prep) are main-executable
+	# modes, not overlays (rules/seasonal_mode_identity.gd). They stay unbound in
+	# core/native_route_registry.gd, so the router refuses them by name.
+	if result.error.is_empty() and state.game_mode not in [0x30, 0x31, 0x32, 0x34, 0x38, 0x39, 0x40, 0x41, 0x42, 0x46]:
 		var idx: int = clampi(int(data.get("day_event_index", 0)), 0, 31)
 		var ev: Array = data["day_events"][idx] if data.get("day_events") is Array and idx < (data["day_events"] as Array).size() else [0xff, 0, 0, 0]
 		data["overlay_state"] = overlay_dispatcher.init_overlay(state.game_mode, data, ev, rng)

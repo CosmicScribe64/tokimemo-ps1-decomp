@@ -10,6 +10,7 @@ const State = preload("res://rules/school_day_state.gd")
 const RouteState = preload("res://rules/new_game_route_state.gd")
 const Controller = preload("res://scenes/school_day_controller.gd")
 const Calendar = preload("res://rules/calendar.gd")
+const CalromMonths = preload("res://tests/fixtures/calrom_months.gd")
 const SchoolDay = preload("res://rules/school_day.gd")
 const Session = preload("res://core/game_session.gd")
 const InputFrame = preload("res://core/input_frame.gd")
@@ -159,7 +160,7 @@ func _build_imported_new_game_state(club_id: int = 0) -> FastRouteState:
 	state.rule_state["resources"]["available_commands"] = [0, 1, 2, 3, 4, 5, 6, 7]
 	state.rule_state["resources"]["available_holiday_commands"] = [0, 8, 9, 10, 12]
 	state.rule_state["icon_enabled"].fill(1)
-	Calendar.populate_month_calendar(state.rule_state, 95, 4)
+	CalromMonths.install_or_report(state.rule_state, 95, 4)
 	return state
 
 
@@ -187,7 +188,7 @@ func _bind_holiday_and_month_modes(session: Session, controller: Controller, tab
 	session.router._handlers[0x38] = func(base: Variant, _input: InputFrame, _rng: Rng, result: Session.FrameResult) -> void:
 		var s: State = base as State
 		var d: Dictionary = s.rule_state
-		Calendar.populate_month_calendar(d, d["year"], d["month"])
+		CalromMonths.install_or_report(d, d["year"], d["month"])
 		if d["day_event_index"] < 31:
 			d["day_event_index"] = (d["day_event_index"] + 1) & 255
 		s.reset_game_mode_fields(0x31)

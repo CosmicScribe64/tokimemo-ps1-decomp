@@ -105,7 +105,9 @@ static func dispatch(state: State, result: Session.FrameResult) -> void:
 		for i: int in range(11):
 			data["girls"][i]["flags"] &= ~0x10
 	DayEnd.clamp_girls(data)
-	if multi and data["year"] >= 98 and data["month"] >= 3 and data["day"] != 0:
+	# day_event_dispatch (scheduler.c:1646-1649) checks the graduation date once,
+	# at entry and unconditionally.
+	if data["year"] >= 98 and data["month"] >= 3 and data["day"] != 0:
 		state.next_step()
 		result.transitions.append({"kind": "native_step", "mode": state.game_mode, "step": state.mode_step})
 		return
@@ -130,10 +132,8 @@ static func dispatch(state: State, result: Session.FrameResult) -> void:
 		if not result.error.is_empty():
 			return
 		index = data["day_event_index"]
-		if multi and data["year"] >= 98 and data["month"] >= 3 and data["day"] != 0:
-			state.next_step()
-			result.transitions.append({"kind": "native_step", "mode": state.game_mode, "step": state.mode_step})
-			return
+		# The source falls through after calendar_advance_day (scheduler.c:1836) and
+		# dispatches the next queued event; there is no second date check.
 	var event: Array = data["day_events"][index]
 	var mode: int
 	match event[0]:
