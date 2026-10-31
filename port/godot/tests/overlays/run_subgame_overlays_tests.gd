@@ -368,8 +368,7 @@ func _test_tt_twinbee_interactive_playthrough() -> void:
 	Overlays.step_overlay(state, {})
 	_check(int(p["shot_kind"]) == 9, "Overlapping Blue Bell upgrades player shot_kind to Twin Shot (9)")
 
-	# Clear all 4 stages (stage_index 0..3) and verify tt_stages_cleared writeback (1..4)
-	var rule_state := {"tt_stages_cleared": 0}
+	# Clear all 4 stages (stage_index 0..3) and verify the overlay's tt_stages_cleared (1..4)
 	for target_stage in range(4):
 		var boss: Dictionary = state["boss"]
 		boss["active"] = 1
@@ -384,8 +383,6 @@ func _test_tt_twinbee_interactive_playthrough() -> void:
 		})
 		Overlays.step_overlay(state, {}) # Defeat boss -> TT_STATE_STAGE_CLEAR
 		_check(int(state["tt_stages_cleared"]) == target_stage + 1, "Defeating TT Stage %d boss sets tt_stages_cleared=%d" % [target_stage + 1, target_stage + 1])
-		Overlays.tt_apply_writeback_to_rule_state(state, rule_state)
-		_check(int(rule_state["tt_stages_cleared"]) == target_stage + 1, "tt_apply_writeback_to_rule_state updates rule_state['tt_stages_cleared']=%d" % (target_stage + 1))
 		Overlays.step_overlay(state, {"confirm": true}) # Advance from TT_STATE_STAGE_CLEAR
 
 	_check(int(state["state"]) == Overlays.TT_STATE_NAME_ENTRY or int(state["state"]) == Overlays.TT_STATE_RANKING_VIEW, "Clearing all 4 TT stages enters name entry / ranking view")

@@ -9,6 +9,7 @@ const InputFrame = preload("res://core/input_frame.gd")
 const Rng = preload("res://core/native_rng.gd")
 const RuleFixtures = preload("res://tests/rules/run_rule_tests.gd")
 const OverlayDispatcher = preload("res://app/overlay_dispatcher.gd")
+const DayEventModes = preload("res://rules/day_event_modes.gd")
 const TelephoneOverlay = preload("res://overlays/telephone_overlay.gd")
 const TelephonePresenter = preload("res://presentation/telephone_overlay_presenter.gd")
 const EndingOverlay = preload("res://overlays/ending_overlay.gd")
@@ -183,7 +184,7 @@ func _test_live_interactive_overlay_dispatch() -> void:
 	state.rule_state["girls"][0]["flags"] = 2
 	Calendar.populate_month_calendar(state.rule_state, 95, 5)
 
-	# Queue: [0] = 0x46 (girl invitation, GEKO), [1] = 0x44 (GEKO walk-home), [2] = 0x80 (DATE), [3] = 0xff (end of queue)
+	# Queue: [0] = 0x46 (GEKO invitation), [1] = 0x44 (GEKO walk-home), [2] = 0x80 (DATE), [3] = 0xff (end of queue)
 	var queue: Array = []
 	queue.append([0x46, 0, 0, 0])
 	queue.append([0x44, 0, 0, 0])
@@ -203,10 +204,12 @@ func _test_live_interactive_overlay_dispatch() -> void:
 	session.cd_logic = _empty
 	session.audio_logic = _empty
 
-	# Step 1: 0x31 dispatches event[0] (0x46 -> native mode 0x5A, GEKO girl invitation
-	# 0x801426D0 per include/game_enums.h) and initializes overlay_state.
+	# Step 1: 0x31 dispatches event[0]. Queue 0x46 enters native 0x5A, whose
+	# overlay_loader.c entry D_801426D0 is the GEKO invitation handler
+	# (src/ovl/girl_encounters/invite_entry.c), so the dispatcher id is GEKO.
 	var r0: Session.FrameResult = session.step(InputFrame.new(session.clock.logic_iterations, 0), [])
-	_check(r0.error.is_empty() and state.game_mode == 0x5A and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == OverlayDispatcher.GAME_MODE_GEKO, "Dispatched queue event 0x46 into native 0x5A (GEKO invitation)")
+	_check(r0.error.is_empty() and state.game_mode == 0x5A and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == OverlayDispatcher.GAME_MODE_GEKO,
+		"Dispatched queue event 0x46 into native 0x5A (GEKO invitation)")
 	_check(state.rule_state.get("overlay_state") is Dictionary, "Initialized active overlay_state for the invitation")
 
 	# Step 2: Neutral input frames must NOT advance or auto-complete the overlay
@@ -215,22 +218,35 @@ func _test_live_interactive_overlay_dispatch() -> void:
 		_check(rn.error.is_empty() and state.game_mode == 0x5A and int(state.rule_state["day_event_index"]) == 0,
 			"Neutral input frame does not auto-skip the invitation overlay")
 
-	# Step 3 (T-39006): with saved state GEKO is refused, so no input may book an
-	# appointment or write affection.
-	var aff_before_tel: int = State.high(int(state.rule_state["girls"][0]["affection_word"]))
-	var appt_before_tel: Array = (state.rule_state.get("appointment_words", []) as Array).duplicate()
+	# Step 3 (T-39006): GEKO is refused with saved state; the invitation books
+	# no appointment and writes no affection.
+	var aff_before_inv: int = State.high(int(state.rule_state["girls"][0]["affection_word"]))
+	var appt_before_inv: Array = (state.rule_state.get("appointment_words", []) as Array).duplicate()
 	_assert_refused(session, state, [0x5A], "GEKO invitation", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_GEKO],
 		[OverlayDispatcher.PAD_DOWN, OverlayDispatcher.PAD_CIRCLE, OverlayDispatcher.PAD_CROSS])
 	_check(int(state.rule_state["day_event_index"]) == 0 and state.rule_state.has("overlay_state"),
 		"Refused invitation stays on event 0 with its overlay")
-	_check((state.rule_state.get("appointment_words", []) as Array) == appt_before_tel
-		and State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff_before_tel,
+	_check((state.rule_state.get("appointment_words", []) as Array) == appt_before_inv
+		and State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff_before_inv,
 		"Refused invitation books no appointment and writes no affection")
 
-	# Preview TEL (no saved state; the player's call is not a queue event): place
-	# cursor, place/day/call_response subscreens and an exit without deltas.
-	var tel_mode: int = OverlayDispatcher.GAME_MODE_TEL
-	var tel: Dictionary = controller.overlay_dispatcher.init_overlay(tel_mode, state.rule_state.duplicate(true), [])
+	# TEL (native 0x43 GAME_MODE_TELEPHONE): phone_date_invitation_resolve writes
+	# and the appointment flag are not ported, so saved-state input is refused.
+	_leave_refused_family(state, 0)
+	controller.start_overlay(state, 0x43)
+	_check(int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == OverlayDispatcher.GAME_MODE_TEL,
+		"Native 0x43 enters dispatcher TEL")
+	var aff_before_tel: int = State.high(int(state.rule_state["girls"][0]["affection_word"]))
+	var appt_before_tel: Array = (state.rule_state.get("appointment_words", []) as Array).duplicate()
+	_assert_refused(session, state, [0x43], "TEL", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_TEL],
+		[OverlayDispatcher.PAD_DOWN, OverlayDispatcher.PAD_CIRCLE, OverlayDispatcher.PAD_CROSS])
+	_check((state.rule_state.get("appointment_words", []) as Array) == appt_before_tel
+		and State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff_before_tel,
+		"Refused TEL books no appointment and writes no affection")
+
+	# Preview TEL (no saved state): place cursor, place/day/call_response subscreens and an exit without deltas.
+	var tel_mode: int = state.game_mode
+	var tel: Dictionary = state.rule_state["overlay_state"].duplicate(true)
 	var p: Dictionary = _preview_step(controller, tel_mode, tel, OverlayDispatcher.PAD_DOWN)
 	_check(int(p["state"].get("cursor", -1)) == 1 and not bool(p.get("completed", true)),
 		"TEL preview PAD_DOWN moves the place cursor 0 -> 1")
@@ -457,54 +473,53 @@ func _test_subgames_and_playable_boot_live_overlay() -> void:
 	session.cd_logic = _empty
 	session.audio_logic = _empty
 
-	# 1. RPG_BAT (0x57), T-39006: refused with saved state (fixed rand_seed instead of native rand()).
-	controller.start_overlay(state, 0x57, {"enemy_hp": 180})
+	# Native RPG_BAT/TACO/TT are 0x81/0x90/0xD0 (include/game_enums.h). Native
+	# 0x57/0x59/0x5A are GEKO modes and must never reach a minigame.
+	for geko_mode: int in [0x57, 0x59, 0x5A]:
+		_check(DayEventModes.dispatcher_mode_for(geko_mode) == OverlayDispatcher.GAME_MODE_GEKO,
+			"native 0x%02X maps to GEKO, not a minigame" % geko_mode)
+	# The queue path passes the opcode too; overlay_loader.c enters GEKO for all four.
+	for pair: Array in [[0x32, 0x57], [0x33, 0x56], [0x44, 0x59], [0x46, 0x5A]]:
+		_check(DayEventModes.dispatcher_mode_for(pair[1], pair[0]) == OverlayDispatcher.GAME_MODE_GEKO,
+			"queue 0x%02X / native 0x%02X resolves to GEKO" % pair)
+
+	# 1. RPG_BAT (native 0x81), T-39006: refused with saved state.
+	controller.start_overlay(state, 0x81, {"enemy_hp": 180})
 	var talk_before: Variant = state.rule_state.get("talk_result_code")
-	_assert_refused(session, state, [0x57], "RPG_BAT", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_RPG_BATTLE],
+	_assert_refused(session, state, [0x81], "RPG_BAT", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_RPG_BATTLE],
 		[OverlayDispatcher.PAD_CIRCLE, OverlayDispatcher.PAD_CIRCLE])
 	_check(state.rule_state.get("talk_result_code") == talk_before, "Refused RPG_BAT writes no talk_result_code")
-	var rpg: Dictionary = _preview_step(controller, 0x57, state.rule_state["overlay_state"].duplicate(true), OverlayDispatcher.PAD_CIRCLE)
+	var rpg: Dictionary = _preview_step(controller, 0x81, state.rule_state["overlay_state"].duplicate(true), OverlayDispatcher.PAD_CIRCLE)
 	_check(bool(rpg["state"].get("victory", false)) and not bool(rpg.get("completed", true)),
 		"RPG_BAT preview reaches victory stage 10 and waits for confirm")
-	rpg = _preview_step(controller, 0x57, rpg["state"], OverlayDispatcher.PAD_CIRCLE)
+	rpg = _preview_step(controller, 0x81, rpg["state"], OverlayDispatcher.PAD_CIRCLE)
 	_check(bool(rpg.get("completed", false)) and (rpg.get("deltas", {}) as Dictionary).is_empty(),
 		"RPG_BAT preview exits with no deltas")
 	_leave_refused_family(state)
 
-	# 2. TACO (0x59) live session loop: does NOT exit on 2nd fire press; writes back high_scores & stages_cleared
-	controller.start_overlay(state, 0x59, {"waves_per_stage": 1, "target_stages": 1})
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE)
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE)
-	_check(state.game_mode == 0x59 and state.rule_state.has("overlay_state"),
-		"TACO (0x59) does NOT exit on 2nd fire press in live SchoolDayController session")
-	_step_pad(session, OverlayDispatcher.PAD_SQUARE)
-	_step_pad(session, OverlayDispatcher.PAD_SQUARE)
-	state.rule_state["overlay_state"]["boss"]["hp"] = 2
-	_step_pad(session, OverlayDispatcher.PAD_CROSS)  # Boss defeated -> GAME_END (45)
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE) # -> RESULT (8)
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE) # -> SCORES (5)
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE) # -> EXIT (46) -> 0x31
-	_check(state.game_mode == 0x31 and int(state.rule_state.get("stages_cleared", 0)) == 1,
-		"Completed TACO (0x59) wrote back stages_cleared=1 to state.rule_state")
-	_check((state.rule_state.get("high_scores", []) as Array).size() == 3,
-		"Completed TACO (0x59) wrote back 3-slot high_scores array to state.rule_state")
+	# 2. TACO (native 0x90): the synthetic monolith is refused with saved state,
+	# including neutral frames, and writes nothing to the save.
+	controller.start_overlay(state, 0x90, {"waves_per_stage": 1, "target_stages": 1})
+	_assert_refused(session, state, [0x90], "TACO", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_TACO],
+		[0, OverlayDispatcher.PAD_CIRCLE, OverlayDispatcher.PAD_CROSS])
+	for key: String in ["high_scores", "high_score_names", "stages_cleared", "score", "total_score", "menu_hit_3", "system_data_flag", "subgame_return_payload"]:
+		_check(not state.rule_state.has(key), "Refused TACO leaves no %s in rule_state" % key)
+	_leave_refused_family(state)
 
-	# 3. TT (0x5A) live session loop: does NOT collect bells on PAD_UP or exit on 3rd confirm; writes back tt_stages_cleared
-	controller.start_overlay(state, 0x5A, {"target_stages": 1, "boss_hp": 16})
-	_step_pad(session, OverlayDispatcher.PAD_UP)
-	_check(int(state.rule_state["overlay_state"].get("score", -1)) == 0,
-		"TT (0x5A) PAD_UP does NOT arbitrarily collect bells in live session")
-	for _i: int in range(3):
-		_step_pad(session, OverlayDispatcher.PAD_CIRCLE)
-	_check(state.game_mode == 0x5A and state.rule_state.has("overlay_state"),
-		"TT (0x5A) does NOT exit after 3 confirms in live session")
-	_step_pad(session, OverlayDispatcher.PAD_SQUARE) # Ground bomb defeats boss (hp=16) -> STAGE_CLEAR (3)
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE) # -> RANKING_VIEW (7)
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE) # -> EXIT (9) -> 0x31
-	_check(state.game_mode == 0x31 and int(state.rule_state.get("tt_stages_cleared", 0)) == 1,
-		"Completed TT (0x5A) wrote back tt_stages_cleared=1 to state.rule_state")
-	_check((state.rule_state.get("tt_rankings", []) as Array).size() == 3,
-		"Completed TT (0x5A) wrote back 3-slot tt_rankings table to state.rule_state")
+	# 3. TT (native 0xD0): refused the same way.
+	controller.start_overlay(state, 0xD0, {"target_stages": 1, "boss_hp": 16})
+	_assert_refused(session, state, [0xD0], "TT", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_TT],
+		[0, OverlayDispatcher.PAD_UP, OverlayDispatcher.PAD_SQUARE])
+	for key: String in ["tt_stages_cleared", "tt_last_time_frames", "tt_rankings"]:
+		_check(not state.rule_state.has(key), "Refused TT leaves no %s in rule_state" % key)
+	_leave_refused_family(state)
+
+	# Negative: a completed preview carrying a forged payload still writes nothing.
+	var forged: Dictionary = {"completed": true, "high_scores": [1, 2, 3], "tt_rankings": [1], "rpg_result_code": 4, "loot_rewards": [1],
+		"return_payload": {"score": 9}}
+	var before_forged: Dictionary = state.rule_state.duplicate(true)
+	controller._apply_overlay_deltas(state, forged)
+	_check(state.rule_state == before_forged, "minigame delta keys are never written to rule_state")
 
 	# 4. PlayableBoot live overlay context rendering & step_active_overlay integration
 	var repo_root: String = _resolve_repo_root()
@@ -538,6 +553,53 @@ func _test_subgames_and_playable_boot_live_overlay() -> void:
 		and not bool(step_res.get("completed", true)) and (step_res.get("deltas", {}) as Dictionary).is_empty()
 		and int(state.rule_state["overlay_state"].get("girl_id", -1)) == 0,
 		"PlayableBoot.step_active_overlay refuses saved-state TEL_ACTION input and keeps girl_id 0")
+
+	# Native 0x56/0x57/0x59/0x5A entered from their queue events render and step
+	# GEKO on the live PlayableBoot path, never the RPG_BAT/TACO/TT ids they share.
+	for pair: Array in [[0x32, 0x57], [0x33, 0x56], [0x44, 0x59], [0x46, 0x5A]]:
+		_leave_refused_family(state)
+		var q_ovl: Dictionary = controller.start_overlay(state, int(pair[1]), {}, [int(pair[0]), 2, 0, 0])
+		_check(state.game_mode == int(pair[1]) and int(q_ovl.get("dispatcher_mode", -1)) == OverlayDispatcher.GAME_MODE_GEKO,
+			"queue 0x%02X enters native 0x%02X with dispatcher GEKO" % pair)
+		_check(String(boot.overlay_dispatcher.describe_native_mode(int(pair[1]), q_ovl).get("overlay", "")) == "GEKO",
+			"describe_native_mode(0x%02X) after queue 0x%02X is GEKO" % [int(pair[1]), int(pair[0])])
+		_check(String(boot.overlay_dispatcher.describe_native_mode(int(pair[1])).get("overlay", "")) == "GEKO",
+			"describe_native_mode(0x%02X) without state is GEKO" % int(pair[1]))
+		boot._last_rendered_image = null
+		var q_err: String = boot._present_committed()
+		var live_img: Image = boot._last_rendered_image
+		var geko_img: Image = boot.overlay_dispatcher.render_mode(OverlayDispatcher.GAME_MODE_GEKO, boot._build_overlay_render_state(state)).get("image")
+		_check(q_err.is_empty() and live_img != null and geko_img != null and live_img.get_data() == geko_img.get_data(),
+			"PlayableBoot renders the GEKO frame for queue 0x%02X / native 0x%02X" % pair)
+		var bare_state: Dictionary = boot._build_overlay_render_state(state)
+		bare_state.erase("dispatcher_mode")
+		bare_state.erase("event_opcode")
+		var bare_img: Image = boot.overlay_dispatcher.render_native_mode(int(pair[1]), bare_state).get("image")
+		_check(bare_img != null and bare_img.get_data() == geko_img.get_data(),
+			"render_native_mode(0x%02X) without a resolved id still renders GEKO" % int(pair[1]))
+		var q_step: Dictionary = boot.step_active_overlay(OverlayDispatcher.PAD_CIRCLE)
+		_check(String(q_step.get("error", "")).contains(OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_GEKO]),
+			"saved-state step of native 0x%02X is refused as GEKO, not a minigame" % int(pair[1]))
+	_leave_refused_family(state)
+
+	# Negative: step_overlay with a completed TT/TACO state and saved state
+	# writes nothing, refused or not. The OPTION case is a production menu
+	# mode, so it reaches step_mode and the completion path (it needs the
+	# opened resources, so this runs on the PlayableBoot dispatcher).
+	for forged_mode: int in [0xD0, 0x90, 0x36]:
+		var forged_ovl: Dictionary = controller.overlay_dispatcher.init_overlay(forged_mode, state.rule_state)
+		forged_ovl["completed"] = true
+		forged_ovl["tt_stages_cleared"] = 4
+		forged_ovl["return_payload"] = {"tt_stages_cleared": 4, "rankings": [1], "elapsed_frames": 9, "high_scores": [1, 2, 3], "stages_cleared": 3}
+		var rs_before: Dictionary = state.rule_state.duplicate(true)
+		for pad: int in [OverlayDispatcher.PAD_CIRCLE, OverlayDispatcher.PAD_CROSS, OverlayDispatcher.PAD_START]:
+			var forged_out: Dictionary = controller.overlay_dispatcher.step_overlay(forged_mode, forged_ovl, pad, state.rule_state)
+			_check((forged_out.get("deltas", {}) as Dictionary).is_empty(),
+				"completed forged payload in native 0x%02X yields no deltas (pad 0x%04X)" % [forged_mode, pad])
+			if forged_mode == 0x36:
+				_check(bool(forged_out.get("completed", false)) and String(forged_out.get("action", "")) != "rejected",
+					"forged OPTION state reaches the completion path (pad 0x%04X)" % pad)
+		_check(state.rule_state == rs_before, "completed forged payload in native 0x%02X leaves rule_state unchanged" % forged_mode)
 	boot.canvas.set("_textures", {})
 	boot.canvas.set("_commands", [])
 	boot.canvas.free()

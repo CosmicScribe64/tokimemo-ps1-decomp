@@ -197,14 +197,12 @@ func _apply_overlay_deltas(state: State, deltas: Dictionary) -> void:
 
 	for k: String in [
 		"ending_completed", "confessed_girl", "ending_type", "ending_phases", "clear_save_completed", "album_clear_mask", "clear_name_slot",
-		"talk_result_code", "rpg_result_code", "loot_rewards",
-		"high_scores", "high_score_names", "stages_cleared", "score", "total_score", "menu_hit_3", "system_data_flag",
-		"tt_stages_cleared", "tt_last_time_frames", "tt_rankings",
+		"talk_result_code",
 	]:
 		if deltas.has(k):
 			data[k] = deltas[k]
-	if deltas.has("return_payload") and deltas["return_payload"] is Dictionary:
-		data["subgame_return_payload"] = (deltas["return_payload"] as Dictionary).duplicate(true)
+	# Minigame results (RPG_BAT, TACO, TT) are never written here: the source keeps
+	# them in system_data (D_800E7D10: TT from +0x2C, TACO from +0x40), not the per-save rule state.
 
 func _overlay_mode(base: CoreState, input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)

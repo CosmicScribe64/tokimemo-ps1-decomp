@@ -1,7 +1,8 @@
 extends RefCounted
 ## T-29024. Authenticated external combat-unit tables, not full route content.
+## Producer: tools/port/taco_tables.py (combat-tables.json); the pin is its output.
 
-const MANIFEST_SHA256: String = "90e9538c47d6d94389c241821d369b041ca66b786e4904637961a00f5fa387cf"
+const MANIFEST_SHA256: String = "bac892c345b9b2e49ed3c3f29159fb200c4d1202e72ac86e7f93ace854f9c4a5"
 const OVERLAY_SHA256: String = "1eb8bad166897063bbb9c4bb94dafa426d34b56db5aa55e1b4f9b8d998e29b80"
 var tables: Dictionary = {}
 var error: String = ""

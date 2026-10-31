@@ -2134,17 +2134,6 @@ static func tt_build_return_payload(state: Dictionary) -> Dictionary:
 		"return_mode_step": int(state.get("saved_mode_step", 0)),
 	}
 
-# Writes TT completion results back into a caller's rule_state dictionary (e.g. Culture Festival)
-static func tt_apply_writeback_to_rule_state(arg0: Dictionary, arg1: Dictionary) -> Dictionary:
-	var tt_state: Dictionary = arg0 if (str(arg0.get("overlay", "")) == "TT" or arg0.has("player")) else arg1
-	var rule_state: Dictionary = arg1 if (str(arg0.get("overlay", "")) == "TT" or arg0.has("player")) else arg0
-	var payload: Dictionary = tt_build_return_payload(tt_state)
-	rule_state["tt_stages_cleared"] = int(payload["tt_stages_cleared"])
-	rule_state["tt_last_time_frames"] = int(payload["elapsed_frames"])
-	rule_state["tt_rankings"] = payload["rankings"]
-	return payload
-
-
 # ==============================================================================
 # 4. Subgame Overlay Entry / Step / Return Router
 # ==============================================================================

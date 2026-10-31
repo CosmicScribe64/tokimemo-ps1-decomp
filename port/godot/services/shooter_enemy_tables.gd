@@ -1,7 +1,8 @@
 extends RefCounted
 ## T-29024. Original finite enemy tables; not a model/render-ready capability.
+## Producer: tools/port/taco_tables.py (enemy-tables.json); the pin is its output.
 const Manifest = preload("res://services/shooter_combat_tables.gd")
-const MANIFEST_SHA256: String = "fde5bb1090952846c5594f9483a62e23098c0e74bd1d9d234dd5810d78c7bb92"
+const MANIFEST_SHA256: String = "f06ebbc60ea3ba8a15ea85da3d05ea84e7dc33ef1cdd8086942b6cdcc542dd53"
 const EXE_SHA256: String = "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae"
 var tables: Dictionary = {}
 var error: String = ""

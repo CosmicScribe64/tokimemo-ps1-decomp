@@ -1359,7 +1359,7 @@ func _present_committed(_restored_app: Node = null) -> String:
 	if overlay_dispatcher != null and _has_active_overlay(state):
 		var render_state: Dictionary = _build_overlay_render_state(state)
 		var ovl_mode: int = int(render_state.get("mode", state.game_mode))
-		var ovl_out: Dictionary = overlay_dispatcher.render_mode(ovl_mode, render_state)
+		var ovl_out: Dictionary = overlay_dispatcher.render_native_mode(ovl_mode, render_state)
 		if not str(ovl_out.get("error", "")).is_empty():
 			return str(ovl_out["error"])
 		if ovl_out.get("image") is Image:

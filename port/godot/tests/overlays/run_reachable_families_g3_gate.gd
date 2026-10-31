@@ -256,7 +256,7 @@ func _check_preview_exit_without_rewards(controller: Controller, mode: int, over
 
 
 # ---------------------------------------------------------------------------
-# (a) Telephone / Profile / Invitation (0x3D TEL, 0x3E TEL_ACTION, native 0x43, 0x45, event 0x46)
+# (a) Telephone / Profile / Invitation (0x3D TEL, 0x3E TEL_ACTION, native 0x43, 0x45; event 0x46 is GEKO)
 # ---------------------------------------------------------------------------
 func _test_a_telephone_profile_invitation(tables: Dictionary) -> void:
 	print("--- [G3.a] Telephone / Profile / Invitation (0x3D TEL, 0x3E TEL_ACTION, native 0x43, 0x45, event 0x46) ---")
@@ -287,52 +287,66 @@ func _test_a_telephone_profile_invitation(tables: Dictionary) -> void:
 	_check_preview_exit_without_rewards(controller, 0x45, ovl_prof, [PAD_CIRCLE, PAD_CIRCLE], "TEL_ACTION")
 	_leave_refused_family(state)
 
-	# 2. Girl invitation via queue event 0x46 -> native 0x5A, which overlay_loader.c loads
-	# from the GEKO overlay (LBA 0x946A); the player's own call (TEL) is not a queue event.
+	# 2. Girl invitation via queue event 0x46 -> native 0x5A. overlay_loader.c enters
+	# D_801426D0, the GEKO invitation handler (src/ovl/girl_encounters/invite_entry.c),
+	# so the dispatcher id is GEKO, not TEL; GEKO is refused with saved state.
 	var aff0_before: int = State.high(int(state.rule_state["girls"][0]["affection_word"]))
 	var tok0_before: int = State.high(int(state.rule_state["girls"][0]["tokimeki_word"]))
 	state.rule_state["appointment_words"] = [0, 0, 0, 0, 0, 0, 0, 0]
-	var mode_tel: int = _queue_day_event_and_step(ctx, 0x46, 0, 0, 0)
-	_check(mode_tel == 0x5A and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == OverlayDispatcher.GAME_MODE_GEKO,
-		"Queue event 0x46 dispatches live to native 0x5A / dispatcher GEKO (girl invitation)")
+	var mode_inv: int = _queue_day_event_and_step(ctx, 0x46, 0, 0, 0)
+	_check(mode_inv == 0x5A and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == OverlayDispatcher.GAME_MODE_GEKO,
+		"Queue event 0x46 dispatches live to native 0x5A / dispatcher 0x44 (GEKO invitation)")
+	for _n in range(3):
+		var res_wait_inv: Session.FrameResult = _step_pad(session, 0)
+		_check(res_wait_inv.error.is_empty() and state.game_mode == 0x5A, "GEKO invitation (0x5A) waits on neutral input")
+	var inv_res: Session.FrameResult = _step_pad(session, PAD_CIRCLE)
+	_check(inv_res.error.contains(OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_GEKO]),
+		"GEKO invitation (0x5A) is refused as GEKO, not TEL (%s)" % inv_res.error)
+	_assert_production_rejection(ctx, 0x5A, "GEKO invitation (0x5A)")
+	_leave_refused_family(state)
+
+	# 3. Telephone (native 0x43 GAME_MODE_TELEPHONE -> dispatcher 0x3D GAME_MODE_TEL)
+	controller.start_overlay(state, 0x43)
+	_check(state.game_mode == 0x43 and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x3D,
+		"Entered native mode 0x43 -> dispatcher 0x3D (GAME_MODE_TEL)")
 
 	for _n in range(3):
 		var res_wait2: Session.FrameResult = _step_pad(session, 0)
-		_check(res_wait2.error.is_empty() and state.game_mode == 0x5A, "GEKO invitation (0x5A) waits on neutral input")
+		_check(res_wait2.error.is_empty() and state.game_mode == 0x43, "GAME_MODE_TEL waits on neutral input")
 
 	# T-39006: TEL has no source-backed production handler (phone_date_invitation_resolve writes are
 	# not ported). With saved state it is refused: no appointment, no affection or tokimeki write.
+	var ovl_tel: Dictionary = state.rule_state.get("overlay_state", {}).duplicate(true)
 	var appointments_before: Array = (state.rule_state["appointment_words"] as Array).duplicate()
-	_assert_production_rejection(ctx, 0x5A, "GEKO invitation (0x5A)")
-	var ovl_tel: Dictionary = controller.overlay_dispatcher.init_overlay(0x3D, state.rule_state.duplicate(true), [])
+	_assert_production_rejection(ctx, 0x43, "GAME_MODE_TEL (0x43)")
 	_check(state.rule_state["appointment_words"] == appointments_before
 		and State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff0_before
 		and State.high(int(state.rule_state["girls"][0]["tokimeki_word"])) == tok0_before,
-		"GEKO invitation refusal books no appointment and writes no affection or tokimeki")
+		"GAME_MODE_TEL refusal books no appointment and writes no affection or tokimeki")
 
 	# Preview stepping (no saved state) drives the screens for rendering checks only.
 	# Stage 0: place_select -> move cursor down, render place menu, confirm place
-	var ovl_place: Dictionary = _preview(controller, 0x5A, ovl_tel, [PAD_DOWN])
+	var ovl_place: Dictionary = _preview(controller, 0x43, ovl_tel, [PAD_DOWN])
 	_check(String(ovl_place.get("subscreen", "")) == "place_select" and int(ovl_place.get("cursor", -1)) == 1,
 		"TEL preview stage 0 place_select cursor moved to 1")
 	var img_place: Image = controller.overlay_dispatcher.render_mode(0x3D, ovl_place).get("image")
 	_check(img_place != null and img_place.get_size() == Vector2i(320, 240), "TEL place_select renders 320x240 image")
 
 	# Confirm place -> Stage 1: day_select
-	var ovl_day0: Dictionary = _preview(controller, 0x5A, ovl_place, [PAD_CIRCLE])
+	var ovl_day0: Dictionary = _preview(controller, 0x43, ovl_place, [PAD_CIRCLE])
 	_check(int(ovl_day0.get("stage", -1)) == 1 and String(ovl_day0.get("subscreen", "")) == "day_select",
 		"TEL advanced to stage 1 (day_select)")
 	var img_day0: Image = controller.overlay_dispatcher.render_mode(0x3D, ovl_day0).get("image")
 
 	# Move cursor on calendar day slots and verify green calendar highlight + hand cursor shift pixels
-	var ovl_day1: Dictionary = _preview(controller, 0x5A, ovl_day0, [PAD_DOWN])
+	var ovl_day1: Dictionary = _preview(controller, 0x43, ovl_day0, [PAD_DOWN])
 	var img_day1: Image = controller.overlay_dispatcher.render_mode(0x3D, ovl_day1).get("image")
 	_check(_image_diff_pixels(img_day0, img_day1) > 0,
 		"TEL day_select cursor movement shifts green calendar highlight + hand cursor pixels")
 
 	# Confirm day -> Stage 2: call_response
 	# The preview's invitation evaluation is not asserted: its inputs are invented.
-	var ovl_call: Dictionary = _preview(controller, 0x5A, ovl_day1, [PAD_CIRCLE])
+	var ovl_call: Dictionary = _preview(controller, 0x43, ovl_day1, [PAD_CIRCLE])
 	_check(int(ovl_call.get("stage", -1)) == 2 and String(ovl_call.get("subscreen", "")) == "call_response",
 		"TEL preview advanced to stage 2 (call_response)")
 
@@ -363,15 +377,15 @@ func _test_a_telephone_profile_invitation(tables: Dictionary) -> void:
 	var img_marker_on: Image = controller.overlay_dispatcher.render_mode(0x3D, ovl_marker_on).get("image")
 	_check(_image_diff_pixels(img_marker_off, img_marker_on) > 0, "TEL call_response actor2/frame1 prompt marker toggles pixels")
 
-	_check_preview_exit_without_rewards(controller, 0x5A, ovl_call, [PAD_CIRCLE], "GAME_MODE_TEL")
+	_check_preview_exit_without_rewards(controller, 0x43, ovl_call, [PAD_CIRCLE], "GAME_MODE_TEL")
 	_leave_refused_family(state)
 
 	_family_evidence["telephone_profile_invitation"] = {
-		"native_modes": ["0x3D", "0x3E", "0x43", "0x45", "0x5A"],
+		"native_modes": ["0x43", "0x45", "0x5A"],
 		"day_event_opcodes": ["0x46"],
-		"dispatcher_modes": ["0x3D", "0x3E"],
+		"dispatcher_modes": ["0x3D", "0x3E", "0x44"],
 		"source_functions": ["telephone_main", "phone_menu_step", "phone_evaluate_invitation", "phone_book_appointment"],
-		"entry_and_caller": "DayEventModes 0x46 -> native 0x5A (or start_overlay 0x43/0x45) -> SchoolDayController._overlay_mode -> OverlayDispatcher",
+		"entry_and_caller": "start_overlay 0x43/0x45 -> SchoolDayController._overlay_mode -> OverlayDispatcher; queue 0x46 -> native 0x5A enters GEKO (D_801426D0), not TEL",
 		"required_content_services": ["OverlayDispatcher.telephone_presenter", "TelephoneOverlay.GIRL_PROFILES", "TelephoneOverlay.PHONE_INVITATION_BASE_ADJUSTMENTS"],
 		"return_and_state_effects": "T-39006: refused with saved state (no appointment, affection or tokimeki write); preview steps render and exit without rewards",
 		"verified_live": false,
@@ -445,15 +459,14 @@ func _test_b_date_choice_cg_ride_movie(tables: Dictionary) -> void:
 	_check_preview_exit_without_rewards(controller, 0x58, ovl_amuse, [PAD_CIRCLE], "AMUSEMENT_PARK_DATE")
 	_leave_refused_family(state)
 
-	# 3. Special event (event 0x45 -> native 0x5D, loaded from the GEKO overlay by
-	# overlay_loader.c), then the date-spot scenes (native 0x5E DATE_SCENE -> EVENT_CG).
+	# 3. Special Event CG & Ride Movie (event 0x45 -> native 0x5D / 0x5E -> GAME_MODE_EVENT_CG)
 	var mode_cg: int = _queue_day_event_and_step(ctx, 0x45, 0, 0, 0)
-	_check(mode_cg == 0x5D and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == OverlayDispatcher.GAME_MODE_GEKO,
-		"Day event 0x45 dispatches live to native mode 0x5D -> dispatcher GEKO")
+	_check(mode_cg == 0x5D and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == 0x5E,
+		"Day event 0x45 dispatches live to native mode 0x5D -> dispatcher 0x5E (GAME_MODE_EVENT_CG)")
 	_step_pad(session, 0)
-	_check(state.game_mode == 0x5D, "GEKO special event (0x5D) waits on neutral input")
-	_assert_production_rejection(ctx, 0x5D, "GEKO special event (0x5D)")
-	var ovl_cg_entry: Dictionary = controller.overlay_dispatcher.init_overlay(0x5E, state.rule_state.duplicate(true), [])
+	_check(state.game_mode == 0x5D, "GAME_MODE_EVENT_CG waits on neutral input")
+	var ovl_cg_entry: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	_assert_production_rejection(ctx, 0x5D, "GAME_MODE_EVENT_CG (0x5D)")
 	ovl_cg_entry["scene_kind"] = "shiori_cg"
 	ovl_cg_entry["spot_place"] = EventCgOverlay.SPOT_KIRAMEKI_CENTRAL_PARK
 	var ovl_cg0: Dictionary = _preview(controller, 0x5D, ovl_cg_entry, [PAD_CIRCLE])
@@ -666,13 +679,17 @@ func _test_e_seasonal_and_school_events(tables: Dictionary) -> void:
 	_check_refused_family(ctx, 0x35, 0x35, "EXAM (0x35)", "exam_ranking", [PAD_CIRCLE], [PAD_CIRCLE])
 	_check(State.high(int(state.rule_state["params"][1])) == hum_before, "EXAM refusal writes no academic parameter delta")
 
-	# 5. Summer Club Camp (event 0x42 -> native 0x5F -> dispatcher 0x51 RENSYU)
+	# 5. Summer Club Camp (event 0x42 -> native 0x5F CLUB_CAMP -> dispatcher 0x4D KANGEI;
+	# include/game_enums.h names the KANGEI overlay for native 0x5F/0x60)
 	var day_count_before_camp: int = int(state.rule_state["day_count"])
 	var mode_camp: int = _queue_day_event_and_step(ctx, 0x42, 0, 0, 0)
-	_check(mode_camp == 0x5F and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x51,
-		"Day event 0x42 dispatches live to native 0x5F -> dispatcher 0x51 (RENSYU camp)")
-	_check_refused_family(ctx, 0x5F, 0x51, "RENSYU (0x5F)", "practice_evaluation", [PAD_CIRCLE], [PAD_CIRCLE])
-	_check(int(state.rule_state["day_count"]) == day_count_before_camp, "RENSYU refusal does not advance the calendar")
+	_check(mode_camp == 0x5F and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x4D,
+		"Day event 0x42 dispatches live to native 0x5F -> dispatcher 0x4D (KANGEI camp)")
+	_check_refused_family(ctx, 0x5F, 0x4D, "KANGEI (0x5F)", "camp_day", [PAD_CIRCLE], [PAD_CIRCLE])
+	_check(int(state.rule_state["day_count"]) == day_count_before_camp, "KANGEI refusal does not advance the calendar")
+	_check(DayEventModes.dispatcher_mode_for(0x60) == 0x4D and DayEventModes.dispatcher_mode_for(0x62) == 0x4B,
+		"native 0x60 maps to KANGEI and 0x62 to OMIMAI")
+	_check(not DayEventModes.NATIVE_TO_DISPATCHER_MODE.has(0x3A), "native 0x3A (OLH help) stays unbound until its command-screen exit is ported")
 
 	# 6. School Trip (event 0x41 -> native 0x51 -> dispatcher 0x4C SHUGAKU)
 	var day_count_before_trip: int = int(state.rule_state["day_count"])
@@ -781,16 +798,16 @@ func _test_f_borrowed_system_overlays(tables: Dictionary) -> void:
 
 
 # ---------------------------------------------------------------------------
-# (g) Subgames (0x81/0x57 RPG_BATTLE, 0x90/0x59 TACO, 0xD0/0x5A TT)
+# (g) Subgames (native 0x81 RPG_BATTLE, 0x90 TACO, 0xD0 TT)
 # ---------------------------------------------------------------------------
 func _test_g_subgames_live_entry_and_return(tables: Dictionary) -> void:
-	print("--- [G3.g] Subgames Live Entry, Multi-Frame Stepping & Return (0x81/0x57 RPG_BATTLE, 0x90/0x59 TACO, 0xD0/0x5A TT) ---")
+	print("--- [G3.g] Subgames Live Entry and Production Refusal (native 0x81 RPG_BATTLE, 0x90 TACO, 0xD0 TT) ---")
 	var ctx: Dictionary = _create_live_controller_session(tables)
 	var controller: Controller = ctx["controller"]
 	var state: State = ctx["state"]
 	var session: Session = ctx["session"]
 
-	# 1. RPG_BATTLE (native 0x81 / 0x57 -> dispatcher 0x57 GAME_MODE_RPG_BATTLE)
+	# 1. RPG_BATTLE (native 0x81 -> dispatcher 0x57 GAME_MODE_RPG_BATTLE)
 	controller.start_overlay(state, 0x81, {"enemy_hp": 180})
 	_check(state.game_mode == 0x81 and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x57,
 		"Entered native 0x81 -> dispatcher 0x57 (GAME_MODE_RPG_BATTLE)")
@@ -812,62 +829,47 @@ func _test_g_subgames_live_entry_and_return(tables: Dictionary) -> void:
 	_check_preview_exit_without_rewards(controller, 0x81, ovl_victory, [PAD_CIRCLE], "RPG_BATTLE")
 	_leave_refused_family(state)
 
-	# 2. TACO Shooter (native 0x90 / 0x59 -> dispatcher 0x59 GAME_MODE_TACO)
+	# 2. TACO Shooter (native 0x90 -> dispatcher 0x59 GAME_MODE_TACO). The step_mode
+	# monolith invents score, roster and ranking, so saved-state play is refused,
+	# including neutral frames. Screens are checked in preview only.
 	controller.start_overlay(state, 0x90, {"waves_per_stage": 1, "target_stages": 1})
 	_check(state.game_mode == 0x90 and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x59,
 		"Entered native 0x90 -> dispatcher 0x59 (GAME_MODE_TACO)")
-	for _n in range(3):
-		_step_pad(session, 0)
-		_check(state.game_mode == 0x90, "TACO steps real-time frames without auto-exiting on neutral input")
-	var img_taco0: Image = controller.overlay_dispatcher.render_mode(0x59, state.rule_state["overlay_state"]).get("image")
-	_step_pad(session, PAD_CIRCLE)
-	_step_pad(session, PAD_CIRCLE)
-	var img_taco1: Image = controller.overlay_dispatcher.render_mode(0x59, state.rule_state["overlay_state"]).get("image")
+	var ovl_taco: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	_assert_production_rejection(ctx, 0x90, "TACO (0x90)", [0, PAD_CIRCLE, PAD_CROSS])
+	for key: String in ["high_scores", "high_score_names", "stages_cleared", "score", "total_score", "menu_hit_3", "subgame_return_payload"]:
+		_check(not state.rule_state.has(key), "TACO refusal leaves no %s in rule_state" % key)
+	var img_taco0: Image = controller.overlay_dispatcher.render_mode(0x59, ovl_taco).get("image")
+	var img_taco1: Image = controller.overlay_dispatcher.render_mode(0x59, _preview(controller, 0x90, ovl_taco, [PAD_CIRCLE, PAD_CIRCLE])).get("image")
 	_check(img_taco0 != null and img_taco0.get_size() == Vector2i(320, 240) and _image_diff_pixels(img_taco0, img_taco1) > 0,
-		"TACO renders 320x240 and active shots update pixels without auto-exiting")
-	_step_pad(session, PAD_SQUARE)
-	_step_pad(session, PAD_SQUARE)
-	state.rule_state["overlay_state"]["boss"]["hp"] = 2
-	_step_pad(session, PAD_CROSS)  # Boss defeated -> GAME_END (45)
-	_step_pad(session, PAD_CIRCLE) # -> RESULT (8)
-	_step_pad(session, PAD_CIRCLE) # -> SCORES (5)
-	_step_pad(session, PAD_CIRCLE) # -> EXIT (46) -> 0x31
-	_check(state.game_mode == 0x31 and int(state.rule_state.get("stages_cleared", 0)) == 1,
-		"TACO returns cleanly to 0x31 and writes stages_cleared=1")
-	_check((state.rule_state.get("high_scores", []) as Array).size() == 3,
-		"TACO writes back 3-slot high_scores array to rule_state")
+		"TACO preview renders 320x240 and shots update pixels")
+	_leave_refused_family(state)
 
-	# 3. TwinBee Time Attack TT (native 0xD0 / 0x5A -> dispatcher 0x5A GAME_MODE_TT)
+	# 3. TwinBee Time Attack TT (native 0xD0 -> dispatcher 0x5A GAME_MODE_TT), refused the same way.
 	controller.start_overlay(state, 0xD0, {"target_stages": 1, "boss_hp": 16})
 	_check(state.game_mode == 0xD0 and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x5A,
 		"Entered native 0xD0 -> dispatcher 0x5A (GAME_MODE_TT)")
-	for _n in range(3):
-		_step_pad(session, 0)
-		_check(state.game_mode == 0xD0, "TT steps real-time frames without auto-exiting on neutral input")
-	var img_tt0: Image = controller.overlay_dispatcher.render_mode(0x5A, state.rule_state["overlay_state"]).get("image")
-	_step_pad(session, PAD_UP)
-	_check(int(state.rule_state["overlay_state"].get("score", -1)) == 0, "TT PAD_UP does not arbitrarily collect bells")
-	for _i in range(3):
-		_step_pad(session, PAD_CIRCLE)
-	var img_tt1: Image = controller.overlay_dispatcher.render_mode(0x5A, state.rule_state["overlay_state"]).get("image")
-	_check(img_tt0 != null and img_tt0.get_size() == Vector2i(320, 240) and _image_diff_pixels(img_tt0, img_tt1) > 0,
-		"TT renders 320x240 and ship movement/shots update pixels")
-	_step_pad(session, PAD_SQUARE) # Ground bomb defeats boss (hp=16) -> STAGE_CLEAR (3)
-	_step_pad(session, PAD_CIRCLE) # -> RANKING_VIEW (7)
-	_step_pad(session, PAD_CIRCLE) # -> EXIT (9) -> 0x31
-	_check(state.game_mode == 0x31 and int(state.rule_state.get("tt_stages_cleared", 0)) == 1,
-		"TT returns cleanly to 0x31 and writes tt_stages_cleared=1")
-	_check((state.rule_state.get("tt_rankings", []) as Array).size() == 3,
-		"TT writes back 3-slot tt_rankings table to rule_state")
+	var ovl_tt: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	_assert_production_rejection(ctx, 0xD0, "TT (0xD0)", [0, PAD_UP, PAD_SQUARE])
+	for key: String in ["tt_stages_cleared", "tt_last_time_frames", "tt_rankings"]:
+		_check(not state.rule_state.has(key), "TT refusal leaves no %s in rule_state" % key)
+	var img_tt0: Image = controller.overlay_dispatcher.render_mode(0x5A, ovl_tt).get("image")
+	_check(img_tt0 != null and img_tt0.get_size() == Vector2i(320, 240), "TT preview renders 320x240")
+	_leave_refused_family(state)
+
+	# Native 0x57/0x59/0x5A are GEKO modes, never the dispatcher's RPG/TACO/TT ids.
+	for geko_mode: int in [0x57, 0x59, 0x5A]:
+		_check(DayEventModes.dispatcher_mode_for(geko_mode) == OverlayDispatcher.GAME_MODE_GEKO,
+			"native 0x%02X resolves to GEKO, not a minigame" % geko_mode)
 
 	_family_evidence["subgames_rpg_taco_tt"] = {
-		"native_modes": ["0x57", "0x59", "0x5A", "0x81", "0x90", "0xD0"],
+		"native_modes": ["0x81", "0x90", "0xD0"],
 		"dispatcher_modes": ["0x57", "0x59", "0x5A"],
 		"source_functions": ["rpg_battle_main", "taco_shooter_main", "tt_twinbee_main"],
 		"entry_and_caller": "SchoolDayController.start_overlay / DayEventModes 0x81/0x90/0xD0 -> _overlay_mode -> OverlayDispatcher",
 		"required_content_services": ["OverlayDispatcher.subgame_presenter", "SubgameOverlays"],
-		"return_and_state_effects": "T-39006: RPG is refused with saved state (no talk_result_code); TACO and TT return to 0x31 with only their subgame payload fields (high_scores/stages_cleared, tt_rankings/tt_stages_cleared)",
-		"verified_live": true,
+		"return_and_state_effects": "RPG_BAT, TACO and TT are refused with saved state and write nothing; their source results live in system_data, not rule_state",
+		"verified_live": false,
 	}
 
 

@@ -26,10 +26,12 @@ const EVENT_TO_DISPATCHER_MODE: Dictionary = {
 }
 
 # Maps native GameMode enum values (include/game_enums.h) to OverlayDispatcher catalog mode IDs.
-# Known collision: the catalog reuses native numbers for other overlays (catalog 0x44 GEKO
-# is native RUMOR; 0x57/0x59/0x5A/0x5C/0x5E are native GEKO birthday/encounter/invitation,
-# DATE2 and DATE scenes but catalog RPG/TACO/TT/ENDING/EVENT_CG). Those native values still
-# resolve to the catalog entry; only queue opcodes resolve them correctly today.
+# The two id spaces overlap: dispatcher 0x57/0x59/0x5A/0x5C are RPG_BAT/TACO/TT/ENDING,
+# while native 0x57/0x59/0x5A are GEKO modes and native 0x5C is DATE2. A native key
+# maps by its include/game_enums.h entry, never by identity with a dispatcher id.
+# Native 0x3A (OLH help) stays unmapped: its exit returns to the command screen
+# (0x34), which _overlay_mode's day-queue completion does not do.
+# Not yet re-checked against the enum: 0x36, 0x37 and 0x41..0x53.
 const NATIVE_TO_DISPATCHER_MODE: Dictionary = {
 	0x01: 0x01, # GAME_MODE_OPENING
 	0x35: 0x35, # GAME_MODE_EXAM
@@ -58,17 +60,22 @@ const NATIVE_TO_DISPATCHER_MODE: Dictionary = {
 	0x53: 0x53, # GAME_MODE_EN_NICHI
 	0x54: 0x4F, # GAME_MODE_VALENTINE -> VALEN
 	0x55: 0x4E, # GAME_MODE_SEASONAL_PARTY -> SHOUGATU
-	0x56: 0x44, # GAME_MODE_PLAYER_BIRTHDAY -> GEKO (0x80134040)
-	0x57: 0x57, # GAME_MODE_RPG_BATTLE
+	0x56: 0x44, # GAME_MODE_PLAYER_BIRTHDAY (GEKO 0x80134040) -> GEKO
+	0x57: 0x44, # GAME_MODE_GIRL_BIRTHDAY (GEKO D_80134C90, queue 0x32) -> GEKO, not RPG_BAT
 	0x58: 0x58, # GAME_MODE_AMUSEMENT_PARK_DATE
-	0x59: 0x59, # GAME_MODE_TACO
-	0x5A: 0x5A, # GAME_MODE_TT
+	0x59: 0x44, # GAME_MODE_GIRL_ENCOUNTER (GEKO D_80132244, queue 0x44) -> GEKO, not TACO (native TACO is 0x90)
+	0x5A: 0x44, # GAME_MODE_GIRL_INVITATION (GEKO 0x801426D0) -> GEKO, not TT (native TT is 0xD0)
 	0x5B: 0x3F, # GAME_MODE_MEETING -> ETC
-	0x5C: 0x5C, # GAME_MODE_ENDING
+	# Native 0x5C is AMUSEMENT_PARK_2 (DATE2 0x80137F64), but SchoolDayController's graduation
+	# still enters 0x5C instead of GAME_MODE_ENDING 0x63 (scheduler.c:1559), so this row keeps
+	# the ending until that caller moves to 0x63.
+	0x5C: 0x5C, # ENDING (see above)
 	0x5D: 0x44, # GAME_MODE_SPECIAL_EVENT -> GEKO (0x8013882C)
 	0x5E: 0x5E, # GAME_MODE_EVENT_CG
-	0x5F: 0x51, # GAME_MODE_CLUB_CAMP -> RENSYU
+	0x5F: 0x4D, # GAME_MODE_CLUB_CAMP (KANGEI overlay) -> KANGEI
+	0x60: 0x4D, # GAME_MODE_CLUB_CAMP_2 (KANGEI overlay) -> KANGEI
 	0x61: 0x4B, # GAME_MODE_SICK_VISIT -> OMIMAI
+	0x62: 0x4B, # GAME_MODE_SICK_VISIT_2 (OMIMAI 0x80132000) -> OMIMAI
 	0x63: 0x5C, # GAME_MODE_ENDING (enum) -> ENDING
 	0x70: 0x48, # GAME_MODE_CULTURE_FESTIVAL_A -> BUNKASAI
 	0x71: 0x4A, # GAME_MODE_CULTURE_FESTIVAL_B -> BUNKAKEN
@@ -92,7 +99,7 @@ static func mode_for(event_type: int, club_id: int) -> int:
 	return int(EVENT_MODES.get(event_type, 0x34))
 
 static func dispatcher_mode_for(native_mode: int, event_type: int = -1) -> int:
-	if NATIVE_TO_DISPATCHER_MODE.has(native_mode) and native_mode in [0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x80, 0x81, 0x82, 0x90, 0xC1, 0xC2, 0xD0, 0x61, 0x63, 0x5F]:
+	if NATIVE_TO_DISPATCHER_MODE.has(native_mode) and native_mode in [0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x80, 0x81, 0x82, 0x90, 0xC1, 0xC2, 0xD0, 0x61, 0x63, 0x5F, 0x60, 0x62]:
 		return int(NATIVE_TO_DISPATCHER_MODE[native_mode])
 	if event_type >= 0 and EVENT_TO_DISPATCHER_MODE.has(event_type):
 		return int(EVENT_TO_DISPATCHER_MODE[event_type])

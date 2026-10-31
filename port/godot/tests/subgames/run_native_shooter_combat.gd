@@ -24,7 +24,14 @@ func sound(state: Dictionary, channel: int, command: int) -> void:
 	if not result["error"].is_empty(): failures.append(result["error"])
 
 func _initialize() -> void:
-	var fixture: Dictionary = integers(JSON.parse_string(FileAccess.get_file_as_string(OS.get_environment("TACO_NATIVE_FIXTURE"))))
+	# Fail closed: a missing or unreadable fixture is an error, not a skip.
+	var fixture_path: String = OS.get_environment("TACO_NATIVE_FIXTURE")
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(fixture_path)) if not fixture_path.is_empty() and FileAccess.file_exists(fixture_path) else null
+	if not parsed is Dictionary or not (parsed as Dictionary).get("cases") is Array:
+		push_error("TACO_NATIVE_FIXTURE is missing or not a native case fixture: '%s'" % fixture_path)
+		quit(1)
+		return
+	var fixture: Dictionary = integers(parsed)
 	var loader: Tables = Tables.new()
 	var error: String = loader.open_manifest(OS.get_environment("TACO_COMBAT_TABLES"))
 	if not error.is_empty():

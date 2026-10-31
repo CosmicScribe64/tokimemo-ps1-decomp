@@ -4,6 +4,7 @@ const Fixture = preload("res://tests/rules/run_rule_tests.gd")
 const State = preload("res://rules/school_day_state.gd")
 const Session = preload("res://core/game_session.gd")
 const Ordinary = preload("res://rules/ordinary_week.gd")
+const DayEventModes = preload("res://rules/day_event_modes.gd")
 var failures: Array[String] = []
 var checks: int = 0
 func check(ok: bool, label: String) -> void:
@@ -44,5 +45,17 @@ func _initialize() -> void:
 	Ordinary.dispatch(graduation,Session.FrameResult.new())
 	check(graduation.game_mode == 0x31 and graduation.mode_step == 1 and graduation.substep == 0,"graduation awaits native audio preparation step")
 	check(not graduation.rule_state.has("ending_completed"),"graduation not completed by date alone")
+	# Native GameMode -> dispatcher catalog id, read from include/game_enums.h
+	# overlay comments. Native ids that equal a dispatcher id must not map by identity.
+	for pair: Array in [[0x56,0x44],[0x57,0x44],[0x59,0x44],[0x5a,0x44],[0x5f,0x4d],[0x60,0x4d],[0x61,0x4b],[0x62,0x4b],[0x81,0x57],[0x90,0x59],[0xd0,0x5a],[0x63,0x5c]]:
+		check(DayEventModes.dispatcher_mode_for(pair[0]) == pair[1], "native mode %02x -> dispatcher %02x" % pair)
+	# The native mode wins over the queue opcode for these overlays.
+	check(DayEventModes.dispatcher_mode_for(0x5f, 0x42) == 0x4d, "club camp 0x5f stays KANGEI under event 0x42")
+	# Queue path as init_overlay runs it: native mode plus the queue opcode.
+	# overlay_loader.c enters GEKO for native 0x56/0x57/0x59/0x5A.
+	for pair: Array in [[0x32,0x57],[0x33,0x56],[0x44,0x59],[0x46,0x5a]]:
+		check(DayEventModes.mode_for(pair[0], 0) == pair[1], "queue %02x enters native %02x" % pair)
+		check(DayEventModes.dispatcher_mode_for(pair[1], pair[0]) == 0x44, "queue %02x / native %02x resolves to GEKO 0x44" % pair)
+	check(not DayEventModes.NATIVE_TO_DISPATCHER_MODE.has(0x3a), "OLH help 0x3a is not bound to the day-queue overlay handler")
 	print(JSON.stringify({"checks":checks,"failures":failures}))
 	quit(0 if failures.is_empty() else 1)

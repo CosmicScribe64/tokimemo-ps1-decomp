@@ -66,18 +66,18 @@ const OVERLAY_CATALOG := {
 	GAME_MODE_GEKO:                {"overlay": "GEKO",     "name": "After-School Walk Home",        "source": "src/ovl/girl_encounters/"},
 	GAME_MODE_TAIIKU:              {"overlay": "TAIIKU",   "name": "Sports Festival",               "source": "src/ovl/sports_festival/"},
 	GAME_MODE_BUNKASAI:            {"overlay": "BUNKASAI", "name": "Culture Festival",              "source": "src/ovl/culture_festival/"},
-	GAME_MODE_BUNKA_SD:            {"overlay": "BUNKA_SD", "name": "Culture Festival SD Stage",     "source": "src/ovl/culture_festival_sd/"},
-	GAME_MODE_BUNKAKEN:            {"overlay": "BUNKAKEN", "name": "Culture Club Tour",             "source": "src/ovl/culture_club_tour/"},
+	GAME_MODE_BUNKA_SD:            {"overlay": "BUNKA_SD", "name": "Culture Festival SD Stage",     "source": "src/ovl/culture_stage_shows/"},
+	GAME_MODE_BUNKAKEN:            {"overlay": "BUNKAKEN", "name": "Culture Club Tour",             "source": "src/ovl/culture_festival_tour/"},
 	GAME_MODE_OMIMAI:              {"overlay": "OMIMAI",   "name": "Sick Visit",                    "source": "src/ovl/sick_visit/"},
 	GAME_MODE_SHUGAKU:             {"overlay": "SHUGAKU",  "name": "School Trip",                   "source": "src/ovl/school_trip/"},
-	GAME_MODE_KANGEI:              {"overlay": "KANGEI",   "name": "Freshman Welcome Party",        "source": "src/ovl/welcome_party/"},
-	GAME_MODE_SHOUGATU:            {"overlay": "SHOUGATU", "name": "New Year & Christmas",          "source": "src/ovl/new_year/"},
+	GAME_MODE_KANGEI:              {"overlay": "KANGEI",   "name": "Club Summer Camp",              "source": "src/ovl/summer_camp/"},
+	GAME_MODE_SHOUGATU:            {"overlay": "SHOUGATU", "name": "New Year & Christmas",          "source": "src/ovl/new_year_christmas/"},
 	GAME_MODE_VALEN:               {"overlay": "VALEN",    "name": "Valentine's Day",               "source": "src/ovl/valentine/"},
 	GAME_MODE_DATE:                {"overlay": "DATE",     "name": "Date Spot Overlay",             "source": "src/ovl/date/"},
-	GAME_MODE_RENSYU:              {"overlay": "RENSYU",   "name": "Club Practice Match & Camp",    "source": "src/ovl/club_practice/"},
+	GAME_MODE_RENSYU:              {"overlay": "RENSYU",   "name": "Club Practice Match",           "source": "src/ovl/practice_match/"},
 	GAME_MODE_MASTER:              {"overlay": "MASTER",   "name": "Club Master Duel",              "source": "src/ovl/club_master/"},
-	GAME_MODE_EN_NICHI:            {"overlay": "EN_NICHI", "name": "Night Festival Stalls",         "source": "src/ovl/night_stalls/"},
-	GAME_MODE_RPG_BATTLE:          {"overlay": "RPG_BAT",  "name": "Turn-Based Party RPG Battle",   "source": "src/ovl/rpg_battle/"},
+	GAME_MODE_EN_NICHI:            {"overlay": "EN_NICHI", "name": "Night Festival Stalls",         "source": "src/ovl/festival_stalls/"},
+	GAME_MODE_RPG_BATTLE:          {"overlay": "RPG_BAT",  "name": "Real-Time RPG Battle",          "source": "src/ovl/rpg_battle/"},
 	GAME_MODE_AMUSEMENT_PARK_DATE: {"overlay": "DATE2",    "name": "Amusement Park & Karaoke Date", "source": "src/ovl/amusement_park_date/"},
 	GAME_MODE_TACO:                {"overlay": "TACO",     "name": "3D Space Shooter Minigame",     "source": "src/ovl/shooter_3d/"},
 	GAME_MODE_TT:                  {"overlay": "TT",       "name": "TwinBee Time Attack",           "source": "src/ovl/TT/"},
@@ -94,12 +94,14 @@ var subgame_presenter: SubgamePresenter
 var event_cg_presenter: EventCgPresenter
 
 ## T-39006: with saved state (production), only these step_mode branches run.
-## System menus carry no event outcome. TACO/TT return only their own subgame
-## payload fields. BUNKASAI runs CultureFestival instead of step_mode. The
-## ending keeps its separate path. Every other event mode reads invented
-## rosters, parameters or fixed rewards in step_mode and is rejected.
+## System menus carry no event outcome. BUNKASAI runs CultureFestival instead
+## of step_mode. The ending keeps its separate path. Every other event mode
+## reads invented rosters, parameters or fixed rewards in step_mode and is
+## rejected. TACO and TT left the payload list: their step_mode monolith
+## invents scores, rosters and rankings and kept them in rule_state instead of
+## system_data (D_800E7D10: TT from +0x2C, TACO from +0x40). The payload
+## writer was removed, so no subgame result reaches rule_state.
 const PRODUCTION_MENU_MODES: Array[int] = [GAME_MODE_OPENING, GAME_MODE_ETC, GAME_MODE_OPTION, GAME_MODE_OLH]
-const PRODUCTION_PAYLOAD_MODES: Array[int] = [GAME_MODE_TACO, GAME_MODE_TT]
 const PRODUCTION_REJECTIONS: Dictionary = {
 	GAME_MODE_TEL: "phone_date_invitation_resolve stress/guts/affection/syoushin writes, girl_scores closeness and appointment flag D_80140560 are not ported; step_mode swaps looks/closeness and defaults closeness to 80",
 	GAME_MODE_TEL_ACTION: "profile/call branch reads the invented preview roster",
@@ -118,7 +120,9 @@ const PRODUCTION_REJECTIONS: Dictionary = {
 	GAME_MODE_KANGEI: "camp day uses fixed parameters",
 	GAME_MODE_RENSYU: "practice match defaults practice points and match count",
 	GAME_MODE_EN_NICHI: "stall game inputs are fixed",
-	GAME_MODE_RPG_BATTLE: "battle uses a fixed rand_seed instead of native rand()",
+	GAME_MODE_RPG_BATTLE: "battle is a turn-based model with a fixed rand_seed; the real-time timers, enemy choosers, girl channel, stages 0-15 and the D_80122CE0 exit contract are not ported",
+	GAME_MODE_TACO: "shooter stages 0-10, 45, 8, 9 and 46, the wingman, secondary weapons, bosses and the OPTION/MASTER callers are not ported; the preview invents score, roster and a five-slot ranking",
+	GAME_MODE_TT: "TT rules are not traced to o-tt and the OPTION/BUNKAKEN/BUNKASAI callers are not ported; the preview invents hitboxes, bells and bosses",
 	GAME_MODE_EVENT_CG: "date-spot special scene defaults spot, month and year",
 }
 const CultureFestival = preload("res://rules/culture_festival.gd")
@@ -221,10 +225,24 @@ static func is_interactive_overlay_mode(mode: int) -> bool:
 	return OVERLAY_CATALOG.has(mode) or DayEventModes.NATIVE_TO_DISPATCHER_MODE.has(mode)
 
 
-func describe_mode(mode: int) -> Dictionary:
-	if OVERLAY_CATALOG.has(mode):
-		return OVERLAY_CATALOG[mode]
-	var disp_mode: int = DayEventModes.dispatcher_mode_for(mode)
+## Native GameMode -> dispatcher catalog id. The two id spaces overlap
+## (native 0x57/0x59/0x5A are GEKO entries, dispatcher 0x57/0x59/0x5A are
+## RPG_BAT/TACO/TT), so a native id is never used as a catalog key directly.
+## An overlay state from init_overlay carries the resolved id; otherwise the
+## state's queue opcode selects the row, as init_overlay does.
+static func resolve_dispatcher_mode(native_mode: int, state: Dictionary = {}) -> int:
+	if state.has("dispatcher_mode"):
+		return int(state["dispatcher_mode"])
+	return DayEventModes.dispatcher_mode_for(native_mode, int(state.get("event_opcode", -1)))
+
+
+## Catalog entry for a native GameMode (see resolve_dispatcher_mode).
+func describe_native_mode(native_mode: int, state: Dictionary = {}) -> Dictionary:
+	return OVERLAY_CATALOG.get(resolve_dispatcher_mode(native_mode, state), {})
+
+
+## Catalog entry for a dispatcher catalog id.
+func describe_mode(disp_mode: int) -> Dictionary:
 	return OVERLAY_CATALOG.get(disp_mode, {})
 
 
@@ -279,8 +297,10 @@ static func _step_cursor(cursor: int, option_count: int, pad_pressed: int) -> in
 	return clampi(cursor, 0, option_count - 1)
 
 
+## `mode` is a dispatcher catalog id; a state from init_overlay overrides it
+## with its own dispatcher_mode. Native callers go through step_overlay.
 func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
-	var disp_mode: int = DayEventModes.dispatcher_mode_for(mode) if not OVERLAY_CATALOG.has(mode) else mode
+	var disp_mode: int = int(state.get("dispatcher_mode", mode))
 	var next_state: Dictionary
 	if state.has("state") and state["state"] is Dictionary:
 		next_state = (state["state"] as Dictionary).duplicate(true)
@@ -973,7 +993,7 @@ static func clear_save_step_out(mode: int, overlay_state: Dictionary, payload: D
 	return out
 
 func step_overlay(mode: int, overlay_state: Dictionary, pad_pressed: int, rule_state: Dictionary = {}, rng: Variant = null) -> Dictionary:
-	var disp_mode: int = int(overlay_state.get("dispatcher_mode", DayEventModes.dispatcher_mode_for(mode)))
+	var disp_mode: int = resolve_dispatcher_mode(mode, overlay_state)
 	var current_state: Dictionary = overlay_state.duplicate(true)
 	if current_state.is_empty():
 		current_state = init_overlay(mode, rule_state, [], rng)
@@ -1004,7 +1024,7 @@ func step_overlay(mode: int, overlay_state: Dictionary, pad_pressed: int, rule_s
 	if not rule_state.is_empty():
 		if disp_mode == GAME_MODE_BUNKASAI:
 			return _step_culture_festival(mode, current_state, pad_pressed, rule_state, rng)
-		if disp_mode not in PRODUCTION_MENU_MODES and disp_mode not in PRODUCTION_PAYLOAD_MODES:
+		if disp_mode not in PRODUCTION_MENU_MODES:
 			return _production_rejection(mode, disp_mode, current_state,
 				String(PRODUCTION_REJECTIONS.get(disp_mode, "no source-backed production handler")))
 		var live_ctx: Dictionary = TelephoneOverlay.extract_live_context(rule_state)
@@ -1018,8 +1038,9 @@ func step_overlay(mode: int, overlay_state: Dictionary, pad_pressed: int, rule_s
 	var next_state: Dictionary = step_res.get("state", step_res).duplicate(true)
 	var act: String = String(step_res.get("action", "stepped"))
 	var completed: bool = (act == "return_to_game" or bool(next_state.get("completed", false)))
-	# Without saved state this is a preview: it exits but writes nothing.
-	var deltas: Dictionary = _payload_outcome(disp_mode, next_state, rule_state) if completed and not rule_state.is_empty() else {}
+	# Menus carry no event outcome and previews write nothing, so no step_mode
+	# result is ever turned into save deltas.
+	var deltas: Dictionary = {}
 
 	next_state["completed"] = completed
 	next_state["action"] = act
@@ -1101,32 +1122,19 @@ func _step_culture_festival(mode: int, current_state: Dictionary, pad_pressed: i
 	return out
 
 
-## Production completion fields: subgame payload values only, no invented
-## affection/tokimeki and no defaults for absent payload fields.
-func _payload_outcome(disp_mode: int, next_state: Dictionary, rule_state: Dictionary) -> Dictionary:
-	if disp_mode not in PRODUCTION_PAYLOAD_MODES:
-		return {}
-	var payload: Dictionary = next_state.get("return_payload", {}) if next_state.get("return_payload") is Dictionary else {}
-	var deltas: Dictionary = {"source": "subgame return payload"}
-	# delta key -> payload key
-	var keys: Dictionary = {"high_scores": "high_scores", "high_score_names": "high_score_names",
-		"stages_cleared": "stages_cleared", "score": "score", "total_score": "total_score",
-		"menu_hit_3": "menu_hit_3", "system_data_flag": "system_data_flag"}
-	if disp_mode == GAME_MODE_TT:
-		SubgameOverlays.tt_apply_writeback_to_rule_state(next_state, rule_state)
-		keys = {"tt_stages_cleared": "tt_stages_cleared", "tt_rankings": "rankings", "tt_last_time_frames": "elapsed_frames"}
-	for key: String in keys:
-		var source_key: String = keys[key]
-		if payload.has(source_key):
-			deltas[key] = payload[source_key].duplicate(true) if payload[source_key] is Array else payload[source_key]
-	deltas["return_payload"] = payload.duplicate(true)
-	return deltas
+## Renders the overlay of a native GameMode (see resolve_dispatcher_mode).
+func render_native_mode(native_mode: int, state: Dictionary = {}) -> Dictionary:
+	var resolved: Dictionary = state.duplicate()
+	resolved["dispatcher_mode"] = resolve_dispatcher_mode(native_mode, state)
+	return render_mode(int(resolved["dispatcher_mode"]), resolved)
 
 
+## Renders a dispatcher catalog id; a state from init_overlay overrides it
+## with its own dispatcher_mode. Native callers use render_native_mode.
 func render_mode(mode: int, state: Dictionary = {}) -> Dictionary:
 	if not _ready:
 		return {"error": "OverlayDispatcher is not initialized", "mode": mode}
-	var disp_mode: int = DayEventModes.dispatcher_mode_for(mode) if not OVERLAY_CATALOG.has(mode) else mode
+	var disp_mode: int = int(state.get("dispatcher_mode", mode))
 	if not OVERLAY_CATALOG.has(disp_mode):
 		return {"error": "Unsupported overlay mode: 0x%02X" % mode, "mode": mode}
 
