@@ -242,9 +242,9 @@ s32 girl_state_rank(s32 a) {
     return (u8)get_g_zyotai_s(a) & 0x7F;
 }
 
-void portrait_read_step(void) {
+void portrait_read_step(s32 arg0) {
     if (game_state.substep == 0) {
-        portrait_read_start();
+        portrait_read_start(arg0);
         game_state.substep += 1;
         return;
     }

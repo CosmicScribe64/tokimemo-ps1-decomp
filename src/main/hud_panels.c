@@ -1165,8 +1165,8 @@ void message_window_title_show(s32 show) {
     }
 }
 
-void message_window_set_title_hidden(void) {
-    message_window_set_title();
+void message_window_set_title_hidden(u8 *arg0) {
+    message_window_set_title(arg0);
     D_80125CA0 = 0xB8;
 }
 

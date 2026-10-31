@@ -1,6 +1,5 @@
 /* scheduler.c: original object text 0x8006CB30-0x800737A0 in config/objects/main.txt; matched C implements weekly queue construction/dispatch, calendar advancement, encounter selection and health checks; original object boundary unchanged. Original object 0x8006CB30-0x800737A0 (config/objects/main.txt). */
 #define MAIN_API_OVERRIDE_girl_scores /* this object calls it as void (no v0 result in the call block, schedule_miharu_scene4_ready); main_api.h has s32 */
-#define MAIN_API_OVERRIDE_message_window_set_title_hidden /* the original callers pass a string the callee ignores; main_api.h has (void) */
 #include "common.h"
 #include "common.h"
 #include "game/game_state.h"
@@ -33,7 +32,6 @@
 #include "main/game_mode.h"
 #include "game/word_views.h"
 
-void message_window_set_title_hidden();
 void girl_scores();
 
 /* Mode 0x30 handler: on stage 0 runs the schedule build steps, then draws the HUD set */

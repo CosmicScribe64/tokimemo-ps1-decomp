@@ -1,0 +1,33 @@
+{
+ "functions": {
+  "message_window_title_update": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS exception and thread tables): in 4 of 16 captured hits a vertical-blank interrupt fell inside the call and the BIOS handler changed it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DC630",
+     "length": 1,
+     "reason": "libcd internal state byte changed by the CD interrupt during the call"
+    },
+    {
+     "start": "0x800DC8FD",
+     "length": 1,
+     "reason": "libcd internal state byte changed by the CD interrupt during the call"
+    },
+    {
+     "start": "0x800E34B0",
+     "length": 1,
+     "reason": "libcd internal state byte changed by the CD interrupt during the call"
+    },
+    {
+     "start": "0x800E5B10",
+     "length": 1,
+     "reason": "SDK counter bumped by the vertical-blank interrupt during the call"
+    }
+   ]
+  }
+ }
+}

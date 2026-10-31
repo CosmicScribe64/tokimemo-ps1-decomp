@@ -48,8 +48,15 @@ func _test_registry() -> void:
 				_check(not engine.is_ported(String(unported)), "%s lists %s as unported but a module ports it" % [stem, unported])
 	_check(engine.memory.game_state().base == 0x800E6280, "the engine owns a GameMemory with the GameState at 0x800E6280")
 
+## game_mode_set(0x30) calls message_window_title_show, a function some package ports. These tests need a callee that
+## stays unported, so the double below calls a name no module will ever define: the refusal is then "message_window_title_show
+## -> __test_never_ported" whatever the packages have landed.
+static func _never_ported_title_show(engine) -> void:
+	engine.set_stub("message_window_title_show", func(_args: Array) -> int: return engine.call_c("__test_never_ported"))
+
 func _test_refusals() -> void:
 	var engine = GameEngine.new()
+	_never_ported_title_show(engine)
 	var gs = engine.memory.game_state()
 	gs.set_field("mode_step", 5)
 	_check(engine.call_c("title_mode_handler") == 0 and engine.refusal.contains("title_mode_handler") \
@@ -59,7 +66,7 @@ func _test_refusals() -> void:
 	engine.clear_failure()
 	# game_mode_set(0x30) reaches message_window_title_show (target mode 0x30 is neither 0x5E nor 0x50)
 	engine.call_c("game_mode_set", [0x30])
-	_check(engine.refusal.begins_with("game_mode_set -> message_window_title_show"), "a nested refusal names caller and callee: %s" % engine.refusal)
+	_check(engine.refusal.begins_with("message_window_title_show -> __test_never_ported"), "a nested refusal names caller and callee: %s" % engine.refusal)
 	_check(gs.get_field("game_mode") == 0x30 and gs.get_field("mode_step") == 0, "the state at the refusal is the state before the callee call")
 	engine.clear_failure()
 	engine.call_address("ovl_entry", 0x80123456)
@@ -119,6 +126,7 @@ func _test_function_table() -> void:
 
 func _test_freeze() -> void:
 	var engine = GameEngine.new()
+	_never_ported_title_show(engine)
 	var gs = engine.memory.game_state()
 	gs.set_field("game_mode", 0x30)
 	gs.set_field("mode_step", 3)

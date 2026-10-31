@@ -1,0 +1,56 @@
+{
+ "captures": [
+  "wpb-a1",
+  "wpb-b1",
+  "wpb-b2",
+  "wpb-b3",
+  "wpb-b5",
+  "wpb-b6",
+  "wpb-c1",
+  "wpb-c4",
+  "wpb-c5",
+  "wpb-c6",
+  "wpb-d1",
+  "wpb-d2",
+  "wpb-e2"
+ ],
+ "exclude": [],
+ "functions": {
+  "message_window_title_update": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS exception and thread tables): in 4 of 16 captured hits a vertical-blank interrupt fell inside the call and the BIOS handler changed it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DC630",
+     "length": 1,
+     "reason": "libcd internal state byte changed by the CD interrupt during the call"
+    },
+    {
+     "start": "0x800DC8FD",
+     "length": 1,
+     "reason": "libcd internal state byte changed by the CD interrupt during the call"
+    },
+    {
+     "start": "0x800E34B0",
+     "length": 1,
+     "reason": "libcd internal state byte changed by the CD interrupt during the call"
+    },
+    {
+     "start": "0x800E5B10",
+     "length": 1,
+     "reason": "SDK counter bumped by the vertical-blank interrupt during the call"
+    }
+   ]
+  }
+ },
+ "untested": {
+  "portrait_hide": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/hud_panels_test.gd",
+  "bustup_speech": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/hud_panels_test.gd",
+  "hud_icon_move_allowed": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); no hand check either: the body is the mechanical translation of the C that no capture or test exercised (see the ticket notes)",
+  "hud_summer_phase": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/hud_panels_test.gd",
+  "hud_season_bgm_load": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); no hand check either: the body is the mechanical translation of the C that no capture or test exercised (see the ticket notes)"
+ }
+}

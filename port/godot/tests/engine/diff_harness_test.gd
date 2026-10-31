@@ -144,8 +144,17 @@ func _test_callees() -> void:
 	bad.a0 = 5
 	result = differ.run_hit(engine, "game_mode_set", _hit(entry, exit_ram, 0x30, [bad]), entry, signature, [])
 	_check(not result.ok and "\n".join(result.problems).contains("argument 0 = 0x0, the original passed 0x5"), "callee arguments are compared: %s" % [result.problems])
-	# the C did not call the callee at all (the port does): a refusal, reported
-	result = differ.run_hit(engine, "game_mode_set", _hit(entry, exit_ram, 0x30, []), entry, signature, [])
+	# the C did not call the callee at all (the port does): a refusal, reported. The caller below is a test module whose
+	# callee is a name no package will ever define, so the check does not depend on which packages have landed.
+	var never := GDScript.new()
+	never.source_code = "extends RefCounted\nconst C_FILE: String = \"test\"\nconst C_FUNCTIONS: Array[String] = [\"never_caller\"]\n" \
+		+ "const C_SIGNATURES: Dictionary = {\"never_caller\": {\"args\": [], \"ret\": \"void\"}}\nvar engine\n" \
+		+ "func never_caller() -> void:\n\tengine.call_c(\"__test_never_ported\")\n"
+	never.reload()
+	var module = never.new()
+	module.set("engine", engine)
+	engine._add_module("never", module, false)
+	result = differ.run_hit(engine, "never_caller", _hit(entry, entry, 0, []), entry, {"args": [], "ret": "void"}, [])
 	_check(not result.ok and "\n".join(result.problems).contains("not ported"), "a callee the original did not call is a failure: %s" % [result.problems])
 	# the C called one more callee than the port reached
 	result = differ.run_hit(engine, "mode_step_next", _hit(entry, _expected_step_next(entry), 0, [record]), entry, engine.modules.game_mode.C_SIGNATURES.mode_step_next, [])

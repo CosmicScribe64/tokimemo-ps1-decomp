@@ -7,6 +7,10 @@ in that C file (ANSI or K&R), then checks the argument count and the return type
 s16 s32 u32, pointers as ptr). A function the C declares non-void cannot be marked void to skip v0: a function that
 falls off the end of an s32 function says so with "ret_undefined": "<reason>". libc (_libc.gd) is checked against the
 prototypes in include/ when one exists. Exit code 1 on any mismatch.
+
+Signature override (T-39312): a function whose callers pass arguments that the C definition does not take (an unprototyped
+callee that ignores them, where adding the parameter changes the matching build) lists them with "args_extra": N and a
+mandatory "args_extra_reason": "<why>"; the expected count is then the C count plus N.
 """
 import argparse
 import glob
@@ -52,13 +56,15 @@ def parse_module(path):
             args = re.search(r'"args": \[([^\]]*)\]', body)
             ret = re.search(r'"ret": "(\w+)"', body)
             count = len([a for a in args.group(1).split(',') if a.strip()]) if args else 0
+            extra = re.search(r'"args_extra": (\d+)', body)
+            reason = re.search(r'"args_extra_reason": "([^"]+)"', body)
             # "c_params": the C parameter count when it differs from the register words (a struct passed by value, such as RECT)
             c_params = re.search(r'"c_params": (\d+)', body)
             if c_params:
                 # the register words (args) must cover the C parameters; the extra words are a struct passed by value
                 assert len(args.group(1).split(',')) >= int(c_params.group(1)), 'c_params larger than the register words of ' + m.group(1)
                 count = int(c_params.group(1))
-            sigs[m.group(1)] = (count, ret.group(1) if ret else '?', '"ret_undefined"' in body)
+            sigs[m.group(1)] = (count, ret.group(1) if ret else '?', '"ret_undefined"' in body, int(extra.group(1)) if extra else 0, bool(reason))
     return (c_file.group(1) if c_file else ''), sigs
 
 
@@ -77,7 +83,7 @@ def main():
             source = open(os.path.join(args.repo, c_file)).read()
         else:
             source = '\n'.join(open(f, errors='ignore').read() for f in glob.glob(os.path.join(args.repo, 'include', '**', '*.h'), recursive=True))
-        for name, (count, ret, undefined) in sorted(sigs.items()):
+        for name, (count, ret, undefined, extra, reason) in sorted(sigs.items()):
             found = find_definition(source, name)
             if found is None:
                 if c_file.startswith('src/'):
@@ -86,7 +92,10 @@ def main():
                 continue
             checked += 1
             c_ret, c_count = found
-            if c_count != count:
+            if extra and not reason:
+                print('%s: %s lists args_extra without args_extra_reason' % (base, name))
+                errors += 1
+            if c_count + extra != count:
                 print('%s: %s takes %d argument(s) in the C, C_SIGNATURES lists %d' % (base, name, c_count, count))
                 errors += 1
             if c_ret == 'void' and ret != 'void':
