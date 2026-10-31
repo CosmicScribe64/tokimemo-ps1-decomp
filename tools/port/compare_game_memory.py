@@ -158,7 +158,8 @@ def summarize(name, fields, base, size, port, emu):
     }
 
 
-def compare_globals(parser, names, port, emu):
+def compare_globals(parser, names, port, emu, known=None):
+    known = known or {}
     out = []
     for name in names:
         g = parser.globals.get(name)
@@ -179,7 +180,8 @@ def compare_globals(parser, names, port, emu):
             a, b = read(port, addr, size, signed), read(emu, addr, size, signed)
             if a != b:
                 diffs.append({"index": i, "address": "0x%08X" % addr, "port": a, "emulator": b})
-        out.append({"name": name, "address": "0x%08X" % g.address, "elements": count, "equal": not diffs, "differing": diffs})
+        out.append({"name": name, "address": "0x%08X" % g.address, "elements": count, "equal": not diffs, "differing": diffs,
+                    "reason": known.get(name, "")})
     return out
 
 
@@ -231,8 +233,9 @@ def render(report, limit):
             lines.append("  %s @%s: equal (%d elements)" % (g["name"], g["address"], g["elements"]))
         else:
             d = g["differing"][0]
-            lines.append("  %s @%s: %d of %d elements differ, first [%d] port=%d emu=%d" % (
-                g["name"], g["address"], len(g["differing"]), g["elements"], d["index"], d["port"], d["emulator"]))
+            lines.append("  %s @%s: %d of %d elements differ, first [%d] port=%d emu=%d%s" % (
+                g["name"], g["address"], len(g["differing"]), g["elements"], d["index"], d["port"], d["emulator"],
+                "  [" + g["reason"] + "]" if g.get("reason") else ""))
     if "sweep" in report:
         different = [r for r in report["sweep"] if r["differing_bytes"]]
         lines.append("global sweep (outside GameState): %d of %d globals differ, %d bytes" % (
@@ -269,7 +272,7 @@ def main(argv=None):
             {"summary": summarize("GameState", fields, GAME_STATE, state.size, port, emu), "fields": fields},
             {"summary": summarize("SystemData.seed", seed, sysdata_base, 4, port, emu), "fields": seed},
         ],
-        "globals": compare_globals(parser, BRIDGED_GLOBALS, port, emu),
+        "globals": compare_globals(parser, BRIDGED_GLOBALS, port, emu, known),
         "system_data_summary": summarize("SystemData", sysdata, sysdata_base, parser.structs["SystemData"].size, port, emu),
     }
     if args.all_globals:
