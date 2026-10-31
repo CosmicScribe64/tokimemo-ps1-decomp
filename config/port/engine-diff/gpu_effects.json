@@ -1,0 +1,15 @@
+{
+ "captures": ["wpa-ge1", "wpa-ge2"],
+ "exclude": [
+  {"start": "0x80000000", "length": 65536, "reason": "BIOS/kernel RAM (OpenBIOS handlers, event and thread tables) changed by the vertical-blank interrupt handlers while a hit runs; the port never writes below 0x80010000"},
+  {"start": "0x800E5B10", "length": 64, "reason": "SDK counters bumped by the vertical-blank interrupt while the function runs"}
+ ],
+ "functions": {},
+ "untested": {
+  "prim_gradient_line": "never reached from the sampled states (title); called from the date/event overlays; covered by tests/engine/gpu_effects_test.gd",
+  "prim_fill_rect": "never reached from the sampled states (title); covered by tests/engine/gpu_effects_test.gd",
+  "prim_disc_tiles": "only called from the new-year/christmas overlay (yuina_scene_handlers.c), not reached from the sampled states; covered by tests/engine/gpu_effects_test.gd",
+  "prim_glow_disc": "only called from the amusement-park date overlay, not reached from the sampled states; covered by tests/engine/gpu_effects_test.gd",
+  "prim_flash_color_wide": "never reached from the sampled states; covered by tests/engine/gpu_effects_test.gd"
+ }
+}
