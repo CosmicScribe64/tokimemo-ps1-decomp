@@ -33,7 +33,8 @@ const ALT := {
 	"display.mode": "borderless", "display.width": 1280, "display.height": 960, "display.monitor": 1,
 	"display.aspect": "wide", "display.filter": "linear", "display.vsync": false, "display.fps": 144,
 	"display.long_confirmation": true, "display.wing_fill": "source", "display.ui_scale": 1.5,
-	"display.bars": null, "display.size_mode": "desktop",
+	"display.bars": null, "display.size_mode": "desktop", "display.wing_art": "seasonal",
+	"display.wing_art_command": "fixed:school", "display.wing_art_story": "off", "display.wing_art_other": "scene",
 	"audio.buses": {"Master": {"volume": 0.5, "mute": false}, "Voice": {"volume": 1.0, "mute": false}, "BGM": {"volume": 1.0, "mute": false}, "SFX": {"volume": 1.0, "mute": false}, "Movie": {"volume": 1.0, "mute": false}},
 	"audio.device": "Other", "audio.mono": true, "audio.mute_unfocused": true,
 	"controls.swap_confirm": true, "controls.deadzone": 0.5, "controls.repeat_delay": 0.6,
@@ -42,7 +43,7 @@ const ALT := {
 	"accessibility.text_speed": "fast", "accessibility.auto_delay": 2.0, "accessibility.skip": "all",
 	"accessibility.font_scale": 1.25, "accessibility.backdrop": 0.5, "accessibility.reduce_flashes": true,
 	"accessibility.reduce_shake": true, "accessibility.auto_advance": true, "accessibility.subtitles": true,
-	"accessibility.text_box": "modern",
+	"accessibility.text_box": "modern", "accessibility.reduce_motion": true,
 	"language.bundle": "en", "language.allow_draft_images": true, "language.text": "en",
 	"language.text_manifest": "/x.json", "language.text_sha256": "a", "language.voice": "en",
 	"language.voice_manifest": "/v.json", "language.voice_sha256": "b", "language.dialogue_manifest": "/d.json",
@@ -50,7 +51,7 @@ const ALT := {
 }
 ## Keys whose change can alter the presented image (or the language) and so
 ## must be flagged by differs_from_original.
-const EXPECTED_DIFFERS := ["profile.preset", "display.aspect", "display.filter", "display.wing_fill",
+const EXPECTED_DIFFERS := ["profile.preset", "display.aspect", "display.filter", "display.wing_fill", "display.wing_art",
 	"accessibility.text_speed", "accessibility.auto_delay", "accessibility.skip", "accessibility.font_scale",
 	"accessibility.backdrop", "accessibility.reduce_flashes", "accessibility.reduce_shake",
 	"accessibility.auto_advance", "accessibility.subtitles", "accessibility.text_box",
@@ -142,6 +143,39 @@ func _initialize() -> void:
 	var partial := Preferences.new(path)
 	check(partial.load_preferences() and partial.reset_keys.size() == 2 and "display.wing_fill" in partial.reset_keys and "accessibility.text_box" in partial.reset_keys, "v2 per-key reset: %s" % [partial.reset_keys])
 	check(partial.settings.display.aspect == "wide", "v2 neighbours survive")
+
+	# T-39220: a v2 file written before display.wing_art / reduce_motion existed
+	# loads with both off and reports no reset; invalid values reset; v1 too.
+	var pre_art := Preferences.defaults(); pre_art.display.erase("wing_art"); pre_art.accessibility.erase("reduce_motion")
+	for late: String in ["wing_art_command", "wing_art_story", "wing_art_other"]: pre_art.display.erase(late)
+	pre_art.display.wing_fill = "source"
+	_clear(path)
+	var pre_file := FileAccess.open(path, FileAccess.WRITE)
+	pre_file.store_string(JSON.stringify({"schema": Preferences.SCHEMA, "settings": pre_art, "pending_display_boot_check": {}})); pre_file.close()
+	var pre := Preferences.new(path)
+	check(pre.load_preferences() and pre.reset_keys.is_empty(), "pre-wing-art v2 file has no reset keys: %s" % [pre.reset_keys])
+	check(pre.settings.display.wing_art == "off" and pre.settings.accessibility.reduce_motion == false and pre.settings.display.wing_fill == "source", "wing art and reduce motion default off; neighbours survive")
+	var bad_art := Preferences.defaults(); bad_art.display.wing_art = "fixed:invented"
+	_clear(path)
+	var bad_file := FileAccess.open(path, FileAccess.WRITE)
+	bad_file.store_string(JSON.stringify({"schema": Preferences.SCHEMA, "settings": bad_art, "pending_display_boot_check": {}})); bad_file.close()
+	var bad_loaded := Preferences.new(path)
+	check(bad_loaded.load_preferences() and bad_loaded.settings.display.wing_art == "off" and "display.wing_art" in bad_loaded.reset_keys, "invented wing art value resets to off")
+	var migrated_art := Preferences.migrate_v1(JSON.parse_string(FileAccess.get_file_as_string(FIXTURES + "settings_v1_complete.json")).settings)
+	check(migrated_art.settings.display.wing_art == "off" and "display.wing_art" not in migrated_art.reset_keys, "v1 migration leaves wing art off without a reset")
+	_clear(path)
+	var art_prefs := Preferences.new(path); art_prefs.load_preferences()
+	check(art_prefs.set_value("display", "wing_art", "seasonal") and art_prefs.effective_settings().display.wing_art == "seasonal", "wing art applies live")
+	check(art_prefs.settings.profile.preset == "custom" and art_prefs.differs_from_original("display.wing_art"), "wing art leaves the Original preset")
+	check(art_prefs.apply_preset("original") and art_prefs.settings.display.wing_art == "off", "Original preset turns wing art off")
+	check(art_prefs.apply_preset("modern") and art_prefs.settings.display.wing_art == "off", "Modern preset keeps wing art off")
+	check(not art_prefs.set_value("display", "wing_art", "fixed:bogus"), "wing art rejects unknown styles")
+	check(pre.settings.display.wing_art_command == "auto" and pre.settings.display.wing_art_other == "auto", "per scene type side art defaults to auto")
+	check(art_prefs.set_value("display", "wing_art", "fixed:legend_tree"), "location styles are fixed side art options")
+	check(art_prefs.set_value("display", "wing_art_story", "fixed:seaside") and art_prefs.effective_settings().display.wing_art_story == "fixed:seaside", "per scene type side art applies live")
+	check(not art_prefs.set_value("display", "wing_art_other", "auto-bogus"), "per scene type side art rejects unknown values")
+	check(not art_prefs.differs_from_original("display.wing_art_story"), "per scene type side art alone never leaves Original")
+	check(art_prefs.set_value("accessibility", "reduce_motion", true) and not art_prefs.differs_from_original("accessibility.reduce_motion"), "reduce motion never changes the game picture")
 
 	# Corrupt file: the existing .backup recovery path, then safe defaults.
 	_install("settings_v1_corrupt.json", path, "settings_v1_complete.json")

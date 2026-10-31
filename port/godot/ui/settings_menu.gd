@@ -166,7 +166,7 @@ func select_preset(name: String) -> void:
 		# Core apply_preset writes its display keys (aspect, filter) live; the
 		# draft must follow, or the next Apply would undo the preset.
 		var saved: Dictionary = runtime.preferences.settings.display
-		for key: String in ["aspect", "filter", "wing_fill", "bars", "ui_scale"]:
+		for key: String in ["aspect", "filter", "wing_fill", "wing_art", "wing_art_command", "wing_art_story", "wing_art_other", "bars", "ui_scale"]:
 			if saved.has(key) and draft.has(key): draft[key] = saved[key]
 	rebuild()
 	# "Modern English" may start the asynchronous English switch.

@@ -12,6 +12,16 @@ extends Control
 ##
 ## Window-space margins for modern UI (pause/settings/hints) come from
 ## ui_margin_rects(); capabilities() reports what this host can present.
+##
+## T-39220: with display.wing_art on, a WingArtProvider fills the wings and a
+## backdrop TextureRect behind the frame fills the side bars and the top and
+## bottom bands at the same pixel scale. Motion follows a presentation clock
+## (clock_usec), never game state or the game RNG; the month and scene come
+## from present()'s wing_context or set_calendar_month(), which a
+## WingArtSceneFeed (presentation/wing_art_scene_feed.gd) drives read-only from
+## the game state. Each scene class may override the mode
+## (display.wing_art_command/_story/_other). A missing or damaged
+## wing_art pack only leaves black wings and records `error`.
 
 signal layout_changed(layout: Dictionary)
 
@@ -20,17 +30,21 @@ const Policy = preload("res://presentation/scene_aperture_policy.gd")
 const Composer = preload("res://presentation/wide_frame_composer.gd")
 const CheckerProvider = preload("res://presentation/checker_wing_provider.gd")
 const Overlay = preload("res://presentation/modern_dialogue_overlay.gd")
+const WingArt = preload("res://presentation/wing_art_provider.gd")
+const USER_OVERRIDES_PATH := "user://wing-art-overrides.json"
 
 ## Node that provides preferences_changed and preferences.effective_settings().
 var settings_node_path := NodePath("/root/ModernSettings")
 var display: TextureRect
+## Window backdrop for wing art (behind display; hidden unless wing art shows).
+var backdrop_display: TextureRect
 var overlay: Control
 var composer := Composer.new()
 var layout: Dictionary = {}
 ## The Image currently shown: the native Image in original mode (same object,
 ## never modified), or the composed frame in wide mode.
 var presented_image: Image
-## "none", "black" or "checker" for the last present().
+## "none", "black", "checker" or "wing_art" for the last present().
 var last_wing_source := "none"
 ## Last composition problem; the host then shows black wings, never nothing.
 var error := ""
@@ -43,9 +57,36 @@ var _texture: ImageTexture
 ## A live 320x240 texture (a SubViewport's) shown instead of an Image; see
 ## present_texture().
 var _live_texture: Texture2D
+## Wing art provider (created when display.wing_art is first turned on).
+var wing_art: RefCounted
+## Pack directory for wing art; empty means discover (env, then install).
+var wing_art_pack_path := ""
+## Last in-game month the boot reported (1..12), 0 when unknown.
+var calendar_month := 0
+## Presentation clock in microseconds; tests replace it.
+var clock_usec: Callable = func() -> int: return Time.get_ticks_usec()
+## Style id shown by the last refresh ("" when wing art is off).
+var last_wing_art_style := ""
+## True once a WingArtSceneFeed reports the game's month and scene facts.
+## Until then "seasonal" and "scene" can only show the default (April) look,
+## and the settings page says so.
+var wing_art_follows_game := false
+var _wing_art_opened := false
+var _clock_origin := -1
+var _last_tick := -1
+var _animating := false
+var _backdrop_texture: ImageTexture
+var _preview_art: RefCounted
 
 func _init() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	backdrop_display = TextureRect.new()
+	backdrop_display.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	backdrop_display.stretch_mode = TextureRect.STRETCH_SCALE
+	backdrop_display.texture_filter = CanvasItem.TEXTURE_FILTER_PARENT_NODE
+	backdrop_display.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	backdrop_display.visible = false
+	add_child(backdrop_display)
 	display = TextureRect.new()
 	display.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	display.stretch_mode = TextureRect.STRETCH_SCALE
@@ -151,6 +192,58 @@ func _place_display() -> void:
 	display.position = rect.position
 	display.size = rect.size
 
+## Wing art pack directory (the installed wing_art role). Reopens the pack.
+func set_wing_art_pack(path: String) -> void:
+	wing_art_pack_path = path
+	_wing_art_opened = false
+	wing_art = null
+	_preview_art = null
+	_refresh_image()
+
+## The in-game month (1..12), read by the boot from game state. Only selects
+## the seasonal style; nothing is written back.
+func set_calendar_month(month: int) -> void:
+	calendar_month = month if month >= 1 and month <= 12 else 0
+	_refresh_image()
+
+func presentation_tick() -> int:
+	var now: int = clock_usec.call()
+	if _clock_origin < 0:
+		_clock_origin = now
+	return WingArt.tick_for_usec(maxi(now - _clock_origin, 0))
+
+func _process(_delta: float) -> void:
+	if _animating and presentation_tick() != _last_tick:
+		_refresh_image()
+
+func _open_wing_art() -> RefCounted:
+	if _wing_art_opened:
+		return wing_art
+	_wing_art_opened = true
+	wing_art = WingArt.new()
+	var path := wing_art_pack_path
+	if path.is_empty():
+		path = OS.get_environment("TOKIMEMO_WING_ART_PACK")
+	if path.is_empty():
+		path = WingArt.discover_pack_path()
+	if wing_art.open_pack(path) and FileAccess.file_exists(USER_OVERRIDES_PATH):
+		wing_art.set_user_overrides(JSON.parse_string(FileAccess.get_file_as_string(USER_OVERRIDES_PATH)))
+	return wing_art
+
+## Context for the wing art provider: month, scene facts, tick, visible side.
+func wing_art_context(prefs: Dictionary, mode: String) -> Dictionary:
+	var context := _wing_context.duplicate()
+	if not context.has("month") and calendar_month > 0:
+		context["month"] = calendar_month
+	context["scene"] = _scene
+	context["wing_art_mode"] = mode
+	context["reduce_motion"] = WingArt.accessibility_flag(prefs, "reduce_motion")
+	context["reduce_flashes"] = WingArt.accessibility_flag(prefs, "reduce_flashes")
+	context["tick"] = presentation_tick()
+	var factor: float = maxf(float(layout.get("factor", 1.0)), 0.0001)
+	context["visible_side"] = floori(layout.aperture.position.x / factor) if layout.get("valid", false) else 0
+	return context
+
 func _refresh_image() -> void:
 	if _live_texture != null and layout.get("valid", false):
 		last_wing_source = "none" if layout.logical_width == Layout.NATIVE_SIZE.x else Policy.WING_BLACK
@@ -159,19 +252,42 @@ func _refresh_image() -> void:
 		return
 	error = ""
 	var prefs := preferences()
+	var art_mode := WingArt.mode_for_scene(prefs, _scene)
+	var art: RefCounted = null
+	var art_context: Dictionary = {}
+	if art_mode != "off":
+		art = _open_wing_art()
+		if art.is_ready():
+			art_context = wing_art_context(prefs, art_mode)
+		else:
+			error = "wing art unavailable: " + str(art.error)
+			art = null
+	var checker: bool = layout.logical_width != Layout.NATIVE_SIZE.x and Policy.wing_source(_scene, prefs) == Policy.WING_CHECKER
+	# The checker continuation is the scene's own art and wins over wing art.
+	var backdrop: Image = art.render(art_mode, art_context) if art != null and not checker else null
+	last_wing_art_style = str(art.last_style) if art != null and not checker else ""
+	_animating = art != null and not checker and not art_context.get("reduce_motion", false)
+	_last_tick = int(art_context.get("tick", -1))
+	_show_backdrop(backdrop, art)
 	if layout.logical_width == Layout.NATIVE_SIZE.x:
 		presented_image = _native
 		last_wing_source = "none"
 	else:
 		var provider: Object = null
+		var context := _wing_context
 		last_wing_source = Policy.wing_source(_scene, prefs)
 		if last_wing_source == Policy.WING_CHECKER:
 			if _checker == null:
 				_checker = CheckerProvider.new()
 			provider = _checker
-		var composed := composer.compose(_native, layout.logical_width, provider, _wing_context)
+		elif backdrop != null:
+			provider = art
+			context = art_context
+			last_wing_source = "wing_art"
+		var composed := composer.compose(_native, layout.logical_width, provider, context)
 		if composed == null and provider != null:
 			error = composer.error
+			_show_backdrop(null, null)
 			last_wing_source = Policy.WING_BLACK
 			composed = composer.compose(_native, layout.logical_width)
 		if composed == null:
@@ -183,6 +299,21 @@ func _refresh_image() -> void:
 	else:
 		_texture = ImageTexture.create_from_image(presented_image)
 	display.texture = _texture
+
+func _show_backdrop(image: Image, art: RefCounted) -> void:
+	if image == null or art == null:
+		backdrop_display.visible = false
+		return
+	var factor: float = layout.factor
+	var origin := Vector2(art.geometry.aperture_x, art.geometry.aperture_y)
+	backdrop_display.position = layout.aperture.position - origin * factor
+	backdrop_display.size = Vector2(image.get_size()) * factor
+	if _backdrop_texture != null and _backdrop_texture.get_size() == Vector2(image.get_size()) and _backdrop_texture.get_format() == image.get_format():
+		_backdrop_texture.update(image)
+	else:
+		_backdrop_texture = ImageTexture.create_from_image(image)
+	backdrop_display.texture = _backdrop_texture
+	backdrop_display.visible = true
 
 func window_to_native(point: Vector2) -> Dictionary:
 	return Layout.window_to_native(layout, point)
@@ -206,9 +337,24 @@ func ui_margin_rects() -> Array[Rect2]:
 ## What this host can present. Wide framing and source wings are presentation
 ## only; the native Image, RNG and game state are untouched in every mode.
 func capabilities() -> Dictionary:
+	var art_ready: bool = wing_art != null and wing_art.is_ready()
 	return {"widescreen_available": true, "aspects": Layout.ASPECTS.duplicate(),
 		"wing_fills": Policy.WING_FILLS.duplicate(), "source_wing_classes": [Policy.CLASS_A],
-		"text_boxes": Overlay.TEXT_BOXES.duplicate(), "bars": "black"}
+		"text_boxes": Overlay.TEXT_BOXES.duplicate(), "bars": "wing_art" if backdrop_display.visible else "black",
+		"wing_art_modes": WingArt.all_modes(), "wing_art_available": art_ready,
+		"wing_art_follows_game": wing_art_follows_game}
+
+## A still preview of a wing art mode around the current native frame, at
+## logical size (480 x 270 is the 16:9 window), for the settings page.
+func wing_art_preview(mode: String, width: int = 480) -> Image:
+	var art := _open_wing_art()
+	if not art.is_ready():
+		return null
+	if _preview_art == null:
+		_preview_art = art.spawn()
+	var prefs := preferences()
+	var context := wing_art_context(prefs, mode)
+	return _preview_art.preview(mode, context, _native, width)
 
 func show_dialogue_line(key: Dictionary) -> bool:
 	return overlay.show_line(key)

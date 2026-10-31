@@ -25,3 +25,6 @@ func build(box: VBoxContainer, ctx: RefCounted) -> void:
 		w.note(box, "Modern text box draws translated lines in a readable box over the original window. The game picture underneath is unchanged.")
 	w.toggle(box, "Reduce screen flashes", access.reduce_flashes, func(v: bool) -> void: save.call("reduce_flashes", v), ctx.scope_tag("reduce_flashes"))
 	w.toggle(box, "Reduce screen shake", access.reduce_shake, func(v: bool) -> void: save.call("reduce_shake", v), ctx.scope_tag("reduce_shake"))
+	if access.has("reduce_motion"):
+		w.toggle(box, "Reduce motion", bool(access.reduce_motion), func(v: bool) -> void: save.call("reduce_motion", v))
+		w.note(box, "Reduce motion keeps the side art still: no drifting petals, leaves or fireworks.")

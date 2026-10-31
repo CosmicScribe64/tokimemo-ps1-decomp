@@ -13,6 +13,7 @@ const ORIGINAL := {
 	"display.aspect": "original",
 	"display.filter": "integer",
 	"display.wing_fill": "black",
+	"display.wing_art": "off",
 	"display.bars": "black",
 	"accessibility.text_speed": "normal",
 	"accessibility.auto_delay": 0.0,
@@ -26,7 +27,8 @@ const ORIGINAL := {
 }
 
 ## Overrides on top of ORIGINAL. Wing art stays black: 'source' wings are
-## proved only for Class A scenes and stay a separate opt-in (T-30001).
+## proved only for Class A scenes and stay a separate opt-in (T-30001), and
+## decorative wing art (display.wing_art) stays off in every preset (T-39220).
 const MODERN_OVERRIDES := {
 	"display.aspect": "auto",
 	"display.filter": "nearest",

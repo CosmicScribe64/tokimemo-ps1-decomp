@@ -16,7 +16,7 @@ const PRESETS := ["original", "modern", "custom"]
 ## Keys that the "Original (PS1 exact)" preset owns. Window size, mode, monitor,
 ## volumes and bindings are desktop-only and never part of a preset. Language
 ## is reported separately (design: Original preset keeps the game language).
-const PRESET_KEYS := ["display.aspect", "display.filter", "display.framing", "display.wing_fill",
+const PRESET_KEYS := ["display.aspect", "display.filter", "display.framing", "display.wing_fill", "display.wing_art",
 	"display.bars", "accessibility.text_speed", "accessibility.auto_delay", "accessibility.auto_advance",
 	"accessibility.font_scale", "accessibility.backdrop", "accessibility.reduce_flashes",
 	"accessibility.reduce_shake", "accessibility.text_box"]
@@ -24,6 +24,7 @@ const PRESET_KEYS := ["display.aspect", "display.filter", "display.framing", "di
 ## fidelity badge names the controls the player can find.
 const PRESET_LABELS := {"display.aspect": "Scene layout", "display.filter": "Scaling",
 	"display.framing": "Screen framing", "display.wing_fill": "Side areas", "display.bars": "Side bars",
+	"display.wing_art": "Side art",
 	"accessibility.text_speed": "Text speed", "accessibility.auto_delay": "Extra reading time after voice",
 	"accessibility.auto_advance": "Auto-advance", "accessibility.font_scale": "Text size",
 	"accessibility.backdrop": "Text box opacity", "accessibility.reduce_flashes": "Reduce screen flashes",
@@ -37,7 +38,8 @@ const FALLBACK_MODERN := {"language.bundle": "en", "accessibility.text_speed": "
 ## Display keys the UI applies live without Keep/Revert (widescreen design WP5).
 ## Core also accepts display.aspect and display.filter live; the Display page
 ## keeps those two in its Keep/Revert draft, which core's begin_display accepts.
-const LIVE_DISPLAY_KEYS := ["display.wing_fill", "display.ui_scale", "display.bars"]
+const LIVE_DISPLAY_KEYS := ["display.wing_fill", "display.wing_art", "display.wing_art_command",
+	"display.wing_art_story", "display.wing_art_other", "display.ui_scale", "display.bars"]
 const PROMPT_STYLES := ["auto", "keyboard", "xbox", "playstation", "nintendo"]
 ## Player-facing names for InputGlyphService.confirm_side results.
 const CONFIRM_SIDES := {"south": "bottom", "east": "right", "west": "left", "north": "top"}

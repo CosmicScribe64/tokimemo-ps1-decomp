@@ -8,6 +8,12 @@ const SCHEMA_V1 := "tokimemo.port-settings.v1"
 const Remaps = preload("res://services/input_remap_service.gd")
 const Presets = preload("res://services/settings_presets.gd")
 const BUSES := ["Master", "Voice", "BGM", "SFX", "Movie"]
+const WING_ART_MODES := ["off", "seasonal", "scene", "fixed:yozakura", "fixed:spring_day",
+	"fixed:summer", "fixed:autumn", "fixed:winter", "fixed:school", "fixed:park", "fixed:town",
+	"fixed:seaside", "fixed:legend_tree"]
+const WING_ART_SCENE_VALUES := ["auto", "off", "seasonal", "scene", "fixed:yozakura", "fixed:spring_day",
+	"fixed:summer", "fixed:autumn", "fixed:winter", "fixed:school", "fixed:park", "fixed:town",
+	"fixed:seaside", "fixed:legend_tree"]
 const ENUMS := {
 	"profile.preset": ["original", "modern", "custom"],
 	"display.mode": ["windowed", "borderless", "exclusive"],
@@ -17,6 +23,12 @@ const ENUMS := {
 	"display.filter": ["integer", "nearest", "linear"],
 	"display.fps": [60, 120, 144, 0],
 	"display.wing_fill": ["black", "source"],
+	## T-39220 decorative wing art (presentation only; off by default).
+	"display.wing_art": WING_ART_MODES,
+	## Per scene type side art: "auto" follows display.wing_art.
+	"display.wing_art_command": WING_ART_SCENE_VALUES,
+	"display.wing_art_story": WING_ART_SCENE_VALUES,
+	"display.wing_art_other": WING_ART_SCENE_VALUES,
 	"display.bars": ["black"],
 	"display.size_mode": ["preset", "desktop", "custom"],
 	"controls.prompt_style": ["auto", "keyboard", "xbox", "playstation", "nintendo"],
@@ -33,18 +45,29 @@ const RANGES := {"display.width": [640, 7680], "display.height": [480, 4320],
 ## Display keys that never resize or move the window apply immediately through
 ## set_value; the others (mode, size, monitor, vsync, fps, size_mode) keep the
 ## Keep/Revert preview through begin_display.
-const LIVE_DISPLAY_KEYS := ["aspect", "filter", "wing_fill", "ui_scale", "bars"]
+const LIVE_DISPLAY_KEYS := ["aspect", "filter", "wing_fill", "wing_art", "wing_art_command",
+	"wing_art_story", "wing_art_other", "ui_scale", "bars"]
 ## Keys introduced by v2. A v1 file lacking them is not reported as reset.
 const V2_KEYS := ["profile.preset", "display.wing_fill", "display.ui_scale", "display.bars",
 	"display.size_mode", "controls.prompt_style", "accessibility.auto_advance",
-	"accessibility.subtitles", "accessibility.text_box", "language.bundle", "language.allow_draft_images"]
+	"accessibility.subtitles", "accessibility.text_box", "language.bundle", "language.allow_draft_images",
+	"display.wing_art", "display.wing_art_command", "display.wing_art_story", "display.wing_art_other",
+	"accessibility.reduce_motion"]
+## Keys added to v2 after it shipped (T-39220). A v2 file written before them
+## simply takes the default; their absence is not reported as a reset.
+const V2_LATE_KEYS := ["display.wing_art", "display.wing_art_command", "display.wing_art_story",
+	"display.wing_art_other", "accessibility.reduce_motion"]
 ## v1 accepted files without these keys.
 const V1_OPTIONAL_KEYS := ["language.dialogue_manifest", "language.dialogue_sha256",
 	"language.ui_text_manifest", "language.ui_text_sha256"]
 ## Keys that cannot change the native 320x240 image, tick, RNG or save image.
 const FIDELITY_NEUTRAL_SECTIONS := ["audio", "controls"]
+## The per scene type side art keys only act while display.wing_art (which
+## is checked) is on, so they never move a profile off Original by themselves.
 const FIDELITY_NEUTRAL_DISPLAY := ["mode", "width", "height", "monitor", "vsync", "fps",
-	"long_confirmation", "ui_scale", "size_mode"]
+	"long_confirmation", "ui_scale", "size_mode", "wing_art_command", "wing_art_story", "wing_art_other"]
+## Accessibility keys that only affect port-drawn decoration (wing art motion).
+const FIDELITY_NEUTRAL_ACCESSIBILITY := ["reduce_motion"]
 var path: String
 var settings: Dictionary = defaults()
 var pending: Dictionary = {}
@@ -63,13 +86,14 @@ static func defaults() -> Dictionary:
 	return {"profile": {"preset": "original"},
 		"display": {"mode": "windowed", "width": 960, "height": 720, "monitor": 0,
 		"aspect": "original", "filter": "integer", "vsync": true, "fps": 60, "long_confirmation": false,
-		"wing_fill": "black", "ui_scale": 1.0, "bars": "black", "size_mode": "preset"},
+		"wing_fill": "black", "ui_scale": 1.0, "bars": "black", "size_mode": "preset", "wing_art": "off",
+		"wing_art_command": "auto", "wing_art_story": "auto", "wing_art_other": "auto"},
 		"audio": {"buses": buses, "device": "Default", "mono": false, "mute_unfocused": false},
 		"controls": {"swap_confirm": false, "deadzone": 0.25, "repeat_delay": 0.4,
 			"repeat_interval": 0.08, "bindings": {}, "prompt_style": "auto"},
 		"accessibility": {"text_speed": "normal", "auto_delay": 0.0, "skip": "read",
 			"font_scale": 1.0, "backdrop": 1.0, "reduce_flashes": false, "reduce_shake": false,
-			"auto_advance": false, "subtitles": false, "text_box": "native"},
+			"auto_advance": false, "subtitles": false, "text_box": "native", "reduce_motion": false},
 		"language": {"bundle": "ja", "allow_draft_images": false,
 			"text": "ja", "text_manifest": "", "text_sha256": "", "voice": "ja",
 			"voice_manifest": "", "voice_sha256": "", "dialogue_manifest": "", "dialogue_sha256": "",
@@ -111,7 +135,8 @@ static func sanitize(candidate: Variant) -> Dictionary:
 		for key: String in result[section]:
 			var name := section + "." + key
 			if not source is Dictionary or not source.has(key):
-				reset.append(name); continue
+				if name not in V2_LATE_KEYS: reset.append(name)
+				continue
 			var value: Variant = source[key]
 			if name == "audio.buses":
 				if not value is Dictionary: reset.append(name); continue
@@ -297,6 +322,7 @@ static func static_differs(values: Dictionary, key: String) -> bool:
 	if Presets.ORIGINAL.has(key): return not Presets.same(current, Presets.ORIGINAL[key])
 	if parts[0] in FIDELITY_NEUTRAL_SECTIONS: return false
 	if parts[0] == "display" and parts[1] in FIDELITY_NEUTRAL_DISPLAY: return false
+	if parts[0] == "accessibility" and parts[1] in FIDELITY_NEUTRAL_ACCESSIBILITY: return false
 	if parts[0] == "accessibility" and parts[1] == "subtitles": return current == true
 	return not Presets.same(current, defaults()[parts[0]][parts[1]])
 

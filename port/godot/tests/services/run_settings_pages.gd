@@ -143,6 +143,34 @@ func _v2_pages() -> void:
 	side.select(1); side.item_selected.emit(1); await process_frame
 	check(fake.preferences.settings.display.wing_fill == "source" and fake.preferences.pending.is_empty())
 	check(menu.fidelity_badge.text.contains("Side areas") and not menu.fidelity_badge.text.contains("Wing Fill"))
+	# T-39220 Side art: live, one-line explanation per option, preview, badge.
+	check(menu.focus_items.has("Side art"))
+	var art: OptionButton = menu.focus_items["Side art"]
+	check(art.item_count == 13)
+	for index: int in art.item_count: check(not art.get_item_tooltip(index).is_empty())
+	check(_page_text(menu, "Display").contains("Off: the side areas stay black"))
+	art.select(1); art.item_selected.emit(1); await process_frame
+	check(fake.preferences.settings.display.wing_art == "seasonal" and fake.preferences.pending.is_empty())
+	check(_page_text(menu, "Display").contains("Seasonal: follows the in-game month"))
+	# No scene feed reports the month yet: Seasonal and Match say so.
+	check(_page_text(menu, "Display").contains("Not active yet in this build"))
+	check(_page_text(menu, "Display").contains("wing-art-overrides.json"))
+	for title: String in ["Side art: command screens", "Side art: dates and talks", "Side art: other scenes"]:
+		check(menu.focus_items.has(title))
+	var per_type: OptionButton = menu.focus_items["Side art: command screens"]
+	check(per_type.item_count == 14 and per_type.get_item_text(0) == "Same as Side art")
+	for index: int in per_type.item_count: check(not per_type.get_item_tooltip(index).is_empty())
+	per_type.select(9); per_type.item_selected.emit(9); await process_frame
+	check(fake.preferences.settings.display.wing_art_command == "fixed:school" and fake.preferences.pending.is_empty())
+	var location_index := 12  # fixed:legend_tree in the Side art list
+	art.select(location_index); art.item_selected.emit(location_index); await process_frame
+	check(fake.preferences.settings.display.wing_art == "fixed:legend_tree")
+	check(_page_text(menu, "Display").contains("Legendary tree:"))
+	art.select(1); art.item_selected.emit(1); await process_frame
+	check(menu.fidelity_badge.text.contains("Side art"))
+	check(menu.ctx.set_pref("display.wing_art", "fixed:bogus") != "")
+	art.select(0); art.item_selected.emit(0); await process_frame
+	check(fake.preferences.settings.display.wing_art == "off")
 	# Every preset key has a player-facing badge name.
 	var context_constants: Dictionary = (load("res://ui/settings/settings_context.gd") as Script).get_script_constant_map()
 	for dotted: String in context_constants.PRESET_KEYS: check(context_constants.PRESET_LABELS.has(dotted))

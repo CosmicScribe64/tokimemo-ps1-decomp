@@ -39,6 +39,9 @@ ROLE_KINDS = {
     "first_arrival_finish_bank": "dir",
     "first_arrival_command_reload": "dir",
     "command_hover_texels": "dir",
+    # T-39220: optional decorative wing art. Never required for launch; an
+    # export failure is only recorded as an unavailable role.
+    "wing_art": "dir",
 }
 
 
@@ -339,7 +342,7 @@ def build(input_path: Path, executable: Path, output: Path,
                              "date", "holiday", "holiday_scene", "opening", "prologue_text",
                              "first_arrival_media", "first_arrival_board",
                              "prologue_hud", "opening_audio", "name_entry_media", "opening_shiori",
-                             "finish_bank", "command_reload", "hover_texels")}
+                             "finish_bank", "command_reload", "hover_texels", "wing_art")}
     # HUD's immutable-directory contract requires an alphanumeric first byte.
     work_dirs["hud"] = cache / ("runtime-" + token + "-hud")
     if any(p.exists() or p.is_symlink() for p in work_dirs.values()):
@@ -394,6 +397,8 @@ def build(input_path: Path, executable: Path, output: Path,
     ]
     commands.append(("name_entry_media", "name_entry_media", [py, "tools/port/name_entry_media.py",
                     "--input", src, "--output", str(work_dirs["name_entry_media"])]))
+    commands.append(("wing_art", "wing_art", [py, "tools/port/wing_art_content.py",
+                    "--input", src, "--output", str(work_dirs["wing_art"])]))
     if opening_only:
         needed = {"entry_rules", "entry", "name_entry_media", "opening", "opening_audio", "prologue_text", "first_arrival_media", "first_arrival_board"}
         for key, role, _command in commands:

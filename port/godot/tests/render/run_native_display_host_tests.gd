@@ -209,7 +209,9 @@ func _check_overlay(host: Control) -> void:
 	_check(_hash(native) == before, "overlay on/off leaves the native Image unchanged")
 	_check(with_overlay.get_data() == without_overlay.get_data(), "overlay on/off leaves the displayed texture unchanged")
 	_check(_hash(with_overlay) == before, "displayed Image is the native Image")
-	_check(host.get_child(1) == host.overlay and host.get_child(0) == host.display, "overlay is mounted above the display")
+	_check(host.overlay.get_index() > host.display.get_index(), "overlay is mounted above the display")
+	# T-39220: the wing art backdrop sits behind the frame.
+	_check(host.backdrop_display.get_index() < host.display.get_index(), "wing art backdrop is mounted below the display")
 	host.set_preferences_override({"display": {"aspect": "original"}, "accessibility": {"text_box": "native"}})
 	host.show_dialogue_line({"payload_sha": PAYLOAD, "line": 0})
 	_check(not host.overlay.visible, "text_box=native hides the overlay")
