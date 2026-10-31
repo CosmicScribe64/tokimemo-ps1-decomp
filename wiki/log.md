@@ -2579,3 +2579,7 @@ After the production-path render (`.asset-cache/date-panel-ship/date-panel-final
 - Approved HUD rows stay in the development draft pack; moving them to release is open.
 
 See [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-30] decision | Dev-only native macOS runs
+
+The user allowed native macOS Godot runs for development iteration only. Docker remains the source of truth for acceptance, Parity gates and verified commits. With the user's explicit approval of the specific file, root downloaded the official `Godot_v4.7.2-stable_macos.universal.zip` (170.6 MB) from `godotengine/godot-builds` into the ignored `.asset-cache/dev-native/`. Its SHA-512 is verified against the official SHA512-SUMS, whose SHA-256 matches the pin in `tools/port/godot.lock.json`. The app is signed by the Godot team, version 4.7.2.stable.official.ed1daf0bf. Next: build the native audio library for macOS and prove native-vs-Docker equivalence and speed.
