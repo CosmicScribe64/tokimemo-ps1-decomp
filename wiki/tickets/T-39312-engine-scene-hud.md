@@ -1,7 +1,7 @@
 ---
 id: T-39312
 title: Port the engine scene and HUD files (WP-B)
-status: In Progress
+status: Done
 assignee: worker agent
 created: 2026-10-30
 updated: 2026-10-30
