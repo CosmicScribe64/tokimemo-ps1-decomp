@@ -15,8 +15,8 @@ SPEC.loader.exec_module(pack)
 SYNC = b"\x00" + b"\xff" * 10 + b"\x00"
 
 
-def sector(payload: bytes, form: int = 1, mode: int = 2, subheader: bytes | None = None) -> bytes:
-    sub = subheader if subheader is not None else bytes([0, 0, 0x08 if form == 1 else 0x20 | 0x04, 0]) * 2
+def sector(payload: bytes, form: int = 1, mode: int = 2, subheader: bytes | None = None, submode: int = 0) -> bytes:
+    sub = subheader if subheader is not None else bytes([0, 0, (0x08 if form == 1 else 0x20 | 0x04) | submode, 0]) * 2
     body = payload + b"\x00" * ((2048 if form == 1 else 2324) - len(payload))
     return (SYNC + b"\x00\x02\x00" + bytes([mode]) + sub + body).ljust(2352, b"\x00")
 
@@ -91,6 +91,32 @@ class DiscPackExportTests(unittest.TestCase):
         self.assertEqual(manifest["excluded"][0]["path"], "AUDIO.XA")
         self.assertIn("form 2", manifest["excluded"][0]["reason"])
         self.assertFalse((self.root / "out/files/AUDIO.XA").exists())
+
+    def test_form1_sectors_flagged_audio_or_video_are_streams(self):
+        for bit in (0x02, 0x04):
+            with self.subTest(bit=bit):
+                files = {"SLPM_86.053": (30, b"x", 1), "S.BIN": (40, b"y" * 100, 1)}
+                raw = bytearray(image(files))
+                raw[40 * 2352:41 * 2352] = sector(b"y" * 100, submode=bit)
+                track = self.root / ("s%d.bin" % bit)
+                track.write_bytes(bytes(raw))
+                manifest = pack.build(track, self.root / ("out%d" % bit))
+                self.assertEqual([e["path"] for e in manifest["excluded"]], ["S.BIN"])
+                self.assertIn("stream", manifest["excluded"][0]["reason"])
+
+    def test_multi_extent_is_refused_and_repeated_records_are_one_file(self):
+        track = self.root / "multi.bin"
+        raw = bytearray(image({"SLPM_86.053": (30, b"x", 1)}))
+        raw[20 * 2352 + 24:20 * 2352 + 24 + 2048] = sector(
+            record(b"SLPM_86.053;1", 30, 1) + record(b"SLPM_86.053;1", 30, 1) + record(b"M.BIN;1", 31, 1, 0x80))[24:24 + 2048]
+        track.write_bytes(bytes(raw))
+        with self.assertRaises(pack.PackError):
+            pack.build(track, self.root / "outm")
+        raw[20 * 2352 + 24:20 * 2352 + 24 + 2048] = sector(
+            record(b"SLPM_86.053;1", 30, 1) + record(b"SLPM_86.053;1", 30, 1))[24:24 + 2048]
+        track.write_bytes(bytes(raw))
+        manifest = pack.build(track, self.root / "outd")
+        self.assertEqual([r["path"] for r in manifest["files"]], ["SLPM_86.053"])
 
     def test_files_past_the_image_are_excluded(self):
         track = self.root / "track.bin"

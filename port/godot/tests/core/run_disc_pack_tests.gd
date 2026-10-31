@@ -18,6 +18,7 @@ func run() -> Array[String]:
 	_test_read_into_memory()
 	_test_refusals()
 	_test_integrity()
+	_test_cache()
 	_test_bad_manifests()
 	_remove_tree(base)
 	return failures
@@ -151,8 +152,21 @@ func _test_refusals() -> void:
 	_check(not outside.ok and outside.error.contains("outside every file") and not outside.has("data"), "LBA in a gap fails with no data")
 	_check(not pack.read_sectors(99, 1).ok and not pack.read_sectors(0, 1).ok and not pack.read_sectors(201, 1).ok, "LBAs before, between and after files fail")
 	var crossing: Dictionary = pack.read_sectors(102, 2)
-	_check(not crossing.ok and crossing.error.contains("runs past the end of CDROM/SUB/A.BIN"), "a read across a file boundary fails even between adjacent files")
-	var long: Dictionary = pack.read_sectors(100, 4)
+	var stored_a: PackedByteArray = _content(1, 3 * 2048)
+	for i: int in range(5000, stored_a.size()):
+		stored_a[i] = 0xee
+	var joined: PackedByteArray = stored_a.slice(2 * 2048)
+	joined.append_array(_content(2, 2 * 2048).slice(0, 2048))
+	_check(crossing.ok and crossing.data == joined and crossing.path == "CDROM/SUB/A.BIN", "a read across two adjacent files returns both, A's last sector then B's first")
+	var five: Dictionary = pack.read_sectors(100, 5)
+	_check(five.ok and five.data.size() == 5 * 2048, "a read over two whole adjacent files")
+	var into_gap: Dictionary = pack.read_sectors(104, 2)
+	_check(not into_gap.ok and into_gap.error.contains("runs past the end of CDROM/SUB/B.BIN") and into_gap.error.contains("outside every file") and not into_gap.has("data"), "a read that ends in a gap after the last adjacent file fails")
+	_check(not pack.read_sectors(100, 6).ok, "a read past the last adjacent file fails")
+	var tight: DiscPack = _open("excluded-adjacent", func(m: Dictionary) -> void: m.excluded[0].lba = 201)
+	var into_xa: Dictionary = tight.read_sectors(200, 2)
+	_check(not into_xa.ok and into_xa.error.contains("XA/S.XA") and into_xa.error.contains("not readable as data"), "a read running into an excluded extent fails and names it")
+	var long: Dictionary = pack.read_sectors(100, 6)
 	_check(not long.ok and long.error.contains("runs past the end"), "a read past the end of the file fails")
 	var xa: Dictionary = pack.read_sectors(300, 1)
 	_check(not xa.ok and xa.error.contains("XA/S.XA") and xa.error.contains("not readable as data"), "an XA/Form 2 extent fails and names the file")
@@ -166,7 +180,7 @@ func _test_refusals() -> void:
 func _test_integrity() -> void:
 	var dir: String = _build("integrity")
 	var pack := DiscPack.new()
-	_check(pack.open(dir).is_empty() and pack.read_sectors(100, 1).ok, "pack reads before tampering")
+	_check(pack.open(dir).is_empty() and pack.read_sectors(100, 1).ok and pack.read_sectors(200, 1).ok, "pack reads before tampering")
 	# A corrupt byte in a file that was not read yet is caught on its first read.
 	var bpath: String = dir.path_join("files/CDROM/SUB/B.BIN")
 	var file: FileAccess = FileAccess.open(bpath, FileAccess.READ_WRITE)
@@ -179,6 +193,8 @@ func _test_integrity() -> void:
 	var memory := Memory.new()
 	var before: PackedByteArray = memory.snapshot()
 	_check(not pack.read_into_memory(memory, 0x80100000, 103, 1).ok and memory.snapshot() == before, "a bad hash writes nothing into memory")
+	var spanning: Dictionary = pack.read_sectors(102, 2)
+	_check(not spanning.ok and spanning.error.contains("SHA-256") and not spanning.has("data"), "a read spanning into a changed file fails")
 	_check(pack.read_sectors(100, 3).ok and pack.read_sectors(200, 1).ok, "other files still read")
 	var all_files := DiscPack.new()
 	_check(all_files.open(dir).is_empty() and not all_files.verify_all().ok, "verify_all reports the changed file")
@@ -195,6 +211,22 @@ func _test_integrity() -> void:
 	# A fresh reader never serves tampered bytes.
 	var fresh := DiscPack.new()
 	_check(fresh.open(dir).is_empty() and not fresh.read_sectors(104, 1).ok, "a new reader refuses the changed file")
+
+func _test_cache() -> void:
+	var dir: String = _build("cache")
+	var pack := DiscPack.new()
+	_check(pack.open(dir).is_empty() and pack.read_sectors(100, 1).ok and pack.read_sectors(200, 1).ok and pack.read_sectors(103, 1).ok, "three files read and verify")
+	# Alternating reads use the verified bytes, so a later change on disk is not seen by this reader.
+	var file: FileAccess = FileAccess.open(dir.path_join("files/CDROM/SUB/A.BIN"), FileAccess.READ_WRITE)
+	file.store_8(0x5a)
+	file.close()
+	_check(pack.read_sectors(100, 1).ok and pack.read_sectors(200, 1).ok and pack.read_sectors(100, 1).ok, "alternating reads of verified files are served from the cache")
+	_check(pack._cache.size() == 3 and pack._cache_size == 6 * 2048, "the cache holds all three verified files")
+	_check(not _open_and_read(dir, 100), "a new reader still hashes the changed file")
+
+func _open_and_read(dir: String, lba: int) -> bool:
+	var pack := DiscPack.new()
+	return pack.open(dir).is_empty() and pack.read_sectors(lba, 1).ok
 
 func _test_bad_manifests() -> void:
 	var cases: Dictionary = {

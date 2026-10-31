@@ -62,6 +62,8 @@ def walk(image: Image, lba: int, size: int, prefix: str, depth: int, out: list) 
             continue
         name = _safe_name(name.split(";")[0])
         path = prefix + "/" + name if prefix else name
+        if flags & 0x80:
+            raise PackError("%s is a multi-extent file, which the pack does not support" % path)
         if flags & 2:
             walk(image, r_lba, r_size, path, depth + 1, out)
         else:
@@ -78,6 +80,7 @@ def classify(image: Image, lba: int, size: int) -> tuple[str, list[bytes] | None
     payloads: list[bytes] = []
     forms: set[int] = set()
     inconsistent = None
+    realtime = False
     for index in range(count):
         position = (lba + index) * SECTOR
         image.f.seek(position)
@@ -92,7 +95,11 @@ def classify(image: Image, lba: int, size: int) -> tuple[str, list[bytes] | None
             inconsistent = lba + index
         form = 2 if raw[18] & 0x20 else 1
         forms.add(form)
+        # A Form 1 sector flagged audio (0x04) or video (0x02) belongs to a stream.
+        realtime = realtime or bool(raw[18] & 0x06)
         payloads.append(raw[24:24 + DATA_SIZE])
+    if realtime and forms == {1}:
+        return "form 1 sectors flagged audio or video (stream), not readable as data", None
     if forms == {1} or not forms:
         if inconsistent is not None:
             # A file read as data must have a valid subheader in every sector.
@@ -143,8 +150,10 @@ def _build(image: Image, track: Path, output: Path, files: Path | None) -> dict:
     root = pvd[156:190]
     entries: list[tuple[str, int, int]] = []
     walk(image, struct.unpack("<I", root[2:6])[0], struct.unpack("<I", root[10:14])[0], "", 0, entries)
+    # A record listed twice with the same path and extent is one file.
+    entries = sorted(set(entries))
     if len({path for path, _, _ in entries}) != len(entries):
-        raise PackError("duplicate path in the file tree")
+        raise PackError("a path appears with two different extents in the file tree")
     packed, excluded = [], []
     stage = output.with_name(output.name + ".partial")
     if stage.exists():

@@ -22,6 +22,8 @@ const MAX_FILES := 20000
 const MAX_MANIFEST_BYTES := 16 * 1024 * 1024
 const MAX_FILE_BYTES := 64 * 1024 * 1024
 const MAX_READ_SECTORS := 4096
+## Verified file bytes kept so alternating reads do not hash again (oldest dropped first).
+const CACHE_BYTES := 8 * 1024 * 1024
 const RECORD_KEYS := ["path", "lba", "sectors", "size", "stored_size", "mode", "form", "sha256", "content_sha256"]
 const EXCLUDED_KEYS := ["path", "lba", "sectors", "size", "reason"]
 
@@ -33,9 +35,10 @@ var _files: Array[Dictionary] = []
 var _starts := PackedInt64Array()
 var _by_path: Dictionary = {}
 var _excluded: Array[Dictionary] = []
-## The last verified file, kept so repeated reads of one file hash it once.
-var _cached_path: String = ""
-var _cached_bytes := PackedByteArray()
+## Verified file bytes by path, with the insertion order for eviction.
+var _cache: Dictionary = {}
+var _cache_order: Array[String] = []
+var _cache_size: int = 0
 
 ## Opens the pack at `pack_root` (a directory holding disc_pack.json and files/).
 ## `expected_manifest_sha256`, when not empty, is the authenticated manifest hash
@@ -50,12 +53,15 @@ func open(pack_root: String, expected_manifest_sha256: String = "") -> String:
 	var size: int = FileAccess.get_size(manifest_path)
 	if size <= 0 or size > MAX_MANIFEST_BYTES:
 		return "disc pack manifest size is outside bounds"
-	var text: String = FileAccess.get_file_as_string(manifest_path)
-	var actual: String = FileAccess.get_sha256(manifest_path)
+	var bytes: PackedByteArray = FileAccess.get_file_as_bytes(manifest_path)
+	var hash := HashingContext.new()
+	hash.start(HashingContext.HASH_SHA256)
+	hash.update(bytes)
+	var actual: String = hash.finish().hex_encode()
 	if not expected_manifest_sha256.is_empty() and actual != expected_manifest_sha256:
 		return "disc pack manifest hash differs from the expected hash"
 	var json := JSON.new()
-	if json.parse(text) != OK or not json.data is Dictionary:
+	if json.parse(bytes.get_string_from_utf8()) != OK or not json.data is Dictionary:
 		return "disc pack manifest is not a JSON object"
 	var problem: String = _load_manifest(json.data)
 	if not problem.is_empty():
@@ -102,8 +108,9 @@ func excluded_at(lba: int) -> Dictionary:
 			return entry.duplicate()
 	return {}
 
-## Reads `count` sectors of 2048 bytes from `lba`. The whole range must lie in
-## one packed file. Returns {"ok", "data", "path", "lba", "sectors"} or the error.
+## Reads `count` sectors of 2048 bytes from `lba`. The range must lie in packed
+## extents with no gap (one file, or adjacent files; every file touched is
+## verified). `path` is the file holding the first sector. Returns {"ok", "data", "path", "lba", "sectors"} or the error.
 func read_sectors(lba: int, count: int) -> Dictionary:
 	if not is_open():
 		return _fail("disc pack is not open")
@@ -114,17 +121,28 @@ func read_sectors(lba: int, count: int) -> Dictionary:
 	var index: int = _index_of(lba)
 	if index < 0:
 		return _fail(_outside_message(lba))
-	var record: Dictionary = _files[index]
-	var first: int = lba - int(record.lba)
-	if first + count > int(record.sectors):
-		return _fail("read of %d sectors at LBA 0x%X runs past the end of %s (%d sectors from LBA 0x%X)" % [
-			count, lba, record.path, int(record.sectors), int(record.lba)])
-	var stored: Dictionary = _verified_bytes(record)
-	if not stored.ok:
-		return stored
-	var bytes: PackedByteArray = stored.data
-	return {"ok": true, "data": bytes.slice(first * SECTOR_SIZE, (first + count) * SECTOR_SIZE),
-		"path": record.path, "lba": lba, "sectors": count}
+	var data := PackedByteArray()
+	var first_path: String = _files[index].path
+	var cursor: int = lba
+	var remaining: int = count
+	while remaining > 0:
+		var record: Dictionary = _files[index]
+		var offset: int = cursor - int(record.lba)
+		var take: int = mini(remaining, int(record.sectors) - offset)
+		var stored: Dictionary = _verified_bytes(record)
+		if not stored.ok:
+			return stored
+		var bytes: PackedByteArray = stored.data
+		data.append_array(bytes.slice(offset * SECTOR_SIZE, (offset + take) * SECTOR_SIZE))
+		cursor += take
+		remaining -= take
+		if remaining == 0:
+			break
+		# Continue only into the file that starts exactly where this one ends.
+		index += 1
+		if index >= _files.size() or int(_files[index].lba) != cursor:
+			return _fail(_runs_past_message(record, lba, count, cursor))
+	return {"ok": true, "data": data, "path": first_path, "lba": lba, "sectors": count}
 
 ## cd_read_sectors: reads `count` sectors at `lba` into `memory` at the PS1
 ## `address`. Nothing is written unless the read succeeds and the range lies in
@@ -176,8 +194,9 @@ func _reset() -> void:
 	_starts = PackedInt64Array()
 	_by_path = {}
 	_excluded = []
-	_cached_path = ""
-	_cached_bytes = PackedByteArray()
+	_cache = {}
+	_cache_order = []
+	_cache_size = 0
 
 static func _fail(message: String) -> Dictionary:
 	return {"ok": false, "error": message}
@@ -202,6 +221,13 @@ func _index_of(lba: int) -> int:
 		return found
 	return -1
 
+func _runs_past_message(record: Dictionary, lba: int, count: int, cursor: int) -> String:
+	var excluded: Dictionary = excluded_at(cursor)
+	var reason: String = "LBA 0x%X is outside every file in the disc pack" % cursor
+	if not excluded.is_empty():
+		reason = "LBA 0x%X is in %s, which is not readable as data (%s)" % [cursor, excluded.path, excluded.reason]
+	return "read of %d sectors at LBA 0x%X runs past the end of %s: %s" % [count, lba, record.path, reason]
+
 func _outside_message(lba: int) -> String:
 	var excluded: Dictionary = excluded_at(lba)
 	if not excluded.is_empty():
@@ -211,8 +237,8 @@ func _outside_message(lba: int) -> String:
 ## The stored bytes of `record`, read in one pass and hashed before any byte is used.
 func _verified_bytes(record: Dictionary) -> Dictionary:
 	var path: String = record.path
-	if path == _cached_path:
-		return {"ok": true, "data": _cached_bytes}
+	if _cache.has(path):
+		return {"ok": true, "data": _cache[path]}
 	var file: FileAccess = FileAccess.open(root.path_join(FILES_DIR).path_join(path), FileAccess.READ)
 	if file == null:
 		return _fail("packed file is missing or unreadable: " + path)
@@ -225,9 +251,19 @@ func _verified_bytes(record: Dictionary) -> Dictionary:
 	hash.update(bytes)
 	if bytes.size() != stored_size or hash.finish().hex_encode() != record.sha256:
 		return _fail("packed file %s does not match its SHA-256" % path)
-	_cached_path = path
-	_cached_bytes = bytes
+	_remember(path, bytes)
 	return {"ok": true, "data": bytes}
+
+func _remember(path: String, bytes: PackedByteArray) -> void:
+	if bytes.size() > CACHE_BYTES:
+		return
+	while _cache_size + bytes.size() > CACHE_BYTES and not _cache_order.is_empty():
+		var oldest: String = _cache_order.pop_front()
+		_cache_size -= (_cache[oldest] as PackedByteArray).size()
+		_cache.erase(oldest)
+	_cache[path] = bytes
+	_cache_order.append(path)
+	_cache_size += bytes.size()
 
 func _load_manifest(manifest: Dictionary) -> String:
 	if manifest.get("schema") != SCHEMA or not _integer(manifest.get("version")) or int(manifest.version) != 1:
