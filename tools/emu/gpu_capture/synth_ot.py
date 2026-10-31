@@ -18,6 +18,7 @@ PAGE4 = (704, 0)     # 4-bit texture page
 PAGE8 = (768, 0)     # 8-bit texture page
 CLUT4 = (640, 256)   # 16 entries
 CLUT8 = (640, 260)   # 256 entries
+PAGEU = (832, 0)     # 15-bit page whose texel (u, v) is the unique value v * 64 + u + 1 (texmap group)
 OUT_X, OUT_Y = 0, 0  # drawing region 320x240
 
 
@@ -88,7 +89,7 @@ class Table:
         return bytes(out)
 
 
-GROUPS = ('polygons', 'semi', 'textured', 'lines', 'rects', 'sprites', 'flips', 'window_wrap', 'clip', 'mask',
+GROUPS = ('texmap', 'polygons', 'semi', 'textured', 'lines', 'rects', 'sprites', 'flips', 'window_wrap', 'clip', 'mask',
           'transfers')
 
 
@@ -103,12 +104,28 @@ def build(groups):
         t.load(PAGE8[0], PAGE8[1] + y, 64, 1, [rng.next() & 0xFFFF for _ in range(64)])
     t.load(CLUT4[0], CLUT4[1], 16, 1, [0] + [rng.pixel15(99, 3) for _ in range(15)])
     t.load(CLUT8[0], CLUT8[1], 256, 1, [rng.pixel15(6, 3) for _ in range(256)])
+    if 'texmap' in groups:
+        for y in range(64):
+            t.load(PAGEU[0], PAGEU[1] + y, 64, 1, [y * 64 + u + 1 for u in range(64)])
     c4 = clut_word(*CLUT4)
     c8 = clut_word(*CLUT8)
     tp15, tp4, tp8 = PAGE15[0] // 64, PAGE4[0] // 64, PAGE8[0] // 64
 
     def tpage(tx, depth, semi=0):
         return tx | (semi << 5) | (depth << 7)
+
+    if 'texmap' in groups:
+        # raw 15-bit triangles and quads over unique texels, so the emulator's per-pixel (u, v) can be read back
+        tpu = PAGEU[0] // 64
+        t.e1()
+        t.add([0x25000000, xy(20, 20), 0, xy(100, 20), (tpage(tpu, 2) << 16) | 63, xy(20, 80), 63 << 8])
+        t.add([0x2D000000, xy(120, 20), 0, xy(180, 20), (tpage(tpu, 2) << 16) | 40, xy(120, 70), 30 << 8,
+               xy(180, 70), (30 << 8) | 40])
+        t.add([0x25000000, xy(200, 20), 0, xy(280, 50), (tpage(tpu, 2) << 16) | 63 | (10 << 8), xy(210, 90),
+               5 | (63 << 8)])
+        t.add([0x25000000, xy(20, 110), 0, xy(60, 110), (tpage(tpu, 2) << 16) | 63, xy(20, 140), 63 << 8])      # shrunk
+        t.add([0x2D000000, xy(100, 110), 0, xy(150, 112), (tpage(tpu, 2) << 16) | 50, xy(101, 160),
+               50 << 8, xy(152, 163), (50 << 8) | 50])
 
     if 'polygons' in groups:
         # --- flat and Gouraud polygons, all winding orders, dither on and off
@@ -242,7 +259,7 @@ def build(groups):
         t.add([0x80000000, xy(0, 0), xy(200, 100), (30 << 16) | 40])           # MoveImage, VRAM to VRAM
         t.add([0x02000000 | rgb(30, 90, 250), xy(240, 100), (12 << 16) | 33])  # fill: x/width rounding
         t.add([0x80000000, xy(190, 190), xy(190, 192), (30 << 16) | 20])       # overlapping move
-        return t
+    return t
 
 
 def main(argv):

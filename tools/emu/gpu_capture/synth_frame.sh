@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # T-39302: the synthetic ordering table (synth_ot.py) drawn by the emulator over the real VRAM of a save
 # state at DrawOTag call <k>, then drawn by the renderer from the same RAM bytes, compared pixel for pixel.
-# usage: [GROUPS=polygons,lines,...] synth_frame.sh <name> <state (relative to the data root)> <k>
+# usage: [SYNTH_GROUPS=polygons,lines,...] synth_frame.sh <name> <state (relative to the data root)> <k>
 # Output: <data root>/.asset-cache/m2-renderer/<name>/{synth.json,a/...}. Same requirements as capture_frame.sh.
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
@@ -12,7 +12,7 @@ OUT=$DATA/.asset-cache/m2-renderer/$NAME
 export TOKIMEMO_DATA_ROOT
 mkdir -p "$OUT"
 py() { docker run --rm -u "$(id -u):$(id -g)" -v "$HERE:/t:ro" -v "$DATA/.asset-cache/m2-renderer:/c" tokimemo-recovery python3 -I "$@"; }
-py /t/synth_ot.py "/c/$NAME/synth.bin" "/c/$NAME/inject.lua" 8014E000 "${GROUPS:-polygons,semi,textured,lines,rects,sprites,flips,window_wrap,clip,mask,transfers}"
+py /t/synth_ot.py "/c/$NAME/synth.bin" "/c/$NAME/inject.lua" 8014E000 "${SYNTH_GROUPS:-polygons,semi,textured,lines,rects,sprites,flips,window_wrap,clip,mask,transfers}"
 "$HERE/run.sh" "$OUT/a" "$STATE" "picks={$K}, frames=$((K + 400))" "$OUT/inject.lua" >/dev/null
 py /t/extract.py "/c/$NAME/a" >/dev/null
 TAG=$(printf 'call%04d' "$K")

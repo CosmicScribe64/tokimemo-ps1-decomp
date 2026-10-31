@@ -1,0 +1,9 @@
+import json
+from pathlib import Path
+env = SConscript('deps/godot-cpp/SConstruct')
+env.Append(CPPPATH=['.'])
+env.Append(CXXFLAGS=['-fexceptions'])
+Path('compiler-flags.json').write_text(json.dumps({key: str(env.get(key, '')) for key in
+    ['CXX', 'CCFLAGS', 'CXXFLAGS', 'LINKFLAGS', 'CPPDEFINES', 'platform', 'arch', 'target', 'optimize']}, indent=2)+'\n')
+target = env.SharedLibrary('project/bin/original_render'+env['suffix']+'.so', source=['extension.cpp'])
+Default(target)
