@@ -300,24 +300,10 @@ func render_girl_profile_notebook_screen(girl_id: int = OverlayRules.GIRL_SHIORI
 	_draw_actor(target, 65, Vector2i(-16, -27))
 
 	# 7. Phone symbols at y = -0x5A (REC(0x60..0x66) in OT 3 after REC(0x67))
-	# Exact girl_phone_digits[13][7] table from asm/data/data.data.s:1024-1095 (0=○, 1=×, 2=▲ -> frames 78, 79, 80)
-	const GIRL_PHONE_DIGITS := [
-		[0, 1, 2, 1, 0, 2, 0], # 0: Shiori
-		[1, 1, 2, 0, 2, 0, 1], # 1: Mio
-		[2, 2, 2, 0, 0, 1, 0], # 2: Yuina
-		[2, 1, 0, 1, 0, 1, 0], # 3: Ayako
-		[2, 1, 0, 2, 2, 1, 1], # 4: Saki
-		[0, 0, 0, 1, 2, 2, 1], # 5: Yukari
-		[2, 1, 1, 0, 1, 2, 1], # 6: Nozomi
-		[2, 2, 1, 0, 1, 1, 2], # 7: Mira
-		[0, 2, 0, 1, 2, 0, 2], # 8: Yuko
-		[0, 1, 2, 2, 1, 0, 0], # 9: Megumi
-		[0, 0, 0, 2, 2, 1, 0], # 10: Yoshio
-		[0, 2, 1, 0, 2, 1, 0], # 11: Yumi
-		[0, 2, 1, 0, 2, 1, 0], # 12: Rei
-	]
-	var row_idx: int = clampi(girl_id, 0, GIRL_PHONE_DIGITS.size() - 1)
-	var phone_digits: Array = GIRL_PHONE_DIGITS[row_idx]
+	# girl_phone_digits[13][7] (D_800B3778), one table shared with the holiday phone book.
+	var phone_rows: Array = CalendarPhoneRules.GIRL_PHONE_DIGITS
+	var row_idx: int = clampi(girl_id, 0, phone_rows.size() - 1)
+	var phone_digits: Array = phone_rows[row_idx]
 	var phone_x := [0x27, 0x31, 0x3B, 0x4C, 0x56, 0x60, 0x6A]
 	for d_idx in range(7):
 		_draw_actor(target, int(phone_digits[d_idx]) + 0x4E, Vector2i(phone_x[d_idx], -0x5A))

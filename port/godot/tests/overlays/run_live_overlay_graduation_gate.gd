@@ -183,7 +183,7 @@ func _test_live_interactive_overlay_dispatch() -> void:
 	state.rule_state["girls"][0]["flags"] = 2
 	Calendar.populate_month_calendar(state.rule_state, 95, 5)
 
-	# Queue: [0] = 0x46 (TEL), [1] = 0x44 (GEKO walk-home), [2] = 0x80 (DATE), [3] = 0xff (end of queue)
+	# Queue: [0] = 0x46 (girl invitation, GEKO), [1] = 0x44 (GEKO walk-home), [2] = 0x80 (DATE), [3] = 0xff (end of queue)
 	var queue: Array = []
 	queue.append([0x46, 0, 0, 0])
 	queue.append([0x44, 0, 0, 0])
@@ -203,33 +203,34 @@ func _test_live_interactive_overlay_dispatch() -> void:
 	session.cd_logic = _empty
 	session.audio_logic = _empty
 
-	# Step 1: 0x31 dispatches event[0] (0x46 -> native mode 0x5A / dispatcher mode 0x3D TEL) and initializes overlay_state
+	# Step 1: 0x31 dispatches event[0] (0x46 -> native mode 0x5A, GEKO girl invitation
+	# 0x801426D0 per include/game_enums.h) and initializes overlay_state.
 	var r0: Session.FrameResult = session.step(InputFrame.new(session.clock.logic_iterations, 0), [])
-	_check(r0.error.is_empty() and state.game_mode in [0x3D, 0x5A] and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == 0x3D, "Dispatched queue event 0x46 into mode 0x3D (TEL)")
-	_check(state.rule_state.get("overlay_state") is Dictionary, "Initialized active overlay_state for TEL")
+	_check(r0.error.is_empty() and state.game_mode == 0x5A and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == OverlayDispatcher.GAME_MODE_GEKO, "Dispatched queue event 0x46 into native 0x5A (GEKO invitation)")
+	_check(state.rule_state.get("overlay_state") is Dictionary, "Initialized active overlay_state for the invitation")
 
 	# Step 2: Neutral input frames must NOT advance or auto-complete the overlay
 	for _n: int in range(3):
 		var rn: Session.FrameResult = session.step(InputFrame.new(session.clock.logic_iterations, 0), [])
-		_check(rn.error.is_empty() and state.game_mode in [0x3D, 0x5A] and int(state.rule_state["day_event_index"]) == 0,
-			"Neutral input frame does not auto-skip TEL overlay")
+		_check(rn.error.is_empty() and state.game_mode == 0x5A and int(state.rule_state["day_event_index"]) == 0,
+			"Neutral input frame does not auto-skip the invitation overlay")
 
-	# Step 3 (T-39006): with saved state TEL is refused. phone_date_invitation_resolve
-	# writes and the appointment flag are not ported, so no input may book an
+	# Step 3 (T-39006): with saved state GEKO is refused, so no input may book an
 	# appointment or write affection.
 	var aff_before_tel: int = State.high(int(state.rule_state["girls"][0]["affection_word"]))
 	var appt_before_tel: Array = (state.rule_state.get("appointment_words", []) as Array).duplicate()
-	_assert_refused(session, state, [0x3D, 0x5A], "TEL", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_TEL],
+	_assert_refused(session, state, [0x5A], "GEKO invitation", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_GEKO],
 		[OverlayDispatcher.PAD_DOWN, OverlayDispatcher.PAD_CIRCLE, OverlayDispatcher.PAD_CROSS])
 	_check(int(state.rule_state["day_event_index"]) == 0 and state.rule_state.has("overlay_state"),
-		"Refused TEL stays on event 0 with its overlay")
+		"Refused invitation stays on event 0 with its overlay")
 	_check((state.rule_state.get("appointment_words", []) as Array) == appt_before_tel
 		and State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff_before_tel,
-		"Refused TEL books no appointment and writes no affection")
+		"Refused invitation books no appointment and writes no affection")
 
-	# Preview TEL (no saved state): place cursor, place/day/call_response subscreens and an exit without deltas.
-	var tel_mode: int = state.game_mode
-	var tel: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	# Preview TEL (no saved state; the player's call is not a queue event): place
+	# cursor, place/day/call_response subscreens and an exit without deltas.
+	var tel_mode: int = OverlayDispatcher.GAME_MODE_TEL
+	var tel: Dictionary = controller.overlay_dispatcher.init_overlay(tel_mode, state.rule_state.duplicate(true), [])
 	var p: Dictionary = _preview_step(controller, tel_mode, tel, OverlayDispatcher.PAD_DOWN)
 	_check(int(p["state"].get("cursor", -1)) == 1 and not bool(p.get("completed", true)),
 		"TEL preview PAD_DOWN moves the place cursor 0 -> 1")

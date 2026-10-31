@@ -136,25 +136,23 @@ func _run_suite_1_telephone() -> void:
 		st.game_mode = 0x46
 		st.mode_stage = 0x10
 		st.mode_step = 0
-		st.rule_state = {"girls": girls_all}
-		var phone_state := {}
+		st.rule_state = {"girls": girls_all, "menu_mode": 1}
 		var res := GameSession.FrameResult.new()
-		# Step 0 -> Step 1 (init)
-		CalendarPhoneScreens.step_holiday_tel(st, InputFrame.new(0, 0, 0), res, phone_state)
-		phone_state["cursor"] = cursor_slot
+		# Step 0 -> Step 1 (holiday_tel_init sets menu_cursor_0 = 0)
+		CalendarPhoneScreens.step_holiday_tel(st, InputFrame.new(0, 0, 0), res)
+		st.rule_state["menu_cursor"] = cursor_slot
 		# Confirm selection with newly pressed PAD_CIRCLE (held=0x20, previous_held=0 -> pressed=0x20)
-		CalendarPhoneScreens.step_holiday_tel(st, InputFrame.new(1, 0x20, 0), res, phone_state)
+		CalendarPhoneScreens.step_holiday_tel(st, InputFrame.new(1, 0x20, 0), res)
 		_eq(st.mode_step, 2, "Slot %d confirm enters dialing step 2" % cursor_slot, suite)
 		var expected_target: int = 13 if cursor_slot == 0 else (11 if cursor_slot == 12 else cursor_slot - 1)
-		_eq(int(phone_state.get("target_girl", -1)), expected_target, "Slot %d maps to target_girl=%d" % [cursor_slot, expected_target], suite)
-		# Run dialing sequence to completion (substep 0..11 takes 11*8 + 1 = 89 ticks)
+		_eq(int(st.rule_state.get("current_girl", -1)), expected_target, "Slot %d maps to current_girl=%d" % [cursor_slot, expected_target], suite)
 		for tick in range(2, 120):
-			CalendarPhoneScreens.step_holiday_tel(st, InputFrame.new(tick, 0, 0), res, phone_state)
-			if st.game_mode == 0x3E:
+			CalendarPhoneScreens.step_holiday_tel(st, InputFrame.new(tick, 0, 0), res)
+			if st.game_mode == 0x45:
 				break
-		_eq(st.game_mode, 0x3E, "Slot %d dialing transitions to GAME_MODE_TELEPHONE_PROFILE (0x3E)" % cursor_slot, suite)
+		_eq(st.game_mode, 0x45, "Slot %d dialing transitions to GAME_MODE_TELEPHONE_PROFILE (0x45)" % cursor_slot, suite)
 		var expected_stage: int = 0 if expected_target == 13 else 1
-		_eq(st.mode_stage, expected_stage, "Slot %d enters 0x3E stage %d" % [cursor_slot, expected_stage], suite)
+		_eq(st.mode_stage, expected_stage, "Slot %d enters 0x45 stage %d" % [cursor_slot, expected_stage], suite)
 		dialed_targets.append(expected_target)
 
 	# 1B. Stress-test Date Invitation Acceptance/Rejection Curves across all 11 heroines, 21 spots, and stat tiers

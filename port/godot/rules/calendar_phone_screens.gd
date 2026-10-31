@@ -14,7 +14,9 @@ const BIRTHDAY_DAY_TABLE: Array[int] = [
 	0, 95, 64, 35, 370, 340, 309, 279, 248, 217, 187, 156, 126
 ]
 
-# Girl phone digits (13 rows of 7 digits, src/main/holiday.c:1307-1309, D_800B3778)
+# girl_phone_digits (D_800B3778, u8[13][7]): rows 0-10 per girl; rows 11 and 12 both
+# hold the rival's number. Checked byte for byte against SLPM_86.053 by
+# tools/port/test_phone_digits_executable.py (run in tokimemo-content).
 const GIRL_PHONE_DIGITS: Array[Array] = [
 	[0, 1, 2, 1, 0, 2, 0], # Girl 0: Shiori Fujisaki
 	[1, 1, 2, 0, 2, 0, 1], # Girl 1: Mio Kisaragi
@@ -27,8 +29,8 @@ const GIRL_PHONE_DIGITS: Array[Array] = [
 	[0, 2, 0, 1, 2, 0, 2], # Girl 8: Yuko Asahina
 	[0, 1, 2, 2, 1, 0, 0], # Girl 9: Megumi Mikihara
 	[0, 0, 0, 2, 2, 1, 0], # Girl 10 (Yoshio Saotome): 0x800B37BE
-	[0, 0, 2, 1, 2, 0, 1], # Girl 11: Yumi Saotome
-	[2, 1, 0, 0, 2, 1, 0], # Girl 12: Miharu / Ray
+	[0, 2, 1, 0, 2, 1, 0], # Row 11: copy of row 12 (girl 11 has no phone-book item)
+	[0, 2, 1, 0, 2, 1, 0], # Row 12: the rival (Rei), handed to TEL as 11
 ]
 
 # Contact display names (girl_full_name_table, D_800B3538)
@@ -245,102 +247,179 @@ static func step_calendar(state: State, input: InputFrame, result: Session.Frame
 				"target_stage": 0,
 			})
 
-# Holiday Phone Book State Step
-# Handles holiday.c::holiday_tel() and telephone_class_init()
-static func step_holiday_tel(state: State, input: InputFrame, result: Session.FrameResult,
-		phone_state: Dictionary) -> void:
-	var data: Dictionary = state.rule_state
-	var contacts: Array[Dictionary] = build_telephone_directory(data.get("girls", []))
-	var cursor: int = int(phone_state.get("cursor", 0))
+# Holiday phone book, mode stage 0x10: holiday.c::holiday_tel, holiday_tel_init,
+# holiday_tel_call and holiday_tel_exit. State lives in the native fields:
+# rule_state menu_cursor (menu_cursor_0), current_girl, scene_work, and state.substep.
+const GIRL_MIHARU := 11
+const GIRL_YOSHIO := 13
+const GAME_MODE_TELEPHONE_PROFILE := 0x45
+const UI_SE_DIAL_START := 0x504
+const UI_SE_DIAL_TONE_0 := 0x505
+const PHONE_SUBSTEP_DIALED := 11
+const PARAM_STRESS_INDEX := 8
 
+static func step_holiday_tel(state: State, input: InputFrame, result: Session.FrameResult) -> void:
+	var data: Dictionary = state.rule_state
+	state.mode_step_timer = Math.add32(state.mode_step_timer, 1)
 	match state.mode_step:
 		0:
-			# Init: telephone_class_init
-			phone_state["cursor"] = 0
-			phone_state["substep"] = 0
-			state.mode_step = 1
-			state.mode_step_timer = 0
+			# holiday_tel_init; telephone_class_init sets menu_cursor_0 = 0.
+			data["menu_cursor"] = 0
 			result.presentation.append({
 				"kind": "holiday_tel_init",
 				"title": "電話番号",
 				"prompt": "誰に電話かけようかな？",
-				"contacts": contacts,
+				"contacts": build_telephone_directory(data.get("girls", [])),
 			})
+			state.next_step()
 		1:
-			# Call selection / cursor movement
-			state.mode_step_timer += 1
-			# Handle navigation
-			var dir_x: int = 0
-			var dir_y: int = 0
-			if (input.pressed & 0x1000) != 0: # UP
-				dir_y = -1
-			elif (input.pressed & 0x4000) != 0: # DOWN
-				dir_y = 1
-			if (input.pressed & 0x8000) != 0: # LEFT
-				dir_x = -1
-			elif (input.pressed & 0x2000) != 0: # RIGHT
-				dir_x = 1
-
-			if dir_x != 0 or dir_y != 0:
-				cursor = _navigate_directory(contacts, cursor, dir_x, dir_y)
-				phone_state["cursor"] = cursor
-				result.presentation.append({"kind": "phone_cursor", "cursor": cursor})
-
-			# PAD_CROSS: Exit back to holiday menu
-			if (input.pressed & 0x40) != 0:
-				state.mode_stage = 0
-				state.mode_step = 0
-				result.transitions.append({"kind": "holiday_menu_return"})
-				return
-
-			# PAD_CIRCLE: Confirm selection
-			if (input.pressed & 0x20) != 0:
-				if cursor == 13: # 取り消し (Cancel)
-					state.mode_stage = 0
-					state.mode_step = 0
-					result.transitions.append({"kind": "holiday_menu_return"})
-					return
-				# Valid contact selected (src/main/holiday.c:1282-1290)
-				result.audio.append({"kind": "native_audio_command", "command": 0x50A})
-				var target_girl: int
-				if cursor == 0:
-					target_girl = 13 # GIRL_YOSHIO = 13 (holiday.c:1284)
-				elif cursor == 12:
-					target_girl = 11 # GIRL_MIHARU = 11 (holiday.c:1286)
-				else:
-					target_girl = cursor - 1
-				phone_state["target_girl"] = target_girl
-				phone_state["substep"] = 0
-				state.mode_step = 2
-				state.mode_step_timer = 0
+			_holiday_tel_call(state, input, result)
 		2:
-			# Exit / Dialing sequence (holiday_tel_exit in holiday.c:1296-1335)
-			state.mode_step_timer += 1
-			var substep: int = int(phone_state.get("substep", 0))
-			if substep < 11:
-				if (state.mode_step_timer & 7) == 7:
-					if substep == 0:
-						result.audio.append({"kind": "native_audio_command", "command": 0x504}) # Dial tone
-					elif substep >= 4:
-						var digit_idx: int = substep - 4
-						var g_id: int = int(phone_state.get("target_girl", 13))
-						var digit_row: int = 10 if g_id == 13 else g_id # holiday.c:1306-1310
-						var digit: int = GIRL_PHONE_DIGITS[digit_row][digit_idx]
-						result.audio.append({"kind": "native_audio_command", "command": 0x505 + digit})
-					substep += 1
-					phone_state["substep"] = substep
-			else:
-				# Reached substep 11: transition to GAME_MODE_TELEPHONE_PROFILE (0x3E)
-				result.audio.append({"kind": "native_restore_bgm", "bank": 0, "sequence": 0})
-				var target_girl: int = int(phone_state.get("target_girl", 13))
-				state.reset_game_mode_fields(0x3E)
-				state.mode_stage = 0 if target_girl == 13 else 1
-				result.transitions.append({
-					"kind": "native_mode",
-					"mode": 0x3E,
-					"girl": target_girl,
-					"stage": state.mode_stage,
+			_holiday_tel_exit(state, result)
+		_:
+			result.error = "holiday phone book step %d is not a source step" % state.mode_step
+
+static func _holiday_tel_call(state: State, input: InputFrame, result: Session.FrameResult) -> void:
+	var data: Dictionary = state.rule_state
+	# menu_check(0) and menu_cursor_update(0) branch on menu_mode & 3. The
+	# holiday menu only enters the phone book with menu_mode 1 (holiday.gd); after
+	# a SELECT press here menu_mode is 2, whose pointer/L1 control is not ported.
+	if not data.has("menu_mode"):
+		result.error = "holiday phone book without the native menu_mode field"
+		return
+	var menu_mode: int = int(data["menu_mode"])
+	if (menu_mode & 3) != 1:
+		result.error = "holiday phone book with menu_mode %d (pointer control) is not ported" % menu_mode
+		return
+	var before: int = int(data.get("menu_cursor", 0))
+	phone_book_cursor_update(data, build_telephone_directory(data.get("girls", [])), input.held, input.pressed)
+	var cursor: int = int(data["menu_cursor"])
+	if cursor != before:
+		result.presentation.append({"kind": "phone_cursor", "cursor": cursor})
+	if (input.pressed & 0x40) != 0: # PAD_CROSS
+		state.set_stage(0)
+		result.transitions.append({"kind": "holiday_menu_return"})
+		return
+	if (input.pressed & 0x20) != 0 and cursor != -1: # PAD_CIRCLE
+		if cursor == 0xD:
+			state.set_stage(0)
+			result.transitions.append({"kind": "holiday_menu_return"})
+			return
+		result.audio.append({"kind": "native_audio_command", "command": 0x50A})
+		if cursor == 0:
+			data["current_girl"] = GIRL_YOSHIO
+		elif cursor == 0xC:
+			data["current_girl"] = GIRL_MIHARU
+		else:
+			data["current_girl"] = cursor - 1
+		state.next_step()
+
+static func _holiday_tel_exit(state: State, result: Session.FrameResult) -> void:
+	var data: Dictionary = state.rule_state
+	var girl: int = int(data.get("current_girl", -1))
+	if girl != GIRL_YOSHIO and (girl < 0 or girl > 12):
+		result.error = "holiday phone current_girl %d is outside the dialable rows" % girl
+		return
+	if state.substep != PHONE_SUBSTEP_DIALED:
+		if (state.mode_step_timer & 7) == 7:
+			if state.substep == 0:
+				result.audio.append({"kind": "native_audio_command", "command": UI_SE_DIAL_START})
+			elif state.substep >= 4:
+				var row: int = 10 if girl == GIRL_YOSHIO else girl
+				var digit: int = GIRL_PHONE_DIGITS[row][state.substep - 4]
+				result.audio.append({"kind": "native_audio_command", "command": UI_SE_DIAL_TONE_0 + digit})
+			state.substep += 1
+		return
+	# All three source branches call k_sub_reset and restore_bgm, then game_mode_set(0x45).
+	result.audio.append({"kind": "native_restore_bgm", "bank": 0, "sequence": 0})
+	var stage: int = 1
+	if girl == GIRL_YOSHIO:
+		data["menu_cursor"] = 0
+		stage = 0
+	elif girl == GIRL_MIHARU:
+		data["menu_cursor"] = 12
+		data["scene_work"] = 11
+	else:
+		data["menu_cursor"] = girl + 1
+		data["scene_work"] = girl
+	state.reset_game_mode_fields(GAME_MODE_TELEPHONE_PROFILE)
+	state.set_stage(stage)
+	result.transitions.append({
+		"kind": "native_mode",
+		"mode": GAME_MODE_TELEPHONE_PROFILE,
+		"girl": girl,
+		"stage": stage,
+	})
+
+## holiday.c::holiday_phone_dial_shortcut (0x80075C84), run on each holiday menu
+## frame after holiday_menu_click returns 0. pointer_x and pointer_y are the
+## position of actor 0 (the pointer). Returns true when a dialed number matched
+## a girl with phone_known: the phone book is then entered at step 2 with
+## substep 11, so the dial tones are skipped. One rand() per match.
+static func holiday_phone_dial_shortcut(state: State, pressed: int, pointer_x: int, pointer_y: int,
+		rng: Variant, result: Session.FrameResult) -> bool:
+	if not (pointer_x < -0x40 and pointer_x >= -0x4F and pointer_y < 0x18 and pointer_y >= -0xF):
+		return false
+	var data: Dictionary = state.rule_state
+	var holiday: Dictionary = data["holiday"]
+	var keys: Array = holiday["dial_keys"]
+	var pos: int = int(holiday["dial_pos"])
+	match pressed & 0x70:
+		0x20:
+			keys[pos] = 0
+			pos += 1
+			result.audio.append({"kind": "native_audio_command", "command": UI_SE_DIAL_TONE_0})
+		0x40:
+			keys[pos] = 1
+			pos += 1
+			result.audio.append({"kind": "native_audio_command", "command": UI_SE_DIAL_TONE_0 + 1})
+		0x10:
+			keys[pos] = 2
+			pos += 1
+			result.audio.append({"kind": "native_audio_command", "command": UI_SE_DIAL_TONE_0 + 2})
+	if pos >= 7:
+		pos = 0
+	holiday["dial_pos"] = pos
+	if (pressed & 0x70) == 0:
+		return false
+	var girls: Array = data["girls"]
+	for i: int in range(13):
+		var read_index: int = pos + 7
+		for j: int in range(7):
+			if int(keys[read_index % 7]) != int(GIRL_PHONE_DIGITS[i][j]):
+				break
+			read_index += 1
+			if j == 6 and (int(girls[i]["flags"]) & 0x08) != 0:
+				if i != 11:
+					if i == 12:
+						data["scene_work"] = 11
+						data["current_girl"] = GIRL_MIHARU
+						data["menu_cursor"] = 12
+					else:
+						data["scene_work"] = i
+						data["current_girl"] = i
+						data["menu_cursor"] = i + 1
+				var bonus: int = rng.next("holiday_phone_dial_shortcut") & 0x7FFF
+				# The original adds to the full first record word (tokimeki fraction and value).
+				girls[i]["tokimeki_word"] = Math.add32(int(girls[i]["tokimeki_word"]), bonus)
+				if (int(data["player_flags_upper"]) & 1) != 0:
+					var params: Array = data["params"]
+					var stress_word: int = int(params[PARAM_STRESS_INDEX])
+					params[PARAM_STRESS_INDEX] = State.with_high(stress_word, State.high(stress_word) + 0x20)
+				state.set_stage(0x10)
+				state.set_step(2)
+				state.substep = PHONE_SUBSTEP_DIALED
+				# telephone_class_init, called next in source order, ends with
+				# menu_cursor_0 = 0; holiday_tel_exit sets it again on the next frame.
+				data["menu_cursor"] = 0
+				result.presentation.append({
+					"kind": "holiday_tel_init",
+					"title": "電話番号",
+					"prompt": "",
+					"contacts": build_telephone_directory(girls),
 				})
+				return true
+	return false
 
 # Build the 14-slot telephone directory matching telephone_class_init()
 static func build_telephone_directory(girls: Array) -> Array[Dictionary]:
@@ -381,27 +460,44 @@ static func build_telephone_directory(girls: Array) -> Array[Dictionary]:
 		})
 	return directory
 
-static func _navigate_directory(contacts: Array[Dictionary], current: int,
-		dir_x: int, dir_y: int) -> int:
-	var col: int = current / 5
-	var row: int = current % 5
-
-	if dir_y != 0:
-		for step in range(1, 5):
-			var target_row: int = (row + dir_y * step + 5) % 5
-			var target_idx: int = col * 5 + target_row
-			if target_idx < 14 and contacts[target_idx]["available"]:
-				return target_idx
-
-	if dir_x != 0:
-		for col_step in range(1, 3):
-			var target_col: int = (col + dir_x * col_step + 3) % 3
-			for r in range(5):
-				var target_idx: int = target_col * 5 + r
-				if target_idx < 14 and contacts[target_idx]["available"]:
-					return target_idx
-
-	return current
+## menu_speaker_girl.c::menu_cursor_update(0), case menu_mode 1, over the
+## phone book built by telephone_class_init. menu_set marks the items of width
+## 0 (unknown numbers) disabled. SELECT bumps menu_mode and clears the cursor;
+## a held shoulder button (pad_held & 0xF) blocks movement; only one of the
+## four exact pad_pressed & 0xF000 values moves the cursor (UP+DOWN does not).
+## HudSessionContext._menu_cursor_update ports the same branch over the HUD's
+## own session dictionary, so it is not callable on this rule state.
+static func phone_book_cursor_update(data: Dictionary, contacts: Array[Dictionary], held: int, pressed: int) -> void:
+	if (pressed & 0x100) != 0: # PAD_SELECT
+		data["menu_mode"] = (int(data["menu_mode"]) + 1) & 0xFF
+		data["menu_cursor"] = -1
+		return
+	var count: int = contacts.size()
+	var current: int = int(data.get("menu_cursor", 0))
+	var direction: int = 0
+	var budget: int = 16
+	if (held & 0xF) == 0:
+		match pressed & 0xF000:
+			0x1000, 0x8000:
+				direction = -1
+				current -= 1
+			0x2000, 0x4000:
+				direction = 1
+				current += 1
+	if current >= count:
+		current = 0
+	if current < 0:
+		current = count - 1
+	while not contacts[current]["available"]:
+		if budget == 0:
+			break
+		budget -= 1
+		current += direction
+		if current >= count:
+			current = 0
+		if current < 0:
+			current = count - 1
+	data["menu_cursor"] = current
 
 # Update quarter flags when reading magazine (hud_magazine_mark_read in hud_screens.c:906)
 static func mark_magazine_read(quarter_flags: Array, year: int, month: int) -> void:

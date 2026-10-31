@@ -4,6 +4,7 @@ extends SceneTree
 ## - Holiday Phone Book Screen (icon 8)
 ## - Holiday Magazine Screen (icon 10)
 
+const NativeRng = preload("res://core/native_rng.gd")
 const Rules = preload("res://rules/calendar_phone_screens.gd")
 const Presenter = preload("res://presentation/calendar_phone_presenter.gd")
 const State = preload("res://rules/school_day_state.gd")
@@ -150,89 +151,272 @@ func _test_phone_directory_and_rules() -> void:
 	_check(dir_open[13]["x"] == 2 * 0x58 - 0x88, "Slot 13 x coordinate matches column 2")
 	_check(dir_open[13]["y"] == (13 % 5) * 0x10 - 0x38 + 0x10, "Slot 13 y coordinate includes +0x10 offset")
 
+func _phone_state(girls: Array) -> State:
+	var state := State.new()
+	state.game_mode = 0x46
+	state.mode_stage = 0x10
+	state.mode_step = 0
+	state.rule_state["girls"] = girls
+	state.rule_state["scene_work"] = 0
+	# The holiday menu enters the phone book only with menu_mode 1 (holiday.gd).
+	state.rule_state["menu_mode"] = 1
+	return state
+
 func _test_phone_dialing_flow() -> void:
 	print("\n--- Testing Holiday Phone Dialing and Audio Sequence ---")
-	var state := State.new()
-	state.game_mode = 0x46 # Holiday
-	state.mode_stage = 0x1E # Holiday Tel
-	state.mode_step = 0
-
 	var girls: Array = []
 	for i in range(11):
 		girls.append({"flags": 0x08 if i in [0, 10] else 0})
-	state.rule_state["girls"] = girls
-
-	var tel_state := {}
-	var input := InputFrame.new(0, 0, 0)
+	var state := _phone_state(girls)
 	var result := Session.FrameResult.new()
 
-	# Init
-	Rules.step_holiday_tel(state, input, result, tel_state)
+	# holiday_tel_init: telephone_class_init sets menu_cursor_0 = 0
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), result)
 	_check(state.mode_step == 1, "Phone book advances to step 1 (selection)")
-	_check(tel_state["cursor"] == 0, "Cursor initialized to Slot 0 (Yoshio)")
+	_check(state.rule_state["menu_cursor"] == 0, "menu_cursor_0 initialized to item 0 (Yoshio)")
 
-	# Move to Cancel slot (slot 13) and press CIRCLE: should exit to holiday menu
-	tel_state["cursor"] = 13
-	input = InputFrame.new(2, 0x20, 0) # PAD_CIRCLE
+	# Item 13 (cancel) returns to the holiday menu stage 0
+	state.rule_state["menu_cursor"] = 13
 	result = Session.FrameResult.new()
-	Rules.step_holiday_tel(state, input, result, tel_state)
-	_check(state.mode_stage == 0, "Confirming slot 13 (Cancel) exits to holiday menu stage 0")
+	Rules.step_holiday_tel(state, InputFrame.new(2, 0x20, 0), result)
+	_check(state.mode_stage == 0 and state.mode_step == 0, "Confirming item 13 (cancel) is mode_stage_set(0)")
 
-	# Reset and select Yoshio (Slot 0)
-	state.mode_stage = 0x1E
-	state.mode_step = 1
-	tel_state["cursor"] = 0
-	input = InputFrame.new(3, 0x20, 0)
+	# Cross also returns to stage 0
+	state = _phone_state(girls)
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), Session.FrameResult.new())
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0x40, 0), Session.FrameResult.new())
+	_check(state.mode_stage == 0, "Cross is mode_stage_set(0)")
+
+	# menu_mode 1 cannot hold menu_cursor_0 == -1 into the CIRCLE test: menu_cursor_update
+	# wraps it to count - 1 (item 13, cancel) first. The -1 case (SELECT) is in
+	# _test_phone_book_cursor_branches.
+	state = _phone_state(girls)
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), Session.FrameResult.new())
+	state.rule_state["menu_cursor"] = -1
 	result = Session.FrameResult.new()
-	Rules.step_holiday_tel(state, input, result, tel_state)
-	_check(state.mode_step == 2, "Confirming contact advances to step 2 (dialing)")
-	_check(tel_state["target_girl"] == 13, "Target girl for Yoshio is GIRL_YOSHIO (13)")
-	var has_select_sound: bool = false
-	for a in result.audio:
-		if a.get("command") == 0x50A:
-			has_select_sound = true
-	_check(has_select_sound, "Select sound 0x50A played")
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0x20, 0), result)
+	_check(state.mode_stage == 0 and state.rule_state["menu_cursor"] == 13 and result.audio.is_empty(),
+		"menu_cursor_0 -1 wraps to item 13 before CIRCLE, which cancels")
 
-	# Timer step 6 -> 7 emits dial tone 0x504
-	state.mode_step_timer = 6
-	input = InputFrame.new(4, 0, 0)
+	_test_phone_book_cursor_branches(girls)
+
+	# Yoshio: 0x504 then the row-10 digits at 8-frame spacing, then 0x45 stage 0
+	state = _phone_state(girls)
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), Session.FrameResult.new())
 	result = Session.FrameResult.new()
-	Rules.step_holiday_tel(state, input, result, tel_state)
-	var has_dial_tone: bool = false
-	for a in result.audio:
-		if a.get("command") == 0x504:
-			has_dial_tone = true
-	_check(has_dial_tone, "Dial tone command 0x504 emitted at timer tick 7")
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0x20, 0), result)
+	_check(state.mode_step == 2 and state.rule_state["current_girl"] == 13, "Item 0 sets current_girl = GIRL_YOSHIO (13)")
+	_check(result.audio.size() == 1 and result.audio[0].get("command") == 0x50A, "Select sound 0x50A played")
+	var sounds: Array[int] = []
+	var frames: Array[int] = []
+	var restored: int = 0
+	for tick in range(2, 200):
+		result = Session.FrameResult.new()
+		Rules.step_holiday_tel(state, InputFrame.new(tick, 0, 0), result)
+		for a in result.audio:
+			if a.get("kind") == "native_audio_command":
+				sounds.append(int(a["command"]))
+				frames.append(tick)
+			elif a.get("kind") == "native_restore_bgm":
+				restored += 1
+		if state.game_mode != 0x46:
+			break
+	_check(sounds == [0x504, 0x505, 0x505, 0x505, 0x507, 0x507, 0x506, 0x505],
+		"Yoshio dials 0x504 then row 10 0002210 (got %s)" % str(sounds))
+	var spaced: bool = true
+	for k in range(1, frames.size()):
+		if frames[k] - frames[k - 1] not in [8, 32]:
+			spaced = false
+	_check(spaced, "Dial sounds sit on (timer & 7) == 7 frames")
+	_check(state.game_mode == 0x45 and state.mode_stage == 0, "Yoshio hands over to 0x45 stage 0")
+	_check(state.rule_state["menu_cursor"] == 0 and restored == 1, "Yoshio: menu_cursor_0 = 0 and one restore_bgm")
 
-	# Advance to substep 11 (call connect)
-	tel_state["substep"] = 11
+	# Item 12 (rival): current_girl 11, row 11 digits (equal to row 12), scene_work 11, 0x45 stage 1
+	# (emulator, spec m-holiday 8.3: 0x504, 0x505 0x507 0x506 0x505 0x507 0x506 0x505)
+	state = _phone_state(girls)
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), Session.FrameResult.new())
+	state.rule_state["menu_cursor"] = 12
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0x20, 0), Session.FrameResult.new())
+	_check(state.rule_state["current_girl"] == 11, "Item 12 selects GIRL_MIHARU (11), the rival's phone slot")
+	sounds.clear()
+	restored = 0
+	for tick in range(2, 200):
+		result = Session.FrameResult.new()
+		Rules.step_holiday_tel(state, InputFrame.new(tick, 0, 0), result)
+		for a in result.audio:
+			if a.get("kind") == "native_audio_command":
+				sounds.append(int(a["command"]))
+			elif a.get("kind") == "native_restore_bgm":
+				restored += 1
+		if state.game_mode != 0x46:
+			break
+	_check(sounds == [0x504, 0x505, 0x507, 0x506, 0x505, 0x507, 0x506, 0x505],
+		"Item 12 dial tones match the emulator observation (got %s)" % str(sounds))
+	_check(state.game_mode == 0x45 and state.mode_stage == 1 and state.rule_state["scene_work"] == 11
+		and state.rule_state["menu_cursor"] == 12 and restored == 1,
+		"Item 12 hands over to 0x45 stage 1 with scene_work 0xB, menu_cursor_0 12, restore_bgm")
+
+	# Item 11 (Yumi, girl 10): stage 1, scene_work 10, menu_cursor_0 11
+	state = _phone_state(girls)
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), Session.FrameResult.new())
+	state.rule_state["menu_cursor"] = 11
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0x20, 0), Session.FrameResult.new())
+	state.substep = 11
+	Rules.step_holiday_tel(state, InputFrame.new(2, 0, 0), Session.FrameResult.new())
+	_check(state.game_mode == 0x45 and state.mode_stage == 1 and state.rule_state["scene_work"] == 10
+		and state.rule_state["menu_cursor"] == 11, "Item 11 (girl 10) hands over to 0x45 stage 1, not Yoshio's stage 0")
+
+	# Negative: an out-of-range current_girl at step 2 is refused, not dialed
+	state = _phone_state(girls)
+	state.mode_step = 2
+	state.rule_state["current_girl"] = 12 + 2
 	result = Session.FrameResult.new()
-	Rules.step_holiday_tel(state, input, result, tel_state)
-	_check(state.game_mode == 0x3E, "Call connected transitions to GAME_MODE_TELEPHONE_PROFILE (0x3E)")
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), result)
+	_check(not result.error.is_empty() and state.game_mode == 0x46, "Out-of-range current_girl is refused")
 
-	# Verify Slot 11 (Yumi Saotome, GIRL_YUMI = 10) does not collide with Yoshio
+	# Digit table rows 11 and 12 are both the rival's number (D_800B3778)
+	_check(Rules.GIRL_PHONE_DIGITS.size() == 13, "13 digit rows")
+	_check(Rules.GIRL_PHONE_DIGITS[11] == [0, 2, 1, 0, 2, 1, 0] and Rules.GIRL_PHONE_DIGITS[12] == [0, 2, 1, 0, 2, 1, 0],
+		"Rows 11 and 12 are 0210210")
+	_test_phone_dial_shortcut()
+
+## menu_cursor_update(0) case 1 branches the phone book must follow (menu_speaker_girl.c:181).
+## Directory with Shiori (item 1) and Yumi (item 11) known: selectable items 0, 1, 11, 12, 13.
+func _test_phone_book_cursor_branches(girls: Array) -> void:
+	print("\n--- Testing phone-book menu_cursor_update branches ---")
+	var state := _phone_state(girls)
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), Session.FrameResult.new())
+	var result := Session.FrameResult.new()
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0x4000, 0), result)
+	_check(state.rule_state["menu_cursor"] == 1, "DOWN moves from item 0 to item 1")
+	Rules.step_holiday_tel(state, InputFrame.new(2, 0x4000, 0), result)
+	_check(state.rule_state["menu_cursor"] == 11, "DOWN skips the disabled items 2..10")
+	Rules.step_holiday_tel(state, InputFrame.new(3, 0x1000, 0), result)
+	_check(state.rule_state["menu_cursor"] == 1, "UP skips back over the disabled items")
+	Rules.step_holiday_tel(state, InputFrame.new(4, 0x8000, 0), result)
+	_check(state.rule_state["menu_cursor"] == 0, "LEFT is the same as UP")
+	Rules.step_holiday_tel(state, InputFrame.new(5, 0x1000, 0), result)
+	_check(state.rule_state["menu_cursor"] == 13, "UP from item 0 wraps to item 13")
+
+	# Negative: UP+DOWN (0x5000) is no case of the 0xF000 switch, so nothing moves
+	state = _phone_state(girls)
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), Session.FrameResult.new())
+	result = Session.FrameResult.new()
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0x5000, 0), result)
+	_check(state.rule_state["menu_cursor"] == 0 and result.presentation.is_empty(), "UP+DOWN does not move the cursor")
+
+	# Negative: a held shoulder button (pad_held & 0xF) blocks movement
+	state = _phone_state(girls)
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), Session.FrameResult.new())
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0x4004, 0x4), Session.FrameResult.new())
+	_check(state.rule_state["menu_cursor"] == 0, "Held L1 + DOWN does not move the cursor")
+	Rules.step_holiday_tel(state, InputFrame.new(2, 0x4000, 0), Session.FrameResult.new())
+	_check(state.rule_state["menu_cursor"] == 1, "DOWN moves again once L1 is released")
+
+	# SELECT: menu_mode++ and menu_cursor_0 = -1; CIRCLE on that frame is then ignored
+	state = _phone_state(girls)
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), Session.FrameResult.new())
+	result = Session.FrameResult.new()
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0x120, 0), result)
+	_check(state.rule_state["menu_mode"] == 2 and state.rule_state["menu_cursor"] == -1, "SELECT steps menu_mode to 2 and clears menu_cursor_0")
+	_check(state.mode_step == 1 and result.audio.is_empty() and result.error.is_empty(), "CIRCLE with SELECT selects nothing")
+	# Negative: menu_mode 2 (pointer control) is refused, not run as pad control
+	result = Session.FrameResult.new()
+	Rules.step_holiday_tel(state, InputFrame.new(2, 0x4000, 0), result)
+	_check(not result.error.is_empty() and state.rule_state["menu_cursor"] == -1,
+		"Phone book with menu_mode 2 is refused")
+	# Negative: a state without the native menu_mode field is refused
+	state = _phone_state(girls)
+	state.rule_state.erase("menu_mode")
+	Rules.step_holiday_tel(state, InputFrame.new(0, 0, 0), Session.FrameResult.new())
+	result = Session.FrameResult.new()
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0x4000, 0), result)
+	_check(not result.error.is_empty(), "Phone book without menu_mode is refused")
+
+func _shortcut_state(phone_known: Array[int], remedial: bool) -> State:
+	var girls: Array = []
+	for i in range(16):
+		girls.append({"flags": 0x08 if i in phone_known else 0, "tokimeki_word": 0})
+	var state := State.new()
 	state.game_mode = 0x46
-	state.mode_stage = 0x1E
-	state.mode_step = 1
-	tel_state["cursor"] = 11
-	input = InputFrame.new(5, 0x20, 0)
-	result = Session.FrameResult.new()
-	Rules.step_holiday_tel(state, input, result, tel_state)
-	_check(tel_state["target_girl"] == 10, "Slot 11 selects GIRL_YUMI (10)")
-	tel_state["substep"] = 11
-	result = Session.FrameResult.new()
-	Rules.step_holiday_tel(state, InputFrame.new(6, 0, 0), result, tel_state)
-	_check(state.game_mode == 0x3E and state.mode_stage == 1,
-		"Yumi call connects to GAME_MODE_TELEPHONE_PROFILE (0x3E) stage 1, not Yoshio stage 0")
+	state.mode_stage = 1
+	state.rule_state = {
+		"girls": girls, "scene_work": 0, "menu_cursor": 9,
+		"player_flags_upper": 1 if remedial else 0, "menu_mode": 1,
+		"params": [0, 0, 0, 0, 0, 0, 0, 0, 0x00100000],
+		"holiday": {"dial_keys": [255, 255, 255, 255, 255, 255, 255, 0], "dial_pos": 0},
+	}
+	return state
 
-	# Verify Slot 12 (Miharu Tatebayashi, GIRL_MIHARU = 11)
-	state.game_mode = 0x46
-	state.mode_stage = 0x1E
-	state.mode_step = 1
-	tel_state["cursor"] = 12
-	result = Session.FrameResult.new()
-	Rules.step_holiday_tel(state, InputFrame.new(7, 0x20, 0), result, tel_state)
-	_check(tel_state["target_girl"] == 11, "Slot 12 selects GIRL_MIHARU (11)")
+func _dial(state: State, rng: NativeRng, keys: Array, x: int, y: int) -> bool:
+	var matched: bool = false
+	for key in keys:
+		var pad: int = [0x20, 0x40, 0x10][key]
+		matched = Rules.holiday_phone_dial_shortcut(state, pad, x, y, rng, Session.FrameResult.new())
+	return matched
+
+func _test_phone_dial_shortcut() -> void:
+	print("\n--- Testing holiday_phone_dial_shortcut ---")
+	# Emulator (m-holiday 8.2): circle cross triangle cross circle triangle circle on girl 0
+	var state := _shortcut_state([0], false)
+	var rng := NativeRng.new()
+	rng.configure(NativeRng.OPENBIOS_PROFILE, 1)
+	var expected_rng := NativeRng.new()
+	expected_rng.configure(NativeRng.OPENBIOS_PROFILE, 1)
+	var bonus: int = expected_rng.next("expected") & 0x7FFF
+	var matched: bool = _dial(state, rng, [0, 1, 2, 1, 0, 2, 0], -0x48, 0)
+	_check(matched, "Shiori's number on the phone picture matches")
+	_check(state.rule_state["holiday"]["dial_keys"].slice(0, 7) == [0, 1, 2, 1, 0, 2, 0], "Ring holds 0,1,2,1,0,2,0")
+	_check(state.mode_stage == 0x10 and state.mode_step == 2 and state.substep == 11, "Enters phone stage 0x10 step 2 substep 11")
+	_check(state.rule_state["current_girl"] == 0 and state.rule_state["menu_cursor"] == 0 and state.rule_state["scene_work"] == 0,
+		"current_girl 0, scene_work 0, menu_cursor_0 0 (telephone_class_init resets it on the shortcut frame)")
+	_check(state.rule_state["girls"][0]["tokimeki_word"] == bonus, "Tokimeki word gains rand() & 0x7FFF")
+	_check(state.rule_state["params"][8] == 0x00100000, "No stress change outside the remedial week")
+	# Next frame of the phone book hands over without dial tones
+	var result := Session.FrameResult.new()
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0, 0), result)
+	_check(state.game_mode == 0x45 and state.mode_stage == 1, "Shortcut then goes straight to 0x45 stage 1")
+	_check(state.rule_state["menu_cursor"] == 1, "holiday_tel_exit sets menu_cursor_0 1 on the next frame")
+
+	# Remedial week: stress +0x20 on the integer half
+	state = _shortcut_state([0], true)
+	rng = NativeRng.new()
+	rng.configure(NativeRng.OPENBIOS_PROFILE, 1)
+	_dial(state, rng, [0, 1, 2, 1, 0, 2, 0], -0x48, 0)
+	_check(state.rule_state["params"][8] == 0x00300000, "Remedial week adds 0x20 to stress")
+
+	# Negative: girl without phone_known does not match and draws no rand()
+	state = _shortcut_state([], false)
+	rng = NativeRng.new()
+	rng.configure(NativeRng.OPENBIOS_PROFILE, 1)
+	_check(not _dial(state, rng, [0, 1, 2, 1, 0, 2, 0], -0x48, 0), "No match without phone_known")
+	_check(rng.draw_count == 0 and state.mode_stage == 1, "No rand() and no stage change without a match")
+
+	# Negative: pointer outside the hot spot records nothing
+	state = _shortcut_state([0], false)
+	rng = NativeRng.new()
+	rng.configure(NativeRng.OPENBIOS_PROFILE, 1)
+	_check(not _dial(state, rng, [0, 1, 2, 1, 0, 2, 0], -0x40, 0), "x = -0x40 is outside the hot spot")
+	_check(state.rule_state["holiday"]["dial_pos"] == 0 and state.rule_state["holiday"]["dial_keys"][0] == 255, "Ring untouched outside the hot spot")
+
+	# Row 12 (rival) maps to slot 11 with menu_cursor_0 12; row 11 never sets a slot
+	state = _shortcut_state([12], false)
+	rng = NativeRng.new()
+	rng.configure(NativeRng.OPENBIOS_PROFILE, 1)
+	_check(_dial(state, rng, [0, 2, 1, 0, 2, 1, 0], -0x4F, -0xF), "Rival's number matches at the hot spot's low corner")
+	_check(state.rule_state["current_girl"] == 11 and state.rule_state["scene_work"] == 11 and state.rule_state["menu_cursor"] == 0,
+		"Row 12 sets current_girl 11, scene_work 11; menu_cursor_0 12 is reset to 0 by telephone_class_init")
+	Rules.step_holiday_tel(state, InputFrame.new(1, 0, 0), Session.FrameResult.new())
+	_check(state.rule_state["menu_cursor"] == 12 and state.game_mode == 0x45, "holiday_tel_exit then sets menu_cursor_0 12")
+	_check(state.rule_state["girls"][12]["tokimeki_word"] != 0 and state.rule_state["girls"][11]["tokimeki_word"] == 0,
+		"Bonus goes to girls[12], the matched row")
+
+	state = _shortcut_state([11], false)
+	rng = NativeRng.new()
+	rng.configure(NativeRng.OPENBIOS_PROFILE, 1)
+	_check(_dial(state, rng, [0, 2, 1, 0, 2, 1, 0], -0x48, 0), "Row 11 matches when girls[11] has phone_known")
+	_check(state.rule_state["menu_cursor"] == 0 and state.rule_state["scene_work"] == 0 and not state.rule_state.has("current_girl"),
+		"Row 11 sets no slot (source quirk); telephone_class_init still resets menu_cursor_0 to 0")
 
 func _test_magazine_rules_and_flow() -> void:
 	print("\n--- Testing Holiday Magazine Rules and Reading Status ---")

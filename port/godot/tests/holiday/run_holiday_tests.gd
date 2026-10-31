@@ -75,11 +75,36 @@ func _initialize() -> void:
 	var mirror: int=state.rule_state["progress_state"][Ordinary.MIRROR_SNAPSHOT_START+0x15]
 	check(mirror==0,"counter update does not invent an early native parameter snapshot")
 	_test_fixed_timer()
+	_test_phone_book_frames()
 	_test_stops()
 	_test_wrapper_tails()
 	for failure: String in failures:push_error(failure)
 	print("Holiday invented test failures: %d" % failures.size())
 	quit(0 if failures.is_empty() else 1)
+
+## Controller path into the phone book: the click frame only sets stage 0x10;
+## holiday_tel_init runs on the next frame (emulator golden dates-phone-golden-v1).
+func _test_phone_book_frames() -> void:
+	var session: Session=fixture()
+	var state: State=session.state as State
+	var holiday: Controller=controllers[controllers.size()-1]
+	holiday.enable_subscreens=true
+	step(session)
+	var ready: Session.ServiceEvent=Session.ServiceEvent.new(1,Session.Phase.BEFORE_MODE,Session.ServiceKind.COMPLETION,"holiday.resources",{"request":"room","lba":1000,"ready":true,"decode_result":1})
+	step(session,[ready])
+	check(state.mode_stage==1 and state.rule_state["icon_enabled"][8]!=0,"phone icon available on the holiday menu")
+	state.rule_state["menu_cursor"]=8
+	session.latched_input=InputFrame.new(1,0x20)
+	var result: Session.FrameResult=step(session)
+	check(result.committed and state.mode_stage==0x10 and state.mode_step==0,"click frame sets stage 0x10 and leaves holiday_tel_init for the next frame")
+	check(not holiday.handles_subscreen(state),"phone book is not drawn before telephone_class_init")
+	session.latched_input=InputFrame.new(2,0)
+	result=step(session)
+	check(result.committed and state.mode_step==1 and state.rule_state["menu_cursor"]==0,"next frame runs holiday_tel_init (menu_cursor_0 = 0)")
+	check(holiday.handles_subscreen(state),"phone book drawn from step 1")
+	session.latched_input=InputFrame.new(3,0x40)
+	result=step(session)
+	check(result.committed and state.game_mode==0x46 and state.mode_stage in [0, 1],"cross leaves the phone book (mode_stage_set(0); the port restores the menu at once)")
 
 func _test_fixed_timer() -> void:
 	var session: Session=fixture()

@@ -227,8 +227,9 @@ func _init_subscreen_on_enter(state: State, rng: Rng, result: Session.FrameResul
 	var neutral := InputFrame.new(0, 0, 0)
 	match state.mode_stage:
 		0x10:
-			data["phone_state"] = {"cursor": 0, "substep": 0}
-			CalendarPhoneRules.step_holiday_tel(state, neutral, result, data["phone_state"])
+			# holiday_tel_init runs on the next frame (emulator golden
+			# dates-phone-golden-v1: click on frame 40, init on frame 41).
+			pass
 		0x20:
 			data["mag_state"] = {"substep": 0, "page": 0}
 			CalendarPhoneRules.step_holiday_magazine(state, neutral, result, data["mag_state"])
@@ -240,9 +241,7 @@ func _init_subscreen_on_enter(state: State, rng: Rng, result: Session.FrameResul
 
 func _step_subscreen_phone(state: State, input: InputFrame, result: Session.FrameResult) -> void:
 	var data: Dictionary = state.rule_state
-	if not data.get("phone_state") is Dictionary:
-		data["phone_state"] = {"cursor": 0, "substep": 0}
-	CalendarPhoneRules.step_holiday_tel(state, input, result, data["phone_state"])
+	CalendarPhoneRules.step_holiday_tel(state, input, result)
 	if state.game_mode == 0x46 and state.mode_stage == 0:
 		_restore_holiday_hud(state, result)
 
@@ -480,6 +479,8 @@ func handles_subscreen(state: State) -> bool:
 		return false
 	if state.game_mode == AppointmentRules.GAME_MODE_DATE:
 		return true
+	if state.game_mode == 0x46 and state.mode_stage == 0x10 and state.mode_step == 0:
+		return false # click frame: telephone_class_init has not run yet
 	if state.game_mode == 0x46 and state.mode_stage in [0x10, 0x20, 0x30, 0xFE]:
 		return true
 	return false
@@ -491,9 +492,8 @@ func render_active_subscreen(state: State, calendar_phone_presenter: RefCounted,
 			0x10:
 				if calendar_phone_presenter == null:
 					return {"error": "calendar_phone_presenter is not open"}
-				var ps: Dictionary = data.get("phone_state", {})
-				var cursor: int = int(ps.get("cursor", 0))
-				var substep: int = int(ps.get("substep", 0))
+				var cursor: int = int(data.get("menu_cursor", 0))
+				var substep: int = state.substep
 				var empty_unlocked: Array[int] = []
 				var img: Image = calendar_phone_presenter.render_holiday_phone_screen(cursor, empty_unlocked, substep)
 				return {

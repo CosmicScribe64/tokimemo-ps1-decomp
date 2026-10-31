@@ -207,7 +207,8 @@ func _bind_holiday_and_month_modes(session: Session, controller: Controller, tab
 		)
 		if need_date and (int(d["day_count"]) % 21) < 7:
 			# 1. Step Telephone (0x3D) invitation through OverlayDispatcher and commit deltas
-			var tel_st: Dictionary = controller.overlay_dispatcher.init_overlay(OverlayDispatcher.GAME_MODE_TEL, d, [0x46, 0, 0, 0], rng)
+			d["current_girl"] = 0 # TEL call target; queue opcode 0x46 is the GEKO invitation
+			var tel_st: Dictionary = controller.overlay_dispatcher.init_overlay(OverlayDispatcher.GAME_MODE_TEL, d, [], rng)
 			for _t_step: int in range(3):
 				var tel_out: Dictionary = controller.overlay_dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, tel_st, OverlayDispatcher.PAD_CIRCLE, d, rng)
 				tel_st = tel_out.get("state", tel_st)

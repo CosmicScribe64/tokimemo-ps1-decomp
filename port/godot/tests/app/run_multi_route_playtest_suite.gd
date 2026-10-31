@@ -312,7 +312,8 @@ func _bind_holiday_mode(
 			var mod_period: int = 14 if target_girl == EndingOverlay.GIRL_YUMI else 21
 			if need_date and (int(d["day_count"]) % mod_period) < 7:
 				# Step Telephone (0x3D) + Date (0x50) through OverlayDispatcher and commit deltas via controller._apply_overlay_deltas
-				var tel_st: Dictionary = controller.overlay_dispatcher.init_overlay(OverlayDispatcher.GAME_MODE_TEL, d, [0x46, target_girl, 0, 0], rng)
+				d["current_girl"] = target_girl # TEL call target; queue opcode 0x46 is the GEKO invitation
+				var tel_st: Dictionary = controller.overlay_dispatcher.init_overlay(OverlayDispatcher.GAME_MODE_TEL, d, [], rng)
 				tel_st["girl_id"] = target_girl
 				for _t_step: int in range(3):
 					var tel_out: Dictionary = controller.overlay_dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, tel_st, OverlayDispatcher.PAD_CIRCLE, d, rng)
@@ -353,7 +354,8 @@ func _bind_holiday_mode(
 		elif target_girl == EndingOverlay.GIRL_REI:
 			# Progress Rei's telephone subcount (bits 24..31) via live TEL overlay calls and set scene_flags[0x4F]=2
 			if (int(d["day_count"]) % 35) < 7:
-				var tel_rei: Dictionary = controller.overlay_dispatcher.init_overlay(OverlayDispatcher.GAME_MODE_TEL, d, [0x46, EndingOverlay.GIRL_REI, 0, 0], rng)
+				d["current_girl"] = EndingOverlay.GIRL_REI
+				var tel_rei: Dictionary = controller.overlay_dispatcher.init_overlay(OverlayDispatcher.GAME_MODE_TEL, d, [], rng)
 				tel_rei["girl_id"] = EndingOverlay.GIRL_REI
 				for _r_step: int in range(3):
 					var rei_out: Dictionary = controller.overlay_dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, tel_rei, OverlayDispatcher.PAD_CIRCLE, d, rng)

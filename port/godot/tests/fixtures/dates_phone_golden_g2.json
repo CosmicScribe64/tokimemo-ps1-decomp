@@ -1,0 +1,207 @@
+{
+ "schema": "tokimemo.dates-phone-golden.v1",
+ "source": "original game in PCSX-Redux (tokimemo-emu), .asset-cache/emu/dates-phone-golden-v1",
+ "start_state_sha256": "a71a2ee5798bba7339f4554260ec49096ab2e6c29a301858c2186b074f608041",
+ "start": {
+  "date": [
+   95,
+   5,
+   28,
+   6
+  ],
+  "game_mode": 70,
+  "mode_stage": 1,
+  "menu_cursor_0": 7,
+  "menu_mode": 1
+ },
+ "note": "Frames are vsyncs from the state load (frame 1). Frame 20 DOWN moves the pointer to icon 8, frame 40 CIRCLE sets stage 0x10; holiday_tel runs from frame 41.",
+ "runs": {
+  "g2-yoshio": {
+   "input": "20:DOWN/2,40:CIRCLE/2,140:CIRCLE/2",
+   "sounds": [
+    [
+     140,
+     1290
+    ],
+    [
+     147,
+     1284
+    ],
+    [
+     179,
+     1285
+    ],
+    [
+     187,
+     1285
+    ],
+    [
+     195,
+     1285
+    ],
+    [
+     203,
+     1287
+    ],
+    [
+     211,
+     1287
+    ],
+    [
+     219,
+     1286
+    ],
+    [
+     227,
+     1285
+    ]
+   ],
+   "tel_sounds_after_load": [
+    [
+     288,
+     1288
+    ]
+   ],
+   "handover_frame": 228,
+   "overlay_load_frame": 229,
+   "final": {
+    "game_mode": 69,
+    "mode_stage": 0,
+    "menu_cursor_0": 0,
+    "current_girl": 13,
+    "scene_work_at_handover": 16
+   }
+  },
+  "g2-shiori": {
+   "input": "20:DOWN/2,40:CIRCLE/2,70:DOWN/2,100:CIRCLE/2",
+   "sounds": [
+    [
+     100,
+     1290
+    ],
+    [
+     107,
+     1284
+    ],
+    [
+     139,
+     1285
+    ],
+    [
+     147,
+     1286
+    ],
+    [
+     155,
+     1287
+    ],
+    [
+     163,
+     1286
+    ],
+    [
+     171,
+     1285
+    ],
+    [
+     179,
+     1287
+    ],
+    [
+     187,
+     1285
+    ]
+   ],
+   "tel_sounds_after_load": [
+    [
+     248,
+     1288
+    ]
+   ],
+   "handover_frame": 188,
+   "overlay_load_frame": 189,
+   "final": {
+    "game_mode": 69,
+    "mode_stage": 1,
+    "menu_cursor_0": 1,
+    "current_girl": 0,
+    "scene_work_at_handover": 0
+   }
+  },
+  "g2-rival": {
+   "input": "20:DOWN/2,40:CIRCLE/2,70:DOWN/2,85:DOWN/2,110:CIRCLE/2",
+   "sounds": [
+    [
+     110,
+     1290
+    ],
+    [
+     117,
+     1284
+    ],
+    [
+     149,
+     1285
+    ],
+    [
+     157,
+     1287
+    ],
+    [
+     165,
+     1286
+    ],
+    [
+     173,
+     1285
+    ],
+    [
+     181,
+     1287
+    ],
+    [
+     189,
+     1286
+    ],
+    [
+     197,
+     1285
+    ]
+   ],
+   "tel_sounds_after_load": [
+    [
+     258,
+     1288
+    ]
+   ],
+   "handover_frame": 198,
+   "overlay_load_frame": 199,
+   "final": {
+    "game_mode": 69,
+    "mode_stage": 1,
+    "menu_cursor_0": 12,
+    "current_girl": 11,
+    "scene_work_at_handover": 11
+   }
+  }
+ },
+ "girl_flags": [
+  4194506,
+  1048578,
+  3145728,
+  5242880,
+  7340032,
+  8388608,
+  9437184,
+  11534336,
+  11534848,
+  11534336,
+  10485760,
+  11534336,
+  11534346,
+  11534336,
+  11534336,
+  11534336
+ ],
+ "handover_source": ".asset-cache/emu/dates-phone-golden-v2: same start state and presses, sample_every 1, breakpoint on game_mode_set (0x80042878) called from holiday_tel_exit; menu_mode is GameState+0x1092 (0x800E7312), 1 in every v1 and v2 sample"
+}

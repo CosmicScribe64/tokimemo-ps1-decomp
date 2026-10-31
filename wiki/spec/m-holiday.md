@@ -298,9 +298,9 @@ The question is a memory test: the player must remember which place goes with th
 - `i == 12`: `current_girl = 11`, `menu_cursor_0 = 12`, `scene_work = 11`; `i == 11`: nothing is set (the number is the same as row 12, so this only happens if girl 11 has `phone_known`); other `i`: `current_girl = scene_work = i`, `menu_cursor_0 = i + 1`;
 - `girls[i].tokimeki word += rand() & 0x7FFF` (the record of the row, so Rei's own record for 12);
 - during `remedial_week`: `param_stress += 0x20`;
-- `mode_stage_set(0x10)`, `mode_step_set(2)`, `substep = 11` (the dial tones are skipped), then `text_system_reset`, `icon_disp_switch(0)`, title hidden, `telephone_class_init`, `k_sub_disp_start(0)`; return 1.
+- `mode_stage_set(0x10)`, `mode_step_set(2)`, `substep = 11` (the dial tones are skipped), then `text_system_reset`, `icon_disp_switch(0)`, title hidden, `telephone_class_init`, `k_sub_disp_start(0)`; return 1. `telephone_class_init` ends with `menu_cursor_0 = 0`, so on the shortcut frame `menu_cursor_0` is 0, not the value set above; `holiday_tel_exit` sets it again on the next frame.
 
-Emu: keys circle, cross, triangle, cross, circle, triangle, circle filled the ring as `0,1,2,1,0,2,0`, then `mode_stage_set(0x10)`, `mode_step_set(2)`, `game_mode_set(0x45)`, `mode_stage_set(1)`; the tokimeki word went from 0 to 0x2BCC; `current_girl = 0`, `menu_cursor_0 = 1`.
+Emu: keys circle, cross, triangle, cross, circle, triangle, circle filled the ring as `0,1,2,1,0,2,0`, then `mode_stage_set(0x10)`, `mode_step_set(2)`, `game_mode_set(0x45)`, `mode_stage_set(1)`; the tokimeki word went from 0 to 0x2BCC; `current_girl = 0`, `menu_cursor_0 = 1` (after the `holiday_tel_exit` frame).
 
 ### 8.3 Dial tones and hand-over (`holiday_tel_exit`, step 2)
 
@@ -309,8 +309,14 @@ Emu: keys circle, cross, triangle, cross, circle, triangle, circle filled the ri
 At substep 11 (`HOLIDAY_DIAL_DONE_SUBSTEP`):
 
 - `current_girl == 13` (Yoshio): `menu_cursor_0 = 0`, `k_sub_reset`, `restore_bgm`, `game_mode_set(0x45)`, `mode_stage_set(0)`;
-- `current_girl == 11` (the rival's slot): `menu_cursor_0 = 12`, `scene_work = 11`, `game_mode_set(0x45)`, `mode_stage_set(1)`;
-- other girl: `menu_cursor_0 = current_girl + 1`, `scene_work = current_girl`, `game_mode_set(0x45)`, `mode_stage_set(1)`.
+- `current_girl == 11` (the rival's slot): `k_sub_reset`, `menu_cursor_0 = 12`, `scene_work = 11`, `restore_bgm`, `game_mode_set(0x45)`, `mode_stage_set(1)`;
+- other girl: `k_sub_reset`, `menu_cursor_0 = current_girl + 1`, `scene_work = current_girl`, `restore_bgm`, `game_mode_set(0x45)`, `mode_stage_set(1)`.
+
+All three branches call `restore_bgm` (`src/main/holiday.c`, `holiday_tel_exit`); an earlier reading that only the Yoshio branch does was wrong.
+
+Phone-book cursor (`holiday_tel_call`, step 1): `menu_cursor_update(0)` with `menu_mode` 1, the only mode the holiday menu enters the phone book in (`src/main/menu_speaker_girl.c`). SELECT does `menu_mode++`, `menu_cursor_0 = -1` and returns, so CIRCLE on that frame selects nothing; later frames run the `menu_mode` 2 pointer control, which the port refuses. A held L1/L2/R1/R2 (`pad_held & 0xF`) blocks movement. Only an exact `pad_pressed & 0xF000` of UP or LEFT moves to the previous item and DOWN or RIGHT to the next; UP+DOWN does not move. The cursor wraps and skips items `menu_set` disabled (width 0: unknown numbers), at most 16 skips.
+
+Golden (2026-10-30, `.asset-cache/emu/dates-phone-golden-v1`, ignored data): from the holiday menu of 1995-05-28 (`route-select-008.sstate`), DOWN puts the pointer on icon 8 and CIRCLE (frame 40) sets stage 0x10; `holiday_tel_init` runs on frame 41. `menu_mode` (GameState+0x1092) is 1 in every sample. In the phone book, DOWN and RIGHT move to the next selectable item and UP and LEFT to the previous one, wrapping and skipping unknown numbers. Calls to Yoshio, Shiori and the rival give 0x50A on the CIRCLE frame, 0x504 seven frames later, then from 32 frames after 0x504 at 8-frame spacing the seven digits of row 10 (Yoshio), row 0 (Shiori) and row 11 (the rival: `current_girl` 11). Row 12 holds the same bytes but only the dial shortcut reads it; `tools/port/test_phone_digits_executable.py` checks both rows against the executable. `scene_work` stays 16 for Yoshio. `.asset-cache/emu/dates-phone-golden-v2` reruns the three calls with a sample every frame and a breakpoint on `game_mode_set`: `holiday_tel_exit` calls `game_mode_set(0x45)` on frames 228, 188 and 198, one frame before the TEL overlay loads (229, 189, 199). The port replays these runs in `port/godot/tests/holiday/run_phone_book_golden.gd` and matches every sound, its frame and the hand-over frame.
 
 Emu (item 12): sounds 0x504, then 0x505 0x507 0x506 0x505 0x507 0x506 0x505 at 8-frame spacing, then `game_mode_set(0x45)`, `mode_stage_set(1)` with `scene_work = 0xB`; TEL starts ringing (0x508 every 128 frames).
 

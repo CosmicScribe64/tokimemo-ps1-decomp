@@ -287,27 +287,28 @@ func _test_a_telephone_profile_invitation(tables: Dictionary) -> void:
 	_check_preview_exit_without_rewards(controller, 0x45, ovl_prof, [PAD_CIRCLE, PAD_CIRCLE], "TEL_ACTION")
 	_leave_refused_family(state)
 
-	# 2. Telephone Date Invitation via queue event 0x46 -> native 0x5A -> dispatcher 0x3D (GAME_MODE_TEL)
+	# 2. Girl invitation via queue event 0x46 -> native 0x5A, which overlay_loader.c loads
+	# from the GEKO overlay (LBA 0x946A); the player's own call (TEL) is not a queue event.
 	var aff0_before: int = State.high(int(state.rule_state["girls"][0]["affection_word"]))
 	var tok0_before: int = State.high(int(state.rule_state["girls"][0]["tokimeki_word"]))
 	state.rule_state["appointment_words"] = [0, 0, 0, 0, 0, 0, 0, 0]
 	var mode_tel: int = _queue_day_event_and_step(ctx, 0x46, 0, 0, 0)
-	_check(mode_tel == 0x5A and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x3D,
-		"Queue event 0x46 dispatches live to native 0x5A / dispatcher 0x3D (GAME_MODE_TEL)")
+	_check(mode_tel == 0x5A and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == OverlayDispatcher.GAME_MODE_GEKO,
+		"Queue event 0x46 dispatches live to native 0x5A / dispatcher GEKO (girl invitation)")
 
 	for _n in range(3):
 		var res_wait2: Session.FrameResult = _step_pad(session, 0)
-		_check(res_wait2.error.is_empty() and state.game_mode == 0x5A, "GAME_MODE_TEL waits on neutral input")
+		_check(res_wait2.error.is_empty() and state.game_mode == 0x5A, "GEKO invitation (0x5A) waits on neutral input")
 
 	# T-39006: TEL has no source-backed production handler (phone_date_invitation_resolve writes are
 	# not ported). With saved state it is refused: no appointment, no affection or tokimeki write.
-	var ovl_tel: Dictionary = state.rule_state.get("overlay_state", {}).duplicate(true)
 	var appointments_before: Array = (state.rule_state["appointment_words"] as Array).duplicate()
-	_assert_production_rejection(ctx, 0x5A, "GAME_MODE_TEL (0x5A)")
+	_assert_production_rejection(ctx, 0x5A, "GEKO invitation (0x5A)")
+	var ovl_tel: Dictionary = controller.overlay_dispatcher.init_overlay(0x3D, state.rule_state.duplicate(true), [])
 	_check(state.rule_state["appointment_words"] == appointments_before
 		and State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff0_before
 		and State.high(int(state.rule_state["girls"][0]["tokimeki_word"])) == tok0_before,
-		"GAME_MODE_TEL refusal books no appointment and writes no affection or tokimeki")
+		"GEKO invitation refusal books no appointment and writes no affection or tokimeki")
 
 	# Preview stepping (no saved state) drives the screens for rendering checks only.
 	# Stage 0: place_select -> move cursor down, render place menu, confirm place
@@ -444,14 +445,15 @@ func _test_b_date_choice_cg_ride_movie(tables: Dictionary) -> void:
 	_check_preview_exit_without_rewards(controller, 0x58, ovl_amuse, [PAD_CIRCLE], "AMUSEMENT_PARK_DATE")
 	_leave_refused_family(state)
 
-	# 3. Special Event CG & Ride Movie (event 0x45 -> native 0x5D / 0x5E -> GAME_MODE_EVENT_CG)
+	# 3. Special event (event 0x45 -> native 0x5D, loaded from the GEKO overlay by
+	# overlay_loader.c), then the date-spot scenes (native 0x5E DATE_SCENE -> EVENT_CG).
 	var mode_cg: int = _queue_day_event_and_step(ctx, 0x45, 0, 0, 0)
-	_check(mode_cg == 0x5D and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == 0x5E,
-		"Day event 0x45 dispatches live to native mode 0x5D -> dispatcher 0x5E (GAME_MODE_EVENT_CG)")
+	_check(mode_cg == 0x5D and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == OverlayDispatcher.GAME_MODE_GEKO,
+		"Day event 0x45 dispatches live to native mode 0x5D -> dispatcher GEKO")
 	_step_pad(session, 0)
-	_check(state.game_mode == 0x5D, "GAME_MODE_EVENT_CG waits on neutral input")
-	var ovl_cg_entry: Dictionary = state.rule_state["overlay_state"].duplicate(true)
-	_assert_production_rejection(ctx, 0x5D, "GAME_MODE_EVENT_CG (0x5D)")
+	_check(state.game_mode == 0x5D, "GEKO special event (0x5D) waits on neutral input")
+	_assert_production_rejection(ctx, 0x5D, "GEKO special event (0x5D)")
+	var ovl_cg_entry: Dictionary = controller.overlay_dispatcher.init_overlay(0x5E, state.rule_state.duplicate(true), [])
 	ovl_cg_entry["scene_kind"] = "shiori_cg"
 	ovl_cg_entry["spot_place"] = EventCgOverlay.SPOT_KIRAMEKI_CENTRAL_PARK
 	var ovl_cg0: Dictionary = _preview(controller, 0x5D, ovl_cg_entry, [PAD_CIRCLE])
