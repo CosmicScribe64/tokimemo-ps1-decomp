@@ -5,13 +5,14 @@
     {
       "item_id": "filesel-0000",
       "status": "candidate-only",
-      "reason": "Index-space draft \"Copy\": source lettering removed inside the 40x16 bevel interior, 87 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+      "reason": "Index-space draft \"Copy\" (unchanged from v3, byte-identical): lettering removed inside the 40x16 bevel interior, 87 former-stroke texels reconstructed from the source index ramp (port-made), NativeLatin core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
       "evidence": [
-        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v3/filesel-indexed-v3/frame-00.base.png",
+        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v4/filesel-indexed-v4/frame-00.base.png",
         "output_sha256 f609e0882deaf2f4de210edb42e078b390c50e64c1957f838b2e298cb1c0a2c2",
         "source_png_sha256 6c4199352db411e984457d67ff339879061f07df81835cedf903585f06dda0b0",
-        "manifest sha256 fe5653e5ecf83db320b7f84dc93edafc53f792d0363abd063f58143e02362070",
-        "source outline-rule deviation: missing 1, extra 0"
+        "manifest sha256 11b29f3e8d742179ea4230afbd20c14c0b8eb08f737f7d9ce360f22a9c8cad63",
+        "ledger sha256 0aad4744625afe63df59b04742970f482b743d9447e029a005fe90b82c560e3a",
+        "port_made True: button gradient"
       ],
       "defaults_applied": [
         "Button words Copy/New/Clear/Load from translator catalog rows 99-102 (row 101 offers \"Clear / Delete\"; its suggested graphic is Clear); source order Copy, New, Clear, Load verified from frames 0-3 lettering. Revisable: Erase or Delete for frame 2.",
@@ -22,13 +23,14 @@
     {
       "item_id": "filesel-0001",
       "status": "candidate-only",
-      "reason": "Index-space draft \"New\": source lettering removed inside the 40x16 bevel interior, 66 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+      "reason": "Index-space draft \"New\" (unchanged from v3, byte-identical): 66 reconstructed texels (port-made), NativeLatin core 177 / outline 178. Unreviewed; not runtime integrated.",
       "evidence": [
-        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v3/filesel-indexed-v3/frame-01.base.png",
+        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v4/filesel-indexed-v4/frame-01.base.png",
         "output_sha256 5f0298656bc7d46c9a7d4a641976f5c2c1f2ecd6cb828654663ef0097a365dd7",
         "source_png_sha256 7829b4fc08c3de3d747bbf8db927bef3231a2285efb5713c9292d779e569297e",
-        "manifest sha256 fe5653e5ecf83db320b7f84dc93edafc53f792d0363abd063f58143e02362070",
-        "source outline-rule deviation: missing 0, extra 0"
+        "manifest sha256 11b29f3e8d742179ea4230afbd20c14c0b8eb08f737f7d9ce360f22a9c8cad63",
+        "ledger sha256 0aad4744625afe63df59b04742970f482b743d9447e029a005fe90b82c560e3a",
+        "port_made True: button gradient"
       ],
       "defaults_applied": [
         "Button words Copy/New/Clear/Load from translator catalog rows 99-102 (row 101 offers \"Clear / Delete\"; its suggested graphic is Clear); source order Copy, New, Clear, Load verified from frames 0-3 lettering. Revisable: Erase or Delete for frame 2.",
@@ -39,16 +41,17 @@
     {
       "item_id": "filesel-0002",
       "status": "candidate-only",
-      "reason": "Index-space draft \"Clear\": source lettering removed inside the 40x16 bevel interior, 88 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+      "reason": "Index-space draft \"Erase\" (v4; v3 read Clear): 93 reconstructed texels (port-made), NativeLatin core 177 / outline 178. Unreviewed; not runtime integrated.",
       "evidence": [
-        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v3/filesel-indexed-v3/frame-02.base.png",
-        "output_sha256 8b73c31c73e91deb616925098050f2defa781356073e51c860e848f49f90867f",
+        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v4/filesel-indexed-v4/frame-02.base.png",
+        "output_sha256 eee2219d6792699945d563f9815ac4328ee98c65d642cebd997702caa2c870a9",
         "source_png_sha256 509f6bcf700408b3bda4c9f6c1accde00f312a00e6ae94ce0f710f4ae0d51744",
-        "manifest sha256 fe5653e5ecf83db320b7f84dc93edafc53f792d0363abd063f58143e02362070",
-        "source outline-rule deviation: missing 0, extra 2"
+        "manifest sha256 11b29f3e8d742179ea4230afbd20c14c0b8eb08f737f7d9ce360f22a9c8cad63",
+        "ledger sha256 0aad4744625afe63df59b04742970f482b743d9447e029a005fe90b82c560e3a",
+        "port_made True: button gradient"
       ],
       "defaults_applied": [
-        "Button words Copy/New/Clear/Load from translator catalog rows 99-102 (row 101 offers \"Clear / Delete\"; its suggested graphic is Clear); source order Copy, New, Clear, Load verified from frames 0-3 lettering. Revisable: Erase or Delete for frame 2.",
+        "Button words Copy/New/Erase/Load (user default 2026-10-30, revisable; catalog row 101 offers Clear / Delete).",
         "Reconstruction errors of up to 1 band accepted for candidate status because the leave-out gate passed (0.9458 index-exact over 3692 held-out texels, max 1 band, slopes [79, 76, 79, 79]/100); every reconstructed texel is flagged for magnified human review.",
         "Base palette only: frames 0-3 have no source-proved selected variant (HIGHLIGHT_FRAMES excludes them)."
       ]
@@ -56,13 +59,14 @@
     {
       "item_id": "filesel-0003",
       "status": "candidate-only",
-      "reason": "Index-space draft \"Load\": source lettering removed inside the 40x16 bevel interior, 90 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+      "reason": "Index-space draft \"Load\" (unchanged from v3, byte-identical): 90 reconstructed texels (port-made), NativeLatin core 177 / outline 178. Unreviewed; not runtime integrated.",
       "evidence": [
-        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v3/filesel-indexed-v3/frame-03.base.png",
+        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v4/filesel-indexed-v4/frame-03.base.png",
         "output_sha256 7217d8782f34ddcadec83795e9028f1bb802ba6d035524606ab72ce7b29e80ea",
         "source_png_sha256 227fda7992340d7c7f630e06db8d5200de34361c4091838ddd4c19ffad854773",
-        "manifest sha256 fe5653e5ecf83db320b7f84dc93edafc53f792d0363abd063f58143e02362070",
-        "source outline-rule deviation: missing 0, extra 0"
+        "manifest sha256 11b29f3e8d742179ea4230afbd20c14c0b8eb08f737f7d9ce360f22a9c8cad63",
+        "ledger sha256 0aad4744625afe63df59b04742970f482b743d9447e029a005fe90b82c560e3a",
+        "port_made True: button gradient"
       ],
       "defaults_applied": [
         "Button words Copy/New/Clear/Load from translator catalog rows 99-102 (row 101 offers \"Clear / Delete\"; its suggested graphic is Clear); source order Copy, New, Clear, Load verified from frames 0-3 lettering. Revisable: Erase or Delete for frame 2.",
@@ -72,12 +76,15 @@
     },
     {
       "item_id": "filesel-page-information-0",
-      "status": "missing",
-      "reason": "Partial draft only: name, nickname edited from exact native-glyph cells; club, clear-count-label, system-tab, button-panel stay Japanese (no exact glyph match). Page-scope replacement has no runtime key in translated_image_store.gd. The partial page build is kept out of the published checkpoint (ledger unpublished_partial_builds).",
+      "status": "candidate-only",
+      "reason": "Complete page draft (v4): Name/Nickname from exact glyph cells; Club and Girls Cleared relettered after erasing the label ink to its paper; System in NativeLatin with the source right-shadow rule (ink 219, shadow 134, port-made styling); button panel Copy/New/Erase/Load in the button-frame layout over one fitted panel ramp (336 port-made gradient texels). Unreviewed; page-scope runtime key missing, so not runtime integrated.",
       "evidence": [
-        ".asset-cache build output (not published, partial page) source-page-information-0.png",
-        "output_sha256 3f6c4932c2098485f9a6dfaa660b144758692afaf5552e6e2e8259e163f5dae4",
-        "translations/en/graphics/filesel_page_regions.json sha256 e12dd08287c1415d6f8ce9a87f7b2207f8824bce48596ef1949de7147e511916"
+        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v4/filesel-indexed-v4/source-page-information-0.png",
+        "output_sha256 421d62bc6c18611026ac1cff2136f6ab4edb8f6df8500d00f06fadfc73dd4cbf",
+        "source_png_sha256 e6761391bb5edc62eb3bf723cefd840b60d0957cd2ca784bd03048ad6ad35043",
+        "manifest sha256 11b29f3e8d742179ea4230afbd20c14c0b8eb08f737f7d9ce360f22a9c8cad63",
+        "ledger sha256 0aad4744625afe63df59b04742970f482b743d9447e029a005fe90b82c560e3a",
+        "port_made True: system-tab shadow; button-panel gradient"
       ],
       "defaults_applied": [
         "Page candidates built only for label cells whose ink is an exact native-font glyph match; date row uses \"/\" in the year and month cells and blanks the day cell, keeping code-drawn digit positions; the count suffix cell is blanked per catalog row 103.",
@@ -86,12 +93,15 @@
     },
     {
       "item_id": "filesel-page-information-1",
-      "status": "missing",
-      "reason": "Partial draft only: date-month-suffix, date-year-suffix, name, nickname edited from exact native-glyph cells; club, clear-count-label stay Japanese (no exact glyph match). Page-scope replacement has no runtime key in translated_image_store.gd. The partial page build is kept out of the published checkpoint (ledger unpublished_partial_builds).",
+      "status": "candidate-only",
+      "reason": "Complete page draft (v4): right halves of Name/Nickname/Club/Girls Cleared and the year/month \"/\" cells. Unreviewed; page-scope runtime key missing, so not runtime integrated.",
       "evidence": [
-        ".asset-cache build output (not published, partial page) source-page-information-1.png",
-        "output_sha256 3e74fb1d5bf809b60c45a9a6ae7cbcc00d33e2231d72914bf8a0fc0175cca329",
-        "translations/en/graphics/filesel_page_regions.json sha256 e12dd08287c1415d6f8ce9a87f7b2207f8824bce48596ef1949de7147e511916"
+        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v4/filesel-indexed-v4/source-page-information-1.png",
+        "output_sha256 2afbc720f755f3fa952a854a15d8a215530c96daee6fccdc2c20eaa78d26b5a4",
+        "source_png_sha256 4f6b2e55f34d678b06b4c095e4745a9e8bd0c7baf240801d125abf18baf97eb9",
+        "manifest sha256 11b29f3e8d742179ea4230afbd20c14c0b8eb08f737f7d9ce360f22a9c8cad63",
+        "ledger sha256 0aad4744625afe63df59b04742970f482b743d9447e029a005fe90b82c560e3a",
+        "port_made False: none"
       ],
       "defaults_applied": [
         "Page candidates built only for label cells whose ink is an exact native-font glyph match; date row uses \"/\" in the year and month cells and blanks the day cell, keeping code-drawn digit positions; the count suffix cell is blanked per catalog row 103.",
@@ -101,11 +111,14 @@
     {
       "item_id": "filesel-page-information-2",
       "status": "candidate-only",
-      "reason": "All Japanese on this page sits in exact native-glyph cells (clear-count-suffix, date-day-suffix, date-month-suffix); edited to \"/\" and blanks. Unreviewed; page-scope runtime key missing, so not runtime integrated.",
+      "reason": "Page draft (unchanged from v3, byte-identical): month \"/\" tail, blank day and count suffixes. Unreviewed; page-scope runtime key missing, so not runtime integrated.",
       "evidence": [
-        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v3/filesel-indexed-v3/source-page-information-2.png",
+        "translations/en/graphics/artwork/checkpoints/T39004-filesel-v4/filesel-indexed-v4/source-page-information-2.png",
         "output_sha256 51d0c37b88a9471c05f8c47e304f10ea1b99e6f1b9bda0588263ef2b36d23752",
-        "translations/en/graphics/filesel_page_regions.json sha256 e12dd08287c1415d6f8ce9a87f7b2207f8824bce48596ef1949de7147e511916"
+        "source_png_sha256 3098c1c310ace8565e592f0cb13ca666933b3e2fcbf603c37927ec04f6ea504f",
+        "manifest sha256 11b29f3e8d742179ea4230afbd20c14c0b8eb08f737f7d9ce360f22a9c8cad63",
+        "ledger sha256 0aad4744625afe63df59b04742970f482b743d9447e029a005fe90b82c560e3a",
+        "port_made False: none"
       ],
       "defaults_applied": [
         "Page candidates built only for label cells whose ink is an exact native-font glyph match; date row uses \"/\" in the year and month cells and blanks the day cell, keeping code-drawn digit positions; the count suffix cell is blanked per catalog row 103.",
@@ -171,17 +184,34 @@
   },
   "tests": "docker run --rm -v \"$PWD\":/work -w /work/tools tokimemo-recovery-splat python3 -m unittest test_translation_filesel_indexed (24 OK; all 28 guard-removal mutants fail the suite); test_translation_filesel_drafts test_translation_inventory (26 OK); python3 tools/translation_inventory.py check (exit 0)",
   "integration": {
-    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-filesel-v3/ledger.json",
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-filesel-v4/ledger.json",
     "ledger_ids": [
       "filesel-frame-0.base",
       "filesel-frame-1.base",
       "filesel-frame-2.base",
       "filesel-frame-3.base",
+      "filesel-page-information-0",
+      "filesel-page-information-1",
       "filesel-page-information-2"
     ],
-    "frame_ids": "filesel-frame-N.base already match candidate_key and map to filesel-000N (FILESEL, frame N, variant base).",
-    "candidate_key_addition": "Before adding the ledger to LEDGERS, add to tools/translation_inventory.py candidate_key: m = re.fullmatch(r'filesel-page-information-(\\d)', cid); if m: return cid, 'FILESEL', None, None. The atom filesel-page-information-N already exists in extra_atoms (scope page) and binds by source hash page:source-page-information-N.",
-    "atom_overrides": "atom_overrides for filesel-0000..0003 and filesel-page-information-2 currently say missing and would raise \"override contradicts evidence\"; set them to candidate-only (the decisions above) in the same change.",
-    "verified_by": "tools/test_translation_filesel_indexed.py test_ledger_ids_load_in_the_inventory (builds the inventory from a temp decisions copy with these statuses and the proposed candidate_key addition; all five items come out candidate-only)"
+    "note": "LEDGERS reads -v4 instead of -v3; candidate_key already maps all ids."
+  },
+  "revision_2026_10_30": {
+    "authority": "User decision 2026-10-30 (relayed by the art-finish workflow): finish asset translation \"or creation\"; port-made lettering/art allowed where no usable original exists, marked port-made; outputs stay drafts.",
+    "checkpoint": "translations/en/graphics/artwork/checkpoints/T39004-filesel-v4 (supersedes T39004-filesel-v3, kept as history)",
+    "changes": [
+      "Frame 2 and the page panel read Erase (user default).",
+      "Club, clear-count label and System tab: label ink erased to the single paper index of its ink box, NativeLatin word drawn; the tab keeps the source right-shadow rule (checked on the source).",
+      "Button panel (page 0): four 40x16 cells whose lettering masks equal frames 0-3 (frame 2 off-rule extras are panel residue texels (20,56),(20,57), removed); one panel-wide ramp reconstructs the strokes; panel gate 0.902 index-exact over 3692 held-out texels, max 1 band (panel gate min 0.88: 39 bands in 83 texels).",
+      "Clear-count label wording: Girls Cleared (catalog: Cleared Heroines / Clears), revisable.",
+      "Dates stay numeric 19YY/MM/DD: the month is a code-drawn number (file_select_number_draw), so the Apr 4 style needs a code or runtime change, not art.",
+      "Review fix (2026-10-30): Erase is set with the font's own 1-texel letter gap (Copy, New, Load keep 2) because the 2-gap word filled its whole cell with the outline against the left bevel; layout_buttons uses the wide gap only while 3 clear texels (BUTTON_PAD) remain each side. Frame 2 and page 0 rebuilt in place (still -v4, unpublished to main); 3020 changed bytes in the round trip (was 3055)."
+    ],
+    "kept_source": [
+      "year-prefix (baked 19)"
+    ],
+    "review_flags": [
+      "Erase uses a tighter letter gap than its neighbours (cell-width limit); a human may approve it or pick Clear/Delete."
+    ]
   }
 }

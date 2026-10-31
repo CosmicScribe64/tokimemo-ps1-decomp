@@ -106,10 +106,10 @@ class PinnedCountTests(unittest.TestCase):
         summary = subject.build()['summary']
         self.assertEqual(summary['artwork_items']['total'], 271)
         self.assertEqual(summary['artwork_items']['by_status'], {
-            'english-reviewed': 52, 'candidate-only': 166, 'missing': 24, 'unmapped': 0, 'deliberately-untranslated': 29})
+            'english-reviewed': 52, 'candidate-only': 169, 'missing': 21, 'unmapped': 0, 'deliberately-untranslated': 29})
         self.assertEqual(summary['historical_assets']['by_status']['english-reviewed'], 56)
         self.assertEqual(summary['historical_assets']['by_status']['unmapped'], 3)
-        self.assertEqual(summary['candidate_records'], {'total': 329, 'distinct_assets': 320, 'agent_reviewed_revisions': 9, 'human_approved': 53})
+        self.assertEqual(summary['candidate_records'], {'total': 360, 'distinct_assets': 351, 'agent_reviewed_revisions': 9, 'human_approved': 53})
         self.assertEqual(summary['superseded_records'], 23)
         self.assertEqual(summary['text_records']['total'], 55911)
         self.assertEqual(summary['text_records']['by_class'], {
@@ -234,9 +234,10 @@ class PinnedCountTests(unittest.TestCase):
                     ledger['supersedes'][0]['id'] = 'mainrom-draft-0082.nothing'
                 target = Path(directory) / 'ledger.json'
                 target.write_text(json.dumps(ledger))
-                entries = subject.load_ledgers(subject.LEDGERS[:-1])
+                others = [p for p in subject.LEDGERS if p != source]
+                entries = subject.load_ledgers(others)
                 with self.assertRaisesRegex(ValueError, 'superseded reference'):
-                    subject.split_superseded(entries, subject.LEDGERS[:-1] + [target])
+                    subject.split_superseded(entries, others + [target])
 
     def test_weekday_and_alternate_ids_check_frame_and_palette(self):
         self.assertEqual(subject.candidate_key({'id': 'mainrom-weekday-two-letter-sun.hud-44', 'frame': 88, 'palette_id': 'hud-44'}),

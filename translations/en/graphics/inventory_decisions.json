@@ -1,103 +1,83 @@
 {
  "atom_overrides": {
   "battle-habu-miss-0": {
-   "blockers": [
-    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
-   ],
    "notes": [
-    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/battle-miss.json (tickets T-39010, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval",
+    "port-made glyph: M (5-wide); I and S are original"
    ],
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "battle-habu-miss-1": {
-   "blockers": [
-    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
-   ],
    "notes": [
-    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/battle-miss.json (tickets T-39010, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval",
+    "port-made glyph: M (5-wide); I and S are original"
    ],
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "battle-kuma-miss-0": {
-   "blockers": [
-    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
-   ],
    "notes": [
-    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/battle-miss.json (tickets T-39010, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval",
+    "port-made glyph: M (5-wide); I and S are original"
    ],
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "battle-kuma-miss-1": {
-   "blockers": [
-    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
-   ],
    "notes": [
-    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/battle-miss.json (tickets T-39010, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval",
+    "port-made glyph: M (5-wide); I and S are original"
    ],
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "battle-robo-miss-0": {
-   "blockers": [
-    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
-   ],
    "notes": [
-    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/battle-miss.json (tickets T-39010, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval",
+    "port-made glyph: M (5-wide); I and S are original"
    ],
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "battle-robo-miss-1": {
-   "blockers": [
-    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
-   ],
    "notes": [
-    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/battle-miss.json (tickets T-39010, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval",
+    "port-made glyph: M (5-wide); I and S are original"
    ],
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "battle-sika-miss-0": {
-   "blockers": [
-    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
-   ],
    "notes": [
-    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/battle-miss.json (tickets T-39010, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval",
+    "port-made glyph: M (5-wide); I and S are original"
    ],
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "battle-sika-miss-1": {
-   "blockers": [
-    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
-   ],
    "notes": [
-    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/battle-miss.json (tickets T-39010, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval",
+    "port-made glyph: M (5-wide); I and S are original"
    ],
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "battle-ufo-miss-0": {
-   "blockers": [
-    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
-   ],
    "notes": [
-    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/battle-miss.json (tickets T-39010, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval",
+    "port-made glyph: M (5-wide); I and S are original"
    ],
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "battle-ufo-miss-1": {
-   "blockers": [
-    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
-   ],
    "notes": [
-    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/battle-miss.json (tickets T-39010, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval",
+    "port-made glyph: M (5-wide); I and S are original"
    ],
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "catalog-127": {
@@ -255,56 +235,59 @@
    "status": "deliberately-untranslated"
   },
   "catalog-153": {
-   "reason": "Catalog requires temporal replacement of the opening movie name pills; no authentic replacement workflow or finite inventory exists. CDROM/OPENXA.STR is not in the local file extraction (stream sectors), so no hash is recorded.",
-   "status": "missing"
+   "notes": [
+    "decision record: translations/en/graphics/decisions/movie-pills.json (ticket T-39004 art finish 2026-10-30); revisable agent defaults, no human approval"
+   ],
+   "reason": "29 port-made English cast-credit pills (8 cues: Cast header, 14 character names, 14 actresses) with a cue table of decoded frame ranges, fade opacities and placements for a port overlay. Unreviewed; the movie player port is separate, so not runtime integrated.",
+   "status": "candidate-only"
   },
   "filesel-0000": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/filesel.json (tickets T-39011, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval"
    ],
-   "reason": "Index-space draft \"Copy\": source lettering removed inside the 40x16 bevel interior, 87 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+   "reason": "Index-space draft \"Copy\" (unchanged from v3, byte-identical): lettering removed inside the 40x16 bevel interior, 87 former-stroke texels reconstructed from the source index ramp (port-made), NativeLatin core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
    "status": "candidate-only"
   },
   "filesel-0001": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/filesel.json (tickets T-39011, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval"
    ],
-   "reason": "Index-space draft \"New\": source lettering removed inside the 40x16 bevel interior, 66 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+   "reason": "Index-space draft \"New\" (unchanged from v3, byte-identical): 66 reconstructed texels (port-made), NativeLatin core 177 / outline 178. Unreviewed; not runtime integrated.",
    "status": "candidate-only"
   },
   "filesel-0002": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/filesel.json (tickets T-39011, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval"
    ],
-   "reason": "Index-space draft \"Clear\": source lettering removed inside the 40x16 bevel interior, 88 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+   "reason": "Index-space draft \"Erase\" (v4; v3 read Clear): 97 reconstructed texels (port-made), NativeLatin core 177 / outline 178. Unreviewed; not runtime integrated.",
    "status": "candidate-only"
   },
   "filesel-0003": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/filesel.json (tickets T-39011, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval"
    ],
-   "reason": "Index-space draft \"Load\": source lettering removed inside the 40x16 bevel interior, 90 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+   "reason": "Index-space draft \"Load\" (unchanged from v3, byte-identical): 90 reconstructed texels (port-made), NativeLatin core 177 / outline 178. Unreviewed; not runtime integrated.",
    "status": "candidate-only"
   },
   "filesel-page-information-0": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/filesel.json (tickets T-39011, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval"
    ],
-   "reason": "Partial draft only: name, nickname edited from exact native-glyph cells; club, clear-count-label, system-tab, button-panel stay Japanese (no exact glyph match). Page-scope replacement has no runtime key in translated_image_store.gd. The partial page build is kept out of the published checkpoint (ledger unpublished_partial_builds).",
-   "status": "missing"
+   "reason": "Complete page draft (v4): Name/Nickname from exact glyph cells; Club and Girls Cleared relettered after erasing the label ink to its paper; System in NativeLatin with the source right-shadow rule (ink 219, shadow 134, port-made styling); button panel Copy/New/Erase/Load in the button-frame layout over one fitted panel ramp (340 port-made gradient texels). Unreviewed; page-scope runtime key missing, so not runtime integrated.",
+   "status": "candidate-only"
   },
   "filesel-page-information-1": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/filesel.json (tickets T-39011, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval"
    ],
-   "reason": "Partial draft only: date-month-suffix, date-year-suffix, name, nickname edited from exact native-glyph cells; club, clear-count-label stay Japanese (no exact glyph match). Page-scope replacement has no runtime key in translated_image_store.gd. The partial page build is kept out of the published checkpoint (ledger unpublished_partial_builds).",
-   "status": "missing"
+   "reason": "Complete page draft (v4): right halves of Name/Nickname/Club/Girls Cleared and the year/month \"/\" cells. Unreviewed; page-scope runtime key missing, so not runtime integrated.",
+   "status": "candidate-only"
   },
   "filesel-page-information-2": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/filesel.json (tickets T-39011, T-39004 art finish 2026-10-30); revisable agent defaults, no human approval"
    ],
-   "reason": "All Japanese on this page sits in exact native-glyph cells (clear-count-suffix, date-day-suffix, date-month-suffix); edited to \"/\" and blanks. Unreviewed; page-scope runtime key missing, so not runtime integrated.",
+   "reason": "Page draft (unchanged from v3, byte-identical): month \"/\" tail, blank day and count suffixes. Unreviewed; page-scope runtime key missing, so not runtime integrated.",
    "status": "candidate-only"
   },
   "filesel-page-information-3": {

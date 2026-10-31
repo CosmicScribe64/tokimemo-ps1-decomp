@@ -4,7 +4,7 @@ title: Produce FILESEL button and page drafts
 status: In Progress
 assignee: Claude (artwork worker)
 created: 2026-10-29
-updated: 2026-10-29
+updated: 2026-10-30
 links: ["[[tickets/T-39004-english-asset-completion]]"]
 ---
 
@@ -48,4 +48,18 @@ Agent review found four issues; all four were real and are fixed. No human appro
 - Partial pages: pages 0 and 1 (candidate false) are no longer published. They stay in the build output only. The ledger now has 5 assets, plus `unpublished_partial_builds` and a `source_pixels_note`. The checkpoint was republished; the 5 kept PNGs are byte-identical to before. New ledger sha256 8ab457d3..., manifest fe5653e5...
 - CLI: added `--nbn` and `--exe`. Their defaults are the old fixed paths.
 
+### 2026-10-30 art finish: pages 0-1 complete, Erase (art-finish worker)
+
+User decision (2026-10-30, relayed by the art-finish workflow): finish asset translation "or creation"; port-made art allowed where no original exists, flagged port-made; outputs stay drafts. Revisable default: buttons Copy/New/Erase/Load.
+- `tools/translation_filesel_indexed.py` revision `filesel-indexed-v4`. Frame 2 reads Erase. Club ("Club"), clear-count label ("Girls Cleared") and System tab ("System") are relettered: every ink texel in the label's ink box goes back to the box's single paper index (fail-closed), then a NativeLatin word is drawn; the tab keeps the source rule shadow = ink shifted one texel right (checked on the source, ink 219, shadow 134; port-made styling). Button panel (page 0): four 40x16 cells whose lettering masks equal frames 0-3 (frame 2's two off-rule outline texels are panel residue at montage (20,56),(20,57) and are removed); one panel-wide ramp (slope 0.89) reconstructs 340 texels (port-made), then the button layout is drawn in core 166 / outline 58. Panel leave-out gate 0.9022 index-exact over 3692 held-out texels, max 1 band; panel minimum 0.88 (39 bands in 83 texels), button gate unchanged.
+- Round trip: 3055 changed bytes, all inside declared rects; CLUT and size unchanged; probe supported; 139 other exports identical. Frames 0, 1, 3 and page 2 are byte-identical to v3.
+- Dates stay numeric 19YY/MM/DD: the month is a code-drawn number (`file_select_number_draw`), so an "Apr 4" form needs code or runtime work, not art.
+- Published `translations/en/graphics/artwork/checkpoints/T39004-filesel-v4/` (7 candidates, ledger sha256 3b472f74..., every row has `port_made` and `port_made_elements`; human_approved false). `translation_inventory.py` LEDGERS reads -v4 instead of -v3. Region map regenerated (only `year-prefix` stays kept-source).
+- Previews: `.asset-cache/art-finish-2026-10-30/filesel-movie-previews/filesel-*.x4.png` (original | English, nearest x4), all inspected.
+- Tests (Docker, tokimemo-recovery-splat): `test_translation_filesel_indexed` updated plus new guards (erased-box paper, right-shadow rule, tab interior, panel mask/ring/gate, residue removal). Not done: CODING_STANDARDS review, human approval.
+
 ## Comments
+
+### 2026-10-30 review fix: Erase spacing (art-finish worker v2)
+
+- Review finding: "Erase" filled its whole 40x16 button cell, with the outline against the left bevel. `layout_buttons` now uses the 2-texel letter gap only while `BUTTON_PAD` (3) clear texels remain on each side; otherwise it uses the font's 1-texel gap. Erase is now 29 wide (gap 1), and Copy, New and Load are unchanged (gap 2). Checkpoint `T39004-filesel-v4` was rebuilt in place: only frame 2 and page 0 changed, and the round trip changes 3020 bytes. A new test checks the gaps and padding. A review flag in `decisions/filesel.json` says a human may approve the tighter gap or choose Clear/Delete.

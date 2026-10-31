@@ -13,14 +13,15 @@ import translation_inventory
 
 SOURCES = subject.ROOT / '.asset-cache/translation-assets/original-filesel-v1'
 NBN, EXE = subject.NBN, subject.EXE
-PUBLISHED = subject.ROOT / 'translations/en/graphics/artwork/checkpoints/T39004-filesel-v3'
+PUBLISHED = subject.ROOT / 'translations/en/graphics/artwork/checkpoints/T39004-filesel-v4'
 REGIONS = subject.ROOT / 'translations/en/graphics/filesel_page_regions.json'
 DECISIONS = subject.ROOT / 'translations/en/graphics/decisions/filesel.json'
 EXPECTED_EDIT_REGIONS = {
     'filesel-frame-0.base': [[1, 1, 40, 16]], 'filesel-frame-1.base': [[4, 1, 40, 16]],
     'filesel-frame-2.base': [[1, 12, 40, 16]], 'filesel-frame-3.base': [[4, 12, 40, 16]],
-    'filesel-page-information-0': [[120, 45, 8, 11], [121, 61, 7, 11]],
-    'filesel-page-information-1': [[0, 45, 36, 11], [0, 61, 39, 11], [89, 28, 11, 11], [120, 28, 8, 11]],
+    'filesel-page-information-0': [[120, 45, 8, 11], [121, 61, 7, 11], [121, 77, 7, 11], [121, 95, 7, 11], [17, 88, 39, 11],
+                                   [17, 25, 40, 16], [60, 25, 40, 16], [17, 44, 40, 16], [60, 44, 40, 16]],
+    'filesel-page-information-1': [[0, 45, 36, 11], [0, 61, 39, 11], [89, 28, 11, 11], [120, 28, 8, 11], [0, 77, 37, 11], [0, 95, 59, 11]],
     'filesel-page-information-2': [[0, 28, 3, 11], [24, 28, 8, 11], [5, 95, 11, 11]],
 }
 
@@ -146,6 +147,33 @@ class SyntheticTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'built output changed'):
                 subject.publish(built, Path(directory) / 'published')
 
+    def test_right_shadow_and_panel_residue(self):
+        mask = np.zeros((3, 4), bool)
+        mask[1, 1:3] = True
+        self.assertEqual(np.argwhere(subject.right_shadow(mask)).tolist(), [[1, 3]])
+        interior = np.full((16, 40), 210)
+        interior[5, 5:8] = subject.CORE
+        ring = subject.dil8(interior == subject.CORE) & (interior != subject.CORE)
+        interior[ring] = subject.OUTLINE
+        interior[9, 20] = subject.OUTLINE  # off-rule extra, as on frame 2
+        cell = np.where(interior == subject.CORE, subject.PANEL_CORE, np.where(ring, subject.PANEL_OUTLINE, 100))
+        residue = subject.check_panel_cell(cell, interior, 2)
+        self.assertEqual(np.argwhere(residue).tolist(), [[9, 20]])
+        cell[5, 5] = 100
+        with self.assertRaisesRegex(ValueError, 'differs from button frame 2'):
+            subject.check_panel_cell(cell, interior, 2)
+
+    def test_compose_removes_declared_residue(self):
+        values = ramp()
+        truth = values.copy()
+        values[3, 3] = 99
+        known = values != 99
+        model = subject.fit_ramp(values, known)
+        empty = np.zeros(values.shape, bool)
+        result, provenance = subject.compose_button(values, model, {'core': empty, 'outline': empty}, residue=~known)
+        self.assertEqual(int(result[3, 3]), int(truth[3, 3]))
+        self.assertEqual(provenance[3][3], 'r')
+
     def test_outputs_must_be_new(self):
         with self.assertRaises(ValueError):
             subject.new_output(subject.ROOT / 'tools')
@@ -201,6 +229,16 @@ class OriginalDataTests(unittest.TestCase):
             glyphs = subject.word_mask(font, place['word'], place['gap'])
             self.assertTrue((place['core'][cy:cy + ch, cx:cx + cw] == glyphs[top:top + ch]).all())
 
+    def test_wide_spacing_only_with_clear_padding(self):
+        font = subject.NativeLatin(EXE)
+        placed = {p['word']: p for p in subject.layout_buttons(font, subject.BUTTON_WORDS)}
+        self.assertEqual({w: p['gap'] for w, p in placed.items()}, {'Copy': 2, 'New': 2, 'Erase': 1, 'Load': 2})
+        for word, place in placed.items():
+            columns = np.nonzero((place['core'] | place['outline']).any(axis=0))[0]
+            pad = subject.BUTTON_PAD if place['gap'] == 2 else 1
+            self.assertGreaterEqual(int(columns.min()), pad, word)
+            self.assertLessEqual(int(columns.max()), place['core'].shape[1] - 1 - pad, word)
+
     def test_leave_out_gate_and_round_trip(self):
         gate = self.manifest['leave_out_gate']
         self.assertGreaterEqual(gate['index_exact'], subject.GATE['min_exact'])
@@ -221,8 +259,8 @@ class OriginalDataTests(unittest.TestCase):
         return subject.edit_pages(montage, font, font.data, font.metadata)
 
     def test_round_trip_changes_exactly_the_declared_regions(self):
-        self.assertEqual(self.manifest['round_trip']['changed_bytes'], 1388)
-        self.assertEqual(self.verified, [1388])
+        self.assertEqual(self.manifest['round_trip']['changed_bytes'], 3020)
+        self.assertEqual(self.verified, [3020])
         self.assertEqual({row['id']: row['edit_regions'] for row in self.manifest['assets']}, EXPECTED_EDIT_REGIONS)
 
     def test_page_guards_reject_bad_montages(self):
@@ -252,8 +290,8 @@ class OriginalDataTests(unittest.TestCase):
         with mock.patch.object(subject, 'DIGIT_SPANS', [[ex, ey, 1, 12]]):
             with self.assertRaisesRegex(ValueError, 'code-drawn digit'):
                 self.edit(montage)
-        cover = {'id': 'probe', 'japanese': '', 'search': [ex, ey, ew, eh], 'ink': [subject.INK], 'matched_cells': [], 'reason': 'test'}
-        with mock.patch.object(subject, 'UNMATCHED', subject.UNMATCHED + [cover]):
+        cover = {'id': 'probe', 'search': [ex, ey, ew, eh], 'ink': [subject.INK], 'reason': 'test'}
+        with mock.patch.object(subject, 'KEPT', subject.KEPT + [cover]):
             with self.assertRaisesRegex(ValueError, 'unmatched region changed'):
                 self.edit(montage)
 
@@ -273,13 +311,13 @@ class OriginalDataTests(unittest.TestCase):
         cell[cell == paper] = other
         with self.assertRaisesRegex(ValueError, 'disagree on paper'):
             self.edit(second)
-        _, cx, cy = subject.UNMATCHED[0]['matched_cells'][0]
+        _, cx, cy = subject.ERASED[0]['matched_cells'][0]
         moved = montage.copy()
         moved[cy + 6, cx + 6] = subject.INK if moved[cy + 6, cx + 6] != subject.INK else paper
         with self.assertRaisesRegex(ValueError, 'partial glyph match moved'):
             self.edit(moved)
-        blank = {'id': 'blank', 'japanese': '', 'search': [0, 0, 1, 1], 'ink': [-1], 'matched_cells': [], 'reason': 'test'}
-        with mock.patch.object(subject, 'UNMATCHED', [blank]):
+        blank = dict(subject.ERASED[0], id='blank', search=[0, 0, 1, 1], ink=-1, matched_cells=[])
+        with mock.patch.object(subject, 'ERASED', [blank]):
             with self.assertRaisesRegex(ValueError, 'has no ink'):
                 self.edit(montage)
         with mock.patch.object(subject, 'font_reference', return_value={'status': 'missing'}):
@@ -326,26 +364,101 @@ class OriginalDataTests(unittest.TestCase):
         self.assertEqual([translation_inventory.candidate_key(e)[:3] for e in frames],
                          [('filesel-%04d' % f, 'FILESEL', f) for f in range(4)])
         pages = [e for e in entries if e['frame'] is None]
-        self.assertEqual([e['id'] for e in pages], ['filesel-page-information-2'])
-        self.assertEqual(translation_inventory.candidate_key(pages[0]),
-                         ('filesel-page-information-2', 'FILESEL', None, None))
+        self.assertEqual([e['id'] for e in pages], ['filesel-page-information-%d' % p for p in range(3)])
+        self.assertEqual([translation_inventory.candidate_key(p) for p in pages],
+                         [('filesel-page-information-%d' % p, 'FILESEL', None, None) for p in range(3)])
         self.assertIn(ledger, translation_inventory.LEDGERS)
+        self.assertNotIn(ledger.parent.parent / 'T39004-filesel-v3/ledger.json', translation_inventory.LEDGERS)
         proposal = json.loads(DECISIONS.read_text())
         overrides = json.loads(translation_inventory.DECISIONS.read_text())['atom_overrides']
         status = {item['id']: item['status'] for item in translation_inventory.build()['artwork_items']}
         for row in proposal['decisions']:
             self.assertEqual(overrides[row['item_id']]['status'], row['status'], row['item_id'])
             self.assertEqual(status[row['item_id']], row['status'], row['item_id'])
-        for item_id in ('filesel-0000', 'filesel-0001', 'filesel-0002', 'filesel-0003', 'filesel-page-information-2'):
+        for item_id in ['filesel-%04d' % f for f in range(4)] + ['filesel-page-information-%d' % p for p in range(3)]:
             self.assertEqual(status[item_id], 'candidate-only', item_id)
 
-    def test_partial_pages_are_not_published(self):
+    def test_every_page_is_complete_and_published(self):
         ledger = json.loads((PUBLISHED / 'ledger.json').read_text())
-        self.assertEqual(ledger['candidate_assets'], 5)
-        self.assertEqual(ledger['unpublished_partial_builds'], ['filesel-page-information-0', 'filesel-page-information-1'])
+        self.assertEqual(ledger['candidate_assets'], 7)
+        self.assertEqual(ledger['unpublished_partial_builds'], [])
+        self.assertEqual([r['status'] for r in self.regions['regions'] if r['status'] != 'candidate'], ['kept-source'])
         published = {p.name for p in (PUBLISHED / subject.REVISION).iterdir()}
-        self.assertNotIn('source-page-information-0.png', published)
-        self.assertNotIn('source-page-information-1.png', published)
+        for page in range(3):
+            self.assertIn('source-page-information-%d.png' % page, published)
+
+    def test_ledger_flags_port_made_elements(self):
+        ledger = {row['id']: row for row in json.loads((PUBLISHED / 'ledger.json').read_text())['assets']}
+        self.assertEqual({k: v['port_made'] for k, v in ledger.items()},
+                         {'filesel-frame-%d.base' % f: True for f in range(4)} | {
+                             'filesel-page-information-0': True, 'filesel-page-information-1': False,
+                             'filesel-page-information-2': False})
+        for row in ledger.values():
+            self.assertEqual(bool(row['port_made_elements']), row['port_made'], row['id'])
+            self.assertTrue(all(e['description'] for e in row['port_made_elements']), row['id'])
+            self.assertFalse(row['human_approved'])
+        self.assertEqual(sorted(e['element'] for e in ledger['filesel-page-information-0']['port_made_elements']),
+                         ['button-panel gradient', 'system-tab shadow'])
+
+    def test_button_words_and_panel_match_the_frames(self):
+        self.assertEqual(subject.BUTTON_WORDS, ('Copy', 'New', 'Erase', 'Load'))
+        panel = next(r for r in self.regions['regions'] if r['id'] == 'button-panel')
+        self.assertEqual([c['word'] for c in panel['cells']], list(subject.BUTTON_WORDS))
+        self.assertGreaterEqual(panel['leave_out_gate']['index_exact'], subject.PANEL_GATE['min_exact'])
+        self.assertLessEqual(panel['leave_out_gate']['max_band_error'], 1)
+        self.assertEqual(panel['cells'][2]['residue_removed'], [[20, 56], [20, 57]])
+        frames = {r['frame']: r for r in self.manifest['assets'] if r['frame'] is not None}
+        edited = np.asarray(Image.open(self.output / 'source-page-information-0.png').convert('RGBA'))
+        source = np.asarray(Image.open(SOURCES / 'filesel.source-page-information-0.png').convert('RGBA'))
+        for (x, y, frame), cell in zip(subject.PANEL_CELLS, panel['cells']):
+            core = np.array([[c == 'c' for c in row] for row in cell['provenance_rows']])
+            fx, fy = frames[frame]['edit_regions'][0][:2]
+            button = np.asarray(Image.open(self.output / frames[frame]['output']).convert('RGBA'))[fy:fy + 16, fx:fx + 40]
+            self.assertTrue((core == (button[..., :3] == (255, 255, 0)).all(axis=-1)).all(), frame)
+            kept = np.array([[c == 'k' for c in row] for row in cell['provenance_rows']])
+            self.assertTrue((edited[y:y + 16, x:x + 40][kept] == source[y:y + 16, x:x + 40][kept]).all(), frame)
+
+    def test_erased_label_guards(self):
+        _, montage = self.montage()
+        club = subject.ERASED[0]
+        x, y = club['matched_cells'][1][1:]
+        cell_glyph, _ = subject.glyph_bitmap(EXE.read_bytes(), subject.NativeLatin(EXE).metadata, club['matched_cells'][1][0])
+        mixed = montage.copy()
+        py, px = map(int, np.argwhere(~cell_glyph)[0])
+        mixed[y + py, x + px] = 200
+        with self.assertRaisesRegex(ValueError, 'no single paper'):
+            self.edit(mixed)
+        tab = next(i for i in subject.ERASED if i['id'] == 'system-tab')
+        sx, sy, sw, sh = tab['search']
+        ys, xs = np.nonzero(montage[sy:sy + sh, sx:sx + sw] == tab['shadow'])
+        broken = montage.copy()
+        broken[sy + ys[0], sx + xs[0]] = tab['ink']
+        with self.assertRaisesRegex(ValueError, 'right-shadow rule'):
+            self.edit(broken)
+        with mock.patch.object(subject, 'TAB_INTERIOR', [17, 85, 30, 16]):
+            with self.assertRaisesRegex(ValueError, 'leaves the tab interior'):
+                self.edit(montage)
+
+    def test_panel_guards(self):
+        data = NBN.read_bytes()
+        frames = subject.packs._parse(data)
+        _, interiors = subject.button_interiors(data, frames)
+        font = subject.NativeLatin(EXE)
+        placed = subject.layout_buttons(font, subject.BUTTON_WORDS)
+        _, montage = self.montage()
+        x, y, frame = subject.PANEL_CELLS[1]
+        ys, xs = np.nonzero(montage[y:y + 16, x:x + 40] == subject.PANEL_CORE)
+        moved = montage.copy()
+        moved[y + ys[0], x + xs[0]] = subject.PANEL_OUTLINE
+        with self.assertRaisesRegex(ValueError, 'differs from button frame 1'):
+            subject.reletter_panel(montage.copy(), moved, interiors, placed)
+        ring = montage.copy()
+        ring[y - 1, x + 5] = subject.PANEL_CORE
+        with self.assertRaisesRegex(ValueError, 'touches the cell border'):
+            subject.reletter_panel(montage.copy(), ring, interiors, placed)
+        with mock.patch.object(subject, 'PANEL_GATE', dict(subject.PANEL_GATE, min_exact=0.99)):
+            with self.assertRaisesRegex(ValueError, 'gate failed'):
+                subject.reletter_panel(montage.copy(), montage, interiors, placed)
 
     def test_region_map_is_committed_and_below_row_120(self):
         self.assertEqual(REGIONS.read_bytes(), subject.encoded(self.regions) + b'\n')

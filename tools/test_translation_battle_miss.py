@@ -4,13 +4,14 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 
 from PIL import Image
 
 import translation_battle_drafts as subject
 
 DISC = subject.ROOT / 'disc/files'
-CHECKPOINT = subject.ROOT / 'translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1'
+CHECKPOINT = subject.ROOT / 'translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2'
 
 
 class Font:
@@ -82,6 +83,18 @@ class ComposeTests(unittest.TestCase):
         self.assertEqual(glyph['rect'], [10, 10, 3, 5])
         self.assertEqual(len(glyph['points']), 11)
 
+    def test_port_made_glyph_is_a_checked_five_row_mask(self):
+        glyph = subject.port_made_glyph('M')
+        self.assertEqual((glyph['width'], glyph['height'], glyph['port_made']), (5, 5, True))
+        self.assertEqual(len(glyph['points']), 13)
+        result = subject.compose_miss(synthetic_region(), type('F', (), {
+            'height': 5, 'glyph': staticmethod(lambda c: glyph), 'width': staticmethod(lambda t: 5)})(), 0x10, 0x12, text='M')
+        self.assertEqual(len(subject.index_points(result, 0x10)), 13)
+        for bad in (('#...#',) * 4, ('#..#', '#...#', '#...#', '#...#', '#...#'), ('#.x.#',) * 5):
+            with mock.patch.dict(subject.PORT_MADE_GLYPHS, {'M': dict(subject.PORT_MADE_GLYPHS['M'], rows=bad)}):
+                with self.assertRaisesRegex(ValueError, 'not a 5-row mask'):
+                    subject.port_made_glyph('M')
+
     def test_altered_mask_or_dirty_gutter_is_rejected(self):
         rows = subject.COMPACT_GLYPHS['M'][2]
         altered = sheet_with(rows, 10, 10)
@@ -143,11 +156,27 @@ class OriginalDataTests(unittest.TestCase):
         self.assertEqual(provenance['sheet_sha256'], subject.COMPACT_SHEET_SHA)
         self.assertEqual(provenance['referenced_by']['frame'], 118)
         self.assertEqual({c: g['rect'] for c, g in provenance['glyphs'].items()},
-                         {'I': [37, 21, 1, 5], 'M': [17, 21, 3, 5], 'S': [78, 21, 3, 5]})
+                         {'I': [37, 21, 1, 5], 'S': [78, 21, 3, 5]})
+        self.assertEqual(provenance['verified_unused']['M']['rect'], [17, 21, 3, 5])
+        self.assertEqual(provenance['port_made']['M']['rows'], list(subject.PORT_MADE_GLYPHS['M']['rows']))
         self.assertEqual(self.manifest['hp_reference']['hand_placed_shadow_pixels'], 2)
         for container in self.manifest['containers']:
             self.assertNotEqual(container['patched_sha256'], container['source_sha256'])
             self.assertLessEqual(container['changed_bytes'], 256)
+
+    def test_port_made_m_is_drawn_and_flagged(self):
+        rows = subject.PORT_MADE_GLYPHS['M']['rows']
+        for record in self.manifest['assets']:
+            self.assertTrue(record['port_made'])
+            self.assertEqual([e['element'] for e in record['port_made_elements']], ['glyph M'])
+            self.assertEqual([g['port_made'] for g in record['glyph_provenance']], [True, False, False, False])
+            draft = Image.open(self.output / record['output']).convert('RGBA')
+            ink = sorted(set(draft.getdata()) - {(0, 0, 0, 0)}, key=lambda c: sum(c[:3]))[-1]
+            m = [''.join('#' if draft.getpixel((x, y)) == ink else '.' for x in range(5)) for y in range(2, 7)]
+            self.assertEqual(m, list(rows), record['id'])
+        if CHECKPOINT.exists():
+            ledger = json.loads((CHECKPOINT / 'ledger.json').read_text())
+            self.assertTrue(all(r['port_made'] and r['port_made_elements'] for r in ledger['assets']))
 
     def test_review_is_separate_and_not_approval(self):
         review_bytes = (self.output / 'review.agent.json').read_bytes()
@@ -175,7 +204,7 @@ class OriginalDataTests(unittest.TestCase):
         subject.shutil.copytree(self.output, built)
         record = self.manifest['assets'][0]
         image = Image.open(built / record['output']).convert('RGBA')
-        image.putpixel((0, 0), image.getpixel((2, 6)))
+        image.putpixel((0, 0), image.getpixel((0, 6)))  # (0, 6) is M ink, (0, 0) is empty
         image.save(built / record['output'])
         target = CHECKPOINT.parent / ('test-refused-' + Path(self.temp.name).name)
         with self.assertRaisesRegex(ValueError, 'changed'):
@@ -255,7 +284,7 @@ class OriginalDataTests(unittest.TestCase):
         patched, letters = subject.letter_container(data, parsed, font)
         rows = [(l['frame'], l['u'], l['v'], l['lettered'], subject.rgba(l['lettered'], parsed['palette']))
                 for l in letters]
-        self.assertEqual(subject.verify_patch(name, data, parsed, patched, rows)['changed_bytes'], 146)
+        self.assertEqual(subject.verify_patch(name, data, parsed, patched, rows)['changed_bytes'], 140)
         stray = bytearray(patched)
         stray[parsed['page_offset']] ^= 1  # page pixel u0 v0, away from both rectangles
         with self.assertRaisesRegex(ValueError, 'outside the Miss rectangles'):

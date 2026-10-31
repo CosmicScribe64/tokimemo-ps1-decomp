@@ -43,10 +43,13 @@ INVENTORY = GRAPHICS / 'translation_inventory.json'
 LEDGERS = [SNAPSHOT / 'checkpoints/T39004-2026-10-29/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-pass2/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-pass3/ledger.json',
-           SNAPSHOT / 'checkpoints/T39004-battle-miss-v1/ledger.json',
-           SNAPSHOT / 'checkpoints/T39004-filesel-v3/ledger.json',
+           SNAPSHOT / 'checkpoints/T39004-battle-miss-v2/ledger.json',
+           SNAPSHOT / 'checkpoints/T39004-filesel-v4/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-bs-v1/ledger.json',
-           SNAPSHOT / 'checkpoints/T39004-date-panel-v1/ledger.json']
+           SNAPSHOT / 'checkpoints/T39004-date-panel-v1/ledger.json',
+           SNAPSHOT / 'checkpoints/T39004-movie-pills-v1/ledger.json']
+# Superseded checkpoints stay on disk as history but are not read:
+# T39004-battle-miss-v1 (3-wide M) by -v2, T39004-filesel-v3 (Clear, partial pages) by -v4.
 TEXT_MAIN = ROOT / 'translations/en/returned-v3.jsonl'
 TEXT_SUPP = ROOT / 'translations/en/supplemental.jsonl'
 TEXT_MANIFEST = ROOT / 'translations/en/manifest.json'
@@ -168,6 +171,8 @@ def candidate_key(entry):
     m = re.fullmatch(r'vs_(habu|kuma|robo|sika|ufo)-miss-(\d)', cid)
     if m:
         return 'battle-%s-miss-%s' % (m[1], m[2]), 'BATTLE', None, None
+    if re.fullmatch(r'openxa-pill-[a-z]+(?:-[a-z]+)*', cid):
+        return 'catalog-153', None, None, None
     if re.fullmatch(r'catalog-\d{3}', entry.get('catalog_item', '')):
         return entry['catalog_item'], None, None, None
     m = re.fullmatch(r'(kasetu|ninsetu|spsetu|tasetu)-(\d)', cid)
@@ -269,7 +274,11 @@ def split_superseded(entries, ledgers=None):
         if not path.exists():
             continue
         by = str(path.relative_to(ROOT)) if path.resolve().is_relative_to(ROOT) else path.name
-        for ref in load_json(path).get('supersedes', []):
+        refs = load_json(path).get('supersedes', [])
+        if isinstance(refs, str):
+            # A whole-ledger note: the older ledger is left out of LEDGERS.
+            continue
+        for ref in refs:
             key = (ref['ledger'], ref['id'], ref['revision'])
             if key in replaced:
                 raise ValueError('candidate superseded twice: %s' % (key,))

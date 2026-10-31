@@ -3,8 +3,11 @@
 
 T-39010 adds the 16x8 Miss regions (frames 64/65 part 0). They are too small
 for the twelve-row executable font, so they are lettered from the compact
-5-row capitals of an original MAINROM sheet (see CompactLatin). The letters
-are copied mask for mask: no scaling, no clipping, no added pixels.
+5-row capitals of an original MAINROM sheet (see CompactLatin). I and S are
+copied mask for mask: no scaling, no clipping, no added pixels. The only
+original M is 3 wide and makes MISS read as HISS, so M is a port-made 5-wide
+capital in the same 1-px, 5-row face (PORT_MADE_GLYPHS, user decision
+2026-10-30); every output records it as port-made.
 """
 import argparse
 import json
@@ -109,6 +112,15 @@ COMPACT_GLYPHS = {
     'I': (37, 21, ('#', '#', '#', '#', '#')),
     'S': (78, 21, ('###', '#..', '###', '..#', '###')),
 }
+# Port-made capitals (user decision 2026-10-30: create lettering in the game's
+# own style where no usable original glyph exists). Same 5 rows and 1-px stems
+# as the pinned I and S; the diagonals meet in the middle column.
+PORT_MADE_GLYPHS = {
+    'M': {'rows': ('#...#', '##.##', '#.#.#', '#...#', '#...#'),
+          'replaces': 'original 3-wide M (MAINROM sheet 0x16000 x17 y21), which reads as H at native size',
+          'description': 'port-made 5-wide compact capital M: 1-px stems, 1-px diagonals meeting at row 2, '
+                         '5 rows like the original I and S; drawn with the region ink and the pure (+1,+1) shadow'},
+}
 MISS_TEXT = 'MISS'
 MISS_SIZE = (16, 8)
 # frame: (page u, page v, ink index, shadow index, sha256 of the 16x8 source indices).
@@ -121,7 +133,7 @@ MISS_FRAMES = {
 HP_REFERENCE = (8, 96, 56, 0x10, 0x12, '1cc2921660aa57e8ab328bda93e9f247e4e26730053cd520846c1ddee5a5758f', 2)
 # Same two 16x8 index blocks, outside PROFILES; a scope question, not drafted.
 UNPROFILED_CONTAINERS = ('PARK.BIN', 'UTYU.BIN', 'VS_PARK.BIN', 'VS_UTYU.BIN')
-MISS_REVISION = 'battle-miss-drafts-v1'
+MISS_REVISION = 'battle-miss-drafts-v2'
 
 
 def extract_glyph(pixels, x, y, rows):
@@ -138,8 +150,21 @@ def extract_glyph(pixels, x, y, rows):
             'width': width, 'height': height, 'rect': [x, y, width, height], 'mask_sha256': digest(mask)}
 
 
+def port_made_glyph(character):
+    rows = PORT_MADE_GLYPHS[character]['rows']
+    if len(rows) != 5 or len({len(r) for r in rows}) != 1 or set(''.join(rows)) - {'#', '.'}:
+        raise ValueError('port-made glyph is not a 5-row mask: ' + character)
+    return {'points': [(x, y) for y, row in enumerate(rows) for x, cell in enumerate(row) if cell == '#'],
+            'width': len(rows[0]), 'height': 5, 'port_made': True, 'rows': list(rows),
+            'mask_sha256': digest('\n'.join(rows).encode())}
+
+
 class CompactLatin:
-    """Pinned 5-row capitals from original MAINROM disc art."""
+    """Pinned 5-row capitals from original MAINROM disc art, plus declared port-made capitals.
+
+    Every original glyph, including the replaced 3-wide M, is still extracted
+    and verified, so the sheet identity and gutters stay pinned.
+    """
 
     def __init__(self, mainrom):
         data = Path(mainrom).read_bytes()
@@ -149,11 +174,20 @@ class CompactLatin:
         if digest(sheet) != COMPACT_SHEET_SHA:
             raise ValueError('compact sheet identity differs')
         pixels = [nibble for byte in sheet for nibble in (byte & 15, byte >> 4)]
-        self.glyphs = {c: extract_glyph(pixels, x, y, rows) for c, (x, y, rows) in COMPACT_GLYPHS.items()}
+        self.originals = {c: extract_glyph(pixels, x, y, rows) for c, (x, y, rows) in COMPACT_GLYPHS.items()}
+        self.port_made = {c: port_made_glyph(c) for c in PORT_MADE_GLYPHS}
+        self.glyphs = dict(self.originals, **self.port_made)
         self.height = 5
 
     def glyph(self, character):
         return self.glyphs[character]
+
+    def glyph_record(self, character):
+        glyph = self.glyphs[character]
+        if glyph.get('port_made'):
+            return {'letter': character, 'port_made': True, 'rows': glyph['rows'], 'mask_sha256': glyph['mask_sha256'],
+                    'description': PORT_MADE_GLYPHS[character]['description']}
+        return {'letter': character, 'port_made': False, 'rect': glyph['rect'], 'mask_sha256': glyph['mask_sha256']}
 
     def width(self, text):
         return sum(self.glyphs[c]['width'] for c in text) + len(text) - 1
@@ -165,7 +199,13 @@ class CompactLatin:
                 'wording': 'original disc art referenced by MAINROM frame 118 part 19; on-screen use not proven',
                 'rescaled': False, 'derived_from_executable_font': False,
                 'glyphs': {c: {'rect': g['rect'], 'mask_sha256': g['mask_sha256']}
-                           for c, g in sorted(self.glyphs.items())}}
+                           for c, g in sorted(self.originals.items()) if c not in self.port_made},
+                'verified_unused': {c: {'rect': g['rect'], 'mask_sha256': g['mask_sha256'],
+                                        'reason': PORT_MADE_GLYPHS[c]['replaces']}
+                                    for c, g in sorted(self.originals.items()) if c in self.port_made},
+                'port_made': {c: {'rows': g['rows'], 'mask_sha256': g['mask_sha256'],
+                                  'description': PORT_MADE_GLYPHS[c]['description']}
+                              for c, g in sorted(self.port_made.items())}}
 
 
 def diagonal(points):
@@ -261,6 +301,7 @@ def letter_container(data, parsed, font):
 def build_miss(input_dir, mainrom, output):
     output = new_output(output)
     font = CompactLatin(mainrom)
+    made = sorted({c for c in MISS_TEXT if font.glyph(c).get('port_made')})
     prepared, comparisons, containers, hp = [], [], [], None
     for name in PROFILES:
         data = (input_dir / name).read_bytes()
@@ -285,8 +326,10 @@ def build_miss(input_dir, mainrom, output):
                 'ink_index': ink, 'shadow_index': shadow, 'shadow_rule': 'pure (+1,+1) diagonal',
                 'source_indices_sha256': expected, 'output_indices_sha256': digest(bytes(lettered)),
                 'source_record_offset': part['source_record_offset'],
-                'glyph_provenance': [{'letter': c, 'rect': font.glyph(c)['rect'],
-                                      'mask_sha256': font.glyph(c)['mask_sha256']} for c in MISS_TEXT],
+                'glyph_provenance': [font.glyph_record(c) for c in MISS_TEXT],
+                'port_made': bool(made),
+                'port_made_elements': [{'element': 'glyph ' + c, 'description': PORT_MADE_GLYPHS[c]['description']}
+                                       for c in made],
                 'rescaled': False, 'derived_from_executable_font': False,
                 'original': asset_id + '.original.png', 'output': asset_id + '.png',
                 'style': 'unreviewed', 'human_approved': False,
@@ -339,13 +382,13 @@ def agent_review(assets):
     """Agent observations kept apart from approval; never a human decision."""
     return {'schema': 'tokimemo.battle-miss-agent-review.v1', 'ticket': 'T-39010',
             'reviewer': 'agent', 'human_approval': False, 'development_only': True,
-            'checks': ['letter masks equal pinned original MAINROM masks with clean gutters',
+            'checks': ['I and S masks equal pinned original MAINROM masks with clean gutters; M is the declared port-made mask',
                        'only the region ink and shadow indices are used; non-lettering is index 0',
                        'shadow equals the (+1,+1) diagonal of the ink minus the ink',
                        'patched containers re-parse with identical tables and palette'],
-            'observations': ['The only verified compact M is 3 wide (#.#/###/#.#/#.#/#.#); at native size MISS may read as HISS.',
-                             'That M is authentic: it is the first letter of the logo word MEMORIAL on the same sheet line '
-                             '(M x17, E x21, M x25, O x29, R x33, I x37, A x39, L x43), so the original art draws M this way.',
+            'observations': ['The only verified compact M is 3 wide (#.#/###/#.#/#.#/#.#) and made MISS read as HISS; '
+                             'v2 uses a port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#), recorded per asset.',
+                             'MISS now fills the 16-texel width: 15 ink columns plus the shadow column.',
                              'The dim frame-65 draft (ink 0xEE over shadow 0xEF) has lower contrast than frame 64.',
                              'The face is 5 ink rows in a slot whose original lettering uses 6.',
                              'Uppercase only: the source face has no lowercase, so MISS replaces the catalog Miss.',
@@ -379,12 +422,13 @@ def publish_miss(built, destination):
             raise ValueError('built output is not a derivative: ' + row['id'])
         staged.append((path, row['output']))
         assets.append({'id': row['id'], 'item_id': row['item_id'], 'revision': MISS_REVISION,
+                       'port_made': row['port_made'], 'port_made_elements': row['port_made_elements'],
                        'path': MISS_REVISION + '/' + row['output'], 'output_sha256': sha,
                        'dimensions': dimensions, 'frame': row['frame'],
                        'source_png_sha256': row['source_png_sha256'],
                        'source_container_sha256': row['source_container_sha256'],
                        'manifest_sha256': digest(manifest_bytes), 'status': 'draft', 'human_approved': False,
-                       'reason': 'Candidate Miss lettering from original compact capitals; style, '
+                       'reason': 'Candidate Miss lettering: original compact I and S, port-made 5-wide M; style, '
                                  'readability and in-game acceptance remain open human decisions.'})
     (destination / MISS_REVISION).mkdir(parents=True)
     for source, target in staged:
@@ -392,6 +436,7 @@ def publish_miss(built, destination):
     (destination / 'ledger.json').write_bytes(encoded({
         'schema': 'tokimemo.translation-checkpoint.v1', 'ticket': 'T-39004', 'subticket': 'T-39010',
         'assets': assets, 'candidate_assets': len(assets), 'original_images_included': False,
+        'supersedes': 'T39004-battle-miss-v1 (original 3-wide M)',
         'complete_translation_inventory': False, 'separate_reviewed_revisions': 0,
         'publication_authorization': 'User explicitly requested translated assets in repository, 2026-10-29.'}) + b'\n')
     return {'destination': str(destination), 'assets': len(assets)}

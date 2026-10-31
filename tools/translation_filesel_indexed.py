@@ -36,7 +36,7 @@ from tools.assets import image_packs_filesel as packs
 from tools.assets.text_font import font_reference
 
 SOURCE_SHA = '1a0e42ade6320df564cdb1017f73ba05083394c1974d3bc7a4af21618725e2a6'
-REVISION = 'filesel-indexed-v3'
+REVISION = 'filesel-indexed-v4'
 NBN = ROOT / 'disc/files/CDROM/FUKUTEST/FILESEL.NBN'
 EXE = ROOT / 'disc/files/SLPM_86.053'
 CLUT_OFFSETS = (0x22000, 0x22200)
@@ -44,10 +44,15 @@ CORE, OUTLINE = 177, 178
 BEVEL = frozenset((0, 176, 189, 217, 218, 220))
 GRADIENT = frozenset((147, 161) + tuple(range(195, 217)))
 # Source order of frames 0-3 (verified against the button lettering); wording
-# from the translator catalog rows 99-102 (revisable default, see the ticket).
-BUTTON_WORDS = ('Copy', 'New', 'Clear', 'Load')
+# from catalog rows 99-102 with Erase for frame 2 (user default 2026-10-30,
+# revisable; v3 used Clear).
+BUTTON_WORDS = ('Copy', 'New', 'Erase', 'Load')
+BUTTON_PAD = 3  # clear texels between a 2-gap word's outline and the button interior edge
 SLOPES = range(0, 301)  # half-plane slope n/100 for p = 100*x + n*y
 GATE = {'min_exact': 0.93, 'max_band_error': 1, 'max_slope_spread': 5, 'shifts': (-3, 0, 3)}
+# The page panel packs 39 bands into 83 texels (2-3 texels per band), so exact
+# hits are rarer than on the buttons; the band error bound stays at 1.
+PANEL_GATE = dict(GATE, min_exact=0.88)
 
 PAGE_OFFSET, PAGE_SIZE, PAGE_SIDE, MAP_ROWS = 0x24000, 0x4000, 128, 120
 INK = 2
@@ -73,16 +78,26 @@ MATCHED = [
     {'id': 'date-day-suffix', 'japanese': '日', 'cells': [('日', 279, 28)], 'english': '', 'mode': 'cell'},
     {'id': 'clear-count-suffix', 'japanese': '人', 'cells': [('人', 261, 95)], 'english': '', 'mode': 'cell'},
 ]
-UNMATCHED = [
-    {'id': 'club', 'japanese': '所属部', 'search': [118, 75, 52, 14], 'ink': [INK], 'matched_cells': [('所', 121, 77), ('属', 137, 77)],
-     'reason': 'the third glyph has no exact native-font match, so the label region is not exact glyph-matched'},
-    {'id': 'clear-count-label', 'japanese': 'クリア人数', 'search': [118, 93, 50, 14], 'ink': [INK], 'matched_cells': [('数', 155, 95)],
-     'reason': 'only the last glyph is an exact native-font match; the katakana are hand-drawn'},
-    {'id': 'system-tab', 'japanese': 'システム', 'search': [14, 86, 40, 16], 'ink': [219, 134], 'matched_cells': [],
-     'reason': 'hand-drawn blue lettering with shadow; no native-font match'},
-    {'id': 'button-panel', 'japanese': 'コピー/ニュー/クリア/ロード', 'search': [14, 20, 92, 44], 'ink': [58, 166], 'matched_cells': [],
-     'reason': 'outlined lettering on a gradient, not native-font glyphs; default builds page candidates only for exact glyph-matched cells'},
+# Labels without an exact native-font match (user decision 2026-10-30: finish
+# by erasing and relettering). Every ink texel inside the label's ink box is
+# returned to the box's single paper index; the matched cells stay a fail-closed
+# witness that the label has not moved. 'shadow' is the source right-shadow
+# index: shadow == ink shifted one texel right, minus ink (checked on the source).
+ERASED = [
+    {'id': 'club', 'japanese': '所属部', 'search': [118, 75, 52, 14], 'ink': INK, 'shadow': None, 'english': 'Club', 'top': 77,
+     'matched_cells': [('所', 121, 77), ('属', 137, 77)], 'match': 'partial'},
+    {'id': 'clear-count-label', 'japanese': 'クリア人数', 'search': [118, 93, 50, 14], 'ink': INK, 'shadow': None,
+     'english': 'Girls Cleared', 'top': 95, 'matched_cells': [('数', 155, 95)], 'match': 'partial'},
+    {'id': 'system-tab', 'japanese': 'システム', 'search': [14, 86, 40, 16], 'ink': 219, 'shadow': 134, 'english': 'System', 'top': 88,
+     'matched_cells': [], 'match': 'none'},
 ]
+# The page-0 button panel repeats frames 0-3: four 40x16 interiors whose
+# lettering masks equal the button frames' (checked), on one continuous
+# gradient in other indices. [montage x, y, button frame].
+PANEL_CELLS = ((17, 25, 0), (60, 25, 1), (17, 44, 2), (60, 44, 3))
+PANEL_ORIGINS = tuple((x - PANEL_CELLS[0][0], y - PANEL_CELLS[0][1]) for x, y, _ in PANEL_CELLS)
+PANEL_CORE, PANEL_OUTLINE = 166, 58
+TAB_INTERIOR = [17, 85, 59, 16]  # white system tab, page 0; the new word must stay inside
 KEPT = [{'id': 'year-prefix', 'search': [180, 26, 20, 16], 'ink': [INK], 'reason': 'baked numerals, kept as source'}]
 
 
@@ -140,16 +155,16 @@ def predict(model, ys, xs):
     return rank, [model['order'][r] for r in rank.tolist()]
 
 
-def leave_out(interiors):
+def leave_out(interiors, letters=(CORE, OUTLINE)):
     """Mask each button with the other buttons' lettering masks shifted by GATE shifts."""
     total = exact = worst = 0
     for i, values in enumerate(interiors):
-        known = ~np.isin(values, (CORE, OUTLINE))
+        known = ~np.isin(values, letters)
         for j, other in enumerate(interiors):
             if i == j:
                 continue
             for shift in GATE['shifts']:
-                held = np.roll(np.isin(other, (CORE, OUTLINE)), shift, axis=1)
+                held = np.roll(np.isin(other, letters), shift, axis=1)
                 if shift > 0:
                     held[:, :shift] = False
                 elif shift < 0:
@@ -186,9 +201,11 @@ def layout_buttons(font, words, height=16, width=40):
     y0 = (height - (bottom - top + 3)) // 2 + 1 - top
     placed = []
     for word in words:
-        for gap in (2, 1):
+        # Wide spacing only while the outlined word keeps BUTTON_PAD clear texels
+        # each side; otherwise the font's own 1-texel spacing (Erase).
+        for gap, pad in ((2, BUTTON_PAD), (1, 0)):
             mask = word_mask(font, word, gap)
-            if mask.shape[1] + 2 <= width:
+            if mask.shape[1] + 2 + 2 * pad <= width:
                 break
         else:
             raise ValueError('button word does not fit without scaling: ' + word)
@@ -210,13 +227,16 @@ def outline_deviation(values):
     return {'missing_from_source': as_list(rule & ~source), 'extra_in_source': as_list(source & ~rule)}
 
 
-def compose_button(values, model, placed):
+def compose_button(values, model, placed, core=CORE, outline=OUTLINE, residue=None):
     """New interior: kept source, reconstructed former strokes, then new lettering.
 
-    Only removed-stroke and new-lettering texels are written, so kept texels and
-    the index set (ramp bands come from known texels) cannot change by construction.
+    Only removed-stroke (plus declared residue) and new-lettering texels are
+    written, so kept texels and the index set (ramp bands come from known
+    texels) cannot change by construction.
     """
-    removed = np.isin(values, (CORE, OUTLINE))
+    removed = np.isin(values, (core, outline))
+    if residue is not None:
+        removed |= residue
     result = values.copy()
     provenance = np.full(values.shape, 'k')
     lettering = placed['core'] | placed['outline']
@@ -225,9 +245,9 @@ def compose_button(values, model, placed):
     for y, x, index in zip(ys.tolist(), xs.tolist(), indices):
         result[y, x] = index
         provenance[y, x] = 'r'
-    result[placed['outline']] = OUTLINE
+    result[placed['outline']] = outline
     provenance[placed['outline']] = 'o'
-    result[placed['core']] = CORE
+    result[placed['core']] = core
     provenance[placed['core']] = 'c'
     return result, [''.join(row) for row in provenance.tolist()]
 
@@ -285,8 +305,175 @@ def bbox(mask, left=0, top=0):
     return [int(xs.min()) + left, int(ys.min()) + top, int(xs.max() - xs.min()) + 1, int(ys.max() - ys.min()) + 1]
 
 
-def edit_pages(montage, font, exe, metadata):
-    """Erase matched glyph ink to the cell paper and place NativeLatin; returns regions."""
+def right_shadow(mask):
+    shifted = np.zeros_like(mask)
+    shifted[:, 1:] = mask[:, :-1]
+    return shifted & ~mask
+
+
+def check_clear_of_digits(drawn, label_id, dynamic=True):
+    columns = np.nonzero(drawn.any(axis=0))[0]
+    if dynamic and columns.max() >= DYNAMIC_STRING_LEFT:
+        raise ValueError('label reaches the dynamic string x: ' + label_id)
+    for left, top, width, height in DIGIT_SPANS:
+        if drawn[top:top + height, left:left + width].any():
+            raise ValueError('lettering overlaps a code-drawn digit: ' + label_id)
+
+
+def reletter(result, montage, font, item):
+    """Erase every ink (and shadow) texel of an unmatched label to its single paper, then draw NativeLatin.
+
+    The new word starts at the old ink's left edge with its cell top at item['top'].
+    """
+    x, y, width, height = item['search']
+    inks = [item['ink']] + ([item['shadow']] if item['shadow'] is not None else [])
+    box = montage[y:y + height, x:x + width]
+    rect = bbox(np.isin(box, inks), x, y)
+    if rect is None:
+        raise ValueError('label region has no ink: ' + item['id'])
+    rx, ry, rw, rh = rect
+    area = montage[ry:ry + rh, rx:rx + rw]
+    papers = set(area[~np.isin(area, inks)].tolist())
+    if len(papers) != 1:
+        raise ValueError('label ink box has no single paper index: ' + item['id'])
+    paper = papers.pop()
+    ink = area == item['ink']
+    if item['shadow'] is not None and not ((area == item['shadow']) == right_shadow(ink)).all():
+        raise ValueError('source shadow differs from the right-shadow rule: ' + item['id'])
+    erased = np.zeros(montage.shape, bool)
+    erased[ry:ry + rh, rx:rx + rw] = np.isin(area, inks)
+    out = result.copy()
+    out[erased] = paper
+    mask = word_mask(font, item['english'], 1)
+    drawn = np.zeros(montage.shape, bool)
+    drawn[item['top']:item['top'] + 12, rx:rx + mask.shape[1]] = mask
+    shadow = right_shadow(drawn) if item['shadow'] is not None else np.zeros(montage.shape, bool)
+    touched = drawn | shadow
+    if (out[touched] != paper).any():
+        raise ValueError('replacement touches non-paper texels: ' + item['id'])
+    if item['id'] == 'system-tab':
+        tx, ty, tw, th = TAB_INTERIOR
+        inside_tab = np.zeros(montage.shape, bool)
+        inside_tab[ty:ty + th, tx:tx + tw] = True
+        if (touched & ~inside_tab).any():
+            raise ValueError('system tab word leaves the tab interior')
+    check_clear_of_digits(touched, item['id'])
+    out[drawn] = item['ink']
+    out[shadow] = item['shadow'] if item['shadow'] is not None else paper
+    full = bbox(erased | touched)
+    return out, {'id': item['id'], 'japanese': item['japanese'], 'english': item['english'], 'status': 'candidate',
+                 'match': item['match'], 'method': 'erase ink box to paper, NativeLatin word' +
+                 (' with the source right-shadow rule' if item['shadow'] is not None else ''),
+                 'paper_index': int(paper), 'ink_index': item['ink'], 'shadow_index': item['shadow'],
+                 'source_ink_rect': rect, 'montage_rect': full, 'page_rects': split_montage(full),
+                 'english_rect': bbox(touched), 'letter_gap': 1,
+                 'port_made_elements': ([{'element': 'system-tab shadow',
+                                          'description': 'shadow index %d placed one texel right of the native-font word, '
+                                                         'the rule the source katakana follow exactly' % item['shadow']}]
+                                        if item['shadow'] is not None else [])}
+
+
+def check_panel_cell(cell, interior, frame):
+    """Core masks equal; outlines equal except the frame's own off-rule extras.
+
+    Returns the residue: texels where the frame has an off-rule outline extra
+    (frame 2 has two). On the panel they hold a dark stroke index instead of the
+    outline, so they belong to the old lettering and are removed with it.
+    """
+    frame_core = interior == CORE
+    extras = (interior == OUTLINE) & ~(dil8(frame_core) & ~frame_core)
+    if not ((cell == PANEL_CORE) == frame_core).all() or \
+            (((cell == PANEL_OUTLINE) != (interior == OUTLINE)) & ~extras).any():
+        raise ValueError('panel cell lettering differs from button frame %d' % frame)
+    return extras & (cell != PANEL_OUTLINE)
+
+
+def panel_leave_out(panel, cells, lettering):
+    """Joint-ramp gate: hide each cell's known texels under the other cells' lettering (shifted) and predict them."""
+    known = cells & ~lettering
+    total = exact = worst = 0
+    for i, (xi, yi) in enumerate(PANEL_ORIGINS):
+        for j, (xj, yj) in enumerate(PANEL_ORIGINS):
+            if i == j:
+                continue
+            for shift in GATE['shifts']:
+                mask = np.roll(lettering[yj:yj + 16, xj:xj + 40], shift, axis=1)
+                if shift > 0:
+                    mask[:, :shift] = False
+                elif shift < 0:
+                    mask[:, shift:] = False
+                held = np.zeros(panel.shape, bool)
+                held[yi:yi + 16, xi:xi + 40] = mask
+                held &= known
+                model = fit_ramp(panel, known & ~held)
+                ys, xs = np.nonzero(held)
+                rank, _ = predict(model, xs=xs, ys=ys)
+                truth = np.array([model['order'].index(v) if v in model['order'] else -99 for v in panel[ys, xs].tolist()])
+                total += len(ys)
+                exact += int((rank == truth).sum())
+                worst = max(worst, int(np.abs(rank - truth).max()) if len(ys) else 0)
+    return {'held_out_texels': total, 'index_exact': round(exact / total, 6), 'max_band_error': worst}
+
+
+def reletter_panel(result, montage, interiors, placed):
+    """Page-0 button panel: the button-frame layouts in the panel's indices over one jointly fitted ramp.
+
+    The panel is one continuous diagonal gradient across its four cells, so the
+    ramp is fitted on the known texels of all four cells in montage coordinates.
+    """
+    left, top = PANEL_CELLS[0][:2]
+    width, height = PANEL_CELLS[3][0] + 40 - left, PANEL_CELLS[3][1] + 16 - top
+    panel = montage[top:top + height, left:left + width]
+    cells = np.zeros(panel.shape, bool)
+    lettering = np.isin(panel, (PANEL_CORE, PANEL_OUTLINE))
+    residues = []
+    for x, y, frame in PANEL_CELLS:
+        cell = montage[y:y + 16, x:x + 40]
+        residue = check_panel_cell(cell, interiors[frame], frame)
+        ring = np.concatenate([montage[y - 1, x - 1:x + 41], montage[y + 16, x - 1:x + 41],
+                               montage[y:y + 16, x - 1], montage[y:y + 16, x + 40]])
+        if np.isin(ring, (PANEL_CORE, PANEL_OUTLINE)).any():
+            raise ValueError('panel lettering touches the cell border: frame %d' % frame)
+        cells[y - top:y - top + 16, x - left:x - left + 40] = True
+        lettering[y - top:y - top + 16, x - left:x - left + 40] |= residue
+        residues.append(residue)
+    gate = panel_leave_out(panel, cells, lettering)
+    model = fit_ramp(panel, cells & ~lettering)
+    check_gate(gate, [model['slope']], PANEL_GATE)
+    out = result.copy()
+    records = []
+    for (x, y, frame), residue in zip(PANEL_CELLS, residues):
+        cell = montage[y:y + 16, x:x + 40]
+        local = {'slope': model['slope'], 'order': model['order'],
+                 'thresholds': [t - 100 * (x - left) - model['slope'] * (y - top) for t in model['thresholds']]}
+        new, provenance = compose_button(cell, local, placed[frame], PANEL_CORE, PANEL_OUTLINE, residue)
+        out[y:y + 16, x:x + 40] = new
+        counts = {k: sum(row.count(k) for row in provenance) for k in 'kroc'}
+        records.append({'frame': frame, 'word': placed[frame]['word'], 'montage_rect': [x, y, 40, 16],
+                        'residue_removed': [[int(c) + x, int(r) + y] for r, c in zip(*np.nonzero(residue))],
+                        'texels': counts, 'provenance_rows': provenance})
+    rect = [left, top, width, height]
+    pieces = [{'page': 0, 'rect': [x, y, 40, 16]} for x, y, _ in PANEL_CELLS]
+    for piece in pieces:
+        check_page_rect(0, piece['rect'])
+    return out, {'id': 'button-panel', 'japanese': 'コピー/ニュー/クリア/ロード', 'english': '/'.join(p['word'] for p in placed),
+                 'status': 'candidate', 'match': 'button-frame lettering masks', 'method':
+                 'frame 0-3 lettering removed, one panel ramp reconstructs the strokes, button-frame NativeLatin layout in core %d / outline %d'
+                 % (PANEL_CORE, PANEL_OUTLINE), 'montage_rect': rect, 'page_rects': pieces, 'cells': records,
+                 'leave_out_gate': dict(gate, thresholds={k: list(v) if isinstance(v, tuple) else v for k, v in PANEL_GATE.items()}),
+                 'ramp': {'method': 'ordinal half-plane p=100*x+slope*y over the whole panel (x, y from the panel origin)',
+                          'origin': [left, top], 'slope_hundredths': model['slope'], 'band_order': model['order'],
+                          'thresholds': model['thresholds'], 'fit_accuracy_known': model['fit_accuracy']},
+                 'port_made_elements': [{'element': 'button-panel gradient',
+                                         'description': '%d texels under the removed katakana strokes reconstructed from each '
+                                                        "cell's own fitted index ramp" % sum(r['texels']['r'] for r in records)}]}
+
+
+def edit_pages(montage, font, exe, metadata, buttons=None):
+    """Erase label ink to the paper and place NativeLatin; reletter the button panel; returns regions.
+
+    buttons is (frame interiors, placed button layouts); None skips the panel.
+    """
     result = montage.copy()
     regions, witnesses = [], {}
     for label in MATCHED:
@@ -320,33 +507,26 @@ def edit_pages(montage, font, exe, metadata):
         if drawn.any():
             if (result[drawn] != paper).any():
                 raise ValueError('replacement touches non-paper texels: ' + label['id'])
-            columns = np.nonzero(drawn.any(axis=0))[0]
-            if label['mode'] == 'label' and columns.max() >= DYNAMIC_STRING_LEFT:
-                raise ValueError('label reaches the dynamic string x: ' + label['id'])
-            for left, top, width, height in DIGIT_SPANS:
-                if drawn[top:top + height, left:left + width].any():
-                    raise ValueError('lettering overlaps a code-drawn digit: ' + label['id'])
+            check_clear_of_digits(drawn, label['id'], dynamic=label['mode'] == 'label')
             result[drawn] = INK
         rect = bbox(erased | drawn)
         regions.append({'id': label['id'], 'japanese': label['japanese'], 'english': label['english'], 'status': 'candidate',
                         'match': 'exact-native-glyph', 'cells': [{'glyph': c, 'cell': [x, y, 12, 12]} for c, x, y in label['cells']],
                         'paper_index': int(paper), 'ink_index': INK, 'montage_rect': rect, 'page_rects': split_montage(rect),
                         'english_rect': bbox(drawn), 'letter_gap': 1 if label['mode'] == 'label' and label['english'] else None})
-    for item in UNMATCHED:
-        x, y, width, height = item['search']
+    for item in ERASED:
         cells = []
         for character, cx, cy in item['matched_cells']:
             glyph, proof = glyph_bitmap(exe, metadata, character)
             witnesses[character] = proof
-            if not ((montage[cy:cy + 12, cx:cx + 12] == INK) == glyph).all():
+            if not ((montage[cy:cy + 12, cx:cx + 12] == item['ink']) == glyph).all():
                 raise ValueError('expected partial glyph match moved: ' + item['id'])
             cells.append({'glyph': character, 'cell': [cx, cy, 12, 12]})
-        rect = bbox(np.isin(montage[y:y + height, x:x + width], item['ink']), x, y)
-        if rect is None:
-            raise ValueError('unmatched region has no ink: ' + item['id'])
-        regions.append({'id': item['id'], 'japanese': item['japanese'], 'status': 'missing', 'reason': item['reason'],
-                        'match': 'partial' if cells else 'none', 'cells': cells, 'ink_indices': item['ink'],
-                        'montage_rect': rect, 'page_rects': split_montage(rect)})
+        result, region = reletter(result, montage, font, item)
+        regions.append(dict(region, cells=cells))
+    if buttons is not None:
+        result, panel = reletter_panel(result, montage, *buttons)
+        regions.append(panel)
     for item in KEPT:
         x, y, width, height = item['search']
         rect = bbox(np.isin(montage[y:y + height, x:x + width], item['ink']), x, y)
@@ -394,9 +574,9 @@ def button_interiors(data, frames):
     return parts, interiors
 
 
-def check_gate(gate, slopes):
-    if not (gate['index_exact'] >= GATE['min_exact'] and gate['max_band_error'] <= GATE['max_band_error']
-            and max(slopes) - min(slopes) <= GATE['max_slope_spread']):
+def check_gate(gate, slopes, spec=GATE):
+    if not (gate['index_exact'] >= spec['min_exact'] and gate['max_band_error'] <= spec['max_band_error']
+            and max(slopes) - min(slopes) <= spec['max_slope_spread']):
         raise ValueError('leave-out reconstruction gate failed: %r slopes %r' % (gate, slopes))
 
 
@@ -453,12 +633,15 @@ def build(sources, output, nbn=NBN, exe=EXE, regions_out=None):
                                           'fit_accuracy_known': model['fit_accuracy'], 'texels': counts,
                                           'provenance_rows': provenance, 'legend': {'k': 'kept source', 'r': 'reconstructed', 'o': 'outline', 'c': 'core'}},
                        'source_outline_deviation': outline_deviation(interior),
+                       'port_made': True,
+                       'port_made_elements': [{'element': 'button gradient', 'description': '%d texels under the removed katakana '
+                                               'strokes reconstructed from the fitted source index ramp' % counts['r']}],
                        'review_flags': ['%d reconstructed texels may be one band off; needs magnified human review' % counts['r']]})
     check_gate(gate, models)
 
     # Information pages.
     montage = np.concatenate([np.frombuffer(data, np.uint8, PAGE_SIZE, PAGE_OFFSET + i * PAGE_SIZE).reshape(128, 128) for i in range(3)], axis=1)
-    edited, regions, witnesses = edit_pages(montage, font, exe_bytes, font.metadata)
+    edited, regions, witnesses = edit_pages(montage, font, exe_bytes, font.metadata, (interiors, placed))
     for page in range(3):
         before, after = montage[:, page * 128:(page + 1) * 128], edited[:, page * 128:(page + 1) * 128]
         pieces = [dict(piece, region=r['id']) for r in regions if r['status'] == 'candidate' for piece in r['page_rects'] if piece['page'] == page]
@@ -468,6 +651,8 @@ def build(sources, output, nbn=NBN, exe=EXE, regions_out=None):
         patched[offset:offset + PAGE_SIZE] = after.astype(np.uint8).tobytes()
         rects.extend([offset] + piece['rect'] for piece in pieces)
         missing = [r['id'] for r in regions if r['status'] == 'missing' and any(q['page'] == page for q in r['page_rects'])]
+        made = [dict(element, region=r['id']) for r in regions if r['status'] == 'candidate'
+                and any(q['page'] == page for q in r['page_rects']) for element in r.get('port_made_elements', [])]
         # A page with any region still Japanese is a partial build: kept in the
         # cache output, never published as a candidate.
         assets.append({'id': 'filesel-page-information-%d' % page, 'item_id': 'filesel-page-information-%d' % page,
@@ -478,7 +663,9 @@ def build(sources, output, nbn=NBN, exe=EXE, regions_out=None):
                        'index_patch': {'sheet_offset': offset, 'rect': [0, 0, 128, 128], 'before_sha256': digest(before.astype(np.uint8).tobytes()),
                                        'after_sha256': digest(after.astype(np.uint8).tobytes())},
                        'lettering': {'font': 'native12', 'ink_index': INK},
-                       'review_flags': ['partial page: %s stay Japanese' % ', '.join(missing)] if missing else []})
+                       'port_made': bool(made), 'port_made_elements': made,
+                       'review_flags': (['partial page: %s stay Japanese' % ', '.join(missing)] if missing else []) +
+                                       ['port-made %s: %s' % (m['element'], m['description']) for m in made]})
 
     changed = verify_patch(data, bytes(patched), rects)
     probe = packs.probe_filesel_ui(bytes(patched))
@@ -538,6 +725,7 @@ def publish(built, destination):
                        'manifest_sha256': digest(manifest_bytes), 'output_sha256': row['output_sha256'],
                        'source_container_sha256': row['source_container_sha256'], 'source_png_sha256': row['source_png_sha256'],
                        'edit_regions': row['edit_regions'], 'status': 'draft', 'human_approved': False,
+                       'port_made': row['port_made'], 'port_made_elements': row['port_made_elements'],
                        'reason': 'Index-space draft candidate; unreviewed; not runtime integrated.'})
         review.append({'id': row['id'], 'output_sha256': row['output_sha256'], 'agent_checks': [
             'pixels outside edit_regions equal the source export', 'output indices are a subset of the source indices',
@@ -548,6 +736,7 @@ def publish(built, destination):
         'original_images_included': False,
         'source_pixels_note': 'Each draft is a whole source frame or 128x128 source page; only its edit_regions differ from the source export.',
         'unpublished_partial_builds': [row['id'] for row in manifest['assets'] if not row['candidate']],
+        'supersedes': 'T39004-filesel-v3 (frame 2 Clear; pages 0-1 partial)',
         'complete_translation_inventory': False, 'separate_reviewed_revisions': 0,
         'publication_authorization': 'User explicitly requested translated assets in repository, 2026-10-29.'}) + b'\n')
     (destination / 'review.agent.json').write_bytes(encoded({

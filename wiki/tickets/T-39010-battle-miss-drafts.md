@@ -4,7 +4,7 @@ title: Produce battle Miss compact lettering drafts
 status: In Progress
 assignee: Claude (artwork worker)
 created: 2026-10-29
-updated: 2026-10-29
+updated: 2026-10-30
 links: ["[[tickets/T-39004-english-asset-completion]]"]
 ---
 
@@ -41,5 +41,13 @@ Design: judged plan from design workflow wf_7f549dff-def (2026-10-29).
 - Finding 1 (medium, accepted): seven fail-closed guards had no test that failed when the guard was removed. Fixes: per-container lettering moved into `letter_container()` so tests can call it; the publish refusals are split so each has its own message (`sidecar changed`, `claims approval` (now `is not False`), `built output changed`, `is not a derivative`). New tests in `tools/test_translation_battle_miss.py` cover a stray byte outside the Miss rectangles, MAINROM altered outside the sheet, an altered source region, a moved frame 65, a review claiming approval, an original PNG presented as the output, and an existing destination. Mutation check in an isolated copy (repo mounted read-only): each of the 9 guards, removed in turn, makes a test fail.
 - Finding 2 (low, accepted, no lettering change): the draft reads as HISS. The M is authentic: it is the first letter of the logo word MEMORIAL. `review.agent.json` now says so and notes the lower contrast of frame 65. The readability decision is now a blocking item in `battle-miss.json` (`blocking_human_decisions`). Rebuilt into `.asset-cache/translation-assets/battle-miss-drafts-v1-r2/` (the first build is left untouched) and republished the checkpoint. The 10 PNGs are byte-identical; the manifest is now 119afdab..., the review ae7b36e0... and the ledger 2ef2651e....
 - Tests: 22 OK (miss + command drafts); inventory check exit 0, still 78 missing; full discovery 121 run, the same 2 unrelated `test_translation_tree` errors.
+
+### 2026-10-30: port-made 5-wide M (art-finish worker)
+
+User decision (2026-10-30, relayed by the art-finish workflow): where no usable original glyph exists, create lettering in the game's own style, flagged port-made; outputs stay drafts. This settles the HISS blocker without a human pick between the old options.
+- `tools/translation_battle_drafts.py`: `PORT_MADE_GLYPHS['M']` = `#...#/##.##/#.#.#/#...#/#...#` (5 rows, 1-px stems like the original I and S). The original 3-wide M is still extracted and verified (sheet gutters stay pinned) and listed as `verified_unused` in the font provenance. Each record has `port_made: true`, `port_made_elements: [glyph M]` and per-letter provenance. MISS now spans 15 ink columns plus the shadow column (x 0-15); shadow rule, inks and baseline unchanged.
+- Rebuild `battle-miss-drafts-v2`: 140 changed bytes per container (was 146), all inside the two rectangles; all five containers identical per frame. Published `translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/` (10 drafts, ledger sha256 03aeaa6e...; -v1 kept as history, LEDGERS reads -v2). `decisions/battle-miss.json`: the blocking decision moved to `resolved_human_decisions`; a human readability check of the new M stays open (not blocking).
+- Previews `.asset-cache/art-finish-2026-10-30/filesel-movie-previews/vs_*-miss-*.x4.png`, all inspected: reads MISS on both frames (frame 65 stays low contrast by its source inks).
+- Tests: `test_translation_battle_miss` updated (pinned provenance, 140 bytes, port-made M drawn and flagged, malformed port-made mask rejected). Not done: CODING_STANDARDS review.
 
 ## Comments

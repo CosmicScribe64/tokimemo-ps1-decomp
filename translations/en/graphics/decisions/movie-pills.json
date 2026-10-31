@@ -1,0 +1,31 @@
+{
+  "group": "catalog-153",
+  "ticket": "T-39004",
+  "authority": "User decision 2026-10-30 (relayed by the art-finish workflow): finish asset translation \"or creation\"; port-made lettering/art allowed where no usable original exists, marked port-made; outputs stay drafts.",
+  "decisions": [
+    {
+      "item_id": "catalog-153",
+      "status": "candidate-only",
+      "reason": "29 port-made English cast-credit pills (8 cues: Cast header, 14 character names, 14 actresses) with a cue table of decoded frame ranges (caption ink plus ghost frames) and placements for a port overlay; pills are drawn opaque. Unreviewed; the movie player port is separate, so not runtime integrated.",
+      "evidence": [
+        "translations/en/graphics/artwork/checkpoints/T39004-movie-pills-v1/ledger.json sha256 49dad602e9fc45a0043d95c5ebad55b21a0b2c9adb19bddc463f3609a033172f",
+        "cue table movie-pills-v1/cue_table.json sha256 df48eeb5acd4abc3f1c9b5c592543203a0a63d1ce1ac52fc5489331d11e8fca1",
+        "OPENXA raw sectors (track 1 LBA 2080, 12435 sectors) sha256 8b7417223e1335702eb624f7bad81e775dee0f1e6f4fdbcf10ebb86320e57f7f"
+      ]
+    }
+  ],
+  "defaults": [
+    "Names romanised family name first (GLOSSARY.md order); actress romanisations (e.g. Teppozuka Yoko, Sugawara Sachiko) are agent defaults for human check.",
+    "Character line and header: native 12px Latin masks, unscaled, 1-texel bold and row-shift italic; actress line: port-made large face (tools/translation_movie_font.py, cap height 13, 2-texel stems).",
+    "Pills are drawn fully opaque on every frame of their range, so no dissolving Japanese shows through; there is no English dissolve. Each cue range is the caption-ink window plus ghost frames (the white lettering still faintly visible beyond the pill-colour ink, found by lettering contrast); every pill of a cue shares that range. fade_ink_ratio is recorded for reference only.",
+    "Frames 246-249 of cue cast-1 are magenta cherry blossoms with no caption (checked by eye); they are excluded from the outside-window ink check (BACKGROUND_INK). The earlier draft drew the Cast header at 0.4 opacity on 246-250; the ghost measure now gives 249-276 for all three cast-1 pills (249 and 276 over-cover by one frame, the safe error).",
+    "Shape: every pill keeps rounded ends inside the frame, because no original pill runs off the frame (bleed measured per pill: the original pill body never fills 60% of its rows in the frame-edge column; at the edge the originals end in a rounded cap). Where a half-disc cap at the frame edge cannot hide the caption, the end rounding shrinks (end_radius 5-13 texels, a rounded rectangle) instead of cutting the pill square.",
+    "Gradient colours sampled from the movie; the original pills are darker, thinner and fade to translucent at one end."
+  ],
+  "open_human_decisions": [
+    "Style and readability of the pills at presentation scale: the English pills are brighter, taller and fully opaque compared with the darker, thinner, partly translucent movie pills; 12 pills use a smaller end rounding (rounded rectangle) than the movie's capsules.",
+    "Whether to add CV: before actress names.",
+    "Whether a short English dissolve is wanted (it would let the Japanese show through on the fade frames).",
+    "Movie player port: draw the pills from the cue table (no runtime yet)."
+  ]
+}

@@ -1,344 +1,356 @@
 {
- "blocking_human_decisions": [
-  {
-   "blocks": "Any status beyond candidate-only for all ten battle-*-miss-* items.",
-   "decision": "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M.",
-   "evidence": "At native size the word reads as HISS (independent review of compare/*.x12.png). The M is authentic: it is the first letter of the logo word MEMORIAL on MAINROM sheet 0x16000 (M x17, E x21, M x25, O x29, R x33, I x37, A x39, L x43). Frame 65 (dim ink 0xEE over shadow 0xEF) has lower contrast."
-  }
- ],
- "catalog_corrections": [
-  {
-   "catalog_line": 122,
-   "correction": "Region is frames 64 (miss-0, bright ink 0x10/shadow 0x12) and 65 (miss-1, dim ink 0xEE/shadow 0xEF) part 0, page0 u40 v72 and u40 v80, 16x8; catalog x=0..15 y=56..63 is stale (that cell is the frame-8 HP sprite at u96 v56). Source index sha256: frame64 5e799a76f358b7cb02df3b437cebe0a159a5b1f20487c429d660f466606ea98c, frame65 ada7cff2f42232209887ff74df16155a0e6c8ffee64a0af7db5444fd8af6a467, identical in all five containers.",
-   "items": "battle-{habu,kuma,robo,sika,ufo}-miss-{0,1}"
-  },
-  {
-   "integration_note": "tools/translation_inventory.py candidate_key needs a pattern vs_(habu|kuma|robo|sika|ufo)-miss-(\\d) -> battle-<enc>-miss-<n>, and LEDGERS needs translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json; without both the ten items stay missing (78). With them they become candidate-only (78 -> 68 missing). Not edited here (shared file)."
-  },
-  {
-   "scope_note": "PARK.BIN, UTYU.BIN, VS_PARK.BIN and VS_UTYU.BIN carry the same two 16x8 index blocks (page rows at file offset 0x2428 and 0x2828, verified row by row) but are outside PROFILES; adding them is a human scope decision."
-  }
- ],
- "decisions": [
-  {
-   "defaults_applied": [
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6"
-   ],
-   "evidence": {
-    "candidate_id": "vs_habu-miss-0",
-    "frame": 64,
-    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json",
-    "output_sha256": "22873c7918d412f85b1addab8333e361cda873e954425d9d39ae271a906318dc",
-    "part": 0,
-    "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/battle-miss-drafts-v1/vs_habu-miss-0.png",
-    "region": [
-     40,
-     72,
-     16,
-     8
-    ],
-    "source_container_sha256": "7e929fbd3f4ebc3ec0377bebe7832622b5080633e20de43eda7029458ca9141f",
-    "source_png_sha256": "3e57903370d5982b2525993b1030573ea9c1a13cca5ac6c64e9d999c9b35777b"
-   },
-   "item_id": "battle-habu-miss-0",
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
-   "status": "candidate-only"
-  },
-  {
-   "defaults_applied": [
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6"
-   ],
-   "evidence": {
-    "candidate_id": "vs_habu-miss-1",
-    "frame": 65,
-    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json",
-    "output_sha256": "cfc4c152658f899575819cefe37be334b711bf87b195bc6487cb5147b1ce6e99",
-    "part": 0,
-    "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/battle-miss-drafts-v1/vs_habu-miss-1.png",
-    "region": [
-     40,
-     80,
-     16,
-     8
-    ],
-    "source_container_sha256": "7e929fbd3f4ebc3ec0377bebe7832622b5080633e20de43eda7029458ca9141f",
-    "source_png_sha256": "88c6103a20c0e9694dff79b12c5fd529241852b1e98dfb6536f51b3f09800869"
-   },
-   "item_id": "battle-habu-miss-1",
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
-   "status": "candidate-only"
-  },
-  {
-   "defaults_applied": [
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6"
-   ],
-   "evidence": {
-    "candidate_id": "vs_kuma-miss-0",
-    "frame": 64,
-    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json",
-    "output_sha256": "22873c7918d412f85b1addab8333e361cda873e954425d9d39ae271a906318dc",
-    "part": 0,
-    "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/battle-miss-drafts-v1/vs_kuma-miss-0.png",
-    "region": [
-     40,
-     72,
-     16,
-     8
-    ],
-    "source_container_sha256": "6f72e44325178100546cbfea1cf73e73ffac6e977d1e720bd0972bb5fb27d9ad",
-    "source_png_sha256": "3e57903370d5982b2525993b1030573ea9c1a13cca5ac6c64e9d999c9b35777b"
-   },
-   "item_id": "battle-kuma-miss-0",
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
-   "status": "candidate-only"
-  },
-  {
-   "defaults_applied": [
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6"
-   ],
-   "evidence": {
-    "candidate_id": "vs_kuma-miss-1",
-    "frame": 65,
-    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json",
-    "output_sha256": "cfc4c152658f899575819cefe37be334b711bf87b195bc6487cb5147b1ce6e99",
-    "part": 0,
-    "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/battle-miss-drafts-v1/vs_kuma-miss-1.png",
-    "region": [
-     40,
-     80,
-     16,
-     8
-    ],
-    "source_container_sha256": "6f72e44325178100546cbfea1cf73e73ffac6e977d1e720bd0972bb5fb27d9ad",
-    "source_png_sha256": "88c6103a20c0e9694dff79b12c5fd529241852b1e98dfb6536f51b3f09800869"
-   },
-   "item_id": "battle-kuma-miss-1",
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
-   "status": "candidate-only"
-  },
-  {
-   "defaults_applied": [
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6"
-   ],
-   "evidence": {
-    "candidate_id": "vs_robo-miss-0",
-    "frame": 64,
-    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json",
-    "output_sha256": "22873c7918d412f85b1addab8333e361cda873e954425d9d39ae271a906318dc",
-    "part": 0,
-    "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/battle-miss-drafts-v1/vs_robo-miss-0.png",
-    "region": [
-     40,
-     72,
-     16,
-     8
-    ],
-    "source_container_sha256": "fc3f85c68ad50475c15742b46c9e45c10adb6ea63bf8aabe23ade0ac2365ad1e",
-    "source_png_sha256": "3e57903370d5982b2525993b1030573ea9c1a13cca5ac6c64e9d999c9b35777b"
-   },
-   "item_id": "battle-robo-miss-0",
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
-   "status": "candidate-only"
-  },
-  {
-   "defaults_applied": [
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6"
-   ],
-   "evidence": {
-    "candidate_id": "vs_robo-miss-1",
-    "frame": 65,
-    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json",
-    "output_sha256": "cfc4c152658f899575819cefe37be334b711bf87b195bc6487cb5147b1ce6e99",
-    "part": 0,
-    "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/battle-miss-drafts-v1/vs_robo-miss-1.png",
-    "region": [
-     40,
-     80,
-     16,
-     8
-    ],
-    "source_container_sha256": "fc3f85c68ad50475c15742b46c9e45c10adb6ea63bf8aabe23ade0ac2365ad1e",
-    "source_png_sha256": "88c6103a20c0e9694dff79b12c5fd529241852b1e98dfb6536f51b3f09800869"
-   },
-   "item_id": "battle-robo-miss-1",
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
-   "status": "candidate-only"
-  },
-  {
-   "defaults_applied": [
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6"
-   ],
-   "evidence": {
-    "candidate_id": "vs_sika-miss-0",
-    "frame": 64,
-    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json",
-    "output_sha256": "22873c7918d412f85b1addab8333e361cda873e954425d9d39ae271a906318dc",
-    "part": 0,
-    "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/battle-miss-drafts-v1/vs_sika-miss-0.png",
-    "region": [
-     40,
-     72,
-     16,
-     8
-    ],
-    "source_container_sha256": "af51d885992facd4be339131aa74713229b0272fddf98ea51c99aec298907dc8",
-    "source_png_sha256": "3e57903370d5982b2525993b1030573ea9c1a13cca5ac6c64e9d999c9b35777b"
-   },
-   "item_id": "battle-sika-miss-0",
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
-   "status": "candidate-only"
-  },
-  {
-   "defaults_applied": [
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6"
-   ],
-   "evidence": {
-    "candidate_id": "vs_sika-miss-1",
-    "frame": 65,
-    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json",
-    "output_sha256": "cfc4c152658f899575819cefe37be334b711bf87b195bc6487cb5147b1ce6e99",
-    "part": 0,
-    "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/battle-miss-drafts-v1/vs_sika-miss-1.png",
-    "region": [
-     40,
-     80,
-     16,
-     8
-    ],
-    "source_container_sha256": "af51d885992facd4be339131aa74713229b0272fddf98ea51c99aec298907dc8",
-    "source_png_sha256": "88c6103a20c0e9694dff79b12c5fd529241852b1e98dfb6536f51b3f09800869"
-   },
-   "item_id": "battle-sika-miss-1",
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
-   "status": "candidate-only"
-  },
-  {
-   "defaults_applied": [
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6"
-   ],
-   "evidence": {
-    "candidate_id": "vs_ufo-miss-0",
-    "frame": 64,
-    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json",
-    "output_sha256": "22873c7918d412f85b1addab8333e361cda873e954425d9d39ae271a906318dc",
-    "part": 0,
-    "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/battle-miss-drafts-v1/vs_ufo-miss-0.png",
-    "region": [
-     40,
-     72,
-     16,
-     8
-    ],
-    "source_container_sha256": "5a523894044f8f2a54cee66b3996d7cc64b091ceef68b60c0a4e3ea7ab1f9f24",
-    "source_png_sha256": "3e57903370d5982b2525993b1030573ea9c1a13cca5ac6c64e9d999c9b35777b"
-   },
-   "item_id": "battle-ufo-miss-0",
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
-   "status": "candidate-only"
-  },
-  {
-   "defaults_applied": [
-    "D1",
-    "D2",
-    "D3",
-    "D4",
-    "D5",
-    "D6"
-   ],
-   "evidence": {
-    "candidate_id": "vs_ufo-miss-1",
-    "frame": 65,
-    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json",
-    "output_sha256": "cfc4c152658f899575819cefe37be334b711bf87b195bc6487cb5147b1ce6e99",
-    "part": 0,
-    "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/battle-miss-drafts-v1/vs_ufo-miss-1.png",
-    "region": [
-     40,
-     80,
-     16,
-     8
-    ],
-    "source_container_sha256": "5a523894044f8f2a54cee66b3996d7cc64b091ceef68b60c0a4e3ea7ab1f9f24",
-    "source_png_sha256": "88c6103a20c0e9694dff79b12c5fd529241852b1e98dfb6536f51b3f09800869"
-   },
-   "item_id": "battle-ufo-miss-1",
-   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
-   "status": "candidate-only"
-  }
- ],
- "defaults": [
-  "D1 (revisable): lettering source is the MAINROM sheet 0x16000 logo-line capitals (frame 118 part 19), worded as original disc art referenced by frame 118; on-screen use unproven.",
-  "D2 (revisable): text is uppercase MISS; the compact face has no lowercase.",
-  "D3 (revisable): M is the verified 3-wide #.#/###/#.#/#.#/#.# glyph at x17 y21; a search of all ten MAINROM sheets found no isolated wider M (judge-reported STADIUM M at x97 y74 not found), so no variant B; may read as HISS, needs human readability check.",
-  "D4 (revisable): pure (+1,+1) shadow with the region shadow index (0x12 bright, 0xEF dim); the original hand-placed counter-shadow pixels are not reproduced.",
-  "D5 (revisable): ink bottom anchored to the source lettering ink bottom (row 6); 5-row face in a 6-row slot; 1-px tracking; centred with the shadow column.",
-  "D6 (revisable): items bound to frames 64 (bright) and 65 (dim) part 0, page0 u40 v72 / u40 v80, 16x8.",
-  "D7 (revisable): PARK/UTYU/VS_PARK/VS_UTYU recorded as a scope note only, not drafted.",
-  "D8 (revisable): Miss drafts are a separate revision (battle-miss-drafts-v1) so the published battle-drafts-v1 manifest and 30 command drafts stay byte-identical."
- ],
- "group": "battle-miss",
- "open_human_decisions": [
-  "Accept MAINROM logo-line capitals as the compact source?",
-  "Accept uppercase MISS instead of Miss?",
-  "Accept pure diagonal shadow and 5-row face in the 6-row slot?",
-  "Correct catalog line 122 to frames 64/65?",
-  "Add PARK/UTYU/VS_PARK/VS_UTYU to scope?"
- ],
- "published_checkpoint": {
-  "agent_review": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/battle-miss-drafts-v1/review.agent.json",
-  "agent_review_sha256": "ae7b36e03a6c7d1d13d2339c09e38ca40c7e9695e23520faaad5a4dff6ca7e57",
-  "assets": 10,
-  "human_approved": 0,
-  "ledger_sha256": "2ef2651e39700c5e65ec7dcd8f834abac9f22f9a6d86cd975c0e39e4f8843c41",
-  "manifest_sha256": "119afdab47a3d89ff8ca5728df80830094a9b8d356fe34861860f21938607dd1",
-  "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/",
-  "republished": "2026-10-29 after review fixes: review.agent.json gained the MEMORIAL-provenance and dim-contrast observations; all 10 PNGs byte-identical to the first publication."
- },
- "tests": "docker run --rm -v $PWD:/repo -w /repo/tools -e PYTHONDONTWRITEBYTECODE=1 tokimemo-recovery-splat python3 -m unittest test_translation_battle_miss test_translation_battle_drafts (22 tests OK); python3 translation_inventory.py check (exit 0, unchanged 78 missing); guard mutation check in an isolated copy: all 9 removed guards make a test fail.",
- "ticket": "T-39010"
+  "catalog_corrections": [
+    {
+      "catalog_line": 122,
+      "correction": "Region is frames 64 (miss-0, bright ink 0x10/shadow 0x12) and 65 (miss-1, dim ink 0xEE/shadow 0xEF) part 0, page0 u40 v72 and u40 v80, 16x8; catalog x=0..15 y=56..63 is stale (that cell is the frame-8 HP sprite at u96 v56). Source index sha256: frame64 5e799a76f358b7cb02df3b437cebe0a159a5b1f20487c429d660f466606ea98c, frame65 ada7cff2f42232209887ff74df16155a0e6c8ffee64a0af7db5444fd8af6a467, identical in all five containers.",
+      "items": "battle-{habu,kuma,robo,sika,ufo}-miss-{0,1}"
+    },
+    {
+      "integration_note": "tools/translation_inventory.py candidate_key needs a pattern vs_(habu|kuma|robo|sika|ufo)-miss-(\\d) -> battle-<enc>-miss-<n>, and LEDGERS needs translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v1/ledger.json; without both the ten items stay missing (78). With them they become candidate-only (78 -> 68 missing). Not edited here (shared file)."
+    },
+    {
+      "scope_note": "PARK.BIN, UTYU.BIN, VS_PARK.BIN and VS_UTYU.BIN carry the same two 16x8 index blocks (page rows at file offset 0x2428 and 0x2828, verified row by row) but are outside PROFILES; adding them is a human scope decision."
+    }
+  ],
+  "decisions": [
+    {
+      "defaults_applied": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "evidence": {
+        "candidate_id": "vs_habu-miss-0",
+        "frame": 64,
+        "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/ledger.json",
+        "output_sha256": "59e84a6c7960e55f276487daf221cb98645f1a885380aab2a01a2c162f9e8800",
+        "part": 0,
+        "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/battle-miss-drafts-v2/vs_habu-miss-0.png",
+        "region": [
+          40,
+          72,
+          16,
+          8
+        ],
+        "source_container_sha256": "7e929fbd3f4ebc3ec0377bebe7832622b5080633e20de43eda7029458ca9141f",
+        "source_png_sha256": "3e57903370d5982b2525993b1030573ea9c1a13cca5ac6c64e9d999c9b35777b",
+        "ledger_sha256": "03aeaa6e371a9fb2407d5f3df18c3f849b4c157239e699157e8ba131cc550c84",
+        "port_made": true
+      },
+      "item_id": "battle-habu-miss-0",
+      "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
+      "status": "candidate-only"
+    },
+    {
+      "defaults_applied": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "evidence": {
+        "candidate_id": "vs_habu-miss-1",
+        "frame": 65,
+        "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/ledger.json",
+        "output_sha256": "0996eeb35256bc2a63741f9a5c5a2c1c439b39430ec80f6a5be3d6d96d4ecd55",
+        "part": 0,
+        "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/battle-miss-drafts-v2/vs_habu-miss-1.png",
+        "region": [
+          40,
+          80,
+          16,
+          8
+        ],
+        "source_container_sha256": "7e929fbd3f4ebc3ec0377bebe7832622b5080633e20de43eda7029458ca9141f",
+        "source_png_sha256": "88c6103a20c0e9694dff79b12c5fd529241852b1e98dfb6536f51b3f09800869",
+        "ledger_sha256": "03aeaa6e371a9fb2407d5f3df18c3f849b4c157239e699157e8ba131cc550c84",
+        "port_made": true
+      },
+      "item_id": "battle-habu-miss-1",
+      "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
+      "status": "candidate-only"
+    },
+    {
+      "defaults_applied": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "evidence": {
+        "candidate_id": "vs_kuma-miss-0",
+        "frame": 64,
+        "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/ledger.json",
+        "output_sha256": "59e84a6c7960e55f276487daf221cb98645f1a885380aab2a01a2c162f9e8800",
+        "part": 0,
+        "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/battle-miss-drafts-v2/vs_kuma-miss-0.png",
+        "region": [
+          40,
+          72,
+          16,
+          8
+        ],
+        "source_container_sha256": "6f72e44325178100546cbfea1cf73e73ffac6e977d1e720bd0972bb5fb27d9ad",
+        "source_png_sha256": "3e57903370d5982b2525993b1030573ea9c1a13cca5ac6c64e9d999c9b35777b",
+        "ledger_sha256": "03aeaa6e371a9fb2407d5f3df18c3f849b4c157239e699157e8ba131cc550c84",
+        "port_made": true
+      },
+      "item_id": "battle-kuma-miss-0",
+      "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
+      "status": "candidate-only"
+    },
+    {
+      "defaults_applied": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "evidence": {
+        "candidate_id": "vs_kuma-miss-1",
+        "frame": 65,
+        "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/ledger.json",
+        "output_sha256": "0996eeb35256bc2a63741f9a5c5a2c1c439b39430ec80f6a5be3d6d96d4ecd55",
+        "part": 0,
+        "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/battle-miss-drafts-v2/vs_kuma-miss-1.png",
+        "region": [
+          40,
+          80,
+          16,
+          8
+        ],
+        "source_container_sha256": "6f72e44325178100546cbfea1cf73e73ffac6e977d1e720bd0972bb5fb27d9ad",
+        "source_png_sha256": "88c6103a20c0e9694dff79b12c5fd529241852b1e98dfb6536f51b3f09800869",
+        "ledger_sha256": "03aeaa6e371a9fb2407d5f3df18c3f849b4c157239e699157e8ba131cc550c84",
+        "port_made": true
+      },
+      "item_id": "battle-kuma-miss-1",
+      "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
+      "status": "candidate-only"
+    },
+    {
+      "defaults_applied": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "evidence": {
+        "candidate_id": "vs_robo-miss-0",
+        "frame": 64,
+        "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/ledger.json",
+        "output_sha256": "59e84a6c7960e55f276487daf221cb98645f1a885380aab2a01a2c162f9e8800",
+        "part": 0,
+        "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/battle-miss-drafts-v2/vs_robo-miss-0.png",
+        "region": [
+          40,
+          72,
+          16,
+          8
+        ],
+        "source_container_sha256": "fc3f85c68ad50475c15742b46c9e45c10adb6ea63bf8aabe23ade0ac2365ad1e",
+        "source_png_sha256": "3e57903370d5982b2525993b1030573ea9c1a13cca5ac6c64e9d999c9b35777b",
+        "ledger_sha256": "03aeaa6e371a9fb2407d5f3df18c3f849b4c157239e699157e8ba131cc550c84",
+        "port_made": true
+      },
+      "item_id": "battle-robo-miss-0",
+      "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
+      "status": "candidate-only"
+    },
+    {
+      "defaults_applied": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "evidence": {
+        "candidate_id": "vs_robo-miss-1",
+        "frame": 65,
+        "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/ledger.json",
+        "output_sha256": "0996eeb35256bc2a63741f9a5c5a2c1c439b39430ec80f6a5be3d6d96d4ecd55",
+        "part": 0,
+        "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/battle-miss-drafts-v2/vs_robo-miss-1.png",
+        "region": [
+          40,
+          80,
+          16,
+          8
+        ],
+        "source_container_sha256": "fc3f85c68ad50475c15742b46c9e45c10adb6ea63bf8aabe23ade0ac2365ad1e",
+        "source_png_sha256": "88c6103a20c0e9694dff79b12c5fd529241852b1e98dfb6536f51b3f09800869",
+        "ledger_sha256": "03aeaa6e371a9fb2407d5f3df18c3f849b4c157239e699157e8ba131cc550c84",
+        "port_made": true
+      },
+      "item_id": "battle-robo-miss-1",
+      "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
+      "status": "candidate-only"
+    },
+    {
+      "defaults_applied": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "evidence": {
+        "candidate_id": "vs_sika-miss-0",
+        "frame": 64,
+        "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/ledger.json",
+        "output_sha256": "59e84a6c7960e55f276487daf221cb98645f1a885380aab2a01a2c162f9e8800",
+        "part": 0,
+        "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/battle-miss-drafts-v2/vs_sika-miss-0.png",
+        "region": [
+          40,
+          72,
+          16,
+          8
+        ],
+        "source_container_sha256": "af51d885992facd4be339131aa74713229b0272fddf98ea51c99aec298907dc8",
+        "source_png_sha256": "3e57903370d5982b2525993b1030573ea9c1a13cca5ac6c64e9d999c9b35777b",
+        "ledger_sha256": "03aeaa6e371a9fb2407d5f3df18c3f849b4c157239e699157e8ba131cc550c84",
+        "port_made": true
+      },
+      "item_id": "battle-sika-miss-0",
+      "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
+      "status": "candidate-only"
+    },
+    {
+      "defaults_applied": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "evidence": {
+        "candidate_id": "vs_sika-miss-1",
+        "frame": 65,
+        "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/ledger.json",
+        "output_sha256": "0996eeb35256bc2a63741f9a5c5a2c1c439b39430ec80f6a5be3d6d96d4ecd55",
+        "part": 0,
+        "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/battle-miss-drafts-v2/vs_sika-miss-1.png",
+        "region": [
+          40,
+          80,
+          16,
+          8
+        ],
+        "source_container_sha256": "af51d885992facd4be339131aa74713229b0272fddf98ea51c99aec298907dc8",
+        "source_png_sha256": "88c6103a20c0e9694dff79b12c5fd529241852b1e98dfb6536f51b3f09800869",
+        "ledger_sha256": "03aeaa6e371a9fb2407d5f3df18c3f849b4c157239e699157e8ba131cc550c84",
+        "port_made": true
+      },
+      "item_id": "battle-sika-miss-1",
+      "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
+      "status": "candidate-only"
+    },
+    {
+      "defaults_applied": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "evidence": {
+        "candidate_id": "vs_ufo-miss-0",
+        "frame": 64,
+        "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/ledger.json",
+        "output_sha256": "59e84a6c7960e55f276487daf221cb98645f1a885380aab2a01a2c162f9e8800",
+        "part": 0,
+        "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/battle-miss-drafts-v2/vs_ufo-miss-0.png",
+        "region": [
+          40,
+          72,
+          16,
+          8
+        ],
+        "source_container_sha256": "5a523894044f8f2a54cee66b3996d7cc64b091ceef68b60c0a4e3ea7ab1f9f24",
+        "source_png_sha256": "3e57903370d5982b2525993b1030573ea9c1a13cca5ac6c64e9d999c9b35777b",
+        "ledger_sha256": "03aeaa6e371a9fb2407d5f3df18c3f849b4c157239e699157e8ba131cc550c84",
+        "port_made": true
+      },
+      "item_id": "battle-ufo-miss-0",
+      "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
+      "status": "candidate-only"
+    },
+    {
+      "defaults_applied": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "evidence": {
+        "candidate_id": "vs_ufo-miss-1",
+        "frame": 65,
+        "ledger": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/ledger.json",
+        "output_sha256": "0996eeb35256bc2a63741f9a5c5a2c1c439b39430ec80f6a5be3d6d96d4ecd55",
+        "part": 0,
+        "path": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2/battle-miss-drafts-v2/vs_ufo-miss-1.png",
+        "region": [
+          40,
+          80,
+          16,
+          8
+        ],
+        "source_container_sha256": "5a523894044f8f2a54cee66b3996d7cc64b091ceef68b60c0a4e3ea7ab1f9f24",
+        "source_png_sha256": "88c6103a20c0e9694dff79b12c5fd529241852b1e98dfb6536f51b3f09800869",
+        "ledger_sha256": "03aeaa6e371a9fb2407d5f3df18c3f849b4c157239e699157e8ba131cc550c84",
+        "port_made": true
+      },
+      "item_id": "battle-ufo-miss-1",
+      "reason": "Draft candidate MISS (v2): original MAINROM compact I and S, port-made 5-wide M (#...#/##.##/#.#.#/#...#/#...#) replacing the 3-wide M that read as HISS; region ink and pure (+1,+1) shadow. Unreviewed, human_approved false.",
+      "status": "candidate-only"
+    }
+  ],
+  "defaults": [
+    "D1 (revisable): lettering source is the MAINROM sheet 0x16000 logo-line capitals (frame 118 part 19), worded as original disc art referenced by frame 118; on-screen use unproven.",
+    "D2 (revisable): text is uppercase MISS; the compact face has no lowercase.",
+    "D3 (revisable): M is the verified 3-wide #.#/###/#.#/#.#/#.# glyph at x17 y21; a search of all ten MAINROM sheets found no isolated wider M (judge-reported STADIUM M at x97 y74 not found), so no variant B; may read as HISS, needs human readability check.",
+    "D4 (revisable): pure (+1,+1) shadow with the region shadow index (0x12 bright, 0xEF dim); the original hand-placed counter-shadow pixels are not reproduced.",
+    "D5 (revisable): ink bottom anchored to the source lettering ink bottom (row 6); 5-row face in a 6-row slot; 1-px tracking; centred with the shadow column.",
+    "D6 (revisable): items bound to frames 64 (bright) and 65 (dim) part 0, page0 u40 v72 / u40 v80, 16x8.",
+    "D7 (revisable): PARK/UTYU/VS_PARK/VS_UTYU recorded as a scope note only, not drafted.",
+    "D8 (revisable): Miss drafts are a separate revision (battle-miss-drafts-v1) so the published battle-drafts-v1 manifest and 30 command drafts stay byte-identical."
+  ],
+  "group": "battle-miss",
+  "open_human_decisions": [
+    "Accept MAINROM logo-line capitals as the compact source?",
+    "Accept uppercase MISS instead of Miss?",
+    "Accept pure diagonal shadow and 5-row face in the 6-row slot?",
+    "Correct catalog line 122 to frames 64/65?",
+    "Add PARK/UTYU/VS_PARK/VS_UTYU to scope?"
+  ],
+  "published_checkpoint": "translations/en/graphics/artwork/checkpoints/T39004-battle-miss-v2 (supersedes -v1)",
+  "tests": "docker run --rm -v $PWD:/repo -w /repo/tools -e PYTHONDONTWRITEBYTECODE=1 tokimemo-recovery-splat python3 -m unittest test_translation_battle_miss test_translation_battle_drafts (22 tests OK); python3 translation_inventory.py check (exit 0, unchanged 78 missing); guard mutation check in an isolated copy: all 9 removed guards make a test fail.",
+  "ticket": "T-39010",
+  "resolved_human_decisions": [
+    {
+      "blocks": "Any status beyond candidate-only for all ten battle-*-miss-* items.",
+      "decision": "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M.",
+      "evidence": "At native size the word reads as HISS (independent review of compare/*.x12.png). The M is authentic: it is the first letter of the logo word MEMORIAL on MAINROM sheet 0x16000 (M x17, E x21, M x25, O x29, R x33, I x37, A x39, L x43). Frame 65 (dim ink 0xEE over shadow 0xEF) has lower contrast.",
+      "resolution": "Superseded 2026-10-30: User decision 2026-10-30 (relayed by the art-finish workflow): finish asset translation \"or creation\"; port-made lettering/art allowed where no usable original exists, marked port-made; outputs stay drafts. The M is now a port-made 5-wide capital; a human readability check of the new M remains open (not blocking)."
+    }
+  ]
 }
