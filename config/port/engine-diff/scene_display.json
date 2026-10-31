@@ -1,0 +1,49 @@
+{
+ "captures": [],
+ "exclude": [
+  {
+   "start": "0x80000000",
+   "length": 65536,
+   "reason": "BIOS/kernel RAM (OpenBIOS handlers, event and thread tables): interrupt handlers change it asynchronously while a function runs; the port never writes below 0x80010000"
+  },
+  {
+   "start": "0x800E5B10",
+   "length": 64,
+   "reason": "SDK counters bumped by the vertical-blank interrupt while the function runs"
+  },
+  {
+   "start": "0x800DC600",
+   "length": 80,
+   "reason": "libcd internal state (command, callback and result bookkeeping) updated by the CD interrupt while the function runs"
+  },
+  {
+   "start": "0x800DC8F0",
+   "length": 48,
+   "reason": "libcd internal state (command, callback and result bookkeeping) updated by the CD interrupt while the function runs"
+  },
+  {
+   "start": "0x800E3490",
+   "length": 112,
+   "reason": "libcd internal state (command, callback and result bookkeeping) updated by the CD interrupt while the function runs"
+  }
+ ],
+ "functions": {},
+ "untested": {
+  "scene_screen_reset": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "Vblnk_Timer_Init": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "Vblnk_Timer": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "Scroll": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
+  "Rot_2D": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "Fade_Out_Init": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "Fade_Out_Main": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "Fade_In_Init": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "Fade_In_Main": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "Yubi": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "Default_Disp": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "select_girl_by_scores": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
+  "actor_pair_swap_sequences": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "girl_state_rank": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
+  "portrait_read_step": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
+  "audio_bank_wait_latch": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd"
+ }
+}
