@@ -1,0 +1,13 @@
+{
+ "captures": [
+  "probe1",
+  "gm-route",
+  "gm-evt",
+  "gm-reset"
+ ],
+ "exclude": [],
+ "functions": {},
+ "untested": {
+  "game_mode_next": "no caller in src/ (dead code in the original: nothing calls it), so no capture can reach it; hand check in tests/engine/game_mode_test.gd"
+ }
+}
