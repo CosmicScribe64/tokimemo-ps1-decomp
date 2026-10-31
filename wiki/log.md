@@ -2625,3 +2625,7 @@ Opened [[tickets/T-39300-game-memory-model]] (M1, In Progress), plus [[tickets/T
 ## [2026-10-30] build | Merge verified on the actual loop route
 
 On the merged tree, the April loop route (playtest, fast, bundle-r3-holiday, candidate library bfb36a4c) stops where round 3 did: the May rollover at frame 16694. Against `routes/r3-03`, the playtest record, states and transitions are identical, and all 150 shared native PNGs match. The route ran at 39 frames/s.
+
+## [2026-10-30] build | Merge suite comparison and wing art test fix
+
+Ran each targeted Godot test script (overlays, checkpoint, route, render, services, translation) on the merged tree and on e9a1e0e3e. No script that passed before the merge fails after it; most failures on both trees need installed content. Only one new test failed: `tests/render/run_wing_art_tests.gd`. Its scene-feed check called the real `rules/calendar.gd advance_day` across May into June, but the loop now correctly refuses a month rollover without the original CALROM source. The test now writes the rollover's dates itself. Result: wing art 1596 checks pass. `tools/port/run_parity_mode_tests.sh` passes: 14 Godot runs and 52 Python tests.
