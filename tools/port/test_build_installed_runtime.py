@@ -46,6 +46,17 @@ class InstalledRuntimeBundleTests(unittest.TestCase):
     def tearDown(self):
         self.temp.cleanup()
 
+    def test_disc_pack_is_an_optional_directory_role(self):
+        (self.bundle / "packs/disc_pack/files").mkdir(parents=True)
+        (self.bundle / "packs/disc_pack/disc_pack.json").write_text('{"fixture":true}\n')
+        (self.bundle / "packs/disc_pack/files/A.BIN").write_bytes(b"a")
+        manifest = runtime._manifest(self.bundle, self.exe, self.track, {"disc_pack": "packs/disc_pack"}, {"limitations": []})
+        self.assertEqual(runtime.ROLE_KINDS["disc_pack"], "dir")
+        self.assertEqual(manifest["roles"], {"disc_pack": "packs/disc_pack"})
+        self.assertIn("packs/disc_pack/disc_pack.json", manifest["files"])
+        with self.assertRaises(runtime.BundleError):
+            runtime._manifest(self.bundle, self.exe, self.track, {"disc_pack": "packs/disc_pack/disc_pack.json"}, {"limitations": []})
+
     def test_manifest_hashes_files_and_source_inputs_deterministically(self):
         roles = {"rule_tables": "packs/rules/manifest.json"}
         first = runtime._manifest(self.bundle, self.exe, self.track, roles, {"limitations": []})

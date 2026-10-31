@@ -16,8 +16,10 @@ const FILE_ROLES := ["name_entry_rules", "name_entry_content", "name_entry_media
 ## not in GAMEPLAY_ROLES: holiday_scene stays missing until a live session
 ## supplies its boundary fields.
 ## wing_art (T-39220) is optional decoration: it is in no required role list,
-## so its absence never changes a capability.
-const DIR_ROLES := ["font_root", "school_day_media", "spring_media", "weekday56_media", "club_media", "date_preview", "opening_pack", "geko_dialogue", "prologue_text", "first_arrival_media", "first_arrival_board", "prologue_hud", "opening_audio", "original_first_arrival_bgm", "first_arrival_finish_bank", "first_arrival_command_reload", "command_hover_texels", "wing_art"]
+## so its absence never changes a capability. disc_pack (T-39303) is the same:
+## the original files the game reads, opened by services/disc_pack.gd with the
+## authenticated manifest hash from role_manifests.
+const DIR_ROLES := ["font_root", "school_day_media", "spring_media", "weekday56_media", "club_media", "date_preview", "opening_pack", "geko_dialogue", "prologue_text", "first_arrival_media", "first_arrival_board", "prologue_hud", "opening_audio", "original_first_arrival_bgm", "first_arrival_finish_bank", "first_arrival_command_reload", "command_hover_texels", "wing_art", "disc_pack"]
 const ENTRY_ROLES := ["name_entry_rules", "name_entry_content", "font_root"]
 const OPENING_RESOURCE_ROLES := ["prologue_text", "first_arrival_media", "prologue_hud", "opening_pack"]
 const ROLE_MANIFESTS := {"prologue_text":"manifest.json","first_arrival_media":"manifest.json",
@@ -25,7 +27,8 @@ const ROLE_MANIFESTS := {"prologue_text":"manifest.json","first_arrival_media":"
 	"prologue_hud":"manifest.json","opening_audio":"opening-audio.json","opening_pack":"opening.json",
 	"original_first_arrival_bgm":"source.json","first_arrival_finish_bank":"finish_bank.json",
 	"first_arrival_command_reload":"command_reload.json",
-	"command_hover_texels":"hover_texels.json","wing_art":"manifest.json"}
+	"command_hover_texels":"hover_texels.json","wing_art":"manifest.json",
+	"disc_pack":"disc_pack.json"}
 const GAMEPLAY_ROLES := ["rule_tables", "school_day_media", "spring_media", "weekday56_media", "club_media", "hud_manifest", "hud_context", "holiday_scene", "holiday_text", "date_preview", "opening_pack"]
 const MAX_FILES := 20000
 const MAX_TOTAL_BYTES := 1024 * 1024 * 1024

@@ -42,6 +42,10 @@ ROLE_KINDS = {
     # T-39220: optional decorative wing art. Never required for launch; an
     # export failure is only recorded as an unavailable role.
     "wing_art": "dir",
+    # T-39303: optional installed disc pack (tools/port/disc_pack_content.py),
+    # the original files the game reads, addressable by LBA. Never required for
+    # launch; a failure is only recorded as an unavailable role.
+    "disc_pack": "dir",
 }
 
 
@@ -342,7 +346,7 @@ def build(input_path: Path, executable: Path, output: Path,
                              "date", "holiday", "holiday_scene", "opening", "prologue_text",
                              "first_arrival_media", "first_arrival_board",
                              "prologue_hud", "opening_audio", "name_entry_media", "opening_shiori",
-                             "finish_bank", "command_reload", "hover_texels", "wing_art")}
+                             "finish_bank", "command_reload", "hover_texels", "wing_art", "disc_pack")}
     # HUD's immutable-directory contract requires an alphanumeric first byte.
     work_dirs["hud"] = cache / ("runtime-" + token + "-hud")
     if any(p.exists() or p.is_symlink() for p in work_dirs.values()):
@@ -399,6 +403,11 @@ def build(input_path: Path, executable: Path, output: Path,
                     "--input", src, "--output", str(work_dirs["name_entry_media"])]))
     commands.append(("wing_art", "wing_art", [py, "tools/port/wing_art_content.py",
                     "--input", src, "--output", str(work_dirs["wing_art"])]))
+    # The pack reads the raw track for sector modes and forms; a directory input
+    # makes the exporter fail, which is recorded as the disc_pack gap.
+    commands.append(("disc_pack", "disc_pack", [py, "tools/port/disc_pack_content.py",
+                    "--track", str(track or input_path), "--files", str(original_root / "files"),
+                    "--output", str(work_dirs["disc_pack"])]))
     if opening_only:
         needed = {"entry_rules", "entry", "name_entry_media", "opening", "opening_audio", "prologue_text", "first_arrival_media", "first_arrival_board"}
         for key, role, _command in commands:

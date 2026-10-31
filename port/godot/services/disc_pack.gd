@@ -65,6 +65,16 @@ func open(pack_root: String, expected_manifest_sha256: String = "") -> String:
 	manifest_sha256 = actual
 	return ""
 
+## Opens the disc_pack role of a validated installed profile (the dictionary
+## InstalledLaunchProfile.read_pack returns), with its inventoried manifest hash.
+func open_installed(profile: Dictionary) -> String:
+	var paths: Variant = profile.get("paths")
+	var manifests: Variant = profile.get("role_manifests")
+	if not profile.get("valid", false) or not paths is Dictionary or not paths.has("disc_pack") \
+			or not manifests is Dictionary or not manifests.has("disc_pack"):
+		return "the installed profile has no disc_pack role"
+	return open(paths.disc_pack, manifests.disc_pack.sha256)
+
 func is_open() -> bool:
 	return not root.is_empty()
 
@@ -142,6 +152,19 @@ func read_file(path: String) -> Dictionary:
 		return stored
 	var bytes: PackedByteArray = stored.data
 	return {"ok": true, "data": bytes.slice(0, int(record.size)), "path": path}
+
+## Hashes every packed file against the manifest (an install-time or QA pass; reads do
+## their own per-file check). Returns {"ok", "files", "bytes"} or the first error.
+func verify_all() -> Dictionary:
+	if not is_open():
+		return _fail("disc pack is not open")
+	var total: int = 0
+	for record: Dictionary in _files:
+		var stored: Dictionary = _verified_bytes(record)
+		if not stored.ok:
+			return stored
+		total += int(record.stored_size)
+	return {"ok": true, "files": _files.size(), "bytes": total}
 
 # ---- internals
 

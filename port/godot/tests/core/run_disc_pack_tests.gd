@@ -93,6 +93,13 @@ func _test_open_and_lookup() -> void:
 	var expected: String = pack.manifest_sha256
 	var again := DiscPack.new()
 	_check(again.open(base.path_join("good"), expected).is_empty(), "open accepts the matching manifest hash")
+	var profile: Dictionary = {"valid": true, "paths": {"disc_pack": base.path_join("good")},
+		"role_manifests": {"disc_pack": {"sha256": expected}}}
+	var installed := DiscPack.new()
+	_check(installed.open_installed(profile).is_empty() and installed.file_count() == 3, "open_installed uses the profile path and manifest hash")
+	profile.role_manifests.disc_pack.sha256 = "1".repeat(64)
+	_check(not DiscPack.new().open_installed(profile).is_empty(), "open_installed refuses a manifest hash that differs")
+	_check(not DiscPack.new().open_installed({"valid": true, "paths": {}, "role_manifests": {}}).is_empty(), "open_installed refuses a profile without the role")
 	var wrong := DiscPack.new()
 	_check(wrong.open(base.path_join("good"), "0".repeat(64)).contains("manifest hash") and not wrong.is_open(), "open refuses a different manifest hash")
 
@@ -113,6 +120,8 @@ func _test_reads() -> void:
 	_check(file.ok and file.data == stored_a.slice(0, 5000), "read_file returns the ISO size bytes")
 	_check(pack.read_file("C.DAT").ok and pack.read_sectors(200, 1).ok, "single sector file")
 	_check(not pack.read_file("nope").ok, "read_file of an unknown path fails")
+	var verified: Dictionary = pack.verify_all()
+	_check(verified.ok and int(verified.files) == 3 and int(verified.bytes) == 6 * 2048, "verify_all hashes every file")
 
 func _test_read_into_memory() -> void:
 	var pack: DiscPack = _open("memory")
@@ -171,6 +180,8 @@ func _test_integrity() -> void:
 	var before: PackedByteArray = memory.snapshot()
 	_check(not pack.read_into_memory(memory, 0x80100000, 103, 1).ok and memory.snapshot() == before, "a bad hash writes nothing into memory")
 	_check(pack.read_sectors(100, 3).ok and pack.read_sectors(200, 1).ok, "other files still read")
+	var all_files := DiscPack.new()
+	_check(all_files.open(dir).is_empty() and not all_files.verify_all().ok, "verify_all reports the changed file")
 	# A truncated or missing file fails (a reader that already verified a file keeps its bytes).
 	var cpath: String = dir.path_join("files/C.DAT")
 	var cut: FileAccess = FileAccess.open(cpath, FileAccess.WRITE)
