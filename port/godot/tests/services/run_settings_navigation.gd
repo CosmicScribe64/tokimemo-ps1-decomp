@@ -30,7 +30,7 @@ func run() -> void:
 	_shell_has_no_page_controls()
 	await _held_input_cleared_on_open()
 	menu = runtime.menu
-	check(menu.page_titles == ["Language", "Display", "Audio", "Controls", "Text & Story"])
+	check(menu.page_titles == ["Language", "Display", "Audio", "Controls", "Text & Story", "Game"])
 	var keyboard := await _reach_all("keyboard")
 	var controller := await _reach_all("controller")
 	var mouse := await _reach_all_mouse()

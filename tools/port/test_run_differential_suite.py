@@ -12,9 +12,11 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import unittest.mock
 
 from PIL import Image
 
+from tools.port import parity_gate
 from tools.port import run_differential_suite as suite
 
 W, H = 32, 24
@@ -36,6 +38,18 @@ def base_image(expand=zero):
     return image
 
 
+PIN = parity_gate.load_pin()
+
+
+def write_identity(root, name="parity-mode.json", **overrides):
+    """A port parity-mode.json (T-39230) and its pin."""
+    record = dict({"schema": "tokimemo.parity-mode-identity.v1", "play_mode": "parity", "forced_by": "TOKIMEMO_PARITY",
+                   "invariance_run": False, "violations": [], "gate": "passed", "error": "",
+                   "registry_sha256": PIN["registry_sha256"], "locked_values_sha256": PIN["locked_values_sha256"]}, **overrides)
+    (root / name).write_text(json.dumps(record))
+    return {"path": name, "sha256": hashlib.sha256((root / name).read_bytes()).hexdigest()}
+
+
 def with_residual(image, points, expand=zero):
     image = image.copy()
     for x, y in points:
@@ -52,6 +66,7 @@ class Fixture:
             "defects": [{"id": "T-39030", "ticket": "T-39030", "class": "port_defect", "summary": "synthetic defect"}],
             "checkpoints": []}
         self.frames = {}
+        self.parity = write_identity(root)
 
     def entry(self, key, expected, kind="frame", **extra):
         self.catalog["checkpoints"].append(dict({"key": key, "group": "synthetic", "kind": kind,
@@ -66,7 +81,7 @@ class Fixture:
         self.frames[key] = {"native": self.save(key + "-n.png", native), "port": self.save(key + "-p.png", port)}
 
     def run(self, out_name="out", keys=None, **kwargs):
-        captures = dict({"schema": suite.CAPTURES_SCHEMA, "frames": self.frames}, **kwargs)
+        captures = dict({"schema": suite.CAPTURES_SCHEMA, "frames": self.frames, "port_parity": self.parity}, **kwargs)
         return suite.compare(self.catalog, captures, self.root, self.root / out_name, keys=keys)
 
 
@@ -229,7 +244,7 @@ class SuiteTests(unittest.TestCase):
         for key, _ in rows[:3]:
             self.fx.entry("t-" + key.replace("/", "-"), {"status": "exact"}, kind="frame_timing",
                           timing_reference={"substep": key})
-        report = self.fx.run(timing={"pad": "2", "port_transitions": pin})
+        report = self.fx.run(timing={"pad": "2", "port_transitions": pin, "port_parity": self.fx.parity})
         got = [row["result"] for row in report["results"]]
         self.assertEqual(got, ["exact_fail", "exact_fail", "exact_pass"])
         self.assertEqual(report["results"][0]["port_iterations"], rows[0][1] + 1)
@@ -263,6 +278,7 @@ class SuiteTests(unittest.TestCase):
                            root / ".asset-cache/bundle", 2600, [323, 335])
         names = [s["name"] for s in steps["steps"]]
         self.assertEqual(names, ["native", "port", "pairs"])
+        self.assertEqual(steps["env"]["TOKIMEMO_PARITY"], "1")
         native = steps["steps"][0]["argv"]
         self.assertEqual(native[:2], ["tools/emu/run.sh", "boot"])
         self.assertIn("800B5BC8:12", native)
@@ -282,11 +298,56 @@ class SuiteTests(unittest.TestCase):
         pair = {"native": {"image": {"path": "../n.png", "sha256": digest}}, "port": {"image": {"path": "../n.png", "sha256": digest}}}
         (self.root / "pairs" / "pair-stage8-1.json").write_text(json.dumps(pair))
         (self.root / "pairs" / "pair-stage8-1-report.json").write_text("{}")
-        frames = suite.captures_from_pairs(self.root / "pairs", self.root / "captures.json", catalog)
+        identity = self.root / "parity-mode.json"
+        frames = suite.captures_from_pairs(self.root / "pairs", self.root / "captures.json", catalog, port_parity=identity)
         self.assertEqual(list(frames), ["rei-stage8-1"])
+        captures = json.loads((self.root / "captures.json").read_text())
+        self.assertEqual(captures["port_parity"]["sha256"], hashlib.sha256(identity.read_bytes()).hexdigest())
+        # T-39230 negatives: no parity file, a modern run, timing without its parity file.
+        with self.assertRaises(suite.Invalid):
+            suite.captures_from_pairs(self.root / "pairs", self.root / "captures-np.json", catalog)
+        write_identity(self.root, "modern.json", play_mode="modern")
+        with self.assertRaises(suite.Invalid):
+            suite.captures_from_pairs(self.root / "pairs", self.root / "captures-m.json", catalog, port_parity=self.root / "modern.json")
+        (self.root / "transitions.json").write_text("{}")
+        with self.assertRaises(suite.Invalid):
+            suite.captures_from_pairs(self.root / "pairs", self.root / "captures-t.json", catalog, self.root / "transitions.json", "2",
+                                      port_parity=identity)
         (self.root / "pairs" / "pair-stage99-1.json").write_text(json.dumps(pair))
         with self.assertRaises(suite.Invalid):
-            suite.captures_from_pairs(self.root / "pairs", self.root / "captures2.json", catalog)
+            suite.captures_from_pairs(self.root / "pairs", self.root / "captures2.json", catalog, port_parity=identity)
+
+    def test_parity_gate_fails_fast(self):
+        """T-39230: nothing is compared unless the port side ran in clean Parity mode."""
+        native = base_image()
+        self.fx.entry("a", {"status": "exact"})
+        self.fx.frame("a", native, native)
+        self.assertEqual(self.fx.run("ok")["port_play_modes"], {"frames": "parity"})
+        cases = {"missing": None,
+                 "modern": write_identity(self.root, "m.json", play_mode="modern"),
+                 "unknown": write_identity(self.root, "u.json", play_mode="unknown"),
+                 "unclean": write_identity(self.root, "v.json", violations=["display.aspect"]),
+                 "gate-failed": write_identity(self.root, "g.json", gate="failed", error="Parity mode is not active"),
+                 "other-schema": write_identity(self.root, "s.json", schema="tokimemo.other.v1"),
+                 "invariance-not-allowed": write_identity(self.root, "i.json", play_mode="modern", invariance_run=True),
+                 "stale-registry": write_identity(self.root, "r.json", registry_sha256="0" * 64)}
+        for name, pin in cases.items():
+            with self.subTest(name), self.assertRaises(suite.Invalid):
+                self.fx.run("out-" + name, port_parity=pin)
+        tampered = dict(self.fx.parity)
+        (self.root / "parity-mode.json").write_text(json.dumps({"schema": "tokimemo.parity-mode-identity.v1", "play_mode": "modern"}))
+        with self.assertRaises(suite.Invalid):
+            self.fx.run("out-tampered", port_parity=tampered)
+        # MODERN_INVARIANCE=1 in the environment does not let a modern run count against the original.
+        with unittest.mock.patch.dict("os.environ", {"MODERN_INVARIANCE": "1"}), self.assertRaises(suite.Invalid):
+            self.fx.run("out-invariance", port_parity=cases["invariance-not-allowed"])
+        # Frame timing needs its own pin.
+        self.fx.frames.clear()
+        self.fx.entry("t-0-0-0", {"status": "exact"}, kind="frame_timing", timing_reference={"substep": "0/0/0"})
+        (self.root / "transitions.json").write_text(json.dumps({"transitions": {}}))
+        pin = {"path": "transitions.json", "sha256": hashlib.sha256((self.root / "transitions.json").read_bytes()).hexdigest()}
+        with self.assertRaises(suite.Invalid):
+            self.fx.run("out-timing", keys={"t-0-0-0"}, timing={"pad": "2", "port_transitions": pin})
 
     def test_cli_exit_codes(self):
         with contextlib.redirect_stderr(io.StringIO()):

@@ -9,6 +9,26 @@ var dialogue := OS.get_environment("REI_DIALOGUE") == "1"
 ## Source substep counts per stage; REI_TARGET_STAGE stops on its first frame.
 const SUBSTEPS := {8:8,9:12,10:9,11:7}
 var target := int(OS.get_environment("REI_TARGET_STAGE")) if OS.get_environment("REI_TARGET_STAGE").is_valid_int() else (10 if dialogue else 9)
+## T-39230: every route built on this one (frame timing, opening trace,
+## presentation pacing, input script) is differential or playtest evidence, so
+## it fails fast unless Parity mode is active and clean, or MODERN_INVARIANCE=1
+## asks for an explicit modern-invariance run. /out/parity-mode.json records
+## the result for tools/port/parity_gate.py.
+const ParityMode = preload("res://services/parity_mode.gd")
+var parity_identity: Dictionary = {}
+## A QA observer that applies modern preferences on purpose overrides this to
+## return false. It then runs in any mode, and its parity-mode.json says
+## gate "not_evidence", which tools/port/parity_gate.py refuses.
+func parity_evidence_route() -> bool:
+	return true
+func _start() -> void:
+	var parity := ParityMode.gate(self, "/out", parity_evidence_route())
+	parity_identity = parity.identity
+	if not parity.ok:
+		print("FAIL: parity gate: " + parity.error)
+		_failed("parity gate: " + parity.error)
+		return
+	super._start()
 func _frame_published(tick: int, app: App) -> void:
 	super._frame_published(tick,app)
 	var state = app.consumer.opening.state

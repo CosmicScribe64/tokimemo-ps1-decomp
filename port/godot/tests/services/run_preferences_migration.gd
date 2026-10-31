@@ -29,7 +29,7 @@ func _schema_on_disk(path: String) -> String:
 ## A valid non-default value for every key; the test fails if a key is added
 ## to defaults() without a row here.
 const ALT := {
-	"profile.preset": "custom",
+	"profile.preset": "custom", "profile.mode": "parity",
 	"display.mode": "borderless", "display.width": 1280, "display.height": 960, "display.monitor": 1,
 	"display.aspect": "wide", "display.filter": "linear", "display.vsync": false, "display.fps": 144,
 	"display.long_confirmation": true, "display.wing_fill": "source", "display.ui_scale": 1.5,

@@ -32,7 +32,18 @@ func _initialize() -> void:
 	var observer := Observer.new(dir, "res://tests/support/run_checkpoint_observer_tests.gd")
 	var image := canvas()
 	var before := Observer.rgba_sha256(image)
-	var settings := Observer.settings_identity(self)
+	var identity := Observer.settings_identity(self)
+	check(identity.get("play_mode") in ["parity", "modern", "unknown"] and identity.has("invariance_run") and str(identity.get("parity_registry_sha256")).length() == 64, "settings identity names the play mode (T-39230)")
+	# T-39230 gate: receipts need a clean Parity run or an explicit modern-invariance run.
+	var settings := identity.merged({"play_mode": "parity", "parity_violations": [], "invariance_run": false}, true)
+	for refused: Dictionary in [{"play_mode": "modern"}, {"play_mode": "unknown"}, {"play_mode": "parity", "parity_violations": ["display.aspect"]},
+			{"play_mode": "unknown", "invariance_run": true}]:
+		var gate_observer := Observer.new(dir, "res://tests/support/run_checkpoint_observer_tests.gd")
+		check(gate_observer.record("gate", image, "cpu_composed_image", clocks(1), {"draw_count": 0}, settings.merged(refused, true), {}).is_empty()
+			and str(gate_observer.errors).contains("Parity"), "receipt refused without Parity: %s" % [refused])
+	var modern_observer := Observer.new(dir, "res://tests/support/run_checkpoint_observer_tests.gd")
+	check(not modern_observer.record("invariance", image, "cpu_composed_image", clocks(1), {"draw_count": 0},
+		settings.merged({"play_mode": "modern", "invariance_run": true}, true), {}).is_empty(), "explicit modern-invariance run is recorded")
 	var receipt := observer.record("stage8-2", image, "cpu_composed_image", clocks(3695), {"draw_count": 12, "state": 99},
 		settings, {"pack_manifest_sha256": "0".repeat(64)}, {"prologue_scene_counter": 6})
 	check(not receipt.is_empty(), "valid canvas is recorded: %s" % [observer.errors])

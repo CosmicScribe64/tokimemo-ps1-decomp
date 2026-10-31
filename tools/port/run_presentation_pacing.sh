@@ -8,7 +8,12 @@
 # .asset-cache bundles as run_opening_frame_timing.sh (OPENING_TIMING_BUNDLE,
 # OPENING_TIMING_SO, OPENING_TIMING_BRIDGE). Host metrics from this runner are
 # Xvfb numbers: relative-only regression signals, never T4 pacing evidence.
+# T-39230: the port side runs in Parity mode (TOKIMEMO_PARITY=1 by default) and the
+# route fails fast without it. MODERN_INVARIANCE=1 is refused (see below).
 set -eu
+# T-39230: this runner's output is compared with the original, so a modern-invariance
+# run is refused here; tools/port/run_parity_invariance.sh is the only invariance entry.
+[ "${MODERN_INVARIANCE:-0}" = 0 ] || { echo "MODERN_INVARIANCE=1 is refused: this run is compared with the original; use tools/port/run_parity_invariance.sh"; exit 2; }
 cd "$(dirname "$0")/../.."
 ROOT=$PWD; OUT=$1; PAD=$2; NATIVE=${3:-}
 [ ! -e "$OUT" ] || { echo "$OUT exists"; exit 2; }
@@ -27,7 +32,7 @@ shasum -a 256 "$SO" "$BRIDGE" "$BUNDLE/manifest.json" port/godot/tests/opening/r
 	port/godot/tests/support/pacing_probe.gd port/godot/tests/opening/run_opening_frame_timing_route.gd \
 	port/godot/tests/fixtures/opening_frame_timing.json > "$OUT/hashes.txt"
 status=0
-docker run --rm --name "$NAME" --cpus=4 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE=12 -e TIMED_ENTRY_PAD="$PAD" \
+docker run --rm --name "$NAME" --cpus=4 -e TOKIMEMO_PARITY="${TOKIMEMO_PARITY:-1}" -e MODERN_INVARIANCE=0 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE=12 -e TIMED_ENTRY_PAD="$PAD" \
 	-e TOKIMEMO_HOST_DISPLAY=xvfb \
 	-v "$ROOT:/work" -v "$ABS_OUT:/out" \
 	-v "$ABS_SO:/work/port/godot/bin/liboriginal_audio.linux.template_release.arm64.so:ro" \

@@ -91,6 +91,24 @@ func set_pref(dotted: String, value: Variant) -> String:
 	if runtime.preferences.set_value(parts[0], parts[1], value): return ""
 	return str(runtime.preferences.error) if not str(runtime.preferences.error).is_empty() else "Invalid setting."
 
+# --- play mode (T-39230) -------------------------------------------------------
+
+func parity_active() -> bool:
+	return runtime.preferences.has_method("parity_active") and bool(runtime.preferences.parity_active())
+
+## 'parity' or 'modern' as the player sees it now (a forced session is parity).
+func play_mode() -> String:
+	return "parity" if parity_active() else "modern"
+
+func parity_forced_by() -> String:
+	return str(runtime.preferences.get("parity_forced_by")) if "parity_forced_by" in runtime.preferences else ""
+
+## Switches the saved play mode. Returns "" or the player-facing error.
+func set_play_mode(name: String) -> String:
+	if not runtime.preferences.has_method("set_mode"): return "This build has no Parity mode."
+	if runtime.preferences.set_mode(name): return ""
+	return str(runtime.preferences.error) if not str(runtime.preferences.error).is_empty() else "Invalid play mode."
+
 # --- presets and fidelity ----------------------------------------------------
 
 func preset_bundle(name: String) -> Dictionary:

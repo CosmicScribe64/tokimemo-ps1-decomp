@@ -15,6 +15,8 @@ const LanguageBundle = preload("res://services/language_bundle_service.gd")
 const Glyphs = preload("res://services/input_glyph_service.gd")
 const DisplayFrame = preload("res://services/display_frame_info.gd")
 const PackStore = preload("res://services/installed_pack_store.gd")
+## T-39230: Parity mode refusals for the features this runtime starts.
+const Parity = preload("res://services/parity_mode.gd")
 var text_pack := TextPack.new()
 var voice_pack := VoicePack.new()
 var read_history := History.new()
@@ -57,6 +59,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	first_launch = not FileAccess.file_exists(preferences.path)
 	preferences.load_preferences()
+	# --parity / TOKIMEMO_PARITY=1 force Parity for this session (never saved).
+	preferences.force_parity(Parity.launch_forced_by())
 	read_history.load_history()
 	Input.joy_connection_changed.connect(_gamepad_connection_changed)
 	for bus: String in Preferences.BUSES:
@@ -75,6 +79,8 @@ func _ready() -> void:
 	menu = Menu.new(); menu.runtime = self; layer.add_child(menu); menu.hide()
 	if not preferences.error.is_empty(): show_notice(preferences.error)
 	elif preferences.recovered: show_notice("Previous settings restored after an interrupted or damaged update.")
+	elif not preferences.parity_forced_by.is_empty(): show_notice("Parity mode (forced by %s): the original game, enhancements locked." % preferences.parity_forced_by)
+	elif not preferences.parity_relocked.is_empty(): show_notice("Parity mode restored the original value of: " + ", ".join(preferences.parity_relocked))
 	elif preferences.migrated: show_notice("Settings were updated to the new format; your choices were kept.")
 	elif not preferences.reset_keys.is_empty(): show_notice("Some settings were invalid and were reset: " + ", ".join(preferences.reset_keys))
 	elif first_launch: show_notice("Settings: press F10 or both controller stick buttons (L3 + R3).")
@@ -203,6 +209,7 @@ func _language_applied(choice: String, _coverage: Dictionary) -> void:
 	preferences_changed.emit(preferences.effective_settings())
 
 func select_image_pack(path: String) -> String:
+	if not path.is_empty() and preferences.parity_active(): return Parity.REFUSAL
 	var digest := "" if path.is_empty() else FileAccess.get_sha256(path)
 	var candidate := Packs.new()
 	if not candidate.select_images(path, digest): return candidate.error
@@ -220,6 +227,7 @@ func select_image_pack(path: String) -> String:
 ## T-39016: select the source-keyed text layer built by
 ## tools/port/build_text_pack.py; an empty path restores original text.
 func select_ui_text_pack(path: String) -> String:
+	if not path.is_empty() and preferences.parity_active(): return Parity.REFUSAL
 	var digest := "" if path.is_empty() else FileAccess.get_sha256(path)
 	var candidate := Packs.new()
 	if not candidate.select_text_layer(path, digest): return candidate.text_layer_error
@@ -234,6 +242,7 @@ func select_ui_text_pack(path: String) -> String:
 	apply_preferences(preferences.effective_settings()); return ""
 
 func select_voice_pack(path: String) -> String:
+	if not path.is_empty() and preferences.parity_active(): return Parity.REFUSAL
 	var candidate := VoicePack.new()
 	var digest := "" if path.is_empty() else FileAccess.get_sha256(path)
 	if not path.is_empty() and not candidate.open_pack(path, digest): return candidate.error
@@ -245,6 +254,7 @@ func select_voice_pack(path: String) -> String:
 	apply_preferences(preferences.effective_settings()); return ""
 
 func select_text_pack(path: String) -> String:
+	if not path.is_empty() and preferences.parity_active(): return Parity.REFUSAL
 	var candidate := TextPack.new(); var digest := "" if path.is_empty() else FileAccess.get_sha256(path)
 	if not path.is_empty() and not candidate.open_pack(path, digest): return candidate.error
 	var before: Dictionary = preferences.settings.language.duplicate(true)
@@ -328,6 +338,11 @@ func save_host() -> Node:
 	return hosts[0] if hosts.size() == 1 else null
 
 func request_save(load_game: bool) -> void:
+	var refused := Parity.refusal("feature.quick_load" if load_game else "feature.quick_save", preferences.parity_active())
+	if not refused.is_empty():
+		if is_instance_valid(menu) and menu.visible: menu.notice.text = refused
+		else: show_notice(refused)
+		return
 	var host := save_host()
 	if host == null:
 		menu.notice.text = "Save/load is unavailable in this scene."
@@ -351,6 +366,8 @@ func observe_prologue_read(opening: Dictionary) -> void:
 		read_history.mark_read(PrologueText.PAYLOAD_SHA + ":" + str(work.line_id))
 
 func request_prologue_skip(pad: Node) -> bool:
+	# Parity: only the native Start button skips; the port_skip shortcut is refused.
+	if not Parity.refusal("feature.prologue_skip_shortcut", preferences.parity_active()).is_empty(): return false
 	if preferences.settings.accessibility.skip == "read":
 		var required: Array[String] = []
 		for line: int in range(43): required.append(PrologueText.PAYLOAD_SHA + ":" + str(line))

@@ -51,6 +51,8 @@ tools.port.test_lint_translation_assets
 tools.port.test_media_cli
 tools.port.test_native_memory_projection
 tools.port.test_opening_voice_content
+tools.port.test_parity_gate
+tools.port.test_parity_invariance
 tools.port.test_preflight
 tools.port.test_prepare_desktop
 tools.port.test_readiness

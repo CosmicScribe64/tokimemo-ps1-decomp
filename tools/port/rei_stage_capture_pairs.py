@@ -45,8 +45,10 @@ from pathlib import Path
 
 try:
     from tools.port import checkpoint_receipt
+    from tools.port import parity_gate
 except ModuleNotFoundError:  # run as a script from tools/port
     import checkpoint_receipt
+    import parity_gate
 
 VSYNC_LO, VSYNC_HI = 0x800AD950, 0x800ADB30
 GAME = 0x800E7374
@@ -79,6 +81,18 @@ V2_SET = "tokimemo.checkpoint-receipt.v2-set"
 V2 = "tokimemo.checkpoint-receipt.v2"
 
 
+def require_parity(port_dir, receipts=None):
+    """T-39230: the port side of a pair must come from a Parity run. v2 receipts
+    carry the play mode in settings; a legacy run directory needs the route's
+    parity-mode.json."""
+    try:
+        if receipts is not None:
+            return parity_gate.check_receipts(receipts)
+        return parity_gate.check_identity(parity_gate.load_identity(port_dir))
+    except parity_gate.ParityError as error:
+        raise SystemExit("port run is not Parity evidence: %s" % error)
+
+
 def load_v2(port_dir):
     """Observed records from a v2 receipt set, with the binding re-checked; None when absent."""
     path = port_dir / "checkpoint-receipts.json"
@@ -89,6 +103,7 @@ def load_v2(port_dir):
         raise SystemExit("checkpoint-receipts.json is not a v2 receipt set")
     if data.get("errors"):
         raise SystemExit("v2 observer recorded refusals: %s" % data["errors"])
+    require_parity(port_dir, data["receipts"])
     observed = {}
     for key, receipt in data["receipts"].items():
         if not key.startswith("stage"):
@@ -204,6 +219,7 @@ def main(argv=None):
     receipt_path = args.port_dir / "rei-failure.json"
     rel = lambda p: os.path.relpath(p, args.out)
     if v2 is None:
+        require_parity(args.port_dir, None)
         receipt = json.loads(receipt_path.read_bytes())
         observer = {"path": rel(args.observer), "sha256": sha(args.observer),
                     "modified_after_receipt": args.observer.stat().st_mtime > receipt_path.stat().st_mtime,

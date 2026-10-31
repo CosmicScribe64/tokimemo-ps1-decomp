@@ -21,6 +21,7 @@ extends Node
 ## same state as expect_next; a differing or missing value fails the script.
 
 const SCHEMA := "tokimemo.input-script.v1"
+const Remaps = preload("res://services/input_remap_service.gd")
 ## Godot joypad buttons for the PS1 pad names. L2/R2 are analog axes in Godot
 ## and are refused rather than approximated.
 const BUTTONS := {"UP": JOY_BUTTON_DPAD_UP, "RIGHT": JOY_BUTTON_DPAD_RIGHT, "DOWN": JOY_BUTTON_DPAD_DOWN,
@@ -49,8 +50,36 @@ var _releases: Dictionary = {}
 var _expect: Dictionary = {}
 var _last_observed := -1
 
+## T-39230: the settings runtime's InputRemapService, or null. When set, each
+## PS1 button is pressed on the controller button that produces the same
+## native pad bit under the active mapping (swap_confirm, remapped bindings),
+## so a modern-invariance run delivers the same native input as Parity.
+var remaps: RefCounted = null
+
 func _init() -> void:
 	process_physics_priority = -1000
+
+## Native pad bit of a PS1 button name under the default mapping.
+static func default_mask(button: String) -> int:
+	var defaults: Dictionary = Remaps.defaults()
+	for action: String in defaults:
+		for spec: Dictionary in defaults[action]:
+			if spec.kind == "button" and spec.code == BUTTONS[button]: return int(Remaps.MASKS[action])
+	return 0
+
+## Godot joypad button to press for a PS1 button now, or -1 when the active
+## mapping has no controller button for its native bit.
+func button_index(button: String) -> int:
+	if remaps == null: return BUTTONS[button]
+	var wanted := default_mask(button)
+	if wanted == 0: return -1
+	for action: String in Remaps.ACTIONS:
+		var mapped := action
+		if remaps.swap_confirm and action in ["confirm", "cancel"]: mapped = "cancel" if action == "confirm" else "confirm"
+		if int(Remaps.MASKS[mapped]) != wanted: continue
+		for spec: Dictionary in remaps.bindings.get(action, []):
+			if spec.kind == "button": return int(spec.code)
+	return -1
 
 ## Returns "" or the reason the script cannot be played on the port.
 func configure(data: Dictionary, observer: Callable) -> String:
@@ -126,9 +155,12 @@ func boundary() -> void:
 		_anchor = -1
 		_waiting_since = -1
 	for event: Dictionary in events:
+		var index := button_index(event.button)
+		if index < 0:
+			_fail("PS1 button %s has no controller button under the active mapping" % event.button); return
 		var input := InputEventJoypadButton.new()
 		input.device = device
-		input.button_index = BUTTONS[event.button]
+		input.button_index = index
 		input.pressed = event.pressed
 		input.pressure = 1.0 if event.pressed else 0.0
 		Input.parse_input_event(input)
@@ -188,7 +220,9 @@ func _fail(message: String) -> void:
 	for button: String in _releases.keys():
 		var input := InputEventJoypadButton.new()
 		input.device = device
-		input.button_index = BUTTONS[button]
+		var index := button_index(button)
+		if index < 0: continue
+		input.button_index = index
 		input.pressed = false
 		Input.parse_input_event(input)
 	_releases.clear()

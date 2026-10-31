@@ -141,6 +141,11 @@ func compute_actions() -> Array[Dictionary]:
 
 ## Continue is offered only for a valid, current save this build can restore.
 func continue_check() -> Dictionary:
+	# T-39230: Continue restores the port's quick slot, which the original game
+	# does not have, so Parity refuses it as a quick load.
+	var refused: String = Controls.parity_refusal(self, Controls.Request.LOAD)
+	if not refused.is_empty():
+		return {"error": refused}
 	var store: SaveService = SaveService.new(save_root)
 	var report: Dictionary = store.inspect_slot(Controls.SLOT)
 	if not report["error"].is_empty():

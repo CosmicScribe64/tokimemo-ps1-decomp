@@ -49,7 +49,13 @@
         "source": {"type": "string"},
         "language": {"type": "string"},
         "aspect": {"type": "string"},
-        "filter": {"type": "string"}
+        "filter": {"type": "string"},
+        "play_mode": {"enum": ["parity", "modern", "unknown"]},
+        "parity_forced_by": {"type": "string"},
+        "invariance_run": {"type": "boolean"},
+        "parity_violations": {"type": "array", "items": {"type": "string"}},
+        "parity_registry_sha256": {"$ref": "#/$defs/sha256"},
+        "parity_locked_values_sha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"const": ""}]}
       }
     },
     "content": {"type": "object"},

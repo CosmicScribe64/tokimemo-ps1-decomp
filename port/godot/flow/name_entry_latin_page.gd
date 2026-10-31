@@ -33,8 +33,18 @@ const ITEM_ACTION_LIMIT := 64
 const ERASE := -1
 ## Queued finish: Enter ends the field with the native START action.
 const FINISH := -2
+## T-39230: typing generates native input, so it is a registered game-affecting
+## feature that Parity mode refuses (services/feature_registry.gd).
+const Parity = preload("res://services/parity_mode.gd")
+const FEATURE := "feature.latin_name_typing"
 
 var enabled := false
+
+## True when the owner may set `enabled`: the English bundle is selected and
+## Parity mode does not refuse the feature. The entry boot uses this instead of
+## the bundle check alone (root hook, wiki/parity-mode.md).
+static func allowed(english_selected: bool, parity_active: bool) -> bool:
+	return english_selected and Parity.refusal(FEATURE, parity_active).is_empty()
 var error := ""
 var _index: Dictionary = {}
 var _pending: Array[int] = []

@@ -7,6 +7,8 @@ extends Control
 ## and the tree stays paused while either menu is shown.
 const Widgets = preload("res://ui/settings/settings_widgets.gd")
 const STICKS := {JOY_BUTTON_LEFT_STICK: 1, JOY_BUTTON_RIGHT_STICK: 2}
+## T-39230: Parity mode locks Quick save, Load and Return to title.
+const Parity = preload("res://services/parity_mode.gd")
 
 var runtime: Node
 var focus_items: Dictionary = {}
@@ -54,14 +56,21 @@ func _build() -> void:
 	widgets.button(box, "Load quick save", func() -> void: _save(true))
 	var host: Node = runtime.save_host()
 	if host != null and host.has_method("request_return_to_title"):
-		widgets.button(box, "Return to title", func() -> void: resume(); host.request_return_to_title())
+		widgets.button(box, "Return to title", func() -> void:
+			var refused := Parity.refusal("feature.return_to_title", _parity_active())
+			if not refused.is_empty(): notice.text = refused; return
+			resume(); host.request_return_to_title())
 	widgets.button(box, "Quit game", func() -> void: quit_confirm.show(); (focus_items["quit_confirm"] as Control).grab_focus())
 	quit_confirm = HBoxContainer.new(); quit_confirm.add_theme_constant_override("separation", 8); box.add_child(quit_confirm)
 	widgets.button(quit_confirm, "Quit now", func() -> void: get_tree().quit(0), "quit_confirm")
 	widgets.button(quit_confirm, "Keep playing", func() -> void: quit_confirm.hide(); (focus_items["Quit game"] as Control).grab_focus(), "quit_cancel")
 	quit_confirm.hide()
 	notice = widgets.note(box, "Esc, B or right-click resumes.")
+	widgets.lock_parity_rows(_parity_active())
 	(focus_items["Resume"] as Control).call_deferred("grab_focus")
+
+func _parity_active() -> bool:
+	return runtime.preferences.has_method("parity_active") and bool(runtime.preferences.parity_active())
 
 func open() -> void:
 	if visible: return
@@ -81,6 +90,8 @@ func open_settings() -> void:
 	if not runtime.menu.visible: runtime.toggle_menu()
 
 func _save(load_game: bool) -> void:
+	var refused := Parity.refusal("feature.quick_load" if load_game else "feature.quick_save", _parity_active())
+	if not refused.is_empty(): notice.text = refused; return
 	var host: Node = runtime.save_host()
 	if host == null:
 		notice.text = "Save/load is unavailable in this scene."; return

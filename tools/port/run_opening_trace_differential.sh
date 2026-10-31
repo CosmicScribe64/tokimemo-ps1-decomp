@@ -16,7 +16,12 @@
 # OPENING_TIMING_BUNDLE, OPENING_TIMING_SO, OPENING_TIMING_BRIDGE). Exit status is step 3's:
 # 0 equal, 1 divergence reported, 2 invalid input. SKIP_NATIVE=1 or SKIP_PORT=1 reuse a step's
 # existing output in <new-out-dir> (for reruns of the comparison only).
+# T-39230: the port side runs in Parity mode (TOKIMEMO_PARITY=1 by default) and the
+# route fails fast without it. MODERN_INVARIANCE=1 is refused (see below).
 set -eu
+# T-39230: this runner's output is compared with the original, so a modern-invariance
+# run is refused here; tools/port/run_parity_invariance.sh is the only invariance entry.
+[ "${MODERN_INVARIANCE:-0}" = 0 ] || { echo "MODERN_INVARIANCE=1 is refused: this run is compared with the original; use tools/port/run_parity_invariance.sh"; exit 2; }
 cd "$(dirname "$0")/../.."
 ROOT=$PWD; OUT=$1; PAD=${2:-2}
 case $PAD in 2) START=20 ;; 3) START=33 ;; *) echo "pad must be 2 or 3"; exit 2 ;; esac
@@ -46,7 +51,7 @@ if [ "${SKIP_PORT:-0}" != 1 ]; then
 	shasum -a 256 "$SO" "$BRIDGE" "$BUNDLE/manifest.json" config/port/opening-trace-projection.json \
 		port/godot/tests/opening/run_opening_trace_emitter.gd port/godot/tests/opening/run_opening_frame_timing_route.gd \
 		port/godot/services/first_arrival_media_bridge.gd port/godot/flow/prologue_arrival.gd > "$OUT/port/hashes.txt"
-	docker run --rm --name "$NAME-port" --cpus=4 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE=12 -e TIMED_ENTRY_PAD="$PAD" \
+	docker run --rm --name "$NAME-port" --cpus=4 -e TOKIMEMO_PARITY="${TOKIMEMO_PARITY:-1}" -e MODERN_INVARIANCE=0 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE=12 -e TIMED_ENTRY_PAD="$PAD" \
 		-v "$ROOT:/work" -v "$ROOT/$OUT/port:/out" \
 		-v "$ROOT/$SO:/work/port/godot/bin/liboriginal_audio.linux.template_release.arm64.so:ro" \
 		-v "$ROOT/$OUT/port/candidate_bgm_bridge.gd:/work/port/godot/services/first_arrival_bgm_bridge.gd:ro" \
@@ -58,6 +63,9 @@ if [ "${SKIP_PORT:-0}" != 1 ]; then
 		timeout 900 godot --path /work/port/godot --audio-driver PulseAudio --rendering-method gl_compatibility --script res://tests/opening/run_opening_trace_emitter.gd > /out/godot.log 2>&1 || true
 		grep -E "opening frame timing|^PASS|^FAIL|SCRIPT ERROR" /out/godot.log | head -10'
 fi
+# T-39230: the port trace counts only if its run passed the Parity gate.
+docker run --rm --name "$NAME-parity" -e PYTHONDONTWRITEBYTECODE=1 \
+	-v "$ROOT:/work:ro" -w /work tokimemo-recovery python3 tools/port/parity_gate.py "$OUT/port"
 exec docker run --rm --name "$NAME-compare" -e PYTHONDONTWRITEBYTECODE=1 -v "$ROOT:/work" -w /work tokimemo-recovery \
 	python3 tools/port/opening_trace.py --config config/port/opening-trace-projection.json \
 	--native-dir "$OUT/native/part1" --native-dir "$OUT/native/part2" --port-trace "$OUT/port/opening-trace.port.jsonl" --out "$OUT/compare"

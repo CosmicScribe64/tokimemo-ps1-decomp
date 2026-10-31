@@ -35,6 +35,8 @@ var page_titles: Array[String] = []
 var fidelity_badge: Label
 var language_badge: Label
 var preset_buttons: Dictionary = {}
+## T-39230: focus keys locked by Parity mode in the last rebuild.
+var parity_locked: Array[String] = []
 var close_prompt: PanelContainer
 var loading_panel: PanelContainer
 var _loading := false
@@ -103,6 +105,7 @@ func rebuild() -> void:
 	widgets.button(footer, "Return to game", request_close)
 	_build_close_prompt()
 	_build_loading_panel()
+	parity_locked = widgets.lock_parity_rows(ctx.parity_active(), not ctx.parity_forced_by().is_empty())
 	var restore_tab := page_titles.find(previous_title)
 	_select_page(clampi(restore_tab if restore_tab >= 0 else previous_tab, 0, navigation.size() - 1))
 	_restore_scroll(tabs, scroll_positions)
@@ -146,7 +149,12 @@ func _update_badges() -> void:
 	var changes: Array[String] = ctx.fidelity_changes()
 	var preset: String = ctx.current_preset()
 	for name: String in preset_buttons: preset_buttons[name].set_pressed_no_signal(name == preset)
-	if changes.is_empty():
+	if ctx.parity_active():
+		var forced: String = ctx.parity_forced_by()
+		fidelity_badge.text = "Parity mode: ON (original game, enhancements locked%s)" % ("; forced by " + forced if not forced.is_empty() else "")
+		fidelity_badge.add_theme_color_override("font_color", Widgets.PARITY_COLOR)
+		if not changes.is_empty(): fidelity_badge.text += " NOT CLEAN: " + ", ".join(changes)
+	elif changes.is_empty():
 		fidelity_badge.text = "Original fidelity: ON"
 		fidelity_badge.add_theme_color_override("font_color", Color("9fd68f"))
 	else:
@@ -174,6 +182,15 @@ func select_preset(name: String) -> void:
 	if not result.display.is_empty(): preview_display()
 	set_notice(result.error if not str(result.error).is_empty() else "%s preset applied." % PRESET_NAMES[name])
 	_update_badges()
+
+## T-39230: Game page play mode row. Entering Parity writes the original value
+## of every locked key at once; the display draft follows the saved display.
+func select_mode(name: String) -> void:
+	var error: String = ctx.set_play_mode(name)
+	if error.is_empty() and runtime.preferences.pending.is_empty():
+		draft = runtime.preferences.settings.display.duplicate(true)
+	rebuild()
+	set_notice(error if not error.is_empty() else ("Parity mode: the original game. Enhancements are locked." if name == "parity" else "Modern mode: every option is unlocked."))
 
 func page(title: String) -> VBoxContainer:
 	var scroll := ScrollContainer.new(); scroll.name = title.replace("&", "and").replace(" ", "_"); tabs.add_child(scroll)

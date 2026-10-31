@@ -12,8 +12,46 @@ const CHOICE_NAMES := {"original": "Original (4:3)", "wide": "Widescreen", "auto
 	"xbox": "Xbox", "playstation": "PlayStation", "nintendo": "Nintendo"}
 const TAG_COLOR := Color("e9c77d")
 const NOTE_COLOR := Color("a7bbb2")
+const PARITY_COLOR := Color("9fd0e8")
+const Registry = preload("res://services/feature_registry.gd")
+const Parity = preload("res://services/parity_mode.gd")
 
 var focus_items: Dictionary = {}
+
+## T-39230: in Parity mode every row whose registry entries are pinned or
+## refused is disabled (it stays focusable so the badge can be read) and
+## carries a "Parity" badge. `forced` also locks the play mode row, which a
+## launch option owns for the session. Returns the locked focus keys.
+func lock_parity_rows(active: bool, forced: bool = false) -> Array[String]:
+	var locked: Array[String] = []
+	if not active: return locked
+	for key: String in focus_items:
+		var ids: Array = Registry.row_entries(key)
+		if not Registry.row_locked_in_parity(key) and not (forced and "profile.mode" in ids): continue
+		var control: Control = focus_items[key]
+		if control is BaseButton: (control as BaseButton).disabled = true
+		elif control is Range: (control as Range).editable = false
+		control.set_meta("parity_locked", true)
+		control.tooltip_text = Parity.FORCED_REFUSAL if forced and "profile.mode" in ids else Parity.REFUSAL
+		_parity_badge(control)
+		locked.append(key)
+	return locked
+
+## Buttons get the badge in their text; option and slider rows get a badge
+## label in their title row, like the existing "[opening only]" tags.
+func _parity_badge(control: Control) -> void:
+	var row: Node = null
+	if control is OptionButton: row = control.get_parent()
+	elif control is Range and control.get_parent() != null and control.get_parent().get_child_count() > 0:
+		row = control.get_parent().get_child(0)
+	if row is HBoxContainer:
+		var badge := Label.new(); badge.text = "[" + Parity.BADGE + "]"
+		badge.add_theme_color_override("font_color", PARITY_COLOR); badge.add_theme_font_size_override("font_size", 14)
+		badge.set_meta("settings_tag", Parity.BADGE); badge.set_meta("parity_badge", true)
+		row.add_child(badge)
+		if control is OptionButton: row.move_child(badge, control.get_index())
+	elif control is Button:
+		(control as Button).text += "  [" + Parity.BADGE + "]"
 
 func register(control: Control, key: String) -> void:
 	control.set_meta("settings_focus_key", key)

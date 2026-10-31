@@ -41,6 +41,15 @@ Pass results: exact_pass, known_diff_stable, known_diff_improved,
 known_diff_clean_except_exclusions, promote, unsynchronizable_listed. Everything
 else fails the suite.
 
+Parity gate (T-39230): a captures file must pin the port run's
+``parity-mode.json`` (``port_parity``, and ``timing.port_parity`` for frame
+timing), and tools/port/parity_gate.py must accept it, before anything is
+compared; otherwise the input is invalid (exit 2). A modern-invariance run is
+never accepted here: it is compared only against a Parity run, by
+tools/port/parity_invariance.py.
+``captures-from-pairs`` needs ``--port-parity`` (and ``--timing-parity`` with
+``--timing-transitions``). The plan runs the port step with TOKIMEMO_PARITY=1.
+
 Reports and images go to a new directory under .asset-cache (or outside the
 repository); the tool refuses a repository path elsewhere.
 Exit codes: 0 suite passed, 1 a result failed, 2 invalid input.
@@ -57,10 +66,12 @@ from PIL import Image
 
 try:
     from tools.port import compare_capture_pair as gate
+    from tools.port import parity_gate
     from tools.port import playtest_catalog
     from tools.port import rgb555_diagnostic as rgb555
 except ModuleNotFoundError:  # run as a script from tools/port
     import compare_capture_pair as gate
+    import parity_gate
     import playtest_catalog
     import rgb555_diagnostic as rgb555
 
@@ -217,10 +228,27 @@ def timing_tables(captures, base, root):
     return {"pad": pad, "reference": reference, "port": port}
 
 
+def require_parity(base, spec, what):
+    """The pinned parity-mode.json of a port run, accepted by parity_gate."""
+    if spec is None:
+        raise Invalid("%s: no port_parity pin; the port run must pass the Parity gate (parity-mode.json)" % what)
+    path = pinned_file(base, spec)
+    try:
+        return parity_gate.check_identity(parity_gate.load_identity(path))
+    except parity_gate.ParityError as error:
+        raise Invalid("%s: %s" % (what, error))
+
+
 def compare(catalog, captures, base, out, keys=None, groups=None, root=ROOT):
     if captures.get("schema") != CAPTURES_SCHEMA:
         raise Invalid("unsupported captures file")
     entries = select(catalog, keys, groups)
+    # T-39230: fail fast unless the port side ran in Parity mode.
+    play_modes = {}
+    if captures.get("frames"):
+        play_modes["frames"] = require_parity(base, captures.get("port_parity"), "frame captures")
+    if captures.get("timing") is not None:
+        play_modes["timing"] = require_parity(base, captures["timing"].get("port_parity"), "frame timing")
     out.mkdir(parents=True, exist_ok=False)
     timing = timing_tables(captures, base, root)
     frames = captures.get("frames", {})
@@ -258,15 +286,31 @@ def compare(catalog, captures, base, out, keys=None, groups=None, root=ROOT):
               "catalog_sha256": hashlib.sha256(json.dumps(catalog, sort_keys=True).encode()).hexdigest(),
               "captures_sha256": hashlib.sha256(json.dumps(captures, sort_keys=True).encode()).hexdigest(),
               "counts": counts, "failed": failed, "promote": promote, "repin_advised": repin,
+              "port_play_modes": play_modes,
               "results": results}
     with (out / "suite-report.json").open("x") as handle:
         json.dump(report, handle, indent=1, sort_keys=True)
     return report
 
 
-def captures_from_pairs(pairs_dir, out_file, catalog, transitions=None, pad=None):
+def captures_from_pairs(pairs_dir, out_file, catalog, transitions=None, pad=None, port_parity=None, timing_parity=None):
     """Captures file from pair-<observer key>.json manifests (rei_stage_capture_pairs.py output),
-    optionally with an opening frame-timing transitions.json for one fixture pad."""
+    optionally with an opening frame-timing transitions.json for one fixture pad. port_parity
+    (and timing_parity with transitions) is the port run's parity-mode.json; it is checked here
+    and pinned so compare checks it again."""
+    if port_parity is None:
+        raise Invalid("--port-parity is required: the port run's parity-mode.json")
+    if transitions is not None and timing_parity is None:
+        raise Invalid("--timing-parity is required with --timing-transitions")
+    pins = {}
+    for name, path in (("frames", port_parity), ("timing", timing_parity)):
+        if path is None:
+            continue
+        try:
+            parity_gate.check_identity(parity_gate.load_identity(path))
+        except parity_gate.ParityError as error:
+            raise Invalid("%s: %s" % (name, error))
+        pins[name] = {"path": str(Path(path).absolute()), "sha256": sha256(path)}
     pairs_dir = Path(pairs_dir).absolute()
     observer = {e["port_observer_key"]: e["key"] for e in catalog["checkpoints"] if e["kind"] == "frame"}
     frames = {}
@@ -283,9 +327,10 @@ def captures_from_pairs(pairs_dir, out_file, catalog, transitions=None, pad=None
         frames[observer[observer_key]]["pair_manifest"] = {"path": str(manifest), "sha256": sha256(manifest)}
     if not frames:
         raise Invalid("no pair manifests in %s" % pairs_dir)
-    captures = {"schema": CAPTURES_SCHEMA, "source": str(pairs_dir), "frames": frames}
+    captures = {"schema": CAPTURES_SCHEMA, "source": str(pairs_dir), "frames": frames, "port_parity": pins["frames"]}
     if transitions is not None:
-        captures["timing"] = {"pad": str(pad), "port_transitions": {"path": str(Path(transitions).absolute()), "sha256": sha256(transitions)}}
+        captures["timing"] = {"pad": str(pad), "port_transitions": {"path": str(Path(transitions).absolute()), "sha256": sha256(transitions)},
+                              "port_parity": pins["timing"]}
     with Path(out_file).open("x") as handle:
         json.dump(captures, handle, indent=1, sort_keys=True)
     return frames
@@ -321,7 +366,7 @@ def plan(entries, out, native_state, port_bundle, frames, shots, input_args=(), 
                "--latency-basis", "T-39008 latency_probe onsets (text-window clear, stage8 white boxes)"]
     return {"schema": "tokimemo.differential-capture-plan.v1", "out": str(rel_out),
             "keys": [e["key"] for e in entries],
-            "env": {"OPENING_TIMING_BUNDLE": str(repo_relative(port_bundle, root))},
+            "env": {"OPENING_TIMING_BUNDLE": str(repo_relative(port_bundle, root)), "TOKIMEMO_PARITY": "1"},
             "steps": [{"name": "native", "image": "tokimemo-emu", "argv": native},
                       {"name": "port", "image": "tokimemo-port-gui-test", "argv": port},
                       {"name": "pairs", "image": "tokimemo-recovery", "argv": pairing}]}
@@ -349,6 +394,8 @@ def main(argv=None):
     p.add_argument("--out", type=Path, required=True, help="new captures JSON file")
     p.add_argument("--timing-transitions", type=Path, help="run_opening_frame_timing_route.gd transitions.json")
     p.add_argument("--timing-pad", choices=["2", "3"], help="fixture pad of that run")
+    p.add_argument("--port-parity", type=Path, help="the port run's parity-mode.json (required, T-39230)")
+    p.add_argument("--timing-parity", type=Path, help="parity-mode.json of the frame-timing run (required with --timing-transitions)")
     args = parser.parse_args(argv)
     try:
         catalog = playtest_catalog.load(args.catalog)
@@ -358,7 +405,8 @@ def main(argv=None):
         if args.cmd == "captures-from-pairs":
             if (args.timing_transitions is None) != (args.timing_pad is None):
                 raise Invalid("--timing-transitions and --timing-pad go together")
-            frames = captures_from_pairs(args.pairs_dir, args.out, catalog, args.timing_transitions, args.timing_pad)
+            frames = captures_from_pairs(args.pairs_dir, args.out, catalog, args.timing_transitions, args.timing_pad,
+                                         args.port_parity, args.timing_parity)
             print(json.dumps({"captures": str(args.out), "frames": len(frames)}))
             return 0
         out = guarded_output(args.out)

@@ -12,11 +12,16 @@ const Context = preload("res://ui/settings/settings_context.gd")
 const MARKER_SCHEMA := "tokimemo.port-welcome.v1"
 const DEFAULT_MARKER := "user://welcome-step.json"
 const WINDOW_NAMES := {"windowed": "Window", "borderless": "Fullscreen"}
+## T-39230: the Welcome step also offers the Parity / Modern play mode.
+const Parity = preload("res://services/parity_mode.gd")
 
 var runtime: Node
 var marker_path := DEFAULT_MARKER
 var language := "en"
 var preset := "original"
+## 'modern' preselected (the language and preset choices apply); 'parity'
+## locks both to the original game. A forced launch starts at 'parity'.
+var play_mode := ""
 ## Starts as the saved display mode; see _build().
 var window_mode := ""
 var notice: Label
@@ -52,6 +57,7 @@ func _build() -> void:
 	var widgets := Widgets.new(); widgets.focus_items = focus_items; focus_items.clear()
 	ctx = Context.new(runtime, self, widgets)
 	if window_mode.is_empty(): window_mode = _saved_mode()
+	if play_mode.is_empty(): play_mode = "parity" if _parity_active() else "modern"
 	var shade := ColorRect.new(); shade.color = Color("0b1716"); shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT); add_child(shade)
 	var center := CenterContainer.new(); center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT); add_child(center)
 	var card := PanelContainer.new(); center.add_child(card)
@@ -65,6 +71,9 @@ func _build() -> void:
 		widgets.note(box, "English is not installed in this build yet. Japanese (Original) will be used.", "english_unavailable")
 	widgets.option(box, "Preset", ["original", "modern"], preset, func(v: String) -> void: preset = v,
 		"", {"original": "Original visuals (PS1 exact)", "modern": "Modern English"})
+	widgets.option(box, "Play mode", Parity.MODES, play_mode, func(v: String) -> void: play_mode = v; _acknowledged_fallback = false; _build.call_deferred(),
+		"", Parity.LABELS)
+	widgets.note(box, Parity.EXPLANATION, "parity_explanation")
 	widgets.option(box, "Window", ["windowed", "borderless"], window_mode, func(v: String) -> void: window_mode = v,
 		"", WINDOW_NAMES)
 	widgets.button(box, "Try window setting", _try_window, "try_window")
@@ -74,6 +83,7 @@ func _build() -> void:
 	keep_row.visible = not runtime.preferences.pending.is_empty()
 	notice = widgets.note(box, "")
 	widgets.button(box, "Continue", confirm, "continue")
+	widgets.lock_parity_rows(play_mode == "parity", _forced())
 	_close_focus_loop(focus_items["Game language"], focus_items["continue"])
 	(focus_items["Game language"] as Control).call_deferred("grab_focus")
 
@@ -82,6 +92,12 @@ func _build() -> void:
 func _close_focus_loop(first: Control, last: Control) -> void:
 	first.focus_previous = first.get_path_to(last); first.focus_neighbor_top = first.get_path_to(last)
 	last.focus_next = last.get_path_to(first); last.focus_neighbor_bottom = last.get_path_to(first)
+
+func _parity_active() -> bool:
+	return runtime.preferences.has_method("parity_active") and bool(runtime.preferences.parity_active())
+
+func _forced() -> bool:
+	return "parity_forced_by" in runtime.preferences and not str(runtime.preferences.parity_forced_by).is_empty()
 
 func _saved_mode() -> String:
 	return str(runtime.preferences.settings.display.get("mode", "windowed"))
@@ -140,6 +156,13 @@ func confirm() -> void:
 			# The mode was refused (error shown); the next Continue keeps the saved mode.
 			_sync_window_choice()
 		return
+	if play_mode == "parity":
+		# Parity pins language and preset to the original game in one write.
+		if not _forced() and not runtime.preferences.set_mode("parity"):
+			notice.text = str(runtime.preferences.error); return
+		_finish(); return
+	if _parity_active() and not _forced() and not runtime.preferences.set_mode("modern"):
+		notice.text = str(runtime.preferences.error); return
 	if not _acknowledged_fallback:
 		var applied: Dictionary = ctx.apply_preset(preset, false)
 		var errors: Array[String] = []

@@ -12,7 +12,12 @@
 # rendering driver, offline sink bound over bgm_sink.gd, no PulseAudio. Both modes write
 # frames.tsv, audio-blocks.tsv and route-speed.json for tools/port/compare_route_modes.py.
 # Exit status is the route's: 0 only if every substep matches the fixture.
+# T-39230: the port side runs in Parity mode (TOKIMEMO_PARITY=1 by default) and the
+# route fails fast without it. MODERN_INVARIANCE=1 is refused (see below).
 set -eu
+# T-39230: this runner's output is compared with the original, so a modern-invariance
+# run is refused here; tools/port/run_parity_invariance.sh is the only invariance entry.
+[ "${MODERN_INVARIANCE:-0}" = 0 ] || { echo "MODERN_INVARIANCE=1 is refused: this run is compared with the original; use tools/port/run_parity_invariance.sh"; exit 2; }
 cd "$(dirname "$0")/../.."
 ROOT=$PWD
 FAST=0
@@ -41,7 +46,7 @@ fi
 shasum -a 256 "$SO" "$BRIDGE" "$BUNDLE/manifest.json" port/godot/tests/opening/run_opening_frame_timing_route.gd port/godot/tests/fixtures/opening_frame_timing.json port/godot/services/prologue_media_queue.gd port/godot/services/opening_audio_rules.gd port/godot/services/opening_audio_bridge.gd port/godot/app/first_arrival_boot.gd port/godot/flow/prologue_arrival.gd port/godot/rules/prologue_text_work.gd \
 	"$SINK" port/godot/tests/route_receipts.gd port/godot/tests/fast_route/fast_route.gd port/godot/tests/run_installed_next_arrival_boundary.gd > "$OUT/hashes.txt"
 printf 'mode %s\n' "$([ "$FAST" = 1 ] && echo fast || echo realtime)" >> "$OUT/hashes.txt"
-exec docker run --rm --name "$NAME" --cpus=4 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE=12 -e TIMED_ENTRY_PAD="$PAD" \
+exec docker run --rm --name "$NAME" --cpus=4 -e TOKIMEMO_PARITY="${TOKIMEMO_PARITY:-1}" -e MODERN_INVARIANCE=0 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE=12 -e TIMED_ENTRY_PAD="$PAD" \
 	-e TOKIMEMO_FAST_ROUTE="$FAST" -e GODOT_MODE_ARGS="$GODOT_MODE_ARGS" -e ROUTE_AUDIO_WAV="${ROUTE_AUDIO_WAV:-}" \
 	-v "$ROOT:/work" -v "$ABS_OUT:/out" \
 	-v "$ABS_SO:/work/port/godot/bin/liboriginal_audio.linux.template_release.arm64.so:ro" \

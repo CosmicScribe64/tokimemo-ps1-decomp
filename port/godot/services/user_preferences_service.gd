@@ -7,6 +7,9 @@ const SCHEMA := "tokimemo.port-settings.v2"
 const SCHEMA_V1 := "tokimemo.port-settings.v1"
 const Remaps = preload("res://services/input_remap_service.gd")
 const Presets = preload("res://services/settings_presets.gd")
+## T-39230: Parity mode (profile.mode) and the feature registry it enforces.
+const Parity = preload("res://services/parity_mode.gd")
+const Registry = preload("res://services/feature_registry.gd")
 const BUSES := ["Master", "Voice", "BGM", "SFX", "Movie"]
 const WING_ART_MODES := ["off", "seasonal", "scene", "fixed:yozakura", "fixed:spring_day",
 	"fixed:summer", "fixed:autumn", "fixed:winter", "fixed:school", "fixed:park", "fixed:town",
@@ -16,6 +19,7 @@ const WING_ART_SCENE_VALUES := ["auto", "off", "seasonal", "scene", "fixed:yozak
 	"fixed:seaside", "fixed:legend_tree"]
 const ENUMS := {
 	"profile.preset": ["original", "modern", "custom"],
+	"profile.mode": ["parity", "modern"],
 	"display.mode": ["windowed", "borderless", "exclusive"],
 	## Widescreen framing (T-30001 WP5): the existing enum is kept, so
 	## display.aspect is the framing key and display.filter the scaling key.
@@ -52,11 +56,13 @@ const V2_KEYS := ["profile.preset", "display.wing_fill", "display.ui_scale", "di
 	"display.size_mode", "controls.prompt_style", "accessibility.auto_advance",
 	"accessibility.subtitles", "accessibility.text_box", "language.bundle", "language.allow_draft_images",
 	"display.wing_art", "display.wing_art_command", "display.wing_art_story", "display.wing_art_other",
-	"accessibility.reduce_motion"]
-## Keys added to v2 after it shipped (T-39220). A v2 file written before them
-## simply takes the default; their absence is not reported as a reset.
+	"accessibility.reduce_motion", "profile.mode"]
+## Keys added to v2 after it shipped (T-39220, T-39230). A v2 file written
+## before them simply takes the default; their absence is not reported as a
+## reset. A file without profile.mode is migrated to 'modern', the behaviour
+## it was written under.
 const V2_LATE_KEYS := ["display.wing_art", "display.wing_art_command", "display.wing_art_story",
-	"display.wing_art_other", "accessibility.reduce_motion"]
+	"display.wing_art_other", "accessibility.reduce_motion", "profile.mode"]
 ## v1 accepted files without these keys.
 const V1_OPTIONAL_KEYS := ["language.dialogue_manifest", "language.dialogue_sha256",
 	"language.ui_text_manifest", "language.ui_text_sha256"]
@@ -79,11 +85,19 @@ var migrated := false
 var reset_keys: Array[String] = []
 ## Unknown "section.key" names dropped on load.
 var dropped_keys: Array[String] = []
+## Locked keys a saved Parity profile held away from their original values
+## (a hand-edited file); load_preferences restores the originals and lists them.
+var parity_relocked: Array[String] = []
+## "--parity" or "TOKIMEMO_PARITY" when the launch forced Parity mode for this
+## session, else "". A forced session keeps the saved profile in _unforced and
+## writes only host settings back into it.
+var parity_forced_by := ""
+var _unforced: Dictionary = {}
 
 static func defaults() -> Dictionary:
 	var buses := {}
 	for bus: String in BUSES: buses[bus] = {"volume": 1.0, "mute": false}
-	return {"profile": {"preset": "original"},
+	return {"profile": {"preset": "original", "mode": "modern"},
 		"display": {"mode": "windowed", "width": 960, "height": 720, "monitor": 0,
 		"aspect": "original", "filter": "integer", "vsync": true, "fps": 60, "long_confirmation": false,
 		"wing_fill": "black", "ui_scale": 1.0, "bars": "black", "size_mode": "preset", "wing_art": "off",
@@ -204,15 +218,16 @@ func _decode(parsed: Variant) -> Dictionary:
 
 func load_preferences() -> bool:
 	settings = defaults(); pending = {}; recovered = false; migrated = false; error = ""
-	reset_keys = []; dropped_keys = []
-	if not FileAccess.file_exists(path): return true
+	reset_keys = []; dropped_keys = []; parity_relocked = []; _unforced = {}
+	if not FileAccess.file_exists(path):
+		_reapply_force(); return true
 	var outcome := _decode(_read(path))
 	if outcome.is_empty():
 		outcome = _decode(_read(path + ".backup"))
 		recovered = true
 	if outcome.is_empty():
 		error = "Settings were damaged. Safe defaults are active."
-		return false
+		_reapply_force(); return false
 	settings = outcome.settings
 	reset_keys.assign(outcome.reset_keys); dropped_keys.assign(outcome.dropped_keys)
 	migrated = outcome.get("migrated", false)
@@ -227,15 +242,106 @@ func load_preferences() -> bool:
 		var checked := sanitize(previous)
 		settings.display = checked.settings.display if marker.get("previous") is Dictionary else defaults().display
 		recovered = true
-	if recovered or migrated or not reset_keys.is_empty() or not dropped_keys.is_empty(): return save()
-	return true
+	# A saved Parity profile is re-locked: a locked key edited away from its
+	# original value is restored and reported, never trusted.
+	if settings.profile.mode == "parity":
+		parity_relocked = Parity.violations(settings, defaults())
+		if not parity_relocked.is_empty():
+			settings = Parity.lock(settings, defaults())
+			for name: String in parity_relocked: if name not in reset_keys: reset_keys.append(name)
+	var loaded_ok := true
+	if recovered or migrated or not reset_keys.is_empty() or not dropped_keys.is_empty(): loaded_ok = save()
+	_reapply_force()
+	return loaded_ok
+
+# --- Parity mode (T-39230) ---------------------------------------------------
+
+## True in a saved Parity profile or a session forced by the launch.
+func parity_active() -> bool:
+	return not parity_forced_by.is_empty() or settings.profile.mode == "parity"
+
+## Forces Parity for this session only (--parity / TOKIMEMO_PARITY=1). The
+## saved profile, including its mode and enhancement values, is kept aside and
+## only host settings changed during the session are written back.
+func force_parity(by: String) -> void:
+	if by.is_empty(): return
+	if parity_forced_by.is_empty(): _unforced = settings.duplicate(true)
+	parity_forced_by = by
+	settings = Parity.lock(settings, defaults())
+	settings.profile.mode = "parity"
+	changed.emit(effective_settings())
+
+func _reapply_force() -> void:
+	if parity_forced_by.is_empty(): return
+	var by := parity_forced_by; parity_forced_by = ""
+	force_parity(by)
+
+## Switches the saved play mode. Entering Parity writes every locked key's
+## original value in the same atomic write (so the preset row, the badge and
+## the runtime all see the original game at once). Leaving Parity keeps those
+## original values; the player then picks a preset or changes options.
+func set_mode(name: String) -> bool:
+	if name not in Parity.MODES: error = "Unknown play mode."; return false
+	if not parity_forced_by.is_empty(): error = Parity.FORCED_REFUSAL; return false
+	if name == settings.profile.mode: return true
+	if not pending.is_empty(): error = "Keep or revert the current display change first."; return false
+	var changes: Dictionary = {"profile.mode": name}
+	if name == "parity": changes.merge(Parity.locked_values(defaults()))
+	return _write(changes, true, true)
+
+## Atomic write of any registered keys, window keys included, outside the
+## display preview (the invariance harness applies whole profiles with it).
+## Parity refusals apply as for every other write.
+func apply_profile(changes: Dictionary) -> bool:
+	if not pending.is_empty(): error = "Keep or revert the current display change first."; return false
+	return _write(changes, true, true)
+
+## "" when the "section.key" may be set to value now, else the refusal.
+func parity_refusal(name: String, value: Variant) -> String:
+	if not parity_active(): return ""
+	if name == "profile.mode" and not parity_forced_by.is_empty(): return Parity.FORCED_REFUSAL
+	return Parity.REFUSAL if not Parity.refused_changes({name: value}, defaults()).is_empty() else ""
+
+## Settings written to disk: the session settings, or in a forced session the
+## saved profile with the session's host settings copied in.
+func _persisted() -> Dictionary:
+	if parity_forced_by.is_empty(): return settings
+	for name: String in Registry.preference_ids():
+		if Registry.parity_policy(name) != "host" or name == "profile.mode": continue
+		var parts := name.split(".")
+		_unforced[parts[0]][parts[1]] = Parity._copy(settings[parts[0]][parts[1]])
+	return _unforced
+
+## The display recovery marker written to disk. In a forced session its
+## displays are the saved profile's display with only the session's host keys
+## copied in, so a relaunch that recovers from the marker never restores the
+## locked Parity values into the saved profile.
+func _persisted_marker() -> Dictionary:
+	if parity_forced_by.is_empty() or pending.is_empty(): return pending
+	var marker := pending.duplicate(true)
+	marker.previous = _host_display(pending.previous)
+	marker.candidate = _host_display(pending.candidate)
+	return marker
+
+func _host_display(session_display: Dictionary) -> Dictionary:
+	var result: Dictionary = _unforced.display.duplicate(true)
+	for name: String in Registry.preference_ids():
+		if not name.begins_with("display.") or Registry.parity_policy(name) != "host": continue
+		var key := name.trim_prefix("display.")
+		if session_display.has(key): result[key] = Parity._copy(session_display[key])
+	return result
 
 func _read(file_path: String) -> Variant:
 	if not FileAccess.file_exists(file_path) or FileAccess.get_size(file_path) > 131072: return null
 	return JSON.parse_string(FileAccess.get_file_as_string(file_path))
 
 func save() -> bool:
-	var record := {"schema": SCHEMA, "settings": settings, "pending_display_boot_check": pending}
+	# Parity mode refuses to persist anything but the original game, whoever
+	# changed settings (pack pickers in settings_runtime write it directly).
+	if parity_active():
+		var broken := Parity.violations(settings, defaults())
+		if not broken.is_empty(): error = Parity.REFUSAL; return false
+	var record := {"schema": SCHEMA, "settings": _persisted(), "pending_display_boot_check": _persisted_marker()}
 	var absolute := ProjectSettings.globalize_path(path)
 	if DirAccess.make_dir_recursive_absolute(absolute.get_base_dir()) != OK:
 		error = "Cannot create the settings directory."; return false
@@ -265,15 +371,18 @@ func set_value(section: String, key: String, value: Variant) -> bool:
 func set_values(changes: Dictionary) -> bool:
 	return _write(changes, false)
 
-func _write(changes: Dictionary, allow_profile: bool) -> bool:
+func _write(changes: Dictionary, allow_profile: bool, allow_window: bool = false) -> bool:
 	if changes.is_empty(): return false
+	if parity_active():
+		if changes.has("profile.mode") and not parity_forced_by.is_empty(): error = Parity.FORCED_REFUSAL; return false
+		if not Parity.refused_changes(changes, defaults()).is_empty(): error = Parity.REFUSAL; return false
 	var candidate := settings.duplicate(true)
 	var touched: Array[String] = []
 	for name: Variant in changes:
 		var parts: PackedStringArray = str(name).split(".")
 		if parts.size() != 2 or not candidate.has(parts[0]) or not candidate[parts[0]].has(parts[1]):
 			error = "Unknown setting."; return false
-		if parts[0] == "display" and parts[1] not in LIVE_DISPLAY_KEYS:
+		if parts[0] == "display" and parts[1] not in LIVE_DISPLAY_KEYS and not allow_window:
 			error = "Window settings need the display preview."; return false
 		if parts[0] == "profile" and not allow_profile:
 			error = "Choose a preset with apply_preset."; return false
@@ -304,6 +413,7 @@ static func _follow_preset(candidate: Dictionary, touched: Array) -> void:
 ## Applies a preset bundle in one atomic write. 'custom' keeps every value.
 func apply_preset(name: String) -> bool:
 	if name not in Presets.NAMES: error = "Unknown preset."; return false
+	if parity_active() and name != "original": error = Parity.REFUSAL; return false
 	var changes := Presets.bundle(name)
 	changes["profile.preset"] = name
 	return _write(changes, true)
@@ -321,6 +431,8 @@ static func static_differs(values: Dictionary, key: String) -> bool:
 	var current: Variant = Presets.read(values, key)
 	if Presets.ORIGINAL.has(key): return not Presets.same(current, Presets.ORIGINAL[key])
 	if parts[0] in FIDELITY_NEUTRAL_SECTIONS: return false
+	# The play mode is reported by its own Parity badge, not as a presentation change.
+	if key == "profile.mode": return false
 	if parts[0] == "display" and parts[1] in FIDELITY_NEUTRAL_DISPLAY: return false
 	if parts[0] == "accessibility" and parts[1] in FIDELITY_NEUTRAL_ACCESSIBILITY: return false
 	if parts[0] == "accessibility" and parts[1] == "subtitles": return current == true
@@ -334,7 +446,7 @@ func fidelity_report() -> Dictionary:
 	for section: String in values:
 		for key: String in values[section]:
 			var name := section + "." + key
-			if name == "profile.preset" or not static_differs(values, name): continue
+			if section == "profile" or not static_differs(values, name): continue
 			if section == "language": language.append(name)
 			else: presentation.append(name)
 	return {"presentation_exact": presentation.is_empty(), "language_original": language.is_empty(),
@@ -342,6 +454,10 @@ func fidelity_report() -> Dictionary:
 
 func begin_display(candidate: Dictionary, now: float, first_launch: bool = false) -> bool:
 	if not pending.is_empty(): error = "Keep or revert the current display change first."; return false
+	if parity_active():
+		var display_changes := {}
+		for key: Variant in candidate: display_changes["display." + str(key)] = candidate[key]
+		if not Parity.refused_changes(display_changes, defaults()).is_empty(): error = Parity.REFUSAL; return false
 	var checked := settings.duplicate(true); checked.display = candidate
 	checked = validate(checked)
 	if checked.is_empty(): error = "Invalid display settings."; return false

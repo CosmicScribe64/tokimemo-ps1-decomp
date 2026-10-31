@@ -62,7 +62,7 @@ func _page_text(menu: Control, title: String) -> String:
 func _v1_pages(runtime: Node) -> void:
 	runtime.toggle_menu(); await process_frame
 	var menu: Control = runtime.menu
-	check(menu.page_titles == ["Language", "Display", "Audio", "Controls", "Text & Story"])
+	check(menu.page_titles == ["Language", "Display", "Audio", "Controls", "Text & Story", "Game"])
 	var all := "\n".join(_texts(menu))
 	for absent: String in ["Subtitle", "subtitle", "Colour", "Color", "colour filter"]:
 		if all.contains(absent): _fail("v1: hidden option is visible: " + absent)

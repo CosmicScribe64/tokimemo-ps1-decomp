@@ -8,6 +8,10 @@ const Session = preload("res://core/game_session.gd")
 const State = preload("res://rules/school_day_state.gd")
 const InputFrame = preload("res://core/input_frame.gd")
 const ExternalPath = preload("res://services/external_content_path.gd")
+## T-39230: quick save and quick load are registered features that Parity refuses.
+const Parity = preload("res://services/parity_mode.gd")
+const FEATURE_SAVE: String = "feature.quick_save"
+const FEATURE_LOAD: String = "feature.quick_load"
 const SOURCE_PROFILE: String = "687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3"
 const BEHAVIOR_PROFILE: String = "rest-week-7a7b095d-f5f9-v2"
 const SLOT: String = "quick"
@@ -113,9 +117,25 @@ func handle_input(app: Node, event: InputEvent) -> bool:
 	request(app, Request.SAVE if event.physical_keycode == KEY_F5 else Request.LOAD)
 	return true
 
+## T-39230: "" when the action may run now, else the Parity refusal. Parity is
+## read from the ModernSettings autoload. Without it, the launch options
+## (--parity / TOKIMEMO_PARITY=1) still force the refusal.
+static func parity_refusal(app: Node, action: Request) -> String:
+	var settings: Node = app.get_node_or_null("/root/ModernSettings") if app != null and app.is_inside_tree() else null
+	var preferences: Object = settings.get("preferences") if settings != null else null
+	var active: bool = not Parity.launch_forced_by().is_empty()
+	if preferences != null and preferences.has_method("parity_active"):
+		active = active or preferences.parity_active()
+	return Parity.refusal(FEATURE_SAVE if action == Request.SAVE else FEATURE_LOAD, active)
+
 ## Keyboard and pause-menu actions share the same admission and boundary guards.
+## Title Continue loads through here too, so Parity refuses it as a quick load.
 func request(app: Node, action: Request) -> bool:
 	if action not in [Request.SAVE, Request.LOAD]: return false
+	var refused: String = parity_refusal(app, action)
+	if not refused.is_empty():
+		_error(refused)
+		return false
 	if storage == null:
 		_error("Save controls are unavailable.")
 		return false

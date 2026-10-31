@@ -2,21 +2,28 @@
 
 Run in Docker: python3 -m unittest tools.port.test_rei_stage_capture_pairs
 """
+import contextlib
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
 import tempfile
 import unittest
+import unittest.mock
 
 from PIL import Image
 
 try:
     from tools.port import checkpoint_receipt
+    from tools.port import parity_gate
     from tools.port import rei_stage_capture_pairs as tool
 except ModuleNotFoundError:
     import checkpoint_receipt
+    import parity_gate
     import rei_stage_capture_pairs as tool
+
+PIN = parity_gate.load_pin()
 
 VSYNC_PC = 0x800ADABC
 
@@ -88,6 +95,11 @@ class Fixture:
             observed[key] = {"frame": frame, "counter": 0, "opening": {"prologue_line": 3, "D_801220E0": 0}}
         receipt = self.port / "rei-failure.json"
         receipt.write_text(json.dumps(dict({"observed": observed}, **(receipt_extra or {}))))
+        # T-39230: the legacy port run passed the Parity gate.
+        (self.port / "parity-mode.json").write_text(json.dumps({"schema": "tokimemo.parity-mode-identity.v1", "play_mode": "parity",
+                                                                "invariance_run": False, "violations": [], "gate": "passed",
+                                                                "registry_sha256": PIN["registry_sha256"],
+                                                                "locked_values_sha256": PIN["locked_values_sha256"]}))
         stamp = receipt.stat().st_mtime + (10 if observer_after_receipt else -10)
         os.utime(self.observer, (stamp, stamp))
 
@@ -282,7 +294,10 @@ def write_v2(port, failure=True, tamper=None, resign=False):
                               "png_sha256": hashlib.sha256(png.read_bytes()).hexdigest(),
                               "rgba8_sha256": checkpoint_receipt.rgba8_sha256(png)[0]},
             "clocks": {"frame_count": frame, "game_mode": 0x15, "mode_stage": stage, "mode_step": 0, "substep": sub},
-            "rng": {"draw_count": 7}, "settings": {"source": "synthetic", "language": "ja", "aspect": "original", "filter": "integer"},
+            "rng": {"draw_count": 7}, "settings": {"source": "synthetic", "language": "ja", "aspect": "original", "filter": "integer",
+                                                   "play_mode": "parity", "parity_violations": [], "invariance_run": False,
+                                                   "parity_registry_sha256": PIN["registry_sha256"],
+                                                   "parity_locked_values_sha256": PIN["locked_values_sha256"]},
             "content": {}, "renderer": {"engine": "4.7.2", "rendering_method": "gl_compatibility", "adapter": "", "vendor": "", "api": ""},
             "observer": {"path": "res://tests/support/checkpoint_observer.gd", "sha256": "1" * 64,
                          "producer": "res://tests/opening/run_installed_rei_banner.gd", "producer_sha256": "2" * 64},
@@ -307,6 +322,43 @@ class ReceiptV2Test(unittest.TestCase):
         tool.main(["--native-dir", str(fx.native), "--port-dir", str(fx.port), "--observer", str(fx.observer),
                    "--out", str(out), "--latency", "2", "--latency-basis", "synthetic"])
         return fx, out
+
+    def test_v2_receipts_must_prove_parity(self):
+        """T-39230: receipts without a clean Parity play mode are refused before pairing."""
+        cases = {"missing": lambda s: s.pop("play_mode"), "modern": lambda s: s.update(play_mode="modern"),
+                 "unclean": lambda s: s.update(parity_violations=["display.aspect"]),
+                 "invariance": lambda s: s.update(play_mode="modern", invariance_run=True),
+                 "stale registry": lambda s: s.update(parity_registry_sha256="0" * 64)}
+        for name, change in cases.items():
+            def tamper(receipts, change=change):
+                change(receipts["stage8-1"]["settings"])
+            with self.subTest(name), tempfile.TemporaryDirectory() as tmp:
+                with self.assertRaises(SystemExit) as raised:
+                    self.run_v2(Path(tmp), failure=False, tamper=tamper, resign=True)
+                self.assertIn("not Parity evidence", str(raised.exception))
+        # A modern-invariance run is never pair evidence, with or without MODERN_INVARIANCE=1,
+        # and the pair builder has no option that accepts one.
+        with tempfile.TemporaryDirectory() as tmp:
+            fx = Fixture(Path(tmp))
+            write_v2(fx.port, failure=False, resign=True,
+                     tamper=lambda receipts: [r["settings"].update(play_mode="modern", invariance_run=True) for r in receipts.values()])
+            argv = ["--native-dir", str(fx.native), "--port-dir", str(fx.port), "--observer", str(fx.observer),
+                    "--latency", "2", "--latency-basis", "synthetic"]
+            with unittest.mock.patch.dict("os.environ", {"MODERN_INVARIANCE": "1"}), self.assertRaises(SystemExit) as raised:
+                tool.main(argv + ["--out", str(Path(tmp) / "out")])
+            self.assertIn("not Parity evidence", str(raised.exception))
+            with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit) as raised:
+                tool.main(argv + ["--out", str(Path(tmp) / "out2"), "--modern-invariance"])
+            self.assertEqual(raised.exception.code, 2)
+
+    def test_legacy_run_without_parity_identity_is_refused(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fx = Fixture(Path(tmp))
+            (fx.port / "parity-mode.json").unlink()
+            with self.assertRaises(SystemExit) as raised:
+                tool.main(["--native-dir", str(fx.native), "--port-dir", str(fx.port), "--observer", str(fx.observer),
+                           "--out", str(Path(tmp) / "out"), "--latency", "2", "--latency-basis", "synthetic"])
+            self.assertIn("parity-mode.json", str(raised.exception))
 
     def test_v2_receipts_need_no_post_hoc_binding(self):
         from tools.port.compare_capture_pair import compare

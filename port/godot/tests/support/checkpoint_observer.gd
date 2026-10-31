@@ -17,6 +17,7 @@ const SELF_PATH := "res://tests/support/checkpoint_observer.gd"
 const NATIVE_SIZE := Vector2i(320, 240)
 const SOURCES := ["cpu_composed_image", "subviewport_1x_readback"]
 const CLOCK_KEYS := ["frame_count", "game_mode", "mode_stage", "mode_step", "substep"]
+const Parity = preload("res://services/parity_mode.gd")
 
 var out_dir: String
 var producer_path: String
@@ -40,15 +41,30 @@ static func rgba_sha256(image: Image) -> String:
 
 static func settings_identity(tree: SceneTree) -> Dictionary:
 	# Effective preferences when the ModernSettings autoload exists; otherwise the
-	# fidelity defaults are reported as such, never guessed.
+	# fidelity defaults are reported as such, never guessed. T-39230: the play
+	# mode comes from services/parity_mode.gd; without ModernSettings it is
+	# "unknown", which record() refuses.
+	var parity: Dictionary = Parity.identity(tree)
+	var mode := {"play_mode": parity.play_mode, "parity_forced_by": parity.forced_by,
+		"invariance_run": parity.invariance_run, "parity_violations": parity.violations,
+		"parity_registry_sha256": parity.registry_sha256, "parity_locked_values_sha256": parity.locked_values_sha256}
 	var node: Node = tree.root.get_node_or_null("ModernSettings") if tree != null else null
 	if node == null:
-		return {"source": "no ModernSettings node: fidelity defaults", "language": "ja", "aspect": "original", "filter": "integer"}
+		return mode.merged({"source": "no ModernSettings node: fidelity defaults", "language": "ja", "aspect": "original", "filter": "integer"})
 	var effective: Dictionary = node.preferences.effective_settings()
-	return {"source": "ModernSettings.effective_settings", "language": str(effective.language.text),
+	return mode.merged({"source": "ModernSettings.effective_settings", "language": str(effective.language.text),
 		"voice": str(effective.language.voice), "aspect": str(effective.display.aspect), "filter": str(effective.display.filter),
 		"text_pack_sha256": str(effective.language.text_sha256), "ui_text_pack_sha256": str(effective.language.ui_text_sha256),
-		"dialogue_pack_sha256": str(effective.language.dialogue_sha256)}
+		"dialogue_pack_sha256": str(effective.language.dialogue_sha256)})
+
+## T-39230 gate: "" when settings prove a clean Parity run or an explicit
+## modern-invariance run, else why the receipt is refused.
+static func parity_refusal(settings: Dictionary) -> String:
+	if settings.get("play_mode") == "parity":
+		var broken: Variant = settings.get("parity_violations", [])
+		return "" if broken is Array and broken.is_empty() else "Parity mode is not clean: %s" % [broken]
+	if settings.get("invariance_run") == true and settings.get("play_mode") == "modern": return ""
+	return "settings do not prove Parity mode (play_mode %s); run with --parity or TOKIMEMO_PARITY=1, or MODERN_INVARIANCE=1" % settings.get("play_mode", "missing")
 
 static func renderer_identity() -> Dictionary:
 	return {"engine": Engine.get_version_info().get("string", ""),
@@ -75,6 +91,9 @@ func record(key: String, image: Image, source: String, clocks: Dictionary, rng: 
 			return _refuse("%s: clock %s must be an integer" % [key, name])
 	if not rng.get("draw_count") is int:
 		return _refuse("%s: rng.draw_count must be an integer" % key)
+	var parity_error := parity_refusal(settings)
+	if not parity_error.is_empty():
+		return _refuse("%s: %s" % [key, parity_error])
 	var png := image.save_png_to_buffer()
 	var png_sha := sha256_bytes(png)
 	var png_path := out_dir.path_join(key + ".png")

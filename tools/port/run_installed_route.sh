@@ -96,7 +96,13 @@
 #              script's port "unsupported" rows; tools/port/run_route_driver.sh
 #              wraps this).
 # The tracked native library and bridge are never modified.
+# T-39230: the port side runs in Parity mode (TOKIMEMO_PARITY=1 by default; the
+# modern and playthrough observers default to 0) and the route fails fast without
+# it. MODERN_INVARIANCE=1 is refused (see below).
 set -eu
+# T-39230: this runner's output is compared with the original, so a modern-invariance
+# run is refused here; tools/port/run_parity_invariance.sh is the only invariance entry.
+[ "${MODERN_INVARIANCE:-0}" = 0 ] || { echo "MODERN_INVARIANCE=1 is refused: this run is compared with the original; use tools/port/run_parity_invariance.sh"; exit 2; }
 cd "$(dirname "$0")/../.."
 ROOT=$PWD
 FAST=0
@@ -198,8 +204,11 @@ case ${ROUTE_OBSERVER:-} in
 		printf 'route-script %s %s\n' "$(sha "$ROUTE_SCRIPT_ABS")" "$ROUTE_SCRIPT" >>"$OUT/candidate-hashes.txt" ;;
 	*) OBSERVER= ;;
 esac
+# Parity mode is the runner default; the modern and playthrough observers
+# apply modern preferences, so they default to modern mode.
+case ${ROUTE_OBSERVER:-} in modern|playthrough) PARITY_DEFAULT=0 ;; *) PARITY_DEFAULT=1 ;; esac
 if [ -n "$OBSERVER" ]; then
-	exec docker run --rm --name "tokimemo-route-$(basename "$OUT")" --cpus=4 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE=22 -e TIMED_ENTRY_PAD="${TIMED_ENTRY_PAD:-2}" \
+	exec docker run --rm --name "tokimemo-route-$(basename "$OUT")" --cpus=4 -e TOKIMEMO_PARITY="${TOKIMEMO_PARITY:-$PARITY_DEFAULT}" -e MODERN_INVARIANCE=0 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE=22 -e TIMED_ENTRY_PAD="${TIMED_ENTRY_PAD:-2}" \
 		-e OBSERVER="$OBSERVER" -e PLAYTEST_FRAMES="${PLAYTEST_FRAMES:-}" -e PLAYTEST_DAYS="${PLAYTEST_DAYS:-}" \
 		-e PLAYTEST_PRESSES="${PLAYTEST_PRESSES:-}" -e PLAYTEST_PRESS_EVERY="${PLAYTEST_PRESS_EVERY:-}" \
 		-e PLAYTEST_EXPECT_STOP="${PLAYTEST_EXPECT_STOP:-}" -e PLAYTEST_COMMANDS="${PLAYTEST_COMMANDS:-}" \
@@ -225,7 +234,7 @@ if [ -n "$OBSERVER" ]; then
 		grep -E "opening frame timing|^PASS|^FAIL|^PLAYTEST|^ROUTE|^DEV |SCRIPT ERROR|stopped at|New Game stopped|dev (resume|checkpoint)" /out/godot.log | head -20
 		exit $status'
 fi
-exec docker run --rm --name "tokimemo-route-$(basename "$OUT")" --cpus=4 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE="${REI_TARGET_STAGE:-10}" -e TOKIMEMO_ROUTE_DEADLINE="${TOKIMEMO_ROUTE_DEADLINE:-900}" \
+exec docker run --rm --name "tokimemo-route-$(basename "$OUT")" --cpus=4 -e TOKIMEMO_PARITY="${TOKIMEMO_PARITY:-1}" -e MODERN_INVARIANCE=0 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE="${REI_TARGET_STAGE:-10}" -e TOKIMEMO_ROUTE_DEADLINE="${TOKIMEMO_ROUTE_DEADLINE:-900}" \
 	-e TOKIMEMO_FAST_ROUTE="$FAST" -e GODOT_MODE_ARGS="$GODOT_MODE_ARGS" -e ROUTE_AUDIO_WAV="${ROUTE_AUDIO_WAV:-}" \
 	-v "$ROOT:/work" -v "$ABS_OUT:/out" \
 	-v "$ABS_SO:/work/port/godot/bin/liboriginal_audio.linux.template_release.arm64.so:ro" \
