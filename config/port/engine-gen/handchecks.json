@@ -83,6 +83,7 @@
   "normal_date_three_select": "hand check in tests/engine/scene_library_test.gd",
   "normal_date_three_select_init": "hand check in tests/engine/scene_library_test.gd",
   "normal_date_three_select_main": "hand check in tests/engine/scene_library_test.gd",
-  "talk_speak_part": "partly hand-checked (codes 0x10, 0x11, 0x8, 0x13, 0xFF, default) in tests/engine/scene_library_test.gd"
+  "talk_speak_part": "hand-checked speak codes 0x0 0x1 0x7 0xA 0xB 0xC 0xE 0xF 0x10 0x11 0x8 0x13 0xFF and the default in tests/engine/scene_library_test.gd",
+  "make_three_select": "hand check in tests/engine/scene_library_test.gd (split, reorder, sprintf double)"
  }
 }

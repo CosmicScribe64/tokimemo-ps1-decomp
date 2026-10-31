@@ -348,7 +348,7 @@
   "normal_date_move_place_main": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); no hand check either: the body is the mechanical translation of the C that no capture or test exercised (see the ticket notes)",
   "place_init2": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/scene_library_test.gd",
   "wait_sub_sub": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/scene_library_test.gd",
-  "make_three_select": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); no hand check either: the body is the mechanical translation of the C that no capture or test exercised (see the ticket notes)",
+  "make_three_select": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/scene_library_test.gd (split, reorder, sprintf double)",
   "junban_init": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/scene_library_test.gd",
   "normal_date_three_select": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/scene_library_test.gd",
   "normal_date_three_select_init": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/scene_library_test.gd",

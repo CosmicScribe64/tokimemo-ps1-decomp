@@ -33,6 +33,8 @@ func run() -> Array[String]:
 	_test_waits_and_selects()
 	_test_choice_menus()
 	_test_talk_speak_part()
+	_test_talk_speak_part_speaker_names()
+	_test_make_three_select()
 	_shutdown()
 	return failures
 
@@ -448,3 +450,107 @@ func _test_talk_speak_part() -> void:
 	renders.clear()
 	engine.call_c("talk_speak_part", [text, 0x110, 0, 0, 0, 0, 3])
 	_check(renders.size() == 1 and renders[0][0] == -0x80, "the speak code narrows to u8 (0x110 -> 0x10)")
+
+## A C string from memory (up to the first NUL).
+func _cstr(engine, address: int) -> String:
+	var out := PackedByteArray()
+	var cursor: int = address & 0xFFFFFFFF
+	while engine.memory.u8(cursor) != 0 and out.size() < 0x200:
+		out.append(engine.memory.u8(cursor))
+		cursor += 1
+	return out.get_string_from_ascii()
+
+## The speaker-name branches of talk_speak_part. The SDK's sprintf has its own tests (T-39314); here it is a double that
+## formats the one format the C uses with that many arguments ("%s " with one argument, "%sq%sq%s" with three), because
+## the format and name literals live in the executable's rodata, which invented memory does not hold. Voice playback is
+## off (the voice reference is zero), so only the speaker-name logic of each speak code runs.
+func _test_talk_speak_part_speaker_names() -> void:
+	var engine = _new()
+	var m = engine.memory
+	var talk_work: int = engine.modules.scene_library.G_TALK_WORK
+	var text: int = 0x80100000
+	var table: int = 0x80101000 # voice_table[0][0] -> a record whose clip_start and clip_end are 0
+	m.write_u32(table, 0x80101100)
+	m.write_u32(0x80101100, 0x80101200)
+	var frame: Array = [0] # engine.frame_base() inside talk_speak_part, learnt from the first sprintf destination
+	var log: Array = []
+	engine.set_stub("sprintf", func(args: Array) -> int:
+		var parts: Array = []
+		for k: int in range(2, args.size()):
+			parts.append(_cstr(engine, args[k]))
+		var formatted: String = ("q".join(parts)) if args.size() == 5 else (parts[0] + " ")
+		m.write_bytes(args[0] & 0xFFFFFFFF, formatted.to_ascii_buffer() + PackedByteArray([0]))
+		return formatted.length())
+	engine.set_stub("set_kanji_string", func(args: Array) -> int:
+		log.append(["kanji", args[0], args[1], args[2], _cstr(engine, args[3]) if args[3] & 0xFFFFFFFF < 0x800AF000 or args[3] & 0xFFFFFFFF > 0x800B4000 else "<rodata>", args[4]])
+		return 0)
+	engine.set_stub("talk_render", func(args: Array) -> int:
+		log.append(["render", args[0], args[1], args[2], _cstr(engine, args[3]), args[4], args[7]])
+		return 0)
+	engine.set_stub("strlen", func(args: Array) -> int:
+		var length: int = _cstr(engine, args[0]).length()
+		return length if length > 0 or args[0] & 0xFFFFFFFF < 0x800AF000 or args[0] & 0xFFFFFFFF > 0x800B4000 else 4) # a rodata literal: 4 bytes of Shift-JIS
+	m.write_bytes(engine.modules.scene_library.G_NAME_CODE_FAMILY, "AB".to_ascii_buffer() + PackedByteArray([0]))
+	m.write_bytes(engine.modules.scene_library.G_NAME_CODE_GIRL_SHORT, "XYZ".to_ascii_buffer() + PackedByteArray([0]))
+	m.write_u32(talk_work + 0x58, 2) # temp_s1 = 0x50
+	var line_wait: int = talk_work + 0x14
+	var line_auto: int = talk_work + 0x30
+	var line_clear: int = talk_work + 0x48
+	# [code, text, choice, [expected log], flag address or 0]
+	var cases: Array = [
+		[0x0, "hello", 0, [["kanji", -0x70, 0x50, 3, "AB ", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "hello", 0, 0]], line_wait],
+		[0x0, "hellonn", 0, [["kanji", -0x70, 0x50, 3, "AB ", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "hello", 0, 0]], line_wait],
+		[0x0, "hellonn", 1, [], 0],
+		[0xE, "hi", 0, [["kanji", -0x70, 0x50, 3, "AB ", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "hi", 0, 0]], 0],
+		[0x1, "hi", 0, [["kanji", -0x74, 0x50, 3, "XYZ ", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "hi", 0, 0]], line_wait],
+		[0x1, "hinn", 0, [["kanji", -0x74, 0x50, 3, "XYZ ", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "hi", 0, 0]], line_wait],
+		[0x1, "hinn", 1, [], 0],
+		[0xC, "hi", 0, [["kanji", -0x74, 0x50, 3, "XYZ ", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "hi", 0, 0]], line_auto],
+		[0xC, "hinn", 0, [["kanji", -0x74, 0x50, 3, "XYZ ", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "hi", 0, 0]], line_auto],
+		[0xF, "hinn", 1, [["kanji", -0x74, 0x50, 3, "XYZ ", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "hinn", 0, 0]], line_clear],
+		[0xB, "hi", 0, [["kanji", -0x78, 0x50, 3, "<rodata>", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "hi", 0, 0]], line_wait],
+		[0xB, "hinn", 0, [["kanji", -0x78, 0x50, 3, "<rodata>", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "hi", 0, 0]], line_wait],
+		[0xA, "hi", 0, [["kanji", -0x78, 0x50, 3, "<rodata>", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "hi", 0, 0]], line_wait],
+		[0x7, ">ABCDrest", 0, [["kanji", -0x78, 0x50, 3, "ABCD ", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "rest", 0, 0]], line_wait],
+		[0x7, "-ABCDEFrest", 0, [["kanji", -0x80, 0x50, 3, "ABCDEF ", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "rest", 0, 0]], line_wait],
+		[0x7, "+ABrest", 0, [["kanji", -0x70, 0x50, 3, "AB ", 0], ["kanji", -0x56, 0x50, 3, "<rodata>", 0], ["render", -0x48, 0x50, 3, "rest", 0, 0]], line_wait],
+	]
+	for c: Array in cases:
+		for flag: int in [line_wait, line_auto, line_clear]:
+			m.write_u32(flag, 0)
+		m.write_u32(talk_work + 0x0C, c[2]) # dialogue->choice
+		m.write_bytes(text, String(c[1]).to_ascii_buffer() + PackedByteArray([0]))
+		log.clear()
+		engine.call_c("talk_speak_part", [text, c[0], c[2], table, 0, 0, 3])
+		_check(not engine.halted(), "speak code 0x%X %s: %s" % [c[0], c[1], engine.failure()])
+		engine.clear_failure()
+		_check(log == c[3], "speak code 0x%X, text %s, choice %d: %s, wanted %s" % [c[0], c[1], c[2], log, c[3]])
+		if c[4] != 0:
+			_check(m.u32(c[4]) == 1, "speak code 0x%X sets its flag at +0x%X" % [c[0], c[4] - talk_work])
+		else:
+			_check(m.u32(line_wait) == 0 and m.u32(line_auto) == 0 and m.u32(line_clear) == 0, "speak code 0x%X, text %s, choice %d sets no flag" % [c[0], c[1], c[2]])
+	frame.clear()
+
+## make_three_select: the text "ab q cd q ef" style options are split at q or space (two bytes per step), copied to three
+## 0x40-byte buffers, and rewritten as "%sq%sq%s" in talk_choice_order.
+func _test_make_three_select() -> void:
+	var engine = _new()
+	var m = engine.memory
+	var seen: Array = []
+	engine.set_stub("sprintf", func(args: Array) -> int:
+		var parts: Array = []
+		for k: int in range(2, args.size()):
+			parts.append(_cstr(engine, args[k]))
+		seen.append(parts)
+		var formatted: String = "q".join(parts)
+		m.write_bytes(args[0] & 0xFFFFFFFF, formatted.to_ascii_buffer() + PackedByteArray([0]))
+		return formatted.length())
+	var source: int = 0x80100000
+	m.write_bytes(source, "abqcdqef".to_ascii_buffer() + PackedByteArray([0]))
+	var order: int = m.global_address("talk_choice_order")
+	m.write_u8(order, 2)
+	m.write_u8(order + 1, 0)
+	m.write_u8(order + 2, 1)
+	engine.call_c("make_three_select", [source])
+	_check(seen == [["ef", "ab", "cd"]], "options split into ab, cd, ef and chosen by talk_choice_order 2, 0, 1: %s" % [seen])
+	_check(_cstr(engine, source) == "efqabqcd", "the source text is rewritten: %s" % _cstr(engine, source))
