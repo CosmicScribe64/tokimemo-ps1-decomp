@@ -2653,6 +2653,18 @@ Merged `port/m1-game-memory` ([[tickets/T-39300-game-memory-model]]) into `port/
 
 At the first command select, 133 of 159 comparable GameState fields equal the emulator. The other 26 are engine-owned and are listed for [[tickets/T-39301-engine-api-core]] and [[tickets/T-39302-generic-ps1-renderer]]. The ticket stays In Progress until those fields are owned.
 
+## [2026-10-30] build | Generic PS1 renderer: DrawOTag capture and compare tooling
+
+`tools/emu/gpu_capture/` (`capture.lua`, `run.sh`, `extract.py`, `poison.py`, `capture_frame.sh`) records RAM and the GPU block of a save state before and after a chosen DrawOTag call in PCSX-Redux, and can resume the game over noise-filled frame buffers. Findings: DrawOTag is `func_8009CB9C`, the emulator runs the list synchronously, the draw area and offset come from the PutDrawEnv words libgpu keeps at `0x800DD5B8` (a loaded save state does not restore them), and the game draws with POLY_G4, FT4, GT4, TILE_1, SPRT, SPRT_16 and FILL only. [[tickets/T-39302-generic-ps1-renderer]], [[ps1-renderer]].
+
+## [2026-10-30] build | Generic PS1 renderer: model, extension, wrapper, tests
+
+`tools/port/native_render/gpu.hpp` (VRAM, GP0 decoder, ordering-table walk, rasterizer), `extension.cpp` (`OriginalGpu`), `port/godot/presentation/ps1_renderer.gd`, `port/godot/original_render.gdextension`. Build reproduces (two builds, SHA-256 `0a57ac81d162d27f961440110c7a30bd98a0ec75271175dcd899a2384c4642d8`). Tests in Docker: 35 C++ tests (512 checks, UBSan and ASan) and 161 Godot checks through the wrapper (`tools/port/run_render_tests.sh`). Nothing switched to the new renderer, the audio library is untouched. [[tickets/T-39302-generic-ps1-renderer]], [[ps1-renderer]].
+
+## [2026-10-30] build | Generic PS1 renderer matches the emulator on sampled frames
+
+29 frames from 28 save states (name entry, file select, prologue, command screen, school days, phone, events, VN scenes, saves) drawn from the RAM and VRAM before DrawOTag and compared with the emulator's VRAM after, on the real VRAM and again over noise-filled frame buffers: 52 of 58 comparisons exact over all 524,288 pixels, the other 6 (three phone frames) one pixel off by one 5-bit step. Two rules were fixed on the way: exact barycentric interpolation rounded to nearest (the plane version with truncated slopes missed 8 gradient pixels), and a dithered semi-transparent pixel blends at 8 bits and then dithers (3,008 pixels of one frame). A synthetic ordering table of invented primitives agreed except for scaled and rotated textures (830 pixels), lines (144), and texture flips (559, ignored by the emulator). [[tickets/T-39302-generic-ps1-renderer]], [[ps1-renderer]].
+
 ## [2026-10-30] ticket | M2 started: disc pack and renderer
 
 Moved [[tickets/T-39303-installed-disc-pack]] and [[tickets/T-39302-generic-ps1-renderer]] to In Progress. Each runs in its own worktree (`port/m2-disc-pack`, `port/m2-renderer`); their files do not overlap. [[tickets/T-39301-engine-api-core]] follows once the disc pack lands.
@@ -2665,3 +2677,14 @@ Moved [[tickets/T-39303-installed-disc-pack]] and [[tickets/T-39302-generic-ps1-
 
 Reads may span contiguous packed files (the date overlays need it); gaps, excluded extents and the pack end still fail. `tools/port/check_literal_disc_reads.py` checks the literal reads in `src/` (879 single-file, 6 spanning, 0 uncovered; computed-LBA reads not covered). The launch profile hashes only the pack manifest and gives it its own caps, with an over-cap pack as a recorded gap (read_pack 379 ms without, 764 ms with whole-pack hashing, 415 ms now). Verified-file cache holds several files; exporter treats audio/video-flagged Form 1 sectors as streams and refuses multi-extent files. See [[tickets/T-39303-installed-disc-pack]].
 
+## [2026-10-30] build | Generic PS1 renderer branch gates after merging port/opening-to-gameplay
+
+On `port/m2-renderer` (merge `9f340f2ab`): core suite `PASS: 9 test suite(s) ran`; opening frame timing (fast, pad 2, candidate audio library) `pad 2, 104 substeps, 6709 frames to 12/0/0, 0 mismatches`, exit 0; renderer tests 35 C++ tests (512 checks) and 161 Godot checks pass. [[tickets/T-39302-generic-ps1-renderer]].
+
+## [2026-10-30] build | Generic PS1 renderer review fixes
+
+Walk bounded (loop detection, word cap), polyline cap, overflow-safe API, RAM-size guard, GP1(09h) texture disable, command mirrors, per-return capture breakpoints, derived noise rectangles with a same-table check, stricter `compare_capture`, `Ps1Renderer.last_error` and guards, `.gitignore` and trap for the test script. 38 C++ tests (537 checks) and 170 Godot checks pass; 52 of 58 frame comparisons still exact (the same six phone comparisons differ by one pixel). [[tickets/T-39302-generic-ps1-renderer]], [[ps1-renderer]].
+
+## [2026-10-30] build | Generic PS1 renderer merged (T-39302)
+
+Merged `port/m2-renderer`: a C++ GPU model and rasterizer (`tools/port/native_render`, library `liboriginal_render`, SHA-256 863ca5ef…, identical across two builds, not committed), plus the `presentation/ps1_renderer.gd` wrapper and emulator capture tooling. Against 29 PCSX-Redux frames from 28 states (58 comparisons, real VRAM and noise-filled VRAM), 52 are pixel-exact. The 6 phone comparisons differ in one pixel by one 5-bit step of Gouraud interpolation rounding. An independent review found no high-severity issues (3,000 ASan/UBSan fuzz iterations clean); its 11 findings are fixed, including cycle and word caps on the ordering-table walk and a polyline cap. Root reran: renderer tests 38 C++ tests (537 checks) and 170 Godot checks; core suite pass. No scene uses the renderer yet. The texture-hash translation hook and the library install wait for [[tickets/T-39301-engine-api-core]]. The ticket stays In Progress.

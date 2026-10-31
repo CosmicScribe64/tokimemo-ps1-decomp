@@ -48,3 +48,4 @@ game-bundle.key
 
 # Godot editor/import cache; generated packs and exports stay in .asset-cache/.
 /port/godot/.godot/
+/port/godot/bin/liboriginal_render*
