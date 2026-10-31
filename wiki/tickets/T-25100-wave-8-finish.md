@@ -5,7 +5,7 @@ status: Done
 assignee: orchestrator
 created: 2026-10-23
 updated: 2026-10-23
-links: [[[status]], [[plan-remaining]], [[playbook]]]
+links: `[status`, `plan-remaining`, [[playbook]]]
 ---
 
 ## Goal
@@ -16,7 +16,7 @@ User request "Finish the game decomp" (2026-10-23, ultracode). Give each of the 
 
 - [ ] Every package below has run and its ticket is Done with results.
 - [ ] Every claimed match passed: no INCLUDE_ASM for the function, `funcdiff --resolve --version default` MATCH, 27/27 sha1, header/global/prototype checks.
-- [ ] [[status]] and [[plan-remaining]] updated with the new counts and the blockers left.
+- [ ] [[status]] and `plan-remaining` updated with the new counts and the blockers left.
 
 ## Notes
 

@@ -7,7 +7,7 @@ sources: ["config/renames/proposals/core.tsv", "p2a-h-cdio config/renames/propos
 
 # Phase 2 core: names that differ from the hardware units
 
-Generated on 2026-10-24 from the proposal tables of the `core`, `h-cdio` and `h-graphics` worktrees (same kind, scope and old name, different new name). 96 rows. Default winner when the orchestrator makes no other decision: the hardware table, except the rows marked `core`, which are game logic and not hardware. The tables are still being reviewed, so regenerate the list before the apply step. Rule and the sound prefix question: [[spec/core]] section 17.
+Generated on 2026-10-24 from the proposal tables of the `core`, `h-cdio` and `h-graphics` worktrees (same kind, scope and old name, different new name). 96 rows. Default winner when the orchestrator makes no other decision: the hardware table, except the rows marked `core`, which are game logic and not hardware. The tables are still being reviewed, so regenerate the list before the apply step. Rule and the sound prefix question: `spec/core` section 17.
 
 | kind | scope | old | core name | other name | unit | winner |
 | --- | --- | --- | --- | --- | --- | --- |

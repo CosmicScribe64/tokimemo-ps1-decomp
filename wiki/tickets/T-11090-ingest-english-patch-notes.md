@@ -5,7 +5,7 @@ status: Done   # Backlog | Ready | In Progress | In Review | Done  (must match c
 assignee: r32 reference agent
 created: 2026-10-13
 updated: 2026-10-13
-links: [[[ref-english-patch]], [[obin]], [[build-system]]]
+links: `[ref-english-patch`, [[obin]], [[build-system]]]
 ---
 
 ## Goal

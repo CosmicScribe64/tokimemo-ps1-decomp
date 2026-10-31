@@ -5,67 +5,37 @@ kanban-plugin: board
 ## Backlog
 
 
-- [ ] [[tickets/T-39055-d1-one-iteration-lag|T-39055 Remove the D1 one-iteration lag (T-39030) seen in the opening trace]]
 
-- [ ] [[tickets/T-39054-d801220e0-first-values|T-39054 Match the first values of D_801220E0..E2 in the opening trace]]
 
-- [ ] [[tickets/T-39053-prologue-scene-counter|T-39053 Model prologue_scene_counter (port 320 vs native 0 at iteration 1233)]]
 
-- [ ] [[tickets/T-39052-opening-rng-extra-draws|T-39052 Remove the +2 RNG draws by opening iteration 650]]
 
-- [ ] [[tickets/T-39051-opening-phase1-timing|T-39051 Explain the +11/+12 iteration opening phase-1 offset in the seed route]]
 
-- [ ] [[tickets/T-39050-name-pointer-origin|T-39050 Match the name-entry pointer origin to the native start]]
 
-- [ ] [[tickets/T-39045-settings-newer-version-file-loss|T-39045 Keep a newer-version settings file when booting from the backup]]
 
-- [ ] [[tickets/T-30003-player-customization|T-30003 Explore gender-aware player customization]]
 
 ## Ready
 
-- [ ] [[tickets/T-39317-sine-table-from-executable|T-39317 Read the libgte sine table from the installed executable]]
-- [ ] [[tickets/T-39316-engine-system-boot-main-loop|T-39316 Port the engine system, boot, audio-driver and main-loop files (WP-E)]]
-- [ ] [[tickets/T-39315-engine-mode-screens|T-39315 Port the engine mode-screen files (WP-D)]]
 
 
 
-- [ ] [[tickets/T-30004-modern-achievements|T-30004 Design achievements for the native port]]
 
 ## In Progress
 
-- [ ] [[tickets/T-39301-engine-api-core|T-39301 Port the main-executable engine API under its C names (M2)]]
-- [ ] [[tickets/T-39303-installed-disc-pack|T-39303 Install one disc pack of the original files the game reads (M2)]]
-- [ ] [[tickets/T-39302-generic-ps1-renderer|T-39302 Build one generic PS1 renderer for every scene (M2)]]
-- [ ] [[tickets/T-39300-game-memory-model|T-39300 Model the original RAM layout as the port's game memory (M1)]]
-- [ ] [[tickets/T-39230-parity-mode|T-39230 Add a locked Parity mode and parity test gate]]
 
-- [ ] [[tickets/T-39214-presenter-english-binding|T-39214 English WP-I: presenter English binding (date, phone, subgame, ending)]]
 
 - [ ] [[tickets/T-39212-english-artwork-drafts|T-39212 English WP-L: remaining artwork drafts and provenance]]
 
-- [ ] [[tickets/T-30001-modern-widescreen|T-30001 Add widescreen presentation]]
 
-- [ ] [[tickets/T-39018-playtest-differential-harness|T-39018 Build playtest and differential harness]]
 
-- [ ] [[tickets/T-39007-player-save-relaunch-recovery|T-39007 Complete Continue and save recovery]]
 
-- [ ] [[tickets/T-39006-production-route-state-parity|T-39006 Restore production event state parity]]
 
-- [ ] [[tickets/T-39013-fresh-hud-context|T-39013 Implement source-owned fresh HUD context]]
 
-- [ ] [[tickets/T-39014-holiday-scene-producer|T-39014 Implement holiday scene content producer]]
 
-- [ ] [[tickets/T-39015-desktop-packaging|T-39015 Unify reproducible desktop packaging]]
 
-- [ ] [[tickets/T-39016-generic-text-layer|T-39016 Build a generic source-keyed text layer]]
 
-- [ ] [[tickets/T-39017-opening-stage-specs|T-39017 Write source specs for opening stages 12-22]]
 
-- [ ] [[tickets/T-39008-synchronized-differential-captures|T-39008 Restore synchronized differential captures]]
 
-- [ ] [[tickets/T-39005-port-adversarial-review|T-39005 Independently review port and contributor experience]]
 
-- [ ] [[tickets/T-30002-modern-settings|T-30002 Provide comprehensive modern settings]]
 
 - [ ] [[tickets/T-39004-english-asset-completion|T-39004 Complete and test English translation assets]]
 
@@ -79,7 +49,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-39003-deslop-repository|T-39003 Deslop repository prose]]
 
-- [ ] [[tickets/T-39002-restore-port-runtime|T-39002 Restore runtime and reproduce port acceptance]]
 
 
 - [ ] [[tickets/T-39000-local-disk-cleanup|T-39000 Remove obsolete local orchestrator state]]
@@ -88,30 +57,18 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-39220-switch-informed-modern-options|T-39220 Add Switch-informed modern presentation options]]
-- [ ] [[tickets/T-39213-latin-name-entry|T-39213 English WP-D: Latin name typing over the native Symbols page]]
 
-- [ ] [[tickets/T-39211-english-bundle-builder|T-39211 English WP-C: build the installed English bundle]]
 
-- [ ] [[tickets/T-39210-translated-image-store-v2|T-39210 English WP-B: translated image store v2 (page and BS rows)]]
 
-- [ ] [[tickets/T-39207-english-dialogue-hooks|T-39207 English dialogue and choice hooks on talk, textbox and VN presenters (Phase 4 English WP-G)]]
 
-- [ ] [[tickets/T-39201-english-native-text-flow|T-39201 Shared native text flow and English corpus fit runner (Phase 4 English WP-A)]]
 
-- [ ] [[tickets/T-39060-phase4-wave1-root-hooks|T-39060 Integrate phase 4 wave 1 into main and wire the root hooks]]
 
 - [ ] [[tickets/T-39029-wiki-tier-relabel|T-39029 Wiki evidence-tier relabel and overclaim cleanup]]
 
-- [ ] [[tickets/T-39028-original-free-ci|T-39028 Original-free port CI job]]
 
-- [ ] [[tickets/T-39027-frame-pacing-receipt|T-39027 Frame pacing and hitch attribution receipt]]
 
-- [ ] [[tickets/T-39026-contact-sheets-review-queue|T-39026 Contact sheets and human visual review queue]]
 
-- [ ] [[tickets/T-39025-english-legibility-linter|T-39025 English legibility and asset-coverage linter]]
 
-- [ ] [[tickets/T-39001-fresh-checkout-assessment|T-39001 Assess fresh checkout and recovery priorities]]
 
 - [ ] [[tickets/T-31001-version-translated-artwork|T-31001 Version and publish translated artwork and review history]]
 - [ ] [[tickets/T-29033-reclaim-inactive-workspace-storage|T-29033 Reclaim inactive workspace storage]]
@@ -119,49 +76,8 @@ kanban-plugin: board
 
 ## Done
 
-- [x] [[tickets/T-39312-engine-scene-hud|T-39312 Port the engine scene and HUD files (WP-B)]]
-- [x] [[tickets/T-39314-engine-sdk-layer|T-39314 Give the engine an SDK layer for the PsyQ library calls (M2)]]
-- [x] [[tickets/T-39311-engine-draw-core|T-39311 Port the engine draw core (WP-A)]]
-- [x] [[tickets/T-39313-engine-menus-memcard|T-39313 Port the engine menu, speaker and memory card files (WP-C)]]
-- [ ] [[tickets/T-29025-connect-installed-content-to-new-game|T-29025 Connect fresh original import to normal New Game]]
-- [ ] [[tickets/T-29032-plan-port-by-reachable-boundaries|T-29032 Plan port implementation by reachable boundaries]]
-- [ ] [[tickets/T-29031-verify-native-cursor-selection|T-29031 Verify native hand and triangle cursor selection]]
-- [ ] [[tickets/T-29030-unify-native-route-capabilities|T-29030 Unify native route identities and executable capabilities]]
-- [ ] [[tickets/T-29029-port-readiness-evidence-gate|T-29029 Gate port readiness on reviewed reproducible evidence]]
-- [ ] [[tickets/T-29028-restore-native-scheduler-mode-ids|T-29028 Restore native scheduler mode IDs and graduation gating]]
-- [ ] [[tickets/T-29027-render-original-sequences-and-spu-banks|T-29027 Render original sequences and SPU instruments]]
-- [ ] [[tickets/T-29026-restore-real-holiday-services|T-29026 Restore real holiday services and exact command media]]
-- [ ] [[tickets/T-29024-restore-complete-subgame-loops|T-29024 Restore source-backed TACO and TT gameplay]]
-- [ ] [[tickets/T-29023-verify-real-player-routes|T-29023 Verify original-backed routes through the connected app]]
-- [ ] [[tickets/T-29022-externalize-original-port-graphics|T-29022 Load original graphics externally and pass live HUD state]]
-- [ ] [[tickets/T-29021-restore-original-audio-playback|T-29021 Restore original sample and sequence playback]]
-- [ ] [[tickets/T-29020-restore-live-overlay-execution|T-29020 Restore interactive overlay and ending execution]]
-- [ ] [[tickets/T-29019-independent-port-readiness-review|T-29019 Independent port readiness review]]
-- [ ] [[tickets/T-29018-complete-overlay-port-and-shared-vn-runner|T-29018 Port remaining PS1 overlays with shared VnScenePresenter and automated C-table extraction]]
-- [ ] [[tickets/T-29016-first-launch-original-import|T-29016 Add first-launch original-game import]]
-- [ ] [[tickets/T-29008-assemble-playable-development-app|T-29008 Assemble the captured-boundary playable development app]]
-- [ ] [[tickets/T-29006-port-save-audio-services|T-29006 Implement stable-boundary saves and ordered audio services]]
-- [ ] [[tickets/T-29034-plan-single-worker-port-completion|T-29034 Plan port completion with one implementer and one manager]]
-- [ ] [[tickets/T-30005-widescreen-settings-feasibility|T-30005 Research widescreen art and modern settings feasibility]]
-- [ ] [[tickets/T-30000-plan-phase4-modernization|T-30000 Plan Phase 4 port modernization]]
-- [ ] [[tickets/T-29017-support-ps1-releases|T-29017 Support known PS1 releases in the content importer]]
-- [ ] [[tickets/T-29015-desktop-development-player|T-29015 Build a reproducible desktop development player]]
-- [ ] [[tickets/T-29014-ordinary-command-content-coverage|T-29014 Extend original content coverage to ordinary commands 1 through 6]]
-- [ ] [[tickets/T-29013-native-holiday-command-loop|T-29013 Port the first ordinary holiday command loop]]
-- [ ] [[tickets/T-29012-native-new-game-initialization|T-29012 Port native New Game initialization and profile rules]]
-- [ ] [[tickets/T-29011-native-dialogue-player|T-29011 Implement source-backed dialogue control playback]]
-- [ ] [[tickets/T-29010-native-hud-font-rendering|T-29010 Render the native HUD and game glyphs]]
-- [ ] [[tickets/T-29009-ordinary-week-continuation|T-29009 Port ordinary-week day-end and weekend continuation]]
-- [ ] [[tickets/T-29007-visual-port-progress-viewer|T-29007 Show port progress through local screenshots and clips]]
-- [ ] [[tickets/T-29005-native-scene-presentation|T-29005 Present original room, HUD and activity animation]]
-- [ ] [[tickets/T-29004-school-day-playable-rules|T-29004 Port command selection and one genuine school-day action]]
-- [ ] [[tickets/T-29003-port-content-adapter|T-29003 Build the validated original-game content pack adapter]]
-- [ ] [[tickets/T-29002-native-runtime-and-oracle|T-29002 Implement native arithmetic, clocks, input and state oracle]]
-- [ ] [[tickets/T-29001-godot-engine-foundation|T-29001 Create the pinned Godot project and test toolchain]]
-- [ ] [[tickets/T-29000-plan-godot-port|T-29000 Plan the Godot port from the readable decompilation]]
 - [ ] [[tickets/T-28009-version-translation-overlays|T-28009 Version English translation overlays for repository backup]]
 - [ ] [[tickets/T-28007-complete-text-and-translator-handoff|T-28007 Complete text evidence and prepare translator handoff]]
-- [ ] [[tickets/T-28006-sequence-music-export|T-28006 Read sequence music and preserve rendering dependencies]]
 - [ ] [[tickets/T-28005-fan-patch-crosscheck|T-28005 Cross-check text and image-text coverage against the fan patch]]
 - [ ] [[tickets/T-28004-japanese-image-catalog|T-28004 Catalog every image asset containing Japanese text]]
 - [ ] [[tickets/T-28003-original-input-assets|T-28003 Read original game inputs and inventory assets]]

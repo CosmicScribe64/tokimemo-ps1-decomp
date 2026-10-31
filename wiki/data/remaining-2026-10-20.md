@@ -5,7 +5,7 @@ updated: 2026-10-20
 
 # Remaining functions (2026-10-20)
 
-Generated from the integration tree at 6,825/6,952 (92.2%). Classes are defined in [[plan-remaining]]. `rows` comes from the NON_MATCHING note; `score` is the best draft's funcdiff score (lower is closer; drafts under `drafts/`).
+Generated from the integration tree at 6,825/6,952 (92.2%). Classes are defined in `plan-remaining`. `rows` comes from the NON_MATCHING note; `score` is the best draft's funcdiff score (lower is closer; drafts under `drafts/`).
 
 ## A - near miss, guarded, 10 rows or fewer (8 functions, 5232 bytes)
 

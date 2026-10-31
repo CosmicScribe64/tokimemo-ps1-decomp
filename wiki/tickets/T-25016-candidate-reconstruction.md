@@ -5,7 +5,7 @@ status: Done
 assignee: octa
 created: 2026-10-21
 updated: 2026-10-26
-links: [[[status]], [[matching-notes]], [[build-step-gaps]], [[tickets/T-25015-lever-expansion-tooling]], [[tickets/T-25014-allocator-source-shape-automation]]]
+links: `[status`, [[matching-notes]], [[build-step-gaps]], [[tickets/T-25015-lever-expansion-tooling]], [[tickets/T-25014-allocator-source-shape-automation]]]
 ---
 
 ## Goal

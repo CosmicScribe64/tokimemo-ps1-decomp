@@ -5,7 +5,7 @@ status: Done
 assignee: claude-opus (blissful-fermi-43d29a)
 created: 2026-10-15
 updated: 2026-10-16
-links: [[[matching-breakthroughs]], [[uopt-register-allocation]], [[toolchain]], [[tickets/T-11570-w1-ovl-name_ent-80139740]], tools/cvt_pass.py, tools/regdiff.py]
+links: `[matching-breakthroughs`, [[uopt-register-allocation]], [[toolchain]], [[tickets/T-11570-w1-ovl-name_ent-80139740]], tools/cvt_pass.py, tools/regdiff.py]
 ---
 
 ## Goal

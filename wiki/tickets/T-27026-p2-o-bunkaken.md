@@ -5,7 +5,7 @@ status: Done
 assignee: p2a-o-bunkaken (Sonnet)
 created: 2026-10-24
 updated: 2026-10-24
-links: [[[tickets/T-27000-phase-2]], [[spec/o-bunkaken]]]
+links: `[tickets/T-27000-phase-2`, `spec/o-bunkaken`]
 ---
 
 ## Goal
@@ -40,4 +40,4 @@ All three blocking findings of round 1 are resolved in commit 2d3372522.
 - Prefix, folder and constants: all 457 rows follow the ADR row for BUNKAKEN: folder `culture_festival_tour`, header `include/ovl/culture_festival_tour.h`, prefix `tour_` (201 funcs, 30 data), types `Tour*` (10) and constants `TOUR_*` (172). A grep finds no `festival_visit` or `FV_` outside the log history entry, which keeps the old name on purpose. The spec's Naming paragraph adopts the ADR row unchanged and explains why the six-club menu confirms it. The 9 main-scope REQUEST words (`D_80122E98` to `D_80122EC0`) carry the `culture_` stem.
 - Abbreviations: a token scan of every new name finds no `lit`, `comp`, `y95` to `y97`, `FV`, `min`, `wrapup`, `fn` or `bustup`; they are spelled out (`literature`, `computer`, `1995` to `1997`, `minimum`, `wrap_up`, `handler`, `portrait`). The remaining short forms (`bg`, `lba`, `init`, `param`) are rows of the GLOSSARY abbreviation table. The one exception is `tt` (`tt_stages_cleared`, `tt_unlocked`, `tour_stage_tt_narrator`, `TOUR_STAGE_TT_NARRATOR`): it is not in the table and the spec says the glossary row is still open, but it is the TT overlay's own stem and the o-tt table uses it throughout, so it is not blocking.
 
-The reviewer found no new clear errors in the rows or lines the fix touched. The branch changes only `config/renames/proposals/o-bunkaken.tsv`, [[spec/o-bunkaken]], [[spec/index]], the ticket and the log: nothing under `src/`, `include/` or `config/symbol*` (checked against the merge base). Set Done. The last acceptance item (the rename tool run: plan, apply, 27/27 build) stays open and is not part of this branch. The board card is not touched here (the kanban sync belongs to the merge script).
+The reviewer found no new clear errors in the rows or lines the fix touched. The branch changes only `config/renames/proposals/o-bunkaken.tsv`, `spec/o-bunkaken`, [[spec/index]], the ticket and the log: nothing under `src/`, `include/` or `config/symbol*` (checked against the merge base). Set Done. The last acceptance item (the rename tool run: plan, apply, 27/27 build) stays open and is not part of this branch. The board card is not touched here (the kanban sync belongs to the merge script).

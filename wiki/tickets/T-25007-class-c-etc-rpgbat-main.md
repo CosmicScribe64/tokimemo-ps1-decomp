@@ -5,12 +5,12 @@ status: Done
 assignee: agent c-m6
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[plan-remaining]], [[playbook]], [[matching-notes]], src/ovl/ETC/80146400.c, src/ovl/RPG_BAT/8014ADD0.c, src/main/80058D20.c]
+links: `[plan-remaining`, [[playbook]], [[matching-notes]], src/ovl/ETC/80146400.c, src/ovl/RPG_BAT/8014ADD0.c, src/main/80058D20.c]
 ---
 
 ## Goal
 
-Match ETC `func_80146D4C` (1076 B), RPG_BAT `func_8014BFE4` (892 B) and main `func_8005938C` (764 B), class C of [[plan-remaining]]. Owned files: `src/ovl/ETC/80146400.c`, `src/ovl/RPG_BAT/8014ADD0.c`, `src/main/80058D20.c`.
+Match ETC `func_80146D4C` (1076 B), RPG_BAT `func_8014BFE4` (892 B) and main `func_8005938C` (764 B), class C of `plan-remaining`. Owned files: `src/ovl/ETC/80146400.c`, `src/ovl/RPG_BAT/8014ADD0.c`, `src/main/80058D20.c`.
 
 ## Acceptance criteria
 

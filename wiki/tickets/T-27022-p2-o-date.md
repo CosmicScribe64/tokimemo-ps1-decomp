@@ -5,7 +5,7 @@ status: Done
 assignee: p2a-o-date (Sonnet)
 created: 2026-10-24
 updated: 2026-10-24
-links: [[[tickets/T-27000-phase-2]], [[spec/o-date]]]
+links: `[tickets/T-27000-phase-2`, `spec/o-date`]
 ---
 
 ## Goal

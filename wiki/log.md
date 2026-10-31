@@ -2806,3 +2806,13 @@ At the user's request, removed the Godot port from the repository:
 - the port sections of README.md and CODING_STANDARDS.md and the port lines in `.gitignore`.
 
 The matching decompilation and its tooling, `translations/` and the wiki history stay. `tools/docker.sh ninja` reports no work to do (27/27 unchanged). Port pages in the wiki now describe removed code. The libgte sine table that `core/native_math.gd` committed remains in published history (since f8497f8ca); the user did not ask for a history rewrite.
+
+## [2026-10-31] decision | Roadmap and future-work pages removed; docs rewritten for the finished decomp
+
+At the user's request, the project is now only the decompilation. The following were removed:
+- `ROADMAP.md`;
+- the port and future-work wiki pages: `phase3`, `phase4`, `phase4-design-2026-10-29`, the eleven `port-*` pages, `parity-mode`, `playtest`, `playtest-pacing-checklist`, `ps1-renderer`, `game-memory-model`, `engine-porting-contract`, the two `switch-remake-*` pages, `widescreen-settings`, `plan-remaining` and `archive/port-status-claims-2026-10-26`;
+- the port unit specs in `spec/` (the four decomp specs stay);
+- 84 port-era tickets with their kanban cards. Tickets for `translations/` work stay.
+
+Links to deleted pages in kept tickets and pages became plain text; log entries keep their original links. [[index]], [[spec/index]], [[status]], [[overview]], README.md and CONTRIBUTING.md were rewritten for the finished state with the deslop skill. AGENTS.md (agent rules) is unchanged. `tools/wiki.py lint` shows 0 broken links and 0 status mismatches.

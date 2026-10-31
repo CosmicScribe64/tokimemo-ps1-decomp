@@ -5,7 +5,7 @@ status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[matching-notes]], [[tickets/T-24054-short-function-count]], [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep]], src/ovl/KANGEI/80137B90.c]
+links: `[matching-notes`, [[tickets/T-24054-short-function-count]], [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep]], src/ovl/KANGEI/80137B90.c]
 ---
 
 ## Goal

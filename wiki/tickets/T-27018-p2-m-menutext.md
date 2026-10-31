@@ -5,7 +5,7 @@ status: Done
 assignee: claude
 created: 2026-10-24
 updated: 2026-10-24
-links: ["[[tickets/T-27000-phase-2]]", "[[spec/m-menutext]]"]
+links: ["[[tickets/T-27000-phase-2]]", "`spec/m-menutext`"]
 ---
 
 ## Goal

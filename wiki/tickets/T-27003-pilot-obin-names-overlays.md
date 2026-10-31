@@ -6,7 +6,7 @@ assignee: sonnet (p2-pilot)
 created: 2026-10-24
 updated: 2026-10-24
 blocked-by: [T-27002]
-links: [[[phase2]], [[obin]], [[tickets/T-0600-apply-obin-renames]], [[tickets/T-27000-phase-2]]]
+links: `[phase2`, [[obin]], [[tickets/T-0600-apply-obin-renames]], [[tickets/T-27000-phase-2]]]
 ---
 
 ## Goal

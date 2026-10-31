@@ -5,7 +5,7 @@ status: Done
 assignee: Claude
 created: 2026-10-14
 updated: 2026-10-17
-links: [[[build-system]], [[tickets/T-1300-reuse-c-across-identical-functions]], [[tickets/T-3320-tooling-near-duplicate-function-reuse]], tools/dupes.py, tools/neardupes.py]
+links: `[build-system`, [[tickets/T-1300-reuse-c-across-identical-functions]], [[tickets/T-3320-tooling-near-duplicate-function-reuse]], tools/dupes.py, tools/neardupes.py]
 ---
 
 ## Goal

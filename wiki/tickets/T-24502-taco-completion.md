@@ -5,7 +5,7 @@ status: Done
 assignee: codex
 created: 2026-10-20
 updated: 2026-10-26
-links: [[[matching-notes]], [[playbook]]]
+links: `[matching-notes`, [[playbook]]]
 ---
 
 ## Goal

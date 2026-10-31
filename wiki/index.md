@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-26
+updated: 2026-10-31
 ---
 
 # Wiki index
@@ -9,55 +9,18 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 
 ## Start here
 
-- [[overview]] - project goal, stack, pointers to fact pages
-- [[status]] - progress, what is left by unit, active work
-- [[plan-remaining]] - current completion plan (101 remaining functions on 2026-10-22; older census in [[data/remaining-2026-10-20]])
-- [[playbook]] - the matching loop and the recipes that closed matches; read before matching
-- [[phase2]] - phase 2 (readable code) work order, units, and review rule; conventions in [[phase2-naming]], terms in `GLOSSARY.md`
+- [[overview]] - project goal, stack and pointers to the fact pages
+- [[status]] - final state of the decompilation and how it was verified
+- [[playbook]] - the matching loop and the recipes that closed matches
+- [[phase2]] - phase 2 (readable code) work order, units and review rule; conventions in [[phase2-naming]], terms in `GLOSSARY.md`
 - [[phase2-naming]] - phase 2 naming decisions, scope table, disc-name map and prefix maps
-- [[phase3]] - Godot 4.7.2 Japanese desktop port plan; readiness repairs and verification remain in progress
-- [[phase4]] - Phase 4 modernization plan (widescreen presentation, modern settings & translation-pack selector, native achievements, player customization)
-- [[phase4-design-2026-10-29]] - judged phase 4 design: widescreen, settings, English play, playtesting work packages
-- [[switch-remake-reference]] - how the 2025 Switch release handles widescreen, fonts and modern features, compared with our phase 4 design
-- [[switch-remake-footage]] - frame log from Switch release trailers and gameplay footage
+- [[spec/index]] - file naming, header split and the phase 2 completion audit
 - [[notes/functions]] - every function named in the matching notes, with links to its sections
-- Repo root: `AGENTS.md` (rules), `CODING_STANDARDS.md` (conventions, review checklist), `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`
-
-## Port references
-
-- [[port-pause-2026-10-29]] - latest user-requested WIP pause, translated-artwork publication and exact continuation instructions
-- [[port-completion-plan]] - 2026-10-30 completion plan: memory model, engine API, generic renderer and disc pack first, then file-by-file porting
-- [[port-finish-plan]] - earlier finish sequence, failure lessons and one-manager/one-implementer workflow
-- [[port-manager-handoff]] - next manager's first assignment, retained candidates and local-page operations
-- [[port-readiness-review]] - independent baseline blockers and actual-route acceptance requirements
-- [[port-adversarial-review]] - fresh-context review of player routes, installation, packaging and contributor experience
-- [[port-testing]] - testing layers, required route coverage and reviewed evidence gate
-- [[port-text-layer]] - generic source-keyed runtime text translation layer, pack builder and screen adoption
-- [[notes/name-entry-visual-checkpoints]] - original NAME entry state addresses and corresponding native/translated visual checkpoints
-- [[archive/port-status-claims-2026-10-26]] - superseded port completion claims and historical checkpoints; not acceptance evidence
-
-- [[port-checkpoint]] - reviewed low-usage publication checkpoint and exact remaining integration work
-
-- [[widescreen-settings]] - reviewed original-art scaling and modern settings research; later implementation remains separate
-
-- [[spec/index]] - source-backed unit port specs, applied ledgers, evidence and explicit unknowns
-- [[spec/o-taiiku]] - Sports festival transitions, input/movement and girl-stat rewards
-- [[spec/o-geko]] - GEKO mode entries, walk-home/birthday rules, invitations and appointments
-- [[spec/o-shougatu]] - New Year/Christmas and annual-event rules, shrine choices and documented unknowns
-- [[spec/o-tel-option]] - Telephone/options invitation eligibility, relationship effects and sound-test flow
-- [[spec/o-master-ending]] - Mastery, companion selection, ending candidates and audio-level rules
-- [[spec/o-bunkasd-shugaku]] - Stage-show dispatch, school-trip responses and evidence limits
-- [[spec/o-small]] - Seven small-overlay loader entries, outcome rules and evidence limits
-- [[spec/reconcile]] - Applied-ledger precedence, scheduler ownership decisions and executable-batch preparation
-- [[spec/file-naming-main]] - Exhaustive main C filename mapping and integration proof
-- [[spec/file-naming-overlays]] - Exhaustive overlay C filename mapping and review gates
-- [[spec/header-split-plan]] - Declaration ownership and staged topic-header extraction
-- [[spec/phase2-completion-audit]] - Final source acceptance, matching proof and scoped residue
-- [[spec/core-followup]] - Applied core/daily-rule residue reconciliation and exact constant-site evidence
+- Repo root: `AGENTS.md` (rules), `CODING_STANDARDS.md` (conventions, review checklist), `README.md`, `CONTRIBUTING.md`
 
 ## Asset tooling
 
-- [[asset-export]] - engine-independent original-input readers, full text export and modern media/localization inventories; no direct Godot work
+- [[asset-export]] - engine-independent readers for the original inputs, full text export and media/localization inventories
 - [[assets-input]] - Original-game input inventory and provenance
 - [[assets-text]] - Text/script extraction coverage and fidelity gates
 - [[assets-media]] - Image/audio readers, authentic palette galleries and visual-text catalog
@@ -79,9 +42,6 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 
 - [[data-types]] - structs and arrays recovered from access patterns (`tools/type_recovery.py`)
 - [[game-state]] - `GameState D_800E6280` field map, evidence, and `tools/migrate_globals.py`
-- [[game-memory-model]] - port RAM model with the original layout: layout generator, `core/game_memory.gd`, `rule_state` bridge, comparison with emulator RAM (T-39300)
-- [[engine-porting-contract]] - how `src/main` C is ported to `port/godot/engine/` (one module per C file, C names, game memory, refusals), the function-differential harness and capture tooling, and how workers claim files (T-39301)
-- [[ps1-renderer]] - generic PS1 renderer: VRAM model and GPU rasterizer as a C++ GDExtension (`Ps1Renderer`), DrawOTag capture comparison with the emulator, known differences (T-39302)
 - `families/` - per-overlay type maps and results in [[families/bunka-family-results]], [[families/bunka-sd-family-results]], [[families/bunkasai-family-results]], [[families/date-family-results]], [[families/en-nichi-family-results]], [[families/ending-family-results]], [[families/etc-family-results]], [[families/event-family-results]], [[families/geko-family-results]], [[families/kangei-family-results]], and [[families/main-family-results]]. Additional overlay results live in [[families/master-family-results]], [[families/master-types-pilot]], [[families/name-ent-family-results]], [[families/option-family-results]], [[families/rpg-bat-family-results]], [[families/scenes-family-results]], [[families/shougatu-family-results]], [[families/shugaku-family-results]], [[families/taco-family-results]], and [[families/taiiku-family-results]]
 - [[ref-english-patch]] - facts-only address reference and independently checked dialogue-offset inventory
 - Data tables: [[data/true-gaps]], [[data/t0018-cases]], [[data/shared-at-groups]], [[data/t13600-remaining-census]]
@@ -126,6 +86,3 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[log]] - append-only log of the last week; older weeks in `log/` (`tools/wiki.py rotate-log`)
 - [[SCHEMA]] - wiki layout and rules
 - `tools/wiki.py` - `rotate-log`, `rotate-notes`, `catalog` (ticket catalog, notes sections, function index), `lint` (broken links, kanban mismatches, large pages)
-- [[tickets/T-30001-modern-widescreen|T-30001]] Phase 4 (`P4.1`) widescreen presentation (`16:9` / `16:10` / `21:9` safe-frame apertures and responsive HUD/dialogue reflow) (Ready).
-- [[tickets/T-30002-modern-settings|T-30002]] Phase 4 (`P4.2`) comprehensive modern settings, input remapping, 5-bus audio, and translation/voice pack selector (In Progress; bounded UI/playback checks pass, full-game/platform acceptance remains open).
-- [[tickets/T-30004-modern-achievements|T-30004]] Phase 4 (`P4.3`) deterministic native achievement system and spoiler-aware gallery (Ready); see [[phase4]] and [[status]].

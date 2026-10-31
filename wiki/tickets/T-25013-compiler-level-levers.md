@@ -9,7 +9,7 @@ created: 2026-10-21
 updated: 2026-10-22
 depends_on:
   - T-25012
-links: [[[status]], [[plan-remaining]], [[build-step-gaps]], [[as1-scheduler-rule]], [[matching-notes]], [[tickets/T-25012-class-c-d-reconstruction]], [[tickets/T-25011-class-a-closers-as1-levers]], [[tickets/T-24929-uopt-zcopy-scope]]]
+links: `[status`, `plan-remaining`, [[build-step-gaps]], [[as1-scheduler-rule]], [[matching-notes]], [[tickets/T-25012-class-c-d-reconstruction]], [[tickets/T-25011-class-a-closers-as1-levers]], [[tickets/T-24929-uopt-zcopy-scope]]]
 ---
 
 ## Why this is the next step
@@ -18,7 +18,7 @@ Source-level work is exhausted. After the 2026-10-19/21 sessions (T-24142, T-250
 
 ## Rules (do not skip)
 
-- A build-step change is allowed only as ONE uniform rule that (a) has evidence it models the original compiler, (b) changes no already-matched function (compare every object before and after; `drafts/T-24929/objcmp.py` does this), and (c) passes 27/27 SHA1. No per-function or per-file options (CODING_STANDARDS section 7a, [[plan-remaining]] ground rules).
+- A build-step change is allowed only as ONE uniform rule that (a) has evidence it models the original compiler, (b) changes no already-matched function (compare every object before and after; `drafts/T-24929/objcmp.py` does this), and (c) passes 27/27 SHA1. No per-function or per-file options (CODING_STANDARDS section 7a, `plan-remaining` ground rules).
 - Where the rules live: `tools/cvt_pass.py`, `tools/ugen_pass.py`, the frame pass and `tools/cc.py`. Existing precedents: T-24929 (switch compares), T-24103 (`_constant_first` before `rpar`), the cvt pass NO_WIDEN helpers.
 - Use `tools/regdiff.py` with `TOKIMEMO_SCRATCH=$PWD/build/scratch/<ticket>` and the traced uopt copied to `$TOKIMEMO_SCRATCH/r9-uopt/variants/trace` (source: `/private/tmp/t24047-uopt/variants/trace`; if that copy is gone, rebuild it from the instrumented uopt of T-9800, see [[ending-allocator-trace]]). Check `regdiff` before trusting `score.py`'s `struct` count, which masks registers.
 

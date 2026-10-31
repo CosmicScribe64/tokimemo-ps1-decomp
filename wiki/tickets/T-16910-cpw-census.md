@@ -5,7 +5,7 @@ status: Done
 assignee: claude-opus (quizzical-swanson-a4bc82)
 created: 2026-10-15
 updated: 2026-10-16
-links: [[[tickets/T-16900-compiler-experiments]], [[uopt-register-allocation]], [[toolchain]], [[matching-notes]], [[tickets/T-11570-w1-ovl-name_ent-80139740]], tools/cvt_pass.py, tools/test_cvt_pass.py]
+links: `[tickets/T-16900-compiler-experiments`, [[uopt-register-allocation]], [[toolchain]], [[matching-notes]], [[tickets/T-11570-w1-ovl-name_ent-80139740]], tools/cvt_pass.py, tools/test_cvt_pass.py]
 ---
 
 ## Goal

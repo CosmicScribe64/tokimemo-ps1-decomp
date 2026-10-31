@@ -5,7 +5,7 @@ status: Done
 assignee: agent
 created: 2026-10-14
 updated: 2026-10-17
-links: [[[decompile-workflow]], [[register-cheatsheet]], [[tickets/T-11170-cheat-sheet-auto-tweaker]], [[tickets/T-11190-bulk-m2c-pipeline]], [[tickets/T-11530-order-search-tool]], tools/autotweak.py, tools/bulk_m2c.py, tools/order_search.py]
+links: `[decompile-workflow`, [[register-cheatsheet]], [[tickets/T-11170-cheat-sheet-auto-tweaker]], [[tickets/T-11190-bulk-m2c-pipeline]], [[tickets/T-11530-order-search-tool]], tools/autotweak.py, tools/bulk_m2c.py, tools/order_search.py]
 ---
 
 ## Goal

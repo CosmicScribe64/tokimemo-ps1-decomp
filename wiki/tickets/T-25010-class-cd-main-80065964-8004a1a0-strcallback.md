@@ -5,7 +5,7 @@ status: Done
 assignee: c-m7
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[matching-notes]], [[plan-remaining]], src/main/80049FF0.c, src/main/80062CD0.c, src/main/800563F0.c]
+links: `[matching-notes`, `plan-remaining`, src/main/80049FF0.c, src/main/80062CD0.c, src/main/800563F0.c]
 ---
 
 ## Goal

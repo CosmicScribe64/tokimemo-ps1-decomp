@@ -5,7 +5,7 @@ status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[cloud-matching]], [[matching-notes]], [[tickets/T-22025-w4-p25]], src/ovl/TACO/80149F90.c]
+links: `[cloud-matching`, [[matching-notes]], [[tickets/T-22025-w4-p25]], src/ovl/TACO/80149F90.c]
 ---
 
 ## Goal

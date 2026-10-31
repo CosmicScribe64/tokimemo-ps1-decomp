@@ -5,7 +5,7 @@ status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[matching-notes]], [[cloud-matching]], [[register-cheatsheet]], [[tickets/T-22015-w4-p15]], src/ovl/MASTER/80132140.c]
+links: `[matching-notes`, [[cloud-matching]], [[register-cheatsheet]], [[tickets/T-22015-w4-p15]], src/ovl/MASTER/80132140.c]
 ---
 
 ## Goal

@@ -5,12 +5,12 @@ status: Done
 assignee: sonnet-5.5
 created: 2026-10-21
 updated: 2026-10-26
-links: [[[plan-remaining]], [[as1-scheduler-rule]], [[playbook]], [[data/remaining-2026-10-20]]]
+links: `[plan-remaining`, [[as1-scheduler-rule]], [[playbook]], [[data/remaining-2026-10-20]]]
 ---
 
 ## Goal
 
-Close the eight class A near misses (10 rows or fewer) of [[plan-remaining]], one function at a time, using [[as1-scheduler-rule]] (block weights, visit order, the `volatile` lever on the global whose `lui` must stay in its block) and `tools/order_search.py` / `tools/autotweak.py`. No per-function compiler options and no build-step changes (CODING_STANDARDS 7a). A match counts only with funcdiff MATCH and a clean 27/27 build.
+Close the eight class A near misses (10 rows or fewer) of `plan-remaining`, one function at a time, using [[as1-scheduler-rule]] (block weights, visit order, the `volatile` lever on the global whose `lui` must stay in its block) and `tools/order_search.py` / `tools/autotweak.py`. No per-function compiler options and no build-step changes (CODING_STANDARDS 7a). A match counts only with funcdiff MATCH and a clean 27/27 build.
 
 ## Notes
 

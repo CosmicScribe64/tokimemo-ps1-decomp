@@ -5,7 +5,7 @@ status: Done
 assignee: codex
 created: 2026-10-22
 updated: 2026-10-26
-links: ["[[tickets/T-25020-bunka-sd-trace-closure]]", "[[tickets/T-24927-func-80139290-801388D0]]", "[[plan-remaining]]"]
+links: ["[[tickets/T-25020-bunka-sd-trace-closure]]", "[[tickets/T-24927-func-80139290-801388D0]]", "`plan-remaining`"]
 ---
 
 ## Goal

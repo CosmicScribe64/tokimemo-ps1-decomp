@@ -5,7 +5,7 @@ status: Done
 assignee: agent (branch c-m5)
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[matching-notes]], [[playbook]], src/main/8004C3F0.c, src/main/80049FF0.c]
+links: `[matching-notes`, [[playbook]], src/main/8004C3F0.c, src/main/80049FF0.c]
 ---
 
 ## Goal

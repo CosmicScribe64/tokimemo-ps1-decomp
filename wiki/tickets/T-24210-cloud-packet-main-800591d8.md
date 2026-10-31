@@ -5,7 +5,7 @@ status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[matching-notes]], [[cloud-matching]], [[tickets/T-24206-cloud-packet-main-800590cc]], [[tickets/T-17017-w3-main-p17]], src/main/80058D20.c]
+links: `[matching-notes`, [[cloud-matching]], [[tickets/T-24206-cloud-packet-main-800590cc]], [[tickets/T-17017-w3-main-p17]], src/main/80058D20.c]
 ---
 
 ## Goal

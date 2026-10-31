@@ -120,4 +120,4 @@ T-24030 completes both assigned targets: `func_80142700` also verifies actual de
 
 ## Phase 2 (T-27025)
 
-The overlay is the club-member culture festival (mode 0x70, player club id below 6). Its readable names and port spec: [[spec/o-bunkasai]] (stage table of 165 entries in 15 scene blocks, phase machine, result formula, fortune telling, TT game exhibit, birthday scene) and `config/renames/proposals/o-bunkasai.tsv` (prefix `culture_`). The type names above (`BunkasaiNameTable`, `BunkasaiTexts12`, ...) get role names there (`CultureChoiceNames`, `CultureFortuneGirlNames`, ...); the old shape names stay in this page as history.
+The overlay is the club-member culture festival (mode 0x70, player club id below 6). Its readable names and port spec: `spec/o-bunkasai` (stage table of 165 entries in 15 scene blocks, phase machine, result formula, fortune telling, TT game exhibit, birthday scene) and `config/renames/proposals/o-bunkasai.tsv` (prefix `culture_`). The type names above (`BunkasaiNameTable`, `BunkasaiTexts12`, ...) get role names there (`CultureChoiceNames`, `CultureFortuneGirlNames`, ...); the old shape names stay in this page as history.

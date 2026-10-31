@@ -78,7 +78,7 @@ row is not necessarily a valid rename row:
 Reproduce the inventory with ignored scratch
 `.claude/orchestrator/state/audit27052-inventory.py` under Docker; its JSON output records per-unit
 row kinds. That scratch is an audit aid, not a committed tool or acceptance dependency. The prepared
-reconciliation recipe in [[spec/reconcile]] is the pattern for executable subsets.
+reconciliation recipe in `spec/reconcile` is the pattern for executable subsets.
 
 | Base analysis unit | Draft rows | Base analysis unit | Draft rows |
 |---|---:|---|---:|
@@ -223,8 +223,8 @@ repeat plan against the final source state. Plan exit 0 is not the application/v
 
 ### A school-day Godot slice can start before full phase 2 closes
 
-Use [[spec/m-weekday]], [[spec/m-scheduler]], [[spec/m-sysmenu]], [[spec/m-hud]], [[spec/m-menutext]],
-[[spec/core]] and [[spec/m-flow]] as the source map. Resolve their identifiers through applied ledgers;
+Use `spec/m-weekday`, `spec/m-scheduler`, `spec/m-sysmenu`, `spec/m-hud`, `spec/m-menutext`,
+`spec/core` and `spec/m-flow` as the source map. Resolve their identifiers through applied ledgers;
 draft prose explicitly uses sibling proposals. The minimal complete slice contract is:
 
 1. Initial state and the shared fixed-width/16.16 record view; player parameters, club and health
@@ -288,7 +288,7 @@ Writing the word midway through an evidence note does not trigger the tool's mar
 
 `include/game_enums.h:175` at the audit snapshot defines `MainMode`: 0x11 is `MODE_PROLOGUE`, 0x13 is
 `MODE_NAME_ENTRY`, 0x14/0x15 are `MODE_NAME_ENT_3/4`. The original prefix-only `game-mode-apply.tsv`
-would preserve these meanings. In contrast, [[spec/o-nameent]] section 1 establishes 0x11 attract opening, 0x13 file
+would preserve these meanings. In contrast, `spec/o-nameent` section 1 establishes 0x11 attract opening, 0x13 file
 select, 0x14 name entry and 0x15 voiced prologue. The loader at `src/main/800789E0.c:358` selects
 entry 0x80144AD0 for 0x11 and 0x8014AF28 for 0x15. NAME_ENT's distinct bodies/callers are the semantic
 evidence; merely renaming `MODE_*` to `GAME_MODE_*` would leave this disagreement intact.

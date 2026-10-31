@@ -5,7 +5,7 @@ status: Done
 assignee: core-followup-agent
 created: 2026-10-24
 updated: 2026-10-25
-links: ["[[phase2]]", "[[tickets/T-27000-phase-2]]", "[[spec/core-followup]]"]
+links: ["[[phase2]]", "[[tickets/T-27000-phase-2]]", "`spec/core-followup`"]
 ---
 
 ## Goal
@@ -19,7 +19,7 @@ Reconcile remaining shared core fields/types and essential scheduler/school-day 
 - [x] Independent Standards/Spec review resolved; root integration and matching proof before Done.
 ## Work notes
 
-2026-10-24: Started with an early source-backed slice. `src/main/scheduler.c:421` proves player club id 6 is `CLUB_BASEBALL`, selects `clubs[6]` by that same id, and uses `level` low nibble `>= 8` as the club-season tournament gate. The code proves the gate's consequence, not a general mastery formula. Queue `girl = 7` is written only to the final three tournament records; neither type-0x25 dispatch nor the MASTER overlay reads it, so its meaning remains open. See [[spec/core-followup]] and ignored `.claude/orchestrator/state/T-27067/club-sites.tsv`.
+2026-10-24: Started with an early source-backed slice. `src/main/scheduler.c:421` proves player club id 6 is `CLUB_BASEBALL`, selects `clubs[6]` by that same id, and uses `level` low nibble `>= 8` as the club-season tournament gate. The code proves the gate's consequence, not a general mastery formula. Queue `girl = 7` is written only to the final three tournament records; neither type-0x25 dispatch nor the MASTER overlay reads it, so its meaning remains open. See `spec/core-followup` and ignored `.claude/orchestrator/state/T-27067/club-sites.tsv`.
 
 2026-10-24: Extended the literal audit with `.claude/orchestrator/state/T-27067/event-flag-sites.tsv`: 28 of 29 scheduler EventFlag values have direct `scene_flags[index]` sites; value 61 is incremented through a computed pointer, so it is not found by the direct-index scan. This only maps source sites and does not validate every historical candidate name. The census now explicitly separates 445 exact ledger matches, 48 later ledger names, 158 header identifiers pending site review, 67 superseded GameMode rows, 98 constant rows, 21 data residues, 12 field residues, 82 comment rows, 3 filename rows, and 1 school-day function candidate. Semantic review remains open across the literal/comment tail. Corrected the live talk-work description: `talk_work` and `D_80122CD4` are separate scalar `s32` declarations; the latter's +0x04 correspondence to `TalkWork.girl` does not create a current struct lvalue.
 

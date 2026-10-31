@@ -5,7 +5,7 @@ status: Done
 assignee: codex
 created: 2026-10-22
 updated: 2026-10-22
-links: [[[tickets/T-25018-kangei-near-closure]], [[tickets/T-25037-bunka-upstream-emission]], [[as1-scheduler-rule]]]
+links: `[tickets/T-25018-kangei-near-closure`, [[tickets/T-25037-bunka-upstream-emission]], [[as1-scheduler-rule]]]
 ---
 
 ## Goal

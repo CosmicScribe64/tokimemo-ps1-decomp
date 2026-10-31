@@ -334,7 +334,7 @@ and context buffers S/O/W/A/M remain symbolic. Space/q delimit rows; q separates
 commands preserve source options plus the selectable count and runtime order policy. Conditional trailing
 `nn` applies only to commands 0, 1, A, B, C, D. A leading n suppresses a reply but the original reply scanner
 still advances over it in two-byte units. Command 7 has four inline speaker markers with fixed byte lengths.
-See [[spec/m-dates-b]] sections 7.1-7.5 for source-backed command/voice/selector behavior.
+See `spec/m-dates-b` sections 7.1-7.5 for source-backed command/voice/selector behavior.
 
 Every record keeps path/section/group/line ID, source hash, command/offset, pointer locations, exact raw
 text and terminator, strict source Unicode, ordered control/glyph tokens and voice pairs where used.

@@ -56,7 +56,7 @@ Seven reviewed positive constant families have dry plans: SpeakerVoiceState 14 l
 - Two compound-expression confirm-button zeros remain unchanged; positive scale plans leave three negative calls unresolved. Holiday candidate constants require applied unique locals and a visible owner header, and their zero initializations remain unresolved.
 - Apply reviewed positive families only after resolving their current selectors and owners; run appropriate apply proofs, matching builds and final review. No phase-2 completion or source/build result is claimed by this preparation lane.
 
-The four specs contain source-backed semantics and detailed per-domain deferrals: [[spec/m-menutext]], [[spec/m-hud]], [[spec/m-sysmenu]] and [[spec/m-holiday]].
+The four specs contain source-backed semantics and detailed per-domain deferrals: `spec/m-menutext`, `spec/m-hud`, `spec/m-sysmenu` and `spec/m-holiday`.
 
 ## Post-main-ui application check
 

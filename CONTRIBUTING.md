@@ -1,7 +1,7 @@
 # Contributing
 
-Contributions are welcome: decompiled functions, fixes to the tools, corrections to the wiki. This project is
-AI-assisted (see the README), and agents and humans follow the same rules.
+Every function is matched, so contributions now are corrections: better names, types and comments, fixes to the
+tools, and fixes to the wiki. This project is AI-assisted (see the README), and agents and humans follow the same rules.
 
 ## Setup
 
@@ -16,8 +16,8 @@ A function counts only when it compiles to bytes identical to the original. Befo
 1. `tools/docker.sh ninja` prints `OK` for all 27 binaries.
 2. `tools/docker.sh python3 tools/funcdiff.py <function>` shows no difference for each function you changed.
 
-Readable C that does not match yet is allowed only behind `#ifdef NON_MATCHING`, with a ticket id in a comment.
-The default build must keep matching.
+The default build must keep matching. A rename goes through `tools/rename.py` so its ledger and checks stay complete
+([wiki/rename-tool.md](wiki/rename-tool.md)).
 
 ## Code style
 
@@ -26,13 +26,12 @@ the headers, `INCLUDE_ASM` kept for functions that are not done, and renames mad
 than by search and replace. Names taken from the O.BIN symbol map are hypotheses and stay in
 `config/symbol_addrs_obin.txt` until something confirms them.
 
-## Picking work
+## Finding something to fix
 
-- Run `tools/docker.sh python3 tools/list_leaves.py` for functions that call nothing. Small leaves are the easiest
-  start.
-- Check `wiki/matching-notes.md` first. It lists the compiler patterns that already cost time, so you do not repeat
-  them.
-- Check `wiki/kanban.md` so you do not start on files someone is already working on.
+- Names still marked `HYPOTHESIS` in a file's first comment, or kept only in `config/symbol_addrs_obin.txt`, are the
+  first candidates for confirmation.
+- `wiki/matching-notes.md` explains the compiler patterns behind odd-looking C. Read it before rewriting a function
+  that looks wrong but matches.
 
 ## Wiki and tickets
 
@@ -46,8 +45,3 @@ CI builds the game and reports progress to [decomp.dev](https://decomp.dev/Cosmi
 workflow needs the original executables, which are stored as an encrypted bundle in repository secrets, so pull requests
 from forks skip the build steps and show a notice instead. Run the build locally before you submit. Details are in
 [wiki/ci.md](wiki/ci.md).
-
-## Translations
-
-English translation work is planned for a late phase (see [ROADMAP.md](ROADMAP.md)). If you want to help, open an issue
-first; the submission process does not exist yet.

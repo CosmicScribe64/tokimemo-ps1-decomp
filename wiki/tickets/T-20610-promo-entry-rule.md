@@ -5,7 +5,7 @@ status: Done
 assignee: claude-opus (cg-promo)
 created: 2026-10-16
 updated: 2026-10-17
-links: [[[speedup-research-2026-10-16]], [[data/t0018-cases]], [[toolchain]], [[matching-notes]], tools/cvt_pass.py, tools/test_cvt_pass.py]
+links: `[speedup-research-2026-10-16`, [[data/t0018-cases]], [[toolchain]], [[matching-notes]], tools/cvt_pass.py, tools/test_cvt_pass.py]
 ---
 
 ## Goal

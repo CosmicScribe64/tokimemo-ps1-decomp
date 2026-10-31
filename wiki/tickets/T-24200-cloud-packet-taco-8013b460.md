@@ -5,7 +5,7 @@ status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[matching-notes]], [[cloud-matching]], [[register-cheatsheet]], src/ovl/TACO/8013B170.c]
+links: `[matching-notes`, [[cloud-matching]], [[register-cheatsheet]], src/ovl/TACO/8013B170.c]
 ---
 
 ## Goal

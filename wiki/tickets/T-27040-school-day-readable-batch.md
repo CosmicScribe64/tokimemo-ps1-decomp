@@ -5,7 +5,7 @@ status: Done
 assignee: orchestrator
 created: 2026-10-24
 updated: 2026-10-24
-links: ["[[phase2]]", "[[spec/m-weekday]]", "[[tickets/T-27012-p2-m-weekday]]"]
+links: ["[[phase2]]", "`spec/m-weekday`", "[[tickets/T-27012-p2-m-weekday]]"]
 ---
 
 ## Goal

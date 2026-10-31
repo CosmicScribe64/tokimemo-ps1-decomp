@@ -5,7 +5,7 @@ status: Done
 assignee: agent
 created: 2026-10-14
 updated: 2026-10-17
-links: [[[decompile-workflow]], [[tickets/T-11190-bulk-m2c-pipeline]], [[tickets/T-11210-bulk-m2c-draft-failure-classes]], tools/bulk_m2c.py, tools/m2c.py, tools/test_bulk_m2c.py]
+links: `[decompile-workflow`, [[tickets/T-11190-bulk-m2c-pipeline]], [[tickets/T-11210-bulk-m2c-draft-failure-classes]], tools/bulk_m2c.py, tools/m2c.py, tools/test_bulk_m2c.py]
 ---
 
 ## Goal

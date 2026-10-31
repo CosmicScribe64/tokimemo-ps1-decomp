@@ -5,7 +5,7 @@ status: Done
 assignee: p2a-o-nameent (Sonnet)
 created: 2026-10-24
 updated: 2026-10-24
-links: ["[[tickets/T-27000-phase-2]]", "[[spec/o-nameent]]"]
+links: ["[[tickets/T-27000-phase-2]]", "`spec/o-nameent`"]
 ---
 
 ## Goal

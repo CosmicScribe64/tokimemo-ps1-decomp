@@ -50,7 +50,7 @@ GDB: `tools/emu/run.sh gdb --state ...` starts the emulator with the PCSX-Redux 
 
 ### Function captures (`tools/emu/func_capture`)
 
-`tools/emu/func_capture/run.sh` captures function hits for the engine's differential harness; see [[engine-porting-contract]]. Two environment options:
+`tools/emu/func_capture/run.sh` captures function hits for the engine's differential harness; see `engine-porting-contract`. Two environment options:
 - `MEMCARD_DIR=<dir>` (relative to the data root, or absolute) copies `memcard1.mcd` and `memcard2.mcd` from that directory into the new capture's output directory, so the emulated cards start with that content. The source files are never touched; without the option the cards start blank.
 - `CONTAINER_PREFIX=<p>` names the container `<p>-<name>` (also in `tools/port/run_engine_diff.sh`), so parallel workers can tell their containers apart.
 
@@ -86,7 +86,7 @@ docker run --rm -v "$PWD:/work" -w /work tokimemo-recovery \
 
 The decoder validates all rows before creating a new output, rejects missing/overlapping/truncated dumps and preserves timestamps. Its field map documents source addresses; it does not independently authenticate the loaded overlay, resolve GPU draw order, align clocks or declare parity. Preserve the original run provenance alongside projections. `SystemData.seed` is the main-loop timer seed, not the BIOS RNG state.
 
-Save-state restoration occurs after the initial callback. Samples explicitly identify `before_restore`, `restored` or `cold_boot`; `result.lifecycle` records the restoration's before/after CPU cycles. Independently verified run `review-restore-lifecycle-v1` retains its pre-restore frame1 and restored frames2..4 rather than treating all four as gameplay. Its frame1 image has zero dimensions and is unusable, despite a listed PNG path; reject nonpositive image dimensions. Restored images are320×240. Actual scanout correlation and ordered port/native event comparison remain required. See [[tickets/T-39008-synchronized-differential-captures]].
+Save-state restoration occurs after the initial callback. Samples explicitly identify `before_restore`, `restored` or `cold_boot`; `result.lifecycle` records the restoration's before/after CPU cycles. Independently verified run `review-restore-lifecycle-v1` retains its pre-restore frame1 and restored frames2..4 rather than treating all four as gameplay. Its frame1 image has zero dimensions and is unusable, despite a listed PNG path; reject nonpositive image dimensions. Restored images are320×240. Actual scanout correlation and ordered port/native event comparison remain required. See `tickets/T-39008-synchronized-differential-captures`.
 
 The current runner rejects that unusable-image case before PNG conversion: dimensions must be positive within1024×512, format16/24bpp and payload length exact. Each new shot records `image_status`, plus `png`/`png_sha256` only when conversion succeeds. Failed image conversion preserves state and raw bytes. Independent actual restore `review-shot-validity-v1` verifies unavailable pre-restore and valid restored shots. Older result files are not rewritten or retroactively certified.
 

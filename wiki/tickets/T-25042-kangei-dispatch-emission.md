@@ -5,7 +5,7 @@ status: Done
 assignee: codex
 created: 2026-10-22
 updated: 2026-10-26
-links: [[[tickets/T-24201-cloud-packet-kangei-80134724]], [[tickets/T-25011-class-a-closers-as1-levers]], [[tickets/T-25041-kangei-preload-schedule]]]
+links: `[tickets/T-24201-cloud-packet-kangei-80134724`, [[tickets/T-25011-class-a-closers-as1-levers]], [[tickets/T-25041-kangei-preload-schedule]]]
 ---
 
 ## Goal

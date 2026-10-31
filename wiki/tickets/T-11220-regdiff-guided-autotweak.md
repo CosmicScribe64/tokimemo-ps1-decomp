@@ -5,7 +5,7 @@ status: Done
 assignee: agent
 created: 2026-10-14
 updated: 2026-10-17
-links: [[[decompile-workflow]], [[register-cheatsheet]], [[uopt-register-allocation]], [[tickets/T-11170-cheat-sheet-auto-tweaker]], [[tickets/T-11200-order-search-in-solvers]], tools/autotweak.py, tools/bulk_m2c.py, tools/regdiff.py]
+links: `[decompile-workflow`, [[register-cheatsheet]], [[uopt-register-allocation]], [[tickets/T-11170-cheat-sheet-auto-tweaker]], [[tickets/T-11200-order-search-in-solvers]], tools/autotweak.py, tools/bulk_m2c.py, tools/regdiff.py]
 ---
 
 ## Goal

@@ -5,7 +5,7 @@ status: Done
 assignee: orchestrator
 created: 2026-10-23
 updated: 2026-10-23
-links: [[[tickets/T-25100-wave-8-finish]], [[tickets/T-25201-wave-9-closers]], [[status]]]
+links: `[tickets/T-25100-wave-8-finish`, [[tickets/T-25201-wave-9-closers]], [[status]]]
 ---
 
 ## Goal

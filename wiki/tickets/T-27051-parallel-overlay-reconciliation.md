@@ -54,13 +54,13 @@ findings after fixing handler suffixes, glossary traps/abbreviations, unsupporte
 character/byte units, iris threshold overshoot, exact line-player timer branches, three declaration
 locators and the opening helper's unused meter average. The source/header census and all explicit
 data deferrals (80 island-only, one comment-only endpoint, 176 generated-assembly-only labels)
-are recorded in [[spec/o-nameent]], alongside separate type/field/constant/move/main-owner work.
+are recorded in `spec/o-nameent`, alongside separate type/field/constant/move/main-owner work.
 Every function locator was independently checked against its actual definition in Docker.
 No source application or clean build is claimed; root must rerun the live plan before application.
 
 2026-10-24 (user layout/constants steering): The primary chat requested a second, explicit section
 covering logical C filenames/topic headers and evidence-backed constants throughout each unit.
-[[spec/o-nameent]] section 14 records the four original-object file destinations, five proposed
+`spec/o-nameent` section 14 records the four original-object file destinations, five proposed
 declaration topics, fixed-width/closure constraints and 17 grouped constant families with source
 contexts. Sol 6.1 reviewed these recommendations with no blocking findings. The optional supported
 move-only `config/renames/proposals/o-nameent-files.tsv` has six rows; its full Docker plan exited 0
@@ -77,7 +77,7 @@ Corrections include Yuina selector 7, visit-script load rather than group reset,
 using computed Sunday while sequential overrides use today's date, exact month/day precedence, all
 matching availability writes, packed appointment bits and explicit birthday masks. Exact score changes
 and ranking/tie rules were also checked. Full Docker plan passed against a frozen source snapshot
-(1,061 rows, 26 files, zero problems); [[spec/o-geko]] records the command and snapshot hash. Live
+(1,061 rows, 26 files, zero problems); `spec/o-geko` records the command and snapshot hash. Live
 planning is still required immediately before integration application because the shared core was
 changing during the analysis. No build or emulator confirmation is claimed.
 
@@ -105,7 +105,7 @@ The reviewer independently compared every printed target tuple to the current TS
 The exact DATE residue is 969 source/header data labels plus 107 assembly-only labels; all 1,076
 deferred data labels are individually listed with no omissions, extras or duplicates. Four function-like
 items are separately deferred (one stale alias prototype and three GTE helpers). The 402 labels absent
-from the first residue draft were recovered by the independent census. [[spec/o-date]] also records
+from the first residue draft were recovered by the independent census. `spec/o-date` also records
 19 C object destinations plus an umbrella, 17 topic headers and all 158 proposed constants. The mixed
 Yumi/Miharu object stays intact as `scene_yumi_miharu.c`; event-log-only IDs 37..40 are not date spots.
 Sol reviewed these layout/constants recommendations without claiming move/constant application proof.
@@ -147,20 +147,20 @@ untraced-writer question is resolved at that technical level. ETC's `func_80144F
 `src/ovl/ETC/80143240.c:738-750` increments both `GameState.girl_cleared` and `SystemData.flags`
 under 99, while main memory-card code copies the 16-byte system counter array. NAME_ENT displays
 those counts through the already-applied `SystemData`/`AlbumSlotRecord` types. These findings are
-filed in [[spec/o-date]] and [[spec/o-nameent]] as shared-owner reconciliation; no main field or
+filed in `spec/o-date` and `spec/o-nameent` as shared-owner reconciliation; no main field or
 symbol row is applied or added to the owned identifier packets.
 
 Follow-up serialization evidence corrects the original NAME_ENT proposal: `AlbumSlotRecord.flags`
 is the reader view of `GameSaveImage.unk_488`, sourced from `GameState.girl_cleared` by main
 memory-card save/load loops (`src/main/memory_card.c:834,950`). The album offset is 0x200 + 0x488 =
 0x688. It is not a copy of the persistent `SystemData.flags` array. The separate 14-byte reader
-and 16-byte serialized declarations remain unchanged; [[spec/o-nameent]] records the exact
+and 16-byte serialized declarations remain unchanged; `spec/o-nameent` records the exact
 shared-owner requests and supersedes the old proposal's provenance claim.
 
 GEKO continuation resolved the birthday candidate sentinel at source level: `func_80134808`
 calls `get_g_zyotai_s(255)` before skipping the sentinel, but the two main score helpers reduce
 the argument modulo 13, so this call reads Yuko's index 8 rather than going out of bounds. The
-later sentinel guard still skips the candidate; no fallback choice is inferred. [[spec/o-geko]]
+later sentinel guard still skips the candidate; no fallback choice is inferred. `spec/o-geko`
 records the shared-helper trace and removes this issue from the unproved bounds questions.
 
 NAME_ENT source inspection identified a possible negative-literal constant bug: `literal_value`

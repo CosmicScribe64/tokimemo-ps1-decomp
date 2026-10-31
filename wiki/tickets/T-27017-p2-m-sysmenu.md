@@ -5,7 +5,7 @@ status: Done
 assignee: Sonnet 5.5 analyst (workflow p2a)
 created: 2026-10-24
 updated: 2026-10-24
-links: [[[tickets/T-27000-phase-2]], [[spec/m-sysmenu]]]
+links: `[tickets/T-27000-phase-2`, `spec/m-sysmenu`]
 ---
 
 ## Goal
@@ -35,5 +35,5 @@ Name every function and global of `src/main/8005A0B0.c` (109 functions: the week
   - `quit_flags` clash: the `GsRec66C unk_03 -> quit_flags` row is gone. The table has 263 rows (92 func, 27 data, 126 const, 16 comment, 2 file, 0 field), every row has 5 columns, no duplicate names. Spec section 7 and this ticket use `ClubRecord.flags` and `ClubFlagBits.quit`.
   - `CharFlags.b2` meaning: no `club_member` remains. The `command_screen_icon_confirm` row and the spec icon 4 row cite the bit as `acquainted`, point to m-scheduler's HYPOTHESIS and claim no meaning for it. This matches `src/main/8005A0B0.c` around lines 520-545 (`func_80053564(club)` finds the girl; if `unk_1BC[i].unk_0C.f.b2` is set, `unk_06 += 1`); the m-menutext table names `func_80053564` as `girl_find_by_club`.
   - Spot checks of the non-blocking fixes against the C: NAME_ENT calls `main_state_set(0x34); func_80042908(0xFF)` (`80144AD0.c:2730`, `80139740.c:2708`) and OPTION calls only `main_state_set(0x34)` (`8013A550.c:723`); ETC has its own init clone `func_80144AC0` (`80143240.c:620`) calling only `func_8005C7C0` and `func_8005C7FC`; the sound rows are `UiSe` `UI_SE_CARD_JOB_DONE` and `UI_SE_DOORBELL`, no `SND_*` / `ICON_*` names remain.
-  - The branch changes only `config/renames/proposals/m-sysmenu.tsv`, [[spec/m-sysmenu]], [[spec/index]], this ticket and the log; nothing under `src/`, `include/` or `config/symbol*`, so no `CODING_STANDARDS.md` code checklist item applies. Moved to Done.
-  - Follow-up for the table merge: `m-sysmenu.tsv` still has the three `TextSpeed` const rows (`TEXT_SPEED_FAST`, `TEXT_SPEED_NORMAL`, `TEXT_SPEED_SLOW`, lines 211-213) that [[spec/m-menutext]] owns (see [[tickets/T-27018-p2-m-menutext]], review round 2). Same names and values; drop them from this table when it goes into the rename tool input. Nothing reads the proposals tables for duplicates yet, so the merge itself is unaffected.
+  - The branch changes only `config/renames/proposals/m-sysmenu.tsv`, `spec/m-sysmenu`, [[spec/index]], this ticket and the log; nothing under `src/`, `include/` or `config/symbol*`, so no `CODING_STANDARDS.md` code checklist item applies. Moved to Done.
+  - Follow-up for the table merge: `m-sysmenu.tsv` still has the three `TextSpeed` const rows (`TEXT_SPEED_FAST`, `TEXT_SPEED_NORMAL`, `TEXT_SPEED_SLOW`, lines 211-213) that `spec/m-menutext` owns (see [[tickets/T-27018-p2-m-menutext]], review round 2). Same names and values; drop them from this table when it goes into the rename tool input. Nothing reads the proposals tables for duplicates yet, so the merge itself is unaffected.

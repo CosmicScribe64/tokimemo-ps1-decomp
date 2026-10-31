@@ -5,7 +5,7 @@ status: Done
 assignee: orchestrator
 created: 2026-10-23
 updated: 2026-10-24
-links: [[[tickets/T-25400-wave-11-until-matched]], [[build-step-gaps]], [[original-compiler]], [[toolchain]]]
+links: `[tickets/T-25400-wave-11-until-matched`, [[build-step-gaps]], [[original-compiler]], [[toolchain]]]
 ---
 
 ## Goal

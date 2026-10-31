@@ -5,7 +5,7 @@ status: Done
 assignee: Claude
 created: 2026-10-14
 updated: 2026-10-17
-links: [[[decompile-workflow]], [[register-cheatsheet]], [[tickets/T-11170-cheat-sheet-auto-tweaker]], [[tickets/T-1330-tooling-m2c-context-and-permuter]], tools/bulk_m2c.py, tools/test_bulk_m2c.py, tools/autotweak.py, tools/m2c.py, tools/permute.py]
+links: `[decompile-workflow`, [[register-cheatsheet]], [[tickets/T-11170-cheat-sheet-auto-tweaker]], [[tickets/T-1330-tooling-m2c-context-and-permuter]], tools/bulk_m2c.py, tools/test_bulk_m2c.py, tools/autotweak.py, tools/m2c.py, tools/permute.py]
 ---
 
 ## Goal

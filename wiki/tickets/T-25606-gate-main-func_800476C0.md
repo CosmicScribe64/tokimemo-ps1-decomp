@@ -5,7 +5,7 @@ status: Done
 assignee: finish gate
 created: 2026-10-23
 updated: 2026-10-23
-links: [[[tickets/T-25600-finish-gate]], [[playbook]]]
+links: `[tickets/T-25600-finish-gate`, [[playbook]]]
 ---
 
 ## Goal

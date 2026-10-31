@@ -5,7 +5,7 @@ status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[cloud-matching]], [[matching-notes]], [[register-cheatsheet]], [[tickets/T-24033-valen-selector-ports]], [[tickets/T-24138-small-overlays-wave-3-closers]], src/ovl/VALEN/80132760.c]
+links: `[cloud-matching`, [[matching-notes]], [[register-cheatsheet]], [[tickets/T-24033-valen-selector-ports]], [[tickets/T-24138-small-overlays-wave-3-closers]], src/ovl/VALEN/80132760.c]
 ---
 
 ## Goal

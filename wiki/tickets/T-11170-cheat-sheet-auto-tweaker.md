@@ -5,7 +5,7 @@ status: Done
 assignee: Claude
 created: 2026-10-14
 updated: 2026-10-17
-links: [[[register-cheatsheet]], [[decompile-workflow]], [[tickets/T-1330-tooling-m2c-context-and-permuter]], [[tickets/T-9810-permuter-farm-for-near-misses]], tools/autotweak.py, tools/test_autotweak.py, tools/permute.py]
+links: `[register-cheatsheet`, [[decompile-workflow]], [[tickets/T-1330-tooling-m2c-context-and-permuter]], [[tickets/T-9810-permuter-farm-for-near-misses]], tools/autotweak.py, tools/test_autotweak.py, tools/permute.py]
 ---
 
 ## Goal

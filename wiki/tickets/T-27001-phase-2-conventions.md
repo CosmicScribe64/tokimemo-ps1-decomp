@@ -5,7 +5,7 @@ status: Done
 assignee: w19-conventions
 created: 2026-10-24
 updated: 2026-10-24
-links: [[[phase2]], [[tickets/T-27000-phase-2]], [[obin]], [[emulator]]]
+links: `[phase2`, [[tickets/T-27000-phase-2]], [[obin]], [[emulator]]]
 ---
 
 ## Goal

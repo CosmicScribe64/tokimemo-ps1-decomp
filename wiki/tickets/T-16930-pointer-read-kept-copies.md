@@ -5,7 +5,7 @@ status: Done
 assignee: claude-opus (pensive-montalcini-7151d4)
 created: 2026-10-15
 updated: 2026-10-16
-links: [[[tickets/T-16920-gamestate-1093-type]], [[tickets/T-16910-cpw-census]], [[register-cheatsheet]], [[matching-notes]], [[game-state]], [[data-types]]]
+links: `[tickets/T-16920-gamestate-1093-type`, [[tickets/T-16910-cpw-census]], [[register-cheatsheet]], [[matching-notes]], [[game-state]], [[data-types]]]
 ---
 
 ## Goal

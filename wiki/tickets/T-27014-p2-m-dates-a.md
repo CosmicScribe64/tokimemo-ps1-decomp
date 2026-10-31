@@ -5,7 +5,7 @@ status: Done
 assignee: Sonnet 5.5 analyst (workflow p2a)
 created: 2026-10-24
 updated: 2026-10-23
-links: [[[tickets/T-27000-phase-2]], [[spec/m-dates-a]]]
+links: `[tickets/T-27000-phase-2`, `spec/m-dates-a`]
 ---
 
 ## Goal

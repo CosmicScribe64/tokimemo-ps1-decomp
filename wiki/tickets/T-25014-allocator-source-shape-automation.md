@@ -5,7 +5,7 @@ status: Done
 assignee: octa
 created: 2026-10-21
 updated: 2026-10-22
-links: [[[status]], [[plan-remaining]], [[build-step-gaps]], [[matching-notes]], [[as1-scheduler-rule]], [[tickets/T-25013-compiler-level-levers]]]
+links: `[status`, `plan-remaining`, [[build-step-gaps]], [[matching-notes]], [[as1-scheduler-rule]], [[tickets/T-25013-compiler-level-levers]]]
 ---
 
 ## Goal

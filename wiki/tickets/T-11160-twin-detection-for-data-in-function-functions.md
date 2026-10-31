@@ -5,7 +5,7 @@ status: Done
 assignee: Claude
 created: 2026-10-14
 updated: 2026-10-17
-links: [[[build-system]], [[tickets/T-11150-twin-detection-for-jump-table-functions]], [[tickets/T-9010-per-object-data-shared-lui-at]], [[tickets/T-10200-orphan-jump-tables]], tools/dupes.py, tools/neardupes.py]
+links: `[build-system`, [[tickets/T-11150-twin-detection-for-jump-table-functions]], [[tickets/T-9010-per-object-data-shared-lui-at]], [[tickets/T-10200-orphan-jump-tables]], tools/dupes.py, tools/neardupes.py]
 ---
 
 ## Goal

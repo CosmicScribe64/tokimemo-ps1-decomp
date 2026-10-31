@@ -5,7 +5,7 @@ status: Done
 assignee: Claude
 created: 2026-10-14
 updated: 2026-10-17
-links: [[[decompile-workflow]], [[tickets/T-11190-bulk-m2c-pipeline]], tools/bulk_m2c.py, tools/test_bulk_m2c.py, tools/permute.py]
+links: `[decompile-workflow`, [[tickets/T-11190-bulk-m2c-pipeline]], tools/bulk_m2c.py, tools/test_bulk_m2c.py, tools/permute.py]
 ---
 
 ## Goal

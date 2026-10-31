@@ -5,7 +5,7 @@ status: Done
 assignee: claude-opus (quizzical-swanson-a4bc82)
 created: 2026-10-15
 updated: 2026-10-16
-links: [[[tickets/T-16910-cpw-census]], [[game-state]], [[matching-notes]], [[toolchain]], [[tickets/T-11570-w1-ovl-name_ent-80139740]], include/main_api.h, tools/cvt_pass.py]
+links: `[tickets/T-16910-cpw-census`, [[game-state]], [[matching-notes]], [[toolchain]], [[tickets/T-11570-w1-ovl-name_ent-80139740]], include/main_api.h, tools/cvt_pass.py]
 ---
 
 ## Goal

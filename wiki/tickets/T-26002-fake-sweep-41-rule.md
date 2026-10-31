@@ -5,7 +5,7 @@ status: Done
 assignee: w20-fake-sweep (Sonnet)
 created: 2026-10-24
 updated: 2026-10-24
-links: [[[tickets/T-26000-ugen-block-copy-41-rule]], [[toolchain]], [[matching-notes]]]
+links: `[tickets/T-26000-ugen-block-copy-41-rule`, [[toolchain]], [[matching-notes]]]
 ---
 
 ## Goal

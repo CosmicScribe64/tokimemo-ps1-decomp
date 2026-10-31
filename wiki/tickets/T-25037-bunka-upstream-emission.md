@@ -5,7 +5,7 @@ status: Done
 assignee: codex
 created: 2026-10-22
 updated: 2026-10-22
-links: [[[tickets/T-25023-bunka-scheduler-closure]], [[as1-scheduler-rule]]]
+links: `[tickets/T-25023-bunka-scheduler-closure`, [[as1-scheduler-rule]]]
 ---
 
 ## Goal

@@ -5,7 +5,7 @@ status: Done
 assignee: claude
 created: 2026-10-20
 updated: 2026-10-20
-links: ["[[build-step-gaps]]", "[[as1-scheduler-rule]]", "[[plan-remaining]]", "[[tickets/T-24925-func-8013cce4-8013BEF0]]"]
+links: ["[[build-step-gaps]]", "[[as1-scheduler-rule]]", "`plan-remaining`", "[[tickets/T-24925-func-8013cce4-8013BEF0]]"]
 ---
 
 ## Goal

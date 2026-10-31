@@ -5,7 +5,7 @@ status: Done
 assignee: wave-9 conveyor
 created: 2026-10-23
 updated: 2026-10-23
-links: [[[tickets/T-25200-wave-9-neighbor]], [[tickets/T-25100-wave-8-finish]], [[playbook]]]
+links: `[tickets/T-25200-wave-9-neighbor`, [[tickets/T-25100-wave-8-finish]], [[playbook]]]
 ---
 
 ## Goal

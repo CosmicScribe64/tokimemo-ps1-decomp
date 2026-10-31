@@ -6,7 +6,7 @@ assignee: sonnet (p2-core-apply)
 created: 2026-10-24
 updated: 2026-10-24
 blocked-by: [T-27002, T-27003]
-links: [[[phase2]], [[game-state]], [[data-types]], [[emulator]], [[tickets/T-20500-emulator-assisted-naming]], [[tickets/T-27000-phase-2]]]
+links: `[phase2`, [[game-state]], [[data-types]], [[emulator]], [[tickets/T-20500-emulator-assisted-naming]], [[tickets/T-27000-phase-2]]]
 ---
 
 ## Goal
@@ -99,7 +99,7 @@ uses). Conventions: `docs/adr/0001-phase-2-naming.md`; stems: `GLOSSARY.md`.
     `actors_`, `audio_`, `bustup_` (O.BIN stem; the map has `portrait_`), `card_` (the map has `memory_card_`),
     `command_`, `daily_`, `debug_`, `dialogue_`, `frame_`, `game_` (the map has `game_mode_`), `icon_`, `last_`,
     `light_`, `mascot_`, `name_buf_`, `overlay_`, `parameter_`, `place_`, `quarter_`, `screen_`, `system_`, `voice_`;
-    and `snd_`, which the ADR calls an SDK stem ([[spec/core]] section 17 proposes it as the single sound prefix).
+    and `snd_`, which the ADR calls an SDK stem (`spec/core` section 17 proposes it as the single sound prefix).
     CODING_STANDARDS section 4 wants the map rows in the commit that first uses a prefix; I did not edit the ADR
     maps, because several rows need a decision (`snd_`, `card_`, `ending_start` against the ENDING overlay prefix).
   - Not run: emulator checks (the notes are the table's); nothing was re-derived.

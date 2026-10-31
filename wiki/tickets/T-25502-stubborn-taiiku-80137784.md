@@ -5,7 +5,7 @@ status: Done
 assignee: wave-12 workflow
 created: 2026-10-23
 updated: 2026-10-23
-links: [[[tickets/T-25500-stubborn-functions]], [[playbook]]]
+links: `[tickets/T-25500-stubborn-functions`, [[playbook]]]
 ---
 
 ## Goal

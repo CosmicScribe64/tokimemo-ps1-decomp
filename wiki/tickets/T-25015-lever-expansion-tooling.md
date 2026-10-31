@@ -5,7 +5,7 @@ status: Done
 assignee: octa
 created: 2026-10-21
 updated: 2026-10-22
-links: [[[status]], [[build-step-gaps]], [[matching-notes]], [[as1-scheduler-rule]], [[tickets/T-25013-compiler-level-levers]], [[tickets/T-25014-allocator-source-shape-automation]]]
+links: `[status`, [[build-step-gaps]], [[matching-notes]], [[as1-scheduler-rule]], [[tickets/T-25013-compiler-level-levers]], [[tickets/T-25014-allocator-source-shape-automation]]]
 ---
 
 ## Goal

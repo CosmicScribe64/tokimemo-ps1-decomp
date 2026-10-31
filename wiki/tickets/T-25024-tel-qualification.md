@@ -5,7 +5,7 @@ status: Done
 assignee: Sol 6.1 medium
 created: 2026-10-22
 updated: 2026-10-26
-links: ["[[plan-remaining]]", "[[matching-notes]]"]
+links: ["`plan-remaining`", "[[matching-notes]]"]
 ---
 
 ## Goal

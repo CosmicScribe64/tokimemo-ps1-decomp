@@ -5,7 +5,7 @@ status: Done
 assignee: claude (cloud session)
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[matching-notes]], [[cloud-matching]], [[register-cheatsheet]], [[tickets/T-24129-taco-and-etc-remaining-closers]], src/ovl/ETC/8013FF80.c]
+links: `[matching-notes`, [[cloud-matching]], [[register-cheatsheet]], [[tickets/T-24129-taco-and-etc-remaining-closers]], src/ovl/ETC/8013FF80.c]
 ---
 
 ## Goal

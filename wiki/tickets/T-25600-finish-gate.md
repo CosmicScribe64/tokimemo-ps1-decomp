@@ -5,7 +5,7 @@ status: Done
 assignee: orchestrator
 created: 2026-10-23
 updated: 2026-10-24
-links: [[[tickets/T-25500-stubborn-functions]], [[tickets/T-25400-wave-11-until-matched]], [[tickets/T-25300-wave-10-second-pass]], [[status]], [[playbook]]]
+links: `[tickets/T-25500-stubborn-functions`, [[tickets/T-25400-wave-11-until-matched]], [[tickets/T-25300-wave-10-second-pass]], [[status]], [[playbook]]]
 ---
 
 ## Goal

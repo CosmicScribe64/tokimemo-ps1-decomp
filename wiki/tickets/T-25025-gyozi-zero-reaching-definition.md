@@ -5,7 +5,7 @@ status: Done
 assignee: codex
 created: 2026-10-22
 updated: 2026-10-26
-links: ["[[tickets/T-24907-func-80140e0c-80140C90]]", "[[plan-remaining]]"]
+links: ["[[tickets/T-24907-func-80140e0c-80140C90]]", "`plan-remaining`"]
 ---
 
 ## Goal

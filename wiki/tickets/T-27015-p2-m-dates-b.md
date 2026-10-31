@@ -5,7 +5,7 @@ status: Done
 assignee: Sonnet analyst (p2a-m-dates-b)
 created: 2026-10-24
 updated: 2026-10-24
-links: ["[[tickets/T-27000-phase-2]]", "[[spec/m-dates-b]]", "config/renames/proposals/m-dates-b.tsv"]
+links: ["[[tickets/T-27000-phase-2]]", "`spec/m-dates-b`", "config/renames/proposals/m-dates-b.tsv"]
 ---
 
 ## Goal
@@ -22,7 +22,7 @@ Roadmap phase 2, unit `m-dates-b`: name the functions, globals, fields and const
 
 ## Notes
 
-- Evidence: the matched C and the overlay step tables, the SERIFU script data parsed from the disc (numbers only), and about twenty short emulator runs (a patched scratch copy of `tools/emu` with a memory-write option; nothing in the repo changed). Run list in [[spec/m-dates-b]] section 15.
+- Evidence: the matched C and the overlay step tables, the SERIFU script data parsed from the disc (numbers only), and about twenty short emulator runs (a patched scratch copy of `tools/emu` with a memory-write option; nothing in the repo changed). Run list in `spec/m-dates-b` section 15.
 - Findings worth reviewing first: every event scene is a table of function pointers indexed by `step` and this object holds the shared steps; dialogue scripts are SERIFU disc files linked for a fixed RAM address with three parallel tables (text, command, voice) and 20 speak codes; wipe kind is `month % 7`; portrait files map to BUSTUP file names by sector (`0x4FE5 + 0x2D * k`); the three-way choice order is a function of `frame_count`; `check_para_limit` clamps are exact (emulator-checked).
 - Core corrections requested in the spec open questions: `bustup_quad_offsets` takes an expression index, not a girl id; `step_timer` is not advanced by the main loop; the core comments for `normal_date_girl_in/out` say slide, the code fades.
 

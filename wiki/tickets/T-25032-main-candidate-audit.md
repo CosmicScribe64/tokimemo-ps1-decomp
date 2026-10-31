@@ -5,7 +5,7 @@ status: Done
 assignee: Codex
 created: 2026-10-22
 updated: 2026-10-26
-links: ["[[plan-remaining]]"]
+links: ["`plan-remaining`"]
 ---
 
 ## Goal

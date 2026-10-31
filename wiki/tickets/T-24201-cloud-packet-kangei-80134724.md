@@ -5,7 +5,7 @@ status: Done
 assignee: cloud session
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[cloud-matching]], [[matching-notes]], [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep]], src/ovl/KANGEI/80134120.c]
+links: `[cloud-matching`, [[matching-notes]], [[tickets/T-24122-shugaku-final-3-and-small-overlays-sweep]], src/ovl/KANGEI/80134120.c]
 ---
 
 ## Goal

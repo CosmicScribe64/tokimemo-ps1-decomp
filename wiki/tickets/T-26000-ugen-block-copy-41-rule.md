@@ -7,7 +7,7 @@ status: Done
 assignee: w17-ugen41 (Opus)
 created: 2026-10-23
 updated: 2026-10-26
-links: [[[tickets/T-25608-gate-main-func_8006B0C8]], [[ido-52-evaluation]], [[toolchain]]]
+links: `[tickets/T-25608-gate-main-func_8006B0C8`, [[ido-52-evaluation]], [[toolchain]]]
 ---
 
 ## Goal

@@ -5,7 +5,7 @@ status: Done
 assignee: codex
 created: 2026-10-22
 updated: 2026-10-26
-links: [[[tickets/T-25016-candidate-reconstruction]], [[as1-scheduler-rule]], [[build-step-gaps]]]
+links: `[tickets/T-25016-candidate-reconstruction`, [[as1-scheduler-rule]], [[build-step-gaps]]]
 ---
 
 ## Goal

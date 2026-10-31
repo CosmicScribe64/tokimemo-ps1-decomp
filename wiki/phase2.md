@@ -32,7 +32,7 @@ Per user clarification on 2026-10-24, every game-code C file across `main` and t
 
 ### Readiness to start the Godot port
 
-Per user clarification on 2026-10-24, the immediate outcome is code readable enough to start the Godot port. Do not wait for every unit's naming backlog to finish before starting a gameplay slice. Prioritize the shared game-state interface, day progression, command effects, and the scene rules that the first slice needs. Keep each spec explicit about verified rules and unresolved work. T-27040 starts this work with the school-day loop and parameter-delta formula, and [[spec/m-weekday]] describes their behavior.
+Per user clarification on 2026-10-24, the immediate outcome is code readable enough to start the Godot port. Do not wait for every unit's naming backlog to finish before starting a gameplay slice. Prioritize the shared game-state interface, day progression, command effects, and the scene rules that the first slice needs. Keep each spec explicit about verified rules and unresolved work. T-27040 starts this work with the school-day loop and parameter-delta formula, and `spec/m-weekday` describes their behavior.
 
 Emulator runs, existing save files, and debugger traces are authorized to resolve uncertain meanings. Record reproducible commands as evidence and keep save files, screenshots, and other game data ignored.
 

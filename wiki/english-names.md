@@ -5,7 +5,7 @@ updated: 2026-10-30
 
 # English names and presenter English hooks (Phase 4 WP-D, WP-I)
 
-Plan: [[phase4-design-2026-10-29]] (English, WP-D and WP-I). Text layer: [[port-text-layer]].
+Plan: `phase4-design-2026-10-29` (English, WP-D and WP-I). Text layer: `port-text-layer`.
 
 ## WP-D: Symbols audit
 

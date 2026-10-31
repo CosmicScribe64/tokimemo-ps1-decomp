@@ -5,7 +5,7 @@ status: Done
 assignee: w3-rpg-bat-p05 agent
 created: 2026-10-16
 updated: 2026-10-16
-links: [[[tickets/T-17100-types-first-rpg_bat]]]
+links: `[tickets/T-17100-types-first-rpg_bat`]
 ---
 
 ## Goal

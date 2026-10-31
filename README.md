@@ -6,13 +6,14 @@
 
 This project is a matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`).
 
-The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) rebuild identically, and every game function is now
-written in C. The source naming/readability phase is recorded as complete. A Godot port was attempted and removed on
-2026-10-31; its history stays in Git and in the wiki. See [wiki/status.md](wiki/status.md) for the current evidence.
+The project is finished. The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) rebuild byte for byte, every
+game function is written in C, and the matched code has readable names and comments. The PsyQ SDK libraries stay in
+assembly. [wiki/status.md](wiki/status.md) has the final numbers and how they were verified.
 
 **You need your own copy of the disc.** Original disc images, executables, extracted originals, and generated
-disassembly are not included. Versioned English artwork edits and review history are backed up under
-[translations/en/graphics/artwork](translations/en/graphics/artwork/README.md); they are not a complete runtime asset pack.
+disassembly are not included. `translations/` keeps English text records and translated artwork with their review
+history ([translations/en/graphics/artwork](translations/en/graphics/artwork/README.md)). Nothing in the repository
+applies them to the game.
 
 This project is independent. It is not affiliated with or endorsed by Konami.
 
@@ -47,22 +48,20 @@ function.
 
 ## Matching decompilation
 
-A function counts as decompiled only when its compiled code is byte-identical to the original. CI checks that on
-every push, along with the SHA-1 of every binary.
+A function counts as decompiled only when its compiled code is byte-identical to the original. CI checks the SHA-1 of
+every binary on every push.
 
 Names, types and comments do not change the bytes, so the match rule cannot check them. Treat them as hypotheses.
-Many function names come from the symbol map in the game's own `O.BIN` developer build and are not yet confirmed.
+Many function names come from the symbol map in the game's own `O.BIN` developer build, and some are unconfirmed.
 
 ## AI assistance
 
-AI coding agents (Claude Code) wrote most of the code and documentation here, directed by the maintainer.
-
-The English translation planned in the roadmap will also be made with AI as a placeholder for human translation. Human translators are
-welcome and encouraged to contribute their own translations to replace the placeholders.
+AI coding agents (Claude Code) wrote most of the code and documentation here, directed by the maintainer. The English
+records in `translations/` were also produced with AI.
 
 ## Contributing
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md). Bug reports and decompiled functions are welcome. Agents and humans follow the
+Read [CONTRIBUTING.md](CONTRIBUTING.md). Bug reports and corrections are welcome. Agents and humans follow the
 same rules, in [CODING_STANDARDS.md](CODING_STANDARDS.md) and [AGENTS.md](AGENTS.md).
 
 ## License

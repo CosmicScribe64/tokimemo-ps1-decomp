@@ -5,7 +5,7 @@ status: Done
 assignee:
 created: 2026-10-24
 updated: 2026-10-26
-links: [[[tickets/T-26000-ugen-block-copy-41-rule]], [[tickets/T-26002-fake-sweep-41-rule]], [[toolchain]]]
+links: `[tickets/T-26000-ugen-block-copy-41-rule`, [[tickets/T-26002-fake-sweep-41-rule]], [[toolchain]]]
 ---
 
 ## Goal

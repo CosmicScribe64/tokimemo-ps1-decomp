@@ -5,7 +5,7 @@ status: Done
 assignee: codex
 created: 2026-10-22
 updated: 2026-10-26
-links: ["[[plan-remaining]]", "[[tickets/T-25016-candidate-reconstruction]]"]
+links: ["`plan-remaining`", "[[tickets/T-25016-candidate-reconstruction]]"]
 ---
 
 ## Goal

@@ -5,12 +5,12 @@ status: Done
 assignee: claude-c-m2
 created: 2026-10-20
 updated: 2026-10-20
-links: [[[plan-remaining]], [[playbook]], src/ovl/ENDING/80137340.c, src/ovl/GEKO/801338F0.c, src/ovl/ETC/80143240.c]
+links: `[plan-remaining`, [[playbook]], src/ovl/ENDING/80137340.c, src/ovl/GEKO/801338F0.c, src/ovl/ETC/80143240.c]
 ---
 
 ## Goal
 
-Match three class C functions from [[plan-remaining]] in worktree c-m2: ENDING `func_801387B0` (src/ovl/ENDING/80137340.c), GEKO `func_80133C50` (src/ovl/GEKO/801338F0.c), ETC `func_80144224` (src/ovl/ETC/80143240.c). Owned files: those three C files only.
+Match three class C functions from `plan-remaining` in worktree c-m2: ENDING `func_801387B0` (src/ovl/ENDING/80137340.c), GEKO `func_80133C50` (src/ovl/GEKO/801338F0.c), ETC `func_80144224` (src/ovl/ETC/80143240.c). Owned files: those three C files only.
 
 ## Acceptance criteria
 

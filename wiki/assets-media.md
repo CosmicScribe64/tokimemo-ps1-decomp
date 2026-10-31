@@ -88,8 +88,8 @@ their separate JSON API can be connected later without importing an engine.
 The standard headers and audio layout are checked against the
 [PSX-SPX format reference](https://psx-spx.consoledev.net/cdromfileformats/)
 and [Sony Psy-Q file-format reference](https://psx.arthus.net/sdk/Psy-Q/DOCS/Devrefs/Filefrmt.pdf).
-The game-side callers are described in [[spec/h-graphics]], [[spec/h-cdio]] and
-[[spec/m-dates-a]]: backgrounds go through MDEC, actor textures use uploaded blocks and runtime
+The game-side callers are described in `spec/h-graphics`, `spec/h-cdio` and
+`spec/m-dates-a`: backgrounds go through MDEC, actor textures use uploaded blocks and runtime
 tables, sound banks have separate headers/bodies, songs use sequence commands and voices stream XA.
 
 Initial deferred inventory (historical; use the current checkpoint above): 313 `.BS` backgrounds (MDEC), 178 other `.NBN` files including `TITLE.NBN`, 308 other
@@ -513,7 +513,7 @@ The coherent current-source suite passes 483 Docker tests without skips. The thr
 
 This is the historical v5 checkpoint at `ee27829ae`; use the later v9 section for current commands.
 
-The reviewed sequence reader/exporter/validator and invented-data tests are applied under [[tickets/T-28006-sequence-music-export]]. Accepted candidate v5 has manifest SHA256 `b3bb094465b65701064199980c4c21f25c0a61fe073dbbc73d1acd9ba330a29e` and patch SHA256 `0426e9aa142356a432924ab0fb0ee6240320c6aa336214fd4e01c02ea86e4dc4`. Earlier packets remain immutable. Independent review closed three validator bypasses, delta/EOT truncation and duplicate/extra manifest-row acceptance. The parser always consumes the bounded delta before status/EOT; failed validation cannot be relabeled as an unsupported source event. Native-entry headers, stable identities, exact source sets and aggregate counts are checked against a fresh original-input parse.
+The reviewed sequence reader/exporter/validator and invented-data tests are applied under `tickets/T-28006-sequence-music-export`. Accepted candidate v5 has manifest SHA256 `b3bb094465b65701064199980c4c21f25c0a61fe073dbbc73d1acd9ba330a29e` and patch SHA256 `0426e9aa142356a432924ab0fb0ee6240320c6aa336214fd4e01c02ea86e4dc4`. Earlier packets remain immutable. Independent review closed three validator bypasses, delta/EOT truncation and duplicate/extra manifest-row acceptance. The parser always consumes the bounded delta before status/EOT; failed validation cannot be relabeled as an unsupported source event. Native-entry headers, stable identities, exact source sets and aggregate counts are checked against a fresh original-input parse.
 
 All 63 original SEQ files (1,277,012 bytes) export to JSON, preserving 177 physical entries and 1,008 runtime slot aliases. Package identities use source-relative path and full source hash; entry identities also include their physical offset. Offset/reverb tables, headers, gaps, complete bounded score/tail bytes and original source bytes are retained. Structured reconstruction assembles those fields and checks byte equality; retaining a raw copy alone is not the proof. Independent source/native checks verify 69 pack-index instructions, 166 `GetSeqData` instructions and 44 `ReadDeltaValue` instructions against the original EXE.
 

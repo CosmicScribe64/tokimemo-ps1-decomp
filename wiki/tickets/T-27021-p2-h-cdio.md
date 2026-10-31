@@ -5,7 +5,7 @@ status: Done
 assignee: Sonnet 5.5 analyst (workflow p2a)
 created: 2026-10-24
 updated: 2026-10-23
-links: [[[spec/h-cdio]]]
+links: `[spec/h-cdio`]
 ---
 
 ## Goal
@@ -25,7 +25,7 @@ Files: `src/main/800451D0.c`, `80046500.c`, `80056300.c`, `800563F0.c`, `8005739
 
 - Evidence: the matched C, callers (index over `src/`), `wiki/ref-english-patch.md`, `wiki/disc-layout.md`, and three short emulator runs from a cold boot (`tools/emu/run.sh break` and `trace`): `cd_command` ids at boot, which unit functions run in 3600 frames, the movie and XA clip calls up to frame 7500.
 - Prefixes used: `cd_`, `snd_` (as the audit proposes for main), plus `xa_`, `movie_`, `model_`, `display_`, `boot_`, `iris_`, `mouse_`, `debug_`; O.BIN names (`str*`, `dec_bg_*`, `init*`, `*Mouse`) kept with English comments.
-- Overlaps with other units are listed in [[spec/h-cdio]] section 11: `unk_014/018` take the graphics unit's `draw_origin_x/y`; `MainMode` rows were dropped (the core unit owns the enum); 22 rows (11 functions, 4 data symbols, 2 types, 5 GameState fields) have a different core name and are for the merge to settle (one family must win, the ledger allows one name per address); type `TaiikuBig` (shared type in `main_api.h`).
+- Overlaps with other units are listed in `spec/h-cdio` section 11: `unk_014/018` take the graphics unit's `draw_origin_x/y`; `MainMode` rows were dropped (the core unit owns the enum); 22 rows (11 functions, 4 data symbols, 2 types, 5 GameState fields) have a different core name and are for the merge to settle (one family must win, the ledger allows one name per address); type `TaiikuBig` (shared type in `main_api.h`).
 - Found while reading: `D_800B5900` (movie flags) starts at 1 and nothing in `src/` writes it, so the 15-bit movie branch with its caption timing is not reached in the shipped data; `initLight`, `initCoordinate`, the mouse read functions and two CD poll helpers have no caller in `src/`.
 - The parent ticket T-27000 is not in this worktree, so it is named in plain text.
 

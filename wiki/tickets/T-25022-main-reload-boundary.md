@@ -5,7 +5,7 @@ status: Done
 assignee: Codex
 created: 2026-10-22
 updated: 2026-10-26
-links: ["[[tickets/T-25021-main-5215c-reconstruction]]", "[[plan-remaining]]"]
+links: ["[[tickets/T-25021-main-5215c-reconstruction]]", "`plan-remaining`"]
 ---
 
 ## Goal
