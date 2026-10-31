@@ -1,7 +1,7 @@
 ---
 id: T-39311
 title: Port the engine draw core (WP-A)
-status: In Progress
+status: Done
 assignee: worker agent
 created: 2026-10-30
 updated: 2026-10-30

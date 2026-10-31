@@ -2738,3 +2738,7 @@ An independent review confirmed fidelity line by line and found two invented val
 - The stale `strncat` count is captured as 8, equal to the longest club name; OpenBIOS, not the retail BIOS.
 
 The asm-derived leftover returns of `menu_check_2`/`menu_check` and `girl_points_others`/`girl_scores` are now compared, the `calendar_month_load` exclusions are narrowed, and voice, refusal and layout-constant checks were added. Root reran the core suite (11 suites pass) and `run_engine_diff.sh --all` (PASS). Documented `MEMCARD_DIR` and `CONTAINER_PREFIX` in [[emulator]], and updated the Status table in [[engine-porting-contract]]. The PsyQ card calls still refuse until [[tickets/T-39314-engine-sdk-layer]] lands.
+
+## [2026-10-30] build | Engine WP-A merged (T-39311 Done)
+
+Merged `port/m2-engine-a-draw-core`: 114 functions of the seven draw-core C files, plus `cd_iris_texture_build` and `cd_iris_wipe_draw`. An independent review found no fidelity defect. Its lows are fixed: the stale `tpage` slot is read as the asm reads it, `srn_tpage_show` refuses late, the inline `rsin`/`abs` use is documented, there is a `c_params` assert, and the specs are narrower. New captures reach `dec_bg_cd_read`, `dec_bg_decode_to_vram`, `dec_bg_show_set`, `set_dec_bri`, the 3D branch of `draw_frame` and more. Still uncaptured: `bg_capture_screen`, `bg_wipe_step`, `bg_fade_draw`, `bg_crossfade_draw`, palette modes 2-4 and animated actors. Root reran the core suite (11 suites pass) and `run_engine_diff.sh --all` (PASS) before and after the merge.

@@ -147,13 +147,13 @@ The unported callees are replayed from the capture: when the port reaches one, t
 |---|---|---|---|
 | `game_mode.c` | `engine/game_mode.gd` | 8/8 | base |
 | `cd_queue.c` | `engine/cd_queue.gd` | 23/23 | base |
-| `reset_iris_wipe.c` | `engine/reset_iris_wipe.gd` | 3/5 merged (2 more on WP-A) | base, [[tickets/T-39311-engine-draw-core]] |
+| `reset_iris_wipe.c` | `engine/reset_iris_wipe.gd` | 5/5 | base, [[tickets/T-39311-engine-draw-core]] (merged) |
 | `memory_card.c` | `engine/memory_card.gd` | 40/40 | [[tickets/T-39313-engine-menus-memcard]] (merged) |
 | `hud_screens.c` | `engine/hud_screens.gd` | 44/44 | [[tickets/T-39313-engine-menus-memcard]] (merged) |
 | `menu_speaker_girl.c` | `engine/menu_speaker_girl.gd` | 35/35 | [[tickets/T-39313-engine-menus-memcard]] (merged) |
-| draw core (7 files) | | 114 ported, in review | [[tickets/T-39311-engine-draw-core]] |
-| scene and HUD (3 files) | | in progress | [[tickets/T-39312-engine-scene-hud]] |
-| PsyQ SDK calls | | in progress | [[tickets/T-39314-engine-sdk-layer]] |
+| `text_system.c`, `frame_render_audio.c`, `background_images.c`, `actor_sprites.c`, `gpu_primitives.c`, `gpu_effects.c`, `screen_layers.c` | `engine/<file>.gd` | 114/114 | [[tickets/T-39311-engine-draw-core]] (merged) |
+| `scene_library.c`, `scene_display.c`, `hud_panels.c` | | 164 ported, review fixes in progress | [[tickets/T-39312-engine-scene-hud]] |
+| PsyQ SDK calls | `engine/_sdk_*.gd` | in review | [[tickets/T-39314-engine-sdk-layer]] |
 
 Per-function results are in each ticket. `game_mode_reset_to_title` is defined in `reset_iris_wipe.c`, not in `game_mode.c`; the engine keeps the file boundary of the C. Until [[tickets/T-39314-engine-sdk-layer]] lands, every PsyQ SDK call refuses by name, so card, GPU and VSync paths stop at their first SDK call.
 
