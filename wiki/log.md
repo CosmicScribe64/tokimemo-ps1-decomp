@@ -2642,3 +2642,13 @@ Ran each targeted Godot test script (overlays, checkpoint, route, render, servic
 
 Review of `port/m1-game-memory`: the bridge now skips `opening.unsourced` keys (scene_work, background_cache, background_show) in both directions and `tools/port/compare_game_memory.py` reports those globals as unsourced; `new_game_memory` refuses a state the adapter did not build; the playtest memory dump needs `TOKIMEMO_DUMP_GAME_MEMORY=1`; the generator evaluates constants with an ast-based integer evaluator; bit positions are tested against independent sources. [[tickets/T-39300-game-memory-model]], [[game-memory-model]].
 
+
+## [2026-10-30] build | M1 game memory model merged
+
+Merged `port/m1-game-memory` ([[tickets/T-39300-game-memory-model]]) into `port/opening-to-gameplay`. An independent review found no high-severity issues. Its two medium bridge findings (placeholder keys, unsourced core fields) and three low findings are fixed. Root reran the checks:
+- Core suite: 9 suites pass.
+- Generator and compare tests: 18 pass.
+- Opening frame timing: 0 mismatches.
+- April loop route: IDENTICAL to the merge reference.
+
+At the first command select, 133 of 159 comparable GameState fields equal the emulator. The other 26 are engine-owned and are listed for [[tickets/T-39301-engine-api-core]] and [[tickets/T-39302-generic-ps1-renderer]]. The ticket stays In Progress until those fields are owned.
