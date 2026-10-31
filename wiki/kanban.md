@@ -30,6 +30,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39314-engine-sdk-layer|T-39314 Give the engine an SDK layer for the PsyQ library calls (M2)]]
 - [ ] [[tickets/T-39311-engine-draw-core|T-39311 Port the engine draw core (WP-A)]]
 - [ ] [[tickets/T-39312-engine-scene-hud|T-39312 Port the engine scene and HUD files (WP-B)]]
 - [ ] [[tickets/T-39313-engine-menus-memcard|T-39313 Port the engine menu, speaker and memory card files (WP-C)]]

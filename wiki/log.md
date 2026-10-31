@@ -2724,3 +2724,7 @@ An independent review found the ported logic faithful line by line, and found pa
 - a function-pointer table, a loop lint and cached accessors were added.
 
 Root reran the core suite (11 suites pass) and `run_engine_diff.sh --all` (PASS). Started file-disjoint packages [[tickets/T-39311-engine-draw-core]], [[tickets/T-39312-engine-scene-hud]] and [[tickets/T-39313-engine-menus-memcard]]. Packages D (mode screens) and E (system, boot, audio driver) come later.
+
+## [2026-10-30] ticket | Engine SDK layer started (T-39314)
+
+WP-A and WP-C reported that every PsyQ SDK call refuses by name because the facade has no owner for them. That covers libgpu, VSync, the card and event calls, and rand. So nothing in the engine reaches the generic renderer or the memory card service yet. Opened [[tickets/T-39314-engine-sdk-layer]] for one worker; it is the only package allowed to edit the facade.
