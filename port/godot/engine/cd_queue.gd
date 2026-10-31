@@ -10,10 +10,11 @@ extends RefCounted
 ## cd_queue_tail, cd_read_status, cd_queue_phase, cd_command_ring, cd_state, cd_read_count, ...), so a caller
 ## that reads them directly (the C does, through cd_read_sync_status and friends) sees what the C shows.
 ##
-## Frames: functions whose C frame holds a buffer that is passed by address reserve the original frame
-## (engine.push_frame, sizes from the `addiu sp, sp, -N` of asm/matchings/main/cd_queue/*.s) so the
-## buffer sits where the original's did; the bytes it never initialises are then the same stale stack
-## bytes the original copies into the ring (cd_command_push copies 16 bytes of a 4-byte parameter).
+## Frames: engine.call_c reserves each function's original frame (engine/_frame_sizes.gd, from the
+## `addiu sp, sp, -N` of the asm); functions whose C frame holds a buffer that is passed by address put it at
+## engine.frame_base() + its original offset, so the buffer sits where the original's did and the bytes it
+## never initialises are the same stale stack bytes the original copies into the ring (cd_command_push
+## copies 16 bytes of a 4-byte parameter).
 
 const Math = preload("res://core/native_math.gd")
 
@@ -27,7 +28,8 @@ const C_FUNCTIONS: Array[String] = [
 	"cd_error_recover",
 ]
 ## "ret_defined": values the C returns on its defined paths; a captured v0 outside them is the register
-## left over when the function falls off its end, which the harness does not compare.
+## left over when the function falls off its end, which the harness does not compare. "ret_undefined": the
+## C function has a non-void type but no return value on any path (a reason is required).
 const C_SIGNATURES: Dictionary = {
 	"cd_load_destination_base_get": {"args": [], "ret": "s32"},
 	"cd_load_destination_base_set": {"args": ["s32"], "ret": "void"},
@@ -50,7 +52,7 @@ const C_SIGNATURES: Dictionary = {
 	"cd_read_sectors_nowait": {"args": ["u8", "s32", "s32"], "ret": "void"},
 	"cd_read_sectors": {"args": ["u8", "s32", "s32"], "ret": "void"},
 	"cd_file_checksum_ok": {"args": ["u8", "ptr"], "ret": "s32"},
-	"cd_busy_marker_draw": {"args": [], "ret": "void"},
+	"cd_busy_marker_draw": {"args": [], "ret": "s32", "ret_undefined": "s32 in the C with no return statement (T-9710): v0 is whatever the register held"},
 	"cd_error_recover": {"args": [], "ret": "void"},
 }
 
@@ -72,12 +74,8 @@ const MAX_LBA: int = 0x4AB50
 ## The XA end-of-file marker word of a checked read: the high half of the last word of the destination.
 const READ_END_MARKER: int = 0x10120000
 
-## Frame sizes of the original (asm/matchings/main/cd_queue/*.s, `addiu sp, sp, -N`).
-const FRAME_CD_AUDIO_COMMAND: int = 0x48
-const FRAME_CD_READ_SECTORS: int = 0x48
-const FRAME_CD_COMMAND_PUMP: int = 0x50
-const FRAME_CD_POSITION_LBA: int = 0x58
-const BUF_OFFSET: int = 0x28 # the `u8 buf[0x20]` of cd_read_sectors and cd_audio_command
+## Offset of the `u8 buf[0x20]` of cd_read_sectors and cd_audio_command in their 0x48-byte frames.
+const BUF_OFFSET: int = 0x28
 
 # CD ring commands (the numbers cd_audio_command pushes; most are libcd command codes)
 ## ring command 0 pauses like 9 but leaves cd_read_status alone
@@ -206,22 +204,20 @@ func cd_command_push(arg0: int, arg1: int, arg2: int) -> int:
 	engine.memory.write_u8(entry + RING_COMMAND_OFFSET, command)
 	engine.memory.write_u32(entry + RING_LBA_OFFSET, arg1)
 	engine.memory.write_u8(entry + RING_PARAM_OFFSET + 15, 0)
-	if command == CMD_READ:
-		engine.cd_drive.note_read_request(engine.frame()) # start of the read's model latency
 	if src == 1:
 		engine.memory.write_u8(entry + RING_PARAM_OFFSET + 15, RING_PARAM_FLAG)
 	elif src != 0:
 		engine.memory.write_bytes(entry + RING_PARAM_OFFSET, engine.memory.read_bytes(Math.u32(src), RING_PARAM_SIZE))
-	tail = _rd("cd_queue_tail") + 1 # cd_queue_tail = cd_queue_tail + 1
-	_wr("cd_queue_tail", tail)
-	if tail < RING_ENTRIES:
+	_wr("cd_queue_tail", _rd("cd_queue_tail") + 1) # cd_queue_tail = cd_queue_tail + 1 (a u8 store: 0xFF + 1 is 0)
+	if command == CMD_READ:
+		engine.cd_drive.note_read_request(engine.frame(), engine.gs_get("game_mode"), engine.gs_get("mode_stage"))
+	if _rd("cd_queue_tail") < RING_ENTRIES: # compares the stored byte
 		return 1
 	_wr("cd_queue_tail", 0)
 	return 0
 
 func cd_audio_command(cd_operation_id: int, sector_lba: int, command_params: int) -> void:
-	var frame: int = engine.push_frame(FRAME_CD_AUDIO_COMMAND)
-	var buf: int = frame + BUF_OFFSET
+	var buf: int = engine.frame_base() + BUF_OFFSET
 	var lba: int = Math.s32(sector_lba)
 	if Math.u32(lba) >= 0x4AB51:
 		lba = MAX_LBA
@@ -257,7 +253,6 @@ func cd_audio_command(cd_operation_id: int, sector_lba: int, command_params: int
 			engine.call_c("cd_command_push", [3, 0, 0])
 		27:
 			pass
-	engine.pop_frame(FRAME_CD_AUDIO_COMMAND)
 
 ## word 0 of a read parameter: the destination address with the sector count in the top byte.
 func cd_read_param_pack(sector_count: int, destination_address: int, read_parameter_out: int) -> void:
@@ -273,14 +268,11 @@ func cd_read_sectors(arg0: int, arg1: int, arg2: int) -> void:
 
 ## The shared body of the two read entry points (identical C except the final store of cd_read_checked).
 func _read_request(count: int, destination: int, lba: int, checked: int) -> void:
-	var frame: int = engine.push_frame(FRAME_CD_READ_SECTORS)
-	var buf: int = frame + BUF_OFFSET
+	var buf: int = engine.frame_base() + BUF_OFFSET
 	engine.call_c("audio_command", [6])
 	engine.call_c("cd_read_param_pack", [Math.u8(count), destination, buf])
 	engine.call_c("cd_audio_command", [6, lba, buf])
-	if not engine.halted():
-		_wr("cd_read_checked", checked)
-	engine.pop_frame(FRAME_CD_READ_SECTORS)
+	_wr("cd_read_checked", checked)
 
 ## True when the 16-bit sum of all bytes of a loaded file except the last 4 equals the big-endian u16
 ## stored at its end.
@@ -313,11 +305,13 @@ func cd_error_recover() -> void:
 	if _spin_control_b(0xE, engine.memory.global_address("cd_mode_scratch"), 0) == 0:
 		return
 	for i: int in 0x200:
+		if engine.halted():
+			break
 		engine.call_c("func_800AD950", [0])
 
 ## The position of the head in sectors (GetlocL of the drive, 0 when the BCD time is out of range).
 func cd_position_lba() -> int:
-	var frame: int = engine.push_frame(FRAME_CD_POSITION_LBA)
+	var frame: int = engine.frame_base()
 	var status_buffer: int = frame + 0x34
 	var local: int = frame + 0x44
 	var state: int = _result_address()
@@ -337,6 +331,8 @@ func cd_position_lba() -> int:
 				engine.memory.write_u32(state, saved)
 				break
 	var bytes: PackedByteArray = engine.memory.read_bytes(state, 3)
+	if engine.halted():
+		return 0
 	engine.memory.write_u8(local, bytes[0])
 	engine.memory.write_u8(local + 1, bytes[1])
 	engine.memory.write_u8(local + 2, bytes[2])
@@ -350,7 +346,6 @@ func cd_position_lba() -> int:
 		result = 0
 	elif retries > 0:
 		result = retries
-	engine.pop_frame(FRAME_CD_POSITION_LBA)
 	return result
 
 # ---- the pump
@@ -359,7 +354,7 @@ func cd_position_lba() -> int:
 ## ring one step. The two phases are -1 (issue the command) and 1 (wait for it to finish); the
 ## status bytes callers poll (cd_state, cd_read_status, cd_read_count) change here.
 func cd_command_pump() -> void:
-	var frame: int = engine.push_frame(FRAME_CD_COMMAND_PUMP)
+	var frame: int = engine.frame_base()
 	var drive = engine.cd_drive
 	if _rd("cd_queue_tail") != _rd("cd_queue_head"):
 		engine.call_c("cd_busy_marker_draw")
@@ -379,9 +374,8 @@ func cd_command_pump() -> void:
 			drive.cd_control(1, 0, 0)
 	elif _rd("cd_state") == 4:
 		_wr("cd_audio_position", engine.call_c("cd_position_lba"))
-	if not engine.halted() and _rd("cd_queue_head") >= RING_ENTRIES:
+	if _rd("cd_queue_head") >= RING_ENTRIES:
 		_wr("cd_queue_head", 0)
-	engine.pop_frame(FRAME_CD_COMMAND_PUMP)
 
 ## Phase -1: the command at the head is started. `sp30` and `sp38` are the C locals of those frame
 ## offsets (an 8-byte result buffer and a 4-byte MSF position).
@@ -523,6 +517,8 @@ func _finish_read(memory) -> void:
 			if _spin_control(0xA, 0, 0) == 0:
 				return
 			for i: int in 0x200:
+				if engine.halted():
+					break
 				engine.call_c("func_800AD950", [0]) # blocking wait: not ported, refuses
 		if not engine.halted():
 			_wr("cd_queue_phase", -1)

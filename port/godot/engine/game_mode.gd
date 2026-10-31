@@ -13,7 +13,8 @@ const C_FUNCTIONS: Array[String] = [
 	"mode_stage_set", "mode_step_set", "game_mode_request_overlay",
 ]
 ## Argument widths ("s32"/"u8"/...) and the return type ("void" or the C type) of each function, read by the
-## differential harness: v0 is compared only for a non-void return.
+## differential harness: v0 is compared for every non-void return unless `ret_undefined` (a reason) says the C
+## falls off the end without a value. tools/port/check_engine_signatures.py checks them against the C.
 ## mode_stage_next, mode_step_next, mode_stage_set and mode_step_set are s32 functions without a return
 ## statement (the "FAKE: z" idiom of the C): the original leaves v0 = 0 (observed in every capture).
 const C_SIGNATURES: Dictionary = {
@@ -24,7 +25,7 @@ const C_SIGNATURES: Dictionary = {
 	"game_mode_set": {"args": ["s32"], "ret": "void"},
 	"mode_stage_set": {"args": ["s32"], "ret": "s32"},
 	"mode_step_set": {"args": ["s32"], "ret": "s32"},
-	"game_mode_request_overlay": {"args": [], "ret": "void"},
+	"game_mode_request_overlay": {"args": [], "ret": "s32", "ret_undefined": "s32 in the C with `return;` and a fall-off end: v0 is whatever the register held"},
 }
 
 ## "LOAD FUNC EXEC", the first string of this object's rodata (0x800AF390 in config/objects/main.txt;
@@ -52,12 +53,11 @@ const OVERLAY_MODES: Array[int] = [
 var engine # GameEngine (engine/engine.gd); set when the engine registers this module
 
 func game_mode_dispatch() -> void:
-	var gs = engine.memory.game_state()
-	match gs.get_field("game_mode"): # *(u8 *)&game_state.game_mode
+	match engine.gs_get("game_mode"): # *(u8 *)&game_state.game_mode
 		0x00:
 			engine.call_c("boot_mode_handler")
 		0x01:
-			if Math.u8(gs.get_field("boot_hold")) == 0: # *(u8 *)&game_state.boot_hold
+			if Math.u8(engine.gs_get("boot_hold")) == 0: # *(u8 *)&game_state.boot_hold
 				engine.call_c("game_mode_set", [GAME_MODE_BOOT])
 		0xFF:
 			engine.call_c("exit_function")
@@ -97,86 +97,75 @@ func game_mode_dispatch() -> void:
 			engine.call_c("game_mode_tt_game_mode_handler")
 		var overlay_mode when overlay_mode in OVERLAY_MODES:
 			engine.call_c("debug_print_string", [STR_LOAD_FUNC_EXEC, 0x14, 0x2C])
-			if engine.halted():
-				return
 			_call_ovl_entry()
 		_:
 			engine.call_c("game_mode_reset_to_title")
-	if engine.halted():
-		return
-	gs.set_field("game_mode_timer", Math.add32(gs.get_field("game_mode_timer"), 1))
+	engine.gs_set("game_mode_timer", Math.add32(engine.gs_get("game_mode_timer"), 1))
 
 ## ((s32 (*)()) ovl_entry)(): the code address is the value of the u32 global ovl_entry.
 func _call_ovl_entry() -> void:
 	engine.call_address(OVL_ENTRY, engine.memory.read_global("ovl_entry"))
 
 func game_mode_next() -> void:
-	var gs = engine.memory.game_state()
-	gs.set_field("game_mode", gs.get_field("game_mode") + 1) # u8: wraps at 0x100
-	_clear_mode_progress(gs)
+	engine.gs_set("game_mode", engine.gs_get("game_mode") + 1) # u8: wraps at 0x100
+	_clear_mode_progress()
 	engine.call_c("game_mode_request_overlay")
 
 ## The nine stores shared by game_mode_next and game_mode_set, in the C order (mode_stage .. substep).
-func _clear_mode_progress(gs) -> void:
-	gs.set_field("mode_stage", 0)
-	gs.set_field("mode_step", 0)
-	gs.set_field("game_mode_timer", 0)
-	gs.set_field("mode_stage_timer", 0)
-	gs.at("mode_step_timer").set_field("w", 0)
-	gs.set_field("game_mode_scratch", 0)
-	gs.set_field("mode_stage_scratch", 0)
-	gs.set_field("substep", 0)
+func _clear_mode_progress() -> void:
+	engine.gs_set("mode_stage", 0)
+	engine.gs_set("mode_step", 0)
+	engine.gs_set("game_mode_timer", 0)
+	engine.gs_set("mode_stage_timer", 0)
+	engine.memory.write_u32(engine.gs_address("mode_step_timer"), 0)
+	engine.gs_set("game_mode_scratch", 0)
+	engine.gs_set("mode_stage_scratch", 0)
+	engine.gs_set("substep", 0)
 
 ## s32 with no return statement; the original leaves v0 = 0 (the `z` read through `p`, T-11610).
 func mode_stage_next() -> int:
-	var gs = engine.memory.game_state()
-	gs.set_field("mode_stage", gs.get_field("mode_stage") + 1) # u8
-	gs.set_field("mode_step", 0)
-	gs.set_field("mode_stage_timer", 0)
-	gs.at("mode_step_timer").set_field("w", 0)
-	gs.set_field("mode_stage_scratch", 0)
-	gs.set_field("substep", 0) # game_state.substep = *p, with p = &z, z = 0
+	engine.gs_set("mode_stage", engine.gs_get("mode_stage") + 1) # u8
+	engine.gs_set("mode_step", 0)
+	engine.gs_set("mode_stage_timer", 0)
+	engine.memory.write_u32(engine.gs_address("mode_step_timer"), 0)
+	engine.gs_set("mode_stage_scratch", 0)
+	engine.gs_set("substep", 0) # game_state.substep = *p, with p = &z, z = 0
 	return 0
 
 func mode_step_next() -> int:
-	var gs = engine.memory.game_state()
-	gs.set_field("mode_step", gs.get_field("mode_step") + 1) # u8
-	gs.at("mode_step_timer").set_field("w", 0)
-	gs.set_field("substep", 0)
+	engine.gs_set("mode_step", engine.gs_get("mode_step") + 1) # u8
+	engine.memory.write_u32(engine.gs_address("mode_step_timer"), 0)
+	engine.gs_set("substep", 0)
 	return 0
 
 ## Switch to a mode and reset stage, step, timers, substep.
 func game_mode_set(mode: int) -> void:
-	var gs = engine.memory.game_state()
-	gs.set_field("game_mode", mode) # u8 store keeps the low byte of the s32 argument
-	_clear_mode_progress(gs)
+	engine.gs_set("game_mode", mode) # u8 store keeps the low byte of the s32 argument
+	_clear_mode_progress()
 	engine.call_c("game_mode_request_overlay")
-	var target: int = gs.get_field("ovl_target_game_mode") # u32 t = (u8)
+	var target: int = engine.gs_get("ovl_target_game_mode") # u32 t = (u8)
 	engine.memory.write_global("talk_voice_wait_frames", 0)
 	if target != 0x5E and target != 0x50:
 		engine.call_c("message_window_title_show", [0])
 
 func mode_stage_set(stage: int) -> int:
-	var gs = engine.memory.game_state()
-	gs.set_field("mode_stage", stage)
-	gs.set_field("mode_step", 0)
-	gs.set_field("mode_stage_timer", 0)
-	gs.at("mode_step_timer").set_field("w", 0)
-	gs.set_field("mode_stage_scratch", 0)
-	gs.set_field("substep", 0)
+	engine.gs_set("mode_stage", stage)
+	engine.gs_set("mode_step", 0)
+	engine.gs_set("mode_stage_timer", 0)
+	engine.memory.write_u32(engine.gs_address("mode_step_timer"), 0)
+	engine.gs_set("mode_stage_scratch", 0)
+	engine.gs_set("substep", 0)
 	return 0
 
 func mode_step_set(step: int) -> int:
-	var gs = engine.memory.game_state()
-	gs.set_field("mode_step", step)
-	gs.at("mode_step_timer").set_field("w", 0)
-	gs.set_field("substep", 0)
+	engine.gs_set("mode_step", step)
+	engine.memory.write_u32(engine.gs_address("mode_step_timer"), 0)
+	engine.gs_set("substep", 0)
 	return 0
 
 ## s32 in the C, but every path ends in `return;` or falls off the end: no return value.
 func game_mode_request_overlay() -> void:
-	var gs = engine.memory.game_state()
-	match gs.get_field("game_mode"): # *(u8 *)&game_state.game_mode
+	match engine.gs_get("game_mode"): # *(u8 *)&game_state.game_mode
 		var overlay_mode when overlay_mode in OVERLAY_MODES:
-			gs.set_field("ovl_target_game_mode", gs.get_field("game_mode"))
-			gs.set_field("game_mode", GAME_MODE_OVERLAY_LOADER)
+			engine.gs_set("ovl_target_game_mode", engine.gs_get("game_mode"))
+			engine.gs_set("game_mode", GAME_MODE_OVERLAY_LOADER)

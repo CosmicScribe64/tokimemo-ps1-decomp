@@ -69,9 +69,11 @@ var motor_on: bool = true
 ## The command in flight: {"command", "result_address", "bytes": PackedByteArray, "complete_frame"} or {}.
 var _pending: Dictionary = {}
 var _last_result := PackedByteArray()
-## Frames at which cd_command_push queued a read (command 6), oldest first: the model latency counts from
-## the request (audio_command(6), cd_read_sectors), as the measurements of T-39002 do.
-var _read_requests: Array[int] = []
+## Reads cd_command_push queued (command 6), oldest first, each {frame, game_mode, mode_stage}: the model
+## latency counts from the request (audio_command(6), cd_read_sectors), as the measurements of T-39002 do,
+## and the measured opening table (PrologueMediaQueue.MEASURED_READ_VSYNCS, keyed by game mode, stage and
+## LBA) is shared with the engine so a later rewire of the opening keeps its timing exact.
+var _read_requests: Array[Dictionary] = []
 ## Completion frame of the read scheduled last (reads are serialised: the next starts when it ends).
 var _last_deadline: int = 0
 ## A read in flight: {"count", "dest", "lba", "start_frame", "deadline_frame"} or {}.
@@ -94,11 +96,15 @@ func reset() -> void:
 	_last_deadline = 0
 
 ## cd_command_push queued a read at this frame (the start of its latency).
-func note_read_request(frame: int) -> void:
-	_read_requests.append(frame)
+func note_read_request(frame: int, game_mode: int, mode_stage: int) -> void:
+	if engine.halted():
+		return
+	_read_requests.append({"frame": frame, "game_mode": game_mode, "mode_stage": mode_stage})
 
 ## cd_command_reset emptied the ring: queued reads will never be issued.
 func forget_read_requests() -> void:
+	if engine.halted():
+		return
 	_read_requests = []
 	_last_deadline = 0
 
@@ -107,6 +113,8 @@ func forget_read_requests() -> void:
 ## CdSync(1, result): 0 while a command executes, 2 when the last one is complete. `result_address` (0 =
 ## none) receives the result bytes of the command that completed.
 func cd_sync(sync_mode: int, result_address: int) -> int:
+	if engine.halted():
+		return SYNC_BUSY
 	if sync_mode != 1:
 		engine.refuse("CdSync", "CdSync(%d) blocks until the command completes; the port never blocks (only mode 1 is modelled)" % sync_mode)
 		return SYNC_BUSY
@@ -120,6 +128,8 @@ func cd_sync(sync_mode: int, result_address: int) -> int:
 ## CdControl(command, param, result): issues the command; 1 when issued, 0 when the previous one is
 ## still executing. The result bytes are stored when the command completes.
 func cd_control(command: int, param_address: int, result_address: int) -> int:
+	if engine.halted():
+		return 0
 	_service()
 	if not _pending.is_empty():
 		return 0
@@ -133,6 +143,8 @@ func cd_control_f(command: int, param_address: int) -> int:
 ## CdControlB(command, param, result): the blocking form. The model completes the command in the call,
 ## so it returns 1 at once; `result_address` receives the result bytes.
 func cd_control_b(command: int, param_address: int, result_address: int) -> int:
+	if engine.halted():
+		return 0
 	_service()
 	if not _pending.is_empty():
 		_complete_pending(true)
@@ -143,17 +155,21 @@ func cd_control_b(command: int, param_address: int, result_address: int) -> int:
 ## CdRead(count, dest, mode): ReadN from the last Setloc into `dest`. 1 when started. The bytes land when
 ## the model latency has elapsed (CdReadSync then returns 0).
 func cd_read(count: int, dest_address: int, read_mode: int) -> int:
+	if engine.halted():
+		return 0
 	_service()
 	if loc_lba < 0:
 		engine.refuse("CdRead", "CdRead without a Setloc: the position is undefined")
 		return 0
-	var vsyncs: int = MediaQueue.model_read_vsyncs(count)
+	var request: Dictionary = _read_requests.pop_front() if not _read_requests.is_empty() else {}
+	var vsyncs: int = MediaQueue.read_vsyncs(int(request.get("game_mode", engine.gs_get("game_mode"))),
+		int(request.get("mode_stage", engine.gs_get("mode_stage"))), loc_lba, count, request.is_empty())
 	if vsyncs < 0:
 		engine.refuse("CdRead", "CdRead of %d sectors is outside the latency model (1..255)" % count)
 		return 0
 	var now: int = engine.frame()
 	# latency counts from the request frame (a retry has none: from now), after the read before it
-	var requested: int = _read_requests.pop_front() if not _read_requests.is_empty() else now
+	var requested: int = int(request.get("frame", now))
 	var start: int = maxi(requested, _last_deadline)
 	_last_deadline = start + vsyncs
 	_read = {"count": count, "dest": dest_address, "lba": loc_lba, "start_frame": start, "deadline_frame": start + vsyncs}
@@ -164,6 +180,8 @@ func cd_read(count: int, dest_address: int, read_mode: int) -> int:
 ## CdReadSync(1, result): sectors still to come (> 0), 0 when the read has landed. The disc pack read
 ## happens here, at the deadline; a pack failure refuses (the original would retry forever).
 func cd_read_sync(sync_mode: int, result_address: int) -> int:
+	if engine.halted():
+		return 0
 	if sync_mode != 1:
 		engine.refuse("CdReadSync", "CdReadSync(%d) blocks until the read completes; only mode 1 is modelled" % sync_mode)
 		return 0
@@ -188,6 +206,8 @@ func cd_read_sync(sync_mode: int, result_address: int) -> int:
 
 ## CdRead2(mode): starts XA streaming from the last Setloc (ReadS). 1 when started.
 func cd_read2(read_mode: int) -> int:
+	if engine.halted():
+		return 0
 	_service()
 	if loc_lba < 0:
 		engine.refuse("CdRead2", "CdRead2 without a Setloc: the position is undefined")
@@ -199,6 +219,8 @@ func cd_read2(read_mode: int) -> int:
 
 ## CdIntToPos(lba, pos): three BCD bytes (minute, second, frame) of lba + 150 at `pos_address`.
 func cd_int_to_pos(lba: int, pos_address: int) -> int:
+	if engine.halted():
+		return pos_address
 	var absolute: int = lba + PREGAP_SECTORS
 	var minute: int = absolute / 4500
 	var second: int = (absolute / 75) % 60
@@ -210,6 +232,8 @@ func cd_int_to_pos(lba: int, pos_address: int) -> int:
 
 ## CdPosToInt(pos): sector number of three BCD bytes (minus the 150-sector offset).
 func cd_pos_to_int(pos_address: int) -> int:
+	if engine.halted():
+		return 0
 	var memory: Memory = engine.memory
 	var minute: int = _unbcd(memory.u8(pos_address))
 	var second: int = _unbcd(memory.u8(pos_address + 1))
@@ -243,6 +267,8 @@ static func _unbcd(value: int) -> int:
 	return (value >> 4) * 10 + (value & 15)
 
 func _issue(command: int, param_address: int, result_address: int) -> void:
+	if engine.halted():
+		return
 	var bytes: PackedByteArray
 	var memory: Memory = engine.memory
 	match command:
@@ -287,12 +313,14 @@ func _issue(command: int, param_address: int, result_address: int) -> void:
 ## ReadN and ReadS are commands to the drive too: their ACK carries the status (reading), which is the
 ## byte CdSync copies into cd_result while a read runs.
 func _acknowledge() -> void:
+	if engine.halted():
+		return
 	_pending = {"command": CDL_READS, "result_address": 0, "bytes": PackedByteArray([_status()]),
 		"complete_frame": engine.frame() + COMMAND_LATENCY_FRAMES}
 
 ## Completes the command in flight when its frame has come: result bytes to the caller's buffer.
 func _service() -> void:
-	if _pending.is_empty():
+	if engine.halted() or _pending.is_empty():
 		return
 	if engine.frame() >= int(_pending.complete_frame):
 		_complete_pending(false)

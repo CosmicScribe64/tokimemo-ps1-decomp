@@ -10,6 +10,18 @@ const GameEngine = preload("res://engine/engine.gd")
 const DiscPack = preload("res://services/disc_pack.gd")
 
 var failures: Array[String] = []
+var _made: Array = []
+
+## Engines are shut down at the end of run() so the engine <-> module cycles are freed.
+func _new():
+	var engine = GameEngine.new()
+	_made.append(engine)
+	return engine
+
+func _shutdown_all() -> void:
+	for engine in _made:
+		engine.shutdown()
+	_made.clear()
 var base: String = ""
 
 func _check(condition: bool, message: String) -> void:
@@ -26,8 +38,10 @@ func run() -> Array[String]:
 	_test_xa_sequence()
 	_test_commands()
 	_test_polls_and_recovery()
+	_test_push_edges()
 	_test_checksum()
 	_remove_tree(base)
+	_shutdown_all()
 	return failures
 
 # ---- invented disc pack: A (LBA 100, 3 sectors, ends with the 0x1012 marker), B (200, 2 sectors, no marker), C (300, 1)
@@ -69,7 +83,7 @@ func _build() -> String:
 
 ## An engine with the invented pack open and audio_command (not ported: sound code) replaced by a recorder.
 func _engine(log: Array) -> Object:
-	var engine = GameEngine.new()
+	var engine = _new()
 	var problem: String = engine.disc_pack.open(_build())
 	_check(problem.is_empty(), "invented disc pack opens: " + problem)
 	engine.set_stub("audio_command", func(args: Array) -> int:
@@ -189,7 +203,7 @@ func _test_retry_and_refusals() -> void:
 		frame += 1
 	_check(other.refusal.contains("outside every file") and other.refusal.contains("LBA 0x96"), "a read the disc pack cannot serve is refused with the pack's reason: %s" % other.refusal)
 	# a read with audio_command not ported refuses before queueing anything
-	var bare = GameEngine.new()
+	var bare = _new()
 	bare.call_c("cd_read_sectors", [1, 0x80110000, 100])
 	_check(bare.refusal.contains("cd_read_sectors -> audio_command") and bare.memory.read_global("cd_queue_tail") == 0 and bare.memory.read_global("cd_read_checked") == 0,
 		"without audio_command ported, cd_read_sectors refuses at that call and queues nothing: %s" % bare.refusal)
@@ -268,8 +282,19 @@ func _test_polls_and_recovery() -> void:
 	_check(recover.memory.read_global("cd_mode_scratch") == 0x84 and recover.refusal.contains("func_800AD950"),
 		"cd_error_recover sets mode 0x84 and then reaches the blocking VSync(0) loop, which is not ported: %s" % recover.refusal)
 
+func _test_push_edges() -> void:
+	var engine = _engine([])
+	# a u8 tail of 0xFF wraps to 0 on the store; the C then compares the stored byte (0 < 0x30): returns 1
+	engine.memory.write_global("cd_queue_tail", 0xFF)
+	_check(engine.call_c("cd_command_push", [9, 1, 0]) == 1 and _g(engine, "cd_queue_tail") == 0, "cd_queue_tail 0xFF + 1 stores 0 and the push returns 1 (compares the stored byte)")
+	engine.call_c("cd_command_reset")
+	# a parameter pointer outside RAM faults in the memcpy: the tail is not advanced and nothing more is written
+	engine.call_c("cd_command_push", [6, 5, 0x00300000])
+	_check(engine.halted() and engine.memory.frozen and _g(engine, "cd_queue_tail") == 0, "a bad parameter pointer faults before the tail moves: %s" % engine.failure())
+	engine.shutdown()
+
 func _test_checksum() -> void:
-	var engine = GameEngine.new()
+	var engine = _new()
 	var buf: int = 0x80120000
 	for i: int in 2048:
 		engine.memory.write_u8(buf + i, (i * 3) & 0xFF)

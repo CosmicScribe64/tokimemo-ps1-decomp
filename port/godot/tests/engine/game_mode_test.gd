@@ -5,6 +5,18 @@ extends RefCounted
 const GameEngine = preload("res://engine/engine.gd")
 
 var failures: Array[String] = []
+var _made: Array = []
+
+## Engines are shut down at the end of run() so the engine <-> module cycles are freed.
+func _new():
+	var engine = GameEngine.new()
+	_made.append(engine)
+	return engine
+
+func _shutdown_all() -> void:
+	for engine in _made:
+		engine.shutdown()
+	_made.clear()
 
 func _check(condition: bool, message: String) -> void:
 	if not condition:
@@ -18,6 +30,7 @@ func run() -> Array[String]:
 	_test_dispatch()
 	_test_reset_to_title()
 	_test_digits()
+	_shutdown_all()
 	return failures
 
 ## A GameState with every field the mode functions touch set to a distinct nonzero value.
@@ -41,7 +54,7 @@ func _fields(gs) -> Array:
 		gs.get_field("mode_stage_scratch"), gs.get_field("substep")]
 
 func _test_setters() -> void:
-	var engine = GameEngine.new()
+	var engine = _new()
 	var gs = _dirty(engine)
 	_check(engine.call_c("mode_step_next") == 0, "mode_step_next returns 0 (z read through p)")
 	_check(_fields(gs) == [0x34, 3, 6, 11, 12, 0, 14, 15, 0], "mode_step_next: step + 1, step timer and substep cleared, nothing else: %s" % [_fields(gs)])
@@ -59,7 +72,7 @@ func _test_setters() -> void:
 	_check(_fields(gs) == [0x34, 3, 9, 11, 12, 0, 14, 15, 0], "mode_step_set stores the step and clears the step timer and substep: %s" % [_fields(gs)])
 
 func _test_game_mode_set_and_next() -> void:
-	var engine = GameEngine.new()
+	var engine = _new()
 	var shown: Array = []
 	engine.set_stub("message_window_title_show", func(args: Array) -> int:
 		shown.append(args)
@@ -86,7 +99,7 @@ func _test_game_mode_set_and_next() -> void:
 	_check(gs.get_field("game_mode") == 2 and gs.get_field("ovl_target_game_mode") == 0x50, "game_mode_next into 0x50 asks the overlay loader")
 
 func _test_request_overlay() -> void:
-	var engine = GameEngine.new()
+	var engine = _new()
 	var gs = engine.memory.game_state()
 	var overlay_modes: Array = [0x11, 0x13, 0x14, 0x15, 0x20, 0x21, 0x22, 0x35, 0x36, 0x37, 0x3A, 0x43, 0x45, 0x50, 0x5E, 0x63, 0x70, 0x76, 0x80, 0x82, 0x90, 0x91, 0xC2, 0xC4]
 	for mode: int in overlay_modes:
@@ -101,7 +114,7 @@ func _test_request_overlay() -> void:
 		_check(gs.get_field("game_mode") == mode and gs.get_field("ovl_target_game_mode") == 0x66, "mode 0x%02X is not an overlay mode: unchanged" % mode)
 
 func _test_dispatch() -> void:
-	var engine = GameEngine.new()
+	var engine = _new()
 	var gs = engine.memory.game_state()
 	var called: Array = []
 	var stub: Callable = func(args: Array) -> int:
@@ -176,7 +189,7 @@ func _test_dispatch() -> void:
 	_check(engine.refusal.contains("game_mode_reset_to_title -> ovl_load_reset"), "an unknown mode calls game_mode_reset_to_title: %s" % engine.refusal)
 
 func _test_reset_to_title() -> void:
-	var engine = GameEngine.new()
+	var engine = _new()
 	var order: Array = []
 	for name: String in ["ovl_load_reset", "game_state_init", "sprite_tables_clear", "actor_deactivate", "back_clear_switch",
 			"dec_bg_reset", "audio_bank_state_reset", "tpage_buf_clear", "audio_command", "audio_shutdown", "audio_init",
@@ -196,7 +209,7 @@ func _test_reset_to_title() -> void:
 			and engine.memory.read_global("cd_queue_phase") == -1, "title mode 0x12 set and cd_command_reset ran (ported, in order)")
 
 func _test_digits() -> void:
-	var engine = GameEngine.new()
+	var engine = _new()
 	for case: Array in [[1234, 1, 4], [1234, 2, 3], [1234, 3, 2], [1234, 4, 1], [1234, 5, 0], [1234, 6, 0], [0, 3, 0], [-1234, 1, -4], [-1234, 4, -1],
 			[0x18000, 1, -8], [0xFFFF, 1, -1], [99, 255, 0]]:
 		_check(engine.call_c("cd_decimal_digit", [case[0], case[1]]) == case[2], "cd_decimal_digit(%d, %d) = %d" % case)

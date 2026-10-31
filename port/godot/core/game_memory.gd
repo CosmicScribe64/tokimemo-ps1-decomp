@@ -28,6 +28,11 @@ const EXE_HEADER_SIZE: int = 0x800
 
 var ram := PackedByteArray()
 var error: String = ""
+## True after a fault or when the engine freezes the memory at a refusal (engine/engine.gd): every write
+## (write_*, write_bytes, fill) returns without changing RAM, so nothing computed after the failing point
+## can leave a trace. clear_error() (the engine's clear_failure) unfreezes. restore() and load_executable()
+## are explicit external loads and still work.
+var frozen: bool = false
 ## Loaded executable facts (not RAM): entry point, gp, text base and size.
 var executable: Dictionary = {}
 
@@ -38,6 +43,7 @@ func _init() -> void:
 func reset() -> void:
 	ram.fill(0)
 	error = ""
+	frozen = false
 	executable = {}
 
 # ---- addressing
@@ -55,11 +61,13 @@ func _offset(address: int, width: int) -> int:
 	return physical
 
 func _fault(message: String) -> void:
+	frozen = true
 	if error.is_empty():
 		error = message
 
 func clear_error() -> void:
 	error = ""
+	frozen = false
 
 # ---- scalar access (R3000 little endian)
 
@@ -85,16 +93,22 @@ func s32(address: int) -> int:
 	return Math.s32(u32(address))
 
 func write_u8(address: int, value: int) -> void:
+	if frozen:
+		return
 	var o: int = _offset(address, 1)
 	if o >= 0:
 		ram[o] = Math.u8(value)
 
 func write_u16(address: int, value: int) -> void:
+	if frozen:
+		return
 	var o: int = _offset(address, 2)
 	if o >= 0:
 		ram.encode_u16(o, Math.u16(value))
 
 func write_u32(address: int, value: int) -> void:
+	if frozen:
+		return
 	var o: int = _offset(address, 4)
 	if o >= 0:
 		ram.encode_u32(o, Math.u32(value))
@@ -139,6 +153,8 @@ func read_bytes(address: int, length: int) -> PackedByteArray:
 	return ram.slice(o, o + length) if o >= 0 else PackedByteArray()
 
 func write_bytes(address: int, data: PackedByteArray) -> void:
+	if frozen:
+		return
 	var o: int = _range(address, data.size())
 	if o < 0:
 		return
@@ -146,6 +162,8 @@ func write_bytes(address: int, data: PackedByteArray) -> void:
 		ram[o + i] = data[i]
 
 func fill(address: int, length: int, value: int) -> void:
+	if frozen:
+		return
 	var o: int = _range(address, length)
 	if o < 0:
 		return
