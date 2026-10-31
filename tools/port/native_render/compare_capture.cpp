@@ -32,6 +32,7 @@ int main(int argc, char** argv) {
     uint32_t ot = 0, status = 0, env_addr = 0;
     int max_report = 12;
     bool have_ot = false;
+    if ((argc - 1) % 2 != 0) { std::fprintf(stderr, "options come in --name value pairs\n"); return 2; }
     for (int i = 1; i + 1 < argc; i += 2) {
         const std::string key = argv[i];
         const char* value = argv[i + 1];
@@ -45,8 +46,8 @@ int main(int argc, char** argv) {
         else if (key == "--max-report") max_report = std::atoi(value);
         else { std::fprintf(stderr, "unknown option %s\n", key.c_str()); return 2; }
     }
-    if (ram_path.empty() || before_path.empty() || !have_ot) {
-        std::fprintf(stderr, "need --ram, --before and --ot\n");
+    if (ram_path.empty() || before_path.empty() || after_path.empty() || !have_ot) {
+        std::fprintf(stderr, "need --ram, --before, --after and --ot\n");
         return 2;
     }
     const std::vector<uint8_t> ram = read_file(ram_path);
@@ -60,18 +61,28 @@ int main(int argc, char** argv) {
     env.semi_mode = int((status >> 5) & 3); env.tex_depth = int((status >> 7) & 3);
     env.dither = (status & 0x200) != 0; env.draw_to_display = (status & 0x400) != 0;
     env.mask_set = (status & 0x800) != 0; env.mask_check = (status & 0x1000) != 0;
+    // GPUSTAT bit 15 is E1 bit 11 as latched; GP1(09h) cannot be read back, so a set bit is taken as allowed.
+    env.texture_disable = (status & 0x8000) != 0; env.texture_disable_allowed = env.texture_disable;
 
     // The draw area, offset, texture window and mask words the game last sent with PutDrawEnv are
     // kept in RAM by libgpu; feeding them first reproduces the GPU environment at DrawOTag entry.
+    uint32_t env_words = 0;
     if (env_addr) {
         for (uint32_t at = env_addr & 0x1FFFFC; at + 4 <= ram.size(); at += 4) {
             const uint32_t word = uint32_t(ram[at]) | uint32_t(ram[at + 1]) << 8 | uint32_t(ram[at + 2]) << 16 | uint32_t(ram[at + 3]) << 24;
             if ((word >> 24) < 0xE1 || (word >> 24) > 0xE6) break;
             gpu.gp0(word);
+            ++env_words;
         }
+        if (env_words == 0) { std::fprintf(stderr, "--env-addr %08X holds no E1..E6 words\n", env_addr); return 3; }
         gpu.clear_counts();
     }
     const ps1::WalkResult walk = gpu.draw_otag(ram.data(), ram.size(), ot);
+    if (!walk.terminated) {
+        std::fprintf(stderr, "ordering table walk did not end cleanly (cycle %d, node limit %d, word limit %d)\n", walk.cycle,
+                     walk.node_limit, walk.word_limit);
+        return 4;
+    }
     const ps1::DirtyRect dirty = gpu.dirty();
     const ps1::Environment final_env = gpu.environment();
 
@@ -80,8 +91,8 @@ int main(int argc, char** argv) {
         out.write(reinterpret_cast<const char*>(gpu.vram()), 0x100000);
     }
 
-    std::printf("{\"nodes\":%u,\"words\":%u,\"terminated\":%s,\"dirty\":[%d,%d,%d,%d],\"area\":[%d,%d,%d,%d],\"offset\":[%d,%d]",
-                walk.nodes, walk.words, walk.terminated ? "true" : "false", dirty.x0, dirty.y0, dirty.x1, dirty.y1,
+    std::printf("{\"env_words\":%u,\"nodes\":%u,\"words\":%u,\"terminated\":%s,\"dirty\":[%d,%d,%d,%d],\"area\":[%d,%d,%d,%d],\"offset\":[%d,%d]",
+                env_words, walk.nodes, walk.words, walk.terminated ? "true" : "false", dirty.x0, dirty.y0, dirty.x1, dirty.y1,
                 final_env.area_x1, final_env.area_y1, final_env.area_x2, final_env.area_y2, final_env.offset_x,
                 final_env.offset_y);
     std::printf(",\"kinds\":{");

@@ -16,6 +16,8 @@ namespace ps1 {
 
 constexpr int VRAM_WIDTH = 1024;
 constexpr int VRAM_HEIGHT = 512;
+// Words one draw_otag call may send to the GPU: a real frame is a few thousand, 2 MiB of RAM holds 512K.
+constexpr uint32_t DEFAULT_MAX_WORDS = 1u << 17;
 
 // Primitive and command kinds the statistics count. Order is the report order.
 enum Kind : int {
@@ -26,7 +28,7 @@ enum Kind : int {
     K_ENV_TPAGE, K_ENV_TWINDOW, K_ENV_AREA_TL, K_ENV_AREA_BR, K_ENV_OFFSET, K_ENV_MASK,
     K_TEX_4BIT, K_TEX_8BIT, K_TEX_15BIT, K_RAW_TEXTURE, K_MODULATED_TEXTURE,
     K_SEMI_0, K_SEMI_1, K_SEMI_2, K_SEMI_3, K_DITHERED, K_MASK_CHECK, K_MASK_SET,
-    K_SKIPPED_OVERSIZE, K_UNKNOWN_COMMAND, K_KIND_COUNT
+    K_SKIPPED_OVERSIZE, K_UNKNOWN_COMMAND, K_POLYLINE_TRUNCATED, K_KIND_COUNT
 };
 
 inline const char* kind_name(int kind) {
@@ -38,7 +40,7 @@ inline const char* kind_name(int kind) {
         "ENV_TPAGE", "ENV_TWINDOW", "ENV_AREA_TL", "ENV_AREA_BR", "ENV_OFFSET", "ENV_MASK",
         "TEX_4BIT", "TEX_8BIT", "TEX_15BIT", "RAW_TEXTURE", "MODULATED_TEXTURE",
         "SEMI_0_AVG", "SEMI_1_ADD", "SEMI_2_SUB", "SEMI_3_QUARTER", "DITHERED", "MASK_CHECK", "MASK_SET",
-        "SKIPPED_OVERSIZE", "UNKNOWN_COMMAND"};
+        "SKIPPED_OVERSIZE", "UNKNOWN_COMMAND", "POLYLINE_TRUNCATED"};
     return kind >= 0 && kind < K_KIND_COUNT ? names[kind] : "?";
 }
 
@@ -51,7 +53,8 @@ struct Environment {
     int tex_depth = 0;        // 0: 4-bit CLUT, 1: 8-bit CLUT, 2 and 3: 15-bit direct
     bool dither = false;
     bool draw_to_display = false;
-    bool texture_disable = false;
+    bool texture_disable = false;         // E1 bit 11, effective only when texture_disable_allowed
+    bool texture_disable_allowed = false; // GP1(09h) bit 0
     bool flip_x = false, flip_y = false;
     int window_mask_x = 0, window_mask_y = 0, window_off_x = 0, window_off_y = 0;  // 8-pixel units
     bool mask_set = false, mask_check = false;
@@ -75,7 +78,10 @@ struct WalkResult {
     uint32_t nodes = 0;
     uint32_t words = 0;
     bool terminated = false;  // reached the end marker (bit 23 of a next pointer)
-    bool node_limit = false;
+    bool node_limit = false;  // stopped at max_nodes
+    bool word_limit = false;  // stopped at max_words
+    bool cycle = false;       // reached a node already walked
+    bool bad_ram = false;     // ram_size is not a power of two of at least 8 bytes
 };
 
 class Gpu {
@@ -100,6 +106,7 @@ public:
     // CPU to VRAM rectangle (the effect of GP0(A0h) plus its data words). Coordinates wrap at the
     // VRAM edges; mask check and mask set apply like they do for the GP0 command.
     void load_image(int x, int y, int w, int h, const uint16_t* data) {
+        x &= 1023; y &= 511;
         w = fix_extent(w, 1024); h = fix_extent(h, 512);
         for (int j = 0; j < h; ++j)
             for (int i = 0; i < w; ++i)
@@ -107,14 +114,16 @@ public:
         ++counts_[K_LOAD_IMAGE];
     }
     void store_image(int x, int y, int w, int h, uint16_t* out) const {
+        x &= 1023; y &= 511;
         w = fix_extent(w, 1024); h = fix_extent(h, 512);
         for (int j = 0; j < h; ++j)
             for (int i = 0; i < w; ++i) out[size_t(j) * w + i] = pixel(x + i, y + j);
     }
     // VRAM to VRAM copy (GP0(80h)): pixel by pixel in row-major order, reading the source live, so an
-    // overlapping copy sees pixels it already wrote (the hardware streams the rectangle; the
-    // reference emulator does the same).
+    // overlapping copy sees pixels it already wrote. The hardware streams the rectangle; PCSX-Redux
+    // output, observed as a black box, shows the same repeat.
     void move_image(int sx, int sy, int dx, int dy, int w, int h) {
+        sx &= 1023; sy &= 511; dx &= 1023; dy &= 511;
         w = fix_extent(w, 1024); h = fix_extent(h, 512);
         for (int j = 0; j < h; ++j)
             for (int i = 0; i < w; ++i) put_transfer(dx + i, dy + j, pixel(sx + i, sy + j));
@@ -151,6 +160,7 @@ public:
             case 0x00:  // reset: environment and display defaults, VRAM kept
                 env_ = Environment(); display_ = DisplayState(); mode_ = M_COMMAND; break;
             case 0x01: mode_ = M_COMMAND; break;
+            case 0x09: env_.texture_disable_allowed = (arg & 1) != 0; break;
             case 0x03: display_.enabled = (arg & 1) == 0; break;
             case 0x05: display_.start_x = int(arg & 0x3FF); display_.start_y = int((arg >> 10) & 0x1FF); break;
             case 0x08: {
@@ -177,13 +187,20 @@ public:
                 if ((word & 0xF000F000) == 0x50005000) {  // terminator word
                     mode_ = M_COMMAND; execute_polyline(); return;
                 }
+                if (param_count_ >= MAX_POLYLINE_WORDS) {  // unterminated: draw what there is, skip the rest
+                    ++counts_[K_POLYLINE_TRUNCATED];
+                    mode_ = M_POLYLINE_SKIP; execute_polyline(); return;
+                }
                 if (param_count_ >= params_.size()) params_.resize(params_.size() * 2);
                 params_[param_count_++] = word;
+                return;
+            case M_POLYLINE_SKIP:
+                if ((word & 0xF000F000) == 0x50005000) mode_ = M_COMMAND;
                 return;
             case M_LOAD_DATA: receive_load(word); return;
             default: break;
         }
-        const uint32_t cmd = word >> 24;
+        const uint32_t cmd = canonical_command(word >> 24);
         params_[0] = word;
         param_count_ = 1;
         if (cmd >= 0x20 && cmd <= 0x3F) {
@@ -205,7 +222,7 @@ public:
         else if (cmd == 0x80) { param_need_ = 4; begin_params(); }
         else if (cmd == 0xA0 || cmd == 0xC0) { param_need_ = 3; begin_params(); }
         else if (cmd >= 0xE1 && cmd <= 0xE6) { environment_word(word); }
-        else if (cmd == 0x00 || cmd == 0x01 || cmd == 0x1F || (cmd >= 0x03 && cmd <= 0x1E)) { /* no-op, cache clear, IRQ */ }
+        else if (cmd == 0x00 || cmd == 0x01 || cmd == 0x1F || (cmd >= 0x03 && cmd <= 0x1E) || cmd == 0xE0 || (cmd >= 0xE7 && cmd <= 0xEF)) { /* no-op, cache clear, IRQ */ }
         else { ++counts_[K_UNKNOWN_COMMAND]; }
     }
 
@@ -214,15 +231,26 @@ public:
     // word count in the high 8 bits) followed by that many words. The walk ends after the node
     // whose next pointer has bit 23 set (0xFFFFFF in the game). `ram_size` must be a power of two;
     // addresses are masked into it (KSEG0, KUSEG and KSEG1 alias the same RAM).
-    WalkResult draw_otag(const uint8_t* ram, size_t ram_size, uint32_t address, uint32_t max_nodes = 1u << 20) {
+    WalkResult draw_otag(const uint8_t* ram, size_t ram_size, uint32_t address, uint32_t max_nodes = 1u << 20,
+                         uint32_t max_words = DEFAULT_MAX_WORDS) {
         WalkResult result;
+        if (ram == nullptr || ram_size < 8 || (ram_size & (ram_size - 1)) != 0 || ram_size > (size_t(1) << 28)) {
+            result.bad_ram = true;
+            return result;
+        }
         const uint32_t mask = uint32_t(ram_size - 1) & ~3u;
+        std::vector<uint64_t> visited((ram_size / 4 + 63) / 64, 0);  // one bit per word slot: loop detection
         uint32_t node = address & mask;
         for (;;) {
             if (result.nodes >= max_nodes) { result.node_limit = true; break; }
+            uint64_t& bits = visited[(node >> 2) >> 6];
+            const uint64_t bit = uint64_t(1) << ((node >> 2) & 63);
+            if (bits & bit) { result.cycle = true; break; }
+            bits |= bit;
             const uint32_t tag = read32(ram, node);
-            ++result.nodes;
             const uint32_t length = tag >> 24;
+            if (uint64_t(result.words) + length > max_words) { result.word_limit = true; break; }
+            ++result.nodes;
             for (uint32_t i = 1; i <= length; ++i) gp0(read32(ram, (node + 4 * i) & mask));
             result.words += length;
             if (tag & 0x800000) { result.terminated = true; break; }
@@ -249,7 +277,8 @@ public:
     }
 
 private:
-    enum Mode { M_COMMAND, M_PARAMS, M_POLYLINE, M_LOAD_DATA };
+    enum Mode { M_COMMAND, M_PARAMS, M_POLYLINE, M_POLYLINE_SKIP, M_LOAD_DATA };
+    static constexpr uint32_t MAX_POLYLINE_WORDS = 4096;
 
     struct Vertex {
         int x = 0, y = 0;
@@ -276,7 +305,14 @@ private:
     static uint32_t read32(const uint8_t* ram, uint32_t at) {
         return uint32_t(ram[at]) | uint32_t(ram[at + 1]) << 8 | uint32_t(ram[at + 2]) << 16 | uint32_t(ram[at + 3]) << 24;
     }
-    static int fix_extent(int v, int limit) { return ((v - 1) & (limit - 1)) + 1; }
+    static int fix_extent(int v, int limit) { return int((uint32_t(v) - 1u) & uint32_t(limit - 1)) + 1; }
+    // psx-spx: 0x81-0x9F mirror 0x80, 0xA1-0xBF mirror 0xA0, 0xC1-0xDF mirror 0xC0.
+    static uint32_t canonical_command(uint32_t cmd) {
+        if (cmd >= 0x81 && cmd <= 0x9F) return 0x80;
+        if (cmd >= 0xA1 && cmd <= 0xBF) return 0xA0;
+        if (cmd >= 0xC1 && cmd <= 0xDF) return 0xC0;
+        return cmd;
+    }
     static int sext11(uint32_t v) { return int(int32_t(v << 21) >> 21); }
 
     void begin_params() { mode_ = M_PARAMS; }
@@ -326,7 +362,7 @@ private:
     }
 
     void execute() {
-        const uint32_t cmd = params_[0] >> 24;
+        const uint32_t cmd = canonical_command(params_[0] >> 24);
         if (cmd >= 0x20 && cmd <= 0x3F) { execute_polygon(cmd); return; }
         if (cmd >= 0x40 && cmd <= 0x5F) { execute_line(cmd); return; }
         if (cmd >= 0x60 && cmd <= 0x7F) { execute_rect(cmd); return; }
@@ -374,8 +410,8 @@ private:
     // Colour path: the 8-bit result of modulation (texel * colour / 128, clamped) or of the vertex
     // colour is dithered and truncated to 5 bits. A semi-transparent pixel without dithering blends
     // the truncated 5-bit source with the 5-bit background. With dithering the blend runs at 8-bit
-    // precision (background << 3) and the dither offset is added to the blended value, as the
-    // reference emulator does; the hardware order is not documented in a form that settles it.
+    // precision (background << 3) and the dither offset is added to the blended value, as
+    // PCSX-Redux output shows (observed as a black box); the hardware order is not documented in a form that settles it.
     void plot(int px, int py, int cr, int cg, int cb, int u, int v, const Prim& p) {
         bool blend = p.semi;
         uint16_t texbit = 0;
@@ -444,7 +480,7 @@ private:
         const int n = quad ? 4 : 3;
         Vertex v[4];
         Prim p;
-        p.textured = tex && !env_.texture_disable; p.raw = raw; p.semi = semi; p.gouraud = gour;
+        p.textured = tex && !(env_.texture_disable && env_.texture_disable_allowed); p.raw = raw; p.semi = semi; p.gouraud = gour;
         int at = 0;
         uint32_t color = params_[at++] & 0xFFFFFF;
         for (int i = 0; i < n; ++i) {
@@ -594,7 +630,7 @@ private:
         const bool raw = cmd & 1, semi = cmd & 2, tex = cmd & 4;
         const int size = int((cmd >> 3) & 3);
         Prim p;
-        p.textured = tex && !env_.texture_disable; p.raw = raw; p.semi = semi;
+        p.textured = tex && !(env_.texture_disable && env_.texture_disable_allowed); p.raw = raw; p.semi = semi;
         int at = 0;
         const uint32_t color = params_[at++] & 0xFFFFFF;
         const uint32_t xy = params_[at++];

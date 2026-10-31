@@ -1,6 +1,6 @@
 """T-39302: write deterministic noise into rectangles of the VRAM of a save state (same length, so
 the protobuf framing is untouched). Used for the noise-background run: the state taken when
-DrawOTag n-1 returns gets noise in both frame buffers; the emulator then resumes, the game builds
+DrawOTag n-1 returns gets noise in the given rectangles (capture_frame.sh derives them); the emulator then resumes, the game builds
 and draws the next ordering table over the noise, and the capture of that DrawOTag is compared
 with the renderer. Pixels the frame does not cover stay noise on both sides; covered and blended
 pixels must agree exactly.

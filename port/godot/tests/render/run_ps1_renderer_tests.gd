@@ -200,10 +200,19 @@ func _test_ordering_table_and_memory(renderer: Renderer) -> void:
 	_check(_pixel(renderer, 10, 10) == _c15(0, 31, 0) and _pixel(renderer, 12, 10) == _c15(0, 31, 0) and _pixel(renderer, 13, 10) == 0, "node B tile")
 	_check(renderer.counters().get("TILE", 0) == 2, "counters list two TILE primitives")
 	_check(memory.ram.hex_encode().sha256_text() == before and memory.error.is_empty(), "the renderer never writes the game memory")
-	# A list that loops is cut at max_nodes.
+	# A list that loops is cut at the repeated node and reported as an error.
 	memory.write_u32(0x80003000, 0x00000000 | 0x3000)
 	var loop: Dictionary = renderer.draw_ordering_table_from_memory(memory, 0x80003000, 10)
-	_check(bool(loop["node_limit"]) and int(loop["nodes"]) == 10 and not bool(loop["terminated"]), "a looping list stops at max_nodes")
+	_check(bool(loop["cycle"]) and int(loop["nodes"]) == 1 and not bool(loop["terminated"]), "a looping list stops at the repeated node")
+	_check(not str(loop["error"]).is_empty() and renderer.last_error == str(loop["error"]), "a loop is an error")
+	# A long chain stops at max_nodes.
+	for i: int in 20:
+		memory.write_u32(0x80004000 + i * 8, 0x01000000 | (0x4000 + (i + 1) * 8))
+	var chain: Dictionary = renderer.draw_ordering_table_from_memory(memory, 0x80004000, 10)
+	_check(bool(chain["node_limit"]) and int(chain["nodes"]) == 10 and not str(chain["error"]).is_empty(), "a long list stops at max_nodes")
+	var words: Dictionary = renderer.draw_ordering_table_from_memory(memory, 0x80004000, 1000, 5)
+	_check(bool(words["word_limit"]) and int(words["words"]) == 5, "a long list stops at max_words")
+	_check(not str(renderer.draw_ordering_table_from_memory(null, 0x80004000)["error"]).is_empty(), "no memory is an error")
 
 func _test_display_image(renderer: Renderer) -> void:
 	renderer.reset()
@@ -227,3 +236,12 @@ func _test_invalid_arguments(renderer: Renderer) -> void:
 	_check(renderer.store_image(Rect2i(0, 0, 2000, 4)).is_empty(), "store_image refuses a 2000-wide rectangle")
 	_check(renderer.read_image(Rect2i(0, 0, 0, 0)) == null, "read_image refuses an empty rectangle")
 	_check(not str(renderer.draw_ordering_table(PackedByteArray([0, 0, 0]), 0)["error"]).is_empty(), "draw_ordering_table refuses a non power-of-two RAM")
+	_check(renderer.store_image(Rect2i(0, 0, 0, 4)).is_empty() and not renderer.last_error.is_empty(), "a failed store_image sets last_error")
+	_check(renderer.store_image(Rect2i(0, 0, 1, 1)).size() == 2 and renderer.last_error.is_empty(), "a good call clears last_error")
+	var unopened := Renderer.new()
+	_check(not unopened.load_image(Rect2i(0, 0, 1, 1), PackedByteArray([0, 0])).is_empty() and unopened.vram().is_empty(), "an unopened renderer reports instead of crashing")
+	_check(unopened.display_image() == null and unopened.counters().is_empty() and not unopened.last_error.is_empty(), "unopened read-out is empty")
+	renderer.gp1(0x03000001)
+	var dark: Image = renderer.display_image()
+	_check(dark != null and dark.get_pixel(0, 0).to_html(false) == "000000", "a disabled display reads black")
+	renderer.gp1(0x03000000)

@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # T-39302: one frame, end to end. Captures DrawOTag call <k> (and call k-1) from a save state, then
 #   1. compares the renderer with the emulator's VRAM after the call (real VRAM before), and
-#   2. poisons both frame buffers of the state at the return of call k-1 with noise, lets the emulator
-#      run the game on to the same DrawOTag over the noise, and compares again (coverage and blending
-#      cannot hide behind unchanged pixels).
+#   2. (k > 1) fills the draw area and the display area of the state at the return of call k-1 with noise
+#      (rectangles derived from the compare run's draw area and the GP1 display registers), lets the
+#      emulator run the game on to the same DrawOTag over the noise, and compares again (coverage and
+#      blending cannot hide behind unchanged pixels). The script fails when the second run draws a
+#      different ordering table.
 # usage: capture_frame.sh <name> <state (relative to the data root)> <k> [extra JOB fields, e.g. inputs={...}]
 # Needs TOKIMEMO_DATA_ROOT (checkout with disc/ and .asset-cache) and the tokimemo-emu, tokimemo-recovery
 # and tokimemo-content images. Output: <data root>/.asset-cache/m2-renderer/<name>/{real,noisy}.json
@@ -30,10 +32,12 @@ cmp_tool "$NAME/a" "$TAG" > "$OUT/real.json"
 echo "real:  $(cut -c1-400 "$OUT/real.json")"
 if [ "$K" -gt 1 ]; then
   PREV=$(printf 'call%04d' "$((K - 1))")
-  py /t/poison.py "/c/$NAME/a/$PREV.after.sstate" "/c/$NAME/a/noisy.sstate" 0,0,319,479
+  RECTS=$(py /t/noise_rects.py rects "/c/$NAME/a/$TAG.gpu.json" "/c/$NAME/real.json")
+  echo "noise rectangles: $RECTS"
+  py /t/poison.py "/c/$NAME/a/$PREV.after.sstate" "/c/$NAME/a/noisy.sstate" $RECTS
   "$HERE/run.sh" "$OUT/b" "$REL/a/noisy.sstate" "picks={1}, frames=400" >/dev/null
   py /t/extract.py "/c/$NAME/b" >/dev/null
-  cmp -s "$OUT/a/$TAG.ram.bin" "$OUT/b/call0001.ram.bin" && echo "ram: identical to the clean run" || echo "ram: DIFFERS from the clean run"
   cmp_tool "$NAME/b" call0001 > "$OUT/noisy.json"
+  py /t/noise_rects.py same "/c/$NAME/real.json" "/c/$NAME/noisy.json"
   echo "noisy: $(cut -c1-400 "$OUT/noisy.json")"
 fi

@@ -3,7 +3,7 @@
 -- state on vsync 1, then at every DrawOTag entry (0x8009CB9C, libgpu) counts the call. For each call
 -- number in JOB.picks it saves the 2 MiB RAM and a save state (VRAM + GPU status) before the call, and
 -- a second save state when DrawOTag returns (the emulator runs the DMA list synchronously, so VRAM
--- then holds the drawn frame). Nothing is written to game RAM.
+-- then holds the drawn frame). Game RAM is only read, except with JOB INJECT (synth_ot.py), which copies a synthetic table into free RAM and points DrawOTag at it.
 --
 -- JOB fields:
 --   out        output dir (container path)
@@ -58,7 +58,7 @@ for _, n in ipairs(JOB.picks) do picks[n] = true end
 local GS = 0x800E6280
 
 local bps = {}
-local afterBp = nil
+local afterBps = {}
 
 local function onAfter()
     if pending == nil then return true end
@@ -86,9 +86,9 @@ bps[#bps + 1] = PCSX.addBreakpoint(DRAW_OTAG, 'Exec', 4, 'drawotag', function()
         pending = { tag = tag, call = calls, vsync = frame, ot = u32(regs.GPR.n.a0), ra = ra,
             mode = mem[bit.band(GS + 0x1108, 0x1fffff)], stage = mem[bit.band(GS + 0x1109, 0x1fffff)],
             step = mem[bit.band(GS + 0x110A, 0x1fffff)] }
-        if afterBp == nil then
-            afterBp = PCSX.addBreakpoint(ra, 'Exec', 4, 'drawotag-ret', onAfter)
-            bps[#bps + 1] = afterBp
+        if afterBps[ra] == nil then  -- one return breakpoint per distinct return address
+            afterBps[ra] = PCSX.addBreakpoint(ra, 'Exec', 4, 'drawotag-ret', onAfter)
+            bps[#bps + 1] = afterBps[ra]
         end
     end
     return true

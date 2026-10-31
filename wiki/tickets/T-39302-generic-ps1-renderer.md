@@ -25,10 +25,10 @@ Test commands (Docker only):
 
 ```sh
 bash tools/port/native_render/build.sh --output .asset-cache/m2-renderer/<new dir>
-tools/port/run_render_tests.sh <that dir>/project/bin/liboriginal_render.linux.template_release.arm64.so   # 35 C++ tests (512 checks) and 161 Godot checks
+tools/port/run_render_tests.sh <that dir>/project/bin/liboriginal_render.linux.template_release.arm64.so   # 38 C++ tests (537 checks) and 170 Godot checks
 ```
 
-Library SHA-256 of the final sources: `0a57ac81d162d27f961440110c7a30bd98a0ec75271175dcd899a2384c4642d8` (Linux arm64, template_release, g++ in `tokimemo-content`). The library is not installed under `port/godot/bin/`; installing it is the integrating work's decision. No existing scene was switched to it.
+Library SHA-256 of the final sources: `863ca5effa3ef4bac1d7e484f85a6282d648e705b2149702e05e65cc33a91c07` (Linux arm64, template_release, g++ in `tokimemo-content`). The library is not installed under `port/godot/bin/`; installing it is the integrating work's decision. No existing scene was switched to it.
 
 Captured frames (game data, kept under `.asset-cache/m2-renderer/`, never committed). "real" is the VRAM the game had; "noisy" repeats the draw over both frame buffers filled with noise. Differing = pixels of all 1024x512 that differ from the emulator's VRAM after the call.
 
@@ -72,3 +72,4 @@ Open points for a decision: hardware rounding of interpolated colours and texel 
 
 - 2026-10-30: In Progress. Built the model, extension, wrapper and tests on branch `port/m2-renderer`; compared 29 captured frames and a synthetic table with the emulator (table above). Review against CODING_STANDARDS.md and the wiki rules is still to do before In Review.
 - 2026-10-30: Merged `port/opening-to-gameplay` (`9f340f2ab`) and reran the gates: core suite 9 suites pass; opening frame timing `pad 2, 104 substeps, 6709 frames to 12/0/0, 0 mismatches`; renderer tests 35 C++ (512 checks) and 161 Godot checks pass. Ticket stays In Progress (texture-hash hook, library installation and review open).
+- 2026-10-30: Independent review fixes (no high findings; 3000 fuzz iterations clean under ASan and UBSan): ordering-table walk now detects loops (visited bitmap) and has a word cap, unterminated polylines are capped at 4,096 words and skipped, public-API coordinates are masked before use, `draw_otag` validates the RAM size itself, GP1(09h) gates texture disable, GP0 command mirrors decoded, capture return breakpoints are registered per distinct return address, noise rectangles derive from the draw area and display registers and a differing noisy table fails the script, compare_capture rejects odd or missing arguments and an `--env-addr` without E-words, `Ps1Renderer` sets `last_error`, guards use before `open()` and shows a switched-off display as black, `.gitignore` covers the library and the test script cleans its mount-point file with a trap. Provenance: the emulator was used only as a black box (running the game under it and reading VRAM and RAM from its save states); no PCSX-Redux source code was read or copied, and the renderer's rules come from psx-spx and from comparing outputs.

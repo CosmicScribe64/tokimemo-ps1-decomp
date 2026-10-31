@@ -32,7 +32,8 @@ protected:
         ClassDB::bind_method(D_METHOD("gp0_word", "word"), &OriginalGpu::gp0_word);
         ClassDB::bind_method(D_METHOD("gp0_words", "bytes"), &OriginalGpu::gp0_words);
         ClassDB::bind_method(D_METHOD("gp1", "word"), &OriginalGpu::gp1);
-        ClassDB::bind_method(D_METHOD("draw_otag", "ram", "address", "max_nodes"), &OriginalGpu::draw_otag, DEFVAL(1048576));
+        ClassDB::bind_method(D_METHOD("draw_otag", "ram", "address", "max_nodes", "max_words"), &OriginalGpu::draw_otag,
+                             DEFVAL(1048576), DEFVAL(int64_t(ps1::DEFAULT_MAX_WORDS)));
         ClassDB::bind_method(D_METHOD("read_rgba", "x", "y", "w", "h", "replicate_bits"), &OriginalGpu::read_rgba, DEFVAL(false));
         ClassDB::bind_method(D_METHOD("display_info"), &OriginalGpu::display_info);
         ClassDB::bind_method(D_METHOD("environment"), &OriginalGpu::environment);
@@ -90,18 +91,25 @@ public:
     void gp1(int64_t word) { gpu.gp1(uint32_t(word & 0xFFFFFFFF)); }
 
     // Walk the ordering table at `address` in `ram` (a power-of-two sized PackedByteArray, the
-    // game's main RAM) exactly as DrawOTag's DMA would. Returns nodes, words, terminated, node_limit, error.
-    Dictionary draw_otag(const PackedByteArray& ram, int64_t address, int64_t max_nodes) {
+    // game's main RAM) exactly as DrawOTag's DMA would. Returns nodes, words, terminated, node_limit, word_limit, cycle, error.
+    Dictionary draw_otag(const PackedByteArray& ram, int64_t address, int64_t max_nodes, int64_t max_words) {
         Dictionary result;
-        const int64_t size = ram.size();
-        if (size < 8 || (size & (size - 1)) != 0) { result["error"] = "RAM size must be a power of two"; return result; }
-        if (max_nodes < 1) { result["error"] = "max_nodes must be positive"; return result; }
-        const ps1::WalkResult walk = gpu.draw_otag(ram.ptr(), size_t(size), uint32_t(address & 0xFFFFFFFF), uint32_t(max_nodes));
+        if (max_nodes < 1 || max_words < 1) { result["error"] = "max_nodes and max_words must be positive"; return result; }
+        const ps1::WalkResult walk = gpu.draw_otag(ram.ptr(), size_t(ram.size()), uint32_t(address & 0xFFFFFFFF),
+                                                   uint32_t(std::min<int64_t>(max_nodes, UINT32_MAX)),
+                                                   uint32_t(std::min<int64_t>(max_words, UINT32_MAX)));
         result["nodes"] = int64_t(walk.nodes);
         result["words"] = int64_t(walk.words);
         result["terminated"] = walk.terminated;
         result["node_limit"] = walk.node_limit;
-        result["error"] = "";
+        result["word_limit"] = walk.word_limit;
+        result["cycle"] = walk.cycle;
+        String error;
+        if (walk.bad_ram) error = "RAM size must be a power of two of at least 8 bytes";
+        else if (walk.cycle) error = "ordering table loops back to a node already drawn";
+        else if (walk.node_limit) error = "ordering table passed max_nodes";
+        else if (walk.word_limit) error = "ordering table passed max_words";
+        result["error"] = error;
         return result;
     }
 

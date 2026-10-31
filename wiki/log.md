@@ -2672,3 +2672,7 @@ Moved [[tickets/T-39303-installed-disc-pack]] and [[tickets/T-39302-generic-ps1-
 ## [2026-10-30] build | Generic PS1 renderer branch gates after merging port/opening-to-gameplay
 
 On `port/m2-renderer` (merge `9f340f2ab`): core suite `PASS: 9 test suite(s) ran`; opening frame timing (fast, pad 2, candidate audio library) `pad 2, 104 substeps, 6709 frames to 12/0/0, 0 mismatches`, exit 0; renderer tests 35 C++ tests (512 checks) and 161 Godot checks pass. [[tickets/T-39302-generic-ps1-renderer]].
+
+## [2026-10-30] build | Generic PS1 renderer review fixes
+
+Walk bounded (loop detection, word cap), polyline cap, overflow-safe API, RAM-size guard, GP1(09h) texture disable, command mirrors, per-return capture breakpoints, derived noise rectangles with a same-table check, stricter `compare_capture`, `Ps1Renderer.last_error` and guards, `.gitignore` and trap for the test script. 38 C++ tests (537 checks) and 170 Godot checks pass; 52 of 58 frame comparisons still exact (the same six phone comparisons differ by one pixel). [[tickets/T-39302-generic-ps1-renderer]], [[ps1-renderer]].

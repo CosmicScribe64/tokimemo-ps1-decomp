@@ -474,13 +474,79 @@ TEST(draw_otag_walks_the_linked_list) {
     CHECK_EQ(gpu.count(ps1::K_TILE), 2);
 }
 
-TEST(draw_otag_empty_nodes_and_node_limit) {
+TEST(draw_otag_loop_is_detected_and_limits_hold) {
     std::vector<uint8_t> ram(0x200000, 0);
     put32(ram, 0x100, 0x00000000u | 0x200u);   // empty node
     put32(ram, 0x200, 0x00000000u | 0x100u);   // loops back
     Gpu gpu;
-    const ps1::WalkResult r = gpu.draw_otag(ram.data(), ram.size(), 0x100, 50);
-    CHECK_EQ(r.node_limit, true); CHECK_EQ(r.nodes, 50); CHECK_EQ(r.terminated, false);
+    ps1::WalkResult r = gpu.draw_otag(ram.data(), ram.size(), 0x100);
+    CHECK_EQ(r.cycle, true); CHECK_EQ(r.nodes, 2); CHECK_EQ(r.terminated, false);
+    // a node that points at itself, carrying a full-screen semi-transparent quad, is drawn once
+    put32(ram, 0x1000, 0x05000000u | 0x1000u);
+    put32(ram, 0x1004, 0x2A000000u | rgb(8, 8, 8)); put32(ram, 0x1008, xy(0, 0)); put32(ram, 0x100C, xy(320, 0));
+    put32(ram, 0x1010, xy(0, 240)); put32(ram, 0x1014, xy(320, 240));
+    Gpu g2;
+    g2.gp0(0xE1000000u | (1u << 5)); set_area(g2, 0, 0, 319, 239);
+    r = g2.draw_otag(ram.data(), ram.size(), 0x1000);
+    CHECK_EQ(r.cycle, true); CHECK_EQ(r.nodes, 1); CHECK_EQ(px(g2, 5, 5), c15(1, 1, 1));
+    // a long chain without a loop stops at max_nodes, or at max_words
+    for (uint32_t i = 0; i < 40; ++i) put32(ram, 0x4000 + i * 8, 0x01000000u | (0x4000 + (i + 1) * 8)), put32(ram, 0x4004 + i * 8, 0u);
+    Gpu g3;
+    r = g3.draw_otag(ram.data(), ram.size(), 0x4000, 10);
+    CHECK_EQ(r.node_limit, true); CHECK_EQ(r.nodes, 10); CHECK_EQ(r.cycle, false);
+    r = g3.draw_otag(ram.data(), ram.size(), 0x4000, 1000, 7);
+    CHECK_EQ(r.word_limit, true); CHECK_EQ(r.words, 7);
+    // RAM size must be a power of two
+    r = g3.draw_otag(ram.data(), 0x1FFFFF, 0x4000);
+    CHECK_EQ(r.bad_ram, true); CHECK_EQ(r.nodes, 0);
+}
+
+TEST(unterminated_polyline_is_capped_and_skipped) {
+    Gpu gpu;
+    gpu.gp0(0x48000000u | rgb(255, 0, 0));
+    for (int i = 0; i < 9000; ++i) gpu.gp0(xy(i % 300, 5));
+    CHECK_EQ(gpu.count(ps1::K_POLYLINE_TRUNCATED), 1);
+    // the rest of the polyline is skipped until its terminator, then commands resume
+    gpu.gp0(0x55555555u);
+    send(gpu, {0x68000000u | rgb(0, 255, 0), xy(9, 9)});
+    CHECK_EQ(px(gpu, 9, 9), c15(0, 31, 0));
+    CHECK_EQ(gpu.count(ps1::K_TILE_1), 1);
+}
+
+TEST(extreme_coordinates_do_not_overflow) {
+    Gpu gpu;
+    const uint16_t data[4] = {1, 2, 3, 4};
+    gpu.load_image(INT32_MAX - 3, INT32_MAX - 1, 2, 2, data);
+    uint16_t out[4] = {};
+    gpu.store_image(INT32_MAX - 3, INT32_MAX - 1, 2, 2, out);
+    CHECK_EQ(out[0], 1); CHECK_EQ(out[3], 4);
+    gpu.move_image(INT32_MIN, INT32_MIN, INT32_MAX, INT32_MAX, INT32_MIN, INT32_MAX);
+    gpu.fill_rect(INT32_MAX, INT32_MAX, INT32_MAX, INT32_MAX, 0xFFFFFF);
+    gpu.load_image(-5, -5, 3, 1, data);
+    CHECK_EQ(px(gpu, 1019, 507), 1);
+}
+
+TEST(command_mirrors_and_texture_disable) {
+    Gpu gpu;
+    // 0x81..0x9F mirror 0x80, 0xA1..0xBF mirror 0xA0, 0xC1..0xDF mirror 0xC0
+    send(gpu, {0xA5000000u, xy(10, 20), (1u << 16) | 2u, 0x00020001u});
+    CHECK_EQ(px(gpu, 10, 20), 1); CHECK_EQ(px(gpu, 11, 20), 2);
+    send(gpu, {0x9F000000u, xy(10, 20), xy(30, 40), (1u << 16) | 2u});
+    CHECK_EQ(px(gpu, 30, 40), 1); CHECK_EQ(px(gpu, 31, 40), 2);
+    send(gpu, {0xC3000000u, xy(0, 0), (1u << 16) | 1u});
+    CHECK_EQ(gpu.count(ps1::K_STORE_IMAGE), 1);
+    CHECK_EQ(gpu.count(ps1::K_UNKNOWN_COMMAND), 0);
+    // texture disable (E1 bit 11) works only after GP1(09h) allows it
+    Gpu g2;
+    put(g2, 512, 0, c15(5, 5, 5)); g2.gp0(0xE1000000u | 8u | (2u << 7) | 0x800u);
+    send(g2, {0x65000000u, xy(0, 0), 0u, (1u << 16) | 1u});
+    CHECK_EQ(px(g2, 0, 0), c15(5, 5, 5));          // not allowed: texturing stays on
+    g2.gp1(0x09000001u);
+    send(g2, {0x65000000u | rgb(0, 255, 0) , xy(4, 0), 0u, (1u << 16) | 1u});
+    CHECK_EQ(px(g2, 4, 0), c15(0, 31, 0));         // allowed: the primitive is untextured, colour 0x00FF00
+    g2.gp1(0x09000000u);
+    send(g2, {0x65000000u, xy(8, 0), 0u, (1u << 16) | 1u});
+    CHECK_EQ(px(g2, 8, 0), c15(5, 5, 5));
 }
 
 TEST(draw_otag_packet_with_image_upload_and_env_commands) {
