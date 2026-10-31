@@ -2771,3 +2771,10 @@ Decomp source change, approved as a one-time exception: `message_window_set_titl
 ## [2026-10-30] ticket | Engine WP-D started (T-39315)
 
 Opened [[tickets/T-39315-engine-mode-screens]] for `scheduler.c`, `home_screens.c`, `holiday.c` and `school_day.c`. Packages A, B and C and the SDK layer are merged, so its callees are ported. WP-E (system, boot, audio driver, main loop) waits for the user's frame-timing decision about GetRCnt.
+
+## [2026-10-30] decision | Frame timing policy, sine table, cleanup
+
+The user told root to follow its recommendations:
+- **Frame timing:** every port frame meets its budget. GetRCnt reports under `frame_scanline_limit`, and VSync(0) ends the frame. This is a documented policy, not a measurement, and it differs only in frames the PS1 itself overran. [[tickets/T-39316-engine-system-boot-main-loop]] (WP-E) builds it with the remaining `src/main` files.
+- **Sine table:** the libgte sine table committed in `core/native_math.gd` becomes runtime data read from the installed executable: [[tickets/T-39317-sine-table-from-executable]].
+- **Cleanup:** the two hung installed-launch test containers are stopped. The 103 stop-all worktrees matched their `refs/snapshots/stop-all-2026-10-30/*` snapshots exactly and were removed with the merge probes (106 in total); 60 GB is now free.

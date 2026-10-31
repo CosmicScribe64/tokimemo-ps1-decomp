@@ -30,6 +30,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39316-engine-system-boot-main-loop|T-39316 Port the engine system, boot, audio-driver and main-loop files (WP-E)]]
+- [ ] [[tickets/T-39317-sine-table-from-executable|T-39317 Read the libgte sine table from the installed executable]]
 - [ ] [[tickets/T-39315-engine-mode-screens|T-39315 Port the engine mode-screen files (WP-D)]]
 - [ ] [[tickets/T-39301-engine-api-core|T-39301 Port the main-executable engine API under its C names (M2)]]
 - [ ] [[tickets/T-39303-installed-disc-pack|T-39303 Install one disc pack of the original files the game reads (M2)]]
