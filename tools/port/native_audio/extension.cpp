@@ -70,11 +70,14 @@ public:
         for(int64_t i=0;i<schedule.size();i+=3){if(schedule[i]<0 || schedule[i+1]<0 || schedule[i+2]<0)return "Shiori landing schedule is malformed";rows.push_back({uint32_t(schedule[i]),unsigned(schedule[i+1]),unsigned(schedule[i+2])});}
         try{engine->begin_shiori_load(data,rows);return "";}catch(const std::exception& e){poisoned=true;return String(e.what());}
     }
-    // native-bank0. Only audio_command(5), (0xD1) and (0x11) come from the owner;
-    // 0x21/0x22/0x2F/0x200|n are queued by bank0_start (audio_bank_start(0,n)).
+    // native-bank0. Only audio_command(5), (0xD1) and (0x11) come from the opening owner;
+    // 0x21/0x22/0x2F/0x200|n are queued by bank0_start (audio_bank_start(0,n)). After the
+    // handoff the gameplay owner submits audio_command(3) and the class-5 effects 0x5PN
+    // (0x15PN key off); the engine refuses them before the slot0 transfer.
     String submit_command(int64_t command){
         if(!engine || poisoned)return "engine is disposed or failed";
-        if(command!=5 && command!=0xd1 && command!=0x11)return "audio command outside the native bank0 owner set";
+        bool effect=(command>=0x500 && command<=0x5ff) || (command>=0x1500 && command<=0x15ff);
+        if(command!=5 && command!=0xd1 && command!=0x11 && command!=3 && !effect)return "audio command outside the native bank0 owner set";
         try{engine->submit(unsigned(command));return "";}catch(const std::exception& e){poisoned=true;return String(e.what());}
     }
     Dictionary bank0_start(int64_t sequence,int64_t tick_skip){
@@ -110,6 +113,8 @@ public:
         d["system_flag"]=engine->system_flag;d["bgm_sequence"]=engine->bgm_sequence;d["bgm_next"]=engine->bgm_next;d["queued_commands"]=int64_t(engine->command_queue.size());
         d["stopped"]=engine->stopped;d["fade_active"]=engine->fade_active;d["fade_rate"]=engine->fade_rate;d["sequence_gain"]=engine->current_gain;d["seq_tick_skip"]=int64_t(engine->seq_tick_skip);
         d["pack_word0"]=int64_t(engine->cpu.read(0x8001c000));
+        d["se_slot_a"]=engine->se_slot_a;d["se_key_ons"]=int64_t(engine->se_key_ons);d["se_key_offs"]=int64_t(engine->se_key_offs);d["xa_forgets"]=int64_t(engine->xa_forgets);
+        d["live_voices"]=[&]{int64_t n=0;for(auto& v:engine->voices)n+=v.live;return n;}();
         Array landed;for(auto c:engine->bank0_landed)landed.append(int64_t(c));d["bank0_landed"]=landed;
         Array log;for(auto& row:engine->bank0_log){PackedInt64Array r;for(auto v:row)r.append(v);log.append(r);}d["bank0_log"]=log;
         // Flat [pump, MVOL, gain, fade_active] and [pump, channel, sample address, 0] rows.

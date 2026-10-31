@@ -41,6 +41,9 @@ var overlay_dispatcher: OverlayDispatcher = OverlayDispatcher.new()
 ## Mutable command-HUD session handed over by flow/fresh_gameplay_handoff.gd.
 ## When set, every 0x34 stage 1 frame runs its source mirrors (see _command).
 var hud_session: HudSession = null
+## TypeA icon positions (D_800B5AE4) for the HUD session's hud_icon_bar_init
+## at school_day_screen_init; set with hud_session by the fresh handoff.
+var hud_icon_positions: Array = []
 ## T-39007: the ending step built from a successful "ending.clear_save"
 ## completion, with the request it answers. It lives only between the
 ## BEFORE_MODE delivery and the overlay step of the same frame, never in the
@@ -413,6 +416,8 @@ func _schedule(base: CoreState, _input: InputFrame, rng: Rng, result: Session.Fr
 			result.audio.append({"kind": "native_stop_xa_if_active"})
 			result.transitions.append({"kind": "native_mode", "mode": 0x31})
 		_: result.error = "unsupported initial scheduler step: %d" % state.mode_step
+	# _schedule_init tail (scheduler.c:66-71): parameter_show .. hud_icon_bar_update(0).
+	_hud_icon_bar_tail(state, _input, result)
 
 func _day_screen(base: CoreState, input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)
@@ -428,15 +433,55 @@ func _day_screen(base: CoreState, input: InputFrame, rng: Rng, result: Session.F
 		result.transitions.append({"kind": "native_mode", "mode": 0x5c})
 		return
 	OrdinaryWeek.dispatch(state, result)
+	# schedule_day_screen_handler tail (scheduler.c:1534-1540): hud_icon_bar_update(0).
+	_hud_icon_bar_tail(state, input, result)
 	if result.error.is_empty() and state.game_mode not in [0x30, 0x31, 0x32, 0x34, 0x38, 0x40, 0x46]:
 		var idx: int = clampi(int(data.get("day_event_index", 0)), 0, 31)
 		var ev: Array = data["day_events"][idx] if data.get("day_events") is Array and idx < (data["day_events"] as Array).size() else [0xff, 0, 0, 0]
 		data["overlay_state"] = overlay_dispatcher.init_overlay(state.game_mode, data, ev, rng)
 
-func _week_end(base: CoreState, _input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
+## hud_icon_bar_update after the step in the mode 0x30 and 0x31 handlers. Its
+## menu_check / menu_cursor_update(0) (hud_panels.c:1081-1082) runs on the same
+## menu as command select: the HUD session mirror and the rule cursor
+## (Command.select_cursor, the same source call) advance together and must
+## agree, as in _command. Without a HUD session (development routes) nothing
+## runs here.
+func _hud_icon_bar_tail(state: State, input: InputFrame, result: Session.FrameResult, screen_init: bool = false) -> void:
+	if hud_session == null or not result.error.is_empty():
+		return
+	var checkpoint: Dictionary = hud_session.checkpoint()
+	var cursor_before: Variant = state.rule_state.get("menu_cursor")
+	# boot_frame_begin (main_loop.c:88) clears the cursor guard every frame.
+	var message: String = "HUD session state was modified outside the source mirrors" if checkpoint.is_empty() else hud_session.begin_outer_frame()
+	if message.is_empty() and screen_init:
+		message = "school_day_screen_init needs the source icon positions" if hud_icon_positions.size() != 14 else hud_session.school_day_screen_init(hud_icon_positions)
+	if message.is_empty():
+		message = hud_session.hud_icon_bar_update(1 if state.game_mode == 0x40 else 0, input.held, input.pressed)
+	if message.is_empty():
+		var selection: Session.FrameResult = Session.FrameResult.new()
+		Command.select_cursor(state, input, selection)
+		message = selection.error
+		if message.is_empty():
+			result.presentation.append_array(selection.presentation)
+	if message.is_empty() and hud_session.menu_cursor() != int(state.rule_state.get("menu_cursor", -1)):
+		message = "HUD session menu cursor %d differs from the rule cursor %s" % [hud_session.menu_cursor(), str(state.rule_state.get("menu_cursor"))]
+	if not message.is_empty():
+		state.rule_state["menu_cursor"] = cursor_before
+		if not checkpoint.is_empty():
+			hud_session.restore(checkpoint)
+		result.error = message
+
+func _week_end(base: CoreState, input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)
 	if state != null:
+		# Stage 0xFF runs school_day_week_end_exit, which has its own
+		# hud_icon_bar_update(0) (school_day.c:39-47) before the handler's
+		# tail (scheduler.c:2258-2264): two menu_cursor_update calls.
+		var exit_frame: bool = state.mode_stage == 0xFF
 		WeekEnd.step(state, rng, result)
+		if exit_frame:
+			_hud_icon_bar_tail(state, input, result)
+		_hud_icon_bar_tail(state, input, result)
 
 static func _sd_table_index(command: int, extra: int) -> int:
 	var variant: int = 1 if extra != 0 else 0
@@ -523,8 +568,10 @@ func _school_day(base: CoreState, _input: InputFrame, _rng: Rng, result: Session
 	var data: Dictionary = state.rule_state
 	var seasonal_allowed: bool = tables.get("allow_seasonal_variants", false) or data.get("allow_seasonal_variants", false) or data.get("allow_multi_week", false)
 	if not seasonal_allowed:
-		if data["vacation"] != 0 or data["year"] != 95 or data["month"] != 4 or data["day"] < 5 or data["day"] > 8:
-			result.error = "school-day route outside initial April5–8 ordinary week"
+		# T-39002: the non-seasonal April variants, April 5..29 1995 (the
+		# dispatcher's bound, rules/day_end.gd).
+		if data["vacation"] != 0 or data["year"] != 95 or data["month"] != 4 or data["day"] < 5 or data["day"] > 29:
+			result.error = "school-day route outside the April5–29 ordinary weeks"
 			return
 	var event: Array = data["day_events"][data["day_event_index"]]
 	if event[0] != 0 or event[1] not in [0, 1, 2, 3, 4, 5, 6, 7]:
@@ -542,6 +589,10 @@ func _school_day(base: CoreState, _input: InputFrame, _rng: Rng, result: Session
 		if club_id >= 11:
 			result.error = "unsupported club command with no active club (club_id 11)"
 			return
+	# week_day (school_day.c:49-75): the stage handler, then the HUD set with
+	# hud_icon_bar_update(1); school_day_screen_init substep 0 also rebuilds
+	# the icon bar and the cursor actor.
+	var screen_init: bool = state.mode_stage == 0 and state.mode_step == 0 and state.substep == 0 and int(data.get("vacation", 0)) == 0
 	match state.mode_stage:
 		0: _setup(state, result)
 		1:
@@ -559,6 +610,7 @@ func _school_day(base: CoreState, _input: InputFrame, _rng: Rng, result: Session
 				return
 			SchoolDay.exit_step(state, result)
 		_: result.error = "unsupported school-day stage: %d" % state.mode_stage
+	_hud_icon_bar_tail(state, _input, result, screen_init)
 
 func _setup(state: State, result: Session.FrameResult) -> void:
 	var data: Dictionary = state.rule_state

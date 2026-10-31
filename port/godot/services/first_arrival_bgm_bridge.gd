@@ -471,7 +471,7 @@ func _preflight_rei(state: State, result: Session.FrameResult) -> String:
 	var audio = _audio.get_ref()
 	var seen: Dictionary = {}
 	for event: Dictionary in result.audio:
-		if _has_rei_action([event]):
+		if _has_rei_action([event]) and not _gameplay_audio(event):
 			if seen.has(event.get("kind")): return "Duplicate native Rei action in one frame"
 			seen[event.kind] = event.get("command",event.get("role",true))
 		if event.get("kind") == "bank_load" and event.get("role") == "prologue_shiori":
@@ -498,7 +498,7 @@ func _preflight_rei(state: State, result: Session.FrameResult) -> String:
 			if not _rei_started or not _shiori.is_empty() or state.mode_stage != 11 or state.substep != 0 or (int(state.opening.get("audio_state_flags",0))&0x100000)==0 or not fade is Dictionary or fade.get("command") != 0xc1 or fade.get("rate") != 0xc0 or fade.get("decrement") != 1 or fade.get("ticks") != 0 or fade.get("active") != true:
 				return "C1 fade is outside its source stage10/substep8 command"
 			if (AudioRules.check_cd(state)&4) != 0: return "XA playback during the in-flight Shiori bank race is unsupported"
-		elif event.get("kind") in ["native_bank0_start","native_bank0_load","native_audio_command"] or (event.get("kind") == "native_audio_control" and not _bank0.is_empty()) or (event.get("kind") == "native_bgm_fade" and event.get("command") == 0xd1):
+		elif event.get("kind") in ["native_bank0_start","native_bank0_load","native_audio_command","native_restore_bgm"] or (event.get("kind") == "native_audio_control" and not _bank0.is_empty()) or (event.get("kind") == "native_bgm_fade" and event.get("command") == 0xd1):
 			var problem := _preflight_bank0(event, state, seen)
 			if not problem.is_empty(): return problem
 		elif event.get("kind") == "native_bgm_fade":
@@ -552,6 +552,20 @@ func _preflight_bank0(event: Dictionary, state: State, seen: Dictionary) -> Stri
 				return "bank0 load differs from prologue_finish_run case0"
 			var inputs := Bank0.native_inputs(_finish_store)
 			if not inputs.error.is_empty(): return inputs.error
+		"native_audio_command" when _gameplay_audio(event):
+			# After the stage 21 handoff the gameplay's audio_command calls go to
+			# the same sound driver: settings_command_screen_icon_confirm's
+			# audio_command(3) (audio_xa_forget) and (0x500), once the SPRING
+			# start of the reload has made bank0 the playing bank.
+			if _bank0.get("phase") != "spring" or record.get("phase") != "spring" or state.game_mode == 0x15:
+				return "gameplay audio_command(0x%x) has no playing bank0 owner" % int(event.get("command"))
+		"native_restore_bgm":
+			# restore_bgm (scheduler.c:86) and the confirm's audio_bgm_is_playing
+			# check: audio_bgm_playing is 1 from the reload's audio_bank_start(0, 0)
+			# (frame_render_audio.c:715) and nothing on this route stops it, so
+			# neither starts the bank again. Any other state is not modeled.
+			if event.get("bank") != 0 or event.get("sequence") != 0 or _bank0.get("phase") != "spring" or record.get("phase") != "spring" or record.get("playing") != 1:
+				return "restore_bgm with audio_bgm_playing 0 (audio_bank_start(0, 0) again) is not modeled"
 		"native_audio_command":
 			if event.get("command") != 0x11 or _bank0.get("phase") != "loading" or record.get("phase") != "transferred" or state.game_mode != 0x34 or state.mode_stage != 0xff or state.mode_step != 1:
 				return "0x11 differs from the reload bank poll"
@@ -595,9 +609,21 @@ func _shiori_native(method: String, args: Array) -> String:
 	if not validation.is_empty(): return validation
 	return _backend._engine.callv(method,args)
 
+## audio_command calls of the gameplay after the handoff; 0x11 stays the
+## reload's bank0 transfer. audio_command(3) is audio_xa_forget (the command
+## select confirm); 0x5PN is audio_command_se_a, the class-5 effect of VAB
+## se_slot_a (the confirm's 0x500, the school day's 0x501/0x502 in
+## school_day.c:460-463), and 0x15PN its key off (sound_driver.c:725-735).
+const GAMEPLAY_AUDIO_COMMANDS := [3]
+
+static func _gameplay_audio(event: Dictionary) -> bool:
+	if event.get("kind") != "native_audio_command" or not event.get("command") is int: return false
+	var command: int = event.command
+	return command in GAMEPLAY_AUDIO_COMMANDS or (command >= 0x500 and command <= 0x5ff) or (command >= 0x1500 and command <= 0x15ff)
+
 func _has_rei_action(events: Array) -> bool:
 	for event: Dictionary in events:
-		if event.get("kind") in ["native_bank0_start","native_bank0_load","native_audio_command"]: return true
+		if event.get("kind") in ["native_bank0_start","native_bank0_load","native_audio_command","native_restore_bgm"]: return true
 		if event.get("kind") == "native_audio_control" and not _bank0.is_empty(): return true
 		if event.get("kind") in ["native_bgm_fade","native_bgm_fade_tick","bgm_play"] or (event.get("kind") == "bank_load" and event.get("role") in ["prologue_rei","prologue_shiori"]): return true
 	return false
@@ -638,6 +664,10 @@ func _publish_rei(result: Session.FrameResult, tick: int = -1) -> String:
 				outcome = reads.error
 				if outcome.is_empty(): outcome = _backend._engine.begin_bank0_load(reads.inputs, Bank0.flat_schedule())
 				if outcome.is_empty(): _bank0.phase = "loading"; _bank0["load_tick"] = tick
+			"native_audio_command" when _gameplay_audio(event):
+				outcome = _backend._engine.submit_command(int(event.command))
+			"native_restore_bgm":
+				pass # audio_bgm_playing is 1: restore_bgm starts nothing.
 			"native_audio_command":
 				var landed: Dictionary = _backend._engine.bank0_diagnostics()
 				if int(landed.get("bank0_load_pump", -1)) != tick - int(_bank0.load_tick) or landed.get("bank0_complete") != true:

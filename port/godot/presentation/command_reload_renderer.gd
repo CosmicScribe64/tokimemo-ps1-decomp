@@ -41,10 +41,12 @@ const HudSession = preload("res://presentation/hud_session_context.gd")
 const HudCompositor = preload("res://presentation/hud_compositor.gd")
 const LiveHud = preload("res://presentation/live_hud_adapter.gd")
 const Services = preload("res://services/command_reload_services.gd")
+const RoomStore = preload("res://services/command_reload_store.gd")
 
 const NO_GOLDEN := "no golden capture between a5 and a6"
 const TYPEWRITER := "k_disp reveal after the build not modeled (narration drawn whole)"
 const MASCOT := "hud_mascot not rasterized"
+const CHECKER_MODEL := "checker scroll from the frame_count model, not the continued prologue scroll record"
 const SCALED := "hover pulse scale: nearest-neighbour approximation of func_80098680"
 
 var presenter: Presenter
@@ -152,6 +154,117 @@ func render(state: State, hud: HudSession, projection: Dictionary, hud_unsourced
 		provenance["unsourced"] = [hud_unsourced]
 		provenance["omitted"] = ["cursor actor 0"]
 	return {"error":"", "image":image, "provenance":provenance}
+
+
+## Gameplay frames after the handoff that still show the command screen:
+## schedule_init (0x30, scheduler.c:40-73) and schedule_day_screen_handler
+## (0x31, scheduler.c:1530-1541) draw parameter_show, message_window_show,
+## hizuke_show, the icon bar (hud_icon_bar_update(0)), hud_mascot_update,
+## dec_bg_draw(get_last_gamen_mode()) and hud_screen_frame_draw(1): the
+## command select records, with the room while it is the shown background
+## (CommandReloadStore.ROOM_TABLE; golden route-golden-smoke-v1 enter-30-001,
+## enter-31-001 and enter-40-001 show the room and the narration). Another
+## shown background (a later day screen) is not presented here.
+func render_schedule(state: State, hud: HudSession) -> Dictionary:
+	if presenter == null:
+		return {"error":"command reload renderer is not prepared"}
+	if hud == null or not hud.intact():
+		return {"error":"gameplay command screen needs the intact HUD session"}
+	var data: Dictionary = state.rule_state
+	var cache: Variant = data.get("background_cache")
+	var show: Variant = data.get("background_show")
+	if not cache is Array or not show is int or show < 0 or show >= (cache as Array).size() or not int(cache[show]) in RoomStore.ROOM_TABLE:
+		return {"error":"gameplay frame with a shown background other than the room is not presented yet"}
+	var family_hex: String = LiveHud._family_hex(data.get("profile_family_bytes"))
+	var context: Dictionary = hud.hud_context(state.game_mode, state.mode_stage, state.mode_step, family_hex)
+	var view: Dictionary = presenter.create_state(data, context)
+	if view.is_empty():
+		return {"error":presenter.error}
+	var failure: String = presenter.set_animation_phase(view, hud.icon_steps, hud.icon_elapsed)
+	if not failure.is_empty():
+		return {"error":failure}
+	# The prologue provider's checker refuses modes other than the opening's;
+	# the compositor draws hud_screen_frame_draw's default-mode scroll from
+	# frame_count (hud_panels.c:1408-1409), as the legacy live HUD does.
+	presenter._compositor.set_checker_uv(HudCompositor.compute_checker_uv(int(state.frame_count), (int(data.get("player_flags", 0)) >> 8) & 15))
+	var drawn: Image = presenter.render(view, null, true)
+	if drawn == null:
+		return {"error":presenter.error}
+	return {"error":"", "image":drawn, "provenance":{"kind":"gameplay_command_screen_frame",
+		"mode":state.game_mode, "unverified":[MASCOT, TYPEWRITER, CHECKER_MODEL]}}
+
+
+## week_day frames of stage 0 (school_day_screen_init, school_day_sd_load):
+## parameter_show, message_window_show, hizuke_show, hud_icon_bar_update(1),
+## dec_bg_draw(0) and hud_screen_frame_draw(1) (school_day.c:67-75) over the
+## shown background: today's command background from the installed media
+## once dec_bg_show[0] selects it. Before that the room slot is shown; the
+## room is not drawn on these frames (recorded in provenance). The message
+## window was reset by message_window_init/text_system_reset, so no text runs.
+func render_school_day(state: State, hud: HudSession, background_lba: int, background_commands: Array[Dictionary], actor_commands: Array[Dictionary] = []) -> Dictionary:
+	if presenter == null:
+		return {"error":"command reload renderer is not prepared"}
+	if hud == null or not hud.intact():
+		return {"error":"school-day frame needs the intact HUD session"}
+	var data: Dictionary = state.rule_state
+	var family_hex: String = LiveHud._family_hex(data.get("profile_family_bytes"))
+	var context: Dictionary = hud.hud_context(state.game_mode, state.mode_stage, state.mode_step, family_hex)
+	var view: Dictionary = presenter.create_state(data, context)
+	if view.is_empty():
+		return {"error":presenter.error}
+	var failure: String = presenter.set_animation_phase(view, hud.icon_steps, hud.icon_elapsed)
+	if not failure.is_empty():
+		return {"error":failure}
+	var shown: int = int(data.background_cache[int(data.background_show)])
+	var scene: Array[Dictionary] = background_commands.duplicate() if shown == background_lba else ([] as Array[Dictionary])
+	scene.append_array(actor_commands)
+	var unverified: Array[String] = [MASCOT, CHECKER_MODEL]
+	if shown != background_lba:
+		unverified.append("shown room slot not drawn during school_day_screen_init")
+	presenter._compositor.set_checker_uv(HudCompositor.compute_checker_uv(int(state.frame_count), (int(data.get("player_flags", 0)) >> 8) & 15))
+	var command: Dictionary = presenter.activity_command(view, scene, [0, 0, 0, 0, 0, 0, 0, 0, 0])
+	if command.is_empty():
+		return {"error":presenter.error}
+	return {"error":"", "image":command.image, "provenance":{"kind":"school_day_setup_frame",
+		"mode":state.game_mode, "background_lba":shown, "unverified":unverified}}
+
+
+## T-39002: frames of the Sunday holiday (0x46) and of the next week's command
+## setup (0x34 stage 0) after it. scene holds the shown background (already at
+## its dec_bg brightness) and the holiday SD actor draws; narration_hex is the
+## message window run after the family name, empty while the text is reset.
+func render_holiday(state: State, hud: HudSession, scene: Array[Dictionary], narration_hex: String, unverified_extra: Array[String] = []) -> Dictionary:
+	if presenter == null:
+		return {"error":"command reload renderer is not prepared"}
+	if hud == null or not hud.intact():
+		return {"error":"holiday frame needs the intact HUD session"}
+	var data: Dictionary = state.rule_state
+	var family_hex: String = LiveHud._family_hex(data.get("profile_family_bytes"))
+	var context: Dictionary = hud.hud_context(state.game_mode, state.mode_stage, state.mode_step, family_hex)
+	var view: Dictionary = presenter.create_state(data, context)
+	if view.is_empty():
+		return {"error":presenter.error}
+	var failure: String = presenter.set_animation_phase(view, hud.icon_steps, hud.icon_elapsed)
+	if not failure.is_empty():
+		return {"error":failure}
+	presenter._compositor.set_checker_uv(HudCompositor.compute_checker_uv(int(state.frame_count), (int(data.get("player_flags", 0)) >> 8) & 15))
+	var command: Dictionary = presenter.scene_command(view, scene, narration_hex)
+	if command.is_empty():
+		return {"error":presenter.error}
+	var unverified: Array[String] = [MASCOT, CHECKER_MODEL]
+	if not narration_hex.is_empty():
+		unverified.append(TYPEWRITER)
+	unverified.append_array(unverified_extra)
+	return {"error":"", "image":command.image, "provenance":{"kind":"holiday_frame",
+		"mode":state.game_mode, "stage":state.mode_stage, "unverified":unverified}}
+
+
+## The command room as the HUD manifest decoded it (C_02_02H, 320x88), or null.
+func command_room_image() -> Image:
+	if presenter == null:
+		return null
+	var compositor: HudCompositor = presenter._compositor
+	return compositor._image(compositor.descriptor.get("room", {}))
 
 
 ## Icon actors 64 + i / 80 + i and the cursor actor 0, in OT order (higher

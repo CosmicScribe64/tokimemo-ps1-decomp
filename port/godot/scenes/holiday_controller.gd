@@ -18,6 +18,7 @@ const Command = preload("res://flow/command_screen.gd")
 const Legacy = preload("res://scenes/school_day_controller.gd")
 const CalendarPhoneRules = preload("res://rules/calendar_phone_screens.gd")
 const AppointmentRules = preload("res://rules/holiday_appointment.gd")
+const FreshHandoff = preload("res://flow/fresh_gameplay_handoff.gd")
 
 const SHAPES: Dictionary = {"seasonal_room_background_lbas":4,"weekday_room_background_lbas":4,
 	"holiday_activity_background_lbas":8,"holiday_sd_non_summer":8,"holiday_sd_summer":8,"holiday_sd_lbas":13}
@@ -28,6 +29,16 @@ var enable_subscreens: bool = false
 var _legacy_command: Callable
 var _legacy_day: Callable
 var _legacy_completion: Callable
+## T-39002 installed route: the HUD session mirror (presentation/
+## hud_session_context.gd) and its TypeA icon positions, as the school-day
+## controller keeps them. Without a session (development routes) no mirror runs.
+var hud_session: RefCounted = null
+var hud_icon_positions: Array = []
+## Returns {"error", "holiday"}: the holiday extension composed from the
+## scene-owned profile and the live session fields when the day screen
+## dispatches the Sunday record (HolidaySceneAdapter.compose_fresh). Unset on
+## development routes, which keep the extension set at attach.
+var extension_supplier: Callable
 
 func _init(common_tables: Dictionary, holiday_tables: Dictionary) -> void:
 	var validator: Legacy = Legacy.new(common_tables)
@@ -68,6 +79,12 @@ func _day_screen(base: Core, input: InputFrame, rng: Rng, result: Session.FrameR
 	var state: State=base as State
 	if state==null:return
 	var data: Dictionary=state.rule_state
+	if state.game_mode==0x46 and extension_supplier.is_valid():
+		var supplied: Dictionary=extension_supplier.call(state)
+		if not str(supplied.get("error","")).is_empty() or not supplied.get("holiday") is Dictionary:
+			result.error="holiday session fields: "+str(supplied.get("error","no extension"))
+			return
+		data["holiday"]=supplied["holiday"]
 	if state.game_mode==0x46 or (state.game_mode==0x34 and [data["year"],data["month"],data["day"],data["day_event_index"]]==[95,4,9,10]):
 		# This validation is still inside the same session transaction as the
 		# dispatcher/calendar change, so a missing extension rolls that back too.
@@ -94,6 +111,15 @@ func _holiday(base: Core, input: InputFrame, rng: Rng, result: Session.FrameResu
 		result.error="mandatory original holiday room/menu/calendar/activity capabilities are unavailable"
 		return
 	var entry_stage: int=state.mode_stage
+	var entry_step: int=state.mode_step
+	var hud_before: Dictionary=_hud_begin(result)
+	if not result.error.is_empty():return
+	if entry_stage==1 and hud_session!=null:
+		# holiday_menu_frame: hud_cursor_update before holiday_menu_click.
+		result.error=hud_session.hud_cursor_update(input.held,input.pressed)
+		if not result.error.is_empty():
+			hud_session.restore(hud_before)
+			return
 	match state.mode_stage:
 		0:
 			if state.mode_step==0:
@@ -144,6 +170,37 @@ func _holiday(base: Core, input: InputFrame, rng: Rng, result: Session.FrameResu
 	# including the frame that exits to mode31. Menu and sub-screens handle their own input.
 	if result.error.is_empty() and entry_stage in [0, 5]:
 		Command.select_cursor(state,input,result)
+	if entry_stage in [0, 1, 5]:
+		_hud_holiday_tail(state,input,result,hud_before,entry_stage==0 and entry_step==0)
+
+## HUD session checkpoint and boot_frame_begin (main_loop.c:88) for a frame
+## of a mirrored handler; {} without a session.
+func _hud_begin(result: Session.FrameResult) -> Dictionary:
+	if hud_session==null:return {}
+	var checkpoint: Dictionary=hud_session.checkpoint()
+	result.error="HUD session state was modified outside the source mirrors" if checkpoint.is_empty() else hud_session.begin_outer_frame()
+	return checkpoint
+
+## HUD mirror of a 0x46 frame: holiday_open_init's hud_icon_bar_init and
+## hud_cursor_actor_init(0) on the open frame, the stage wrapper's
+## hud_icon_bar_update (0 in open and menu, 1 in the activity), then
+## holiday_mode_handler's hud_cursor_update (holiday.c:128; a no-op after the
+## menu frame's own call). The session cursor and the rule cursor are the same
+## source menu and must agree; a refusal restores both records.
+func _hud_holiday_tail(state: State, input: InputFrame, result: Session.FrameResult, before: Dictionary, open_init: bool) -> void:
+	if hud_session==null:return
+	var message: String=result.error
+	if message.is_empty() and open_init:
+		message="holiday_open_init needs the source icon positions" if hud_icon_positions.size()!=14 else hud_session.holiday_open_init(hud_icon_positions)
+	if message.is_empty():
+		message=hud_session.hud_icon_bar_update(1 if state.mode_stage==5 and state.game_mode==0x46 else 0,input.held,input.pressed)
+	if message.is_empty():
+		message=hud_session.hud_cursor_update(input.held,input.pressed)
+	if message.is_empty() and hud_session.menu_cursor()!=int(state.rule_state.get("menu_cursor",-1)):
+		message="HUD session menu cursor %d differs from the holiday cursor %s" % [hud_session.menu_cursor(),str(state.rule_state.get("menu_cursor"))]
+	if not message.is_empty():
+		if not before.is_empty():hud_session.restore(before)
+		result.error=message
 
 func _restore_holiday_hud(state: State, result: Session.FrameResult) -> void:
 	var data: Dictionary = state.rule_state
@@ -510,7 +567,8 @@ func render_active_subscreen(state: State, calendar_phone_presenter: RefCounted,
 func _load(state: State, result: Session.FrameResult) -> void:
 	var data: Dictionary=state.rule_state
 	var multi: bool=data.get("allow_multi_week",false)
-	var idx: int=data["day_event_index"] if multi else 9
+	# holiday_activity_load reads day_events[day_event_index] (holiday.c:944).
+	var idx: int=data["day_event_index"]
 	var event: Array=data["day_events"][idx]
 	var cmd: int=event[1]
 	if not multi and cmd!=0:
@@ -578,7 +636,7 @@ func _background_ready(state: State, result: Session.FrameResult) -> bool:
 func _command(base: Core, input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
 	var possible: State=base as State
 	var multi: bool=possible!=null and possible.rule_state.get("allow_multi_week",false)
-	var is_post_sunday: bool=possible!=null and ([possible.rule_state.get("year"),possible.rule_state.get("month"),possible.rule_state.get("day"),possible.rule_state.get("day_event_index")]==[95,4,9,10] or (multi and int(possible.rule_state.get("day_event_index",0))>0))
+	var is_post_sunday: bool=possible!=null and ([possible.rule_state.get("year"),possible.rule_state.get("month"),possible.rule_state.get("day"),possible.rule_state.get("day_event_index")]==[95,4,9,10] or (multi and int(possible.rule_state.get("day_event_index",0))>0) or (hud_session!=null and after_holiday_record(possible.rule_state)))
 	if not is_post_sunday:
 		_legacy_command.call(base,input,rng,result)
 		return
@@ -592,6 +650,11 @@ func _command(base: Core, input: InputFrame, rng: Rng, result: Session.FrameResu
 	if not data["resources"].get("available_holiday_commands",[]).has(0):
 		result.error="required original next-command room/menu/calendar resources are unavailable"
 		return
+	if state.mode_stage==1 and hud_session!=null:
+		# settings_command_screen_mode_stage_select is the same handler as the
+		# first week's: the school-day controller runs it with its HUD mirror.
+		_legacy_command.call(base,input,rng,result)
+		return
 	if state.mode_stage==1:
 		if (input.pressed & 0x20)!=0:
 			if multi:
@@ -604,6 +667,8 @@ func _command(base: Core, input: InputFrame, rng: Rng, result: Session.FrameResu
 	if state.mode_stage!=0:
 		result.error="unsupported next-command stage"
 		return
+	var hud_before: Dictionary=_hud_begin(result)
+	if not result.error.is_empty():return
 	state.mode_step_timer=Math.add32(state.mode_step_timer,1)
 	match state.mode_step:
 		0:
@@ -614,10 +679,26 @@ func _command(base: Core, input: InputFrame, rng: Rng, result: Session.FrameResu
 			state.next_step()
 		1:state.next_step()
 		2:
-			if not multi and (data["calendar"][0]["marker"][10]!=0 or data["calendar"][0]["marker"][15]!=0):
+			if hud_session!=null:
+				var branch: String=FreshHandoff.source_build_branch(data)
+				if branch!="ordinary":
+					result.error="settings_command_screen_build branch %s is not modeled" % branch
+					return
+			elif not multi and (data["calendar"][0]["marker"][10]!=0 or data["calendar"][0]["marker"][15]!=0):
 				result.error="next-command annual/exam notice branch is unimplemented"
 				return
+			var prior_icon_14: int=int(data["icon_enabled"][14]) if data["icon_enabled"].size()==15 else -1
 			Rules.icons(state,true,multi)
+			if hud_session!=null:
+				var expected: Dictionary=FreshHandoff.source_ordinary_build(data,hud_session.icon_mode,hud_session.icon_count,prior_icon_14)
+				if prior_icon_14<0 or data["icon_enabled"]!=expected["icon_enabled"] or data["menu_cursor"]!=expected["menu_cursor"]:
+					result.error="next-command build differs from settings_command_screen_build: icons %s cursor %s, source %s cursor %d" % [str(data["icon_enabled"]),str(data["menu_cursor"]),str(expected["icon_enabled"]),expected["menu_cursor"]]
+					hud_session.restore(hud_before)
+					return
+				result.error=hud_session.command_screen_build(hud_icon_positions,int(data["last_command"]),true)
+				if not result.error.is_empty():
+					hud_session.restore(hud_before)
+					return
 			result.error=Ordinary.snapshot_parameters(state)
 			if not result.error.is_empty():return
 			result.presentation.append({"kind":"holiday_screen_init","screen":"next_command","prompt":"settings_command_screen_build/default","icon_count":14})
@@ -632,6 +713,26 @@ func _command(base: Core, input: InputFrame, rng: Rng, result: Session.FrameResu
 		_:result.error="unsupported next-command setup step"
 	# Normal stage0 setup has no stage0xff reload brightness increment.
 	if result.error.is_empty():Command.select_cursor(state,input,result)
+	if hud_session!=null:
+		# settings_command_screen_mode_stage_setup tail (home_screens.c:122-123):
+		# hud_icon_bar_update(0) and hud_cursor_update(); the frame that
+		# commits stage 1 is the command-select boundary.
+		var message: String=result.error
+		if message.is_empty():message=hud_session.command_screen_frame(input.held,input.pressed)
+		if message.is_empty() and state.mode_stage==1:message=hud_session.enter_command_select(state.game_mode,state.mode_stage,state.mode_step)
+		if message.is_empty() and hud_session.menu_cursor()!=int(data.get("menu_cursor",-1)):
+			message="HUD session menu cursor %d differs from the command cursor %s" % [hud_session.menu_cursor(),str(data.get("menu_cursor"))]
+		if not message.is_empty():
+			if not hud_before.is_empty():hud_session.restore(hud_before)
+			result.error=message
+
+## The queue record is the 0xFF next-command record right after the Sunday
+## (0x10) or appointment (0x80) record (HolidaySceneAdapter.handles).
+static func after_holiday_record(data: Dictionary) -> bool:
+	var index: int=int(data.get("day_event_index",0))
+	var events: Variant=data.get("day_events")
+	if not events is Array or index<1 or index>=(events as Array).size():return false
+	return int(events[index][0])==0xff and int(events[index-1][0]) in [0x10,0x80]
 
 func service_completion(event: Session.ServiceEvent, base: Core, rng: Rng, result: Session.FrameResult) -> void:
 	if event.service in ["holiday.actor96","school_day.actor96"] and base.game_mode==0x46:

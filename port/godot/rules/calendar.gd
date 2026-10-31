@@ -156,6 +156,13 @@ static func advance_initial_april(state: State) -> String:
 	var data: Dictionary = state.rule_state
 	if data.get("allow_multi_week", false):
 		return advance_day(state)
+	# T-39002: a later April 1995 week start (Scheduler.april_week_boundary)
+	# advances Sunday to Monday inside the month: calendar_advance_day.
+	if data["year"] == 95 and data["month"] == 4 and data["weekday"] == 6 and data["day"] + 7 <= days_in_month(95, 4):
+		for appointment: int in data["appointment_words"]:
+			if appointment != 0:
+				return "appointment sorting/launch is outside captured empty-appointment boundary"
+		return advance_day(state)
 	if data["year"] != 95 or data["month"] != 4 or data["day"] != 4 or data["weekday"] != 1:
 		return "calendar branch outside captured April4→5 boundary"
 	for appointment: int in data["appointment_words"]:

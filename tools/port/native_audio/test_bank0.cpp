@@ -79,6 +79,34 @@ int main(int argc,char** argv){
     // PCM: spring audible after start.
     int peak=0;for(int i=0;i<60;++i){auto pcm=e.render();for(auto v:pcm)peak=std::max(peak,std::abs(int(v)));}
     check(peak>0,"spring BGM renders silence");
+    // ---- gameplay: the command select confirm queues audio_command(3) and (0x500)
+    // (golden route-golden-smoke-v1 enter-30-001 queue [3, 0x500]); both run in the next pump.
+    {
+        auto ram0=e.cpu.ram;size_t kons=e.bank0_kon_log.size();
+        std::string gerr=error_of([&]{e.submit(3);e.submit(0x500);e.render();});
+        check(gerr.empty(),"gameplay audio_command(3)/(0x500) failed: "+gerr);
+        check(e.xa_forgets==1 && e.se_key_ons==1 && e.se_slot_a==0,"confirm did not run xa_forget and one effect key on");
+        check(!e.system_flag,"audio_se_play left state_flags 0x100000 set");
+        check(!e.stopped && e.bgm_sequence==0 && e.current_gain==94,"confirm effect disturbed the spring sequence");
+        gerr=error_of([&]{render(e,2);});
+        check(gerr.empty(),"pumps after the confirm effect failed: "+gerr);
+        uint32_t effect_address=0;for(size_t i=kons;i<e.bank0_kon_log.size();++i){auto a=e.bank0_kon_log[i][2];if(a>=0x1010 && a<0x11010)effect_address=uint32_t(a);}
+        check(effect_address!=0,"confirm effect keyed no COM_MIX (slot0) sample");
+        std::ofstream ef(out+"/effect.txt");ef<<std::hex<<effect_address<<'\n';
+        std::ofstream r0(out+"/ram_before_confirm.bin",std::ios::binary);r0.write((const char*)ram0.data(),ram0.size());
+        std::ofstream r1(out+"/ram_after_confirm.bin",std::ios::binary);r1.write((const char*)e.cpu.ram.data(),e.cpu.ram.size());
+        // Key off form 0x1500 (audio_se_stop) releases without a key on.
+        uint64_t ons=e.se_key_ons;gerr=error_of([&]{e.submit(0x1500);e.render();});
+        check(gerr.empty() && e.se_key_offs==1 && e.se_key_ons==ons,"0x1500 effect key off failed: "+gerr);
+        check(!error_of([&]{e.submit(0x600);}).empty(),"unmodelled class-6 effect 0x600 accepted");
+        // School day effects 0x501/0x502 (school_day.c:460-463): program 0, notes 0x1C/0x20.
+        for(unsigned command:{0x501u,0x502u}){
+            size_t k=e.bank0_kon_log.size();uint64_t n=e.se_key_ons;
+            gerr=error_of([&]{e.submit(command);render(e,2);});
+            bool slot0=false;for(size_t i=k;i<e.bank0_kon_log.size();++i){auto a=e.bank0_kon_log[i][2];if(a>=0x1010 && a<0x11010)slot0=true;}
+            check(gerr.empty() && e.se_key_ons==n+1 && slot0,"school-day effect failed or keyed no slot0 sample: "+gerr);
+        }
+    }
     // ---- negatives (each would pass if its guard were removed)
     {Engine n;to_stage16(n,in);
      check(!error_of([&]{n.begin_bank0_load(in.finish,{{1,0,3}});}).empty(),"incomplete landing schedule accepted");}
@@ -98,6 +126,11 @@ int main(int argc,char** argv){
     {Engine n;to_stage16(n,in);n.submit(5);n.submit(0xd1);n.render();uint64_t before=n.bank0_log.size();n.submit(0xd1);n.render();
      bool ignored=false;for(size_t i=before;i<n.bank0_log.size();++i)if(n.bank0_log[i][1]==8)ignored=true;
      check(ignored && n.fade_rate==0x80,"second D1 during a fade was not ignored");}
+    // Effects before the slot0 transfer (0x21 assigned by audio_bank_start(0,1), no 0x11 yet).
+    {Engine n;to_stage16(n,in);n.bank0_start(1,1);n.render();n.render();n.submit(0x500);
+     check(error_of([&]{n.render();})=="effect command before the slot0 bank transfer","effect accepted before the slot0 transfer");}
+    {Engine n;to_stage16(n,in);n.submit(0x500);
+     check(error_of([&]{n.render();})=="effect command before audio_command_bank_assign(0x21)","effect accepted before the 0x21 assignment");}
     std::cerr<<checks<<" checks, "<<failures<<" failures\n";
     if(!failures)std::cout<<"PASS: native bank0 route\n";
     return failures?1:0;

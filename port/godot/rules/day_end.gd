@@ -10,10 +10,12 @@ static func branch_error(state: State) -> String:
 	var data: Dictionary = state.rule_state
 	if data.get("allow_multi_week", false):
 		return ""
-	if data["year"] != 95 or data["month"] != 4 or data["day"] < 5 or data["day"] > 9 or data["vacation"] != 0:
-		return "ordinary-week dispatcher supports only non-vacation April5–9,1995"
-	if data["weekday"] != data["day"] - 3:
-		return "ordinary-week weekday differs from the initial-April native calendar"
+	# T-39002: April 5..30, 1995; 95/4/4 is a Tuesday (weekday 1). finish
+	# refuses the month rollover of calendar_advance_day.
+	if data["year"] != 95 or data["month"] != 4 or data["day"] < 5 or data["day"] > 30 or data["vacation"] != 0:
+		return "ordinary-week dispatcher supports only non-vacation April5–30,1995"
+	if data["weekday"] != posmod(data["day"] - 3, 7):
+		return "ordinary-week weekday differs from the April 1995 native calendar"
 	for appointment: int in data["appointment_words"]:
 		if appointment != 0:
 			return "ordinary-week appointment sorting/telephone branch is unimplemented"
@@ -55,6 +57,8 @@ static func finish(state: State) -> String:
 				return "reachable telephone concern for girl %d is unimplemented" % index
 		if (data["girls"][11]["flags"] & 0xe00) != 0 and data["scene_flags"][77] == 0:
 			return "reachable girl11 telephone RNG branch is unimplemented"
+	if data["day"] + 1 > Calendar.days_in_month(data["year"], data["month"]):
+		return "day end at the month's last day needs calendar_advance_day's month rollover (unimplemented)"
 	data["daily_check_done"] = 0
 	data["day_event_index"] = Math.u8(current + 1)
 	data["weekday"] = (data["weekday"] + 1) % 7

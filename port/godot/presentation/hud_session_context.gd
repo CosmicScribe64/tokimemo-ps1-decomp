@@ -26,6 +26,7 @@ const EXE_HOVER_COUNTDOWN := 0 # D_800B5AA0, 0x800B5AA0
 const HOVER_RESTART := 0x20
 # include/game_enums.h, include/main/settings.h.
 const MENU_MODE_A := 1
+const INPUT_PAD := 1
 const CURSOR_SPEED_NORMAL := 3
 const ICON_MODE_TYPE_A := 0
 const ICON_COUNT_ORDINARY := 14
@@ -69,6 +70,9 @@ var cursor_speed: int:
 var icon_mode: int:
 	get: return _s["icon_mode"]
 	set(_value): _refuse_write("icon_mode")
+var input_device: int: # game_state.input_device
+	get: return _s["input_device"]
+	set(_value): _refuse_write("input_device")
 var icon_count: int:
 	get: return _s["icon_count"]
 	set(_value): _refuse_write("icon_count")
@@ -98,7 +102,7 @@ func _init() -> void:
 	_s = {"cursor_style": EXE_CURSOR_STYLE, "cursor_style_saved": 0,
 		"hover_last_index": EXE_HOVER_LAST_INDEX, "hover_countdown": EXE_HOVER_COUNTDOWN,
 		"cursor_x": 0, "cursor_y": 0, "cursor_guard": 0,
-		"menu_mode": 0, "cursor_speed": 0, "icon_mode": 0, "icon_count": 0,
+		"menu_mode": 0, "cursor_speed": 0, "input_device": 0, "icon_mode": 0, "icon_count": 0,
 		"menu_count": 0, "menu_current": 0, "menu_items": _zero_items(),
 		"icon_steps": _zeros(ICON_COUNT_ORDINARY), "icon_elapsed": _zeros(ICON_COUNT_ORDINARY),
 		"game_state_initialized": false, "icon_bar_initialized": false,
@@ -147,7 +151,9 @@ func game_state_init(clear_game_state: bool) -> String:
 		_s["menu_count"] = 0
 		_s["menu_current"] = 0
 		_s["menu_items"] = _zero_items()
-	# pad_defaults_set (game_init.c:287).
+	# pad_defaults_set (game_init.c:287). pad_device_detect (pad_input.c:50)
+	# keeps INPUT_PAD while a pad answers; the port's only device is the pad.
+	_s["input_device"] = INPUT_PAD
 	_s["menu_mode"] = MENU_MODE_A
 	_s["cursor_speed"] = CURSOR_SPEED_NORMAL
 	# boot_settings_defaults_set (game_init.c:470). No modeled call writes
@@ -238,6 +244,42 @@ func hud_icon_bar_init(positions: Array) -> String:
 		return _reject(message)
 	_s["command_built"] = false
 	_s["command_select"] = false
+	return _commit()
+
+
+## school_day_screen_init substep 0 (school_day.c:150-155): hud_icon_bar_init,
+## icon_disp_switch(1), schedule_command_icons_lock_to_record (rule
+## icon_enabled) and hud_cursor_actor_init(0). The menu is the icon bar's again
+## and the command-select boundary is left.
+func school_day_screen_init(positions: Array) -> String:
+	if not _begin():
+		return error
+	var message := _icon_bar_init(positions)
+	if not message.is_empty():
+		return _reject(message)
+	_cursor_actor_init()
+	_s["command_built"] = false
+	_s["command_select"] = false
+	_s["trace"].append("school_day_screen_init")
+	return _commit()
+
+
+## holiday_open_init (holiday.c:203-205, 254): icon_count = 0xE,
+## hud_icon_bar_init, hud_icon_layout_apply (TypeA keeps fourteen), then
+## hud_cursor_actor_init(0). The menu is the icon bar's again and the
+## command-select boundary is left. The notice branches that set
+## menu_cursor_0 (appointment, club practice, remedial, sick) are refused by
+## the holiday rules before this runs.
+func holiday_open_init(positions: Array) -> String:
+	if not _begin():
+		return error
+	var message := _icon_bar_init(positions)
+	if not message.is_empty():
+		return _reject(message)
+	_cursor_actor_init()
+	_s["command_built"] = false
+	_s["command_select"] = false
+	_s["trace"].append("holiday_open_init")
 	return _commit()
 
 

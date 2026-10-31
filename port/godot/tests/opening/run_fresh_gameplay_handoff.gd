@@ -588,8 +588,17 @@ func _static_rules() -> void:
 	data["player_flags"] = 0xB000
 	data["player_flags_upper"] = 1
 	check(Handoff.source_build_branch(data) == "remedial", "player_flags_upper bit 0 is the remedial branch")
+	# marker[day - 1 + 7] past month_calendar[0].marker reads
+	# month_calendar[1].day_kind (T-39002): day 31 reads next day_kind[5].
+	data["player_flags_upper"] = 0
 	data["day"] = 31
-	check(Handoff.source_build_branch(data).begins_with("unsupported"), "day 31 marker read past the array is unsupported")
+	data["calendar"][1]["day_kind"][5] = 0xC
+	data["player_flags"] = 0x2000
+	check(Handoff.source_build_branch(data) == "festival", "day 31 marker[37] is month_calendar[1].day_kind[5]")
+	data["calendar"][1]["day_kind"][5] = 0
+	var single: Dictionary = data.duplicate(true)
+	single["calendar"] = [data["calendar"][0]]
+	check(Handoff.source_build_branch(single).begins_with("unsupported"), "without month_calendar[1] the read past the marker array is unsupported")
 	var built: Dictionary = Handoff.source_ordinary_build({"player_flags": 0x2000, "year": 0x5F, "month": 4, "day": 5, "last_command": 0x13}, 2, 14, 1)
 	check(built["icon_enabled"] == [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0] and built["menu_cursor"] == 3, "icon mode 2 clears 14, a club keeps 4, other days keep 13, cursor = last_command & 15")
 	# hud_screen_frame_draw's D_800B5BC8 step on the pre-increment frame_count.

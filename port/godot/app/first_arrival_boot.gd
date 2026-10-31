@@ -31,6 +31,11 @@ const OpeningHandoff = preload("res://flow/opening_command_handoff.gd")
 const DisplayHost = preload("res://presentation/native_display_host.gd")
 const ProjectionWings = preload("res://presentation/projection_checker_wing_provider.gd")
 const PrologueText = preload("res://services/prologue_text_store.gd")
+const HudSeason = preload("res://services/native_hud_season.gd")
+const SchoolDayLoads = preload("res://services/school_day_load_service.gd")
+const HolidayController = preload("res://scenes/holiday_controller.gd")
+const HolidayScene = preload("res://services/holiday_scene_adapter.gd")
+const SchoolMedia = preload("res://services/school_day_media_store.gd")
 const INITIALIZATION_PROFILE := "desktop-fresh-new-game-cold-prefix.v1"
 const HUD_PREFIX_SOURCE_SHA := "440bdf2172fb3dae871aa30b96072f81110825ac8d0f875ebce64d288b48f889"
 var installed_launch_profile: Dictionary = {}
@@ -79,6 +84,14 @@ var reload_frame_provenance: Dictionary = {}
 var _reload_unavailable := ""
 var _icon_positions: Array = []
 var _school_day: SchoolDay
+## CD reads of the school day (school_day_screen_init / school_day_sd_load).
+var _school_day_loads := SchoolDayLoads.new()
+## T-39002: the Sunday holiday (mode 0x46) and the next week's command setup,
+## attached after command select when the installed pack carries the holiday
+## media; otherwise the reason, reported when the Sunday is dispatched.
+var _holiday: HolidayController
+var _holiday_scene: HolidayScene
+var _holiday_unavailable := ""
 
 func _ready() -> void:
 	get_window().content_scale_size = Vector2i.ZERO
@@ -240,6 +253,8 @@ func _physics_process(delta: float) -> void:
 	var tick: int = consumer.opening.session.clock.logic_iterations
 	var events := media.pending_events(tick)
 	events.append_array(audio_bridge.pending_events(tick))
+	if handoff != null and handoff.phase == "attached":
+		events.append_array(_school_day_loads.pending_events(tick,int(consumer.opening.state.frame_count)))
 	var preparation := bgm.prepare_pending(consumer.opening.state,events) if _bgm_prepare_error.is_empty() else ""
 	if not preparation.is_empty():
 		bgm.abort_frame()
@@ -250,6 +265,7 @@ func _physics_process(delta: float) -> void:
 		bgm.abort_frame()
 		_fail("bgm_backend" if result.error == "original opening BGM backend is unavailable" else "source_transaction",result.error)
 	elif not consumer.opening.publish_error.is_empty(): _fail("publication",consumer.opening.publish_error)
+	elif handoff != null and handoff.phase == "attached" and not _school_day_reads(result,events).is_empty(): pass
 	elif failure.is_empty():
 		var pumping := bgm.pump(consumer.opening.state)
 		if not pumping.is_empty(): _fail("bgm_pump",pumping)
@@ -366,6 +382,16 @@ func _exit_draw(state: State, result: Session.FrameResult) -> void:
 	result.presentation.append({"kind":"first_arrival_entry_exit_draw","brightness":state.opening.screen_brightness})
 
 func _logical_draw(state: State, _rng, result: Session.FrameResult) -> void:
+	# Gameplay frames after the handoff (scheduler 0x30, day screen 0x31 and the
+	# 0x40 entry): the handler's hud_screen_frame_draw(1) fade step, then
+	# actor_draw_all, whose only flagged actors are still the icon bar's.
+	if _gameplay_frame(state):
+		result.error = HudSeason.draw_step(state,result)
+		if result.error.is_empty(): result.error = handoff.hud.advance_icon_animation(reload_renderer.icon_sequences(),state.rule_state.icon_enabled)
+		# School day: the SD actors 96/97 after school_day_sd_actors_init;
+		# holiday: actor 96 after holiday_activity_sd_setup.
+		if result.error.is_empty() and state.game_mode in [0x40,0x46]: result.error = _school_day_loads.draw(state,result,consumer.opening.session.clock.logic_iterations)
+		return
 	# Reload frames: actor_draw_all advances the sequence of every flagged
 	# icon actor 80 + i (hud_icon_bar_update(0) flags the enabled ones).
 	if ReloadRenderer.reload_frame(state):
@@ -419,12 +445,33 @@ func _publish_frame(result: Session.FrameResult, tick: int) -> String:
 		if not str(drawn.get("error","")).is_empty(): return str(drawn.error)
 		image = drawn.image
 		reload_frame_provenance = drawn.provenance
+	elif _holiday_frame(state):
+		var drawn := _render_holiday(state)
+		if not str(drawn.get("error","")).is_empty(): return str(drawn.error)
+		image = drawn.image
+		reload_frame_provenance = drawn.provenance
+	elif _gameplay_frame(state) and not _command_screen_shown(state):
+		# The day's background (or, during school_day_screen_init, the room slot
+		# not yet replaced) with the SD actors of the committed draw.
+		var shown: int = int(state.rule_state.background_cache[int(state.rule_state.background_show)])
+		var background := _command_background(shown)
+		if background.is_empty() and not shown in ReloadRenderer.RoomStore.ROOM_TABLE: return "no installed image for the shown background LBA %d" % shown
+		var actors: Array[Dictionary] = _school_day_loads.actor_commands if state.game_mode == 0x40 else ([] as Array[Dictionary])
+		var day: Dictionary = reload_renderer.render_school_day(state,handoff.hud,shown if not background.is_empty() else -1,background,actors)
+		if not str(day.get("error","")).is_empty(): return str(day.error)
+		image = day.image
+		reload_frame_provenance = day.provenance
+	elif _gameplay_frame(state):
+		var shown: Dictionary = reload_renderer.render_schedule(state,handoff.hud)
+		if not str(shown.get("error","")).is_empty(): return str(shown.error)
+		image = shown.image
+		reload_frame_provenance = shown.provenance
 	elif state.game_mode in [0x14,2] or loader_enter:
 		image = _entry_image.duplicate()
 		var brightness: int = state.opening.screen_brightness
 		for y in range(image.get_height()):
 			for x in range(image.get_width()):
-				var color := image.get_pixel(x,y)
+				var color: Color = image.get_pixel(x,y)
 				image.set_pixel(x,y,Color8((color.r8*brightness)>>7,(color.g8*brightness)>>7,(color.b8*brightness)>>7,color.a8))
 	elif state.opening.has("arrival_media"):
 		var modern_settings := get_node_or_null("/root/ModernSettings")
@@ -545,7 +592,9 @@ func _prepare_reload() -> String:
 	_school_day = SchoolDay.new(rules.tables)
 	if not _school_day.error.is_empty(): return "school-day controller: " + _school_day.error
 	# Ordinary weekly commands offered after command select (lane B capability).
-	if resources.school_day_commands != null: resources.school_day_commands.apply(_school_day)
+	if resources.school_day_commands != null:
+		resources.school_day_commands.apply(_school_day)
+		if resources.school_day_commands.get("exact_media") != null: _school_day_loads.prepare(resources.school_day_commands)
 	# process_image, then the main boot: game_state_init(1) (game_init.c:142)
 	# and boot_hud_init's hud_icon_bar_init (boot_assets.c:136).
 	var session := HudSession.new()
@@ -553,7 +602,38 @@ func _prepare_reload() -> String:
 	if error.is_empty(): error = session.hud_icon_bar_init(_icon_positions)
 	if not error.is_empty(): return "boot HUD session: " + error
 	hud_session = session
+	_holiday_unavailable = _prepare_holiday(rules.tables)
 	return ""
+
+## Opens the holiday media (v5 school_day_media: holiday room, activity
+## background and SD set, route tables) with the scene-owned holiday profile
+## and the command room, and the holiday controller. Returns the reason the
+## holiday is unavailable, or "".
+func _prepare_holiday(tables: Dictionary) -> String:
+	if resources.holiday_sources.is_empty(): return "installed pack lacks the school_day_media or holiday_scene_source role"
+	var media := SchoolMedia.new()
+	if not media.open_pack(resources.holiday_sources.school_day_media): return "school_day_media: " + media.error_message()
+	if media.get_route_tables().is_empty(): return "installed school_day_media has no holiday components (schema v5)"
+	var scene := HolidayScene.new()
+	var error := scene.open_scene(media, resources.holiday_sources.holiday_scene_source, reload_renderer.command_room_image())
+	if not error.is_empty(): return "holiday scene: " + error
+	var controller := HolidayController.new(tables, scene.tables)
+	if not controller.error.is_empty(): return "holiday controller: " + controller.error
+	error = _school_day_loads.prepare_holiday(scene, int(scene.tables.weekday_room_background_lbas[0]))
+	if not error.is_empty(): return error
+	_holiday = controller
+	_holiday_scene = scene
+	return ""
+
+## The holiday extension of a Sunday entry: the scene-owned profile with the
+## live session fields (HolidayScene.live_session; tile_layer_enabled and
+## boot_hold from the reload's settings_command_screen_setup_reset record).
+func _holiday_extension(state: State) -> Dictionary:
+	var live: Dictionary = HolidayScene.live_session(state,hud_session,ReloadServices.record(state).get("setup"))
+	if not str(live.error).is_empty(): return live
+	var holiday: Dictionary = _holiday_scene.compose_session(live.session)
+	if holiday.is_empty(): return {"error":"live session fields are outside the holiday profile bounds: %s" % [live.session]}
+	return {"error":"","holiday":holiday}
 
 ## Opens and binds the handoff on the committed stage 21 switch frame.
 func _open_reload() -> void:
@@ -576,6 +656,126 @@ func _connect_gameplay() -> void:
 	var connected := OpeningHandoff.connect_gameplay(consumer.opening,handoff,hud_session)
 	if not str(connected.get("error","")).is_empty():
 		_fail("gameplay_handoff",str(connected.error))
+		return
+	if _holiday == null: return
+	# The holiday controller wraps the school-day controller's 0x31 and 0x34
+	# handlers and binds 0x46 on the same session; available_holiday_commands
+	# advertises the installed holiday command 0 media.
+	_holiday.hud_session = hud_session
+	_holiday.hud_icon_positions = _icon_positions.duplicate(true)
+	_holiday.extension_supplier = _holiday_extension
+	var state: State = consumer.opening.state
+	state.rule_state["resources"]["available_holiday_commands"] = [0]
+	var error := _holiday.attach(consumer.opening.session,state)
+	if not error.is_empty(): _fail("gameplay_handoff","holiday controller: " + error)
+
+## After a committed gameplay frame: drop the delivered read completions and
+## queue the reads it requested. Returns the failure it reported, if any.
+func _school_day_reads(result: Session.FrameResult, events: Array[Session.ServiceEvent]) -> String:
+	_school_day_loads.delivered(events)
+	var error := _school_day_loads.committed(result,consumer.opening.state)
+	if not error.is_empty(): _fail("school_day_reads",error)
+	return error
+
+## A committed gameplay frame of the school-day controller that this app
+## presents: the attached handoff, in the scheduler (0x30), the day screen
+## (0x31) or on the 0x40 entry frame (0x40/0/0/0, the frame the day screen
+## dispatched it, before school_day_screen_init runs).
+func _gameplay_frame(state: State) -> bool:
+	if handoff == null or handoff.phase != "attached": return false
+	return state.game_mode in [0x30,0x31] or (state.game_mode == 0x40 and state.mode_stage in [0,1,2]) or (state.game_mode == 0x32 and state.mode_stage in [0,1,0xFF]) or _holiday_frame(state)
+
+## Holiday frames: mode 0x46 (open, menu, activity) and the 0x34 setup
+## stage after the Sunday record, under the attached holiday controller.
+func _holiday_frame(state: State) -> bool:
+	if _holiday == null or handoff == null or handoff.phase != "attached": return false
+	return (state.game_mode == 0x46 and state.mode_stage in [0,1,5]) \
+		or (state.game_mode == 0x34 and state.mode_stage == 0 and HolidayController.after_holiday_record(state.rule_state))
+
+## The committed holiday frame: the shown background at its dec_bg brightness
+## (holiday open/activity: set_dec_bri(0x80) once read; the command setup:
+## set_dec_bri(0) from setup_reset until the room is shown), the holiday SD
+## actor, and the message window: holiday_open_init's sndisp (holiday.c:250)
+## while the holiday menu is up, settings_command_screen_build's narration
+## from the setup's build step on; text_system_reset clears it otherwise.
+func _render_holiday(state: State) -> Dictionary:
+	var data: Dictionary = state.rule_state
+	var shown: int = int(data.background_cache[int(data.background_show)])
+	var background: Array[Dictionary] = _command_background(shown)
+	var room: bool = shown == int(_holiday_scene.tables.weekday_room_background_lbas[0])
+	if room:
+		var room_image := reload_renderer.command_room_image()
+		if room_image != null: background.assign([{"id":"native-command-room","image":room_image,"position":Vector2i(0,72)}])
+	if background.is_empty(): return {"error":"no installed image for the shown holiday background LBA %d" % shown}
+	var brightness: int = int(data.holiday.get("background_brightness",-1))
+	if brightness < 0 or brightness > 255: return {"error":"holiday background brightness is not a native byte"}
+	var scene: Array[Dictionary] = []
+	for command: Dictionary in background:
+		var lit: Dictionary = command.duplicate()
+		if brightness != 0x80: lit["image"] = _lit(command.image,brightness)
+		scene.append(lit)
+	if state.game_mode == 0x46: scene.append_array(_school_day_loads.actor_commands)
+	var narration := ""
+	var strings: Dictionary = _holiday_text()
+	# The 0x46 entry frame (46/0/0/0) is the day screen's draw: no holiday text yet.
+	if state.game_mode == 0x46 and (state.mode_stage == 1 or (state.mode_stage == 0 and state.mode_step == 1)):
+		if strings.is_empty(): return {"error":"installed holiday_text lacks holiday_default"}
+		narration = reload_renderer.presenter.narration_prefix_hex() + str(strings.holiday_default)
+	elif state.game_mode == 0x34 and state.mode_step >= 3:
+		narration = reload_renderer.presenter.ordinary_narration_hex()
+	return reload_renderer.render_holiday(state,handoff.hud,scene,narration)
+
+## dec_bg_draw's brightness: each channel * brightness >> 7, as the entry
+## frame applies screen brightness.
+static func _lit(source: Image, brightness: int) -> Image:
+	var image: Image = source.duplicate()
+	image.convert(Image.FORMAT_RGBA8)
+	for y in range(image.get_height()):
+		for x in range(image.get_width()):
+			var color: Color = image.get_pixel(x,y)
+			image.set_pixel(x,y,Color8(mini(255,(color.r8*brightness)>>7),mini(255,(color.g8*brightness)>>7),mini(255,(color.b8*brightness)>>7),color.a8))
+	return image
+
+var _holiday_strings: Dictionary = {}
+
+## holiday_text role strings (raw SJIS hex by name), read once.
+func _holiday_text() -> Dictionary:
+	if not _holiday_strings.is_empty(): return _holiday_strings
+	var path: String = str(resources.launch_profile.get("paths",{}).get("holiday_text",""))
+	if path.is_empty() or not FileAccess.file_exists(path) or FileAccess.get_sha256(path) != preload("res://presentation/holiday_hud_adapter.gd").TEXT_SHA: return {}
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	if not parsed is Dictionary or parsed.get("schema") != "tokimemo.holiday-hud-text.v1" or not parsed.get("strings") is Dictionary: return {}
+	for key: String in parsed.strings:
+		var entry: Variant = parsed.strings[key]
+		if entry is Dictionary and entry.get("raw_hex") is String: _holiday_strings[key] = entry.raw_hex
+	return _holiday_strings
+
+## The command screen composition (render_schedule) is still on screen: the
+## scheduler and day screen over the room, and the 0x40 entry frame (drawn
+## by the day screen handler that dispatched it).
+func _command_screen_shown(state: State) -> bool:
+	var data: Dictionary = state.rule_state
+	var room: bool = int(data.background_cache[int(data.background_show)]) in ReloadRenderer.RoomStore.ROOM_TABLE
+	if state.game_mode in [0x30,0x31]: return room
+	return room and state.game_mode == 0x40 and state.mode_stage == 0 and state.mode_step == 0 and state.substep == 0
+
+## Installed image commands of a shown command background (the ordinary and
+## club routes of services/ordinary_command_media_adapter.gd), or none.
+func _command_background(lba: int) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var adapter: Variant = resources.school_day_commands.get("adapter") if resources.school_day_commands != null else null
+	if adapter == null: return out
+	for command: int in adapter.MEDIA_ROUTES:
+		if int(adapter.MEDIA_ROUTES[command].background_lba) == lba and adapter.has_command(command):
+			out.assign(adapter.get_background_commands(command))
+			return out
+	for club: int in adapter.CLUB_ROUTES:
+		if int(adapter.CLUB_ROUTES[club].background_lba) == lba and adapter.has_command(4,club):
+			out.assign(adapter.get_background_commands(4,club))
+			return out
+	# The holiday room and activity backgrounds of the installed holiday media.
+	out.assign(_school_day_loads.holiday_background(lba))
+	return out
 
 func _unsupported(a = null,b = null,c = null,d = null,e = null,f = null) -> int:
 	for value: Variant in [a,b,c,d,e,f]:

@@ -525,6 +525,46 @@ func activity_command(state: Dictionary, scene_commands: Array[Dictionary], para
 	return {} if image == null else {"id": "native-activity-hud:v1:" + _sha(image.get_data()),
 		"image": image, "position": Vector2i.ZERO, "blend_mode": 0}
 
+## T-39002: frames of the Sunday holiday (0x46: holiday_mode_handler draws
+## dec_bg_draw(0), hizuke_show, parameter_show and the icon bar,
+## holiday.c:123-131) and of the next week's command setup (0x34 stage 0,
+## settings_command_screen_mode_stage_setup, home_screens.c:103-124) over the
+## shown background. narration_hex is the message window's sndisp text after
+## the family name (empty while text_system_reset has cleared it).
+func scene_command(state: Dictionary, scene_commands: Array[Dictionary], narration_hex: String) -> Dictionary:
+	var view := _view(state)
+	if view.is_empty():
+		return {}
+	var mode: int = state["context"]["game_mode"]
+	if not (mode == 0x46 or (mode == 0x34 and state["context"]["mode_stage"] == 0)):
+		error = "holiday scene HUD requires mode 0x46 or the 0x34 setup stage"
+		return {}
+	if not narration_hex.is_empty() and (narration_hex.length() % 4 != 0 or not _hex(narration_hex) or not _glyphs_supported(narration_hex.hex_decode())):
+		error = "holiday narration needs supported native code units"
+		return {}
+	view["parameter_colors"] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+	var runs: Array[Dictionary] = []
+	if not narration_hex.is_empty():
+		var name: String = state["context"]["family_name_hex"]
+		var name_size: int = name.length() / 2
+		var name_x: int = -114 if name_size == 2 else (-121 if name_size == 4 else -128)
+		runs = [{"hex": name, "position": [name_x, 50], "attribute": 0}, {"hex": narration_hex, "position": [NARRATION_X, 50], "attribute": 0}]
+	_compositor.set_text_runs(runs)
+	var image: Image = _compositor.render(view, null, scene_commands, false)
+	error = _compositor.error
+	return {} if image == null else {"id": "native-holiday-hud:v1:" + _sha(image.get_data()),
+		"image": image, "position": Vector2i.ZERO, "blend_mode": 0}
+
+## The ordinary narration run of settings_command_screen_build (prefix and
+## text), as render() draws it.
+func ordinary_narration_hex() -> String:
+	var strings: Dictionary = _manifest["content"]["strings"]
+	return str(strings["narration_prefix"]["raw_hex"]) + str(strings["ordinary_command"]["raw_hex"])
+
+## The narration prefix the speaker style 0x1F run starts with.
+func narration_prefix_hex() -> String:
+	return str(_manifest["content"]["strings"]["narration_prefix"]["raw_hex"])
+
 func calendar_source_commands(state: Dictionary) -> Array[Dictionary]:
 	var view := _view(state)
 	if view.is_empty():
@@ -571,8 +611,10 @@ func _view(state: Dictionary) -> Dictionary:
 	# T-39002: stage 0xFF step 3 is the reload after settings_command_screen_build
 	# (room read pending), drawn with the same HUD records as command select.
 	var command_screen: bool = (context["game_mode"] == 0x34 and context["mode_stage"] == 1 and context["mode_step"] == 0) or context["game_mode"] == 0x30 \
-		or (session_context and context["game_mode"] == 0x34 and context["mode_stage"] == 0xFF and context["mode_step"] == 3)
-	var activity: bool = (context["game_mode"] == 0x40 and context["mode_stage"] in [0, 1, 2] and context["mode_step"] in [0, 1, 2]) or (context["game_mode"] == 0x31 and context["mode_stage"] == 0 and context["mode_step"] == 0) or (context["game_mode"] == 0x32 and context["mode_stage"] in [0, 1, 0xff] and context["mode_step"] == 0) or (context["game_mode"] == 0x38 and context["mode_stage"] in [0, 1] and context["mode_step"] == 0)
+		or (session_context and context["game_mode"] == 0x34 and context["mode_stage"] == 0xFF and context["mode_step"] == 3) \
+		or (session_context and context["game_mode"] == 0x34 and context["mode_stage"] == 0 and context["mode_step"] in [0, 1, 2, 3])
+	var activity: bool = (context["game_mode"] == 0x40 and context["mode_stage"] in [0, 1, 2] and context["mode_step"] in [0, 1, 2]) or (context["game_mode"] == 0x31 and context["mode_stage"] == 0 and context["mode_step"] == 0) or (context["game_mode"] == 0x32 and context["mode_stage"] in [0, 1, 0xff] and context["mode_step"] == 0) or (context["game_mode"] == 0x38 and context["mode_stage"] in [0, 1] and context["mode_step"] == 0) \
+		or (session_context and context["game_mode"] == 0x46 and context["mode_stage"] in [0, 1, 5] and context["mode_step"] in [0, 1, 2])
 	if not (command_screen or activity) or context["icon_mode"] != 0 or context["icon_count"] != 14 or not _hover_ticks_allowed(context["hover_ticks"], session_context) or not (style == 0 or (style >= 0x9b and style < 0xae)):
 		error = "HUD supports bounded TypeA command/school-day modes and settled hover (any phase only from a live HUD session)"
 		return {}

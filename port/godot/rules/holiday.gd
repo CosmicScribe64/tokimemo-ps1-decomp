@@ -15,8 +15,12 @@ static func validate(state: State, allow_subscreens: bool = false) -> String:
 	if not failure.is_empty():return failure
 	var data: Dictionary = state.rule_state
 	var multi: bool = data.get("allow_multi_week", false)
-	if not multi and [data["year"],data["month"],data["day"],data["weekday"],data["vacation"]] != [95,4,9,6,0]:
-		return "holiday controller supports the captured April9,1995 normal Sunday only"
+	# T-39002: the April 1995 holidays the ordinary-week dispatcher reaches
+	# (April 9..30, rules/day_end.gd), non-vacation: a day whose calendar kind
+	# is a Sunday (1) or a national holiday (2), as day_event_queue_build_week
+	# queues the 0x10 record (4/29 Greenery Day is a Saturday).
+	if not multi and ([data["year"],data["month"],data["vacation"]] != [95,4,0] or data["day"] < 9 or data["day"] > 30 or int(data["calendar"][0]["day_kind"][data["day"]]) not in [1,2]):
+		return "holiday controller supports the April 1995 normal holidays only"
 	if not multi and (((data["player_flags"] >> 8) & 15) != 0 or (data["player_flags_upper"] & 1) != 0 or data["player_flags"] >> 12 != 11):
 		return "holiday health/remedial/club branch is unimplemented"
 	var capabilities: Variant=data["resources"].get("available_holiday_commands",[])
@@ -64,8 +68,19 @@ static func validate(state: State, allow_subscreens: bool = false) -> String:
 		if not value is int or value < -2147483648 or value > 2147483647:return "holiday parameter exceeds native signed32"
 	for value: Variant in data["progress_state"]:
 		if not value is int or value < 0 or value > 255:return "holiday progress snapshot needs native bytes"
-	if not multi and data["day_event_index"] not in [9,10]:return "holiday queue index is outside captured Sunday/next-command boundary"
+	if not multi and not _sunday_boundary(data):return "holiday queue index is outside captured Sunday/next-command boundary"
 	return ""
+
+## The queue record is the Sunday (0x10) or appointment (0x80) record, or the
+## 0xFF next-command record right after it. The captured route has them at
+## 9/10, the installed New Game route (one 0xFA encounter record earlier in
+## the week, golden route-golden-smoke-v1 enter-46-001) at 10/11.
+static func _sunday_boundary(data: Dictionary) -> bool:
+	var index: int = int(data["day_event_index"])
+	var events: Array = data["day_events"]
+	if index < 0 or index >= events.size():return false
+	if int(events[index][0]) in [0x10, 0x80]:return true
+	return index > 0 and int(events[index][0]) == 0xff and int(events[index-1][0]) in [0x10, 0x80]
 
 static func icons(state: State, weekday: bool, allow_subscreens: bool = false) -> void:
 	var data: Dictionary = state.rule_state

@@ -54,6 +54,22 @@ static func snapshot_parameters(state: State) -> String:
 	data[PROFILE_HASH_FIELD] = _profile_signature(data)
 	return ""
 
+## day_event_queue_build_week (scheduler.c) mutates two profile records
+## outside parameter_show_init: the weekly command counter
+## progress_state[0x15 + command] and the recovery countdown in
+## player_flags_upper bits 5-7. Like increment_holiday_command_counter, the
+## builder checks the anchored profile before (profile_guard) and re-anchors it
+## after (reanchor_profile); the anchor exists once the command reload's
+## parameter_show_init has run (flow/new_game_command_reload.gd).
+static func profile_guard(data: Dictionary) -> String:
+	if not data.get("allow_multi_week", false) and data.has(PROFILE_HASH_FIELD) and data[PROFILE_HASH_FIELD] != _profile_signature(data):
+		return "weekly queue build refused an edited native profile"
+	return ""
+
+static func reanchor_profile(data: Dictionary) -> void:
+	if data.has(PROFILE_HASH_FIELD):
+		data[PROFILE_HASH_FIELD] = _profile_signature(data)
+
 static func _profile_signature(data: Dictionary) -> String:
 	return JSON.stringify([data["progress_state"].slice(0, PARAMETER_SNAPSHOT_START),
 		data["progress_state"].slice(PARAMETER_SNAPSHOT_END, PROGRESS_STATE_BYTES),

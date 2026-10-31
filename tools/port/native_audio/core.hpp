@@ -309,6 +309,12 @@ struct Engine {
     void flush() {
         for(int i=0;i<24;++i)cpu.write(0x1f801c0c+i*16,voices[i].live?voices[i].env.level:0,2);
         cpu.writes.clear();cpu.call(0x8008e1d0);
+        apply_key_writes();
+    }
+    // Key-on/key-off register writes captured during SDK calls (SpuVmFlush, or an
+    // SE key on/off called directly by audio_se_play/stop), then the per-voice
+    // register refresh.
+    void apply_key_writes() {
         for(auto command:cpu.writes)for(int ch=0;ch<24;++ch)if(command.second&(1u<<ch)){
             auto& v=voices[ch];if(!command.first){if(v.live)v.env.release();continue;}
             uint32_t addr=cpu.read(0x1f801c06+ch*16,2)*8;
@@ -428,10 +434,18 @@ struct Engine {
     std::vector<Landing> bank0_schedule;size_t bank0_next_row=0;
     // [pump, kind, a, b]: 1 commands(count,last) 2 fade_start(rate,step) 3 fade_finish(gain,master)
     // 4 bgm_start(sequence,gain) 5 voices_kill(released) 6 dispose(slot) 7 transfer(slot,bytes)
-    // 8 fade_ignored(command) 9 bank0_load 10 landing_complete(region)
+    // 8 fade_ignored(command) 9 bank0_load 10 landing_complete(region) 11 xa_forget
+    // 12 effect(command, key_on)
     std::vector<std::array<int64_t,4>> bank0_log,bank0_pump_log,bank0_kon_log;
     void note(int kind,int64_t a=0,int64_t b=0){if(bank0_log.size()<4096)bank0_log.push_back({int64_t(pumps),int64_t(kind),a,b});}
-    static bool bank0_command(unsigned command){return command==5 || command==0xd1 || command==0x11 || command==0x21 || command==0x22 || command==0x2f || (command>=0x200 && command<=0x20f);}
+    // Gameplay after the stage21 handoff (command select confirm, flow/command_screen):
+    // audio_command(3) (audio_command_system -> audio_xa_forget) and the class-5 effect
+    // audio_command(0x5PN) (audio_command_se_a: VAB se_slot_a, program P, note N*4+0x18;
+    // 0x15PN keys it off). Source: sound_driver.c audio_command_pump/audio_command_system/
+    // audio_xa_forget/audio_xa_control(0x74)/audio_command_se_a/audio_se_play/audio_se_stop.
+    static bool bank0_command(unsigned command){return command==5 || command==0xd1 || command==0x11 || command==0x21 || command==0x22 || command==0x2f || (command>=0x200 && command<=0x20f) || command==3 || (command>=0x500 && command<=0x5ff) || (command>=0x1500 && command<=0x15ff);}
+    int se_slot_a=-1;                // D_80125D50; 0x21 -> 0 (audio_command_bank_assign case 33)
+    uint64_t se_key_ons=0,se_key_offs=0,xa_forgets=0;
     void submit(unsigned command) {
         if(!initialized)throw std::runtime_error("audio command requires an initialized engine");
         if(!bank0_command(command))throw std::runtime_error("audio command outside the modelled bank0 set");
@@ -554,7 +568,9 @@ struct Engine {
         if(command==5){system_flag=true;if(fade_active)fade_sequence_volume=false;return;}
         if(command==0xd1){fade_command(0x80,1);return;}
         if(command==0x22){bgm_slot=1;return;}
-        if(command==0x21)return;  // SE slots 0/3: no native SE playback is modelled.
+        if(command==0x21){se_slot_a=0;return;}  // audio_command_bank_assign case 33 (se_slot_b 3 is not used)
+        if(command==3){xa_forget();return;}
+        if((command&0xf00)==0x500){se_a(command);return;}
         if(command==0x2f){index_pack0();return;}
         if(command==0x11){
             if(!bank0_complete())throw std::runtime_error("0x11 transfer before the five bank0 reads landed");
@@ -566,6 +582,33 @@ struct Engine {
         if(fade_active){bgm_next=sequence;fade_finish_source();}
         else if(!stopped){bgm_next=sequence;fade_command(0x100,10);}
         else{bgm_sequence=sequence;bgm_next=-1;request_start();}
+    }
+    // audio_xa_forget -> audio_xa_control(0x74): SsSetSerialAttr(0,0,0) (CD input mix off)
+    // and cd_audio_command(9). The XA clip/flag fields and the CD command belong to the
+    // GDScript XA/CD owner (opening_audio_bridge accepts this only with no XA playing and
+    // an idle CD), so the native side runs only the SPU attribute call.
+    void xa_forget() {
+        cpu.writes.clear();cpu.call(0x8008bee0,{0,0,0});
+        if(!cpu.writes.empty())throw std::runtime_error("audio_xa_forget wrote a key on/off");
+        ++xa_forgets;note(11);
+    }
+    // audio_command_se_a + audio_se_play / audio_se_stop (sound_driver.c:725-782).
+    // audio_se_play: SpuVmSeKeyOff(key,note) (its a0/a1 are the caller's), state_flags
+    // &= ~0x100000, SsSetMVol(0x7F,0x7F), SpuVmSeKeyOn(key,note,se_volume,se_volume).
+    void se_a(unsigned command) {
+        if(se_slot_a!=0)throw std::runtime_error("effect command before audio_command_bank_assign(0x21)");
+        if(!bank0_loaded || (transfer_requests&1u))throw std::runtime_error("effect command before the slot0 bank transfer");
+        uint32_t key=((uint32_t(se_slot_a)<<8)&0xff00)|((command&0xff)>>4);
+        uint32_t packed=(((command&0xf)*4+0x18)<<8)&0xff00;
+        uint32_t se_volume=uint32_t(0x5a-attenuation);
+        cpu.writes.clear();
+        cpu.call(0x80090d20,{key,packed});
+        if(command&0x1000){apply_key_writes();cpu.writes.clear();++se_key_offs;note(12,command,0);return;}
+        system_flag=false;if(fade_active)fade_sequence_volume=true;
+        cpu.call(0x8008b750,{0x7f,0x7f});
+        cpu.call(0x80090d60,{key,packed,se_volume,se_volume});
+        apply_key_writes();cpu.writes.clear();
+        ++se_key_ons;note(12,command,1);
     }
     void transfer_slot(unsigned slot) {
         if(slot>1)throw std::runtime_error("only bank0 slots 0/1 are modelled");

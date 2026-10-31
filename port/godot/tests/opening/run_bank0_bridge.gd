@@ -208,12 +208,32 @@ func _route() -> void:
 	bridge.start(state,0,0,spring)
 	check(spring.error.is_empty() and spring.audio == [{"kind":"native_bank0_start","sequence":0,"tick_skip":Bank0.SPRING_TICK_SKIP}] and state.opening.prologue_bgm_state.gain == 94, "spring start differs: %s %s" % [spring.error,spring.audio])
 	check(_commit(bridge,state,session,spring,7443).is_empty() and engine.calls.back() == ["bank0_start",0,0,7243], "spring native start differs: " + str(engine.calls.back()))
+	_gameplay_effects(bridge,state,session,engine)
 	# The opening's later pumps keep one block per logic frame after the reset record.
 	state.opening.audio_bank = {"epoch":4,"role":"","ready":false}
 	session.clock.logic_iterations = 7450
 	check(bridge.pump(state).is_empty() and engine.renders == 7250, "bank0 pump after the stage21 reset failed")
 	state.opening.audio_bank = {"epoch":9,"role":"","ready":false}
 	check(bridge.pump(state) == "active original BGM actual bank changed", "foreign bank record accepted by the bank0 pump")
+
+## Gameplay audio_command calls once SPRING plays (bank0 phase "spring"): the
+## school day's class-5 effects 0x501/0x502 (school_day.c:460-463) reach the
+## native owner like the confirm's 0x500; another class (0x600) and the
+## gameplay effects inside the prologue mode (0x15) are refused unsent.
+func _gameplay_effects(bridge: Bridge, state: State, session: Session, engine: FakeEngine) -> void:
+	var mode: int = state.game_mode
+	state.game_mode = 0x40
+	for command: int in [0x501, 0x502]:
+		var effect := Session.FrameResult.new(); effect.audio = [{"kind":"native_audio_command","command":command}]
+		var sent: int = engine.calls.size()
+		check(_commit(bridge,state,session,effect,7443).is_empty() and engine.calls.size() == sent+1 and engine.calls.back().slice(0,2) == ["submit",command], "school-day effect 0x%x not sent to the native owner: %s" % [command,engine.calls.back()])
+	var other := Session.FrameResult.new(); other.audio = [{"kind":"native_audio_command","command":0x600}]
+	var before: int = engine.calls.size()
+	check(not _commit(bridge,state,session,other,7443).is_empty() and engine.calls.size() == before, "class-6 effect 0x600 accepted")
+	state.game_mode = 0x15
+	var prologue := Session.FrameResult.new(); prologue.audio = [{"kind":"native_audio_command","command":0x501}]
+	check(_commit(bridge,state,session,prologue,7443) == "gameplay audio_command(0x501) has no playing bank0 owner" and engine.calls.size() == before, "gameplay effect inside the prologue mode accepted")
+	state.game_mode = mode
 
 func _refusals() -> void:
 	# Library without the bank0 methods: refused before any native call.

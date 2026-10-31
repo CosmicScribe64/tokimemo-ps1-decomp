@@ -208,9 +208,15 @@ static func boot_records() -> Dictionary:
 ## records it reads at build time.
 static func source_build_branch(data: Dictionary) -> String:
 	var day: int = int(data["day"])
-	var markers: Array = data["calendar"][0]["marker"]
+	# month_calendar[2] is two {day_kind[0x20], marker[0x20]} records
+	# (include/game/calendar.h): marker[i] for i >= 0x20 reads past the first
+	# record into month_calendar[1].day_kind[i - 0x20], as the source's
+	# marker[day - 1 + 7] does late in a month (home_screens.c:271).
+	var markers: Array = (data["calendar"][0]["marker"] as Array).duplicate()
+	if data["calendar"].size() > 1 and (data["calendar"][1] as Dictionary).get("day_kind") is Array:
+		markers.append_array(data["calendar"][1]["day_kind"])
 	if day < 1 or day - 1 + 7 >= markers.size():
-		return "unsupported: marker read past month_calendar[0].marker"
+		return "unsupported: marker read past month_calendar[1].day_kind"
 	var marker: int = int(markers[day - 1 + 2])
 	var club: int = Math.u16(int(data["player_flags"])) >> 12
 	var health: int = (Math.u16(int(data["player_flags"])) >> 8) & 0xF
@@ -509,6 +515,8 @@ func attach(session: Session, attached_state: Variant) -> String:
 		resources[HudSeason.KEY] = int(state.opening["D_800B5BC8"])
 	resources["unsourced"] = unsourced.duplicate(true)
 	gameplay.set("hud_session", hud)
+	if "hud_icon_positions" in gameplay:
+		gameplay.set("hud_icon_positions", _positions.duplicate(true))
 	phase = "attached"
 	return ""
 

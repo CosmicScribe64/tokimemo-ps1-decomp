@@ -10,6 +10,7 @@ const Session = preload("res://core/game_session.gd")
 const AudioService = preload("res://services/audio_service.gd")
 const VoicePlayback = preload("res://services/original_voice_playback.gd")
 const AudioRules = preload("res://services/opening_audio_rules.gd")
+const Math = preload("res://core/native_math.gd")
 
 var audio: AudioService
 var voice: VoicePlayback = VoicePlayback.new()
@@ -34,13 +35,24 @@ const INTENT_FIELDS: Dictionary = {
 	"native_bank0_start": ["kind", "sequence", "tick_skip"],
 	"native_bank0_load": ["kind"],
 	"native_audio_command": ["kind", "command"],
+	# Gameplay after the stage 21 handoff (flow/command_screen.gd confirm,
+	# scenes/school_day_controller.gd scheduler): cd_audio_command(9, 0, 0)
+	# and restore_bgm.
+	"native_cd_audio_command": ["kind", "command"],
+	"native_restore_bgm": ["kind", "bank", "sequence"],
 }
+## schedule_step_advance_day (scheduler.c:1522): `if (cd_audio_state() & 4)
+## cd_audio_command(9)`, emitted by the gameplay rules without an opening
+## voice epoch.
+const GAMEPLAY_XA_STOP_FIELDS := ["kind"]
 
 
 func _schema(event: Dictionary) -> String:
 	if not event.get("kind") is String or not INTENT_FIELDS.has(event["kind"]):
 		return "unsupported opening audio intent kind"
 	var fields: Array = INTENT_FIELDS[event["kind"]]
+	if event["kind"] == "native_stop_xa_if_active" and event.size() == GAMEPLAY_XA_STOP_FIELDS.size():
+		fields = GAMEPLAY_XA_STOP_FIELDS
 	if event.size() != fields.size() or not event.has_all(fields):
 		return "opening audio intent fields differ from its supported schema"
 	for key: String in ["voice_id", "speaker", "epoch", "line_id", "clip_index", "command", "bank", "sequence", "bank_epoch", "request_serial", "session_generation", "tick", "gain"]:
@@ -114,7 +126,9 @@ func _preflight_service_event(raw: Dictionary) -> String:
 	var kind: String = str(raw.get("kind", ""))
 	if kind in ["native_bgm_fade","native_bgm_fade_tick"]:
 		return "" if audio.original_bgm_service != null else "Native fade has no original engine owner"
-	if kind in ["native_bank0_start","native_bank0_load","native_audio_command"]:
+	if kind == "native_cd_audio_command":
+		return "" if int(raw.get("command", -1)) == 9 else "gameplay cd_audio_command other than 9 (pause) is not modeled"
+	if kind in ["native_bank0_start","native_bank0_load","native_audio_command","native_restore_bgm"]:
 		return "" if audio.original_bgm_service != null else "Native bank0 operation has no original engine owner"
 	if kind == "bank_load" and str(raw.get("role", "")) in ["prologue_rei", "prologue_shiori"]:
 		var preparation := AudioRules.prepare_mid_prologue_bank_roles(audio)
@@ -186,6 +200,21 @@ func preflight(result: Session.FrameResult, state: RefCounted = null) -> String:
 				var bank: Dictionary = state.opening.get("audio_bank", {})
 				if bank.get("ready") != true:
 					return "SE play requires a ready transactional sound bank"
+			"native_stop_xa_if_active" when raw.size() == GAMEPLAY_XA_STOP_FIELDS.size():
+				if (AudioRules.check_cd(state) & 4) != 0:
+					return "gameplay XA stop of a playing XA stream is not modeled"
+			"native_cd_audio_command":
+				# cd_command_push(9) (cd_queue.c:110): a pause queued while no XA plays
+				# and the CD ring is idle has no effect on any modeled read or voice.
+				if (AudioRules.check_cd(state) & 4) != 0:
+					return "gameplay CD pause of a playing XA stream is not modeled"
+				var media: Variant = state.opening.get("media")
+				if media is Dictionary:
+					for request: Variant in (media.get("requests", {}) as Dictionary).values():
+						if request is Dictionary and request.get("status") == "pending":
+							return "gameplay CD pause behind a pending CD read is not modeled"
+					if media.get("cd_ready_frame") is int and Math.s32(int(media.cd_ready_frame) - int(state.frame_count)) > 0:
+						return "gameplay CD pause behind a CD read in flight is not modeled"
 			"native_stop_xa_if_active":
 				var owner: Dictionary = state.opening.get("audio", {})
 				if raw["epoch"] != owner.get("epoch") or owner.get("status") != "cancelled" or owner.get("clips") != []:
@@ -196,7 +225,7 @@ func preflight(result: Session.FrameResult, state: RefCounted = null) -> String:
 			"native_bgm_fade":
 				var bank0_d1: bool = raw.command == 0xd1 and state.opening.get("bank0_audio") is Dictionary
 				if not (raw.command in [0xb1, 0xc1] or bank0_d1) or not state.opening.get("bgm_fade") is Dictionary: return "Native fade lacks source command ownership"
-			"native_bank0_start", "native_bank0_load", "native_audio_command":
+			"native_bank0_start", "native_bank0_load", "native_audio_command", "native_restore_bgm":
 				if not state.opening.get("bank0_audio") is Dictionary: return "Native bank0 operation lacks its source bank0 record"
 			"native_bgm_fade_tick":
 				if raw.xa_active != ((AudioRules.check_cd(state)&4)!=0): return "Native fade XA flag differs from source playback"
@@ -322,7 +351,7 @@ func publish(result: Session.FrameResult, logical_tick: int) -> String:
 				voice.stop_clip()
 				_active_request.clear()
 				_pending = _pending.filter(func(value: Dictionary) -> bool: return value["service"] != "opening.audio")
-			"native_audio_control", "native_bgm_fade", "native_bgm_fade_tick", "native_bank0_start", "native_bank0_load", "native_audio_command":
+			"native_audio_control", "native_bgm_fade", "native_bgm_fade_tick", "native_bank0_start", "native_bank0_load", "native_audio_command", "native_restore_bgm", "native_cd_audio_command":
 				pass
 			_:
 				return "unsupported opening audio publication kind"

@@ -7,6 +7,19 @@ const State = preload("res://rules/school_day_state.gd")
 const Calendar = preload("res://rules/calendar.gd")
 const Rng = preload("res://core/native_rng.gd")
 const Session = preload("res://core/game_session.gd")
+const Ordinary = preload("res://rules/ordinary_week.gd")
+
+## The captured first week: command select of the New Game, 95/4/4.
+static func initial_boundary(data: Dictionary) -> bool:
+	return [data["year"], data["month"], data["day"], data["weekday"], data["day_count"]] == [95, 4, 4, 1, 0]
+
+## T-39002: a later week start of April 1995, the command select on a Sunday
+## (weekday 6) whose following seven days day+1..day+7 stay in April
+## (day_event_queue_build_week without its month rollover), before day_count
+## 29 (schedule_special_scene_select's Miharu gate, not modeled, stays shut).
+static func april_week_boundary(data: Dictionary) -> bool:
+	return data["year"] == 95 and data["month"] == 4 and data["weekday"] == 6 and data["vacation"] == 0 \
+		and data["day"] + 7 <= Calendar.days_in_month(95, 4) and data["day_count"] < 29
 
 static func initial_branch_error(state: State) -> String:
 	var data: Dictionary = state.rule_state
@@ -17,8 +30,9 @@ static func initial_branch_error(state: State) -> String:
 		if cmd == 4 and ((data["player_flags"] >> 12) & 15) >= 11:
 			return "initial queue club command requires valid club_id 0..10"
 		return ""
-	if [data["year"], data["month"], data["day"], data["weekday"], data["day_count"]] != [95, 4, 4, 1, 0]:
-		return "scheduler supports the captured April4 initial boundary only"
+	var initial: bool = initial_boundary(data)
+	if not initial and not april_week_boundary(data):
+		return "scheduler supports the April 1995 week starts only (the captured April4 boundary or a Sunday whose next week stays in April)"
 	var club_id: int = (data["player_flags"] >> 12) & 15
 	if data["vacation"] != 0 or ((data["player_flags"] >> 8) & 15) != 0 or club_id > 11 or (data["player_flags_upper"] & 1) != 0:
 		return "initial scheduler health/club/term branch differs from captured route"
@@ -33,7 +47,8 @@ static func initial_branch_error(state: State) -> String:
 				return "girl special-scene history outside initial route"
 	if (Math.u32(data["girls"][12]["flags"]) >> 24) >= 21 or data["scene_flags"][52] == 1:
 		return "reachable special-scene branch outside initial route"
-	for day: int in range(5, 10):
+	# The days the queue covers: April 5..9 for the first week, day+1..day+7 later.
+	for day: int in (range(5, 10) if initial else range(data["day"] + 1, data["day"] + 8)):
 		if data["calendar"][0]["marker"][day] != 0 or data["calendar"][0]["day_kind"][day] not in [0, 1, 2]:
 			return "annual event/vacation marker outside initial ordinary week"
 	for appointment: int in data["appointment_words"]:
@@ -297,6 +312,9 @@ static func build_week(state: State, tables: Dictionary, rng: Rng) -> String:
 		return "initial queue supports only commands0-7"
 	if command == 4 and ((data["player_flags"] >> 12) & 15) >= 11:
 		return "initial queue club command requires valid club_id 0..10"
+	var guard: String = Ordinary.profile_guard(data)
+	if not guard.is_empty():
+		return guard
 	data["progress_state"][0x15 + command % 9] = Math.u8(data["progress_state"][0x15 + command % 9] + 1)
 	if data["girls"][11]["counters"][0] != 0:
 		data["girls"][11]["counters"][0] = Math.u8(data["girls"][11]["counters"][0] - 1)
@@ -312,6 +330,7 @@ static func build_week(state: State, tables: Dictionary, rng: Rng) -> String:
 	var recovery: int = (data["player_flags_upper"] >> 5) & 7
 	if recovery != 0:
 		data["player_flags_upper"] = (data["player_flags_upper"] & ~0xe0) | ((recovery - 1) << 5)
+	Ordinary.reanchor_profile(data)
 
 	var day: int = data["day"]
 	var month: int = data["month"]
@@ -419,11 +438,17 @@ static func build_initial_week(state: State, tables: Dictionary, rng: Rng) -> St
 	var failure: String = initial_branch_error(state)
 	if not failure.is_empty():
 		return failure
+	# Later April weeks run the general day_event_queue_build_week.
+	if not initial_boundary(data):
+		return build_week(state, tables, rng)
 	var command: int = data["last_command"] & 15
 	if command not in [0, 1, 2, 3, 4, 5, 6, 7]:
 		return "initial queue supports only commands0-7"
 	if command == 4 and ((data["player_flags"] >> 12) & 15) >= 11:
 		return "initial queue club command requires valid club_id 0..10"
+	var guard: String = Ordinary.profile_guard(data)
+	if not guard.is_empty():
+		return guard
 	data["progress_state"][0x15 + command % 9] = Math.u8(data["progress_state"][0x15 + command % 9] + 1)
 	if data["girls"][11]["counters"][0] != 0:
 		data["girls"][11]["counters"][0] = Math.u8(data["girls"][11]["counters"][0] - 1)
@@ -439,6 +464,7 @@ static func build_initial_week(state: State, tables: Dictionary, rng: Rng) -> St
 	var recovery: int = (data["player_flags_upper"] >> 5) & 7
 	if recovery != 0:
 		data["player_flags_upper"] = (data["player_flags_upper"] & ~0xe0) | ((recovery - 1) << 5)
+	Ordinary.reanchor_profile(data)
 	var queue: Array = []
 	var random_count: int = 0
 	for weekday: int in range(2, 7):

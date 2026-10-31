@@ -4,6 +4,10 @@ extends RefCounted
 const FRESH_SCHEMA := "tokimemo.school-day-media.v4"
 const FRESH_MANIFEST_SHA := "70453a62d88bb6b9c1bf4478dee9d07a5be12fdd93b4225b5e7f7c4b26ad4839"
 const FRESH_PROFILE := "source-checked-april-command0-7-extra15.v1"
+## T-39002: the fresh pack plus the April 9 holiday command 0 components and
+## route tables (tools/port/school_day_media_fresh.py --holiday).
+const FRESH_HOLIDAY_SCHEMA := "tokimemo.school-day-media.v5"
+const FRESH_HOLIDAY_MANIFEST_SHA := "7b8a9a94bd8acc2f4e3f093e69bb0c2d84d3ce835d8ceb0e149791ddc7b3087b"
 const SCHEMA := "tokimemo.school-day-media.v1"
 const COMMAND7_SCHEMA := "tokimemo.school-day-media.v2"
 const HOLIDAY_SCHEMA := "tokimemo.school-day-media.v3"
@@ -46,10 +50,11 @@ func open_pack(root: String) -> bool:
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
 	if not parsed is Dictionary:
 		return _fail("manifest JSON must be an object")
-	var fresh: bool = parsed.get("schema") == FRESH_SCHEMA
-	if fresh and FileAccess.get_sha256(manifest_path) != FRESH_MANIFEST_SHA: return _fail("fresh original-source manifest differs")
+	var fresh_holiday: bool = parsed.get("schema") == FRESH_HOLIDAY_SCHEMA
+	var fresh: bool = parsed.get("schema") == FRESH_SCHEMA or fresh_holiday
+	if fresh and FileAccess.get_sha256(manifest_path) != (FRESH_HOLIDAY_MANIFEST_SHA if fresh_holiday else FRESH_MANIFEST_SHA): return _fail("fresh original-source manifest differs")
 	_route_profile = FRESH_PROFILE if fresh else "OpenBIOS d93840921b5ad7ed515e95b0e414f1b1e2038b1a"
-	var holiday: bool = parsed.get("schema") == HOLIDAY_SCHEMA
+	var holiday: bool = parsed.get("schema") in [HOLIDAY_SCHEMA, FRESH_HOLIDAY_SCHEMA]
 	var holiday_proof: Dictionary = {}
 	var manifest_keys := ["schema", "version", "provenance", "route_capabilities", "unsupported", "components"]
 	if holiday:
@@ -60,9 +65,9 @@ func open_pack(root: String) -> bool:
 		holiday_proof = proof
 	if not _exact_keys(parsed, manifest_keys):
 		return _fail("manifest keys differ from v1 contract")
-	var extended: bool = parsed.get("schema") in [COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA]
-	var version: int = 4 if fresh else 3 if holiday else 2 if extended else 1
-	if parsed.get("schema") not in [SCHEMA, COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA] or not _exact_int(parsed.get("version"), version) or int(parsed["version"]) != version:
+	var extended: bool = parsed.get("schema") in [COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA, FRESH_HOLIDAY_SCHEMA]
+	var version: int = 5 if fresh_holiday else 4 if fresh else 3 if holiday else 2 if extended else 1
+	if parsed.get("schema") not in [SCHEMA, COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA, FRESH_HOLIDAY_SCHEMA] or not _exact_int(parsed.get("version"), version) or int(parsed["version"]) != version:
 		return _fail("unsupported schema/version")
 	var provenance: Variant = parsed.get("provenance")
 	var provenance_keys := ["original_input_sha256", "original_executable_sha256", "reviewed_media_manifest_sha256", "native_profile_sha256", "readers"]
@@ -72,7 +77,7 @@ func open_pack(root: String) -> bool:
 		readers.append("tools/assets/holiday_content_profile.py:build_holiday_profile")
 	if not fresh and (not provenance is Dictionary or not _exact_keys(provenance, provenance_keys) or provenance.get("original_input_sha256") != TRACK_SHA or provenance.get("original_executable_sha256") != EXE_SHA or provenance.get("reviewed_media_manifest_sha256") != MEDIA_SHA or provenance.get("native_profile_sha256") != NATIVE_SHA or not _string_array_equals(provenance.get("readers"), readers)):
 		return _fail("source provenance is not the reviewed route profile")
-	if holiday and provenance.get("holiday_profile_sha256") != holiday_proof["native_profile_sha256"]:
+	if holiday and not fresh and provenance.get("holiday_profile_sha256") != holiday_proof["native_profile_sha256"]:
 		return _fail("holiday native profile SHA differs")
 	var caps: Variant = parsed.get("route_capabilities")
 	var expected_caps := ["command_0_static_background", "command_0_sd_sequence_0", "command_7_sd_sequence_0"]

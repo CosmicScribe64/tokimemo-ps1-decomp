@@ -34,6 +34,7 @@ var tables: Dictionary = {}
 var resources: Dictionary = {}
 var backgrounds: Dictionary = {}
 var _extension: Dictionary = {}
+var _scene_owned: Dictionary = {}
 var _actor: ActorService = ActorService.new()
 var _ready: bool = false
 
@@ -64,6 +65,55 @@ func open_fresh(media: MediaStore, profile_path: String, next_room: Image, sessi
 	if not _next_room_valid(next_room):
 		return _fail("next-command room differs from the reviewed C_02_02H pixels")
 	return _open_media(media, next_room, holiday)
+
+## T-39002 installed route: opens the media with the fresh profile's
+## scene-owned values only. The session-owned fields are composed on every
+## holiday entry from the live records (compose_session), never at open; until
+## then initial_extension() stays empty.
+func open_scene(media: MediaStore, profile_path: String, next_room: Image) -> String:
+	_reset()
+	var loaded: Dictionary = load_fresh_profile(profile_path)
+	if not loaded["error"].is_empty():
+		return _fail(loaded["error"])
+	if not _next_room_valid(next_room):
+		return _fail("next-command room differs from the reviewed C_02_02H pixels")
+	var failure: String = _open_media(media, next_room, {})
+	if not failure.is_empty():
+		return failure
+	_scene_owned = loaded["scene"]
+	return ""
+
+## The six session-owned fields from their live owners when the day screen
+## dispatches a Sunday: icon_mode and input_device from the HUD session
+## (boot_settings_defaults_set, pad_defaults_set), screen_brightness from the
+## route state, tile_layer_enabled and boot_hold from the last
+## settings_command_screen_setup_reset record `setup` (home_screens.c:136-137;
+## no modeled mode writes them since), clubs as each ClubRecord's flags, the
+## field holiday_icons_set_available reads (holiday.c:307).
+## Returns {"error", "session"}.
+static func live_session(state: State, hud: RefCounted, setup: Variant) -> Dictionary:
+	if not setup is Dictionary or not setup.get("tile_layer_enabled") is int or not setup.get("boot_hold") is int:
+		return {"error": "no settings_command_screen_setup_reset record owns tile_layer_enabled/boot_hold"}
+	var clubs: Array = []
+	for club: Variant in state.rule_state.get("clubs", []):
+		if not club is Dictionary or not club.get("flags") is int:
+			return {"error": "club records lack their flags"}
+		clubs.append(int(club["flags"]))
+	if hud == null or not hud.intact():
+		return {"error": "no intact HUD session owns icon_mode/input_device"}
+	var brightness: Variant = state.opening.get("screen_brightness") if "opening" in state else null
+	if not brightness is int:
+		return {"error": "route state has no screen_brightness"}
+	return {"error": "", "session": {"boot_hold": int(setup["boot_hold"]), "clubs": clubs, "icon_mode": hud.icon_mode,
+		"input_device": hud.input_device, "screen_brightness": int(brightness),
+		"tile_layer_enabled": int(setup["tile_layer_enabled"])}}
+
+## The holiday extension of one holiday entry: the opened scene-owned values
+## with exactly the live session fields (compose_fresh); {} on refusal.
+func compose_session(session: Dictionary) -> Dictionary:
+	if not _ready or _scene_owned.is_empty():
+		return {}
+	return compose_fresh(_scene_owned, session)
 
 ## Authenticates the fresh profile bytes and returns only its scene-owned values.
 static func load_fresh_profile(path: String) -> Dictionary:
@@ -116,6 +166,7 @@ func _reset() -> void:
 	resources.clear()
 	backgrounds.clear()
 	_extension.clear()
+	_scene_owned.clear()
 	error = ""
 
 static func _next_room_valid(next_room: Image) -> bool:

@@ -24,6 +24,10 @@ from tools.port.media_components import export_sd_component, export_background_c
 from tools.port.validate_school_day_media import SOURCE_PINS, EXPECTED_CAPABILITIES, EXPECTED_UNSUPPORTED
 
 SCHEMA = "tokimemo.school-day-media.v4"
+# T-39002: the same fresh pack plus the April 9 holiday command 0 media
+# (holiday_media.export_holiday_components) and its route tables.
+HOLIDAY_SCHEMA = "tokimemo.school-day-media.v5"
+HOLIDAY_CAPABILITIES = ["holiday_room_static_background", "holiday_command_0_static_background", "holiday_command_0_sd_sequence_0"]
 PROFILE = "source-checked-april-command0-7-extra15.v1"
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -32,7 +36,7 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def export(input_path, output_path):
+def export(input_path, output_path, holiday=False):
     out = _safe_output(ROOT, output_path)
     tables = build_bundle(input_path)
     t = tables['tables']
@@ -80,12 +84,21 @@ def export(input_path, output_path):
                         components[key] = export_background_component(data,stage,entry,identity,context,route,_safe_copy)
                         if command==7:
                             components[key]['native_read_extent'] = _native_cd_read_extent(source,entry,TRACK_SHA,10)
+            holiday_tables = None
+            if holiday:
+                from tools.port.holiday_media import export_holiday_components
+                extra, holiday_tables = export_holiday_components(source,entries,exe,ROOT,stage,_safe_copy)
+                components.update(extra)
         manifest = {'schema':SCHEMA,'version':4,'components':components,
             'provenance':{'original_input_sha256':TRACK_SHA,'original_executable_sha256':EXE_SHA,
                 'profile':PROFILE,'source_evidence':evidence,
                 'selector_table_proof':{k:tables['provenance']['tables'][k] for k in ['weekday_background_lbas','weekday_sd_lbas','sd_select_non_summer']}},
             'route_capabilities':EXPECTED_CAPABILITIES+['command_7_static_background'],
             'unsupported':{k:v for k,v in EXPECTED_UNSUPPORTED.items() if k!='command_7_background'}}
+        if holiday:
+            manifest['schema'],manifest['version'] = HOLIDAY_SCHEMA,5
+            manifest['route_capabilities'] = manifest['route_capabilities']+HOLIDAY_CAPABILITIES
+            manifest['route_tables'] = holiday_tables
         (stage/'manifest.json').write_text(json.dumps(manifest,sort_keys=True,indent=2)+'\n')
         from tools.port.validate_school_day_media import validate_pack
         validate_pack(stage)
@@ -99,4 +112,5 @@ def export(input_path, output_path):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--input',required=True);p.add_argument('--output',required=True)
-    a=p.parse_args();print(export(a.input,a.output))
+    p.add_argument('--holiday',action='store_true',help='add the April 9 holiday command 0 media (schema v5)')
+    a=p.parse_args();print(export(a.input,a.output,a.holiday))

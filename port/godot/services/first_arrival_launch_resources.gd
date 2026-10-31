@@ -32,6 +32,10 @@ var hud_manifest: Dictionary = {}
 ## command select. Opened at launch but not fatal: a closed capability lists
 ## no command, and its reason stays in school_day_commands.error.
 var school_day_commands: CommandCapabilities
+## T-39002: installed sources of the Sunday holiday after command select: the
+## school_day_media pack (a v5 pack carries the holiday components) and the
+## holiday_scene_source profile. Empty without either role.
+var holiday_sources: Dictionary = {}
 var hud: Hud
 var painter: Painter
 var audio: Audio
@@ -96,6 +100,9 @@ func prepare(profile: Dictionary) -> String:
 	hud_manifest = next_hud_manifest
 	school_day_commands = CommandCapabilities.new()
 	school_day_commands.open_installed(fresh.paths)
+	holiday_sources = {}
+	if fresh.paths.has("school_day_media") and fresh.paths.has("holiday_scene_source"):
+		holiday_sources = {"school_day_media":fresh.paths.school_day_media,"holiday_scene_source":fresh.paths.holiday_scene_source}
 	hud = next_hud
 	painter = next_painter
 	audio = next_audio

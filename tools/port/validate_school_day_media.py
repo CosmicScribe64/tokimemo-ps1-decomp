@@ -8,6 +8,10 @@ from pathlib import Path, PurePosixPath
 FRESH_SCHEMA = "tokimemo.school-day-media.v4"
 FRESH_MANIFEST_SHA = "70453a62d88bb6b9c1bf4478dee9d07a5be12fdd93b4225b5e7f7c4b26ad4839"
 FRESH_PROFILE = "source-checked-april-command0-7-extra15.v1"
+# T-39002: the fresh v4 pack plus the holiday command 0 components and route
+# tables (school_day_media_fresh.py --holiday).
+FRESH_HOLIDAY_SCHEMA = "tokimemo.school-day-media.v5"
+FRESH_HOLIDAY_MANIFEST_SHA = "7b8a9a94bd8acc2f4e3f093e69bb0c2d84d3ce835d8ceb0e149791ddc7b3087b"
 SCHEMA = "tokimemo.school-day-media.v1"
 COMMAND7_SCHEMA = "tokimemo.school-day-media.v2"
 HOLIDAY_SCHEMA = "tokimemo.school-day-media.v3"
@@ -103,16 +107,18 @@ def validate_pack(pack: str):
     doc = json.loads(manifest.read_text(encoding="utf-8"))
     if not isinstance(doc, dict):
         raise ValueError("manifest JSON must be an object")
-    fresh = doc.get("schema") == FRESH_SCHEMA
-    if fresh and hashlib.sha256(manifest.read_bytes()).hexdigest() != FRESH_MANIFEST_SHA:
+    fresh_holiday = doc.get("schema") == FRESH_HOLIDAY_SCHEMA
+    fresh = doc.get("schema") == FRESH_SCHEMA or fresh_holiday
+    pinned = FRESH_HOLIDAY_MANIFEST_SHA if fresh_holiday else FRESH_MANIFEST_SHA
+    if fresh and hashlib.sha256(manifest.read_bytes()).hexdigest() != pinned:
         raise ValueError("fresh original-source manifest differs")
     route_profile = FRESH_PROFILE if fresh else NATIVE_ROUTE_PROFILE
-    holiday = doc.get("schema") == HOLIDAY_SCHEMA
+    holiday = doc.get("schema") in (HOLIDAY_SCHEMA, FRESH_HOLIDAY_SCHEMA)
     holiday_proof = json.loads(HOLIDAY_PROOF.read_text()) if holiday else None
     if set(doc) != {"schema", "version", "provenance", "route_capabilities", "unsupported", "components"} | ({"route_tables"} if holiday else set()):
         raise ValueError("manifest keys differ from v1 contract")
-    extended = doc.get("schema") in (COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA)
-    if doc.get("schema") not in (SCHEMA, COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA) or type(doc.get("version")) is not int or doc["version"] != (4 if fresh else 3 if holiday else 2 if extended else 1):
+    extended = doc.get("schema") in (COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA, FRESH_HOLIDAY_SCHEMA)
+    if doc.get("schema") not in (SCHEMA, COMMAND7_SCHEMA, HOLIDAY_SCHEMA, FRESH_SCHEMA, FRESH_HOLIDAY_SCHEMA) or type(doc.get("version")) is not int or doc["version"] != (5 if fresh_holiday else 4 if fresh else 3 if holiday else 2 if extended else 1):
         raise ValueError("unsupported media schema/version")
     provenance = dict(EXPECTED_PROVENANCE)
     if holiday:
