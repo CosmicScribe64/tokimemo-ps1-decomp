@@ -2696,3 +2696,11 @@ Merged `port/m2-disc-pack`: `tools/port/disc_pack_content.py` packs the 1355 For
 ## [2026-10-30] ticket | Engine API started (T-39301)
 
 Moved [[tickets/T-39301-engine-api-core]] to In Progress. The first worker (`port/m2-engine-base`) sets up the engine layout and facade and a function-differential harness from emulator captures, and ports `game_mode.c` as the pattern. The other engine files fan out to file-disjoint workers after that.
+
+## [2026-10-30] build | Engine base: facade, contract, differential harness (T-39301)
+
+On `port/m2-engine-base`: `port/godot/engine/engine.gd` (facade over game memory, disc pack, renderer, CD drive model, text and audio slots; one module per C file found by directory scan; an unported callee latches a refusal naming caller and callee), the written contract [[engine-porting-contract]], capture tooling `tools/emu/func_capture/` and the replay harness `port/godot/tests/engine/engine_diff*.gd` with `tools/port/run_engine_diff.sh`. Specs in `config/port/engine-diff/`. Captures stay under `.asset-cache/m2-engine/`. Ticket: [[tickets/T-39301-engine-api-core]].
+
+## [2026-10-30] build | game_mode.c and cd_queue.c ported (T-39301)
+
+All 8 functions of `src/main/game_mode.c` (`engine/game_mode.gd`), 23 of `src/main/cd_queue.c` (`engine/cd_queue.gd` over `engine/_cd_drive.gd`) and 3 of `src/main/reset_iris_wipe.c` (`engine/reset_iris_wipe.gd`, includes `game_mode_reset_to_title`). Differential run over 10 captures: every function with hits passes except 12 `cd_position_lba` hits and 3 `cd_command_pump` read-completion hits, listed as not comparable with reasons (drive state is hardware; the replay lacks the request frame). `game_mode_next`, `cd_read_sync_poll`, `cd_sync_poll`, `cd_error_recover`, `cd_queue_idle`, `cd_last_command`, `cd_audio_request_get` have no reachable capture and are covered by hand checks. `gm-reset` is a constructed state (bad game mode poked at vsync 30). Core suite gains one suite (`tests/engine/run_engine_tests.gd`).
