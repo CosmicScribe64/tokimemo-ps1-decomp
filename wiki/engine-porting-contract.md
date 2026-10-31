@@ -141,9 +141,21 @@ The unported callees are replayed from the capture: when the port reaches one, t
 
 ## Status
 
-Ported and tested: `engine/game_mode.gd` (all 8 functions of `src/main/game_mode.c`), `engine/cd_queue.gd` (all 23 functions of `src/main/cd_queue.c` over the CD drive model), `engine/reset_iris_wipe.gd` (3 of 5 functions of `src/main/reset_iris_wipe.c`: `game_mode_reset_to_title`, `cd_decimal_digit`, `cd_binary_coded_decimal_to_integer`). Results per function: ticket comments of [[tickets/T-39301-engine-api-core]] and the log.
+(This Status section is the orchestrator's.)
 
-`game_mode_reset_to_title` is defined in `reset_iris_wipe.c`, not in `game_mode.c`; the engine keeps the file boundary of the C. (This Status section is the orchestrator's.)
+| C file | Module | Functions | Package |
+|---|---|---|---|
+| `game_mode.c` | `engine/game_mode.gd` | 8/8 | base |
+| `cd_queue.c` | `engine/cd_queue.gd` | 23/23 | base |
+| `reset_iris_wipe.c` | `engine/reset_iris_wipe.gd` | 3/5 merged (2 more on WP-A) | base, [[tickets/T-39311-engine-draw-core]] |
+| `memory_card.c` | `engine/memory_card.gd` | 40/40 | [[tickets/T-39313-engine-menus-memcard]] (merged) |
+| `hud_screens.c` | `engine/hud_screens.gd` | 44/44 | [[tickets/T-39313-engine-menus-memcard]] (merged) |
+| `menu_speaker_girl.c` | `engine/menu_speaker_girl.gd` | 35/35 | [[tickets/T-39313-engine-menus-memcard]] (merged) |
+| draw core (7 files) | | 114 ported, in review | [[tickets/T-39311-engine-draw-core]] |
+| scene and HUD (3 files) | | in progress | [[tickets/T-39312-engine-scene-hud]] |
+| PsyQ SDK calls | | in progress | [[tickets/T-39314-engine-sdk-layer]] |
+
+Per-function results are in each ticket. `game_mode_reset_to_title` is defined in `reset_iris_wipe.c`, not in `game_mode.c`; the engine keeps the file boundary of the C. Until [[tickets/T-39314-engine-sdk-layer]] lands, every PsyQ SDK call refuses by name, so card, GPU and VSync paths stop at their first SDK call.
 
 ## Limits and decisions
 
