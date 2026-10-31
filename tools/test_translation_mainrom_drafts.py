@@ -12,6 +12,7 @@ SOURCES = subject.ROOT / '.asset-cache/translation-assets/original-mainrom-v1'
 PACK = subject.ROOT / 'disc/files/CDROM/FUKUTEST/MAINROM.NBN'
 EXECUTABLE = subject.ROOT / 'disc/files/SLPM_86.053'
 PUBLISHED = subject.ROOT / 'translations/en/graphics/artwork/checkpoints/T39004-pass3'
+PORT_MADE_PUBLISHED = subject.ROOT / 'translations/en/graphics/artwork/checkpoints/T39004-mainrom-port-made-v1'
 RED, GREEN, GREY = 0x001f, 0x03e0, 0x4210
 
 
@@ -208,6 +209,82 @@ class SyntheticTests(unittest.TestCase):
             subject.new_output(subject.ROOT / 'tools')
 
 
+def recovered_panel7():
+    """A stand-in for the recovered panel7 face (two glyphs) with its provenance shape."""
+    glyphs = {'o': subject.bitmap_glyph(['....', '....', '.##.', '#..#', '#..#', '#..#', '.##.']),
+              'l': subject.bitmap_glyph(['#'] * 7)}
+    return subject.Face('panel7', glyphs, 5, {'source': 'test', 'source_output_sha256': '0' * 64,
+                                              'witness': {'o': {}, 'l': {}}})
+
+
+class PortMadeTests(unittest.TestCase):
+    def test_glyph_tables_are_well_formed(self):
+        for table, rows in ((subject.PANEL7_ADDED, 7), (subject.NARROW_ADDED, 7), (subject.CAPS5, 5)):
+            for ch, (bitmap, description) in table.items():
+                self.assertEqual(len(bitmap), rows, ch)
+                self.assertTrue(description, ch)
+                glyph = subject.bitmap_glyph(bitmap)
+                columns = {x for x, _ in glyph['points']}
+                self.assertEqual(columns, set(range(glyph['width'])), 'glyph %r has a blank column' % ch)
+        with self.assertRaises(ValueError):
+            subject.bitmap_glyph(['#.', '#'])
+
+    def test_faces_flag_every_port_made_glyph(self):
+        panel7 = recovered_panel7()
+        faces = subject.port_made_faces(panel7)
+        compact = faces['panel7-compact'].provenance['glyphs']
+        self.assertEqual(compact['o']['origin'], 'recovered-panel7')
+        self.assertEqual(compact['m']['origin'], 'port-made')
+        narrow = faces['panel7-narrow'].provenance['glyphs']
+        self.assertEqual(narrow['o']['origin'], 'port-made-narrow')
+        self.assertEqual(narrow['o']['replaces'], 'recovered-panel7')
+        self.assertFalse(faces['caps5'].provenance['rescaled'])
+        elements = subject.used_port_made(faces['panel7-compact'], ['mol'])
+        self.assertEqual([e['char'] for e in elements], ['m'])
+        self.assertTrue(all(e['description'] for e in elements))
+
+    def test_fit_face_narrows_only_what_a_too_wide_line_needs(self):
+        glyphs = {'o': ['....', '....', '.##.', '#..#', '#..#', '#..#', '.##.'], 'r': ['...', '...', '#.#', '##.', '#..', '#..', '#..'],
+                  'H': ['#...#', '#...#', '#...#', '#####', '#...#', '#...#', '#...#']}
+        panel7 = subject.Face('panel7', {c: subject.bitmap_glyph(b) for c, b in glyphs.items()}, 5,
+                              {'source': 'test', 'source_output_sha256': '0' * 64, 'witness': {c: {} for c in glyphs}})
+        faces = subject.port_made_faces(panel7)
+        # Horror: 27px at panel7 widths; narrowing H and o (bowls first) gives exactly 24, r stays recovered.
+        face = subject.fit_face(faces, ['Horror'], 24)
+        self.assertEqual(face.name, 'panel7-compact+narrow-Ho')
+        self.assertEqual(face.provenance['glyphs']['r']['origin'], 'recovered-panel7')
+        self.assertEqual(subject.line_width(face, 'Horror', None), 24)
+        self.assertEqual(subject.fit_face(faces, ['Horror'], 27).name, 'panel7-compact')
+        # A line that fits does not pull narrow forms in for its own letters.
+        self.assertEqual(subject.fit_face(faces, ['Ho', 'Horror'], 24).name, 'panel7-compact+narrow-Ho')
+        with self.assertRaises(ValueError):
+            subject.fit_face(faces, ['Horror'], 20)
+
+    def test_port_made_glyph_cannot_silently_replace_a_recovered_one(self):
+        with self.assertRaises(ValueError):
+            subject.port_made_face('x', recovered_panel7(), {'o': (['#'] * 7, 'dup')})
+
+    def test_ink_and_shadow_follow_the_drop_shadow(self):
+        pixels = {(0, 0): (0, 9), (1, 0): (0, 9), (1, 1): (0, 10), (2, 1): (0, 10)}
+        self.assertEqual(subject.ink_and_shadow(pixels), (9, 10))
+        self.assertEqual(subject.ink_and_shadow({(0, 0): (0, 9)}), (9, None))
+        with self.assertRaises(ValueError):
+            subject.ink_and_shadow({(0, 0): (0, 9), (5, 5): (0, 10)})
+
+    def test_isolated_scope_reports_overlay_and_intra_frame_conflicts(self):
+        base = synthetic([part(0, 2, [[0, 0], [0, 0]], sheet=0), part(2, 2, [[0, 0], [0, 0]], sheet=0)])
+        edited = base.copy()
+        edited.set(0, 0, 0, 1)
+        edited.set(1, 2, 0, 2)
+        scope = subject.isolated_scope(1, edited, base, {})
+        self.assertEqual(scope['scope'], 'frame-composite-only')
+        self.assertIn('different edits', scope['reasons'][0])
+        private = base.copy()
+        private.set(0, 0, 0, 1)
+        self.assertEqual(subject.isolated_scope(1, private, base, {2: set()})['scope'], 'sheet-patch')
+        self.assertEqual(subject.isolated_scope(1, private, base, {2: {(0, 0, 0)}})['affected_frames'], {'2': 1})
+
+
 class OriginalDataTests(unittest.TestCase):
     def setUp(self):
         if not (SOURCES.exists() and PACK.exists() and EXECUTABLE.exists()):
@@ -238,6 +315,52 @@ class OriginalDataTests(unittest.TestCase):
                 self.assertEqual((output / name).read_bytes(), (revision / name).read_bytes(), name)
             ledger = json.loads((PUBLISHED / 'ledger.json').read_text())
             self.assertTrue(all(a['human_approved'] is False and a['status'] == 'draft' for a in ledger['assets']))
+
+    def test_port_made_rebuild_is_deterministic_and_matches_checkpoint(self):
+        with tempfile.TemporaryDirectory(dir=subject.ROOT / '.asset-cache') as directory:
+            first, second = Path(directory) / 'a', Path(directory) / 'b'
+            subject.build_port_made(SOURCES, PACK, first)
+            subject.build_port_made(SOURCES, PACK, second)
+            names = sorted(p.name for p in first.iterdir())
+            self.assertEqual(names, sorted(p.name for p in second.iterdir()))
+            for name in names:
+                self.assertEqual((first / name).read_bytes(), (second / name).read_bytes(), name)
+            manifest = json.loads((first / 'manifest.json').read_text())
+            frames = {row['frame'] for row in manifest['assets']}
+            self.assertEqual(frames, set(subject.PORT_MADE_TAGS) | {subject.DATE_FRAME})
+            for row in manifest['assets'] + manifest['alternates']:
+                self.assertFalse(row['human_approved'])
+                self.assertTrue(row['port_made'])
+                self.assertTrue(all(e['description'] for e in row['port_made_elements']))
+                source = Image.open(SOURCES / ('mainrom.frame-%03d.%s.png' % (row['frame'], row['palette_id']))).convert('RGBA')
+                draft = Image.open(first / row['output']).convert('RGBA')
+                # Pixels outside the edit regions equal the source; colours are a subset of the source's.
+                subject.check(source, draft, row['edit_regions'], row['id'])
+            self.assertEqual({row['frame'] for row in manifest['alternates']}, {subject.DATE_FRAME})
+            sprites = manifest['port_overlay']['sprites']
+            self.assertEqual([row['text'] for row in sprites], list(subject.MONTHS))
+            digit = Image.open(SOURCES / 'mainrom.frame-068.base.png').convert('RGBA')
+            for row in sprites:
+                self.assertFalse(row['human_approved'])
+                self.assertTrue(row['port_made'] and row['port_made_elements'])
+                image = Image.open(first / row['output']).convert('RGBA')
+                self.assertEqual(list(image.size), list(subject.MONTH_SPRITE['size']))
+                # Month names use only the calendar digits' colours.
+                self.assertLessEqual(set(image.getdata()), set(digit.getdata()) | {(0, 0, 0, 0)})
+            if not PORT_MADE_PUBLISHED.exists():
+                self.skipTest('port-made checkpoint not published yet')
+            revision = PORT_MADE_PUBLISHED / subject.PORT_MADE_REVISION
+            self.assertEqual(names, sorted(p.name for p in revision.iterdir()))
+            for name in names:
+                self.assertEqual((first / name).read_bytes(), (revision / name).read_bytes(), name)
+            ledger = json.loads((PORT_MADE_PUBLISHED / 'ledger.json').read_text())
+            self.assertEqual(ledger['port_made_assets'], len(ledger['assets']))
+            self.assertEqual(len(ledger['alternates']), len(manifest['alternates']))
+            self.assertEqual(len(ledger['port_overlay_assets']), len(sprites))
+            for asset in ledger['assets'] + ledger['alternates'] + ledger['port_overlay_assets']:
+                self.assertIs(asset['human_approved'], False)
+                self.assertIs(asset['port_made'], True)
+                self.assertTrue(asset['port_made_elements'])
 
 
 if __name__ == '__main__':

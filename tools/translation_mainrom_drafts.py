@@ -16,6 +16,11 @@ rendered from the edited indices with that variant's own CLUT words:
   original digit/dot texels), unscaled, with ink/shadow/outline indices taken from
   the frame's own lettering.
 
+* port-made (--port-made, user decision 2026-10-30): where no usable original
+  glyph exists, hand-drawn bitmap glyphs in panel7 style (and 5-row small caps for
+  the frame-60 date captions) set the English; each glyph and draft is flagged
+  port-made with a description in the manifest and ledger.
+
 Every changed texel is mapped back to its sheet address: drafts that disagree on a
 texel are refused, and each draft records whether it is a sheet patch or only a whole-
 frame replacement (overlay texels, or texels other frames draw unedited).
@@ -829,6 +834,525 @@ def publish(built, destination):
     return {'destination': str(destination), 'assets': len(assets)}
 
 
+# ---- Port-made lettering (T-39004 art finish, 2026-10-30) --------------------
+#
+# User decision 2026-10-30: where no usable original glyph exists, new lettering
+# may be drawn by hand in the game's own style and marked port-made. The glyphs
+# below are hand-drawn bitmaps (not generated, not scaled from any font). The
+# 7-row ones follow panel7 as recovered from frame 61: 1px strokes, caps on rows
+# 0-6, lowercase x-height on rows 2-6, descenders folded into the x-height as in
+# panel7 'p', one ink index, one blank column between glyphs.
+
+PORT_MADE_REVISION = 'mainrom-port-made-drafts-v1'
+PORT_MADE_TICKET = 'T-39009'
+
+PANEL7_ADDED = {
+    'B': (['###.', '#..#', '#..#', '###.', '#..#', '#..#', '###.'], 'cap B, 4 wide like panel7 S and L'),
+    'D': (['###.', '#..#', '#..#', '#..#', '#..#', '#..#', '###.'], 'cap D, 4 wide, straight stem and bowl like B'),
+    'F': (['####', '#...', '#...', '###.', '#...', '#...', '#...'], 'cap F, 4 wide, top bar as wide as panel7 L foot'),
+    'J': (['...#', '...#', '...#', '...#', '...#', '#..#', '.##.'], 'cap J, 4 wide, hook like the panel7 S terminals'),
+    'O': (['.###.', '#...#', '#...#', '#...#', '#...#', '#...#', '.###.'], 'cap O, 5 wide like panel7 C and G'),
+    'I': (['###', '.#.', '.#.', '.#.', '.#.', '.#.', '###'], 'cap I with serifs, 3 wide, so it does not read as panel7 l'),
+    'M': (['#...#', '##.##', '#.#.#', '#.#.#', '#...#', '#...#', '#...#'], 'cap M, 5 wide like panel7 A and H'),
+    'N': (['#...#', '#...#', '##..#', '#.#.#', '#..##', '#...#', '#...#'], 'cap N, 5 wide, diagonal on rows 2-4'),
+    'P': (['###.', '#..#', '#..#', '###.', '#...', '#...', '#...'], 'cap P, 4 wide, bowl matches B and R'),
+    'R': (['###.', '#..#', '#..#', '###.', '#.#.', '#..#', '#..#'], 'cap R, 4 wide, bowl matches B and P'),
+    'W': (['#...#', '#...#', '#...#', '#.#.#', '#.#.#', '#.#.#', '.#.#.'], 'cap W, 5 wide, mirror logic of panel7 v'),
+    'b': (['#...', '#...', '###.', '#..#', '#..#', '#..#', '###.'], 'lowercase b, panel7 h stem with the panel7 o bowl'),
+    'd': (['...#', '...#', '.###', '#..#', '#..#', '#..#', '.###'], 'lowercase d, mirror of b'),
+    'g': (['....', '....', '.###', '#..#', '.###', '...#', '.##.'], 'lowercase g, tail folded into the x-height like panel7 p'),
+    'm': (['.....', '.....', '####.', '#.#.#', '#.#.#', '#.#.#', '#.#.#'], 'lowercase m, double arch of panel7 n'),
+    'w': (['.....', '.....', '#...#', '#...#', '#.#.#', '#.#.#', '.#.#.'], 'lowercase w, panel7 v with a centre stroke'),
+    'y': (['....', '....', '#..#', '#..#', '.###', '...#', '.##.'], 'lowercase y, tail folded into the x-height like panel7 p'),
+}
+# Narrow forms, used only where a line does not fit at panel7 widths (fit_face).
+# Same rows and stroke; only the bowl or counter is one column narrower.
+NARROW_ADDED = {
+    'H': (['#..#', '#..#', '#..#', '####', '#..#', '#..#', '#..#'], 'narrow cap H, 4 wide (panel7 H is 5)'),
+    'a': (['...', '...', '##.', '..#', '.##', '#.#', '.##'], 'narrow a, 3 wide (panel7 a is 4)'),
+    'b': (['#..', '#..', '##.', '#.#', '#.#', '#.#', '##.'], 'narrow b, 3 wide'),
+    'e': (['...', '...', '.#.', '#.#', '###', '#..', '.##'], 'narrow e, 3 wide (panel7 e is 4)'),
+    'g': (['...', '...', '###', '#.#', '###', '..#', '##.'], 'narrow g, 3 wide, square bowl so it does not read as narrow a'),
+    'n': (['...', '...', '##.', '#.#', '#.#', '#.#', '#.#'], 'narrow n, 3 wide (panel7 n is 4)'),
+    'o': (['...', '...', '.#.', '#.#', '#.#', '#.#', '.#.'], 'narrow o, 3 wide (panel7 o is 4)'),
+    'r': (['..', '..', '##', '#.', '#.', '#.', '#.'], 'narrow r, 2 wide (panel7 r is 3); last resort, loses the arm'),
+    's': (['...', '...', '.##', '#..', '.#.', '..#', '##.'], 'narrow s, 3 wide (panel7 s is 4)'),
+    't': (['#.', '#.', '##', '#.', '#.', '#.', '.#'], 'narrow t, 2 wide (panel7 t is 3); last resort, loses the crossbar'),
+}
+# Order in which fit_face narrows letters: bowls and counters first, r and t (whose
+# narrow forms lose a stroke) last.
+NARROW_ORDER = 'Hoaebgns' + 'rt'
+# 5-row small capitals for the frame-60 date captions; the 16px cells have room
+# for 4 letters of 3px only. Same 1px stroke; ink and drop shadow are the panel's.
+CAPS5 = {
+    'A': (['.#.', '#.#', '###', '#.#', '#.#'], 'small cap A'),
+    'D': (['##.', '#.#', '#.#', '#.#', '##.'], 'small cap D'),
+    'E': (['###', '#..', '##.', '#..', '###'], 'small cap E'),
+    'M': (['#...#', '##.##', '#.#.#', '#...#', '#...#'], 'small cap M, 5 wide'),
+    'O': (['.#.', '#.#', '#.#', '#.#', '.#.'], 'small cap O'),
+    'R': (['##.', '#.#', '##.', '#.#', '#.#'], 'small cap R'),
+    'Y': (['#.#', '#.#', '.#.', '.#.', '.#.'], 'small cap Y'),
+}
+
+# Frame -> lines of text. Wording is the user's revisable default (2026-10-30).
+# Glyph widths are chosen per item by fit_face.
+PORT_MADE_TAGS = {134: ('Comedy',), 135: ('Romance',), 138: ('Horror',), 139: ('Anime',), 141: ('Idol',),
+                  142: ('Rock',), 143: ('New Music',), 144: ('Pro', 'Wrestling'), 145: ('Baseball',)}
+DATE_FRAME = 60
+# Frame-60 kanji cells 年/月/日 (parts 3-5). The game draws the year, month and day
+# digits above these cells (port/godot/ui/native_hud.gd build_calendar). Part 6, the
+# weekday parentheses, is kept.
+DATE_CELLS = (3, 4, 5)
+# Default English form "95 / Apr / 4 / (Mon)": the cells are cleared and the port
+# draws a month-name sprite in place of the two month digit actors (19, 20).
+# Alternate form: small-cap captions under each number, "95 YR / 4 MO / 4 DAY".
+DATE_CAPTIONS = {3: 'YR', 4: 'MO', 5: 'DAY'}
+# Interior column of the panel that the digits are centred on (frame x 9..24).
+DATE_CAPTION_X = (9, 16)
+# Month names in game order (the school year starts in April).
+MONTHS = ('Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar')
+# Month digit pair geometry (native_hud.gd: actors 19/20 at x 0x8C/0x94, y -0x22; digit
+# frames 0x44.. are 8x16 with origin (4, 8) and bounds x 1). The pair covers screen
+# x 0x89..0x98, y -0x2A..-0x1B, which is frame-60 rect (9, 40, 16, 16).
+DIGIT_FRAMES = tuple(range(0x44, 0x4E))
+MONTH_SPRITE = {'size': (16, 16), 'frame60_rect': [9, 40, 16, 16], 'screen_left_top': [0x89, -0x2A],
+                'replaces_actors': [19, 20], 'digit_ink_rows': [0, 10]}
+
+
+def bitmap_glyph(rows):
+    width = len(rows[0])
+    if any(len(r) != width for r in rows) or any(set(r) - {'#', '.'} for r in rows):
+        raise ValueError('malformed glyph bitmap')
+    return {'points': [(x, y) for y, r in enumerate(rows) for x, c in enumerate(r) if c == '#'], 'width': width}
+
+
+def port_made_face(name, panel7, added, narrow=None, space=3):
+    """panel7 plus hand-drawn glyphs; every glyph records whether it is recovered or port-made."""
+    glyphs, provenance = {}, {}
+    for ch, glyph in sorted(panel7.glyphs.items()):
+        glyphs[ch] = glyph
+        provenance[ch] = {'origin': 'recovered-panel7', 'witness': panel7.provenance['witness'][ch]}
+    for table, kind in ((added, 'port-made'), (narrow or {}, 'port-made-narrow')):
+        for ch, (rows, description) in sorted(table.items()):
+            if kind == 'port-made' and ch in panel7.glyphs:
+                raise ValueError('port-made glyph would replace recovered panel7 glyph %r' % ch)
+            if len(rows) != 7:
+                raise ValueError('panel7-style glyph %r must have 7 rows' % ch)
+            glyphs[ch] = bitmap_glyph(rows)
+            provenance[ch] = {'origin': kind, 'description': description, 'bitmap': list(rows),
+                              'replaces': 'recovered-panel7' if ch in panel7.glyphs else None}
+    return Face(name, glyphs, space, {
+        'base_face': {'name': 'panel7', 'source': panel7.provenance['source'],
+                      'source_output_sha256': panel7.provenance['source_output_sha256']},
+        'style': 'panel7: 1px stroke, 7 rows, x-height rows 2-6, one ink index, 1 blank column between glyphs',
+        'rescaled': False, 'generated': False, 'glyphs': provenance})
+
+
+def caps5_face():
+    glyphs, provenance = {}, {}
+    for ch, (rows, description) in sorted(CAPS5.items()):
+        if len(rows) != 5:
+            raise ValueError('caps5 glyph %r must have 5 rows' % ch)
+        glyphs[ch] = bitmap_glyph(rows)
+        provenance[ch] = {'origin': 'port-made', 'description': description, 'bitmap': list(rows)}
+    return Face('caps5', glyphs, 3, {
+        'style': '5-row small capitals, 1px stroke, drawn with the frame-60 kanji ink and (+1,+1) drop shadow',
+        'rescaled': False, 'generated': False, 'glyphs': provenance})
+
+
+def port_made_faces(panel7):
+    return {'panel7-compact': port_made_face('panel7-compact', panel7, PANEL7_ADDED),
+            'panel7-narrow': port_made_face('panel7-narrow', panel7, PANEL7_ADDED, NARROW_ADDED),
+            'caps5': caps5_face()}
+
+
+def line_width(face, text, shadow):
+    xs = [x for x, _ in face.points(text)]
+    return max(xs) - min(xs) + 1 + (1 if shadow is not None else 0)
+
+
+def fit_face(faces, lines, width, shadow=None):
+    """panel7-compact with narrow forms swapped in one letter at a time, only while a line is too wide.
+
+    Letters are tried in NARROW_ORDER, and only letters of a line that does not fit;
+    a letter once narrowed is narrow in every line of the item.
+    """
+    compact, narrow = faces['panel7-compact'], faces['panel7-narrow']
+    chosen = []
+    while True:
+        glyphs, provenance = dict(compact.glyphs), dict(compact.provenance['glyphs'])
+        for ch in chosen:
+            glyphs[ch], provenance[ch] = narrow.glyphs[ch], narrow.provenance['glyphs'][ch]
+        face = Face(compact.name + ('+narrow-' + ''.join(chosen) if chosen else ''), glyphs, compact.space,
+                    {**compact.provenance, 'glyphs': provenance})
+        wide = [line for line in lines if line_width(face, line, shadow) > width]
+        if not wide:
+            return face
+        options = [ch for ch in NARROW_ORDER if ch not in chosen and any(ch in line for line in wide)]
+        if not options:
+            raise ValueError('%r does not fit %dpx even with narrow forms' % (wide, width))
+        chosen.append(options[0])
+
+
+def ink_and_shadow(pixels):
+    """(ink, shadow) of lettering with a (+1,+1) drop shadow; (ink, None) for one index.
+
+    The shadow index is the one most often found one pixel down-right of the other.
+    """
+    indices = sorted({i for _, i in pixels.values()})
+    if len(indices) == 1:
+        return indices[0], None
+    tally = Counter()
+    for (x, y), (_, i) in pixels.items():
+        below = pixels.get((x + 1, y + 1))
+        if below and below[1] != i:
+            tally[(i, below[1])] += 1
+    if not tally:
+        raise ValueError('lettering has several indices but no drop shadow')
+    (ink, shadow), _ = sorted(tally.items(), key=lambda kv: (-kv[1], kv[0]))[0]
+    return ink, shadow
+
+
+def used_port_made(face, lines):
+    """Port-made glyphs a draft uses, with their descriptions (for the ledger)."""
+    out = []
+    for ch in sorted({c for line in lines for c in line if c != ' '}):
+        origin = face.provenance['glyphs'][ch]
+        if origin['origin'] != 'recovered-panel7':
+            out.append({'kind': 'glyph', 'face': face.name, 'char': ch, 'origin': origin['origin'],
+                        'description': origin['description']})
+    return out
+
+
+def plan_port_made_tag(frame, faces):
+    """Tags 134-145: clear the Japanese and set English lines in a port-made panel7 face."""
+    lines = PORT_MADE_TAGS[frame.frame]
+    rect = [0, 0, frame.width, frame.height]
+    source = lettering(frame, rect)
+    ink, shadow = ink_and_shadow(source)
+    face = fit_face(faces, lines, frame.width, shadow)
+    face_name = face.name
+    clear(frame, rect)
+    line_h = frame.height // len(lines)
+    boxes = [stamp(frame, face, text, [0, n * line_h, frame.width, line_h], ink, source_parts(source), shadow=shadow)
+             for n, text in enumerate(lines)]
+    elements = used_port_made(face, lines)
+    return {'path': 'G', 'text': ' / '.join(lines), 'lines': list(lines), 'face': face_name, 'ink': ink,
+            'shadow': shadow, 'edit_regions': [rect], 'lettering_bbox': boxes,
+            'port_made': bool(elements), 'port_made_elements': elements,
+            'design': '%d line(s) of %s lettering centred in the tag, ink%s taken from the source lettering'
+                      % (len(lines), face_name, ' and (+1,+1) shadow' if shadow is not None else '')}
+
+
+def date_cells(frame):
+    """(ink, shadow, per-cell lettering pixels) of the frame-60 kanji cells, which must hold only lettering."""
+    pixels = {}
+    for n in DATE_CELLS:
+        p = frame.parts[n]
+        pixels.update({k: v for k, v in lettering(frame, [p['x'], p['y'], p['w'], p['h']]).items() if v[0] == n})
+    ink, shadow = ink_and_shadow(pixels)
+    if any(t not in (CLEAR, ink, shadow) for n in DATE_CELLS for row in frame.parts[n]['texels'] for t in row):
+        raise ValueError('frame 60 kanji cells hold more than lettering')
+    return ink, shadow, pixels
+
+
+DATE_DIGITS = ('drawn by the game above each cell (native_hud.gd build_calendar: year y-0x41, '
+               'month y-0x22, day y-1, weekday frame 0x52+n inside part 6)')
+
+
+def plan_date_panel(frame, faces):
+    """Frame 60, default "Apr 4" form: clear the 年/月/日 cells; the port draws the month name."""
+    ink, shadow, _ = date_cells(frame)
+    regions = []
+    for n in DATE_CELLS:
+        p = frame.parts[n]
+        for row in p['texels']:
+            row[:] = [CLEAR] * len(row)
+        regions.append([p['x'], p['y'], p['w'], p['h']])
+    elements = [{'kind': 'layout', 'description': 'year, month and day kanji cells cleared; the port draws a '
+                 'port-made month-name sprite (mainrom-port-month-*.png) in place of month digit actors 19/20, '
+                 'so the panel reads 95 / Apr / 4 / (Mon); the weekday parentheses are kept'}]
+    return {'path': 'H', 'text': '95 / Apr / 4 / (Mon)', 'face': None, 'ink': ink, 'shadow': shadow,
+            'edit_regions': regions, 'lettering_bbox': [], 'port_made': True, 'port_made_elements': elements,
+            'date_form': {'reads': '95 / Apr / 4 / (Mon)', 'form': 'month-name', 'digits': DATE_DIGITS,
+                          'month_sprites': 'mainrom-port-month-<mon>.png, see port_overlay in the manifest',
+                          'without_port_overlay': 'reads 95 / 4 / 4 / (Mon) (game digits only)',
+                          'alternatives': ['captions: mainrom-alt-0060-captions.* reads 95 YR / 4 MO / 4 DAY / (Mon)']},
+            'design': 'empty panel cells; the English month is a separate port-drawn sprite'}
+
+
+def plan_date_captions(frame, faces):
+    """Frame 60, alternate form: small-cap captions YR / MO / DAY under the game's digits."""
+    face = faces['caps5']
+    ink, shadow, pixels = date_cells(frame)
+    frame.add_overlay(DATE_CELLS)
+    overlay = len(frame.parts) - 1
+    regions, boxes = [], []
+    for n, caption in DATE_CAPTIONS.items():
+        p = frame.parts[n]
+        rows = [y for (x, y), v in pixels.items() if v[0] == n]
+        top, bottom = min(rows), max(rows)
+        for row in p['texels']:
+            row[:] = [CLEAR] * len(row)
+        rect = [DATE_CAPTION_X[0], top, DATE_CAPTION_X[1], bottom - top + 1]
+        boxes.append(stamp(frame, face, caption, rect, ink, set(DATE_CELLS), shadow=shadow, part=overlay))
+        regions += [[p['x'], p['y'], p['w'], p['h']], rect]
+    elements = used_port_made(face, DATE_CAPTIONS.values()) + [{
+        'kind': 'layout', 'description': 'captions YR / MO / DAY on an overlay layer with the kanji-cell CLUT, '
+        'centred on the digit column (frame x 9..24) and on each kanji\'s rows; the weekday parentheses are kept'}]
+    return {'path': 'H', 'text': ' / '.join(DATE_CAPTIONS.values()), 'face': 'caps5', 'ink': ink, 'shadow': shadow,
+            'overlay_clut_parts': list(DATE_CELLS), 'edit_regions': regions, 'lettering_bbox': boxes,
+            'port_made': True, 'port_made_elements': elements,
+            'date_form': {'reads': '95 YR / 4 MO / 4 DAY / (Mon)', 'form': 'captions', 'digits': DATE_DIGITS},
+            'design': 'small-cap captions in the panel\'s kanji ink with its (+1,+1) drop shadow'}
+
+
+def load_digit_frames(sources, pack_path):
+    """The calendar digit frames 0x44..0x4D, each checked against its exported base PNG."""
+    pack = pack_path.read_bytes()
+    if digest(pack) != MAINROM_SHA:
+        raise ValueError('MAINROM.NBN identity differs')
+    images = {(i['frame_index'], i['variant']): i
+              for i in json.loads((sources / 'manifest.json').read_text())['images']}
+    out = {}
+    for f in DIGIT_FRAMES:
+        frame = Frame(f, images, pack)
+        original = Image.open(sources / ('mainrom.frame-%03d.base.png' % f)).convert('RGBA')
+        if list(frame.render('base').getdata()) != list(original.getdata()):
+            raise ValueError('decoder does not reproduce digit frame %d' % f)
+        out[f] = frame
+    return out
+
+
+def month_sprites(digits, date_frame, faces):
+    """Port-made month-name sprites in the calendar digits' CLUT, ink and drop shadow.
+
+    Each is 16x16 like the two-digit month pair it replaces; the name is centred on the
+    digit ink rows. Returns [(name, Frame, plan)].
+    """
+    four = digits[0x48]
+    ink, shadow = ink_and_shadow(lettering(four, [0, 0, four.width, four.height]))
+    palette = four.palettes['base'][0]
+    if any(date_frame.palettes['base'][n] != palette for n in DATE_CELLS):
+        raise ValueError('digit CLUT differs from the frame-60 kanji cells')
+    w, h = MONTH_SPRITE['size']
+    top, bottom = MONTH_SPRITE['digit_ink_rows']
+    out = []
+    for name in MONTHS:
+        face = fit_face(faces, [name], w, shadow)
+        model = Frame.from_layers(DATE_FRAME, w, h, [{'index': 0, 'x': 0, 'y': 0, 'w': w, 'h': h,
+                                                     'texels': [[CLEAR] * w for _ in range(h)]}],
+                                  {v: [palette] for v in VARIANTS})
+        box = stamp(model, face, name, [0, top, w, bottom - top + 1], ink, {0}, shadow=shadow)
+        out.append((name, model, {'text': name, 'face': face.name, 'ink': ink, 'shadow': shadow,
+                                  'lettering_bbox': [box], 'port_made': True,
+                                  'port_made_elements': used_port_made(face, [name]) + [{
+                                      'kind': 'sprite', 'description': 'new 16x16 port sprite for month %s in '
+                                      'the calendar digit CLUT, ink and (+1,+1) shadow, drawn in place of month '
+                                      'digit actors 19/20' % name}]}))
+    return out
+
+
+def digit_preview(digits, month_index):
+    """The month as the game draws it (one or two digit frames in a 16x16 box), for previews."""
+    month = month_index + 4 if month_index < 9 else month_index - 8
+    image = Image.new('RGBA', MONTH_SPRITE['size'], (0, 0, 0, 0))
+    if month >= 10:
+        image.alpha_composite(digits[0x44 + month // 10].render('base'), (0, 0))
+        image.alpha_composite(digits[0x44 + month % 10].render('base'), (8, 0))
+    else:
+        image.alpha_composite(digits[0x44 + month].render('base'), (4, 0))
+    return image
+
+
+def isolated_scope(f, model, original, users):
+    """Sheet scope of one draft on its own: whole-frame replacement unless every edited texel is private."""
+    edited, overlay, conflicting = {}, 0, 0
+    for n, p in enumerate(model.parts):
+        if 'sheet' not in p:
+            overlay += sum(1 for row in p['texels'] for t in row if t != CLEAR)
+            continue
+        before = original.parts[n]['texels']
+        for y, row in enumerate(p['texels']):
+            for x, t in enumerate(row):
+                if t != before[y][x]:
+                    k = sheet_key(p['sheet'], p['w'], p['h'], x, y)
+                    if edited.get(k, t) != t:
+                        conflicting += 1
+                    edited[k] = t
+    affected = Counter(g for g, keys in users.items() if g != f for k in edited if k in keys)
+    reasons = []
+    if overlay:
+        reasons.append('%d overlay texels have no sheet source' % overlay)
+    if conflicting:
+        reasons.append('%d sheet texels are drawn by two parts of this frame with different edits' % conflicting)
+    if affected:
+        reasons.append('edited texels are also drawn by frames %s' % sorted(affected))
+    return {'scope': 'frame-composite-only' if reasons else 'sheet-patch', 'reasons': reasons,
+            'edited_sheet_texels': len(edited), 'overlay_texels': overlay,
+            'affected_frames': {str(g): c for g, c in sorted(affected.items())}}
+
+
+def compose_port_made(frames, faces):
+    out = {}
+    for f in sorted(PORT_MADE_TAGS):
+        model = frames[f].copy()
+        out[f] = (model, plan_port_made_tag(model, faces))
+    model = frames[DATE_FRAME].copy()
+    out[DATE_FRAME] = (model, plan_date_panel(model, faces))
+    return out
+
+
+def frame_rows(f, model, plan, original_frame, hashes, sources, users, id_format, output_format):
+    """One output row per distinct source PNG of frame f, checked against the source outside the edit regions."""
+    scope = isolated_scope(f, model, original_frame, users)
+    rows = []
+    for sha, palette_ids in variant_groups(hashes, f):
+        original = Image.open(sources / ('mainrom.frame-%03d.%s.png' % (f, palette_ids[0]))).convert('RGBA')
+        image = render_group(model, palette_ids)
+        check(original, image, plan['edit_regions'], 'frame %d %s' % (f, palette_ids[0]))
+        rows.append((image, {'id': id_format % (f, palette_ids[0]), 'frame': f, 'palette_id': palette_ids[0],
+                             'palette_ids': palette_ids, 'source_container': CONTAINER,
+                             'source_container_sha256': MAINROM_SHA, 'source_png_sha256': sha,
+                             'dimensions': [model.width, model.height], 'output': output_format % (f, palette_ids[0]),
+                             'runtime_variant_scope': applicability(f, palette_ids, model),
+                             'style': 'unreviewed', 'human_approved': False, 'runtime_integrated': False,
+                             'in_game_verified': False, 'sheet_scope': scope, **plan}))
+    return rows
+
+
+def build_port_made(sources, pack_path, output, snapshot=SNAPSHOT, pass2=PASS2):
+    """Drafts for the MAINROM items with no usable original glyphs (60, 134-145 minus 136/137/140).
+
+    Also builds the frame-60 caption alternate and the port-made month-name sprites
+    that the default frame-60 form needs.
+    """
+    frames = load_frames(sources, pack_path)
+    hashes = gate(frames, sources)
+    digits = load_digit_frames(sources, pack_path)
+    records = json.loads((sources / 'manifest.json').read_text())['images']
+    users = {r['frame_index']: record_keys(r) for r in records if r['variant'] == 'base'}
+    faces = port_made_faces(panel7_face(snapshot, pass2))
+    drafted = compose_port_made(frames, faces)
+    output = new_output(output)
+    prepared, overlay = [], []
+    for f, (model, plan) in sorted(drafted.items()):
+        prepared += frame_rows(f, model, plan, frames[f], hashes, sources, users,
+                               'mainrom-draft-%04d.%s', 'mainrom-frame-%04d-%s.png')
+    model = frames[DATE_FRAME].copy()
+    alternates = frame_rows(DATE_FRAME, model, plan_date_captions(model, faces), frames[DATE_FRAME], hashes, sources,
+                            users, 'mainrom-alt-%04d-captions.%s', 'mainrom-alt-%04d-captions-%s.png')
+    for n, (name, model, plan) in enumerate(month_sprites(digits, frames[DATE_FRAME], faces)):
+        overlay.append((model.render('base'), {
+            'id': 'mainrom-port-month-%s' % name.lower(), 'month_order': n,
+            'output': 'mainrom-port-month-%s.png' % name.lower(), 'dimensions': [model.width, model.height],
+            'palette_id': 'base', 'clut_words': model.palettes['base'][0],
+            'clut_source': 'calendar digit frames 0x44..0x4D (equal to the frame-60 kanji-cell CLUT)',
+            'placement': MONTH_SPRITE, 'source_container_sha256': MAINROM_SHA, 'style': 'unreviewed',
+            'human_approved': False, 'runtime_integrated': False, 'in_game_verified': False, **plan}))
+    output.mkdir(parents=True)
+    for image, row in prepared + alternates + overlay:
+        image.save(output / row['output'])
+        row['output_sha256'] = digest((output / row['output']).read_bytes())
+    manifest = {'schema': 'tokimemo.mainrom-port-made-drafts.v1', 'ticket': PORT_MADE_TICKET, 'human_approved': False,
+                'user_decision': '2026-10-30: finish asset translation or creation; new lettering in the game style '
+                                 'is allowed where no usable original glyph exists, marked port-made',
+                'source_container': CONTAINER, 'source_container_sha256': MAINROM_SHA,
+                'decode_gate': {'frames': list(GATED_FRAMES), 'variants': list(VARIANTS),
+                                'renders_byte_identical': len(hashes), 'digit_frames': list(DIGIT_FRAMES)},
+                'faces': {name: face.proof() for name, face in sorted(faces.items())},
+                'assets': [row for _, row in prepared],
+                'alternates': [row for _, row in alternates],
+                'port_overlay': {'purpose': 'frame-60 default date form: the port draws the month name instead of '
+                                            'month digit actors 19/20 (port/godot/ui/native_hud.gd build_calendar)',
+                                 'month_order': list(MONTHS), 'sprites': [row for _, row in overlay]}}
+    (output / 'manifest.json').write_bytes(encoded(manifest) + b'\n')
+    return {'output': str(output), 'drafts': len(prepared), 'alternates': len(alternates),
+            'port_overlay_sprites': len(overlay), 'gated_renders': len(hashes)}
+
+
+def calendar_mock(panel, digits, month):
+    """Frame 60 with the game's year and day digits (95, 4) and a month image drawn on it (review aid)."""
+    image = panel.copy()
+    for digit, x, y in ((9, 9, 9), (5, 17, 9), (4, 13, 73)):
+        image.alpha_composite(digits[0x44 + digit].render('base'), (x, y))
+    image.alpha_composite(month, tuple(MONTH_SPRITE['frame60_rect'][:2]))
+    return image
+
+
+def previews(built, sources, destination, pack_path, zoom=4):
+    """Original beside draft, nearest x`zoom`, one PNG per output (local review aid, not published)."""
+    destination.mkdir(parents=True, exist_ok=True)
+    manifest = json.loads((built / 'manifest.json').read_text())
+    digits = load_digit_frames(sources, pack_path)
+    count = 0
+    for row in manifest['assets'] + manifest['alternates']:
+        original = Image.open(sources / ('mainrom.frame-%03d.%s.png' % (row['frame'], row['palette_id']))).convert('RGBA')
+        contact_sheet([(original, Image.open(built / row['output']).convert('RGBA'), row)],
+                      destination / row['output'], zoom=zoom)
+        count += 1
+    sprites = manifest['port_overlay']['sprites']
+    rows = [(digit_preview(digits, row['month_order']), Image.open(built / row['output']).convert('RGBA'), row)
+            for row in sprites]
+    contact_sheet(rows, destination / 'mainrom-port-months.png', zoom=zoom)
+    panel = Image.open(sources / ('mainrom.frame-%03d.base.png' % DATE_FRAME)).convert('RGBA')
+    draft = Image.open(built / ('mainrom-frame-%04d-base.png' % DATE_FRAME)).convert('RGBA')
+    captions = Image.open(built / ('mainrom-alt-%04d-captions-base.png' % DATE_FRAME)).convert('RGBA')
+    april = Image.open(built / sprites[0]['output']).convert('RGBA')
+    four = digit_preview(digits, 0)
+    contact_sheet([(calendar_mock(panel, digits, four), calendar_mock(draft, digits, april), None),
+                   (calendar_mock(captions, digits, four), calendar_mock(draft, digits, four), None)],
+                  destination / 'review-0060-date-forms-mock.png', zoom=zoom)
+    return count + len(rows)
+
+
+def publish_port_made(built, destination):
+    """Copy a port-made build and its ledger (port-made flags per asset) into a new repository directory."""
+    manifest_bytes = (built / 'manifest.json').read_bytes()
+    manifest = json.loads(manifest_bytes)
+    if manifest['schema'] != 'tokimemo.mainrom-port-made-drafts.v1':
+        raise ValueError('not a port-made build')
+    destination = destination.absolute()
+    if destination.exists():
+        raise ValueError('destination must be new')
+    (destination / PORT_MADE_REVISION).mkdir(parents=True)
+
+    def copy(row):
+        data = (built / row['output']).read_bytes()
+        if digest(data) != row['output_sha256']:
+            raise ValueError('built output changed: ' + row['id'])
+        (destination / PORT_MADE_REVISION / row['output']).write_bytes(data)
+        return {'dimensions': row['dimensions'], 'human_approved': False, 'id': row['id'],
+                'manifest_sha256': digest(manifest_bytes), 'output_sha256': row['output_sha256'],
+                'path': PORT_MADE_REVISION + '/' + row['output'], 'revision': PORT_MADE_REVISION,
+                'source_container_sha256': row['source_container_sha256'], 'status': 'draft',
+                'port_made': row['port_made'], 'port_made_elements': row['port_made_elements'], 'text': row['text']}
+
+    def frame_entry(row, reason):
+        return {**copy(row), 'frame': row['frame'], 'palette_id': row['palette_id'], 'palette_ids': row['palette_ids'],
+                'source_png_sha256': row['source_png_sha256'], 'sheet_scope': row['sheet_scope']['scope'],
+                'reason': reason % row['path']}
+
+    assets = [frame_entry(row, 'MAINROM draft with port-made lettering (path %s); unreviewed, no approval transfers.')
+              for row in manifest['assets']]
+    alternates = [frame_entry(row, 'Alternate MAINROM draft (path %s), not an inventory candidate; unreviewed.')
+                  for row in manifest['alternates']]
+    overlay = [{**copy(row), 'placement': row['placement'], 'month_order': row['month_order'],
+                'reason': 'Port-made overlay sprite for the frame-60 month name; not a source frame; unreviewed.'}
+               for row in manifest['port_overlay']['sprites']]
+    (destination / PORT_MADE_REVISION / 'manifest.json').write_bytes(manifest_bytes)
+    ledger = {'schema': 'tokimemo.translation-checkpoint.v1', 'ticket': PORT_MADE_TICKET, 'assets': assets,
+              'candidate_assets': len(assets), 'original_images_included': False,
+              'complete_translation_inventory': False, 'separate_reviewed_revisions': 0,
+              'port_made_assets': sum(1 for a in assets if a['port_made']),
+              'alternates': alternates, 'port_overlay_assets': overlay,
+              'publication_authorization': 'User explicitly requested translated assets in repository, 2026-10-29; '
+                                           'finish translation or creation, 2026-10-30.'}
+    (destination / 'ledger.json').write_bytes(encoded(ledger) + b'\n')
+    return {'destination': str(destination), 'assets': len(assets), 'alternates': len(alternates),
+            'port_overlay_assets': len(overlay)}
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--sources', type=Path, default=ROOT / '.asset-cache/translation-assets/original-mainrom-v1')
@@ -836,8 +1360,17 @@ if __name__ == '__main__':
     parser.add_argument('--executable', type=Path, default=ROOT / 'disc/files/SLPM_86.053')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--publish', type=Path, help='also copy outputs and a ledger into this new repository directory')
+    parser.add_argument('--port-made', action='store_true', help='build the port-made lettering drafts instead')
+    parser.add_argument('--previews', type=Path, help='with --port-made: write x4 original/draft previews here')
     args = parser.parse_args()
-    result = build(args.sources, args.pack, args.executable, args.output)
-    if args.publish:
-        result['published'] = publish(args.output, args.publish)
+    if args.port_made:
+        result = build_port_made(args.sources, args.pack, args.output)
+        if args.previews:
+            result['previews'] = previews(args.output, args.sources, args.previews, args.pack)
+        if args.publish:
+            result['published'] = publish_port_made(args.output, args.publish)
+    else:
+        result = build(args.sources, args.pack, args.executable, args.output)
+        if args.publish:
+            result['published'] = publish(args.output, args.publish)
     print(json.dumps(result))

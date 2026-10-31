@@ -1,0 +1,975 @@
+{
+ "decisions": [
+  {
+   "defaults_applied": [
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists",
+    "wording is the revisable default from the 2026-10-30 instruction",
+    "date form: the user default \"Apr 4\"; year, month and day cells cleared and the port draws mainrom-port-month-<mon>.png (16x16, digit CLUT) in place of month digit actors 19/20 at frame-60 rect (9, 40, 16, 16); without the overlay the panel reads 95 / 4 / 4 / (Mon); alternate: captions 95 YR / 4 MO / 4 DAY (ledger alternates, mainrom-alt-0060-captions.*)"
+   ],
+   "evidence": {
+    "alternates": [
+     {
+      "id": "mainrom-alt-0060-captions.base",
+      "output_sha256": "6935ceca81cb04ac76bf264bba455b715bae8e7947e6a6c010bf6bcce1085277",
+      "text": "YR / MO / DAY"
+     },
+     {
+      "id": "mainrom-alt-0060-captions.hud-43",
+      "output_sha256": "a2bf1bd301a571f801bfeab9cbb01ca1839842e795526472ed1df9bad202cb04",
+      "text": "YR / MO / DAY"
+     },
+     {
+      "id": "mainrom-alt-0060-captions.hud-44",
+      "output_sha256": "5ffed04308319099a23d2301c2a5a90eed05643647fe43cf9ef5f2a9a20a1f78",
+      "text": "YR / MO / DAY"
+     },
+     {
+      "id": "mainrom-alt-0060-captions.icon-51",
+      "output_sha256": "3fa60625dd2e030d8643c33495a56724a462a62f972b0daaa480c126f7607220",
+      "text": "YR / MO / DAY"
+     },
+     {
+      "id": "mainrom-alt-0060-captions.icon-52",
+      "output_sha256": "7c64a3b9838f66bccb81369377d159c559c9ca8bd92dca7f55faec19d37a47f9",
+      "text": "YR / MO / DAY"
+     },
+     {
+      "id": "mainrom-alt-0060-captions.icon-53",
+      "output_sha256": "9a012c72157f71c38e57cb690168000d0260cafd762ce5b46404d0b0d2174ec0",
+      "text": "YR / MO / DAY"
+     }
+    ],
+    "edit_regions": [
+     [
+      10,
+      24,
+      16,
+      16
+     ],
+     [
+      10,
+      56,
+      16,
+      16
+     ],
+     [
+      10,
+      88,
+      16,
+      16
+     ]
+    ],
+    "outputs": [
+     {
+      "id": "mainrom-draft-0060.base",
+      "output_sha256": "9011b0b7d920791df3bb123f099ef13cbfc2888fcf75145516350d00b6463a7c",
+      "palette_ids": [
+       "base"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0060.hud-43",
+      "output_sha256": "4204551b83d2ce31f941f41bf581de33312d6f302b0ca1ed552cac3257ee0dd2",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0060.hud-44",
+      "output_sha256": "2060bfdd29ca12971c42b03db53c596f6a5033f22b26bc402a6179ddeaa6c6f2",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0060.icon-51",
+      "output_sha256": "0551937bcafcc8397982837521ef8e5bb8a37cc12ab8406d7e547d42466f5e52",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0060.icon-52",
+      "output_sha256": "ae82d70c70d6b0117923e8dccdb825fd5a40fca8c3c8eb4a6123ce2a1e82ce6a",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0060.icon-53",
+      "output_sha256": "567c6e11e3a4140473185babeaa2510691a669929762692da5c476ca84e9a0cb",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "sheet_scope": "frame-composite-only"
+     }
+    ],
+    "port_made_elements": [
+     {
+      "description": "year, month and day kanji cells cleared; the port draws a port-made month-name sprite (mainrom-port-month-*.png) in place of month digit actors 19/20, so the panel reads 95 / Apr / 4 / (Mon); the weekday parentheses are kept",
+      "kind": "layout"
+     }
+    ],
+    "port_overlay": [
+     {
+      "id": "mainrom-port-month-apr",
+      "output_sha256": "d94c14a3d168e7a127676506aee864d2dbc6b0390e93116e024957791d520074",
+      "text": "Apr"
+     },
+     {
+      "id": "mainrom-port-month-may",
+      "output_sha256": "ea75cbffa8c3572f3b27aa5c30567ecfa60029597b57d59ca8d30a45f3b925a2",
+      "text": "May"
+     },
+     {
+      "id": "mainrom-port-month-jun",
+      "output_sha256": "435c78a366e548297a246effafc8c36d0f5eb9a1acd4c3d4ce8c8abcc8526429",
+      "text": "Jun"
+     },
+     {
+      "id": "mainrom-port-month-jul",
+      "output_sha256": "83118cc0f7f62327820f81a6361c2e107b2bac03470b131f6f96e0a0ce481765",
+      "text": "Jul"
+     },
+     {
+      "id": "mainrom-port-month-aug",
+      "output_sha256": "4ca40b648145d9c765e6b4a1b806f94b3c768291b4bcf670931908697c483dbc",
+      "text": "Aug"
+     },
+     {
+      "id": "mainrom-port-month-sep",
+      "output_sha256": "78c209dd005df32a4abbfa69b82551ae7a3bde20318632b024b7b4df77aa3af0",
+      "text": "Sep"
+     },
+     {
+      "id": "mainrom-port-month-oct",
+      "output_sha256": "229439012535ac5d1457e71488190bd79c0dd6ce2f3ab476785a41d857e5e7ee",
+      "text": "Oct"
+     },
+     {
+      "id": "mainrom-port-month-nov",
+      "output_sha256": "cae8a03b0fab4a7b11e19de61391b9f94b65e3cb7c159d2dfbd2488841c3a995",
+      "text": "Nov"
+     },
+     {
+      "id": "mainrom-port-month-dec",
+      "output_sha256": "8553043db9fc0588e430660880af8af0710a9783fafa6b9c4a6f826f81b1a49a",
+      "text": "Dec"
+     },
+     {
+      "id": "mainrom-port-month-jan",
+      "output_sha256": "6d06ba8ea9054c28ab039e9db847f6d6c05c11c56050c136942098e080bb6362",
+      "text": "Jan"
+     },
+     {
+      "id": "mainrom-port-month-feb",
+      "output_sha256": "4582c66d46db3056d1201e3318a3ed5c16bb1413f765ec2c3e01832b604774cd",
+      "text": "Feb"
+     },
+     {
+      "id": "mainrom-port-month-mar",
+      "output_sha256": "fd8e9fd6d25d581f8ea9713ac35c3724c877310657cacc4c78d7f656ce0cf965",
+      "text": "Mar"
+     }
+    ]
+   },
+   "item_id": "mainrom-0060",
+   "reason": "draft candidate \"95 / Apr / 4 / (Mon)\": kanji cells cleared, month name drawn by port-made overlay sprites (ledger port_overlay_assets); unreviewed, human_approved false",
+   "status": "candidate-only",
+   "supersedes": "translations/en/graphics/decisions/mainrom.json status missing"
+  },
+  {
+   "defaults_applied": [
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists",
+    "wording is the revisable default from the 2026-10-30 instruction"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      40,
+      8
+     ]
+    ],
+    "outputs": [
+     {
+      "id": "mainrom-draft-0134.base",
+      "output_sha256": "dd492fdff92d2a71f3eb716a16391b746f652de4f420aeb33fe40563ea196e58",
+      "palette_ids": [
+       "base",
+       "icon-53"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0134.hud-43",
+      "output_sha256": "212c9894f6647931863becf8b994927581d14c99e9c4fae792e7cd4601f6adc3",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0134.hud-44",
+      "output_sha256": "20a0091179203badb8d4a06bb96d325ca3c1429748d949af14dadd04df954f66",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0134.icon-51",
+      "output_sha256": "bd1c6e6ca68c9bd7a4fdcc9a182676096a02f65e34715dd11b4b6130a52b186d",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0134.icon-52",
+      "output_sha256": "1df622ca414c41d273fb37e10a66a5ed31adf5c28c2399cbe2d691706107ab04",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "sheet_scope": "frame-composite-only"
+     }
+    ],
+    "port_made_elements": [
+     {
+      "char": "d",
+      "description": "lowercase d, mirror of b",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     },
+     {
+      "char": "m",
+      "description": "lowercase m, double arch of panel7 n",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     },
+     {
+      "char": "y",
+      "description": "lowercase y, tail folded into the x-height like panel7 p",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     }
+    ]
+   },
+   "item_id": "mainrom-0134",
+   "reason": "draft candidate \"Comedy\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only",
+   "supersedes": "translations/en/graphics/decisions/mainrom.json status missing"
+  },
+  {
+   "defaults_applied": [
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists",
+    "wording is the revisable default from the 2026-10-30 instruction"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      48,
+      8
+     ]
+    ],
+    "outputs": [
+     {
+      "id": "mainrom-draft-0135.base",
+      "output_sha256": "540d019e9c54241568de445a2b03fac9c0fa4a772085494e500e4bdf840bea1c",
+      "palette_ids": [
+       "base",
+       "icon-53"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0135.hud-43",
+      "output_sha256": "3851defef0ca06a583db96e1b4ea0f0b101a7bd7dbce0bbde8ae2531ef074985",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0135.hud-44",
+      "output_sha256": "283508fb9684405b69a22f427e9461f98545fb1131306329ca11dacd350432dd",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0135.icon-51",
+      "output_sha256": "a221be1863198dc6ba4c239e80fdebc0340c6ff80a2f1c6e7d4a24cc214d405b",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0135.icon-52",
+      "output_sha256": "57390f52e52b2ad699b964526d425e9b4d4e3bbb5a0ce204b147fe05835b0530",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "sheet_scope": "frame-composite-only"
+     }
+    ],
+    "port_made_elements": [
+     {
+      "char": "R",
+      "description": "cap R, 4 wide, bowl matches B and P",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     },
+     {
+      "char": "m",
+      "description": "lowercase m, double arch of panel7 n",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     }
+    ]
+   },
+   "item_id": "mainrom-0135",
+   "reason": "draft candidate \"Romance\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only",
+   "supersedes": "translations/en/graphics/decisions/mainrom.json status missing"
+  },
+  {
+   "defaults_applied": [
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists",
+    "wording is the revisable default from the 2026-10-30 instruction"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      24,
+      8
+     ]
+    ],
+    "outputs": [
+     {
+      "id": "mainrom-draft-0138.base",
+      "output_sha256": "d0423631e8141e111de85c16d0a82d7509261dfd581cea0aec8ef0922d550567",
+      "palette_ids": [
+       "base",
+       "icon-53"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0138.hud-43",
+      "output_sha256": "176857452eeba13791c39abf48906a37f332ed784e15e776760587c721995f1e",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0138.hud-44",
+      "output_sha256": "6293c0a67809fdbf6434fdf97af9d3b7cad29354eb3e9834f27cf414d44d8936",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0138.icon-51",
+      "output_sha256": "3b1f8fd7efb96f7b068e425177b7d7d52374f18ee2a0c58fe11ae693ce036c8a",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0138.icon-52",
+      "output_sha256": "09ed38904f45a9b5aca7bf2cf9307d2d43f83958495e09b7386b5f3cfc8d5e28",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "sheet_scope": "frame-composite-only"
+     }
+    ],
+    "port_made_elements": [
+     {
+      "char": "H",
+      "description": "narrow cap H, 4 wide (panel7 H is 5)",
+      "face": "panel7-compact+narrow-Ho",
+      "kind": "glyph",
+      "origin": "port-made-narrow"
+     },
+     {
+      "char": "o",
+      "description": "narrow o, 3 wide (panel7 o is 4)",
+      "face": "panel7-compact+narrow-Ho",
+      "kind": "glyph",
+      "origin": "port-made-narrow"
+     }
+    ]
+   },
+   "item_id": "mainrom-0138",
+   "reason": "draft candidate \"Horror\" with port-made lettering (panel7-compact+narrow-Ho); unreviewed, human_approved false",
+   "status": "candidate-only",
+   "supersedes": "translations/en/graphics/decisions/mainrom.json status missing"
+  },
+  {
+   "defaults_applied": [
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists",
+    "wording is the revisable default from the 2026-10-30 instruction"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      24,
+      8
+     ]
+    ],
+    "outputs": [
+     {
+      "id": "mainrom-draft-0139.base",
+      "output_sha256": "3c7e197a6dc5900ad80003d022ab0310a873ec53ebc670640791da8c60cf903c",
+      "palette_ids": [
+       "base",
+       "icon-53"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0139.hud-43",
+      "output_sha256": "8197a1ded1fb45acab53dd66b3a35018b543ac4643324a457b96c261f54dd9e2",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0139.hud-44",
+      "output_sha256": "ad4aee3861ce2263bd8fce4222a80d89bb81a69d728b6042c8c7dade12320c73",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0139.icon-51",
+      "output_sha256": "8a4d2bb94ccf66356afdbcbe0c7ed61e4041491ede73d85651005178837caca2",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0139.icon-52",
+      "output_sha256": "0f4cf4855d08f2a39bee60c5e1fb2165926bc665761bfe493f6006a84d43cba7",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "sheet_scope": "frame-composite-only"
+     }
+    ],
+    "port_made_elements": [
+     {
+      "char": "m",
+      "description": "lowercase m, double arch of panel7 n",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     }
+    ]
+   },
+   "item_id": "mainrom-0139",
+   "reason": "draft candidate \"Anime\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only",
+   "supersedes": "translations/en/graphics/decisions/mainrom.json status missing"
+  },
+  {
+   "defaults_applied": [
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists",
+    "wording is the revisable default from the 2026-10-30 instruction"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      32,
+      8
+     ]
+    ],
+    "outputs": [
+     {
+      "id": "mainrom-draft-0141.base",
+      "output_sha256": "2431781cf538514a2f0348a3ace2fda71c44df4c6b978f27dadbf6577195ec69",
+      "palette_ids": [
+       "base",
+       "icon-53"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0141.hud-43",
+      "output_sha256": "e569db3b733787a951803aab6a79dda790d34966b42838b093291b164691f09e",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0141.hud-44",
+      "output_sha256": "288078c994095010ec52fecba37f387ff17753a2884e506be6b926ff79aca0ba",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0141.icon-51",
+      "output_sha256": "1141c7fe506768ba1af18bf54e8e5292f589ecacb1225b2ae11b926b3cdfc7a7",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0141.icon-52",
+      "output_sha256": "9dcf4447274c6ce2b07f690375461fa0c14132ace4f84c0c9bdd38a0cfaa4e21",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "sheet_scope": "frame-composite-only"
+     }
+    ],
+    "port_made_elements": [
+     {
+      "char": "I",
+      "description": "cap I with serifs, 3 wide, so it does not read as panel7 l",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     },
+     {
+      "char": "d",
+      "description": "lowercase d, mirror of b",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     }
+    ]
+   },
+   "item_id": "mainrom-0141",
+   "reason": "draft candidate \"Idol\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only",
+   "supersedes": "translations/en/graphics/decisions/mainrom.json status missing"
+  },
+  {
+   "defaults_applied": [
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists",
+    "wording is the revisable default from the 2026-10-30 instruction"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      24,
+      8
+     ]
+    ],
+    "outputs": [
+     {
+      "id": "mainrom-draft-0142.base",
+      "output_sha256": "c588ece4ff185d00cabcdf18ac014227f7f52d6f73b157c2e03ab132a0bbb332",
+      "palette_ids": [
+       "base",
+       "icon-53"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0142.hud-43",
+      "output_sha256": "4f932ec906268733d3daa02ed329eefa0bd56965a134d12a851ecb077f2a33b9",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0142.hud-44",
+      "output_sha256": "f2b9d5fac4ce171d47ca4ca7a4e1298b2855458120382f0b15e4db88e61d1af6",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0142.icon-51",
+      "output_sha256": "c2d333a11e251f31e5d5a8c7736c4defe302b6d78c36d86281f802a4abc002de",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0142.icon-52",
+      "output_sha256": "56e39da27bba380e38f79b0dcacc402367e8e8cc52b698643e613aefaf54c8b4",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "sheet_scope": "frame-composite-only"
+     }
+    ],
+    "port_made_elements": [
+     {
+      "char": "R",
+      "description": "cap R, 4 wide, bowl matches B and P",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     }
+    ]
+   },
+   "item_id": "mainrom-0142",
+   "reason": "draft candidate \"Rock\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only",
+   "supersedes": "translations/en/graphics/decisions/mainrom.json status missing"
+  },
+  {
+   "defaults_applied": [
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists",
+    "wording is the revisable default from the 2026-10-30 instruction"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      64,
+      8
+     ]
+    ],
+    "outputs": [
+     {
+      "id": "mainrom-draft-0143.base",
+      "output_sha256": "7049d23be2e5b77066cd9619c5971363855a4fb09c292ba5a0fe792558f348d0",
+      "palette_ids": [
+       "base",
+       "icon-53"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0143.hud-43",
+      "output_sha256": "99d36523a18b3da2bf0602ca933a7caea78689e3655a1bfcd24e3f439cf45067",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0143.hud-44",
+      "output_sha256": "862f71734210ed30e06e73e7d4535356fe697e41c4f74e213c513404b343fc74",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0143.icon-51",
+      "output_sha256": "d2cfd2ee0231a47871e6dc06d6b553c5eb421597706a6a75f23a3e8e633f5662",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "sheet_scope": "frame-composite-only"
+     },
+     {
+      "id": "mainrom-draft-0143.icon-52",
+      "output_sha256": "4ad236ae7b5cf3035185df7db0478207bfc17180fcf8a0ab7c890372f9a91133",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "sheet_scope": "frame-composite-only"
+     }
+    ],
+    "port_made_elements": [
+     {
+      "char": "M",
+      "description": "cap M, 5 wide like panel7 A and H",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     },
+     {
+      "char": "N",
+      "description": "cap N, 5 wide, diagonal on rows 2-4",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     },
+     {
+      "char": "w",
+      "description": "lowercase w, panel7 v with a centre stroke",
+      "face": "panel7-compact",
+      "kind": "glyph",
+      "origin": "port-made"
+     }
+    ]
+   },
+   "item_id": "mainrom-0143",
+   "reason": "draft candidate \"New Music\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only",
+   "supersedes": "translations/en/graphics/decisions/mainrom.json status missing"
+  },
+  {
+   "defaults_applied": [
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists",
+    "wording is the revisable default from the 2026-10-30 instruction"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      32,
+      16
+     ]
+    ],
+    "outputs": [
+     {
+      "id": "mainrom-draft-0144.base",
+      "output_sha256": "ec54b221e338b2b73bdacccdf59ae38230ccaec77aa0dc6529f27e0b6c56b61a",
+      "palette_ids": [
+       "base"
+      ],
+      "sheet_scope": "sheet-patch"
+     },
+     {
+      "id": "mainrom-draft-0144.hud-43",
+      "output_sha256": "4ae53307a754b981af0e90cd2644307e5516d195acf1c1f14e8d9ec280750b87",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "sheet_scope": "sheet-patch"
+     },
+     {
+      "id": "mainrom-draft-0144.hud-44",
+      "output_sha256": "68e3beaee4f3453515c650f33c4ae3a6fbed7d626a2c1d3cbbc8b883a426a24d",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "sheet_scope": "sheet-patch"
+     },
+     {
+      "id": "mainrom-draft-0144.icon-51",
+      "output_sha256": "bb191e4141d4ac1a17c070775b1ce93bb232f4faf2ff21091d94ff1fec0097db",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "sheet_scope": "sheet-patch"
+     },
+     {
+      "id": "mainrom-draft-0144.icon-52",
+      "output_sha256": "cb9541b7a372d686e7cfe2307335e784b186d1c13046fd72d92c9540af3f5b97",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "sheet_scope": "sheet-patch"
+     },
+     {
+      "id": "mainrom-draft-0144.icon-53",
+      "output_sha256": "d9fd753cbeb8114d56836b0ffe51c122f79bc3d165e87b861be363c2125ed6f1",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "sheet_scope": "sheet-patch"
+     }
+    ],
+    "port_made_elements": [
+     {
+      "char": "P",
+      "description": "cap P, 4 wide, bowl matches B and R",
+      "face": "panel7-compact+narrow-egnsrt",
+      "kind": "glyph",
+      "origin": "port-made"
+     },
+     {
+      "char": "W",
+      "description": "cap W, 5 wide, mirror logic of panel7 v",
+      "face": "panel7-compact+narrow-egnsrt",
+      "kind": "glyph",
+      "origin": "port-made"
+     },
+     {
+      "char": "e",
+      "description": "narrow e, 3 wide (panel7 e is 4)",
+      "face": "panel7-compact+narrow-egnsrt",
+      "kind": "glyph",
+      "origin": "port-made-narrow"
+     },
+     {
+      "char": "g",
+      "description": "narrow g, 3 wide, square bowl so it does not read as narrow a",
+      "face": "panel7-compact+narrow-egnsrt",
+      "kind": "glyph",
+      "origin": "port-made-narrow"
+     },
+     {
+      "char": "n",
+      "description": "narrow n, 3 wide (panel7 n is 4)",
+      "face": "panel7-compact+narrow-egnsrt",
+      "kind": "glyph",
+      "origin": "port-made-narrow"
+     },
+     {
+      "char": "r",
+      "description": "narrow r, 2 wide (panel7 r is 3); last resort, loses the arm",
+      "face": "panel7-compact+narrow-egnsrt",
+      "kind": "glyph",
+      "origin": "port-made-narrow"
+     },
+     {
+      "char": "s",
+      "description": "narrow s, 3 wide (panel7 s is 4)",
+      "face": "panel7-compact+narrow-egnsrt",
+      "kind": "glyph",
+      "origin": "port-made-narrow"
+     },
+     {
+      "char": "t",
+      "description": "narrow t, 2 wide (panel7 t is 3); last resort, loses the crossbar",
+      "face": "panel7-compact+narrow-egnsrt",
+      "kind": "glyph",
+      "origin": "port-made-narrow"
+     }
+    ]
+   },
+   "item_id": "mainrom-0144",
+   "reason": "draft candidate \"Pro / Wrestling\" with port-made lettering (panel7-compact+narrow-egnsrt); unreviewed, human_approved false",
+   "status": "candidate-only",
+   "supersedes": "translations/en/graphics/decisions/mainrom.json status missing"
+  },
+  {
+   "defaults_applied": [
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists",
+    "wording is the revisable default from the 2026-10-30 instruction"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      32,
+      16
+     ]
+    ],
+    "outputs": [
+     {
+      "id": "mainrom-draft-0145.base",
+      "output_sha256": "9334cf9bcca8451e08b3e64aa9e2514ef507ef4067070ec32f8cf0264aec2de1",
+      "palette_ids": [
+       "base"
+      ],
+      "sheet_scope": "sheet-patch"
+     },
+     {
+      "id": "mainrom-draft-0145.hud-43",
+      "output_sha256": "a7c67ea1b486fc25110b4e4d23307d4505ba16f55508ec6b1dcccc003a023ca1",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "sheet_scope": "sheet-patch"
+     },
+     {
+      "id": "mainrom-draft-0145.hud-44",
+      "output_sha256": "130c193274e2c6a74c5d40e29e09542b8c3a1ef22cbf984cf909f9cb9c347dcb",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "sheet_scope": "sheet-patch"
+     },
+     {
+      "id": "mainrom-draft-0145.icon-51",
+      "output_sha256": "e201e5b659a883e4817331709d20e97b690a62e4011fc09b1603448b0cb7b89d",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "sheet_scope": "sheet-patch"
+     },
+     {
+      "id": "mainrom-draft-0145.icon-52",
+      "output_sha256": "e6b9226fa16292c7b59752ffc958bf9102cc7a4da68086979429c1b0b44d87dd",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "sheet_scope": "sheet-patch"
+     },
+     {
+      "id": "mainrom-draft-0145.icon-53",
+      "output_sha256": "1de1053bb2733a849b006d9dbc4e8246ed694297b4d1490a9d788223d8f5018a",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "sheet_scope": "sheet-patch"
+     }
+    ],
+    "port_made_elements": [
+     {
+      "char": "B",
+      "description": "cap B, 4 wide like panel7 S and L",
+      "face": "panel7-compact+narrow-a",
+      "kind": "glyph",
+      "origin": "port-made"
+     },
+     {
+      "char": "a",
+      "description": "narrow a, 3 wide (panel7 a is 4)",
+      "face": "panel7-compact+narrow-a",
+      "kind": "glyph",
+      "origin": "port-made-narrow"
+     },
+     {
+      "char": "b",
+      "description": "lowercase b, panel7 h stem with the panel7 o bowl",
+      "face": "panel7-compact+narrow-a",
+      "kind": "glyph",
+      "origin": "port-made"
+     }
+    ]
+   },
+   "item_id": "mainrom-0145",
+   "reason": "draft candidate \"Baseball\" with port-made lettering (panel7-compact+narrow-a); unreviewed, human_approved false",
+   "status": "candidate-only",
+   "supersedes": "translations/en/graphics/decisions/mainrom.json status missing"
+  }
+ ],
+ "group": "mainrom port-made (art finish 2026-10-30)",
+ "integration": [
+  "tools/translation_inventory.py: append checkpoints/T39004-mainrom-port-made-v1/ledger.json to LEDGERS (ids use the existing mainrom-draft-NNNN.<palette> pattern)",
+  "inventory_decisions.json atom_overrides: set the ten items below to candidate-only with these reasons, then regenerate translation_inventory.json",
+  "every draft here is frame-composite-only (whole-frame replacement): tag cells are shared between tags; frame 60 needs the port to draw the month-name sprite instead of month digit actors 19/20 (port/godot/ui/native_hud.gd build_calendar)"
+ ],
+ "ledger": "translations/en/graphics/artwork/checkpoints/T39004-mainrom-port-made-v1/ledger.json",
+ "ledger_sha256": "b149d4861e846c98d2441ea4b9b59fbd42c6170292abf6780b8de2e2651b5ec7",
+ "not_changed": [
+  "frames 57-59 keep \"Save\": \"Saving\" needs about 27px of panel7 ink plus outline in a 19px card interior"
+ ],
+ "schema": "tokimemo.translation-decisions.v1",
+ "ticket": "T-39009",
+ "weekday_revisit": "frames 82-88: every source variant group already has English (reviewed batch-002 or pass3 draft); no variant is missing, nothing redrawn"
+}
