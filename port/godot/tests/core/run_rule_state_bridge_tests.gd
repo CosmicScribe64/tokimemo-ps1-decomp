@@ -7,6 +7,7 @@ const Math = preload("res://core/native_math.gd")
 const Bridge = preload("res://core/rule_state_bridge.gd")
 const Memory = preload("res://core/game_memory.gd")
 const Layout = preload("res://core/game_layout.gd")
+const Boot = preload("res://core/game_state_boot.gd")
 const RouteState = preload("res://rules/new_game_route_state.gd")
 
 var failures: Array[String] = []
@@ -21,6 +22,8 @@ func run() -> Array[String]:
 	_test_core_fields()
 	_test_key_coverage()
 	_test_port_only_keys_untouched()
+	_test_boot_defaults()
+	_test_placeholders()
 	return failures
 
 func _check(condition: bool, message: String) -> void:
@@ -198,3 +201,40 @@ func _test_port_only_keys_untouched() -> void:
 	_check(JSON.stringify([state.rule_state["actor_state"], state.rule_state["resources"],
 		state.rule_state["voice_wait_frames"], state.rule_state["message_title_visible"]]) == kept, "port-only keys survive a pull")
 	_check(not state.rule_state.has("overlay_state"), "pull adds no keys")
+
+func _test_boot_defaults() -> void:
+	var state := _state()
+	var mem: Memory = Boot.new_game_memory(state)
+	_check(mem.error.is_empty(), "boot memory faults: " + mem.error)
+	_check(mem.u16(0x800e6280) == 0x140 and mem.u16(0x800e6282) == 0xf0, "game_state_init video size")
+	_check(mem.s16(0x800e6294 + 2) == 0xa0 and mem.s16(0x800e6298) == 0x168 and mem.s16(0x800e6298 + 2) == 0x78, "draw origins")
+	_check(mem.u32(0x800e6280 + 0x1098) == 0x9f and mem.u32(0x800e6280 + 0x10f0) == 0x106, "menu_hit[3] word and scanline limit")
+	_check(mem.u8(0x800e6280 + 0x3a) == 0x80 and mem.u32(0x800e6280 + 0x10e8) == 1, "brightness and quads_enabled")
+	_check(mem.u8(0x800e6280 + 0x10ec) == 0x80 and mem.u8(0x800e6280 + 0x10ed) == 0x80, "bg_layer_order")
+	_check(mem.u8(0x800e6280 + 0xf74) == 1 and mem.u8(0x800e6280 + 0xf6f) == 3 and mem.u32(0x80123110) == 0x80132000, "pad_defaults_set")
+	_check(mem.u8(0x800e6280 + 0x3c) == 2 and mem.u8(0x800e6280 + 0xf73) == 0x20, "boot_settings_defaults_set")
+	# The state's sourced values win over the defaults.
+	_check(mem.u8(0x800e6280 + 0x1108) == 0x34 and mem.u8(0x800e6280 + 0xf6c) == 1 and mem.u8(0x800e6280 + 0xf5f) == 6, "state values override defaults")
+	var full: PackedByteArray = mem.read_bytes(0x800e6280 + 0xc4, 16)
+	var expected := PackedByteArray()
+	for key: String in ["profile_family_bytes", "profile_given_bytes"]:
+		for value: int in state.rule_state[key]:
+			if value == 0:
+				break
+			expected.append(value)
+	expected.resize(16)
+	_check(full == expected, "name_entry_profile_store full name")
+
+func _test_placeholders() -> void:
+	var state := _state()
+	state.rule_state["last_picked_girl"] = 0
+	state.opening["unread_before_owned_write"] = ["last_picked_girl", "icon_enabled[14]"]
+	var mem := Memory.new()
+	mem.write_u8(0x800b6740, 0xff) # the data section's value, as load_executable would leave it
+	Bridge.push(state, mem)
+	_check(mem.s8(0x800b6740) == -1, "a placeholder key is not pushed over the data section's value")
+	Bridge.pull(mem, state)
+	_check(state.rule_state["last_picked_girl"] == 0, "a placeholder key is not pulled either")
+	state.opening.erase("unread_before_owned_write")
+	Bridge.push(state, mem)
+	_check(mem.s8(0x800b6740) == 0, "without the marker the key is pushed")

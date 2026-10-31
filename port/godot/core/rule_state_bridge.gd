@@ -93,9 +93,9 @@ static func push(state: Object, mem: Memory) -> void:
 	for field: String in CORE_FLAGS:
 		mem.write_u8(GS + CORE_FLAGS[field], 1 if state.get(field) else 0)
 	var rule: Variant = state.get("rule_state")
-	if rule is Dictionary:
-		_push_rule_state(rule, mem)
 	var opening: Variant = state.get("opening")
+	if rule is Dictionary:
+		_push_rule_state(rule, mem, _placeholders(opening))
 	if opening is Dictionary:
 		for key: String in OPENING_FIELDS:
 			if opening.has(key):
@@ -114,9 +114,9 @@ static func pull(mem: Memory, state: Object) -> void:
 		if bool(state.get(field)) != flag:
 			state.set(field, flag)
 	var rule: Variant = state.get("rule_state")
-	if rule is Dictionary:
-		_pull_rule_state(mem, rule)
 	var opening: Variant = state.get("opening")
+	if rule is Dictionary:
+		_pull_rule_state(mem, rule, _placeholders(opening))
 	if opening is Dictionary:
 		for key: String in OPENING_FIELDS:
 			if opening.has(key):
@@ -126,6 +126,14 @@ static func pull(mem: Memory, state: Object) -> void:
 					opening[key] = value
 
 # ---- helpers
+
+## Keys the state holds only as a placeholder (opening.unread_before_owned_write, written by
+## flow/new_game_state_adapter.gd: never read before an owned write). The original's value
+## for them is the initial data/bss value, so neither direction touches them.
+static func _placeholders(opening: Variant) -> Array:
+	if opening is Dictionary and opening.get("unread_before_owned_write") is Array:
+		return opening["unread_before_owned_write"]
+	return []
 
 static func _address(offset_or_address: int) -> int:
 	return offset_or_address if offset_or_address >= 0x80000000 else GS + offset_or_address
@@ -187,7 +195,7 @@ static func _get_words(rule: Dictionary, key: String, mem: Memory, address: int,
 
 # ---- rule_state
 
-static func _push_rule_state(rule: Dictionary, mem: Memory) -> void:
+static func _push_rule_state(rule: Dictionary, mem: Memory, placeholders: Array) -> void:
 	_push_scalar(rule, "year", mem, GS + Layout.GAME_STATE_YEAR, 1)
 	_push_scalar(rule, "month", mem, GS + Layout.GAME_STATE_MONTH, 1)
 	_push_scalar(rule, "day", mem, GS + Layout.GAME_STATE_DAY, 1)
@@ -209,7 +217,8 @@ static func _push_rule_state(rule: Dictionary, mem: Memory) -> void:
 	_push_scalar(rule, "menu_mode", mem, GS + Layout.GAME_STATE_MENU_MODE, 1)
 	_push_scalar(rule, "event_log_count", mem, GS + Layout.GAME_STATE_EVENT_LOG_COUNT, 1)
 	_push_scalar(rule, "current_girl", mem, GS + Layout.GAME_STATE_CURRENT_GIRL, 1)
-	_push_scalar(rule, "last_picked_girl", mem, mem.global_address("schedule_last_picked_girl"), 1)
+	if "last_picked_girl" not in placeholders:
+		_push_scalar(rule, "last_picked_girl", mem, mem.global_address("schedule_last_picked_girl"), 1)
 	_push_scalar(rule, "scene_work", mem, mem.global_address("scene_work"), 4)
 	_push_scalar(rule, "background_show", mem, mem.global_address("dec_bg_show"), 1)
 	_put_bytes(rule, "progress_state", mem, GS + Layout.GAME_STATE_PROGRESS_STATE, 0x9c)
@@ -229,7 +238,7 @@ static func _push_rule_state(rule: Dictionary, mem: Memory) -> void:
 	_push_event_log(rule, mem)
 	_push_menu_disabled(rule, mem)
 
-static func _pull_rule_state(mem: Memory, rule: Dictionary) -> void:
+static func _pull_rule_state(mem: Memory, rule: Dictionary, placeholders: Array) -> void:
 	_pull_scalar(rule, "year", mem, GS + Layout.GAME_STATE_YEAR, 1, false)
 	_pull_scalar(rule, "month", mem, GS + Layout.GAME_STATE_MONTH, 1, false)
 	_pull_scalar(rule, "day", mem, GS + Layout.GAME_STATE_DAY, 1, false)
@@ -251,7 +260,8 @@ static func _pull_rule_state(mem: Memory, rule: Dictionary) -> void:
 	_pull_scalar(rule, "menu_mode", mem, GS + Layout.GAME_STATE_MENU_MODE, 1, false)
 	_pull_scalar(rule, "event_log_count", mem, GS + Layout.GAME_STATE_EVENT_LOG_COUNT, 1, false)
 	_pull_scalar(rule, "current_girl", mem, GS + Layout.GAME_STATE_CURRENT_GIRL, 1, false)
-	_pull_scalar(rule, "last_picked_girl", mem, mem.global_address("schedule_last_picked_girl"), 1, true)
+	if "last_picked_girl" not in placeholders:
+		_pull_scalar(rule, "last_picked_girl", mem, mem.global_address("schedule_last_picked_girl"), 1, true)
 	_pull_scalar(rule, "scene_work", mem, mem.global_address("scene_work"), 4, true)
 	_pull_scalar(rule, "background_show", mem, mem.global_address("dec_bg_show"), 1, false)
 	_get_bytes(rule, "progress_state", mem, GS + Layout.GAME_STATE_PROGRESS_STATE, 0x9c)
