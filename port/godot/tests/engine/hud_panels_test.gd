@@ -29,6 +29,7 @@ func run() -> Array[String]:
 	_test_icons()
 	_test_season_and_vacation()
 	_test_title_hidden_forwards_a0()
+	_test_screen_frame_fade()
 	_test_refusal_names_the_callee()
 	for engine in _made:
 		engine.shutdown()
@@ -233,3 +234,44 @@ func _test_refusal_names_the_callee() -> void:
 	engine.memory.write_global("D_8011F113", 0x80)
 	engine.call_c("hizuke_show")
 	_check(engine.halted() and engine.refusal.begins_with("hizuke_show -> prim_gradient_rect"), "an unported callee is refused by name: %s" % engine.refusal)
+
+## hud_screen_frame_draw, season fade (C: every 4th frame once D_800B5BC8 >= 0xEF): the counter is incremented; at 0xFF the
+## palette of season (current + 3) & 3 is loaded and the function returns; from 0xF0 the 8 colour pairs of the palettes
+## (current + 3) & 3 and (current + 4) & 3 are blended with the weights 255 - fade and fade - 239 and loaded.
+func _test_screen_frame_fade() -> void:
+	var engine = _new()
+	var m = engine.memory
+	var loads: Array = []
+	engine.set_stub("GetWorkBase", func(_args: Array) -> int: return 0x80180000)
+	for name: String in ["func_8009F0A4", "SetSemiTrans", "AddPrim", "goto_tpage"]:
+		engine.set_stub(name, func(_args: Array) -> int: return 0)
+	engine.set_stub("func_8009ED74", func(_args: Array) -> int: return 0x1234)
+	engine.set_stub("LoadSquare", func(args: Array) -> int:
+		loads.append(args.duplicate())
+		return 0)
+	var palettes: int = engine.modules.hud_panels.G_D_800B5B28
+	var blended: int = engine.modules.hud_panels.G_D_800B5BA8
+	engine.gs_set("month", 7) # hud_season_index() = 1
+	engine.gs_set("frame_count", 3) # (frame_count & 3) == 3
+	m.write_global("D_800B5BC8", 0xF0)
+	var old_word: int = 10 | (20 << 5) | (30 << 10) | (1 << 16) | (2 << 21) | (3 << 26)
+	var next_word: int = 4 | (8 << 5) | (12 << 10) | (16 << 16) | (31 << 21) | (0 << 26)
+	m.write_u32(palettes + 0 * 32, old_word) # palette (1 + 3) & 3 = 0, colour pair 0
+	m.write_u32(palettes + 1 * 32, next_word) # palette (1 + 4) & 3 = 1
+	engine.call_c("hud_screen_frame_draw", [0])
+	# fade = 0xF1: old weight 14, next weight 2, each channel (14 * old + 2 * next) >> 4
+	var want: int = 9 | (18 << 5) | (27 << 10) | (2 << 16) | (5 << 21) | (2 << 26)
+	_check(m.read_global("D_800B5BC8") == 0xF1, "the fade counter is incremented")
+	_check(m.u32(blended) == want, "blended colour pair 0: 0x%X, wanted 0x%X" % [m.u32(blended), want])
+	_check(loads == [[0xA0, 0x1E1, 0x10, 1, blended]], "the blended palette is loaded: %s" % [loads])
+	# fade 0xFF: the season advances and the palette (current + 3) & 3 is loaded, nothing is blended
+	loads.clear()
+	m.write_global("D_800B5BC8", 0xFE)
+	engine.call_c("hud_screen_frame_draw", [0])
+	_check(loads == [[0xA0, 0x1E1, 0x10, 1, palettes + 1 * 32]], "fade 0xFF loads palette (2 + 3) & 3 = 1: %s" % [loads])
+	# not every 4th frame: no fade step
+	loads.clear()
+	engine.gs_set("frame_count", 2)
+	m.write_global("D_800B5BC8", 0xF0)
+	engine.call_c("hud_screen_frame_draw", [0])
+	_check(m.read_global("D_800B5BC8") == 0xF0 and loads.is_empty(), "the fade only advances when frame_count & 3 == 3")

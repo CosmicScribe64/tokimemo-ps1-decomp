@@ -5,7 +5,13 @@
   "wpb-b2",
   "wpb-b3",
   "wpb-b5",
-  "wpb-b6"
+  "wpb-b6",
+  "wpb-c1",
+  "wpb-c4",
+  "wpb-c5",
+  "wpb-c6",
+  "wpb-d1",
+  "wpb-d2"
  ],
  "exclude": [
   {
@@ -36,14 +42,8 @@
  ],
  "functions": {},
  "untested": {
-  "portrait_read_start": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
   "portrait_hide": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
-  "portrait_build": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
-  "portrait_value_clear_if_high": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
-  "portrait_expression_select": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
-  "portrait_face_update": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
   "bustup_speech": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
-  "bustup_wink": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
   "message_disp_switch": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
   "hud_icon_move_allowed": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
   "hud_summer_phase": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",

@@ -1,5 +1,8 @@
 {
- "captures": [],
+ "captures": [
+  "wpb-c4",
+  "wpb-d1"
+ ],
  "exclude": [
   {
    "start": "0x80000000",
@@ -29,17 +32,8 @@
  ],
  "functions": {},
  "untested": {
-  "scene_screen_reset": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
-  "Vblnk_Timer_Init": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
-  "Vblnk_Timer": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
-  "Scroll": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
   "Rot_2D": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
-  "Fade_Out_Init": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
-  "Fade_Out_Main": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
-  "Fade_In_Init": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
-  "Fade_In_Main": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
   "Yubi": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
-  "Default_Disp": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
   "select_girl_by_scores": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
   "actor_pair_swap_sequences": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
   "girl_state_rank": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",

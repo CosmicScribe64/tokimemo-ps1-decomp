@@ -24,6 +24,7 @@ func run() -> Array[String]:
 	_test_rot_2d()
 	_test_small_functions()
 	_test_audio_latch()
+	_test_select_girl_by_scores()
 	for engine in _made:
 		engine.shutdown()
 	_made.clear()
@@ -150,3 +151,35 @@ func _test_audio_latch() -> void:
 	_check(m.read_global("audio_bank_wait_done") == 1, "the latch is set when the poll returns 1")
 	engine.call_c("audio_bank_wait_latch")
 	_check(polls.size() == 2, "once set, the poll is not called again")
+
+## select_girl_by_scores (C: best-girl selection among the girls with the `met` flag): the first met girl is the
+## starting best; a later girl with a higher tokimeki + yuukou score replaces it when the rank of the current best
+## is not below hers (t >= rank), a tie goes to the larger tokimeki + affection sum under the same rank test.
+func _test_select_girl_by_scores() -> void:
+	var engine = _new()
+	var m = engine.memory
+	var base: int = engine.gs_address("girls")
+	for girl: int in 11:
+		m.write_u32(base + girl * 0x38 + 0xC, 0)
+	for girl: int in [0, 2, 3]: # met: bit 1 of the flags word
+		m.write_u32(base + girl * 0x38 + 0xC, 2)
+	var yuukou: Dictionary = {0: 10, 2: 5, 3: 10}
+	var tokimeki: Dictionary = {0: 20, 2: 30, 3: 25}
+	var rank: Dictionary = {0: 3, 2: 2, 3: 2}
+	engine.set_stub("get_h_yuukou", func(args: Array) -> int: return yuukou[args[0]])
+	engine.set_stub("get_h_tokimeki", func(args: Array) -> int: return tokimeki[args[0]])
+	engine.set_stub("get_g_zyotai_s", func(args: Array) -> int: return rank[args[0]])
+	m.write_u16(base + 2 * 0x38 + 2, 5) # tokimeki of girl 2
+	m.write_u16(base + 2 * 0x38 + 6, 6) # affection of girl 2: sum 11
+	m.write_u16(base + 3 * 0x38 + 2, 20)
+	m.write_u16(base + 3 * 0x38 + 6, 1) # girl 3: sum 21
+	# girl 2: score 35 > 30 and rank(0) = 3 >= rank(2) = 2: best = 2. girl 3: score 35 == 35, rank(2) = 2 >= 2, sum 11 < 21: best = 3
+	_check(engine.call_c("select_girl_by_scores") == 3, "the tie goes to the larger tokimeki + affection sum")
+	rank[3] = 9 # rank(best = 2) = 2 < 9: the tie is not taken
+	_check(engine.call_c("select_girl_by_scores") == 2, "a tie with a higher rank stays with the current best")
+	rank[0] = 1 # rank(0) = 1 < rank(2) = 2: the higher score of girl 2 does not replace girl 0
+	rank[3] = 2
+	_check(engine.call_c("select_girl_by_scores") == 0, "a higher score loses against a better rank of the current best")
+	for girl: int in [0, 2, 3]:
+		m.write_u32(base + girl * 0x38 + 0xC, 1) # bit 0 is not the met bit
+	_check(engine.call_c("select_girl_by_scores") == 0, "without the met flag only girl 0 stays (the starting best)")
