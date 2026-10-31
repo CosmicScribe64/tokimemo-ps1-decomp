@@ -26,6 +26,7 @@ extends SceneTree
 
 const Differ = preload("res://tests/engine/engine_diff.gd")
 const GameEngine = preload("res://engine/engine.gd")
+const MemoryCardService = preload("res://services/memory_card_service.gd")
 const MAX_FAILURES_SHOWN: int = 4 ## failing hits printed per function (the tally counts them all; --show N changes it)
 
 var show_limit: int = MAX_FAILURES_SHOWN
@@ -102,6 +103,7 @@ func _run_module(engine, differ, stem: String, root: String, specs: String, only
 			# outside game memory (the CD drive model) evolves as it did between the captured calls.
 			engine.shutdown()
 			engine = GameEngine.new()
+			engine.memory_card = MemoryCardService.new("/tmp/engine-diff-card") # T-39314: the card the SDK card calls ask
 			var function_spec: Dictionary = spec.get("functions", {}).get(function_name, {})
 			var known: Dictionary = function_spec.get("not_comparable", {})
 			if untested.has(function_name):
@@ -125,6 +127,8 @@ func _run_module(engine, differ, stem: String, root: String, specs: String, only
 				if result.ok:
 					tally.passed += 1
 					tally.compared += int(result.compared_bytes)
+				elif known_spec.has("refuses") and _is_expected_refusal(result, str(known_spec["refuses"])):
+					tally.refusals = int(tally.get("refusals", 0)) + 1
 				elif not known_spec.is_empty() and result.within_allowance:
 					tally.not_comparable = int(tally.get("not_comparable", 0)) + 1
 					_note_runs(tally, result.runs)
@@ -146,9 +150,10 @@ func _run_module(engine, differ, stem: String, root: String, specs: String, only
 			if int(t.passed) == 0 and not (untested.has(function_name) and not str(untested[function_name]).is_empty()):
 				print("    NO PASSING HIT: every hit of %s fails or is not comparable; add a comparable capture or list it under \"untested\" with a reason" % function_name)
 				ok = false
-			print("%-34s %3d hit(s), %3d passed, %d callee call(s) replayed, %d bytes compared%s%s" % [
+			print("%-34s %3d hit(s), %3d passed, %d callee call(s) replayed, %d bytes compared%s%s%s" % [
 				function_name, t.hits, t.passed, t.callees, t.compared,
 				", %d not comparable (spec)" % int(t.not_comparable) if int(t.get("not_comparable", 0)) > 0 else "",
+				", %d refused as the spec expects" % int(t.refusals) if int(t.get("refusals", 0)) > 0 else "",
 				", %d FAILED" % int(t.failed) if int(t.get("failed", 0)) > 0 else ""])
 			if args_verbose and t.has("ranges"):
 				_print_ranges(t.ranges)
@@ -158,6 +163,13 @@ func _run_module(engine, differ, stem: String, root: String, specs: String, only
 			print("%-34s NO CAPTURE (add one or list it under \"untested\" with a reason)" % function_name)
 			ok = false
 	return ok
+
+## T-39314: a hit the original served through a path the model refuses by design (the original queued the call
+## behind a running DMA: hardware state that is not in RAM). The spec entry says {"refuses": "<text of the refusal>",
+## "reason": "..."}; the hit passes when the port's only problem is that refusal.
+func _is_expected_refusal(result: Dictionary, text: String) -> bool:
+	var problems: Array = result.problems
+	return problems.size() == 1 and str(problems[0]).begins_with("refused: ") and str(problems[0]).contains(text)
 
 func _note_runs(tally: Dictionary, runs: Array) -> void:
 	var ranges: Dictionary = tally.get("ranges", {})
