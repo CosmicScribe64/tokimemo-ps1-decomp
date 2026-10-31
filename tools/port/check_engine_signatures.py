@@ -58,6 +58,12 @@ def parse_module(path):
             count = len([a for a in args.group(1).split(',') if a.strip()]) if args else 0
             extra = re.search(r'"args_extra": (\d+)', body)
             reason = re.search(r'"args_extra_reason": "([^"]+)"', body)
+            # "c_params": the C parameter count when it differs from the register words (a struct passed by value, such as RECT)
+            c_params = re.search(r'"c_params": (\d+)', body)
+            if c_params:
+                # the register words (args) must cover the C parameters; the extra words are a struct passed by value
+                assert len(args.group(1).split(',')) >= int(c_params.group(1)), 'c_params larger than the register words of ' + m.group(1)
+                count = int(c_params.group(1))
             sigs[m.group(1)] = (count, ret.group(1) if ret else '?', '"ret_undefined"' in body, int(extra.group(1)) if extra else 0, bool(reason))
     return (c_file.group(1) if c_file else ''), sigs
 

@@ -386,10 +386,10 @@ func _test_refusals_and_layout() -> void:
 	# An unported callee is a refusal at its call, with nothing stored after it.
 	var engine = _new()
 	engine.call_c("hud_save_slot_info_show", [0, 0])
-	_check(engine.refusal.contains("k_sub_reset"), "hud_save_slot_info_show refuses at the unported k_sub_reset: %s" % engine.refusal)
+	_check(engine.refusal.is_empty(), "hud_save_slot_info_show: k_sub_reset is ported (T-39311), the call now runs without a refusal: %s" % engine.refusal)
 	var engine2 = _new()
 	engine2.call_c("hud_cursor_actor_init", [0])
-	_check(engine2.refusal.contains("actor_clear") and engine2.memory.u8(0x8011ECD0 + 1) == 0, "hud_cursor_actor_init refuses at actor_clear and writes nothing after it")
+	_check(engine2.refusal.is_empty(), "hud_cursor_actor_init: actor_clear is ported (T-39311), the call now runs without a refusal: %s" % engine2.refusal)
 	# magazine_issue_index is uninitialised in the C for unassigned year/month combinations: refusal by name.
 	var engine3 = _new()
 	for n: String in ["actor_clear_upper", "actor_clear", "set_kanji_string"]:

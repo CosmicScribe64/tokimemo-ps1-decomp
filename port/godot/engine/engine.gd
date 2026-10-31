@@ -30,6 +30,10 @@ const DiscPack = preload("res://services/disc_pack.gd")
 const Renderer = preload("res://presentation/ps1_renderer.gd")
 const CdDrive = preload("res://engine/_cd_drive.gd")
 const Libc = preload("res://engine/_libc.gd")
+const SdkGpu = preload("res://engine/_sdk_gpu.gd")
+const SdkEtc = preload("res://engine/_sdk_etc.gd")
+const SdkCard = preload("res://engine/_sdk_card.gd")
+const SdkGte = preload("res://engine/_sdk_gte.gd")
 const Frames = preload("res://engine/_frame_sizes.gd")
 const Symbols = preload("res://engine/_symbols.gd")
 
@@ -50,6 +54,9 @@ var cd_drive: CdDrive = CdDrive.new()
 ## and finds null refuses with the function name; it never skips the work.
 var text_layer = null # services/text_layer_store.gd instance
 var audio = null # services/audio_service.gd instance (native audio engine behind it)
+## T-39314: the virtual memory card behind the SDK card calls (services/memory_card_service.gd). Null until the
+## integrating code attaches one; the BIOS card calls then refuse by name (engine/_sdk_card.gd).
+var memory_card = null
 
 ## First refusal, "" while the run is healthy. Format: "<caller> -> <callee>: <reason>".
 var refusal: String = ""
@@ -76,6 +83,10 @@ var _functions: Dictionary = {} # C function name -> module instance
 var _callables: Dictionary = {} # C function name -> cached Callable
 var _arity: Dictionary = {} # C function name -> argument count
 var _returns: Dictionary = {} # C function name -> C return type ("void", "s32", ...)
+## Real (not padded) variadic arguments of the variadic C function now running (T-39314): call_c pads missing ones
+## with 0 so the method can be called, but a formatter must refuse to consume one of them.
+var variadic_supplied: int = 0
+var _required: Dictionary = {} # variadic C function name -> number of required arguments (T-39314)
 var _stubs: Dictionary = {} # C function (or pointer slot) name -> Callable(args: Array) -> int, test doubles
 var _stack: Array[String] = []
 var _by_address: Dictionary = {} # code address -> C function name, built on first use
@@ -86,6 +97,11 @@ func _init() -> void:
 	var libc := Libc.new()
 	libc.engine = self
 	_add_module("libc", libc)
+	# T-39314: the SDK layer (PsyQ libgpu/libgs, libetc/libapi, libcard, libgte), one helper module per library.
+	for entry: Array in [["sdk_gpu", SdkGpu], ["sdk_etc", SdkEtc], ["sdk_card", SdkCard], ["sdk_gte", SdkGte]]:
+		var sdk: RefCounted = (entry[1] as GDScript).new()
+		sdk.set("engine", self)
+		_add_module(entry[0], sdk)
 	_register_modules()
 
 ## Breaks the engine <-> module reference cycles so the engine can be freed (modules hold `engine`).
@@ -148,9 +164,17 @@ func _add_module(stem: String, module: RefCounted, check_frames: bool = true) ->
 			var signature: Variant = signatures.get(function_name) if signatures is Dictionary else null
 			if signature is Dictionary:
 				_returns[function_name] = str(signature.get("ret", "s32"))
-				if (signature.get("args", []) as Array).size() != _arity[function_name]:
+				var listed: int = (signature.get("args", []) as Array).size()
+				if signature.has("variadic"):
+					# a variadic C function (printf, sprintf): "args" are the required arguments, "variadic" the
+					# number of extra integer arguments the method takes; call_c pads the missing ones with 0
+					_required[function_name] = listed
+					if listed + int(signature["variadic"]) != _arity[function_name]:
+						registration_errors.append("%s.%s takes %d argument(s), C_SIGNATURES lists %d required + %d variadic" % [
+							stem, function_name, _arity[function_name], listed, int(signature["variadic"])])
+				elif listed != _arity[function_name]:
 					registration_errors.append("%s.%s takes %d argument(s), C_SIGNATURES lists %d" % [
-						stem, function_name, _arity[function_name], (signature.get("args", []) as Array).size()])
+						stem, function_name, _arity[function_name], listed])
 			if check_frames and not Frames.FRAME_SIZES.has(function_name):
 				registration_errors.append("%s.%s has no frame size in engine/_frame_sizes.gd (regenerate with tools/port/gen_engine_tables.py)" % [stem, function_name])
 
@@ -173,6 +197,29 @@ func ported_functions() -> PackedStringArray:
 ## The module that ported `function_name`, or null.
 func module_of(function_name: String) -> RefCounted:
 	return _functions.get(function_name)
+
+# ---- renderer (T-39314)
+
+var _renderer_tried: bool = false
+
+## True when the generic renderer can take work: it is opened on first use (the GDExtension is not installed
+## in every environment). A caller that needs the renderer and gets false refuses naming its function; it never
+## skips the draw.
+func renderer_ready() -> bool:
+	if renderer.is_open():
+		return true
+	if not _renderer_tried:
+		_renderer_tried = true
+		# Ps1Renderer.open() reports a missing library as an engine error: look for it first (res://bin holds it)
+		var present: bool = ClassDB.class_exists(Renderer.NATIVE_CLASS)
+		for file_name: String in DirAccess.get_files_at("res://bin"):
+			if file_name.begins_with("liboriginal_render") and file_name.get_extension() in ["so", "dylib", "dll", "remap"]:
+				present = true
+		if present:
+			renderer.open()
+		else:
+			renderer.last_error = "native PS1 renderer library is not installed under res://bin"
+	return renderer.is_open()
 
 # ---- name <-> address (generated from config/symbol_addrs*.txt and the asm labels)
 
@@ -202,8 +249,16 @@ func call_c(function_name: String, args: Array = []) -> int:
 		refuse(function_name, "C function %s is not ported (no engine module lists it)" % function_name)
 		return 0
 	if args.size() != _arity[function_name]:
-		refuse(function_name, "%s takes %d argument(s), called with %d" % [function_name, _arity[function_name], args.size()])
-		return 0
+		if _required.has(function_name) and args.size() >= int(_required[function_name]) and args.size() < _arity[function_name]:
+			variadic_supplied = args.size() - int(_required[function_name])
+			args = args.duplicate()
+			while args.size() < _arity[function_name]:
+				args.append(0)
+		else:
+			refuse(function_name, "%s takes %d argument(s), called with %d" % [function_name, _arity[function_name], args.size()])
+			return 0
+	elif _required.has(function_name):
+		variadic_supplied = args.size() - int(_required[function_name])
 	if _stack.size() >= MAX_CALL_DEPTH:
 		refuse(function_name, "call depth %d exceeded (%s)" % [MAX_CALL_DEPTH, " > ".join(_stack)])
 		return 0

@@ -212,7 +212,7 @@ static func _arguments(hit: Dictionary, signature: Dictionary) -> Array[int]:
 	var stack: Array = hit.stack
 	for i: int in stack.size():
 		raw.append(int(stack[i]))
-	var count: int = (signature.get("args", []) as Array).size()
+	var count: int = (signature.get("args", []) as Array).size() + int(signature.get("variadic", 0)) # T-39314: printf, sprintf
 	return raw.slice(0, count)
 
 ## A test double that replays the next recorded callee call.

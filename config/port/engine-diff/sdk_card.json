@@ -1,0 +1,65 @@
+{
+ "captures": [
+  "card-save",
+  "card-load",
+  "card-create",
+  "card2-load",
+  "card2-save"
+ ],
+ "exclude": [],
+ "functions": {
+  "_card_info": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS card driver state in kernel RAM (job flags and SIO buffers the original's driver sets when it starts the job); it is not game memory and the port keeps the card job in the SDK layer and never writes below 0x80010000 for these calls"
+    }
+   ]
+  },
+  "_card_load": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS card driver state in kernel RAM (job flags and SIO buffers the original's driver sets when it starts the job); it is not game memory and the port keeps the card job in the SDK layer and never writes below 0x80010000 for these calls"
+    }
+   ]
+  },
+  "EnterCriticalSection": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "the syscall exception saves the interrupted context in kernel RAM (BIOS exception stacks and the interrupt dispatcher's state); the port has no exception and never writes below 0x80010000 for these calls"
+    }
+   ]
+  },
+  "ExitCriticalSection": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "the syscall exception saves the interrupted context in kernel RAM (BIOS exception stacks and the interrupt dispatcher's state); the port has no exception and never writes below 0x80010000 for these calls"
+    }
+   ]
+  }
+ },
+ "untested": {
+  "_card_status": "refuses by design: the BIOS behaviour of this call was only observed on a blank card (see the header of engine/_sdk_card.gd), so no result is modelled; hand check in tests/engine/sdk_misc_test.gd",
+  "_card_clear": "refuses by design: the BIOS behaviour of this call was only observed on a blank card (see the header of engine/_sdk_card.gd), so no result is modelled; hand check in tests/engine/sdk_misc_test.gd",
+  "open": "refuses by design: the BIOS behaviour of this call was only observed on a blank card (see the header of engine/_sdk_card.gd), so no result is modelled; hand check in tests/engine/sdk_misc_test.gd",
+  "close": "refuses by design: the BIOS behaviour of this call was only observed on a blank card (see the header of engine/_sdk_card.gd), so no result is modelled; hand check in tests/engine/sdk_misc_test.gd",
+  "read": "refuses by design: the BIOS behaviour of this call was only observed on a blank card (see the header of engine/_sdk_card.gd), so no result is modelled; hand check in tests/engine/sdk_misc_test.gd",
+  "write": "refuses by design: the BIOS behaviour of this call was only observed on a blank card (see the header of engine/_sdk_card.gd), so no result is modelled; hand check in tests/engine/sdk_misc_test.gd",
+  "format": "refuses by design: the BIOS behaviour of this call was only observed on a blank card (see the header of engine/_sdk_card.gd), so no result is modelled; hand check in tests/engine/sdk_misc_test.gd",
+  "delete": "refuses by design: the BIOS behaviour of this call was only observed on a blank card (see the header of engine/_sdk_card.gd), so no result is modelled; hand check in tests/engine/sdk_misc_test.gd",
+  "OpenEvent": "called once at boot (card_ev_set) before any saved state: no capture reaches it; hand check in tests/engine/sdk_misc_test.gd from the psx-spx event layout, whose table pointer, size and entries the captured RAM confirms",
+  "EnableEvent": "boot-time only (card_ev_set), no hit in the sampled states; hand check in tests/engine/sdk_misc_test.gd",
+  "CloseEvent": "called only when the card job ends (Hw_Stop), never reached by the sampled states; hand check in tests/engine/sdk_misc_test.gd",
+  "InitCARD": "boot-time only (card_ev_set): no capture reaches it; it changes no state the game can read",
+  "StartCARD": "boot-time only (card_ev_set): no capture reaches it",
+  "_bu_init": "boot-time only (card_ev_set): no capture reaches it",
+  "_card_auto": "boot-time only (card_ev_set): no capture reaches it"
+ }
+}

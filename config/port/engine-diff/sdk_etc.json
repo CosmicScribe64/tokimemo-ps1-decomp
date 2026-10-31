@@ -1,0 +1,27 @@
+{
+ "captures": [
+  "gpu1",
+  "gpu-title",
+  "gpu-prol",
+  "gpu-name",
+  "gpu-school",
+  "gpu-sel",
+  "gpu-tel",
+  "gpu-evt",
+  "gpu-sp1",
+  "gpu-sp2",
+  "gpu-sp3"
+ ],
+ "exclude": [],
+ "functions": {
+  "func_800AD950": {
+   "not_comparable": {
+    "gpu1:9": {
+     "reason": "the capture hit is VSync(0), a blocking wait for a vertical blank the frame loop produces: the port refuses by the blocking-wait rule",
+     "refuses": "blocking wait"
+    }
+   }
+  }
+ },
+ "untested": {}
+}

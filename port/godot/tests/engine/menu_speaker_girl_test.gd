@@ -360,10 +360,10 @@ func _test_voice() -> void:
 func _test_refusals_and_layout() -> void:
 	var engine = _new()
 	engine.call_c("x_taku_string_set", [1, 2, 3, 3])
-	_check(engine.refusal.contains("set_kanji_string"), "x_taku_string_set refuses at the unported set_kanji_string: %s" % engine.refusal)
+	_check(engine.refusal.is_empty(), "x_taku_string_set: set_kanji_string is ported (T-39311), the call now runs without a refusal: %s" % engine.refusal)
 	var e2 = _new()
 	e2.call_c("sndi", [0x80150000, 0, 0xFF])
-	_check(e2.refusal.contains("set_kanji_string"), "sndi refuses at set_kanji_string: %s" % e2.refusal)
+	_check(e2.refusal.is_empty(), "sndi: set_kanji_string is ported (T-39311), the call now runs without a refusal: %s" % e2.refusal)
 	var e3 = _new()
 	e3.call_c("get_near_menu", [2, 1, 0])
 	_check(e3.refusal.contains("axis_distances is uninitialised"), "get_near_menu on an axis other than 0/1 refuses: %s" % e3.refusal)

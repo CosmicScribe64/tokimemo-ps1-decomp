@@ -1,0 +1,15 @@
+{
+ "captures": [
+  "wpa-tx1",
+  "wpa-tx2",
+  "wpa-s5"
+ ],
+ "exclude": [],
+ "functions": {},
+ "untested": {
+  "set_k_work": "not reached from the sampled states (title, school first line); covered by tests/engine/text_system_test.gd",
+  "k_sub_reset_point_set": "not reached from the sampled states (title, school first line); covered by tests/engine/text_system_test.gd",
+  "k_disp_goto_line_end": "not reached from the sampled states (title, school first line); covered by tests/engine/text_system_test.gd",
+  "text_unused_stub": "empty function with no caller in src/; covered by tests/engine/text_system_test.gd"
+ }
+}

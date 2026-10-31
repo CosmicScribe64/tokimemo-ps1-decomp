@@ -74,3 +74,32 @@ Not yet split: objects inside `libcd_rest`, `libsnd`, `libspu`, `libgs`, `libgpu
 The old order guess (libpress, libcd, libsnd, libspu, libgpu, libapi) is refined above: libgs sits between libspu and libgpu, libgte after libgpu, then libetc, then libapi/libcard/libc objects interleaved.
 
 Build side: [[build-system]] (per-object asm assembly without gas padding). Executable layout: [[executable]]. Ticket: [[tickets/T-0010-sdk-lib-object-boundaries]].
+
+## Engine SDK layer: identified symbols (T-39314)
+The engine ([[engine-porting-contract]], ticket [[tickets/T-39314-engine-sdk-layer]]) provides the SDK calls the main executable makes. Symbols without a name in `config/symbol_addrs_sdk.txt` are identified here from the asm (`asm/libgpu.s` and neighbours) by the GP0 command code and header length each initialiser writes, the offsets a function reads from its argument, the data labels it uses and the driver table it calls through (`D_800DD580` points at the driver table `D_800DD540` of libgpu `sys.c`: +0x08 queue, +0x0C clear, +0x10 GP1/GP0 word write, +0x14 FIFO send, +0x18 DMA list send, +0x1C store, +0x20 load, +0x2C OT clear, +0x34 reset, +0x38 status, +0x3C DrawSync). The names are the PsyQ ones; the engine keeps the `func_` symbol the C calls.
+
+| symbol | PsyQ function | evidence |
+|---|---|---|
+| `func_8009C210` | `ResetGraph(mode)` | first function of SYS.OBJ; prints `ResetGraph`, GPU probe, calls ResetCallback; `mode & 7` selects the reset form |
+| `func_8009C5E0` | `SetDispMask(mask)` | GP1(03h) with bit 0 = !mask; mask 0 invalidates the stored DISPENV |
+| `func_8009C674` | `DrawSync(mode)` | calls driver +0x3C |
+| `func_8009C6D8` | rectangle check used by the transfer calls | prints through `printf` for an invalid RECT |
+| `func_8009C7F8` / `C884` / `C8E0` / `C93C` | `ClearImage` / `LoadImage` / `StoreImage` / `MoveImage` | strings `ClearImage`, `LoadImage`, `StoreImage`, `MoveImage` at 0x800B2F78..; drivers +0x0C, +0x20, +0x1C, +0x18 |
+| `func_8009C9F8` / `CAAC` | `ClearOTag` / `ClearOTagR` | forward chain ending in the node at `D_800DD644` (0x04FFFFFF); reverse table via the OTC driver +0x2C |
+| `func_8009CB3C` / `CB9C` | `DrawPrim` / `DrawOTag` | DrawSync(0) then FIFO send +0x14; DMA list send +0x18 |
+| `func_8009CC04` / `CCBC` / `CCF4` / `D10C` | `PutDrawEnv` / `GetDrawEnv` / `PutDispEnv` / `GetDispEnv` | 0x5C-byte DRAWENV copy at `D_800DD598`, 0x14-byte DISPENV copy at `D_800DD5F4`; `D2E8` builds the DR_ENV packet at env+0x1C |
+| `func_8009D294` | `SetDrawMode(p, dfe, dtd, tpage, tw)` | header length 2, E1 word from `get_mode`, E2 word from `D7C4` |
+| `func_8009ECB0` / `ED74` | `GetTPage(tp, abr, x, y)` / `GetClut(x, y)` | field layouts; GetTPage switches on `GetGraphType` (`D_800DD588`) |
+| `AddPrim`, `AddPrims`, `SetSemiTrans`, `SetShadeTex` | same | named in `symbol_addrs_sdk.txt` |
+| `func_8009EFDC` `EFF0` `F004` `F018` `F02C` `F040` `F054` `F068` | `SetPolyF3` `SetPolyFT3` `SetPolyG3` `SetPolyGT3` `SetPolyF4` `SetPolyFT4` `SetPolyG4` `SetPolyGT4` | header length 4/7/6/9/5/9/8/12 and codes 0x20/0x24/0x30/0x34/0x28/0x2C/0x38/0x3C |
+| `func_8009F07C` `F090` `F0A4` | `SetSprt8` `SetSprt16` `SetSprt` | codes 0x74/0x7C/0x64 |
+| `func_8009F0B8` `F0CC` `F0E0` `F0F4` | `SetTile1` `SetTile8` `SetTile16` `SetTile` | codes 0x68/0x70/0x78/0x60 |
+| `func_8009F108` `F11C` `F130` `F150` `F170` `F190` | `SetLineF2` `SetLineG2` `SetLineF3` `SetLineG3` `SetLineF4` `SetLineG4` | codes 0x40/0x50/0x48/0x58/0x4C/0x5C, polylines write the 0x55555555 terminator |
+| `func_8009AD00` / `func_8009824C` | libgs `GsDrawOt` / `GsSortClear` | `DrawOTag(ot->org)`; the per-buffer clear packet at 0x800E6100 linked into `ot->org` |
+| `func_800AD950` | libetc `VSync(mode)` | RCS id `intr.c` 1995/08/29; `VSync: timeout` string |
+| `func_800AD3F8` | libetc I_MASK write that returns the old value; the PsyQ name is inferred from behaviour (not matched to a published symbol) | used by the queue to save and restore the mask |
+| `func_80098650` / `func_8009ABF0` | `GetRCnt(0xF2000001)` / `ResetRCnt(0xF2000001)` (root counter 2 = the horizontal-retrace counter), although splat files them in `libspu.s` / `libgs.s` | they only call the BIOS root-counter functions with that argument; the engine refuses both |
+| `rsin` (0x800A0070), `func_800A0140` | libgte `rsin` / `rcos` | sine table at `D_800DD6C0` |
+| `OpenEvent EnableEvent CloseEvent TestEvent EnterCriticalSection ExitCriticalSection InitCARD StartCARD _bu_init _card_auto _card_info _card_load _card_clear _card_status open close read write format delete rand srand abs printf` | the BIOS A/B/C-table stubs of libapi (`asm/libapi_*.s`, `libcard_card.s`) | `addiu $t2, $zero, 0xA0/0xB0/0xC0; jr $t2; addiu $t1, $zero, N` |
+
+`rand` and `srand` are BIOS routines (A0[2f], A0[30]). The engine keeps the seed in the kernel-RAM word the captures use (OpenBIOS, `0x8000850C`); `rand` before any `srand` therefore starts from the RAM value (0 in a fresh memory), not from the retail BIOS power-on seed, which has not been observed. `printf` keeps `ret_undefined` (T-39314): the BIOS returns the character count and a restricted formatter cannot compute it for the debug formats (`%d` and others); every caller discards the value.

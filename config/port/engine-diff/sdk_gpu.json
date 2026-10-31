@@ -1,0 +1,373 @@
+{
+ "captures": [
+  "gpu1",
+  "gpu-title",
+  "gpu-prol",
+  "gpu-name",
+  "gpu-school",
+  "gpu-sel",
+  "gpu-tel",
+  "gpu-evt",
+  "gpu-sp1",
+  "gpu-sp2",
+  "gpu-sp3"
+ ],
+ "exclude": [],
+ "functions": {
+  "func_8009C884": {
+   "not_comparable": {
+    "gpu-title:2": {
+     "reason": "the original found the GPU DMA busy (hardware state, not in RAM) and queued the call: it advanced the queue head (0x800DD68C), filled a ring entry (0x80129D30..) and recorded a different last-call word; the port, whose renderer is idle, runs the call at once",
+     "allow": [
+      {
+       "start": "0x800DD67C",
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
+      },
+      {
+       "start": "0x80129D30",
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
+      },
+      {
+       "start": "0x800E35F0",
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
+      }
+     ]
+    },
+    "gpu-title:3": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-title:5": {
+     "reason": "the original found the GPU DMA busy (hardware state, not in RAM) and queued the call: it advanced the queue head (0x800DD68C), filled a ring entry (0x80129D30..) and recorded a different last-call word; the port, whose renderer is idle, runs the call at once",
+     "allow": [
+      {
+       "start": "0x800DD67C",
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
+      },
+      {
+       "start": "0x80129D30",
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
+      },
+      {
+       "start": "0x800E35F0",
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
+      }
+     ]
+    },
+    "gpu-title:6": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-title:8": {
+     "reason": "the original found the GPU DMA busy (hardware state, not in RAM) and queued the call: it advanced the queue head (0x800DD68C), filled a ring entry (0x80129D30..) and recorded a different last-call word; the port, whose renderer is idle, runs the call at once",
+     "allow": [
+      {
+       "start": "0x800DD67C",
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
+      },
+      {
+       "start": "0x80129D30",
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
+      },
+      {
+       "start": "0x800E35F0",
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
+      }
+     ]
+    },
+    "gpu-prol:2": {
+     "reason": "the original found the GPU DMA busy (hardware state, not in RAM) and queued the call: it advanced the queue head (0x800DD68C), filled a ring entry (0x80129D30..) and recorded a different last-call word; the port, whose renderer is idle, runs the call at once",
+     "allow": [
+      {
+       "start": "0x800DD67C",
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
+      },
+      {
+       "start": "0x80129D30",
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
+      },
+      {
+       "start": "0x800E35F0",
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
+      }
+     ]
+    },
+    "gpu-prol:3": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-prol:4": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-prol:5": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-prol:6": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-prol:7": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-prol:8": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-sp1:2": {
+     "reason": "the original found the GPU DMA busy (hardware state, not in RAM) and queued the call: it advanced the queue head (0x800DD68C), filled a ring entry (0x80129D30..) and recorded a different last-call word; the port, whose renderer is idle, runs the call at once",
+     "allow": [
+      {
+       "start": "0x800DD67C",
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
+      },
+      {
+       "start": "0x80129D30",
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
+      },
+      {
+       "start": "0x800E35F0",
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
+      }
+     ]
+    },
+    "gpu-sp3:2": {
+     "reason": "the original found the GPU DMA busy (hardware state, not in RAM) and queued the call: it advanced the queue head (0x800DD68C), filled a ring entry (0x80129D30..) and recorded a different last-call word; the port, whose renderer is idle, runs the call at once",
+     "allow": [
+      {
+       "start": "0x800DD67C",
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
+      },
+      {
+       "start": "0x80129D30",
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
+      },
+      {
+       "start": "0x800E35F0",
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
+      }
+     ]
+    }
+   }
+  },
+  "func_8009C674": {
+   "exclude": [
+    {
+     "start": "0x800DD6A4",
+     "length": 4,
+     "port": "free",
+     "reason": "D_800DD6A4 counts the polls func_8009EA48 made while the original waited for the GPU or a DMA channel (hardware); func_8009EA18 resets it before every wait and nothing reads it otherwise. The port has nothing to wait for and leaves the reset value"
+    }
+   ],
+   "not_comparable": {
+    "gpu-title:1": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-title:2": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-title:3": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-title:4": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-title:5": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-title:6": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-title:7": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-title:8": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-title:9": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    },
+    "gpu-title:10": {
+     "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
+    }
+   }
+  },
+  "func_8009C93C": {
+   "not_comparable": {
+    "gpu-school:1": {
+     "reason": "the original found the GPU DMA busy (hardware state, not in RAM) and queued the call: it advanced the queue head (0x800DD68C), filled a ring entry (0x80129D30..) and recorded a different last-call word; the port, whose renderer is idle, runs the call at once",
+     "allow": [
+      {
+       "start": "0x800DD67C",
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
+      },
+      {
+       "start": "0x80129D30",
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
+      },
+      {
+       "start": "0x800E35F0",
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
+      }
+     ]
+    },
+    "gpu-sp2:1": {
+     "reason": "the original found the GPU DMA busy (hardware state, not in RAM) and queued the call: it advanced the queue head (0x800DD68C), filled a ring entry (0x80129D30..) and recorded a different last-call word; the port, whose renderer is idle, runs the call at once",
+     "allow": [
+      {
+       "start": "0x800DD67C",
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
+      },
+      {
+       "start": "0x80129D30",
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
+      },
+      {
+       "start": "0x800E35F0",
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
+      }
+     ]
+    }
+   }
+  },
+  "func_8009CAAC": {
+   "exclude": [
+    {
+     "start": "0x800DD6A4",
+     "length": 4,
+     "port": "free",
+     "reason": "D_800DD6A4 counts the polls func_8009EA48 made while the original waited for the GPU or a DMA channel (hardware); func_8009EA18 resets it before every wait and nothing reads it otherwise. The port has nothing to wait for and leaves the reset value"
+    }
+   ]
+  }
+ },
+ "untested": {
+  "AddPrims": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009EFDC": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009EFF0": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009F004": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009F018": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009F02C": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009F07C": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009F0CC": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009F0E0": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009F108": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009F130": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009F150": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009F170": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009F190": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009C9F8": "no hit in the sampled states; hand check in tests/engine/sdk_gpu_test.gd from asm/libgpu.s",
+  "func_8009C8E0": "no hit in the sampled states (StoreImage is not called in the scenes reached); hand check of the odd-size refusal in tests/engine/sdk_gpu_test.gd; the renderer's store_image is covered by tests/render",
+  "func_8009CB3C": "no hit in the sampled states (DrawPrim is not called in the scenes reached); not called by the engine packages; refuses without the renderer (tests/engine/sdk_gpu_test.gd)",
+  "func_8009AD00": "libgs GsDrawOt: no hit in the sampled states (the capture hooks the libgpu entry, whose caller it is); hand check in tests/engine/sdk_gpu_test.gd; DrawOTag itself has 38 passing hits",
+  "func_8009824C": "libgs GsSortClear: no hit in the sampled states; hand check of the packet fields in tests/engine/sdk_gpu_test.gd from asm/libgs.s"
+ }
+}
