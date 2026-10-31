@@ -441,6 +441,13 @@ func _mod(left: int, right: int) -> int:
 		return 0
 	return left % right # the sign follows the dividend, as in C
 
+## A local the C may read before it assigns it holds stale stack bytes there; the port refuses instead of
+## inventing a value (the harness shows the refusal if a capture ever takes that path).
+func _uninit(function_name: String, local_name: String, value: int, is_set: bool) -> int:
+	if not is_set:
+		engine.refuse("uninitialised local " + local_name, "%s reads %s before the C assigns it (stale stack bytes)" % [function_name, local_name])
+	return value
+
 ## Samples CD audio and updates the stereo level-meter values.
 func SD_GetCDLevel(arg0: int) -> void:
 	arg0 = Math.u32(arg0)
@@ -2975,6 +2982,7 @@ func select_girl_init(omit_back: int) -> void:
 	var i: int = 0
 	var length: int = 0
 	var result: int = 0
+	var result_set: bool = false
 	i = 0
 	while i < 0xB:
 		if engine.halted():
@@ -2983,7 +2991,7 @@ func select_girl_init(omit_back: int) -> void:
 		engine.memory.write_u16(G_SELECT_GIRL_MENU_Y + i * 2, _mod(i, 3) * 0x10 + 0x30)
 		if engine.memory.u8(G_SELECT_GIRL_MENU_ENABLED + i) != 0:
 			engine.call_c("strcpy", [engine.frame_base() + 0x64, engine.memory.u32(G_GIRL_SHORT_NAME_TABLE + i * 4)])
-			result = Math.s32(engine.call_c("set_kanji_string", [engine.memory.s16(G_SELECT_GIRL_MENU_X + i * 2), engine.memory.s16(G_SELECT_GIRL_MENU_Y + i * 2), 0, engine.frame_base() + 0x64, 0]))
+			result = Math.s32(engine.call_c("set_kanji_string", [engine.memory.s16(G_SELECT_GIRL_MENU_X + i * 2), engine.memory.s16(G_SELECT_GIRL_MENU_Y + i * 2), 0, engine.frame_base() + 0x64, 0])); result_set = true
 			length = Math.s32(engine.call_c("strlen", [engine.frame_base() + 0x64]))
 			engine.memory.write_u16(G_SELECT_GIRL_MENU_WIDTH + i * 2, Math.s32(_div(length, 2) * 0xE))
 		else:
@@ -2997,8 +3005,8 @@ func select_girl_init(omit_back: int) -> void:
 	if omit_back != 0:
 		engine.memory.write_u16(G_SELECT_GIRL_MENU_WIDTH + 0x16, 0)
 	if omit_back == 0:
-		result = Math.s32(engine.call_c("set_kanji_string", [0x40, 0x50, 0, 0x800B226C, 0]))
-	engine.call_c("k_disp_start", [result])
+		result = Math.s32(engine.call_c("set_kanji_string", [0x40, 0x50, 0, 0x800B226C, 0])); result_set = true
+	engine.call_c("k_disp_start", [_uninit("select_girl_init", "result", result, result_set)])
 	engine.call_c("menu_set", [1, Math.u32(0xC - omit_back) & 0xFF, G_SELECT_GIRL_MENU_X, G_SELECT_GIRL_MENU_Y, G_SELECT_GIRL_MENU_WIDTH, G_SELECT_GIRL_MENU_HEIGHT])
 	i = 0
 	while i < 0xB:

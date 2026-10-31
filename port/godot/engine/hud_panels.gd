@@ -213,6 +213,13 @@ func _mod(left: int, right: int) -> int:
 		return 0
 	return left % right # the sign follows the dividend, as in C
 
+## A local the C may read before it assigns it holds stale stack bytes there; the port refuses instead of
+## inventing a value (the harness shows the refusal if a capture ever takes that path).
+func _uninit(function_name: String, local_name: String, value: int, is_set: bool) -> int:
+	if not is_set:
+		engine.refuse("uninitialised local " + local_name, "%s reads %s before the C assigns it (stale stack bytes)" % [function_name, local_name])
+	return value
+
 func portrait_read_start(arg0: int) -> void:
 	arg0 = Math.s32(arg0)
 	engine.call_c("cd_read_sectors", [0x2D, -0x7FE80000, arg0])
@@ -245,7 +252,9 @@ func portrait_build(arg0: int, arg1: int, arg2: int, arg3: int, expression_varia
 	var x1: int = 0
 	var y1: int = 0
 	var origin_x: int = 0
+	var origin_x_set: bool = false
 	var origin_y: int = 0
+	var origin_y_set: bool = false
 	var w1: int = 0
 	var h1: int = 0
 	var temp_v0: int = 0
@@ -283,8 +292,8 @@ func portrait_build(arg0: int, arg1: int, arg2: int, arg3: int, expression_varia
 	engine.memory.write_u8(G_ACTOR_POOL + 0x7FF, 0)
 	temp_v0 = engine.memory.u32(arg2)
 	if engine.memory.s16(temp_v0) >= 6:
-		origin_x = engine.memory.s16(temp_v0 + 0x2)
-		origin_y = engine.memory.s16(temp_v0 + 0x4)
+		origin_x = engine.memory.s16(temp_v0 + 0x2); origin_x_set = true
+		origin_y = engine.memory.s16(temp_v0 + 0x4); origin_y_set = true
 		x0 = engine.memory.s16(temp_v0 + 0x8 + 0x46)
 		y0 = engine.memory.s16(temp_v0 + 0x8 + 0x48)
 		x1 = engine.memory.s16(temp_v0 + 0x8 + 0x38)
@@ -304,8 +313,8 @@ func portrait_build(arg0: int, arg1: int, arg2: int, arg3: int, expression_varia
 		engine.memory.write_u16(G_SPRITE_QUADS + 0x1C, 0x1000)
 		engine.memory.write_u16(G_SPRITE_QUADS + 0x1E, 0x1000)
 		engine.memory.write_u32(G_SPRITE_QUADS + 0x20, 0)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0x4, engine.memory.s16(G_ACTOR_POOL + 0x862) + x0 - origin_x)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0x6, engine.memory.s16(G_ACTOR_POOL + 0x866) + y0 - origin_y)
+		engine.memory.write_u16(G_SPRITE_QUADS + 0x4, engine.memory.s16(G_ACTOR_POOL + 0x862) + x0 - _uninit("portrait_build", "origin_x", origin_x, origin_x_set))
+		engine.memory.write_u16(G_SPRITE_QUADS + 0x6, engine.memory.s16(G_ACTOR_POOL + 0x866) + y0 - _uninit("portrait_build", "origin_y", origin_y, origin_y_set))
 		engine.memory.write_u8(GS + 0x10A5, 0xB)
 		engine.memory.write_u32(G_SPRITE_QUADS + 0x24, 0x81000000)
 		engine.memory.write_u16(G_SPRITE_QUADS + 0x2C, 0x30)
@@ -322,8 +331,8 @@ func portrait_build(arg0: int, arg1: int, arg2: int, arg3: int, expression_varia
 		engine.memory.write_u16(G_SPRITE_QUADS + 0x40, 0x1000)
 		engine.memory.write_u16(G_SPRITE_QUADS + 0x42, 0x1000)
 		engine.memory.write_u32(G_SPRITE_QUADS + 0x44, 0)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0x28, engine.memory.s16(G_ACTOR_POOL + 0x862) + x1 - origin_x)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0x2A, engine.memory.s16(G_ACTOR_POOL + 0x866) + y1 - origin_y)
+		engine.memory.write_u16(G_SPRITE_QUADS + 0x28, engine.memory.s16(G_ACTOR_POOL + 0x862) + x1 - _uninit("portrait_build", "origin_x", origin_x, origin_x_set))
+		engine.memory.write_u16(G_SPRITE_QUADS + 0x2A, engine.memory.s16(G_ACTOR_POOL + 0x866) + y1 - _uninit("portrait_build", "origin_y", origin_y, origin_y_set))
 		engine.memory.write_u8(GS + 0x10A5 + 0x1, 0xB)
 	if engine.memory.s16(temp_v0) >= 4:
 		x0 = engine.memory.s16(temp_v0 + 0x8 + 0x1C)
@@ -349,8 +358,8 @@ func portrait_build(arg0: int, arg1: int, arg2: int, arg3: int, expression_varia
 		engine.memory.write_u16(G_SPRITE_QUADS + 0x64, 0x1000)
 		engine.memory.write_u16(G_SPRITE_QUADS + 0x66, 0x1000)
 		engine.memory.write_u32(G_SPRITE_QUADS + 0x68, 0)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0x4C, engine.memory.s16(G_ACTOR_POOL + 0x862) + x0 - origin_x)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0x4E, engine.memory.s16(G_ACTOR_POOL + 0x866) + y0 - origin_y)
+		engine.memory.write_u16(G_SPRITE_QUADS + 0x4C, engine.memory.s16(G_ACTOR_POOL + 0x862) + x0 - _uninit("portrait_build", "origin_x", origin_x, origin_x_set))
+		engine.memory.write_u16(G_SPRITE_QUADS + 0x4E, engine.memory.s16(G_ACTOR_POOL + 0x866) + y0 - _uninit("portrait_build", "origin_y", origin_y, origin_y_set))
 		engine.memory.write_u8(GS + 0x10A5 + 0x2, 0x8B)
 		engine.memory.write_u32(G_SPRITE_QUADS + 0x6C, -0x3F000000)
 		engine.memory.write_u16(G_SPRITE_QUADS + 0x74, w1)
@@ -367,8 +376,8 @@ func portrait_build(arg0: int, arg1: int, arg2: int, arg3: int, expression_varia
 		engine.memory.write_u16(G_SPRITE_QUADS + 0x88, 0x1000)
 		engine.memory.write_u16(G_SPRITE_QUADS + 0x8A, 0x1000)
 		engine.memory.write_u32(G_SPRITE_QUADS + 0x8C, 0)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0x70, engine.memory.s16(G_ACTOR_POOL + 0x862) + x1 - origin_x)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0x72, engine.memory.s16(G_ACTOR_POOL + 0x866) + y1 - origin_y)
+		engine.memory.write_u16(G_SPRITE_QUADS + 0x70, engine.memory.s16(G_ACTOR_POOL + 0x862) + x1 - _uninit("portrait_build", "origin_x", origin_x, origin_x_set))
+		engine.memory.write_u16(G_SPRITE_QUADS + 0x72, engine.memory.s16(G_ACTOR_POOL + 0x866) + y1 - _uninit("portrait_build", "origin_y", origin_y, origin_y_set))
 		engine.memory.write_u8(GS + 0x10A5 + 0x3, 0x8B)
 	if engine.memory.s16(temp_v0) >= 7:
 		x0 = engine.memory.s16(temp_v0 + 0x8 + 0x54)
@@ -390,8 +399,8 @@ func portrait_build(arg0: int, arg1: int, arg2: int, arg3: int, expression_varia
 		engine.memory.write_u16(G_SPRITE_QUADS + 0xAC, 0x1000)
 		engine.memory.write_u16(G_SPRITE_QUADS + 0xAE, 0x1000)
 		engine.memory.write_u32(G_SPRITE_QUADS + 0xB0, 0)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0x94, engine.memory.s16(G_ACTOR_POOL + 0x862) + x0 - origin_x)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0x96, engine.memory.s16(G_ACTOR_POOL + 0x866) + y0 - origin_y)
+		engine.memory.write_u16(G_SPRITE_QUADS + 0x94, engine.memory.s16(G_ACTOR_POOL + 0x862) + x0 - _uninit("portrait_build", "origin_x", origin_x, origin_x_set))
+		engine.memory.write_u16(G_SPRITE_QUADS + 0x96, engine.memory.s16(G_ACTOR_POOL + 0x866) + y0 - _uninit("portrait_build", "origin_y", origin_y, origin_y_set))
 		engine.memory.write_u8(GS + 0x10A5 + 0x4, 0x8B)
 	if engine.memory.s16(temp_v0) == 8:
 		x1 = engine.memory.s16(temp_v0 + 0x8 + 0x62)
@@ -413,8 +422,8 @@ func portrait_build(arg0: int, arg1: int, arg2: int, arg3: int, expression_varia
 		engine.memory.write_u16(G_SPRITE_QUADS + 0xD0, 0x1000)
 		engine.memory.write_u16(G_SPRITE_QUADS + 0xD2, 0x1000)
 		engine.memory.write_u32(G_SPRITE_QUADS + 0xD4, 0)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0xB8, engine.memory.s16(G_ACTOR_POOL + 0x862) + x1 - origin_x)
-		engine.memory.write_u16(G_SPRITE_QUADS + 0xBA, engine.memory.s16(G_ACTOR_POOL + 0x866) + y1 - origin_y)
+		engine.memory.write_u16(G_SPRITE_QUADS + 0xB8, engine.memory.s16(G_ACTOR_POOL + 0x862) + x1 - _uninit("portrait_build", "origin_x", origin_x, origin_x_set))
+		engine.memory.write_u16(G_SPRITE_QUADS + 0xBA, engine.memory.s16(G_ACTOR_POOL + 0x866) + y1 - _uninit("portrait_build", "origin_y", origin_y, origin_y_set))
 		engine.memory.write_u8(GS + 0x10A5 + 0x5, 0x8B)
 	engine.call_c("portrait_expression_select", [Math.u32(expression_variant)])
 	engine.call_c("portrait_value_clear_if_high") # the C also passes 1 argument(s) the callee ignores
