@@ -32,6 +32,7 @@ func run() -> Array[String]:
 	_test_simple_scene_commands()
 	_test_waits_and_selects()
 	_test_choice_menus()
+	_test_talk_speak_part()
 	_shutdown()
 	return failures
 
@@ -393,3 +394,57 @@ func _test_choice_menus() -> void:
 		engine.call_c("normal_date_two_select")
 		engine.call_c("normal_date_three_select")
 	_check(routed == ["normal_date_two_select_init", "normal_date_three_select_init", "normal_date_two_select_main", "normal_date_three_select_main", "game_mode_reset_to_title", "game_mode_reset_to_title"], "select dispatch: %s" % [routed])
+
+## talk_speak_part: the simple speak codes. The text is copied into a 0x200-byte local at sp + 0x7C (strcpy, unless the
+## code is 0xFF), dialogue->voice_state and talk_voice_waiting are cleared, and temp_s1 = row_offset * 0x10 + 0x30 (s16).
+func _test_talk_speak_part() -> void:
+	var engine = _new()
+	var m = engine.memory
+	var talk_work: int = engine.modules.scene_library.G_TALK_WORK
+	var text: int = 0x80100000
+	m.write_bytes(text, "ABC".to_ascii_buffer() + PackedByteArray([0]))
+	var renders: Array = []
+	var texts: Array = []
+	var results: Array = [0x1234]
+	engine.set_stub("talk_render", func(args: Array) -> int:
+		renders.append([args[0], args[1], args[2], args[4], args[7]])
+		texts.append(m.read_bytes(args[3] & 0xFFFFFFFF, 4).hex_encode()) # the C passes (s32) address: a negative int
+		return results[0])
+	var other: Array = []
+	for name: String in ["k_disp_start", "game_mode_reset_to_title"]:
+		engine.set_stub(name, func(args: Array) -> int:
+			other.append([name, args.duplicate()])
+			return 0)
+	m.write_u32(talk_work + 0x58, 2) # row_offset: temp_s1 = 2 * 0x10 + 0x30 = 0x50
+	m.write_u32(talk_work + 0x20, 9) # voice_state: cleared by the call
+	m.write_global("talk_voice_waiting", 1)
+	m.write_global("talk_next_row_y", 0x66)
+	_check(engine.call_c("talk_speak_part", [text, 0x10, 0, 0, 0, 0, 3]) == 0, "speak code 0x10 returns 0")
+	_check(renders == [[-0x80, 0x50, 3, 0, 0]] and texts == ["41424300"] and m.u32(talk_work + 0x30) == 1, "0x10: talk_render(-0x80, 0x50, color, text, 0, .., .., 0), line_auto = 1: %s %s" % [renders, texts])
+	_check(m.u32(talk_work + 0x20) == 0 and m.read_global("talk_voice_waiting") == 0, "voice_state and talk_voice_waiting are cleared first")
+	renders.clear()
+	m.write_u32(talk_work + 0x30, 0)
+	engine.call_c("talk_speak_part", [text, 0x11, 0, 0, 0, 0, 3])
+	_check(renders == [[-0x48, 0x66, 3, 0, 0]] and m.u32(talk_work + 0x30) == 1, "0x11 renders at talk_next_row_y: %s" % [renders])
+	renders.clear()
+	var order: int = m.global_address("talk_choice_order")
+	m.write_u8(order, 7)
+	m.write_u8(order + 1, 7)
+	engine.call_c("talk_speak_part", [text, 0x8, 0, 0, 0, 0, 4])
+	_check(renders == [[-0x72, 0x50, 4, 0, 1]] and other == [["k_disp_start", [0x1234]]] and m.u8(order) == 0 and m.u8(order + 1) == 1, "0x8: two-choice order 0, 1 and k_disp_start(talk_render(...)): %s %s" % [renders, other])
+	renders.clear()
+	other.clear()
+	m.write_u8(order, 7)
+	engine.call_c("talk_speak_part", [text, 0x13, 0, 0, 0, 0, 4])
+	_check(renders == [[-0x72, 0x50, 4, 0, 1]] and other == [["k_disp_start", [0x1234]]] and m.u8(order) == 0, "0x13: the same with the other brackets")
+	# 0xFF: no copy, mode_step_next; an unknown code resets to the title
+	renders.clear()
+	other.clear()
+	engine.gs_set("mode_step", 2)
+	_check(engine.call_c("talk_speak_part", [text, 0xFF, 0, 0, 0, 0, 3]) == 0 and engine.gs_get("mode_step") == 3 and renders.is_empty(), "0xFF steps and renders nothing")
+	engine.call_c("talk_speak_part", [text, 0x55, 0, 0, 0, 0, 3])
+	_check(other == [["game_mode_reset_to_title", []]], "an unknown speak code resets to the title: %s" % [other])
+	# the speak code is a u8 parameter: 0x110 is 0x10
+	renders.clear()
+	engine.call_c("talk_speak_part", [text, 0x110, 0, 0, 0, 0, 3])
+	_check(renders.size() == 1 and renders[0][0] == -0x80, "the speak code narrows to u8 (0x110 -> 0x10)")
