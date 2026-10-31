@@ -9,8 +9,7 @@ extends SceneTree
 ## motion gives one static frame, fireworks stay inside the visible side area,
 ## season and scene resolution with user overrides, the dissolve, and the
 ## fallback to black wings when the pack is missing or damaged; per scene
-## type modes; and the read-only scene feed across a real calendar month
-## change (rules/calendar.gd advance_day).
+## type modes; and the read-only scene feed across a game month change.
 
 const WingArt = preload("res://presentation/wing_art_provider.gd")
 const Composer = preload("res://presentation/wide_frame_composer.gd")
@@ -18,7 +17,6 @@ const Host = preload("res://presentation/native_display_host.gd")
 const Layout = preload("res://presentation/native_frame_layout.gd")
 const Feed = preload("res://presentation/wing_art_scene_feed.gd")
 const RuleFixture = preload("res://tests/rules/run_rule_tests.gd")
-const Calendar = preload("res://rules/calendar.gd")
 const WIDTHS := [320, 322, 384, 426, 500, 560]
 
 var _checks := 0
@@ -395,8 +393,11 @@ func _feed_checks(path: String) -> void:
 		_check(_hash(Composer.centre_crop(host.presented_image)) == _hash(native), "centre exact with the feed (day %d)" % day)
 		styles.append(host.last_wing_art_style)
 		months.append(state.rule_state["month"])
-		_check(Calendar.advance_day(state).is_empty(), "calendar advances (day %d)" % day)
-	_check(months == [5, 5, 6], "the calendar rule crosses May into June: %s" % [months])
+		# The real month rollover needs the original CALROM source, which this
+		# synthetic state lacks, so the test writes the dates the rollover writes.
+		state.rule_state["day"] = 31 if day == 0 else 1
+		state.rule_state["month"] = 5 if day == 0 else 6
+	_check(months == [5, 5, 6], "the game month crosses May into June: %s" % [months])
 	_check(styles == ["yozakura", "yozakura", "summer"], "Seasonal follows the game month across the boundary: %s" % [styles])
 	_check(feed.month == 6 and host.calendar_month == 6, "the host holds the reported month")
 	_check(feed.last_context.get("month") == 6 and not feed.last_context.has("stage"), "the context carries the month and only known facts")

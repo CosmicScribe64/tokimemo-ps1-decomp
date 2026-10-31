@@ -2634,3 +2634,11 @@ On the merged tree, the April loop route (playtest, fast, bundle-r3-holiday, can
 
 `port/godot/core/game_memory.gd` (2 MiB, typed views, installed-executable loader), `core/rule_state_bridge.gd`, `core/game_state_boot.gd` and `tools/port/compare_game_memory.py` added. Both route gates unchanged: opening frame timing `pad 2, 104 substeps, 6709 frames to 12/0/0, 0 mismatches`; April loop route IDENTICAL against `.asset-cache/merge-pending-2026-10-30/loop-route-fast`. At 0x34/1/0/0, 133 of 159 comparable GameState fields equal the emulator's RAM; the rest are listed in `config/port/game-memory-known-diffs.json`. [[tickets/T-39300-game-memory-model]], [[game-memory-model]].
 
+## [2026-10-30] build | Merge suite comparison and wing art test fix
+
+Ran each targeted Godot test script (overlays, checkpoint, route, render, services, translation) on the merged tree and on e9a1e0e3e. No script that passed before the merge fails after it; most failures on both trees need installed content. Only one new test failed: `tests/render/run_wing_art_tests.gd`. Its scene-feed check called the real `rules/calendar.gd advance_day` across May into June, but the loop now correctly refuses a month rollover without the original CALROM source. The test now writes the rollover's dates itself. Result: wing art 1596 checks pass. `tools/port/run_parity_mode_tests.sh` passes: 14 Godot runs and 52 Python tests.
+
+## [2026-10-30] build | Game memory model review fixes
+
+Review of `port/m1-game-memory`: the bridge now skips `opening.unsourced` keys (scene_work, background_cache, background_show) in both directions and `tools/port/compare_game_memory.py` reports those globals as unsourced; `new_game_memory` refuses a state the adapter did not build; the playtest memory dump needs `TOKIMEMO_DUMP_GAME_MEMORY=1`; the generator evaluates constants with an ast-based integer evaluator; bit positions are tested against independent sources. [[tickets/T-39300-game-memory-model]], [[game-memory-model]].
+
