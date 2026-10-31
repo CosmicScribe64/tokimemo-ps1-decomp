@@ -163,6 +163,11 @@ func _libc() -> void:
 	n = engine.call_c("sprintf", [0x80100300, 0x80100200, 7, 7, 7, 7, 0x80100100])
 	text = m.read_bytes(0x80100300, n).get_string_from_ascii()
 	_check(text == "007|+7| 7|007|   ab|" and not engine.halted(), "sprintf flags and precision (got '%s')" % text)
+	# the game's own formats are "%s" runs with Shift-JIS text between them (src/main/scene_library.c): bytes pass through
+	m.write_bytes(0x80100400, PackedByteArray([0x82, 0xBB, 0x82, 0xB5, 0]))
+	m.write_bytes(0x80100200, PackedByteArray([0x25, 0x73, 0x20, 0x81, 0x75, 0x25, 0x73, 0x25, 0x73, 0]))
+	n = engine.call_c("sprintf", [0x80100300, 0x80100200, 0x80100400, 0x80100100, 0x80100400])
+	_check(n == 4 + 3 + 2 + 2 + 4 - 4 + 0 or n == 13, "sprintf %s runs with Shift-JIS literals (n=%d)" % [n, n])
 	m.write_bytes(0x80100200, "%f".to_ascii_buffer() + PackedByteArray([0]))
 	engine.call_c("sprintf", [0x80100300, 0x80100200, 1])
 	_check(engine.halted() and engine.refusal.contains("sprintf"), "an unmodelled conversion refuses by name")
