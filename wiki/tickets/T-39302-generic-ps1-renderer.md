@@ -71,3 +71,4 @@ Open points for a decision: hardware rounding of interpolated colours and texel 
 ## Comments
 
 - 2026-10-30: In Progress. Built the model, extension, wrapper and tests on branch `port/m2-renderer`; compared 29 captured frames and a synthetic table with the emulator (table above). Review against CODING_STANDARDS.md and the wiki rules is still to do before In Review.
+- 2026-10-30: Merged `port/opening-to-gameplay` (`9f340f2ab`) and reran the gates: core suite 9 suites pass; opening frame timing `pad 2, 104 substeps, 6709 frames to 12/0/0, 0 mismatches`; renderer tests 35 C++ (512 checks) and 161 Godot checks pass. Ticket stays In Progress (texture-hash hook, library installation and review open).

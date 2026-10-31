@@ -2668,3 +2668,7 @@ At the first command select, 133 of 159 comparable GameState fields equal the em
 ## [2026-10-30] ticket | M2 started: disc pack and renderer
 
 Moved [[tickets/T-39303-installed-disc-pack]] and [[tickets/T-39302-generic-ps1-renderer]] to In Progress. Each runs in its own worktree (`port/m2-disc-pack`, `port/m2-renderer`); their files do not overlap. [[tickets/T-39301-engine-api-core]] follows once the disc pack lands.
+
+## [2026-10-30] build | Generic PS1 renderer branch gates after merging port/opening-to-gameplay
+
+On `port/m2-renderer` (merge `9f340f2ab`): core suite `PASS: 9 test suite(s) ran`; opening frame timing (fast, pad 2, candidate audio library) `pad 2, 104 substeps, 6709 frames to 12/0/0, 0 mismatches`, exit 0; renderer tests 35 C++ tests (512 checks) and 161 Godot checks pass. [[tickets/T-39302-generic-ps1-renderer]].
