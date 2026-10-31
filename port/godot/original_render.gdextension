@@ -1,7 +1,0 @@
-[configuration]
-entry_symbol = "original_render_init"
-compatibility_minimum = "4.5"
-reloadable = false
-[libraries]
-linux.release.arm64 = "res://bin/liboriginal_render.linux.template_release.arm64.so"
-linux.debug.arm64 = "res://bin/liboriginal_render.linux.template_release.arm64.so"

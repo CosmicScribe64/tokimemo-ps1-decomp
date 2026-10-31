@@ -2796,3 +2796,13 @@ State at the pause, all on `port/opening-to-gameplay` and verified:
 - The engine is not wired into the playable game.
 
 To resume, read [[port-completion-plan]] and [[engine-porting-contract]].
+
+## [2026-10-31] decision | Godot port removed
+
+At the user's request, removed the Godot port from the repository:
+- `port/` and `tools/port/` (with the untracked `dev_native/`) and `config/port/`;
+- `tools/emu/func_capture`, `gpu_capture` and `route_driver`, `tools/emu/input_script.py` and `route_script.py` with their tests;
+- the four port content tests in `tests/`, `.github/workflows/port-offline.yml` and `tools/Dockerfile.engine_gen`;
+- the port sections of README.md and CODING_STANDARDS.md and the port lines in `.gitignore`.
+
+The matching decompilation and its tooling, `translations/` and the wiki history stay. `tools/docker.sh ninja` reports no work to do (27/27 unchanged). Port pages in the wiki now describe removed code. The libgte sine table that `core/native_math.gd` committed remains in published history (since f8497f8ca); the user did not ask for a history rewrite.

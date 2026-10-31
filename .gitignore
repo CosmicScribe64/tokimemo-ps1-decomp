@@ -46,6 +46,3 @@ game-bundle.key
 !/versions/README.md
 /tools/local-compilers/
 
-# Godot editor/import cache; generated packs and exports stay in .asset-cache/.
-/port/godot/.godot/
-/port/godot/bin/liboriginal_render*

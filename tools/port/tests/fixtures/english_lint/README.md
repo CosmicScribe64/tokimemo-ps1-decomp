@@ -1,1 +1,0 @@
-Synthetic E-mode draw receipts for `tools/port/test_english_lint.py` (T-39025). The ids, hashes and strings are invented; the only Japanese is two hiragana code units used to exercise the untranslated-text rule. No game data.

@@ -1,5 +1,0 @@
-# Image of tools/port/run_engine_gen.sh: the C -> GDScript generator for the engine modules (T-39312).
-# gcc for the preprocessor, pycparser pinned for the C parser.
-FROM python:3.12-slim
-RUN apt-get update && apt-get install -y --no-install-recommends gcc libc6-dev && rm -rf /var/lib/apt/lists/*
-RUN pip install --no-cache-dir pycparser==3.12

@@ -1,7 +1,0 @@
-{
- "schema": "tokimemo.translation-asset-audit.v1",
- "assets": [
-  {"output_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "style": "approve", "exact_review_event": "synthetic-event-1"},
-  {"output_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "style": "stale", "exact_review_event": null}
- ]
-}

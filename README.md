@@ -4,23 +4,17 @@
 [![Code](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp.svg?mode=shield&measure=code&label=Code)](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp)
 [![Functions](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp.svg?mode=shield&measure=functions&label=Functions)](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp)
 
-This project is a matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`), and an eventual English-translated Godot port of the game.
+This project is a matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`).
 
 The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) rebuild identically, and every game function is now
-written in C. The source naming/readability phase is recorded as complete. Work now focuses on the Godot port,
-fresh-install content generation, and actual gameplay verification. See [wiki/status.md](wiki/status.md) for the
-current evidence and [ROADMAP.md](ROADMAP.md) for the broader plan.
+written in C. The source naming/readability phase is recorded as complete. A Godot port was attempted and removed on
+2026-10-31; its history stays in Git and in the wiki. See [wiki/status.md](wiki/status.md) for the current evidence.
 
 **You need your own copy of the disc.** Original disc images, executables, extracted originals, and generated
 disassembly are not included. Versioned English artwork edits and review history are backed up under
 [translations/en/graphics/artwork](translations/en/graphics/artwork/README.md); they are not a complete runtime asset pack.
 
 This project is independent. It is not affiliated with or endorsed by Konami.
-
-## Roadmap
-
-[ROADMAP.md](ROADMAP.md) lays out five phases, from a complete matching decompilation to an English-language Godot
-port.
 
 ## Building
 
@@ -76,7 +70,3 @@ same rules, in [CODING_STANDARDS.md](CODING_STANDARDS.md) and [AGENTS.md](AGENTS
 The project's own code, tools and documentation are released under [CC0 1.0 Universal](LICENSE), a public-domain
 dedication. That covers our work only. It does not cover the game, its executables, its data or its assets, which
 belong to their rights holders, and none of them are included here.
-
-## Restoring the Godot port after a fresh clone
-
-See [the container-only content setup guide](tools/port/SETUP.md). It accepts the original two-track 7z and regenerates the source evidence required by exporters. The current output is a partial developer bundle; native release and full fresh-install readiness remain under verification.
