@@ -1,31 +1,278 @@
 {
  "captures": [
   "libc-title",
-  "libc-route"
+  "libc-route",
+  "gpu1",
+  "gpu-title",
+  "gpu-prol",
+  "gpu-name",
+  "gpu-school",
+  "gpu-sel",
+  "gpu-tel",
+  "gpu-evt",
+  "gpu-sp1",
+  "gpu-sp2",
+  "gpu-sp3"
  ],
- "exclude": [
-  {
-   "start": "0x80000000",
-   "length": 65536,
-   "reason": "BIOS/kernel RAM (OpenBIOS handlers, event tables): interrupts taken while the BIOS routine runs change it; the port never writes below 0x80010000"
+ "exclude": [],
+ "functions": {
+  "memcpy": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS handlers, event tables): interrupts taken while the BIOS routine runs change it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DD680",
+     "length": 32,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E3440",
+     "length": 192,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E35F0",
+     "length": 16,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    }
+   ]
   },
-  {
-   "start": "0x800DD680",
-   "length": 32,
-   "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+  "memmove": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS handlers, event tables): interrupts taken while the BIOS routine runs change it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DD680",
+     "length": 32,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E3440",
+     "length": 192,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E35F0",
+     "length": 16,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    }
+   ]
   },
-  {
-   "start": "0x800E3440",
-   "length": 192,
-   "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+  "strlen": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS handlers, event tables): interrupts taken while the BIOS routine runs change it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DD680",
+     "length": 32,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E3440",
+     "length": 192,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E35F0",
+     "length": 16,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    }
+   ]
   },
-  {
-   "start": "0x800E35F0",
-   "length": 16,
-   "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+  "strcpy": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS handlers, event tables): interrupts taken while the BIOS routine runs change it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DD680",
+     "length": 32,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E3440",
+     "length": 192,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E35F0",
+     "length": 16,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    }
+   ]
+  },
+  "strncpy": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS handlers, event tables): interrupts taken while the BIOS routine runs change it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DD680",
+     "length": 32,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E3440",
+     "length": 192,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E35F0",
+     "length": 16,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    }
+   ]
+  },
+  "strcat": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS handlers, event tables): interrupts taken while the BIOS routine runs change it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DD680",
+     "length": 32,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E3440",
+     "length": 192,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E35F0",
+     "length": 16,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    }
+   ]
+  },
+  "strncat": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS handlers, event tables): interrupts taken while the BIOS routine runs change it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DD680",
+     "length": 32,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E3440",
+     "length": 192,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E35F0",
+     "length": 16,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    }
+   ]
+  },
+  "strcmp": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS handlers, event tables): interrupts taken while the BIOS routine runs change it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DD680",
+     "length": 32,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E3440",
+     "length": 192,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E35F0",
+     "length": 16,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    }
+   ]
+  },
+  "bzero": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS handlers, event tables): interrupts taken while the BIOS routine runs change it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DD680",
+     "length": 32,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E3440",
+     "length": 192,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    },
+    {
+     "start": "0x800E35F0",
+     "length": 16,
+     "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+    }
+   ]
+  },
+  "printf": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS kernel RAM: the BIOS printf formats into its console (TTY) state and the interrupts that fire while it runs change handler state; none of it is game memory and the port never writes below 0x80010000 for printf"
+    }
+   ],
+   "not_comparable": {
+    "gpu-prol:2": {
+     "reason": "the BIOS printf of this hit runs long enough for a VBlank interrupt: the handler advanced game memory (GameState.timer_ticks, SystemData.seed, the libetc vblank counter and handler state, a libgs table); the port's printf is instantaneous",
+     "allow": [
+      {
+       "start": "0x800E3400",
+       "length": 512
+      },
+      {
+       "start": "0x800E6040",
+       "length": 192
+      },
+      {
+       "start": "0x80009000",
+       "length": 4096
+      },
+      {
+       "start": "0x800E7374",
+       "length": 4
+      },
+      {
+       "start": "0x800E7D10",
+       "length": 4
+      },
+      {
+       "start": "0x801295C0",
+       "length": 64
+      }
+     ]
+    }
+   }
   }
- ],
- "functions": {},
+ },
  "untested": {
   "memmove": "no caller in the game's C (0 files call it); hand check in tests/engine/libc_test.gd from asm/libc_memmove.s",
   "strncat": "no hit in the sampled states (title, command select); hand check in tests/engine/libc_test.gd",

@@ -1,0 +1,18 @@
+{
+ "captures": [
+  "gpu1",
+  "gpu-title",
+  "gpu-prol",
+  "gpu-name",
+  "gpu-school",
+  "gpu-sel",
+  "gpu-tel",
+  "gpu-evt",
+  "gpu-sp1",
+  "gpu-sp2",
+  "gpu-sp3"
+ ],
+ "exclude": [],
+ "functions": {},
+ "untested": {}
+}
