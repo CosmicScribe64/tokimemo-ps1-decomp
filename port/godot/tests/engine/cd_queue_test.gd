@@ -202,11 +202,12 @@ func _test_retry_and_refusals() -> void:
 		_pump(other, frame)
 		frame += 1
 	_check(other.refusal.contains("outside every file") and other.refusal.contains("LBA 0x96"), "a read the disc pack cannot serve is refused with the pack's reason: %s" % other.refusal)
-	# a read with audio_command not ported refuses before queueing anything
+	# a read refuses before queueing anything: audio_command is ported (frame_render_audio.c, T-39311) but the sound
+	# driver queue it feeds (audio_command_submit, sound_driver.c) is not
 	var bare = _new()
 	bare.call_c("cd_read_sectors", [1, 0x80110000, 100])
-	_check(bare.refusal.contains("cd_read_sectors -> audio_command") and bare.memory.read_global("cd_queue_tail") == 0 and bare.memory.read_global("cd_read_checked") == 0,
-		"without audio_command ported, cd_read_sectors refuses at that call and queues nothing: %s" % bare.refusal)
+	_check(bare.refusal.contains("audio_command -> audio_command_submit") and bare.memory.read_global("cd_queue_tail") == 0 and bare.memory.read_global("cd_read_checked") == 0,
+		"without audio_command_submit ported, cd_read_sectors refuses inside audio_command and queues nothing: %s" % bare.refusal)
 
 func _test_xa_sequence() -> void:
 	var log: Array = []

@@ -86,11 +86,11 @@ func _test_bg_slot_setup() -> void:
 	e.call_c("prim_bg_slot_setup", [tex, 0, 0, 9, 8, 0, 0, 0, 1, 0])
 	var printed: Array = log.filter(func(x): return x[0] == "printf")
 	s.check(printed.size() == 7 and printed[0] == ["printf", 0x800AFAE0], "72 cells (index 0..0x47): printf(BG_ERROR) for index 0x41..0x47 = 7 times: %d" % printed.size())
-	# a refusal in the first loop stops before any cell is written
+	# a refusal (GetClut is not ported) stops before the flag store: bg_layer_order stays 0
 	var e2 = s.new_engine()
 	e2.memory.write_s32(0x80180000, 1)
 	e2.call_c("prim_bg_slot_setup", [0x80180000, 0, 0, 1, 1, 0, 0, 0, 7, 0])
-	s.check(e2.halted() and e2.refusal.contains("load_tpage_buf_lock") and e2.memory.u8(e2.gs_address("bg_layer_order")) == 0, "unported load_tpage_buf_lock refuses; the later stores do not land")
+	s.check(e2.halted() and e2.refusal.contains("func_8009ED74") and e2.memory.u8(e2.gs_address("bg_layer_order")) == 0, "unported GetClut refuses; the later stores do not land: %s" % e2.refusal)
 
 func _test_disc_tiles() -> void:
 	var log: Array = []
