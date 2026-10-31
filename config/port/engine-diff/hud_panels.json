@@ -11,7 +11,8 @@
   "wpb-c5",
   "wpb-c6",
   "wpb-d1",
-  "wpb-d2"
+  "wpb-d2",
+  "wpb-e2"
  ],
  "exclude": [
   {
@@ -44,10 +45,8 @@
  "untested": {
   "portrait_hide": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
   "bustup_speech": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
-  "message_disp_switch": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
   "hud_icon_move_allowed": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
   "hud_summer_phase": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
-  "hud_vram_init": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
   "hud_season_bgm_load": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers"
  }
 }

@@ -29,6 +29,8 @@ func run() -> Array[String]:
 	_test_day_plus()
 	_test_cd_level()
 	_test_don_wait()
+	_test_simple_scene_commands()
+	_test_waits_and_selects()
 	_shutdown()
 	return failures
 
@@ -188,3 +190,103 @@ func _test_don_wait() -> void:
 	_check(seen.is_empty(), "the old value 0x80 is still below 0x81")
 	engine.call_c("don_wait")
 	_check(seen == [[1]] and engine.gs_get("mode_step") == 4, "at 0x81: k_reset(1), then the next step: %s step %d" % [seen, engine.gs_get("mode_step")])
+
+## The one-step scene commands that only store constants (or call one function) and step.
+func _test_simple_scene_commands() -> void:
+	var engine = _new()
+	var m = engine.memory
+	var step := func() -> int: return engine.gs_get("mode_step")
+	var cases: Array = [
+		["event_face1", {"D_80120666": 3, "D_801206AA": 1}], ["event_face2", {"D_80120666": 6, "D_801206AA": 4}],
+		["event_face3", {"D_80120666": 7, "D_801206AA": 5}], ["event_face_kuchi1", {"D_80120666": 3}],
+		["event_kuchi_ani_yes", {"D_80122D10": 1, "D_80120652": 0}], ["scene_mouth_lock_clear", {"D_80122D20": 0}],
+		["ev_me_on", {"D_80122D0C": 0, "D_80120696": 5}], ["ev_me_on_continue", {"D_80122D0C": 1, "D_80120696": 5}],
+		["scene_bg_show", {"D_80122CF8": 1, "bg_brightness": 0x80}], ["scene_bg_hide", {"D_80122CF8": 0, "bg_brightness": 0}],
+	]
+	for c: Array in cases:
+		for global_name: String in c[1]:
+			m.write_global(global_name, 0x55 if c[1][global_name] != 0x55 else 0x56) # a value the function must overwrite
+		var before: int = step.call()
+		engine.call_c(c[0])
+		for global_name: String in c[1]:
+			_check(m.read_global(global_name) == c[1][global_name], "%s: %s = %d, got %d" % [c[0], global_name, c[1][global_name], m.read_global(global_name)])
+		_check(step.call() == before + 1, "%s ends with mode_step_next" % c[0])
+	# hizuke_appear: hizuke_disp_switch(1), then the next step
+	var pool: int = m.global_address("actor_pool")
+	engine.call_c("hizuke_appear")
+	_check(m.u8(pool + 16 * ACTOR_SIZE + 3) == 0x80 and m.u8(pool + 23 * ACTOR_SIZE + 3) == 0x80 and m.u8(pool + 24 * ACTOR_SIZE + 3) == 0, "hizuke_appear sets bit 7 of actors 16..23")
+	# vram_bustup_clear: actor_clear(0x1F), actor_clear(0x1E), tpage_buf[5..9] = -1, then the next step
+	var cleared: Array = []
+	engine.set_stub("actor_clear", func(args: Array) -> int:
+		cleared.append(args[0])
+		return 0)
+	var tpage: int = engine.gs_address("tpage_buf")
+	for i: int in 12:
+		m.write_u32(tpage + i * 4, 0x77)
+	engine.call_c("vram_bustup_clear")
+	_check(cleared == [0x1F, 0x1E], "vram_bustup_clear clears actors 31 and 30: %s" % [cleared])
+	for i: int in 12:
+		_check(m.s32(tpage + i * 4) == (-1 if i >= 5 and i < 10 else 0x77), "tpage_buf[%d] is -1 only for 5..9" % i)
+	# yosi_trans: audio_bank_start(0, 0x200), then the next step; place_init2: k_reset(0), message_window_set_title(scene_place_title_2)
+	var seen: Array = []
+	for name: String in ["audio_bank_start", "k_reset", "message_window_set_title", "portrait_quad_offsets"]:
+		engine.set_stub(name, func(args: Array) -> int:
+			seen.append([name, args.duplicate()])
+			return 0)
+	engine.call_c("yosi_trans")
+	engine.call_c("place_init2")
+	_check(seen == [["audio_bank_start", [0, 0x200]], ["k_reset", [0]], ["message_window_set_title", [m.global_address("scene_place_title_2")]]], "yosi_trans, place_init2: %s" % [seen])
+	# portrait_layout_set(u8): portrait_quad_offsets(arg), then portrait_value_clear_if_high (which takes no argument)
+	seen.clear()
+	m.write_global("D_800B5A64", 0xB0)
+	engine.call_c("portrait_layout_set", [0x1FF])
+	_check(seen == [["portrait_quad_offsets", [0xFF]]] and m.read_global("D_800B5A64") == 0, "portrait_layout_set(0x1FF): the u8 argument is 0xFF, then the value is cleared: %s" % [seen])
+
+func _test_waits_and_selects() -> void:
+	var engine = _new()
+	var m = engine.memory
+	# return_step: game_mode_set(saved_game_mode); mode_stage_set(saved_mode_stage); mode_step_set(saved_mode_step)
+	var seen: Array = []
+	for name: String in ["game_mode_set", "mode_stage_set", "mode_step_set", "select_girl_init", "select_girl_main", "game_mode_reset_to_title", "talk_run"]:
+		engine.set_stub(name, func(args: Array) -> int:
+			seen.append([name, args.duplicate()])
+			return 1 if name == "talk_run" and seen.size() % 2 == 0 else 0)
+	engine.gs_set("saved_game_mode", 0x45)
+	engine.gs_set("saved_mode_stage", 3)
+	engine.gs_set("saved_mode_step", 9)
+	engine.call_c("return_step")
+	_check(seen == [["game_mode_set", [0x45]], ["mode_stage_set", [3]], ["mode_step_set", [9]]], "return_step: %s" % [seen])
+	# select_girl / select_girl2: mode_step_timer 0 -> select_girl_init(0/1), 1 -> select_girl_main(0/1), else game_mode_reset_to_title
+	var timer: int = engine.gs_address("mode_step_timer")
+	for variant: int in 2:
+		var name: String = "select_girl" if variant == 0 else "select_girl2"
+		for state: int in 3:
+			seen.clear()
+			m.write_u32(timer, state)
+			engine.call_c(name)
+			var want: Array = [["select_girl_init", [variant]]] if state == 0 else ([["select_girl_main", [variant]]] if state == 1 else [["game_mode_reset_to_title", []]])
+			_check(seen == want, "%s with the step timer %d: %s" % [name, state, seen])
+	# wait_sub_sub(s16 frames): the step timer counts up and (u32) elapsed >= (u32) frames steps; a negative s16 is a huge u32
+	engine.clear_stubs()
+	engine.gs_set("mode_step", 5)
+	m.write_u32(timer, 0)
+	engine.call_c("wait_sub_sub", [3])
+	engine.call_c("wait_sub_sub", [3])
+	_check(m.u32(timer) == 2 and engine.gs_get("mode_step") == 5, "after 2 of 3 frames nothing steps")
+	engine.call_c("wait_sub_sub", [3])
+	_check(engine.gs_get("mode_step") == 6 and m.u32(timer) == 0, "the 3rd frame steps (and mode_step_next clears the timer)")
+	engine.call_c("wait_sub_sub", [-1])
+	_check(engine.gs_get("mode_step") == 6 and m.u32(timer) == 1, "frames = -1 compares as 0xFFFFFFFF: no step")
+	# normal_date_speak_1line: the table pointers, then talk_run(talk_choice, 1, 0); step when it returns 1
+	var runs: Array = []
+	var result: Array = [0]
+	engine.set_stub("talk_run", func(args: Array) -> int:
+		runs.append(args.duplicate())
+		return result[0])
+	m.write_global("talk_choice", 2)
+	engine.gs_set("mode_step", 1)
+	engine.call_c("normal_date_speak_1line")
+	_check(runs == [[2, 1, 0]] and engine.gs_get("mode_step") == 1, "talk_run(talk_choice, 1, 0) returning 0 does not step: %s" % [runs])
+	result[0] = 1
+	engine.call_c("normal_date_speak_1line")
+	_check(engine.gs_get("mode_step") == 2, "talk_run returning 1 steps")
