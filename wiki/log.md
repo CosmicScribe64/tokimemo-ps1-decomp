@@ -2724,3 +2724,17 @@ An independent review found the ported logic faithful line by line, and found pa
 - a function-pointer table, a loop lint and cached accessors were added.
 
 Root reran the core suite (11 suites pass) and `run_engine_diff.sh --all` (PASS). Started file-disjoint packages [[tickets/T-39311-engine-draw-core]], [[tickets/T-39312-engine-scene-hud]] and [[tickets/T-39313-engine-menus-memcard]]. Packages D (mode screens) and E (system, boot, audio driver) come later.
+
+## [2026-10-30] ticket | Engine SDK layer started (T-39314)
+
+WP-A and WP-C reported that every PsyQ SDK call refuses by name because the facade has no owner for them. That covers libgpu, VSync, the card and event calls, and rand. So nothing in the engine reaches the generic renderer or the memory card service yet. Opened [[tickets/T-39314-engine-sdk-layer]] for one worker; it is the only package allowed to edit the facade.
+
+## [2026-10-30] build | Engine WP-C merged (T-39313 Done)
+
+Merged `port/m2-engine-c-menus-memcard`: `memory_card.c` (40/40 functions), `hud_screens.c` (44/44) and `menu_speaker_girl.c` (35/35) are ported onto the engine. 82 functions pass captured hits; the rest are untested with reasons and hand checks.
+
+An independent review confirmed fidelity line by line and found two invented values; both are fixed:
+- `hud_magazine_page_build` now refuses for the C's uninitialised magazine index.
+- The stale `strncat` count is captured as 8, equal to the longest club name; OpenBIOS, not the retail BIOS.
+
+The asm-derived leftover returns of `menu_check_2`/`menu_check` and `girl_points_others`/`girl_scores` are now compared, the `calendar_month_load` exclusions are narrowed, and voice, refusal and layout-constant checks were added. Root reran the core suite (11 suites pass) and `run_engine_diff.sh --all` (PASS). Documented `MEMCARD_DIR` and `CONTAINER_PREFIX` in [[emulator]], and updated the Status table in [[engine-porting-contract]]. The PsyQ card calls still refuse until [[tickets/T-39314-engine-sdk-layer]] lands.

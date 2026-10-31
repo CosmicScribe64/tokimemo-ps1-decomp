@@ -48,6 +48,12 @@ tools/emu/run.sh report build/emu/<run>/result.json            # print a report 
 
 GDB: `tools/emu/run.sh gdb --state ...` starts the emulator with the PCSX-Redux GDB server on `--port` (3333, published on localhost). `gdb-multiarch` is in the image; tested in one container: `python3 tools/emu/emu.py gdb --state S &`, then `gdb-multiarch -batch -ex 'set architecture mips:3000' -ex 'target remote localhost:3333' -ex 'break *0x8004E788' -ex continue -ex 'info registers' -ex 'x/s $a3'` (breakpoint, registers and memory work; `detach` is not supported). The REA GDB tools need a Linux host GDB, so they do not work from this macOS host.
 
+### Function captures (`tools/emu/func_capture`)
+
+`tools/emu/func_capture/run.sh` captures function hits for the engine's differential harness; see [[engine-porting-contract]]. Two environment options:
+- `MEMCARD_DIR=<dir>` (relative to the data root, or absolute) copies `memcard1.mcd` and `memcard2.mcd` from that directory into the new capture's output directory, so the emulated cards start with that content. The source files are never touched; without the option the cards start blank.
+- `CONTAINER_PREFIX=<p>` names the container `<p>-<name>` (also in `tools/port/run_engine_diff.sh`), so parallel workers can tell their containers apart.
+
 ## Spike results (2026-10-24)
 
 - The game boots under OpenBIOS: Konami logo and intro movie (MDEC/STR works), NAME_ENT loads at frame 3538 (mode byte 0x11), the attract prologue runs, START reaches the title menu. Speed without breakpoints is about 3x real time (900 frames from a state in 18 s, 3600 frames from power-on in 70 s).

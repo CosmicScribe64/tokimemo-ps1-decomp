@@ -11,6 +11,7 @@
 #          [--input FRAME:BUTTON[:HOLD]] ...                 pad press (vsyncs counted from the state load)
 #          [--poke FRAME:0xADDR:HEXBYTES] ...                RAM write at the start of that vsync (a constructed state)
 #          [--max-diff BYTES] [--cover] [--ptr-bytes N]
+# MEMCARD_DIR=<dir>: start the run with the cards memcard1.mcd/memcard2.mcd of that directory (copied).
 #   --cover records the executed instruction addresses of every hit (slow: a breakpoint per instruction of the function);
 #   tools/emu/func_capture/coverage.sh <name> then reports unreached blocks. --ptr-bytes: bytes recorded behind a callee's
 #   pointer argument into the stack (default 64).
@@ -62,6 +63,13 @@ while [ $# -gt 0 ]; do
 done
 [ -n "$TARGETS" ] || { echo "give at least one --fn" >&2; exit 2; }
 mkdir -p "$OUT"
+# MEMCARD_DIR: a directory (relative to the data root, or absolute) holding memcard1.mcd / memcard2.mcd; they are
+# copied into the output directory first, so the emulated card starts with that content (a copy: the source is
+# never touched). Without it the cards start blank.
+if [ -n "${MEMCARD_DIR:-}" ]; then
+  case "$MEMCARD_DIR" in /*) CARDS="$MEMCARD_DIR" ;; *) CARDS="$DATA/$MEMCARD_DIR" ;; esac
+  for c in memcard1.mcd memcard2.mcd; do [ -f "$CARDS/$c" ] && cp "$CARDS/$c" "$OUT/$c"; done
+fi
 cat > "$OUT/emulator.cue" <<CUE
 FILE "/disc/track1.bin" BINARY
   TRACK 01 MODE2/2352
@@ -74,7 +82,7 @@ CUE
 { echo "JOB = { out = '/out', load_state = '/data/$STATE', frames = $FRAMES, ${MAXDIFF}${COVER}${PTRB}"
   echo "  targets = { $TARGETS }, callees = { $CALLEES }, inputs = { $INPUTS }, pokes = { $POKES } }"
   cat "$HERE/capture.lua"; } > "$OUT/job.lua"
-docker run --rm --name "m2fn-$NAME" --cpus=4 -u "$(id -u):$(id -g)" -e HOME=/tmp \
+docker run --rm --name "${CONTAINER_PREFIX:-m2fn}-$NAME" --cpus=4 -u "$(id -u):$(id -g)" -e HOME=/tmp \
   -e SDL_AUDIO_DRIVER=dummy -e SDL_AUDIODRIVER=dummy -e SDL_VIDEO_DRIVER=dummy \
   -v "$DATA/disc":/disc:ro -v "$DATA/.asset-cache":/data/.asset-cache:ro -v "$DATA/build/emu/states":/data/build/emu/states:ro -v "$OUT":/out -w /out tokimemo-emu \
   timeout 3000 nice -n 19 /opt/redux/pcsx-redux -no-ui -stdout -lua_stdout -run -interpreter -debugger \
