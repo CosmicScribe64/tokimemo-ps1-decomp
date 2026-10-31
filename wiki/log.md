@@ -2664,3 +2664,7 @@ At the first command select, 133 of 159 comparable GameState fields equal the em
 ## [2026-10-30] build | Generic PS1 renderer matches the emulator on sampled frames
 
 29 frames from 28 save states (name entry, file select, prologue, command screen, school days, phone, events, VN scenes, saves) drawn from the RAM and VRAM before DrawOTag and compared with the emulator's VRAM after, on the real VRAM and again over noise-filled frame buffers: 52 of 58 comparisons exact over all 524,288 pixels, the other 6 (three phone frames) one pixel off by one 5-bit step. Two rules were fixed on the way: exact barycentric interpolation rounded to nearest (the plane version with truncated slopes missed 8 gradient pixels), and a dithered semi-transparent pixel blends at 8 bits and then dithers (3,008 pixels of one frame). A synthetic ordering table of invented primitives agreed except for scaled and rotated textures (830 pixels), lines (144), and texture flips (559, ignored by the emulator). [[tickets/T-39302-generic-ps1-renderer]], [[ps1-renderer]].
+
+## [2026-10-30] ticket | M2 started: disc pack and renderer
+
+Moved [[tickets/T-39303-installed-disc-pack]] and [[tickets/T-39302-generic-ps1-renderer]] to In Progress. Each runs in its own worktree (`port/m2-disc-pack`, `port/m2-renderer`); their files do not overlap. [[tickets/T-39301-engine-api-core]] follows once the disc pack lands.

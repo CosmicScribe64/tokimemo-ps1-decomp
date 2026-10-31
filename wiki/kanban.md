@@ -24,7 +24,6 @@ kanban-plugin: board
 ## Ready
 
 - [ ] [[tickets/T-39301-engine-api-core|T-39301 Port the main-executable engine API under its C names (M2)]]
-- [ ] [[tickets/T-39303-installed-disc-pack|T-39303 Install one disc pack of the original files the game reads (M2)]]
 
 
 
@@ -32,6 +31,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39303-installed-disc-pack|T-39303 Install one disc pack of the original files the game reads (M2)]]
 - [ ] [[tickets/T-39302-generic-ps1-renderer|T-39302 Build one generic PS1 renderer for every scene (M2)]]
 - [ ] [[tickets/T-39300-game-memory-model|T-39300 Model the original RAM layout as the port's game memory (M1)]]
 - [ ] [[tickets/T-39230-parity-mode|T-39230 Add a locked Parity mode and parity test gate]]

@@ -1,7 +1,7 @@
 ---
 id: T-39303
 title: Install one disc pack of the original files the game reads (M2)
-status: Ready
+status: In Progress
 assignee:
 created: 2026-10-30
 updated: 2026-10-30
