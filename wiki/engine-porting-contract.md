@@ -162,9 +162,9 @@ The SDK modules hand drawing to the renderer GDExtension, which is not installed
 | `menu_speaker_girl.c` | `engine/menu_speaker_girl.gd` | 35/35 | [[tickets/T-39313-engine-menus-memcard]] (merged) |
 | `text_system.c`, `frame_render_audio.c`, `background_images.c`, `actor_sprites.c`, `gpu_primitives.c`, `gpu_effects.c`, `screen_layers.c` | `engine/<file>.gd` | 114/114 | [[tickets/T-39311-engine-draw-core]] (merged) |
 | `scene_library.c`, `scene_display.c`, `hud_panels.c` | | 164 ported, review fixes in progress | [[tickets/T-39312-engine-scene-hud]] |
-| PsyQ SDK calls | `engine/_sdk_*.gd` | in review | [[tickets/T-39314-engine-sdk-layer]] |
+| PsyQ SDK calls | `engine/_sdk_gpu.gd`, `_sdk_etc.gd`, `_sdk_card.gd`, `_sdk_gte.gd`, `_libc.gd` | libgpu, VSync(-1), events, blank-card jobs, rand/abs/printf/sprintf(%s) | [[tickets/T-39314-engine-sdk-layer]] (merged) |
 
-Per-function results are in each ticket. `game_mode_reset_to_title` is defined in `reset_iris_wipe.c`, not in `game_mode.c`; the engine keeps the file boundary of the C. Until [[tickets/T-39314-engine-sdk-layer]] lands, every PsyQ SDK call refuses by name, so card, GPU and VSync paths stop at their first SDK call.
+Per-function results are in each ticket. `game_mode_reset_to_title` is defined in `reset_iris_wipe.c`, not in `game_mode.c`; the engine keeps the file boundary of the C. Still refusing by name: GetRCnt/ResetRCnt and blocking VSync(0)/DrawSync(0) (the frame-timing policy belongs to the main-loop package), card file calls (open/read/write/close/format/delete, `_card_status`, `_card_clear`; no measured success path), the libgs sorters, libspu/libsnd, libcd's `func_8008B750` and libpress/MDEC.
 
 ## Limits and decisions
 

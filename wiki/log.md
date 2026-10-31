@@ -2742,3 +2742,16 @@ The asm-derived leftover returns of `menu_check_2`/`menu_check` and `girl_points
 ## [2026-10-30] build | Engine WP-A merged (T-39311 Done)
 
 Merged `port/m2-engine-a-draw-core`: 114 functions of the seven draw-core C files, plus `cd_iris_texture_build` and `cd_iris_wipe_draw`. An independent review found no fidelity defect. Its lows are fixed: the stale `tpage` slot is read as the asm reads it, `srn_tpage_show` refuses late, the inline `rsin`/`abs` use is documented, there is a `c_params` assert, and the specs are narrower. New captures reach `dec_bg_cd_read`, `dec_bg_decode_to_vram`, `dec_bg_show_set`, `set_dec_bri`, the 3D branch of `draw_frame` and more. Still uncaptured: `bg_capture_screen`, `bg_wipe_step`, `bg_fade_draw`, `bg_crossfade_draw`, palette modes 2-4 and animated actors. Root reran the core suite (11 suites pass) and `run_engine_diff.sh --all` (PASS) before and after the merge.
+
+## [2026-10-30] build | Engine SDK layer merged (T-39314 Done)
+
+Merged `port/m2-engine-sdk`, which gives the engine its PsyQ SDK modules:
+- libgpu with GsDrawOt and GsSortClear, backed by the generic renderer;
+- VSync(-1) and I_MASK;
+- critical sections, BIOS events and the card jobs `_card_info`/`_card_load` (2/72 frames, measured once each on OpenBIOS with a blank card; any other card state refuses);
+- rsin and rcos;
+- libc rand/srand on the RAM seed, abs, printf (no-op) and sprintf (`%s`/`%%` only; variadic padding is recorded and refused if consumed).
+
+Most captured calls pass, for example AddPrim 144/144, GetTPage 184/184 and TestEvent 615/615. The 26-frame DrawOTag render check passes, with 24 frames exact and 2 frames 1 pixel off (the renderer's known rounding). An independent review found nothing blocking; its three medium findings (invented card, sprintf and variadic values) and its lows are fixed.
+
+Root reran the core suite (11 suites pass) and `run_engine_diff.sh --all` (PASS). Still refusing: GetRCnt/ResetRCnt and blocking VSync(0), which stop the frame loop every frame. That policy is waiting on a user decision, and the main-loop package will build it.

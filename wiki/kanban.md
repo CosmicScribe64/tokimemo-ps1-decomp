@@ -30,7 +30,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-39314-engine-sdk-layer|T-39314 Give the engine an SDK layer for the PsyQ library calls (M2)]]
 - [ ] [[tickets/T-39312-engine-scene-hud|T-39312 Port the engine scene and HUD files (WP-B)]]
 - [ ] [[tickets/T-39301-engine-api-core|T-39301 Port the main-executable engine API under its C names (M2)]]
 - [ ] [[tickets/T-39303-installed-disc-pack|T-39303 Install one disc pack of the original files the game reads (M2)]]
@@ -118,6 +117,7 @@ kanban-plugin: board
 
 ## Done
 
+- [x] [[tickets/T-39314-engine-sdk-layer|T-39314 Give the engine an SDK layer for the PsyQ library calls (M2)]]
 - [x] [[tickets/T-39311-engine-draw-core|T-39311 Port the engine draw core (WP-A)]]
 - [x] [[tickets/T-39313-engine-menus-memcard|T-39313 Port the engine menu, speaker and memory card files (WP-C)]]
 - [ ] [[tickets/T-29025-connect-installed-content-to-new-game|T-29025 Connect fresh original import to normal New Game]]

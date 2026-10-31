@@ -1,7 +1,7 @@
 ---
 id: T-39314
 title: Give the engine an SDK layer for the PsyQ library calls (M2)
-status: In Review
+status: Done
 assignee: worker agent
 created: 2026-10-30
 updated: 2026-10-30
