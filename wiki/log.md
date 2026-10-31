@@ -2652,3 +2652,7 @@ Merged `port/m1-game-memory` ([[tickets/T-39300-game-memory-model]]) into `port/
 - April loop route: IDENTICAL to the merge reference.
 
 At the first command select, 133 of 159 comparable GameState fields equal the emulator. The other 26 are engine-owned and are listed for [[tickets/T-39301-engine-api-core]] and [[tickets/T-39302-generic-ps1-renderer]]. The ticket stays In Progress until those fields are owned.
+
+## [2026-10-30] ticket | M2 started: disc pack and renderer
+
+Moved [[tickets/T-39303-installed-disc-pack]] and [[tickets/T-39302-generic-ps1-renderer]] to In Progress. Each runs in its own worktree (`port/m2-disc-pack`, `port/m2-renderer`); their files do not overlap. [[tickets/T-39301-engine-api-core]] follows once the disc pack lands.
