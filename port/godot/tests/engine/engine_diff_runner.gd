@@ -127,7 +127,7 @@ func _run_module(engine, differ, stem: String, root: String, specs: String, only
 				if result.ok:
 					tally.passed += 1
 					tally.compared += int(result.compared_bytes)
-				elif known_spec.has("refuses") and _is_expected_refusal(result, str(known_spec["refuses"])):
+				elif known_spec.has("refuses") and _is_expected_refusal(result, str(known_spec["refuses"]), known_spec, entry_ram):
 					tally.refusals = int(tally.get("refusals", 0)) + 1
 				elif not known_spec.is_empty() and result.within_allowance:
 					tally.not_comparable = int(tally.get("not_comparable", 0)) + 1
@@ -167,9 +167,19 @@ func _run_module(engine, differ, stem: String, root: String, specs: String, only
 ## T-39314: a hit the original served through a path the model refuses by design (the original queued the call
 ## behind a running DMA: hardware state that is not in RAM). The spec entry says {"refuses": "<text of the refusal>",
 ## "reason": "..."}; the hit passes when the port's only problem is that refusal.
-func _is_expected_refusal(result: Dictionary, text: String) -> bool:
+func _is_expected_refusal(result: Dictionary, text: String, known_spec: Dictionary, entry_ram: PackedByteArray) -> bool:
 	var problems: Array = result.problems
-	return problems.size() == 1 and str(problems[0]).begins_with("refused: ") and str(problems[0]).contains(text)
+	if not (problems.size() == 1 and str(problems[0]).begins_with("refused: ") and str(problems[0]).contains(text)):
+		return false
+	# "entry_differ": [a, b] also requires the two words at those addresses to differ in the hit's entry RAM (for
+	# example the library's queue head and tail: the original really had a job queued), so the expected refusal
+	# does not rest on the message text alone
+	var words: Array = known_spec.get("entry_differ", [])
+	if words.size() == 2:
+		var first: int = int(str(words[0]).hex_to_int()) & 0x1fffffff
+		var second: int = int(str(words[1]).hex_to_int()) & 0x1fffffff
+		return entry_ram.decode_u32(first) != entry_ram.decode_u32(second)
+	return true
 
 func _note_runs(tally: Dictionary, runs: Array) -> void:
 	var ranges: Dictionary = tally.get("ranges", {})

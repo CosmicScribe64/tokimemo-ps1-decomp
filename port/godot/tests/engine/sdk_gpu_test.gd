@@ -186,7 +186,15 @@ func _libgs() -> void:
 	m.write_u8(0x801296A1, 1)
 	engine.call_c("func_8009824C", [1, 2, 3, gs_ot])
 	_check(m.u16(packet + 0xC) == 0x168, "GsSortClear with the flag: 3 * 0xF0 / 2")
-	# GsDrawOt(ot) calls DrawOTag(ot->org): without the renderer it refuses naming DrawOTag
+	# GsDrawOt(ot) calls DrawOTag(ot->org): a recording double on DrawOTag sees the table address at ot + 0x10
+	var seen: Array = []
+	engine.set_stub("func_8009CB9C", func(args: Array) -> int:
+		seen.append(args)
+		return 0)
 	engine.call_c("func_8009AD00", [gs_ot])
-	_check(engine.halted() and (engine.refusal.contains("DrawOTag") or engine.refusal.contains("queue")), "GsDrawOt reaches DrawOTag (got '%s')" % engine.refusal)
+	_check(seen.size() == 1 and seen[0] == [org] and not engine.halted(), "GsDrawOt calls DrawOTag(ot->org) (saw %s)" % str(seen))
+	engine.clear_stubs()
+	engine.call_c("func_8009AD00", [gs_ot])
+	if not engine.renderer_ready():
+		_check(engine.halted() and engine.refusal.begins_with("func_8009CB9C -> DrawOTag"), "without the renderer the refusal comes from DrawOTag inside GsDrawOt (got '%s')" % engine.refusal)
 	engine.shutdown()

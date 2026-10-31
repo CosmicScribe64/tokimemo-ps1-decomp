@@ -25,7 +25,7 @@ extends RefCounted
 ## - Event delivery to a callback (mode 0x1000) and the other BIOS event classes.
 ##
 ## Measured profile (OpenBIOS in PCSX-Redux, blank card, capture card2-load): _card_info called at frame 192, the
-## event is seen at 194 (INFO_FRAMES = 2); _card_load called at frame 195, the event is seen at 267
+## event is seen at 194 (INFO_FRAMES = 2, OpenBIOS, blank card only); _card_load called at frame 195, the event is seen at 267
 ## (LOAD_FRAMES = 72). This is the emulated BIOS, not hardware parity; both numbers come from one capture each.
 
 const Math = preload("res://core/native_math.gd")
@@ -204,13 +204,23 @@ func _bu_init() -> void:
 func _card_auto(_flag: int) -> void:
 	pass
 
+## The 2 and 72 frame numbers are "OpenBIOS, blank (unformatted) card only": measured once each on a blank card.
+## The model therefore accepts a card job only when the attached card is in that state, and only when no other job
+## is pending (two jobs at once were never observed); anything else refuses naming the call and the missing
+## measurement. The game's own waits are longer than the 72 frames (memory_card_timer gives up at 0x200 polls,
+## src/ovl/*/album_save_flow.c, save_and_exit.c, settings_sound_test_and_extras.c), so the model cannot trip them.
 func _card_job(function_name: String, frames: int) -> int:
 	if engine.memory_card == null:
 		_refuse(function_name, "no memory card is attached to the engine (engine.memory_card)")
 		return 0
 	var state: Dictionary = engine.memory_card.check()
-	if int(state.get("result", 0)) == 0xFF:
-		_refuse(function_name, "no card in the slot: the BIOS event for an empty slot was never observed (%s)" % str(state.get("error", "")))
+	var result: int = int(state.get("result", 0))
+	if result != 0xF1:
+		_refuse(function_name, "the %d-frame SwCARD event was measured only on a blank (unformatted) card; this card reports 0x%02X (%s) and no timing was measured for it" % [
+			frames, result, str(state.get("error", ""))])
+		return 0
+	if not _jobs.is_empty():
+		_refuse(function_name, "a card job is already pending; two jobs at once were never observed")
 		return 0
 	_jobs.append({"due": engine.frame() + frames, "class": CLASS_SW_CARD, "spec": SPEC_IOE})
 	return 1

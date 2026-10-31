@@ -99,12 +99,15 @@ func _test_sprite_ft4() -> void:
 	m.write_s32(q + Layout.SPRITE_QUAD_FLAGS, 0)
 	e.call_c("sprite_set_gpu_poly_ft4", [q, 2, 1])
 	s.check(log[1][0] == "SetSemiTrans" and log[1][2] == 0, "SetSemiTrans(p, 0) without bit 30")
-	# refusal of an unported callee
+	# a refusal inside a libgpu call (a double that refuses; the SDK layer now provides it, T-39314)
 	var e2 = s.new_engine()
+	e2.set_stub("func_8009F040", func(_a: Array) -> int:
+		e2.refuse("func_8009F040", "double")
+		return 0)
 	e2.memory.write_global("draw_buffer", 0)
 	e2.call_c("SetWorkBase", [0x80140000, 0])
 	e2.call_c("sprite_set_gpu_poly_ft4", [q, 0, 0])
-	s.check(e2.halted() and e2.refusal.contains("func_8009F040"), "unported libgpu call refuses by name: %s" % e2.refusal)
+	s.check(e2.halted() and e2.refusal.contains("func_8009F040"), "a refusing libgpu call stops the run: %s" % e2.refusal)
 
 func _test_tpage_and_tiles() -> void:
 	var log: Array = []

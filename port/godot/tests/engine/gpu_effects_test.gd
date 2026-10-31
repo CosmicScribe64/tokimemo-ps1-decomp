@@ -86,11 +86,14 @@ func _test_bg_slot_setup() -> void:
 	e.call_c("prim_bg_slot_setup", [tex, 0, 0, 9, 8, 0, 0, 0, 1, 0])
 	var printed: Array = log.filter(func(x): return x[0] == "printf")
 	s.check(printed.size() == 7 and printed[0] == ["printf", 0x800AFAE0], "72 cells (index 0..0x47): printf(BG_ERROR) for index 0x41..0x47 = 7 times: %d" % printed.size())
-	# a refusal (GetClut is not ported) stops before the flag store: bg_layer_order stays 0
+	# a refusal inside GetClut (a double that refuses; the SDK layer now provides GetClut, T-39314) stops before the flag store: bg_layer_order stays 0
 	var e2 = s.new_engine()
+	e2.set_stub("func_8009ED74", func(_a: Array) -> int:
+		e2.refuse("func_8009ED74", "double")
+		return 0)
 	e2.memory.write_s32(0x80180000, 1)
 	e2.call_c("prim_bg_slot_setup", [0x80180000, 0, 0, 1, 1, 0, 0, 0, 7, 0])
-	s.check(e2.halted() and e2.refusal.contains("func_8009ED74") and e2.memory.u8(e2.gs_address("bg_layer_order")) == 0, "unported GetClut refuses; the later stores do not land: %s" % e2.refusal)
+	s.check(e2.halted() and e2.refusal.contains("func_8009ED74") and e2.memory.u8(e2.gs_address("bg_layer_order")) == 0, "a refusing GetClut stops the run; the later stores do not land: %s" % e2.refusal)
 
 func _test_disc_tiles() -> void:
 	var log: Array = []
@@ -119,13 +122,16 @@ func _test_disc_tiles() -> void:
 	s.check(adds.size() == 9, "radius 16 step 8: dx, dy in {-8, 0, 8} with dx^2 + dy^2 < 256 = 9 tiles, got %d" % adds.size())
 	var first: int = p + 0x34 * 4
 	s.check(m.s16(first + 8) == 100 - 8 - 4 and m.s16(first + 0xA) == -20 - 8 - 4, "first tile is x = -8, y = -8 (loops start at centre - radius: -16 is outside the disc)")
-	# a refusal (rand not ported)
+	# a refusal inside rand (a double that refuses; the SDK layer now provides rand, T-39314)
 	var e2 = s.new_engine()
+	e2.set_stub("rand", func(_a: Array) -> int:
+		e2.refuse("rand", "double")
+		return 0)
 	s.record(e2, ["AddPrim", "SetSemiTrans", "func_8009F068", "func_8009ECB0", "func_8009ED74"], [])
 	e2.memory.write_global("draw_buffer", 0)
 	e2.call_c("SetWorkBase", [0x80160000, 0])
 	e2.call_c("prim_disc_tiles", [0, 0, 8, 8, 8, 0])
-	s.check(e2.halted() and e2.refusal.contains("rand"), "rand is not ported: refusal by name (%s)" % e2.refusal)
+	s.check(e2.halted() and e2.refusal.contains("rand"), "a refusing rand stops the run: refusal by name (%s)" % e2.refusal)
 
 func _test_glow_disc() -> void:
 	var log: Array = []

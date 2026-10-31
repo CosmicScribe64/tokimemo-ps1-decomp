@@ -97,6 +97,9 @@ The engine ([[engine-porting-contract]], ticket [[tickets/T-39314-engine-sdk-lay
 | `func_8009F108` `F11C` `F130` `F150` `F170` `F190` | `SetLineF2` `SetLineG2` `SetLineF3` `SetLineG3` `SetLineF4` `SetLineG4` | codes 0x40/0x50/0x48/0x58/0x4C/0x5C, polylines write the 0x55555555 terminator |
 | `func_8009AD00` / `func_8009824C` | libgs `GsDrawOt` / `GsSortClear` | `DrawOTag(ot->org)`; the per-buffer clear packet at 0x800E6100 linked into `ot->org` |
 | `func_800AD950` | libetc `VSync(mode)` | RCS id `intr.c` 1995/08/29; `VSync: timeout` string |
-| `func_800AD3F8` | libetc interrupt-mask write (returns the old I_MASK) | used by the queue to save and restore the mask |
+| `func_800AD3F8` | libetc I_MASK write that returns the old value; the PsyQ name is inferred from behaviour (not matched to a published symbol) | used by the queue to save and restore the mask |
+| `func_80098650` / `func_8009ABF0` | `GetRCnt(0xF2000001)` / `ResetRCnt(0xF2000001)` (root counter 2 = the horizontal-retrace counter), although splat files them in `libspu.s` / `libgs.s` | they only call the BIOS root-counter functions with that argument; the engine refuses both |
 | `rsin` (0x800A0070), `func_800A0140` | libgte `rsin` / `rcos` | sine table at `D_800DD6C0` |
 | `OpenEvent EnableEvent CloseEvent TestEvent EnterCriticalSection ExitCriticalSection InitCARD StartCARD _bu_init _card_auto _card_info _card_load _card_clear _card_status open close read write format delete rand srand abs printf` | the BIOS A/B/C-table stubs of libapi (`asm/libapi_*.s`, `libcard_card.s`) | `addiu $t2, $zero, 0xA0/0xB0/0xC0; jr $t2; addiu $t1, $zero, N` |
+
+`rand` and `srand` are BIOS routines (A0[2f], A0[30]). The engine keeps the seed in the kernel-RAM word the captures use (OpenBIOS, `0x8000850C`); `rand` before any `srand` therefore starts from the RAM value (0 in a fresh memory), not from the retail BIOS power-on seed, which has not been observed. `printf` keeps `ret_undefined` (T-39314): the BIOS returns the character count and a restricted formatter cannot compute it for the debug formats (`%d` and others); every caller discards the value.

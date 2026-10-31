@@ -170,8 +170,11 @@ func sprintf(dst: int, fmt: int, a1: int = 0, a2: int = 0, a3: int = 0, a4: int 
 	engine.memory.write_bytes(dst, text)
 	return out.size()
 
-## The conversions the library implements that the game uses: %% %c %s %d %i %u %x %X %o with flags - 0 + space,
-## width, precision and the h/l length modifiers. Anything else refuses by name (no value is invented).
+## Only what the game's sprintf calls use: `%s` and `%%` (grep of src/ and of the executable's format strings:
+## every sprintf format is a run of `%s` with Shift-JIS text between). Everything else, including flags, width,
+## precision, `%d` and friends, refuses by name; add a conversion only with a derivation from asm/libc_sprintf.s
+## or a capture. A `%s` that would consume an argument the caller did not supply refuses
+## (`engine.variadic_supplied`: call_c pads missing variadic arguments with 0 and records how many were real).
 func _sprintf_format(fmt: int, arguments: Array[int]) -> PackedByteArray:
 	var out := PackedByteArray()
 	var format: PackedByteArray = _c_string(fmt)
@@ -183,109 +186,17 @@ func _sprintf_format(fmt: int, arguments: Array[int]) -> PackedByteArray:
 		if c != 0x25:
 			out.append(c)
 			continue
-		var left: bool = false
-		var zero: bool = false
-		var plus: bool = false
-		var space: bool = false
-		while i < format.size() and format[i] in [0x2D, 0x30, 0x2B, 0x20]:
-			match format[i]:
-				0x2D: left = true
-				0x30: zero = true
-				0x2B: plus = true
-				0x20: space = true
-			i += 1
-		var width: int = 0
-		while i < format.size() and format[i] >= 0x30 and format[i] <= 0x39:
-			width = width * 10 + format[i] - 0x30
-			i += 1
-		var precision: int = -1
-		if i < format.size() and format[i] == 0x2E:
-			i += 1
-			precision = 0
-			while i < format.size() and format[i] >= 0x30 and format[i] <= 0x39:
-				precision = precision * 10 + format[i] - 0x30
-				i += 1
-		var length: int = 0 # 0 int, 1 short, 2 long (the R3000 int and long are both 32 bits)
-		while i < format.size() and format[i] in [0x68, 0x6C]:
-			length = 1 if format[i] == 0x68 else 2
-			i += 1
-		if i >= format.size():
-			engine.refuse("sprintf", "format ends inside a conversion at 0x%08X" % fmt)
-			break
-		var conv: int = format[i]
+		var conv: int = format[i] if i < format.size() else 0
 		i += 1
-		var body := PackedByteArray()
-		var sign_text: String = ""
-		match conv:
-			0x25:
-				body.append(0x25)
-			0x63:
-				body.append(_next_argument(arguments, next_arg) & 0xFF)
-				next_arg += 1
-			0x73:
-				var address: int = _next_argument(arguments, next_arg)
-				next_arg += 1
-				body = _c_string(address)
-				if precision >= 0 and body.size() > precision:
-					body = body.slice(0, precision)
-				zero = false
-			0x64, 0x69, 0x75, 0x78, 0x58, 0x6F:
-				var value: int = _next_argument(arguments, next_arg)
-				next_arg += 1
-				var signed: bool = conv == 0x64 or conv == 0x69
-				if length == 1:
-					value = Math.s16(value) if signed else Math.u16(value)
-				else:
-					value = Math.s32(value) if signed else Math.u32(value)
-				var digits: String
-				if signed:
-					if value < 0:
-						sign_text = "-"
-					elif plus:
-						sign_text = "+"
-					elif space:
-						sign_text = " "
-					digits = str(absi(value))
-				elif conv == 0x75:
-					digits = str(value)
-				elif conv == 0x6F:
-					digits = "%o" % value
-				elif conv == 0x78:
-					digits = "%x" % value
-				else:
-					digits = "%X" % value
-				if precision >= 0:
-					zero = false
-					while digits.length() < precision:
-						digits = "0" + digits
-					if precision == 0 and value == 0:
-						digits = ""
-				body = (sign_text + digits).to_ascii_buffer()
-			_:
-				engine.refuse("sprintf", "conversion %%%c at 0x%08X is not modelled" % [conv, fmt])
+		if conv == 0x25:
+			out.append(0x25)
+		elif conv == 0x73:
+			if next_arg >= engine.variadic_supplied or next_arg >= arguments.size():
+				engine.refuse("sprintf", "the format at 0x%08X has a %%s for argument %d but the caller supplied %d" % [fmt, next_arg + 1, engine.variadic_supplied])
 				break
-		var pad: int = width - body.size()
-		if pad > 0:
-			if left:
-				out.append_array(body)
-				for _k: int in pad:
-					out.append(0x20)
-			elif zero and conv != 0x63 and conv != 0x73 and conv != 0x25:
-				var sign_bytes: int = sign_text.length()
-				out.append_array(body.slice(0, sign_bytes))
-				for _k: int in pad:
-					out.append(0x30)
-				out.append_array(body.slice(sign_bytes))
-			else:
-				for _k: int in pad:
-					out.append(0x20)
-				out.append_array(body)
+			out.append_array(_c_string(arguments[next_arg]))
+			next_arg += 1
 		else:
-			out.append_array(body)
+			engine.refuse("sprintf", "conversion %%%s at 0x%08X is not used by the game's formats and is not modelled" % [char(conv) if conv != 0 else "(end)", fmt])
+			break
 	return out
-
-func _next_argument(arguments: Array[int], index: int) -> int:
-	if index >= arguments.size():
-		engine.refuse("sprintf", "more than %d conversion arguments" % arguments.size())
-		return 0
-	return arguments[index]

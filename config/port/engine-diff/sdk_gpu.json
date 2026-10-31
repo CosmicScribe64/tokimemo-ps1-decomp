@@ -21,57 +21,74 @@
      "allow": [
       {
        "start": "0x800DD67C",
-       "length": 40
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
       },
       {
        "start": "0x80129D30",
-       "length": 6144
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
       },
       {
        "start": "0x800E35F0",
-       "length": 16
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
       }
      ]
     },
     "gpu-title:3": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-title:5": {
      "reason": "the original found the GPU DMA busy (hardware state, not in RAM) and queued the call: it advanced the queue head (0x800DD68C), filled a ring entry (0x80129D30..) and recorded a different last-call word; the port, whose renderer is idle, runs the call at once",
      "allow": [
       {
        "start": "0x800DD67C",
-       "length": 40
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
       },
       {
        "start": "0x80129D30",
-       "length": 6144
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
       },
       {
        "start": "0x800E35F0",
-       "length": 16
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
       }
      ]
     },
     "gpu-title:6": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-title:8": {
      "reason": "the original found the GPU DMA busy (hardware state, not in RAM) and queued the call: it advanced the queue head (0x800DD68C), filled a ring entry (0x80129D30..) and recorded a different last-call word; the port, whose renderer is idle, runs the call at once",
      "allow": [
       {
        "start": "0x800DD67C",
-       "length": 40
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
       },
       {
        "start": "0x80129D30",
-       "length": 6144
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
       },
       {
        "start": "0x800E35F0",
-       "length": 16
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
       }
      ]
     },
@@ -80,56 +97,86 @@
      "allow": [
       {
        "start": "0x800DD67C",
-       "length": 40
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
       },
       {
        "start": "0x80129D30",
-       "length": 6144
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
       },
       {
        "start": "0x800E35F0",
-       "length": 16
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
       }
      ]
     },
     "gpu-prol:3": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-prol:4": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-prol:5": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-prol:6": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-prol:7": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-prol:8": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-sp1:2": {
      "reason": "the original found the GPU DMA busy (hardware state, not in RAM) and queued the call: it advanced the queue head (0x800DD68C), filled a ring entry (0x80129D30..) and recorded a different last-call word; the port, whose renderer is idle, runs the call at once",
      "allow": [
       {
        "start": "0x800DD67C",
-       "length": 40
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
       },
       {
        "start": "0x80129D30",
-       "length": 6144
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
       },
       {
        "start": "0x800E35F0",
-       "length": 16
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
       }
      ]
     },
@@ -138,15 +185,18 @@
      "allow": [
       {
        "start": "0x800DD67C",
-       "length": 40
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
       },
       {
        "start": "0x80129D30",
-       "length": 6144
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
       },
       {
        "start": "0x800E35F0",
-       "length": 16
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
       }
      ]
     }
@@ -164,43 +214,83 @@
    "not_comparable": {
     "gpu-title:1": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-title:2": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-title:3": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-title:4": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-title:5": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-title:6": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-title:7": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-title:8": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-title:9": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     },
     "gpu-title:10": {
      "reason": "the captured original had a job in the library's drawing queue (its DMA was still running from an earlier call): asynchronous drawing, which the synchronous renderer never produces, so the port refuses by design (_idle)",
-     "refuses": "drawing queue holds jobs"
+     "refuses": "drawing queue holds jobs",
+     "entry_differ": [
+      "0x800DD68C",
+      "0x800DD690"
+     ]
     }
    }
   },
@@ -211,15 +301,18 @@
      "allow": [
       {
        "start": "0x800DD67C",
-       "length": 40
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
       },
       {
        "start": "0x80129D30",
-       "length": 6144
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
       },
       {
        "start": "0x800E35F0",
-       "length": 16
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
       }
      ]
     },
@@ -228,15 +321,18 @@
      "allow": [
       {
        "start": "0x800DD67C",
-       "length": 40
+       "length": 40,
+       "reason": "the library's last-call words (function, address, parameter) and queue head/tail: the queued path records them differently"
       },
       {
        "start": "0x80129D30",
-       "length": 6144
+       "length": 6144,
+       "reason": "the library's queue ring (0x60-byte entries): the original filled an entry"
       },
       {
        "start": "0x800E35F0",
-       "length": 16
+       "length": 16,
+       "reason": "libetc interrupt-handler state (0x800E35FC changes under the DMA/VBlank interrupts that fire while the original's queued job runs); the port never writes there"
       }
      ]
     }

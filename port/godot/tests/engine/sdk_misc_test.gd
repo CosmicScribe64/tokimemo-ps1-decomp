@@ -82,7 +82,7 @@ func _card_jobs() -> void:
 	engine.memory_card = MemoryCardService.new(OS.get_temp_dir().path_join("sdk-card-test-none"))
 	engine.memory_card.inserted = false
 	engine.call_c("_card_info", [0])
-	_check(engine.halted() and engine.refusal.contains("no card in the slot"), "_card_info refuses for an empty slot")
+	_check(engine.halted() and engine.refusal.contains("measured only on a blank"), "_card_info refuses for an empty slot (got '%s')" % engine.refusal)
 	engine.shutdown()
 	engine = GameEngine.new()
 	m = engine.memory
@@ -104,6 +104,10 @@ func _card_jobs() -> void:
 	m.write_u32(frame_address, 182)
 	_check(engine.call_c("TestEvent", [handle]) == 1, "the load event is delivered LOAD_FRAMES (72) frames later")
 	_check(not engine.halted(), "the card job path does not refuse")
+	# a second job while one is pending was never observed: refuses
+	engine.call_c("_card_info", [0])
+	engine.call_c("_card_load", [0])
+	_check(engine.halted() and engine.refusal.contains("already pending"), "a second card job refuses while one is pending (got '%s')" % engine.refusal)
 	engine.shutdown()
 
 func _card_refusals() -> void:
@@ -151,24 +155,22 @@ func _libc() -> void:
 	engine = GameEngine.new()
 	m = engine.memory
 	m.write_bytes(0x80100100, "ab".to_ascii_buffer() + PackedByteArray([0]))
-	m.write_bytes(0x80100200, "[%s|%d|%5d|%-5d|%05d]".to_ascii_buffer() + PackedByteArray([0]))
-	var n: int = engine.call_c("sprintf", [0x80100300, 0x80100200, 0x80100100, 42, 42, 42, 42])
+	m.write_bytes(0x80100200, "[%s|%s]%%".to_ascii_buffer() + PackedByteArray([0]))
+	var n: int = engine.call_c("sprintf", [0x80100300, 0x80100200, 0x80100100, 0x80100100])
 	var text: String = m.read_bytes(0x80100300, n).get_string_from_ascii()
-	_check(text == "[ab|42|   42|42   |00042]" and m.u8(0x80100300 + n) == 0, "sprintf formats %%s %%d with widths (got '%s')" % text)
-	m.write_bytes(0x80100200, "%x %X %c %% %u %i".to_ascii_buffer() + PackedByteArray([0]))
-	n = engine.call_c("sprintf", [0x80100300, 0x80100200, 255, 255, 65, 0xFFFFFFFF, -3])
-	text = m.read_bytes(0x80100300, n).get_string_from_ascii()
-	_check(text == "ff FF A % 4294967295 -3" and not engine.halted(), "sprintf %%x %%X %%c %%u %%i (got '%s')" % text)
-	m.write_bytes(0x80100200, "%03d|%+d|% d|%.3d|%5.2s|".to_ascii_buffer() + PackedByteArray([0]))
-	n = engine.call_c("sprintf", [0x80100300, 0x80100200, 7, 7, 7, 7, 0x80100100])
-	text = m.read_bytes(0x80100300, n).get_string_from_ascii()
-	_check(text == "007|+7| 7|007|   ab|" and not engine.halted(), "sprintf flags and precision (got '%s')" % text)
+	_check(text == "[ab|ab]%" and m.u8(0x80100300 + n) == 0 and not engine.halted(), "sprintf %%s and %%%% (got '%s')" % text)
 	# the game's own formats are "%s" runs with Shift-JIS text between them (src/main/scene_library.c): bytes pass through
 	m.write_bytes(0x80100400, PackedByteArray([0x82, 0xBB, 0x82, 0xB5, 0]))
 	m.write_bytes(0x80100200, PackedByteArray([0x25, 0x73, 0x20, 0x81, 0x75, 0x25, 0x73, 0x25, 0x73, 0]))
 	n = engine.call_c("sprintf", [0x80100300, 0x80100200, 0x80100400, 0x80100100, 0x80100400])
-	_check(n == 4 + 3 + 2 + 2 + 4 - 4 + 0 or n == 13, "sprintf %s runs with Shift-JIS literals (n=%d)" % [n, n])
-	m.write_bytes(0x80100200, "%f".to_ascii_buffer() + PackedByteArray([0]))
-	engine.call_c("sprintf", [0x80100300, 0x80100200, 1])
-	_check(engine.halted() and engine.refusal.contains("sprintf"), "an unmodelled conversion refuses by name")
+	_check(n == 13, "sprintf %%s runs with Shift-JIS literals (n=%d)" % n)
+	# a %s whose argument the caller did not supply refuses (call_c pads with 0 but records the real count)
+	engine.call_c("sprintf", [0x80100300, 0x80100200, 0x80100400])
+	_check(engine.halted() and engine.refusal.contains("supplied"), "a missing variadic argument refuses (got '%s')" % engine.refusal)
 	engine.shutdown()
+	for fmt: String in ["%d", "%5s", "%-5s", "%c", "%f", "%x"]:
+		engine = GameEngine.new()
+		engine.memory.write_bytes(0x80100200, fmt.to_ascii_buffer() + PackedByteArray([0]))
+		engine.call_c("sprintf", [0x80100300, 0x80100200, 1])
+		_check(engine.halted() and engine.refusal.contains("sprintf"), "sprintf %s refuses by name" % fmt)
+		engine.shutdown()

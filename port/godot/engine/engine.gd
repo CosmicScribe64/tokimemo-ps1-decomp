@@ -83,6 +83,9 @@ var _functions: Dictionary = {} # C function name -> module instance
 var _callables: Dictionary = {} # C function name -> cached Callable
 var _arity: Dictionary = {} # C function name -> argument count
 var _returns: Dictionary = {} # C function name -> C return type ("void", "s32", ...)
+## Real (not padded) variadic arguments of the variadic C function now running (T-39314): call_c pads missing ones
+## with 0 so the method can be called, but a formatter must refuse to consume one of them.
+var variadic_supplied: int = 0
 var _required: Dictionary = {} # variadic C function name -> number of required arguments (T-39314)
 var _stubs: Dictionary = {} # C function (or pointer slot) name -> Callable(args: Array) -> int, test doubles
 var _stack: Array[String] = []
@@ -247,12 +250,15 @@ func call_c(function_name: String, args: Array = []) -> int:
 		return 0
 	if args.size() != _arity[function_name]:
 		if _required.has(function_name) and args.size() >= int(_required[function_name]) and args.size() < _arity[function_name]:
+			variadic_supplied = args.size() - int(_required[function_name])
 			args = args.duplicate()
 			while args.size() < _arity[function_name]:
 				args.append(0)
 		else:
 			refuse(function_name, "%s takes %d argument(s), called with %d" % [function_name, _arity[function_name], args.size()])
 			return 0
+	elif _required.has(function_name):
+		variadic_supplied = args.size() - int(_required[function_name])
 	if _stack.size() >= MAX_CALL_DEPTH:
 		refuse(function_name, "call depth %d exceeded (%s)" % [MAX_CALL_DEPTH, " > ".join(_stack)])
 		return 0
