@@ -4,7 +4,6 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] [[tickets/T-39220-switch-informed-modern-options|T-39220 Add Switch-informed modern presentation options]]
 
 - [ ] [[tickets/T-39055-d1-one-iteration-lag|T-39055 Remove the D1 one-iteration lag (T-39030) seen in the opening trace]]
 
@@ -24,6 +23,9 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-39301-engine-api-core|T-39301 Port the main-executable engine API under its C names (M2)]]
+- [ ] [[tickets/T-39302-generic-ps1-renderer|T-39302 Build one generic PS1 renderer for every scene (M2)]]
+- [ ] [[tickets/T-39303-installed-disc-pack|T-39303 Install one disc pack of the original files the game reads (M2)]]
 
 
 
@@ -31,6 +33,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39300-game-memory-model|T-39300 Model the original RAM layout as the port's game memory (M1)]]
 - [ ] [[tickets/T-39230-parity-mode|T-39230 Add a locked Parity mode and parity test gate]]
 
 - [ ] [[tickets/T-39214-presenter-english-binding|T-39214 English WP-I: presenter English binding (date, phone, subgame, ending)]]
@@ -82,6 +85,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-39220-switch-informed-modern-options|T-39220 Add Switch-informed modern presentation options]]
 - [ ] [[tickets/T-39213-latin-name-entry|T-39213 English WP-D: Latin name typing over the native Symbols page]]
 
 - [ ] [[tickets/T-39211-english-bundle-builder|T-39211 English WP-C: build the installed English bundle]]

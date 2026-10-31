@@ -26,7 +26,8 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 ## Port references
 
 - [[port-pause-2026-10-29]] - latest user-requested WIP pause, translated-artwork publication and exact continuation instructions
-- [[port-finish-plan]] - current finish sequence, failure lessons and one-manager/one-implementer workflow
+- [[port-completion-plan]] - 2026-10-30 completion plan: memory model, engine API, generic renderer and disc pack first, then file-by-file porting
+- [[port-finish-plan]] - earlier finish sequence, failure lessons and one-manager/one-implementer workflow
 - [[port-manager-handoff]] - next manager's first assignment, retained candidates and local-page operations
 - [[port-readiness-review]] - independent baseline blockers and actual-route acceptance requirements
 - [[port-adversarial-review]] - fresh-context review of player routes, installation, packaging and contributor experience

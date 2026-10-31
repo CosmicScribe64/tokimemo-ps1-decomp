@@ -2583,3 +2583,45 @@ See [[tickets/T-39004-english-asset-completion]].
 ## [2026-10-30] decision | Dev-only native macOS runs
 
 The user allowed native macOS Godot runs for development iteration only. Docker remains the source of truth for acceptance, Parity gates and verified commits. With the user's explicit approval of the specific file, root downloaded the official `Godot_v4.7.2-stable_macos.universal.zip` (170.6 MB) from `godotengine/godot-builds` into the ignored `.asset-cache/dev-native/`. Its SHA-512 is verified against the official SHA512-SUMS, whose SHA-256 matches the pin in `tools/port/godot.lock.json`. The app is signed by the Godot team, version 4.7.2.stable.official.ed1daf0bf. Next: build the native audio library for macOS and prove native-vs-Docker equivalence and speed.
+
+## [2026-10-30] decision | Stop all port workflows to re-plan
+
+User asked to stop all tasks and workflows and plan a new approach. Stopped the main-loop (reviewing round 3, unmerged), performance/checkpoint, art finishing and dev-native macOS workflows; killed the remaining container; no Godot or emulator processes left. Saved all 103 dirty workflow worktrees, without moving HEAD, as `refs/snapshots/stop-all-2026-10-30/<worktree>`. The worktrees use 35 GB. Unmerged results stay where they were: `.asset-cache/gameplay-loop/loop-r3.patch` (actual route through April 1995 command selects, May rollover next), plus the parity, wing-art, fast-route, family and art patches under `.asset-cache/`. Branch `port/opening-to-gameplay` at e9a1e0e3e is unchanged.
+
+## [2026-10-30] build | Pending port work merged on port/merge-pending
+
+Merged every finished, reviewed piece onto `port/merge-pending` (from e9a1e0e3e) as 12 commits:
+- the main loop through April 1995 (round 3);
+- the 3x logic-frame speedup and dev checkpoints;
+- six gameplay families (wave 1);
+- the long-route driver;
+- MAINROM, FILESEL and movie-pill art;
+- wing art;
+- Parity mode.
+
+Left out: the unfinished background-sign art and the paused, unreviewed wave-2 endings work.
+
+Conflict decisions:
+- The day-event tables follow `overlay_loader.c`: native 0x57/0x59/0x5A/0x5D enter GEKO, queue 0x42 enters KANGEI, and 0x48/native 0x5B load SHOUGATU.
+- The inventory skips free-text `supersedes` notes.
+- The installed-route runner defaults to Parity except for the modern and playthrough observers.
+- Parity's "hook 0" wall-clock seed is not added.
+- The tracked native audio library is unchanged; route runs keep using the candidate library built from the merged source (bfb36a4c).
+
+Checks so far:
+- Every GDScript file parses, and `run_tests.gd` passes 7 suites.
+- The Python tests fail exactly as at e9a1e0e3e (29 failures, all needing content or mounts).
+- The opening frame-timing route (pad 2, fast) has 0 mismatches over 6,709 frames, at 75 frames/s.
+- [[tickets/T-39220-switch-informed-modern-options]] moved to In Review.
+
+## [2026-10-30] decision | Port completion plan approved
+
+The user approved [[port-completion-plan]]. Its approach: build a memory model of the original RAM layout, port the engine API under the C names, add a generic PS1 renderer (rasterizer in C++) and one installed disc pack. The remaining C is then ported file by file, with function-level and memory-checkpoint testing. Testing bar: memory exact at checkpoints, pixels exact on sampled frames, and frame-exact only for the opening. M1 (the memory model) starts once the merge lands.
+
+## [2026-10-30] ticket | Completion plan tickets
+
+Opened [[tickets/T-39300-game-memory-model]] (M1, In Progress), plus [[tickets/T-39301-engine-api-core]], [[tickets/T-39302-generic-ps1-renderer]] and [[tickets/T-39303-installed-disc-pack]] (M2, Ready), from [[port-completion-plan]].
+
+## [2026-10-30] build | Merge verified on the actual loop route
+
+On the merged tree, the April loop route (playtest, fast, bundle-r3-holiday, candidate library bfb36a4c) stops where round 3 did: the May rollover at frame 16694. Against `routes/r3-03`, the playtest record, states and transitions are identical, and all 150 shared native PNGs match. The route ran at 39 frames/s.

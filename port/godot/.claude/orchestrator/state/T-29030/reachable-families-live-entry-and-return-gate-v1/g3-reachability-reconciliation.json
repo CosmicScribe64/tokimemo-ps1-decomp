@@ -1,0 +1,1203 @@
+{
+  "checks_failed": 38,
+  "checks_passed": 443,
+  "counts_by_classification": {
+    "implemented_subset": 8,
+    "preview_only": 35,
+    "reviewed_pending": 4,
+    "unsupported": 21
+  },
+  "day_event_dispatch_reconciliation": [
+    {
+      "day_event_opcode_hex": "0x00",
+      "dispatcher_mode_hex": "0x40",
+      "is_core_scheduler_mode": true,
+      "native_mode_hex": "0x40",
+      "overlay_name": "CORE_SCHEDULER"
+    },
+    {
+      "day_event_opcode_hex": "0x10",
+      "dispatcher_mode_hex": "0x46",
+      "is_core_scheduler_mode": true,
+      "native_mode_hex": "0x46",
+      "overlay_name": "CORE_SCHEDULER"
+    },
+    {
+      "day_event_opcode_hex": "0x20",
+      "dispatcher_mode_hex": "0x47",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x72",
+      "overlay_name": "TAIIKU"
+    },
+    {
+      "day_event_opcode_hex": "0x24",
+      "dispatcher_mode_hex": "0x48",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x70",
+      "overlay_name": "BUNKASAI"
+    },
+    {
+      "day_event_opcode_hex": "0x25",
+      "dispatcher_mode_hex": "0x52",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x74",
+      "overlay_name": "MASTER"
+    },
+    {
+      "day_event_opcode_hex": "0x26",
+      "dispatcher_mode_hex": "0x52",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x75",
+      "overlay_name": "MASTER"
+    },
+    {
+      "day_event_opcode_hex": "0x27",
+      "dispatcher_mode_hex": "0x52",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x76",
+      "overlay_name": "MASTER"
+    },
+    {
+      "day_event_opcode_hex": "0x28",
+      "dispatcher_mode_hex": "0x42",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x42",
+      "overlay_name": "CORE_SCHEDULER"
+    },
+    {
+      "day_event_opcode_hex": "0x2C",
+      "dispatcher_mode_hex": "0x41",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x41",
+      "overlay_name": "CORE_SCHEDULER"
+    },
+    {
+      "day_event_opcode_hex": "0x30",
+      "dispatcher_mode_hex": "0x4E",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x55",
+      "overlay_name": "SHOUGATU"
+    },
+    {
+      "day_event_opcode_hex": "0x31",
+      "dispatcher_mode_hex": "0x4F",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x54",
+      "overlay_name": "VALEN"
+    },
+    {
+      "day_event_opcode_hex": "0x32",
+      "dispatcher_mode_hex": "0x44",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x57",
+      "overlay_name": "GEKO"
+    },
+    {
+      "day_event_opcode_hex": "0x33",
+      "dispatcher_mode_hex": "0x44",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x56",
+      "overlay_name": "GEKO"
+    },
+    {
+      "day_event_opcode_hex": "0x40",
+      "dispatcher_mode_hex": "0x35",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x35",
+      "overlay_name": "GYOZI"
+    },
+    {
+      "day_event_opcode_hex": "0x41",
+      "dispatcher_mode_hex": "0x4C",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x51",
+      "overlay_name": "SHUGAKU"
+    },
+    {
+      "day_event_opcode_hex": "0x42",
+      "dispatcher_mode_hex": "0x4D",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x5F",
+      "overlay_name": "KANGEI"
+    },
+    {
+      "day_event_opcode_hex": "0x43",
+      "dispatcher_mode_hex": "0x3F",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x36",
+      "overlay_name": "ETC"
+    },
+    {
+      "day_event_opcode_hex": "0x44",
+      "dispatcher_mode_hex": "0x44",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x59",
+      "overlay_name": "GEKO"
+    },
+    {
+      "day_event_opcode_hex": "0x45",
+      "dispatcher_mode_hex": "0x44",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x5D",
+      "overlay_name": "GEKO"
+    },
+    {
+      "day_event_opcode_hex": "0x46",
+      "dispatcher_mode_hex": "0x44",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x5A",
+      "overlay_name": "GEKO"
+    },
+    {
+      "day_event_opcode_hex": "0x47",
+      "dispatcher_mode_hex": "0x4B",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x61",
+      "overlay_name": "OMIMAI"
+    },
+    {
+      "day_event_opcode_hex": "0x48",
+      "dispatcher_mode_hex": "0x4E",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x5B",
+      "overlay_name": "SHOUGATU"
+    },
+    {
+      "day_event_opcode_hex": "0x49",
+      "dispatcher_mode_hex": "0x58",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x58",
+      "overlay_name": "DATE2"
+    },
+    {
+      "day_event_opcode_hex": "0x4A",
+      "dispatcher_mode_hex": "0x3F",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x37",
+      "overlay_name": "ETC"
+    },
+    {
+      "day_event_opcode_hex": "0x80",
+      "dispatcher_mode_hex": "0x50",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x50",
+      "overlay_name": "DATE"
+    },
+    {
+      "day_event_opcode_hex": "0xFC",
+      "dispatcher_mode_hex": "0x32",
+      "is_core_scheduler_mode": true,
+      "native_mode_hex": "0x32",
+      "overlay_name": "CORE_SCHEDULER"
+    },
+    {
+      "day_event_opcode_hex": "0xFD",
+      "dispatcher_mode_hex": "0x39",
+      "is_core_scheduler_mode": false,
+      "native_mode_hex": "0x39",
+      "overlay_name": "CORE_SCHEDULER"
+    },
+    {
+      "day_event_opcode_hex": "0xFE",
+      "dispatcher_mode_hex": "0x38",
+      "is_core_scheduler_mode": true,
+      "native_mode_hex": "0x38",
+      "overlay_name": "CORE_SCHEDULER"
+    },
+    {
+      "day_event_opcode_hex": "0xFF",
+      "dispatcher_mode_hex": "0x34",
+      "is_core_scheduler_mode": true,
+      "native_mode_hex": "0x34",
+      "overlay_name": "CORE_SCHEDULER"
+    }
+  ],
+  "day_event_opcodes_audited": 29,
+  "gate": "G3",
+  "native_route_registry_68_modes": [
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x00",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x00",
+      "native_id_int": 0
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x01",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x01",
+      "native_id_int": 1
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "reviewed_pending",
+      "dispatcher_mode_hex": "0x02",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x02",
+      "native_id_int": 2
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x03",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x03",
+      "native_id_int": 3
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x10",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x10",
+      "native_id_int": 16
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x11",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x11",
+      "native_id_int": 17
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x12",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x12",
+      "native_id_int": 18
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x13",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x13",
+      "native_id_int": 19
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "reviewed_pending",
+      "dispatcher_mode_hex": "0x14",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x14",
+      "native_id_int": 20
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "implemented_subset",
+      "dispatcher_mode_hex": "0x15",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x15",
+      "native_id_int": 21
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x20",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x20",
+      "native_id_int": 32
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x21",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x21",
+      "native_id_int": 33
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x22",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x22",
+      "native_id_int": 34
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "implemented_subset",
+      "dispatcher_mode_hex": "0x30",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x30",
+      "native_id_int": 48
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "implemented_subset",
+      "dispatcher_mode_hex": "0x31",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x31",
+      "native_id_int": 49
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "implemented_subset",
+      "dispatcher_mode_hex": "0x32",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x32",
+      "native_id_int": 50
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "implemented_subset",
+      "dispatcher_mode_hex": "0x34",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x34",
+      "native_id_int": 52
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x35",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x35",
+      "native_id_int": 53
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x36",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x36",
+      "native_id_int": 54
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x37",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x37",
+      "native_id_int": 55
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "implemented_subset",
+      "dispatcher_mode_hex": "0x38",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x38",
+      "native_id_int": 56
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x39",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x39",
+      "native_id_int": 57
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x3A",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x3A",
+      "native_id_int": 58
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "implemented_subset",
+      "dispatcher_mode_hex": "0x40",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x40",
+      "native_id_int": 64
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x41",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x41",
+      "native_id_int": 65
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x42",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x42",
+      "native_id_int": 66
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x3D",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x43",
+      "native_id_int": 67
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x44",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x44",
+      "native_id_int": 68
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "reviewed_pending",
+      "dispatcher_mode_hex": "0x3E",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x45",
+      "native_id_int": 69
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "implemented_subset",
+      "dispatcher_mode_hex": "0x46",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x46",
+      "native_id_int": 70
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x50",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x50",
+      "native_id_int": 80
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x51",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x51",
+      "native_id_int": 81
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x52",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x52",
+      "native_id_int": 82
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x53",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x53",
+      "native_id_int": 83
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x4F",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x54",
+      "native_id_int": 84
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x4E",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x55",
+      "native_id_int": 85
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x44",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x56",
+      "native_id_int": 86
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x44",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x57",
+      "native_id_int": 87
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x58",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x58",
+      "native_id_int": 88
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "reviewed_pending",
+      "dispatcher_mode_hex": "0x44",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x59",
+      "native_id_int": 89
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x44",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x5A",
+      "native_id_int": 90
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x4E",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x5B",
+      "native_id_int": 91
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x5C",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x5C",
+      "native_id_int": 92
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x44",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x5D",
+      "native_id_int": 93
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x5E",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x5E",
+      "native_id_int": 94
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x4D",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x5F",
+      "native_id_int": 95
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x4D",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x60",
+      "native_id_int": 96
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x4B",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x61",
+      "native_id_int": 97
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x4B",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x62",
+      "native_id_int": 98
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x5C",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x63",
+      "native_id_int": 99
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x48",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x70",
+      "native_id_int": 112
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x4A",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x71",
+      "native_id_int": 113
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x47",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x72",
+      "native_id_int": 114
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x51",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x73",
+      "native_id_int": 115
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x52",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x74",
+      "native_id_int": 116
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x52",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x75",
+      "native_id_int": 117
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x52",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x76",
+      "native_id_int": 118
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x49",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x80",
+      "native_id_int": 128
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x57",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x81",
+      "native_id_int": 129
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x53",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x82",
+      "native_id_int": 130
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x59",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0x90",
+      "native_id_int": 144
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x91",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0x91",
+      "native_id_int": 145
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0x3F",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0xC2",
+      "native_id_int": 194
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0xC3",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0xC3",
+      "native_id_int": 195
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0xC4",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0xC4",
+      "native_id_int": 196
+    },
+    {
+      "bound_in_school_day_controller": true,
+      "capability": "",
+      "classification": "preview_only",
+      "dispatcher_mode_hex": "0x5A",
+      "family": "",
+      "in_overlay_catalog": true,
+      "native_id_hex": "0xD0",
+      "native_id_int": 208
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0xFE",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0xFE",
+      "native_id_int": 254
+    },
+    {
+      "bound_in_school_day_controller": false,
+      "capability": "",
+      "classification": "unsupported",
+      "dispatcher_mode_hex": "0xFF",
+      "family": "",
+      "in_overlay_catalog": false,
+      "native_id_hex": "0xFF",
+      "native_id_int": 255
+    }
+  ],
+  "native_route_registry_total": 68,
+  "overlay_catalog_modes_total": 27,
+  "parent_tickets": [
+    "T-29020",
+    "T-29028"
+  ],
+  "reachable_gameplay_families": {
+    "borrowed_system_overlays": {
+      "day_event_opcodes": [
+        "0x43",
+        "0x48",
+        "0x4A"
+      ],
+      "dispatcher_modes": [
+        "0x36",
+        "0x37",
+        "0x3F"
+      ],
+      "entry_and_caller": "SchoolDayController.start_overlay / DayEventModes 0x43/0x48/0x4A -> _overlay_mode -> OverlayDispatcher",
+      "native_modes": [
+        "0x01",
+        "0x36",
+        "0x37",
+        "0x3F",
+        "0x5B"
+      ],
+      "required_content_services": [
+        "OverlayDispatcher.vn_presenter",
+        "SystemOverlays.OptionsOverlay",
+        "SystemOverlays.HelpOverlay",
+        "SystemOverlays.TitleMenuOverlay"
+      ],
+      "return_and_state_effects": "Returns to 0x31; updates options settings dictionary in overlay state",
+      "source_functions": [
+        "option_main",
+        "olh_main",
+        "etc_main"
+      ],
+      "verified_live": true
+    },
+    "date_choice_cg_ride_movie": {
+      "day_event_opcodes": [
+        "0x45",
+        "0x49",
+        "0x80"
+      ],
+      "dispatcher_modes": [
+        "0x44",
+        "0x50",
+        "0x58",
+        "0x5E"
+      ],
+      "entry_and_caller": "DayEventModes 0x80/0x49 -> native 0x50/0x58, start_overlay 0x5E -> SchoolDayController._overlay_mode -> OverlayDispatcher; DayEventModes 0x45 -> native 0x5D is GEKO and refused",
+      "native_modes": [
+        "0x50",
+        "0x58",
+        "0x5D",
+        "0x5E"
+      ],
+      "required_content_services": [
+        "OverlayDispatcher.date_presenter",
+        "OverlayDispatcher.event_cg_presenter",
+        "DateOverlay",
+        "EventCgOverlay"
+      ],
+      "return_and_state_effects": "T-39006: DATE, AMUSEMENT_PARK_DATE and EVENT_CG are refused with saved state (no affection, tokimeki or date_count write); preview steps render and exit without rewards",
+      "source_functions": [
+        "date_main",
+        "date_setup_spot",
+        "date_arrival_and_looks_check",
+        "date_choice_score",
+        "date2_main",
+        "event_cg_main"
+      ],
+      "verified_live": false
+    },
+    "graduation_and_ending": {
+      "dispatcher_modes": [
+        "0x3F",
+        "0x5C"
+      ],
+      "entry_and_caller": "OrdinaryWeek 1998-03-01 graduation check / native 0x5C/0x63 -> SchoolDayController._overlay_mode -> EndingOverlay",
+      "native_modes": [
+        "0x5C",
+        "0x63",
+        "0xC1",
+        "0xC2"
+      ],
+      "required_content_services": [
+        "OverlayDispatcher.encounters_ending_presenter",
+        "EndingOverlay",
+        "SaveService.record_completed_route"
+      ],
+      "return_and_state_effects": "Terminates route (mode_stage=0xFF); writes ending_completed=1, confessed_girl, ending_type, ending_phases, clear_save_completed, album_clear_mask",
+      "source_functions": [
+        "ending_main",
+        "evaluate_confession_candidates",
+        "create_graduation_sequence",
+        "step_graduation_sequence"
+      ],
+      "verified_live": true
+    },
+    "health_rest_and_club_commands": {
+      "day_event_opcodes": [
+        "0x00",
+        "0xFC",
+        "0xFF"
+      ],
+      "dispatcher_modes": [],
+      "entry_and_caller": "SchoolDayController._command (0x34) -> _schedule (0x30) -> _day_screen (0x31) -> _school_day (0x40) -> _week_end (0x32)",
+      "native_modes": [
+        "0x34",
+        "0x30",
+        "0x31",
+        "0x40",
+        "0x32"
+      ],
+      "required_content_services": [
+        "tokimemo.port-rule-tables.v1 (command_deltas, weekday_background_lbas, weekday_sd_lbas)",
+        "SchoolDay.CLUB_ACTIVITY_DELTAS"
+      ],
+      "return_and_state_effects": "Updates rule_state.params[0..8] (including stress reduction on command 7) and rule_state.clubs[0..10] practice points",
+      "source_functions": [
+        "command_screen_step",
+        "school_day_apply_parameters",
+        "increment_practice_points",
+        "resolve_bg_and_sd"
+      ],
+      "verified_live": true
+    },
+    "seasonal_and_school_events": {
+      "day_event_opcodes": [
+        "0x20",
+        "0x24",
+        "0x25",
+        "0x26",
+        "0x27",
+        "0x28",
+        "0x2C",
+        "0x30",
+        "0x31",
+        "0x32",
+        "0x33",
+        "0x40",
+        "0x41",
+        "0x42",
+        "0x47",
+        "0xFD"
+      ],
+      "dispatcher_modes": [
+        "0x35",
+        "0x3F",
+        "0x47",
+        "0x48",
+        "0x49",
+        "0x4A",
+        "0x4B",
+        "0x4C",
+        "0x4D",
+        "0x4E",
+        "0x4F",
+        "0x51",
+        "0x52",
+        "0x53"
+      ],
+      "entry_and_caller": "DayEventModes scheduler opcodes -> SchoolDayController._day_screen -> _overlay_mode -> OverlayDispatcher",
+      "native_modes": [
+        "0x35",
+        "0x39",
+        "0x41",
+        "0x42",
+        "0x47",
+        "0x48",
+        "0x49",
+        "0x4A",
+        "0x4B",
+        "0x4C",
+        "0x4D",
+        "0x4E",
+        "0x4F",
+        "0x51",
+        "0x52",
+        "0x53",
+        "0x54",
+        "0x55",
+        "0x56",
+        "0x57",
+        "0x5F",
+        "0x61",
+        "0x70",
+        "0x71",
+        "0x72",
+        "0x73",
+        "0x74",
+        "0x75",
+        "0x76",
+        "0x80",
+        "0x82"
+      ],
+      "required_content_services": [
+        "OverlayDispatcher.school_events_presenter",
+        "OverlayDispatcher.encounters_ending_presenter",
+        "SchoolEventsOverlay",
+        "EndingOverlay"
+      ],
+      "return_and_state_effects": "T-39006: the ceremony notice (ETC menu) returns to 0x31; every event family here is refused with saved state (no parameter, affection, tokimeki or calendar write; BUNKASAI also lacks clubs/event_log/timer_ticks in this fixture); preview steps render and exit without rewards",
+      "source_functions": [
+        "taiiku_main",
+        "bunkasai_main",
+        "bunka_sd_main",
+        "bunkaken_main",
+        "exam_main",
+        "rensyu_main",
+        "shugaku_main",
+        "kangei_main",
+        "shougatu_main",
+        "valen_main",
+        "omimai_main",
+        "master_main",
+        "en_nichi_main"
+      ],
+      "verified_live": false
+    },
+    "subgames_rpg_taco_tt": {
+      "dispatcher_modes": [
+        "0x57",
+        "0x59",
+        "0x5A"
+      ],
+      "entry_and_caller": "SchoolDayController.start_overlay / DayEventModes 0x81/0x90/0xD0 -> _overlay_mode -> OverlayDispatcher",
+      "native_modes": [
+        "0x81",
+        "0x90",
+        "0xD0"
+      ],
+      "required_content_services": [
+        "OverlayDispatcher.subgame_presenter",
+        "SubgameOverlays"
+      ],
+      "return_and_state_effects": "RPG_BAT, TACO and TT are refused with saved state and write nothing; their source results live in system_data, not rule_state",
+      "source_functions": [
+        "rpg_battle_main",
+        "taco_shooter_main",
+        "tt_twinbee_main"
+      ],
+      "verified_live": false
+    },
+    "telephone_profile_invitation": {
+      "day_event_opcodes": [
+        "0x46"
+      ],
+      "dispatcher_modes": [
+        "0x3D",
+        "0x3E",
+        "0x44"
+      ],
+      "entry_and_caller": "start_overlay 0x43/0x45 -> SchoolDayController._overlay_mode -> OverlayDispatcher; queue 0x46 -> native 0x5A enters GEKO (D_801426D0), not TEL",
+      "native_modes": [
+        "0x43",
+        "0x45",
+        "0x5A"
+      ],
+      "required_content_services": [
+        "OverlayDispatcher.telephone_presenter",
+        "TelephoneOverlay.GIRL_PROFILES",
+        "TelephoneOverlay.PHONE_INVITATION_BASE_ADJUSTMENTS"
+      ],
+      "return_and_state_effects": "T-39006: refused with saved state (no appointment, affection or tokimeki write); preview steps render and exit without rewards",
+      "source_functions": [
+        "telephone_main",
+        "phone_menu_step",
+        "phone_evaluate_invitation",
+        "phone_book_appointment"
+      ],
+      "verified_live": false
+    },
+    "walk_home_encounter": {
+      "day_event_opcodes": [
+        "0x44"
+      ],
+      "dispatcher_modes": [
+        "0x44"
+      ],
+      "entry_and_caller": "DayEventModes 0x44 -> native 0x59 -> dispatcher 0x44 -> SchoolDayController._overlay_mode",
+      "native_modes": [
+        "0x44",
+        "0x59"
+      ],
+      "required_content_services": [
+        "OverlayDispatcher.encounters_ending_presenter",
+        "EncountersOverlay"
+      ],
+      "return_and_state_effects": "T-39006: refused with saved state (no affection, tokimeki or syoushin write); preview steps render and exit without rewards",
+      "source_functions": [
+        "geko_main",
+        "select_walk_home_topic",
+        "apply_walk_home_choice",
+        "finish_walk_home"
+      ],
+      "verified_live": false
+    }
+  },
+  "schema": "tokimemo.g3-reachability-reconciliation.v1",
+  "ticket": "T-29030"
+}

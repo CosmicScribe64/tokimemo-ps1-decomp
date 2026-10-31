@@ -1,0 +1,27 @@
+{
+	"captures": {},
+	"producer_script": "tests/overlays/run_emulator_vs_godot_capture_producer.gd",
+	"producer_script_sha256": "3562e77dba4adb028e3a79992ced52bca75000726d2c1b0e84ffb97c57c33ba4",
+	"schema": "tokimemo.emulator_vs_godot_capture_provenance.v1",
+	"source_scripts": {
+		"app/overlay_dispatcher.gd": "d093a2c55901f507beb540bd7d9e7a8050af5b2a39880ed64049181ccdbf196f",
+		"app/playable_boot.gd": "e62e12426890a986cbf44fc13ecd1b5784e606aba1aa3ca4aa3ca7b1c7bf0cc3",
+		"overlays/system_overlays.gd": "1b1f263ae920ad74c8b0ca1a2dd8cdd8463d19867d92903014a367ef206b83b7",
+		"overlays/telephone_overlay.gd": "a96b8f778940112066c7072197adcb1de37d158a7501c3dead74ac9c94a54136",
+		"presentation/calendar_phone_presenter.gd": "f3fa6617d1d61263f86b4ae3e73357f35883aa1e0692b292de53e96c983a8224",
+		"presentation/command_hud_presenter.gd": "e4d18b7459672450318dce88849c2609ee88d388f18bae79a20cdafce8a8b2f8",
+		"presentation/holiday_hud_adapter.gd": "ad07584b9785dccfad7f0fef4f5c0905d30b4982eb936662a5bcda09e36c3e30",
+		"presentation/hud_compositor.gd": "1e5c7953726b74f41fd0caca535febe5225be046a4190e5f0113468cc63077a8",
+		"presentation/prologue_presenter.gd": "c2850eb8855fc91136af860aa8b4956833d63f63e5af19cdacf94b65c0b911dc",
+		"presentation/telephone_overlay_presenter.gd": "d935b6f0c2290cc6b5e17cb6e3813ec922a42f464c9288b22ed228b4cb3df42f",
+		"presentation/vn_scene_presenter.gd": "abd3592d1e5e3b533f2ca9c85bcb0405919b93cb66fd23e44860cffaa3ede563",
+		"tests/holiday/run_calendar_phone_tests.gd": "4d4e2c91ffdb848f0b1ce49f194bd4de383446aa9a7787ca0f9b1498f63d1d5f",
+		"tests/holiday/run_continuous_scene_tests.gd": "09aee545f3f1e823b7b7edfcd12b7108e0712e41efe56278c62fe71de4e496d8",
+		"tests/overlays/run_emulator_vs_godot_capture_producer.gd": "3562e77dba4adb028e3a79992ced52bca75000726d2c1b0e84ffb97c57c33ba4",
+		"tests/overlays/run_system_overlays_tests.gd": "5748b78fa902cfac3bc406088d560e1f1d4da272b9aec070d55dae6667afb3c0",
+		"tests/overlays/run_telephone_overlay_tests.gd": "86ca33276a6112ac98c25be55735871bc5f74f7445232dd903b68aa78354a5fe",
+		"tests/run_prologue_visual_tests.gd": "2881b9819a55106d480b33b31869a072ac7653e591b3382f77a646c9fd8a60c4"
+	},
+	"ticket": "T-29022",
+	"total_pairs": 0
+}
