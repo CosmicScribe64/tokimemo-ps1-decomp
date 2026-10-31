@@ -5,7 +5,7 @@ updated: 2026-10-24
 
 # Phase 2 human-readable codebase
 
-Phase 2 makes the matched code readable on a port-first basis ("not 100%, just enough for the Godot port", user scope 2026-10-24). It names and explains the game logic in full while covering the PS1 hardware layer only at module level and entry points. The matching decompilation stays at 27/27 SHA-1 after every change under umbrella ticket [[tickets/T-27000-phase-2]]. Supporting rules live in four documents:
+Phase 2 made the matched code readable. It was scoped on 2026-10-24 to serve a planned Godot port, which was later removed. It names and explains the game logic in full and covers the PS1 hardware layer only at module level and entry points. The matching decompilation stayed at 27/27 SHA-1 after every change under umbrella ticket [[tickets/T-27000-phase-2]]. Supporting rules live in four documents:
 
 - `wiki/phase2-naming.md` ([[phase2-naming]]) for decisions, conventions, the disc-name map, and the prefix maps.
 - `CODING_STANDARDS.md` sections 4, 5, and 8 for checkable review rules.
@@ -29,10 +29,6 @@ The user set the scope on 2026-10-24; the full table and the accepted exception 
 ### Complete C-file naming requirement
 
 Per user clarification on 2026-10-24, every game-code C file across `main` and the overlays must have an understandable role-based name. No address or number-only basenames remain at completion, and hardware files also receive technical role names. Renames preserve original object boundaries and require source evidence, case-insensitive per-folder uniqueness, separate file-only rename tables, API-view proof, and matching verification. T-27059 and T-27060 own the remaining exhaustive filename census and reviewed mappings.
-
-### Readiness to start the Godot port
-
-Per user clarification on 2026-10-24, the immediate outcome is code readable enough to start the Godot port. Do not wait for every unit's naming backlog to finish before starting a gameplay slice. Prioritize the shared game-state interface, day progression, command effects, and the scene rules that the first slice needs. Keep each spec explicit about verified rules and unresolved work. T-27040 starts this work with the school-day loop and parameter-delta formula, and `spec/m-weekday` describes their behavior.
 
 Emulator runs, existing save files, and debugger traces are authorized to resolve uncertain meanings. Record reproducible commands as evidence and keep save files, screenshots, and other game data ignored.
 

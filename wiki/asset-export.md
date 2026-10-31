@@ -6,7 +6,7 @@ updated: 2026-10-25
 # Reusable asset extraction and exports
 
 User scope (2026-10-24): put agents on asset extraction/readers, especially text for future translation,
-and general modern exports useful to the decomp. These asset tickets remain engine-independent; the separately authorized Godot implementation is tracked in `phase3`. Parent [[tickets/T-28000-asset-export-pipeline]].
+and general modern exports useful to the decomp. These asset tickets are engine-independent. Parent [[tickets/T-28000-asset-export-pipeline]].
 
 ## Pipeline
 

@@ -1,7 +1,7 @@
 ---
 type: concept
-updated: 2026-10-30
-sources: [".github/workflows/progress.yml", ".github/workflows/port-offline.yml", "tools/port/run_offline_suite.sh", "tools/make_ci_bundle.sh", "tools/report_objs.py", "configure.py", "raw/ai-disclosure-research.md"]
+updated: 2026-10-31
+sources: [".github/workflows/progress.yml", "tools/make_ci_bundle.sh", "tools/report_objs.py", "configure.py", "raw/ai-disclosure-research.md"]
 ---
 
 # CI and decomp.dev
@@ -48,13 +48,3 @@ The artifact name follows the decomp.dev convention `<version>_report` (decomp.w
 - A fork pull request cannot see the secrets, so it only gets the notice. Contributors build locally.
 - `ssh-keyscan` fetches the GitHub host key at run time; pin it if that matters.
 - The bundle is tied to this exact disc release. A different dump fails the main-executable sha1 check in `tools/make_ci_bundle.sh`.
-
-## Port offline job (original-free; not fidelity evidence)
-Written in `tickets/T-39028-original-free-ci`. `.github/workflows/port-offline.yml` runs `tools/port/run_offline_suite.sh --inside` on pull requests and pushes that touch `tools/port`, `tools/emu`, `translations`, `config/port` or the workflow itself. The job name carries the label "original-free; not fidelity evidence": it is tier T0 (`port-testing`). It has not run on GitHub; nothing was pushed or enabled remotely. The same suite runs locally in Docker with `sh tools/port/run_offline_suite.sh` (image `tokimemo-recovery`, repository mounted read-only).
-
-What it runs, with no game data and no secrets:
-1. The Python unittests of every original-free `tools/port` and `tools/emu` module (310 tests on 2026-10-30, 30 skipped by their own data guards). The script lists the excluded modules and why: `test_content`, `test_first_arrival_content`, `test_font_content`, `test_prologue_arrival_media`, `test_prologue_hud_content`, `test_prologue_runtime_content` and `test_release_catalog` need original files, a `TOKIMEMO_*` source root or `tokimemo-content` modules; the `tools/port/progress` suite has 6 pre-existing errors in `tokimemo-recovery` and stays out until triaged.
-2. JSON Schema validation (`tools/port/schema_check.py`: jsonschema when installed, as in CI; otherwise a strict subset validator that fails on any keyword it does not implement) of the checkpoint catalog, input scripts and checkpoint receipts. Pairs whose schema or instances are not in the tree yet (WP-01, WP-06, WP-02) print `UNAVAILABLE`, never PASS.
-3. `tools/port/lint_translation_assets.py` over `translations/en`: text-record ids, manifest counts, the recorded text approval count and protected markers (every non-empty translation carries exactly its record's ``T...`` tokens, so dropping all of them fails too); for artwork, the snapshot audit, "no draft marked approved" (a status claiming approval needs an exact hash-bound approve event; a checkpoint ledger entry keeps `human_approved: false` unless its status is `approved`, and an entry with status `approved` or `human_approved: true` needs a latest approve event in `style-decisions.jsonl` bound to the hash of every image it lists) and "every image has a review record" (every PNG anywhere under `translations/en` must be a manifest output or a ledger entry with matching hash; a stray PNG in any other folder fails).
-
-Not included until the user approves: building or pulling a Godot image in CI (headless parse and the synthetic GDScript suites), Tier-1 private-data CI and an amd64 native-audio build. CI dependencies are pinned in the workflow (`tools/port/requirements-test.txt` plus `Pillow==11.1.0`).

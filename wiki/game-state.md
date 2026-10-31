@@ -138,7 +138,7 @@ The object right after `GameState`, the 0xEE0-byte work area `D_800E7D10` (album
 - Real semantics: calendar (`unk_03E..unk_041`, `unk_044`), parameters (`unk_0FC..unk_11C`), girl records (`Rec38`), event log (`unk_75E`), modes (`unk_1109`/`unk_110A`/`unk_110D`) are hypotheses from use; rename through a symbol file only when confirmed.
 - The unknown arrays `unk_120`, `unk_183C` and the record counts of `GsRecF90`, `GsRec142C`.
 - The bit-field words (`Rec38.unk_0C`, `unk_10`, `unk_54C`, `unk_66C`, `unk_F68`) as bit-field structs, once one layout reproduces every user.
-- For the Godot port: the save routine `func_8005557C` copies `unk_03D..unk_042`, `unk_044` (2 x 0x3C), `unk_0C4` (0x78), the 16 `Rec38` records, `unk_53C`, `unk_54C`, `unk_56C`, `unk_668..`, `unk_69C`, `unk_728..unk_74C`, `unk_75E` (0x800 bytes) and a dozen bytes of `0xF6C..0xF75`, `unk_1092`, `unk_03C`, then sums 0xF00 bytes of the buffer as a checksum: the persistent part of the state.
+- The save routine `func_8005557C` copies `unk_03D..unk_042`, `unk_044` (2 x 0x3C), `unk_0C4` (0x78), the 16 `Rec38` records, `unk_53C`, `unk_54C`, `unk_56C`, `unk_668..`, `unk_69C`, `unk_728..unk_74C`, `unk_75E` (0x800 bytes) and a dozen bytes of `0xF6C..0xF75`, `unk_1092`, `unk_03C`, then sums 0xF00 bytes of the buffer as a checksum: the persistent part of the state.
 
 ## T-14200 packed initialization views
 

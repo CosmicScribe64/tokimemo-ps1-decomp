@@ -13,8 +13,8 @@ working tree:
 - Pre-Phase-2 baseline: 65% of struct members were `unk_XX`, and 70% of type names described a size or an address.
 - Pre-Phase-2 baseline (2026-10-24): all 437 C files carried address names and overlay headers carried disc names.
 
-Phase 2 makes the code readable for someone who has never seen the binary, so that the Godot port can be
-written from it. The user settled six questions and the scope on 2026-10-24. This record states them, the
+Phase 2 makes the code readable for someone who has never seen the binary. Its scope was set for a planned
+Godot port, which was later removed. The user settled six questions and the scope on 2026-10-24. This record states them, the
 conventions that follow from them, and their costs. A rename never changes an output byte, and every rename
 batch ends with the 27/27 sha1 build that proves it.
 
@@ -57,8 +57,8 @@ unused. The `confirm` gates and HYPOTHESIS notes for GEKO, KANGEI, SHOUGATU and 
 
 ## Scope
 
-The user set the scope on 2026-10-24. Phase 2 is port-first, "not 100%, just enough for the Godot port". The
-matching decompilation stays exact: all 27 sha1 files match and `ninja progress` stays at 6,952 functions after
+The user set the scope on 2026-10-24: port-first, "not 100%, just enough for the Godot port" (the port was
+removed on 2026-10-31). The matching decompilation stays exact: all 27 sha1 files match and `ninja progress` stays at 6,952 functions after
 every change. Naming goes as deep as the port needs:
 
 | layer | what it covers | depth |

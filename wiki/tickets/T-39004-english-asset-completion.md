@@ -70,7 +70,7 @@ Restored FILESEL pixels contradict the old catalog: frame19 is the Stats panel,2
 
 `tools/translation_filesel_drafts.py` now creates eight source-verified panel/header/badge variants:19,20,21,22 and base/selected30/31. Stats and heroine labels use original black ink on untouched pale panels; heroine given names fit the narrow original cells. Badge silhouettes and selected palettes remain exact. A Docker test verifies dimensions, palette membership, unchanged pixels outside text regions and identical badge alpha masks. Outputs are in ignored `filesel-drafts-v1`, visually inspected, unapproved and pending an actual file-selection route. Four decorated command buttons and the background slot-info regions still require work; the previous catalog's claimed extra button highlight variants are not established by the source reader.
 
-[[notes/name-entry-visual-checkpoints]] records exact native field addresses and timing-isolated comparison checkpoints for T-39008. Root owns the emulator rebuild; no duplicate image build was started.
+`notes/name-entry-visual-checkpoints` records exact native field addresses and timing-isolated comparison checkpoints for T-39008. Root owns the emulator rebuild; no duplicate image build was started.
 
 ## Native-font sports drafts and remaining source corrections
 

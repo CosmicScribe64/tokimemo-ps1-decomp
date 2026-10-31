@@ -218,6 +218,5 @@ Ignored evidence: `.claude/orchestrator/state/T-28005/crosscheck.md`, independen
 contains only original file paths, bases and integer offsets. Findings were handed to
 [[assets-text]] and [[assets-media]]; their completion gates remain open under T-28001/T-28004.
 
-The user clarified that the future port will not inherit the PS1 textbox size limit.
-Original line, glyph and buffer limits remain provenance for the original game's behavior;
-they do not constrain future translation wording or layout. No direct Godot work is included.
+Original line, glyph and buffer limits record the original game's behavior. They are not limits on
+translation wording or layout.

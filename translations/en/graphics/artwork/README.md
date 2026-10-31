@@ -22,7 +22,7 @@ python3 tools/translation_assets.py inventory --output .asset-cache/translation-
 python3 tools/translation_assets.py pack --output .asset-cache/translation-assets/english-pack
 ```
 
-Each output path must be new. The pack command prints its manifest hash for the optional runtime loader. It includes only current, exactly approved images with complete source identities (56 of the 59 retained assets). It does not activate English or establish visual acceptance. Three earlier assets require source mapping before inclusion. Missing replacements retain the original Japanese artwork. The inventory preserves the 153 catalog groups without claiming that grouped rows are individual assets or complete runtime coverage.
+Each output path must be new. The pack command prints its manifest hash. Nothing in the repository loads the pack into the game since the Godot port was removed. It includes only current, exactly approved images with complete source identities (56 of the 59 retained assets). It does not activate English or establish visual acceptance. Three earlier assets require source mapping before inclusion. Missing replacements retain the original Japanese artwork. The inventory preserves the 153 catalog groups without claiming that grouped rows are individual assets or complete in-game coverage.
 
 To restore OPTION references and reproduce the next 64 unapproved drafts, use the existing Pillow tooling image after disc extraction:
 

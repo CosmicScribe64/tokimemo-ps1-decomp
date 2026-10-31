@@ -7,6 +7,8 @@ sources: ["wiki/phase2.md", "wiki/tickets/T-27000-phase-2.md", "wiki/phase2-nami
 
 # Phase 2 acceptance audit and closeout order
 
+> Historical (2026-10-24). This audit predates the phase 2 closeout of 2026-10-25, which passed; see [[status]]. Its Godot slice guidance is obsolete, since the port was removed on 2026-10-31.
+
 Phase 2 is **not complete**. The code needed to begin a school-day Godot slice is substantially more
 readable after the applied core, school-day and scheduler batches. Neither the presence of all unit
 drafts nor a matching build establishes the remaining naming and explanation criteria. This audit

@@ -2816,3 +2816,15 @@ At the user's request, the project is now only the decompilation. The following 
 - 84 port-era tickets with their kanban cards. Tickets for `translations/` work stay.
 
 Links to deleted pages in kept tickets and pages became plain text; log entries keep their original links. [[index]], [[spec/index]], [[status]], [[overview]], README.md and CONTRIBUTING.md were rewritten for the finished state with the deslop skill. AGENTS.md (agent rules) is unchanged. `tools/wiki.py lint` shows 0 broken links and 0 status mismatches.
+
+## [2026-10-31] lint | User-facing docs double-checked after the port removal
+
+Every relative link in README.md, CONTRIBUTING.md, CODING_STANDARDS.md, AGENTS.md and the artwork README resolves. Fixed stale port references:
+- [[ci]]: dropped the deleted port offline job;
+- [[emulator]]: dropped the removed function-capture tools and the port's differential capture notes;
+- [[disc-layout]]: dropped the deleted disc pack;
+- [[phase2]], [[phase2-naming]]: the port-first scope is now stated as history;
+- [[game-state]], [[asset-export]], [[ref-english-patch]]: port wording removed;
+- the artwork README: no runtime loader exists.
+
+Removed the port-only pages `english-names` and `notes/name-entry-visual-checkpoints`. [[spec/phase2-completion-audit]] is marked as a pre-closeout historical audit, and [[status]] says so. Lint shows 0 broken links.

@@ -23,7 +23,7 @@ Phase 2 renamed and documented the matched code without changing a byte ([[phase
 - 43 data islands across 2,083 pieces;
 - 337 path-tool tests.
 
-The audit is in [[spec/phase2-completion-audit]]. Conventions are in [[phase2-naming]], `CODING_STANDARDS.md` and `GLOSSARY.md`.
+An earlier audit from 2026-10-24, before the closeout, is in [[spec/phase2-completion-audit]]. Conventions are in [[phase2-naming]], `CODING_STANDARDS.md` and `GLOSSARY.md`.
 
 On 2026-10-30, `message_window_set_title_hidden` and `portrait_read_step` were changed to take and forward the argument their callers pass. The build still matches 27/27.
 

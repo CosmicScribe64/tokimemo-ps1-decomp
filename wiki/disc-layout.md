@@ -30,6 +30,3 @@ Tokimeki Memorial - Forever with You (Japan, PlayStation the Best). Volume ID `V
 | `CDROM/VAB_SE`, `CDROM/VAB_SEQ` | sound banks and sequences |
 
 31 subdirectories under `CDROM/`.
-
-## Installed disc pack (T-39303)
-`tools/port/disc_pack_content.py` reads `disc/track1.bin` and writes the `disc_pack` role of the installed bundle: `disc_pack.json` plus `files/<path>`, one stored file per ISO file, as whole sectors (a file of 3,072 bytes is stored as 4,096, the tail being the disc's own sector bytes). Records carry path, LBA, sectors, ISO size, mode 2, form 1, SHA-256 of the stored bytes and of the ISO-size content. On this disc: 1,355 files (41,727 sectors, 85,456,896 bytes) and 17 excluded: `OPENXA.STR`, `KONAMIC3.STR` (mixed Form 1/2), the 14 `CDROM/XA_G/*.XA` and `CDROM/DADIR/TR02.DA` (past the image). `port/godot/services/disc_pack.gd` reads it by LBA (see `game-memory-model` for the memory it writes into). A read may run from one file into the adjacent one (the date overlays read 10 sectors of 9-sector `D_11_xx.BS` files); a gap, a stream or the end of the pack fails with the reason. Known reads: `PROLODIR/O_11.NBN` 0xAC1E x 33, `PROLODIR/CUT_08.NBN` 0xAA85 x 49. Ticket: `tickets/T-39303-installed-disc-pack`.
