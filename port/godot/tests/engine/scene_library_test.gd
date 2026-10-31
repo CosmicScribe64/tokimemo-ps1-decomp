@@ -31,6 +31,7 @@ func run() -> Array[String]:
 	_test_don_wait()
 	_test_simple_scene_commands()
 	_test_waits_and_selects()
+	_test_choice_menus()
 	_shutdown()
 	return failures
 
@@ -290,3 +291,105 @@ func _test_waits_and_selects() -> void:
 	result[0] = 1
 	engine.call_c("normal_date_speak_1line")
 	_check(engine.gs_get("mode_step") == 2, "talk_run returning 1 steps")
+
+## junban_init: talk_choice_order[0] = frame_count % 3, then the other two entries (the C formulas per case).
+func _test_choice_order() -> void:
+	var engine = _new()
+	var order: int = engine.memory.global_address("talk_choice_order")
+	# frame_count -> [order0, order1, order2]: F = 3: 0, (3 & 1) + 1 = 2, (4 & 1) + 1 = 1; F = 6: 0, 1, 2;
+	# F = 4: 1, (4 & 1) * 2 = 0, (5 & 1) * 2 = 2; F = 7: 1, 2, 0; F = 5: 2, 1 - (5 & 1) = 0, 1 - (6 & 1) = 1; F = 8: 2, 1, 0
+	var cases: Dictionary = {3: [0, 2, 1], 6: [0, 1, 2], 4: [1, 0, 2], 7: [1, 2, 0], 5: [2, 0, 1], 8: [2, 1, 0]}
+	for frame: int in cases:
+		engine.gs_set("frame_count", frame)
+		engine.call_c("junban_init")
+		var got: Array = [engine.memory.u8(order), engine.memory.u8(order + 1), engine.memory.u8(order + 2)]
+		_check(got == cases[frame], "junban_init at frame %d: %s, wanted %s" % [frame, got, cases[frame]])
+
+## The 2- and 3-choice menus of the date dialogue: init (menu_set with the arrays in the frame), main (hover to choice).
+func _test_choice_menus() -> void:
+	_test_choice_order()
+	var engine = _new()
+	var m = engine.memory
+	var seen: Array = []
+	var frames: Array = []
+	engine.set_stub("menu_set", func(args: Array) -> int:
+		var row: Array = [args[0], args[1]]
+		for pointer: int in args.slice(2, 6):
+			var values: Array = []
+			for i: int in args[1]:
+				values.append(m.s16(pointer + i * 2))
+			row.append(values)
+		seen.append(row)
+		frames.append(engine.frame_base())
+		return 0)
+	engine.gs_set("menu_cursor_1", 5)
+	m.write_u32(engine.gs_address("mode_step_timer"), 7)
+	engine.call_c("normal_date_two_select_init")
+	_check(seen == [[1, 2, [-0x80, -0x80], [0x30, 0x40], [0xFC, 0xFC], [0x10, 0x10]]], "two-choice menu: %s" % [seen])
+	_check(engine.gs_get("menu_cursor_1") == 0 and m.read_global("talk_menu_active") == 1 and m.u32(engine.gs_address("mode_step_timer")) == 8, "cursor 0, talk_menu_active 1, step timer + 1")
+	seen.clear()
+	engine.call_c("normal_date_three_select_init")
+	_check(seen == [[1, 3, [-0x80, -0x80, -0x80], [0x30, 0x40, 0x50], [0xFC, 0xFC, 0xFC], [0x10, 0x10, 0x10]]], "three-choice menu: %s" % [seen])
+	# main: menu_check(1, cursor_x, cursor_y), menu_cursor_update(1), menu_bar_show(1), then on a confirm press with check_end_k != 0
+	# the hovered item 1/3/5 (record index) sets talk_choice (order[k] for three choices), clears bit 7 of D_8011ECD3, talk_menu_active, k_reset(1), next step
+	var calls: Array = []
+	var ended: Array = [1]
+	for name: String in ["menu_check", "menu_cursor_update", "menu_bar_show", "k_reset"]:
+		engine.set_stub(name, func(args: Array) -> int:
+			calls.append([name, args.duplicate()])
+			return 0)
+	engine.set_stub("check_end_k", func(_args: Array) -> int: return ended[0])
+	var items: int = engine.gs_address("menu_items")
+	m.write_global("cursor_x", -5)
+	m.write_global("cursor_y", 9)
+	var order: int = m.global_address("talk_choice_order")
+	m.write_u8(order, 2)
+	m.write_u8(order + 1, 0)
+	m.write_u8(order + 2, 1)
+	engine.gs_set("mode_step", 4)
+	engine.gs_set("pad_pressed", 0x20) # bit 0x20 of 0x200020
+	for k: int in 3: # which item is hovered: records 1, 3, 5 (8-byte records, hover at +6)
+		for i: int in 8:
+			m.write_u8(items + i * 8 + 6, 1 if i == 2 * k + 1 else 0)
+		calls.clear()
+		m.write_global("talk_choice", -1)
+		m.write_global("D_8011ECD3", 0xFF)
+		m.write_global("talk_menu_active", 1)
+		engine.call_c("normal_date_three_select_main")
+		_check(m.read_global("talk_choice") == [2, 0, 1][k], "three-choice menu: item %d gives order[%d]" % [2 * k + 1, k])
+		_check(calls == [["menu_check", [1, -5, 9]], ["menu_cursor_update", [1]], ["menu_bar_show", [1]], ["k_reset", [1]]], "calls of the confirm path: %s" % [calls])
+		_check(m.read_global("D_8011ECD3") == 0x7F and m.read_global("talk_menu_active") == 0, "bit 7 of D_8011ECD3 cleared, talk_menu_active 0")
+	_check(engine.gs_get("mode_step") == 7, "each confirm stepped once")
+	# no hovered item among 1, 3, 5: return 0 without any of the stores
+	for i: int in 8:
+		m.write_u8(items + i * 8 + 6, 0)
+	m.write_global("talk_choice", 77)
+	calls.clear()
+	_check(engine.call_c("normal_date_three_select_main") == 0 and m.read_global("talk_choice") == 77 and calls.size() == 3, "no hover: nothing is chosen")
+	# not confirmed (pad bit missing) or check_end_k == 0: only the three per-frame calls
+	engine.gs_set("pad_pressed", 0x01)
+	calls.clear()
+	engine.call_c("normal_date_two_select_main")
+	_check(calls.size() == 3, "no confirm press: only menu_check, menu_cursor_update, menu_bar_show")
+	engine.gs_set("pad_pressed", 0x200000) # the other bit of the mask
+	ended[0] = 0
+	calls.clear()
+	engine.call_c("normal_date_two_select_main")
+	_check(calls.size() == 3, "check_end_k() == 0: nothing is chosen")
+	# two choices: items 1 -> 0, 3 -> 1
+	ended[0] = 1
+	m.write_u8(items + 1 * 8 + 6, 0)
+	m.write_u8(items + 3 * 8 + 6, 1)
+	engine.call_c("normal_date_two_select_main")
+	_check(m.read_global("talk_choice") == 1, "two-choice menu: item 3 gives choice 1")
+	# the dispatchers: mode_step_timer 0 -> init, 1 -> main, otherwise game_mode_reset_to_title
+	var routed: Array = []
+	for name: String in ["normal_date_two_select_init", "normal_date_two_select_main", "normal_date_three_select_init", "normal_date_three_select_main", "game_mode_reset_to_title"]:
+		engine.set_stub(name, func(_args: Array) -> int:
+			routed.append(name)
+			return 0)
+	for state: int in 3:
+		m.write_u32(engine.gs_address("mode_step_timer"), state)
+		engine.call_c("normal_date_two_select")
+		engine.call_c("normal_date_three_select")
+	_check(routed == ["normal_date_two_select_init", "normal_date_three_select_init", "normal_date_two_select_main", "normal_date_three_select_main", "game_mode_reset_to_title", "game_mode_reset_to_title"], "select dispatch: %s" % [routed])
