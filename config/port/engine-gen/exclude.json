@@ -1,0 +1,29 @@
+{
+ "default": [
+  {
+   "start": "0x80000000",
+   "length": 65536,
+   "reason": "BIOS/kernel RAM (OpenBIOS handlers, event and thread tables): interrupt handlers change it asynchronously while a function runs; the port never writes below 0x80010000"
+  },
+  {
+   "start": "0x800E5B10",
+   "length": 64,
+   "reason": "SDK counters bumped by the vertical-blank interrupt while the function runs"
+  },
+  {
+   "start": "0x800DC600",
+   "length": 80,
+   "reason": "libcd internal state (command, callback and result bookkeeping) updated by the CD interrupt while the function runs"
+  },
+  {
+   "start": "0x800DC8F0",
+   "length": 48,
+   "reason": "libcd internal state (command, callback and result bookkeeping) updated by the CD interrupt while the function runs"
+  },
+  {
+   "start": "0x800E3490",
+   "length": 112,
+   "reason": "libcd internal state (command, callback and result bookkeeping) updated by the CD interrupt while the function runs"
+  }
+ ]
+}

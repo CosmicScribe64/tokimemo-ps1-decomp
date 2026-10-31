@@ -57,10 +57,10 @@ func _test_portrait() -> void:
 		_check(m.u32(_quad(engine, index)) == 0x81000000, "portrait_hide(0) sets bit 31 of sprite_quads[%d].flags" % index)
 	# portrait_value_clear_if_high: (u32) D_800B5A64 >= 0xA5 clears it (u8 variable)
 	m.write_global("D_800B5A64", 0xA4)
-	engine.call_c("portrait_value_clear_if_high")
+	engine.call_c("portrait_value_clear_if_high", [0])
 	_check(m.read_global("D_800B5A64") == 0xA4, "0xA4 stays")
 	m.write_global("D_800B5A64", 0xA5)
-	engine.call_c("portrait_value_clear_if_high")
+	engine.call_c("portrait_value_clear_if_high", [0])
 	_check(m.read_global("D_800B5A64") == 0, "0xA5 is cleared")
 	# portrait_expression_select: cases 0..5 set sprite_quads[1].unk_0C and [0].unk_0C to 7, 8, 9 (the odd cases add 0x40 to unk_0E)
 	var expect_c: Array[int] = [7, 7, 8, 8, 9, 9]

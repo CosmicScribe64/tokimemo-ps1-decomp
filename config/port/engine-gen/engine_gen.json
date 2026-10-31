@@ -1,0 +1,88 @@
+{
+ "aliases": {
+  "func_80084C98": "sprite_brightness"
+ },
+ "uninit_false_positives": [
+  [
+   "talk_speak_part",
+   "p"
+  ]
+ ],
+ "stack_locals": {
+  "hud_icon_layout_apply": {
+   "x": 192,
+   "y": 160,
+   "w": 128,
+   "h": 96
+  },
+  "normal_date_two_select_init": {
+   "x": 64,
+   "y": 60,
+   "w": 56,
+   "h": 52
+  },
+  "normal_date_three_select_init": {
+   "x": 76,
+   "y": 68,
+   "w": 60,
+   "h": 52
+  },
+  "make_three_select": {
+   "option_text_buffer": 100,
+   "pad": 32
+  },
+  "select_girl_init": {
+   "label": 100
+  },
+  "talk_render": {
+   "line": 676,
+   "name": 652,
+   "text": 140,
+   "open": 132,
+   "punct0": 128,
+   "punct1": 124,
+   "punct2": 120,
+   "punct3": 116,
+   "punct4": 112
+  },
+  "talk_speak_part": {
+   "line_buffer": 124,
+   "speaker_name_fragment": 116,
+   "speaker_name_text": 104,
+   "voice_speaker_ids": 88
+  }
+ },
+ "stack_locals_evidence": "Offsets of arrays passed to callees are the `addiu $reg, $sp, N` that builds the argument in asm/matchings/main/<file>/<function>.s (menu_set: a2 = x, a3 = y, first stack word w, second h; strcpy/sprintf/strncpy destinations for the text buffers); a local that no callee sees (make_three_select pad, an unused word) sits at a free slot of the frame.",
+ "array_locals": {
+  "hud_icon_move_allowed": {
+   "cx": [
+    4
+   ],
+   "cy": [
+    4
+   ]
+  },
+  "hud_screen_frame_draw": {
+   "enabled": [
+    10,
+    8
+   ]
+  },
+  "select_girl_by_scores": {
+   "list": [
+    14
+   ]
+  }
+ },
+ "signature_overrides": {
+  "portrait_value_clear_if_high": {
+   "extra_params": [
+    [
+     "arg0",
+     "s32"
+    ]
+   ],
+   "reason": "every caller passes one argument that the C definition ignores; a named parameter makes IDO spill a0 (funcdiff: sw a0,0(sp) against nop), so the C keeps (void) and the port takes the argument"
+  }
+ }
+}

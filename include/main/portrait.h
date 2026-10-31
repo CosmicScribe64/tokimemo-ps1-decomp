@@ -5,7 +5,8 @@
 
 void portrait_read_start(); /* unprototyped: main callers pass no argument, overlays pass one */
 void portrait_build();
-void portrait_value_clear_if_high(); /* unprototyped: callers pass an argument, the definition ignores it */
+void portrait_value_clear_if_high(); /* unprototyped: callers pass an argument, the definition ignores it (a named parameter makes IDO spill a0: T-39312) */
+void portrait_read_step(s32 arg0); /* forwards its argument to portrait_read_start */
 void portrait_expression_select(u32 expression_variant);
 void portrait_face_update();
 void portrait_event_face_mouth_lipsync(void);

@@ -1,0 +1,94 @@
+{
+ "functions": {
+  "portrait_show_checked": {
+   "exclude": [
+    {
+     "start": "0x800084CC",
+     "length": 27,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x80009370",
+     "length": 129,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x800E33D8",
+     "length": 111,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x800E35E0",
+     "length": 1,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x800E5B56",
+     "length": 554,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x800E5F48",
+     "length": 4,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x800E6041",
+     "length": 38,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x800E60F8",
+     "length": 1,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x800E7374",
+     "length": 1,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x800E74BC",
+     "length": 20,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x800E75A8",
+     "length": 7,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x800E76A8",
+     "length": 79,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x800E7D10",
+     "length": 3,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x8011F50D",
+     "length": 67,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there; the range holds the portrait actors 30 and 31 (actor_pool + 30 * 0x44), which portrait_build rewrites, so the port computes it itself (portrait_build has its own passing hits)",
+     "port": "free"
+    },
+    {
+     "start": "0x80125E74",
+     "length": 1,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x80125EF0",
+     "length": 10,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    },
+    {
+     "start": "0x80129592",
+     "length": 71,
+     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+    }
+   ]
+  }
+ }
+}
