@@ -24,6 +24,12 @@ var _cut_batch_keys: Dictionary = {}
 var _stage_actor_batch_keys: Dictionary = {}
 var _ready_cache: Dictionary = {}
 var _ready_cache_spot: Array = []
+# Deep copy of the owned buffers the cached readiness results were computed
+# from. Every pump readiness check is a pure function of the owned buffers and
+# the pump's batch receipts; receipts change only when publish executes a
+# batch (which clears the cache), so an exactly equal owned record (byte-exact
+# packed arrays, type-exact values) proves a cached result still holds.
+var _ready_cache_owned: Dictionary = {}
 var _last_published_tick := -1
 
 func prepare(media: Media, store: Store, owned_runtime: Dictionary, board_store: BoardStore = null) -> String:
@@ -74,6 +80,7 @@ func publish(result: Session.FrameResult, tick: int) -> String:
 	if _media.publication_tick() != tick: return "actual native media publication must precede its upload producer"
 	var preview := _preview(result,owner.state as State)
 	if not preview.error.is_empty(): return preview.error
+	var executed := false
 	if preview.has("plan"):
 		var next: Dictionary = _owned.duplicate(true)
 		next["actor_runtime_bytes"] = preview.actor_bytes.duplicate()
@@ -87,6 +94,7 @@ func publish(result: Session.FrameResult, tick: int) -> String:
 		_owned.clear()
 		_owned.merge(next)
 		_batch_key = preview.batch_key
+		executed = true
 	elif preview.has("board_batch_key"):
 		var next: Dictionary = _owned.duplicate(true)
 		next["board_runtime_bytes"] = preview.board_bytes.duplicate()
@@ -95,6 +103,7 @@ func publish(result: Session.FrameResult, tick: int) -> String:
 		_owned.clear()
 		_owned.merge(next)
 		_board_batch_key = preview.board_batch_key
+		executed = true
 	elif preview.has("names_bg_batch_key") or preview.has("cut_batch_key") or preview.has("stage_actor_batches"):
 		var next: Dictionary = _owned.duplicate(true)
 		if preview.has("names_bg_batch_key"):
@@ -110,6 +119,7 @@ func publish(result: Session.FrameResult, tick: int) -> String:
 				if not pumped_sa.error.is_empty(): return pumped_sa.error
 		_owned.clear()
 		_owned.merge(next)
+		executed = true
 		if preview.has("names_bg_batch_key"):
 			_names_bg_batch_keys[preview.names_bg_batch_key] = preview.names_bg_resource_id
 		if preview.has("cut_batch_key"):
@@ -117,9 +127,10 @@ func publish(result: Session.FrameResult, tick: int) -> String:
 		if preview.has("stage_actor_batches"):
 			for sa_item: Dictionary in preview.stage_actor_batches:
 				_stage_actor_batch_keys[sa_item.batch_key] = sa_item.resource_id
-	if has_uploads:
+	if executed:
 		_ready_cache.clear()
 		_ready_cache_spot.clear()
+		_ready_cache_owned = {}
 	_last_published_tick = tick
 	return ""
 
@@ -142,9 +153,10 @@ func _current_ready_spot() -> Array:
 
 func batch_ready(batch_key: String) -> String:
 	var spot := _current_ready_spot()
-	if spot.is_empty() or spot != _ready_cache_spot:
+	if spot.is_empty() or spot != _ready_cache_spot or _ready_cache_owned != _owned:
 		_ready_cache.clear()
 		_ready_cache_spot = spot
+		_ready_cache_owned = _owned.duplicate(true)
 	elif _ready_cache.has(batch_key):
 		return str(_ready_cache[batch_key])
 	var res := ""
@@ -478,5 +490,19 @@ static func _effects_hash(result: Session.FrameResult) -> String:
 static func _runtime_hash(owned: Dictionary) -> String:
 	var values: Dictionary = {}
 	for key: Variant in owned:
-		values[key] = Store._sha(owned[key]) if owned[key] is PackedByteArray else owned[key]
+		values[key] = _buffer_sha(key, owned[key]) if owned[key] is PackedByteArray else owned[key]
 	return JSON.stringify(values).sha256_text()
+
+# Last SHA-256 per owned buffer key, with a private copy of the bytes it was
+# computed from (a copy, because a packed array held in a Variant is shared
+# and an in-place write would reach a retained reference). A byte-exact
+# comparison (~100x cheaper than SHA-256 of the 1 MiB VRAM image) proves the
+# digest still applies; any difference recomputes.
+static var _sha_memo: Dictionary = {}
+
+static func _buffer_sha(key: Variant, bytes: PackedByteArray) -> String:
+	var memo: Variant = _sha_memo.get(key)
+	if memo is Array and memo[0] == bytes: return memo[1]
+	var digest := Store._sha(bytes)
+	_sha_memo[key] = [bytes.duplicate(), digest]
+	return digest

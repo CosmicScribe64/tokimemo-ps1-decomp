@@ -19,6 +19,11 @@ var history: Array[Dictionary] = []
 var render_times_us: Array[float] = []
 var push_times_us: Array[int] = []
 var error: String = ""
+## Development seam for tests/checkpoint/runtime_checkpoint.gd only: when
+## valid, it creates each native engine (a recording wrapper around the
+## OriginalAudioEngine) so a dev checkpoint can replay the engine's calls.
+## The app and every acceptance or parity route leave it unset.
+static var engine_factory: Callable = Callable()
 
 func bind_month_context(flags: int, mode: int) -> String:
 	if _engine == null or not _prepared.is_empty() or not error.is_empty():
@@ -101,7 +106,7 @@ func prepare_start(owner: Dictionary, queued_epoch: Variant, files: Array[Packed
 	var validation: String = validate_owner(owner, queued_epoch)
 	if not validation.is_empty():
 		return {"error": validation}
-	var raw_candidate: Variant = ClassDB.instantiate("OriginalAudioEngine")
+	var raw_candidate: Variant = engine_factory.call() if engine_factory.is_valid() else ClassDB.instantiate("OriginalAudioEngine")
 	if not raw_candidate is RefCounted:
 		return {"error": "registered original audio class did not create an owned engine"}
 	var candidate: RefCounted = raw_candidate

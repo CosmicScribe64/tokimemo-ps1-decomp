@@ -5,6 +5,28 @@ const Store = preload("res://services/installed_pack_store.gd")
 const Router = preload("res://app/boot_router.gd")
 const App = preload("res://app/first_arrival_boot.gd")
 const Profile = preload("res://services/installed_launch_profile.gd")
+const Receipts = preload("res://tests/route_receipts.gd")
+const FastRoute = preload("res://tests/fast_route/fast_route.gd")
+## Development checkpoints (tests/checkpoint/runtime_checkpoint.gd), FAST
+## routes only: TOKIMEMO_DEV_CHECKPOINT_SAVE=<file> writes the runtime at the
+## first frame boundary whose committed key is TOKIMEMO_DEV_CHECKPOINT_KEY
+## (default 34/1/0/0); TOKIMEMO_DEV_RESUME=<file> restores one into the freshly
+## booted app before its first logic frame and marks the run as resumed
+## (/out/resumed-from.json). TOKIMEMO_DEV_IDENTITY is the route identity the
+## runner computed (bundle, library, bridge, sources); a resume refuses a
+## checkpoint written under another identity.
+const Checkpoint = preload("res://tests/checkpoint/runtime_checkpoint.gd")
+const EngineRecorder = preload("res://tests/checkpoint/engine_recorder.gd")
+const Backend = preload("res://bgm_backend.gd")
+var _dev_checkpoint_save := OS.get_environment("TOKIMEMO_DEV_CHECKPOINT_SAVE")
+var _dev_checkpoint_key := OS.get_environment("TOKIMEMO_DEV_CHECKPOINT_KEY") if not OS.get_environment("TOKIMEMO_DEV_CHECKPOINT_KEY").is_empty() else "34/1/0/0"
+var _dev_resume := OS.get_environment("TOKIMEMO_DEV_RESUME")
+var _dev_identity := OS.get_environment("TOKIMEMO_DEV_IDENTITY")
+var _dev_saved := false
+## Per-frame image/PCM receipts in both modes; the FAST harness only with
+## TOKIMEMO_FAST_ROUTE=1 (tests/fast_route/fast_route.gd).
+var receipts := Receipts.new()
+var fast: FastRoute = FastRoute.new() if FastRoute.enabled() else null
 var expected := [[1,1],[1,3],[1,5],[1,7],[1,9],[2,1],[2,3]]
 var phase := 0
 var checks := 0
@@ -59,7 +81,21 @@ func check(value: bool, message: String) -> void:
 	if not value: _failed(message)
 
 func _initialize() -> void:
+	receipts.install()
+	if fast != null:
+		var fast_error := fast.install(self)
+		if not fast_error.is_empty():
+			_failed(fast_error)
+			return
+	if not _dev_checkpoint_save.is_empty() or not _dev_resume.is_empty():
+		if fast == null or _dev_identity.is_empty():
+			_failed("dev checkpoints need a FAST route and the runner's TOKIMEMO_DEV_IDENTITY")
+			return
+		Backend.engine_factory = Callable(EngineRecorder, "create")
 	_start.call_deferred()
+
+func _finalize() -> void:
+	receipts.finish()
 
 func _start() -> void:
 	var store := Store.new("/out/content-install")
@@ -79,6 +115,12 @@ func _start() -> void:
 
 func _process(_delta: float) -> bool:
 	if finishing: return false
+	if not _dev_resume.is_empty() and current_scene is App:
+		_dev_resume_now(current_scene)
+		if finishing: return false
+	elif not _dev_checkpoint_save.is_empty() and not _dev_saved and current_scene is App:
+		_dev_save_if_key(current_scene)
+		if finishing: return false
 	frames += 1
 	if frames > 240000:
 		_failed("connected entry exceeded bounded observer frames")
@@ -87,6 +129,7 @@ func _process(_delta: float) -> bool:
 	if app == null: return false
 	if not observer_bound:
 		app.frame_published.connect(_frame_published.bind(app))
+		receipts.bind(app)
 		observer_bound = true
 	if not app.failure.is_empty():
 		finishing = true
@@ -207,11 +250,16 @@ func _capture_and_resume(app: App, path: String) -> void:
 	await RenderingServer.frame_post_draw
 	if is_instance_valid(app) and app.consumer != null:
 		app.bgm.pump(app.consumer.opening.state)
-	var image := root.get_texture().get_image()
+	# FAST mode renders with the dummy driver: there is no window image to read.
+	var image: Image = root.get_texture().get_image() if fast == null else null
 	if is_instance_valid(app) and app.consumer != null:
 		app.bgm.pump(app.consumer.opening.state)
-	if image != null:
+	# The window capture needs a real renderer (none in FAST mode); the native
+	# image beside it is saved in both modes for tools/port/compare_route_modes.py.
+	if image != null and not image.is_empty():
 		image.save_png(path)
+	if is_instance_valid(app) and app.last_rendered_image != null:
+		app.last_rendered_image.save_png(path.get_basename() + ".native.png")
 	if is_instance_valid(app) and app.consumer != null:
 		app.bgm.pump(app.consumer.opening.state)
 	if is_instance_valid(app) and not finishing:
@@ -284,7 +332,58 @@ func _finish_boundary(app: App) -> void:
 	await create_timer(0.2).timeout
 	quit(0)
 
+## Observer-side objects whose plain variables a checkpoint carries.
+func _dev_observers() -> Dictionary:
+	var observers := {"observer": self, "receipts": receipts}
+	if fast != null: observers["fast"] = fast
+	return observers
+
+func _dev_save_if_key(app: App) -> void:
+	if app.consumer == null or app.consumer.opening.state == null or app.consumer.opening.session == null: return
+	var state = app.consumer.opening.state
+	if "%02x/%d/%d/%d" % [state.game_mode, state.mode_stage, state.mode_step, state.substep] != _dev_checkpoint_key: return
+	_dev_saved = true
+	var tick: int = app.consumer.opening.session.clock.logic_iterations
+	var started := Time.get_ticks_msec()
+	var error := Checkpoint.save(_dev_checkpoint_save, app, _dev_observers(), {"key": _dev_checkpoint_key, "tick": tick,
+		"frame_count": int(state.frame_count), "identity": _dev_identity, "observer": get_script().resource_path})
+	if not error.is_empty():
+		_failed("dev checkpoint save: " + error)
+		return
+	var file := FileAccess.open("/out/checkpoint-saved.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({"path": _dev_checkpoint_save, "key": _dev_checkpoint_key, "tick": tick, "frame_count": int(state.frame_count),
+		"sha256": FileAccess.get_sha256(_dev_checkpoint_save), "save_ms": Time.get_ticks_msec() - started}, "\t"))
+	file.close()
+	print("DEV CHECKPOINT saved %s at %s tick %d" % [_dev_checkpoint_save, _dev_checkpoint_key, tick])
+
+func _dev_resume_now(app: App) -> void:
+	var path := _dev_resume
+	_dev_resume = ""
+	var started := Time.get_ticks_msec()
+	var loaded := Checkpoint.load_file(path)
+	if not loaded.error.is_empty():
+		_failed("dev resume: " + loaded.error)
+		return
+	var meta: Dictionary = loaded.data.meta
+	if meta.get("identity") != _dev_identity or meta.get("observer") != get_script().resource_path:
+		_failed("dev resume: checkpoint was written for another route identity or observer")
+		return
+	var error := Checkpoint.restore(loaded.data, app, _dev_observers())
+	if not error.is_empty():
+		_failed("dev resume: " + error)
+		return
+	var file := FileAccess.open("/out/resumed-from.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({"path": path, "sha256": FileAccess.get_sha256(path), "key": meta.key, "tick": meta.tick,
+		"frame_count": meta.frame_count, "identity": meta.identity, "restore_ms": Time.get_ticks_msec() - started}, "\t"))
+	file.close()
+	receipts.resumed_from = path
+	# route-speed.json of a resumed run covers the resumed frames only (the
+	# restored wall-clock marks belong to the process that saved).
+	receipts.restart_speed_window()
+	print("DEV RESUME from %s at %s tick %d" % [path, meta.key, meta.tick])
+
 func _status(record: Dictionary) -> void:
+	if fast != null: fast.observe_status(record)
 	var file := FileAccess.open("/out/entry-keyboard-status.json",FileAccess.WRITE)
 	file.store_string(JSON.stringify(record,"\t"))
 	file.close()

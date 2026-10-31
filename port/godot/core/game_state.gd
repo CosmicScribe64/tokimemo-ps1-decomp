@@ -62,11 +62,22 @@ func next_step() -> void:
 	set_step(mode_step + 1)
 
 func to_words() -> Array[int]:
+	return core_words()
+
+func core_words() -> Array[int]:
 	# Fixed field order is the trace format, not raw PS1 memory layout.
 	return [game_mode, mode_stage, mode_step, substep, game_mode_scratch,
 		mode_stage_scratch, ovl_target_game_mode, frame_count, timer_ticks,
 		system_seed, game_mode_timer, mode_stage_timer, mode_step_timer,
 		int(paused), int(restart_request), int(sound_active)]
+
+## The text JSON.stringify(to_words()) writes, which GameSession.state_hash
+## digests. Classes whose to_words() appends the UTF-8 bytes of canonical
+## JSON records override this to render the same text without the per-byte
+## word list (core/canonical_words.gd); a class that overrides to_words()
+## without overriding this keeps the exact default.
+func words_json() -> String:
+	return JSON.stringify(to_words())
 
 func projection() -> Dictionary:
 	return {"game_mode": game_mode, "mode_stage": mode_stage, "mode_step": mode_step,

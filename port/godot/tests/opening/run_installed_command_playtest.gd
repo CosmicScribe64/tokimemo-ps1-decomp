@@ -13,7 +13,7 @@ extends "res://tests/opening/run_opening_frame_timing_route.gd"
 ## failure, after PLAYTEST_FRAMES frames past command select, or when
 ## day_count has advanced PLAYTEST_DAYS days, and writes /out/playtest.json
 ## (every mode/stage/step/substep change with frame and day, the presses,
-## the stop) plus a capture at every mode change (/out/playtest/).
+## the stop, and the BGM owner's diagnostics as original_audio) plus a capture at every mode change (/out/playtest/).
 ## A stop on an app failure exits non-zero unless PLAYTEST_EXPECT_STOP names
 ## that exact stop as "<gate>: <failure>" (the text after "New Game stopped
 ## at"); when it is set, any other stop, the frame/day limit included, fails.
@@ -130,7 +130,10 @@ func _rng_record(app: App) -> Dictionary:
 func _write_playtest(app: App, reason: String) -> void:
 	var state = app.consumer.opening.state
 	var file := FileAccess.open("/out/playtest.json",FileAccess.WRITE)
-	file.store_string(JSON.stringify({"reason":reason,"select_frame":_select_frame,"select_day":_select_day,
+	# BGM receipt for tools/port/compare_route_modes.py (FAST pacing); the app's
+	# _fail snapshots it into failure_audio_diagnostics before resetting the owner.
+	var audio: Dictionary = app.failure_audio_diagnostics if not app.failure_audio_diagnostics.is_empty() else (app.bgm.diagnostics() if app.bgm != null else {})
+	file.store_string(JSON.stringify({"original_audio":audio,"reason":reason,"select_frame":_select_frame,"select_day":_select_day,
 		"failure_gate":app.failure_gate,"failure":app.failure,"final_key":_last_key,"final_frame":int(state.frame_count),
 		"final_day":state.rule_state.get("day_count",-1),"presses":_presses,"picks":_picks,"transitions":all_transitions,
 		"final_state":state.projection(),"rule_state":state.rule_state},"\t",false)); file.close()

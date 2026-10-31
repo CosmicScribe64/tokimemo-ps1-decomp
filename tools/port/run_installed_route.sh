@@ -2,7 +2,44 @@
 # Actual installed Rei route: physical X11 entry, unskipped opening, observer
 # port/godot/tests/opening/run_installed_rei_banner.gd with REI_DIALOGUE=1.
 #
-# usage: sh tools/port/run_installed_route.sh <new-out-dir> [bundle] [candidate.so] [candidate_bridge.gd]
+# usage: sh tools/port/run_installed_route.sh [--fast] [--checkpoint-save | --resume <checkpoint>] <new-out-dir> [bundle] [candidate.so] [candidate_bridge.gd]
+#   --fast       FAST route test mode (opt-in, test only; tests/fast_route/fast_route.gd):
+#                the same observer, bundle, library and bridge, but Godot runs
+#                with --fixed-fps 60 --max-fps 0 --disable-vsync and the dummy
+#                rendering driver (Xvfb window, no GPU), so logic frames run
+#                as fast as the CPU allows; the offline sink
+#                tests/fast_route/offline_bgm_sink.gd is bound over bgm_sink.gd
+#                (one native block per logic frame, no real-time device, no
+#                PulseAudio) and recorded as a source-override line; the
+#                default route's physical START presses are injected as
+#                InputEvents at logic ticks instead of xdotool, so a FAST
+#                default route does not test X11 key delivery or focus, and
+#                the offline device cannot underrun, so it does not test the
+#                real-time pump either: keep the real-time route as the
+#                check for both. FAST only helps where a route is not
+#                CPU-bound: both modes are limited by GDScript frame cost
+#                (about 13 logic frames/s before the T-39018 per-frame digest
+#                work, about 40 FAST and 30 real time after it). Receipts are
+#                the same, plus fast-route.json; window captures that need a
+#                renderer are skipped (the .native.png beside each is kept).
+#                Every route, in both modes, writes frames.tsv, audio-blocks.tsv
+#                and route-speed.json (tests/route_receipts.gd); compare two
+#                runs with tools/port/compare_route_modes.py.
+#   --checkpoint-save / --resume <checkpoint>
+#                DEVELOPMENT ONLY (tests/checkpoint/runtime_checkpoint.gd), with
+#                --fast and ROUTE_OBSERVER=playtest. --checkpoint-save writes
+#                <out>/runtime-checkpoint.bin at the first frame boundary whose
+#                committed key is TOKIMEMO_DEV_CHECKPOINT_KEY (default
+#                34/1/0/0, the first command select) and keeps running.
+#                --resume restores that file into the freshly booted app and
+#                continues from it; the run writes <out>/resumed-from.json and
+#                a "resume" line in candidate-hashes.txt. A checkpoint carries
+#                the route identity (every candidate-hashes.txt line but the
+#                mode line: bundle, library, bridge, HEAD, working-tree diff,
+#                sources), so a resume with any other code or input refuses.
+#                Acceptance and parity checks refuse resumed runs
+#                (tools/port/compare_route_modes.py without --resumed,
+#                tools/port/compare_newgame_golden.py).
 #   new-out-dir  must not exist; created below the repository (for example
 #                .asset-cache/port/rei-route-v5)
 #   bundle       installed bundle copied into the out dir as prepared-original
@@ -54,7 +91,23 @@
 set -eu
 cd "$(dirname "$0")/../.."
 ROOT=$PWD
+FAST=0
+CHECKPOINT_SAVE=0
+RESUME=
+while :; do
+	case ${1:-} in
+		--fast) FAST=1; shift ;;
+		--checkpoint-save) CHECKPOINT_SAVE=1; shift ;;
+		--resume) [ $# -ge 2 ] || { echo "--resume needs a checkpoint file" >&2; exit 2; }; RESUME=$2; shift 2 ;;
+		*) break ;;
+	esac
+done
 [ $# -ge 1 ] || { sed -n '2,20p' "$0"; exit 2; }
+if [ "$CHECKPOINT_SAVE" = 1 ] || [ -n "$RESUME" ]; then
+	[ "$FAST" = 1 ] && [ "${ROUTE_OBSERVER:-}" = playtest ] || { echo "dev checkpoints need --fast and ROUTE_OBSERVER=playtest" >&2; exit 2; }
+	[ "$CHECKPOINT_SAVE" = 0 ] || [ -z "$RESUME" ] || { echo "--checkpoint-save and --resume are exclusive" >&2; exit 2; }
+	[ -z "$RESUME" ] || [ -f "$RESUME" ] || { echo "checkpoint not found: $RESUME" >&2; exit 2; }
+fi
 OUT=$1
 BUNDLE=${2:-.asset-cache/port/installed-runtime-v12}
 SO=${3:-.asset-cache/recovery/rei-fade-review-v3/candidate.so}
@@ -72,11 +125,18 @@ fi
 if [ -n "${CANDIDATE_SHA:-}" ] && [ "$SO_ACTUAL" != "$CANDIDATE_SHA" ]; then
 	echo "candidate library SHA $SO_ACTUAL differs from CANDIDATE_SHA $CANDIDATE_SHA" >&2; exit 2
 fi
+if [ "$FAST" = 1 ]; then
+	ROUTE_SOURCE_OVERRIDES="port/godot/tests/fast_route/offline_bgm_sink.gd=port/godot/bgm_sink.gd ${ROUTE_SOURCE_OVERRIDES:-}"
+	GODOT_MODE_ARGS="--display-driver x11 --rendering-driver dummy --audio-driver Dummy --fixed-fps 60 --max-fps 0 --disable-vsync"
+else
+	GODOT_MODE_ARGS="--audio-driver PulseAudio --rendering-method gl_compatibility"
+fi
 mkdir -p "$OUT/content-install/.staging"
 cp -R "$BUNDLE" "$OUT/content-install/.staging/prepared-original"
 cp "$BRIDGE" "$OUT/candidate_bgm_bridge.gd"
 # The bundle line records the SHA of the bundle's manifest.json.
-printf 'library %s %s\nbridge %s %s\nbundle %s %s\n' "$SO_ACTUAL" "$SO" "$(sha "$OUT/candidate_bgm_bridge.gd")" "$BRIDGE" "$(sha "$BUNDLE/manifest.json")" "$BUNDLE" >"$OUT/candidate-hashes.txt"
+printf 'mode %s\n' "$([ "$FAST" = 1 ] && echo fast || echo realtime)" >"$OUT/candidate-hashes.txt"
+printf 'library %s %s\nbridge %s %s\nbundle %s %s\n' "$SO_ACTUAL" "$SO" "$(sha "$OUT/candidate_bgm_bridge.gd")" "$BRIDGE" "$(sha "$BUNDLE/manifest.json")" "$BUNDLE" >>"$OUT/candidate-hashes.txt"
 # The route mounts the working tree, so also pin the uncommitted runtime
 # sources it executes: HEAD, a hash of the whole tracked+untracked port/godot
 # diff, and per-file hashes of the opening audio/boot files.
@@ -100,6 +160,16 @@ for pair in ${ROUTE_SOURCE_OVERRIDES:-}; do
 	printf 'source-override %s %s %s\n' "$(sha "$file")" "$file" "$target" >>"$OUT/candidate-hashes.txt"
 	EXTRA_MOUNTS="$EXTRA_MOUNTS -v $abs:/work/$target:ro"
 done
+# Route identity for dev checkpoints: every line above except the mode line.
+DEV_IDENTITY=$(grep -v '^mode ' "$OUT/candidate-hashes.txt" | { shasum -a 256 2>/dev/null || sha256sum; } | cut -d' ' -f1)
+DEV_SAVE=; DEV_RESUME=
+if [ "$CHECKPOINT_SAVE" = 1 ]; then DEV_SAVE=/out/runtime-checkpoint.bin; fi
+if [ -n "$RESUME" ]; then
+	case $RESUME in /*) ABS_RESUME=$RESUME ;; *) ABS_RESUME=$ROOT/$RESUME ;; esac
+	printf 'resume %s %s\n' "$(sha "$RESUME")" "$RESUME" >>"$OUT/candidate-hashes.txt"
+	DEV_RESUME=/checkpoint/runtime-checkpoint.bin
+	EXTRA_MOUNTS="$EXTRA_MOUNTS -v $ABS_RESUME:$DEV_RESUME:ro"
+fi
 if [ -n "${ROUTE_ASSET_CACHE:-}" ]; then
 	[ -d "$ROUTE_ASSET_CACHE" ] || { echo "ROUTE_ASSET_CACHE is not a directory" >&2; exit 2; }
 	EXTRA_MOUNTS="$EXTRA_MOUNTS -v $ROUTE_ASSET_CACHE:/work/.asset-cache:ro"
@@ -121,26 +191,41 @@ if [ -n "$OBSERVER" ]; then
 		-e ROUTE_PREFS="${ROUTE_PREFS:-}" -e ROUTE_WINDOW="${ROUTE_WINDOW:-}" -e VISUAL_QA="${VISUAL_QA:-}" \
 		-e PLAYTHROUGH_CAPTURES="${PLAYTHROUGH_CAPTURES:-}" -e PLAYTHROUGH_EVERY="${PLAYTHROUGH_EVERY:-}" -e ROUTE_SCREEN="${ROUTE_SCREEN:-1280x1024x24}" \
 		-e GODOT_SILENCE_ROOT_WARNING=1 -e TOKIMEMO_ENTRY_DEBUG=1 -e DEADLINE="${TOKIMEMO_ROUTE_DEADLINE:-2400}" \
+		-e TOKIMEMO_FAST_ROUTE="$FAST" -e GODOT_MODE_ARGS="$GODOT_MODE_ARGS" -e ROUTE_AUDIO_WAV="${ROUTE_AUDIO_WAV:-}" \
+		-e TOKIMEMO_DEV_CHECKPOINT_SAVE="$DEV_SAVE" -e TOKIMEMO_DEV_RESUME="$DEV_RESUME" -e TOKIMEMO_DEV_IDENTITY="$DEV_IDENTITY" \
+		-e TOKIMEMO_DEV_CHECKPOINT_KEY="${TOKIMEMO_DEV_CHECKPOINT_KEY:-}" \
 		-v "$ROOT:/work" -v "$ABS_OUT:/out" \
 		-v "$ABS_SO:/work/port/godot/bin/liboriginal_audio.linux.template_release.arm64.so:ro" \
 		-v "$ABS_OUT/candidate_bgm_bridge.gd:/work/port/godot/services/first_arrival_bgm_bridge.gd:ro" $EXTRA_MOUNTS \
 		"${GODOT_GUI_TEST_IMAGE:-tokimemo-port-gui-test}" sh -ec '
 		Xvfb :99 -screen 0 "$ROUTE_SCREEN" -nolisten tcp -ac >/out/xvfb.log 2>&1 &
 		export DISPLAY=:99; sleep 1
-		pulseaudio -D --exit-idle-time=-1 --system=false 2>/dev/null || true
-		pactl load-module module-null-sink sink_name=virtual >/dev/null 2>&1 || true
+		if [ "$TOKIMEMO_FAST_ROUTE" != 1 ]; then
+			pulseaudio -D --exit-idle-time=-1 --system=false 2>/dev/null || true
+			pactl load-module module-null-sink sink_name=virtual >/dev/null 2>&1 || true
+		fi
 		status=0
-		timeout "$DEADLINE" godot --path /work/port/godot --audio-driver PulseAudio --rendering-method gl_compatibility --script "$OBSERVER" > /out/godot.log 2>&1 || status=$?
-		grep -E "opening frame timing|^PASS|^FAIL|^PLAYTEST|SCRIPT ERROR|stopped at|New Game stopped" /out/godot.log | head -20
+		timeout "$DEADLINE" godot --path /work/port/godot $GODOT_MODE_ARGS --script "$OBSERVER" > /out/godot.log 2>&1 || status=$?
+		grep -E "opening frame timing|^PASS|^FAIL|^PLAYTEST|^DEV |SCRIPT ERROR|stopped at|New Game stopped|dev (resume|checkpoint)" /out/godot.log | head -20
 		exit $status'
 fi
 exec docker run --rm --name "tokimemo-route-$(basename "$OUT")" --cpus=4 -e REI_DIALOGUE=1 -e REI_TARGET_STAGE="${REI_TARGET_STAGE:-10}" -e TOKIMEMO_ROUTE_DEADLINE="${TOKIMEMO_ROUTE_DEADLINE:-900}" \
+	-e TOKIMEMO_FAST_ROUTE="$FAST" -e GODOT_MODE_ARGS="$GODOT_MODE_ARGS" -e ROUTE_AUDIO_WAV="${ROUTE_AUDIO_WAV:-}" \
 	-v "$ROOT:/work" -v "$ABS_OUT:/out" \
 	-v "$ABS_SO:/work/port/godot/bin/liboriginal_audio.linux.template_release.arm64.so:ro" \
 	-v "$ABS_OUT/candidate_bgm_bridge.gd:/work/port/godot/services/first_arrival_bgm_bridge.gd:ro" $EXTRA_MOUNTS \
 	"${GODOT_GUI_TEST_IMAGE:-tokimemo-port-gui-test}" sh -ec '
 	Xvfb :99 -screen 0 1280x1024x24 -nolisten tcp -ac >/out/xvfb.log 2>&1 &
 	export DISPLAY=:99; sleep 1
+	if [ "$TOKIMEMO_FAST_ROUTE" = 1 ]; then
+		# No xdotool: tests/fast_route/fast_route.gd injects the START presses.
+		status=0
+		GODOT_SILENCE_ROOT_WARNING=1 TOKIMEMO_TEST_START_KEY=Return TOKIMEMO_FAST_ENTRY_KEYS=1 timeout "$TOKIMEMO_ROUTE_DEADLINE" godot --path /work/port/godot $GODOT_MODE_ARGS \
+			--script res://tests/opening/run_installed_rei_banner.gd > /out/godot.log 2>&1 || status=$?
+		grep -E "^PASS|^FAIL|SCRIPT ERROR|stopped at" /out/godot.log | head -20
+		[ "$status" != 0 ] || grep -q "\"phase\": \"passed\"" /out/entry-keyboard-status.json || status=1
+		exit $status
+	fi
 	pulseaudio -D --exit-idle-time=-1 --system=false 2>/dev/null || true
 	pactl load-module module-null-sink sink_name=virtual >/dev/null 2>&1 || true
 	python3 /work/tools/port/drive_installed_first_scene.py --rei'

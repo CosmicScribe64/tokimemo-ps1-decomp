@@ -48,6 +48,14 @@ func _finish_rei(app: App) -> void:
 	print(("PASS: actual unskipped installed Rei progression to stage%d" % target) if not failed else "FAIL: Rei progression")
 	quit(1 if failed else 0)
 func _finish_boundary(app: App) -> void:
+	if app.consumer == null or app.consumer.opening.state == null:
+		# The app failed before the opening owned a state (for example a bundle
+		# this runtime rejects): no state or race clock to record.
+		var early := "Rei observer stopped before the opening: %s: %s" % [app.failure_gate,app.failure]
+		var receipt := FileAccess.open("/out/rei-failure.json",FileAccess.WRITE)
+		receipt.store_string(JSON.stringify({"message":early,"audio_clock":{"race_clock":{},"sink":app.failure_audio_diagnostics.get("sink",{})}},"\t")); receipt.close()
+		_status({"phase":"failed","message":early}); printerr(early); quit(1)
+		return
 	var state = app.consumer.opening.state
 	var message := "Rei observer stopped at %d/%d/%d: %s: %s" % [state.mode_stage,state.mode_step,state.substep,app.failure_gate,app.failure]
 	var file := FileAccess.open("/out/rei-failure.json",FileAccess.WRITE)
@@ -57,6 +65,6 @@ func _finish_boundary(app: App) -> void:
 	var bgm: Dictionary = app.failure_audio_diagnostics if not app.failure_audio_diagnostics.is_empty() else (app.bgm.diagnostics() if app.bgm != null else {})
 	var engine: Dictionary = bgm.get("engine",{})
 	var audio_clock := {"race_clock":bgm.get("race_clock",{}),"shiori":bgm.get("shiori",{}),"active_skips":bgm.get("active_skips",0),
-		"native":{"shiori_pump":engine.get("shiori_pump"),"shiori_landed":engine.get("shiori_landed"),"stopped":engine.get("stopped"),"sequence_gain":engine.get("sequence_gain"),"frames":engine.get("frames"),"kon_log":engine.get("kon_log",[]).filter(func(row): return int(row[1]) > 0)}}
+		"sink":bgm.get("sink",{}),"native":{"shiori_pump":engine.get("shiori_pump"),"shiori_landed":engine.get("shiori_landed"),"stopped":engine.get("stopped"),"sequence_gain":engine.get("sequence_gain"),"frames":engine.get("frames"),"kon_log":engine.get("kon_log",[]).filter(func(row): return int(row[1]) > 0)}}
 	file.store_string(JSON.stringify({"message":message,"state":state.projection(),"observed":rei_frames,"audio_clock":audio_clock},"\t")); file.close()
 	_status({"phase":"failed","message":message}); printerr(message); quit(1)

@@ -44,8 +44,29 @@ class FrameResult extends RefCounted:
 	var audio: Array[Dictionary] = []
 	var transitions: Array[Dictionary] = []
 	var state_hash: String = ""
-	var event_hash: String = ""
+	# SHA-256 of the canonical JSON of the committed step's records
+	# [presentation, audio, transitions, trace, step RNG trace]. The digest is
+	# rendered on first read: GameSession.step captures those records at commit
+	# (deep copies of the effect lists and the RNG slice; the trace records are
+	# the session's own per-step snapshots), so a later read returns exactly
+	# what an eager digest at commit returned, even if a publisher or test then
+	# edits result.presentation. Frames nobody reads cost no serialisation.
+	var event_hash: String = "":
+		get:
+			if _event_records != null:
+				_event_hash = JSON.stringify(_event_records).sha256_text()
+				_event_records = null
+			return _event_hash
+		set(value):
+			_event_hash = value
+			_event_records = null
+	var _event_hash: String = ""
+	var _event_records: Variant = null
 	var service_events_consumed: int = 0
+
+	func defer_event_hash(records: Array) -> void:
+		_event_hash = ""
+		_event_records = records
 
 var state: GameState = GameState.new()
 var clock: NativeClock = NativeClock.new()
@@ -60,6 +81,9 @@ var service_completion: Callable
 # Optional pure final validation, after all rule/service callbacks and before
 # commit. Physical publication follows synchronously through the owner.
 var final_precommit: Callable
+# state_hash() memo: the last digested text and its SHA-256 (never state).
+var _state_hash_text := ""
+var _state_hash_digest := ""
 
 func step(next_input: InputFrame, events: Array[ServiceEvent]) -> FrameResult:
 	var result: FrameResult = FrameResult.new()
@@ -116,8 +140,11 @@ func step(next_input: InputFrame, events: Array[ServiceEvent]) -> FrameResult:
 	clock.logic_iterations += 1
 	result.committed = true
 	result.state_hash = state_hash()
-	result.event_hash = JSON.stringify([result.presentation, result.audio, result.transitions,
-		result.trace, rng.trace.slice(initial_rng_trace)]).sha256_text()
+	# Captured now, serialised on first read (FrameResult.event_hash). The trace
+	# records are fresh per-step snapshots the session alone wrote; the shallow
+	# list copy keeps later appends/clears out of the digest.
+	result.defer_event_hash([result.presentation.duplicate(true), result.audio.duplicate(true),
+		result.transitions.duplicate(true), result.trace.duplicate(), rng.trace.slice(initial_rng_trace).duplicate(true)])
 	rng.end_step()
 	return result
 
@@ -197,6 +224,15 @@ func _record(phase_name: String, result: FrameResult) -> void:
 
 func state_hash() -> String:
 	# Rendered-frame count and wall-clock debt cannot change rule state hashes.
-	return JSON.stringify([state.to_words(), latched_input.tick, latched_input.held,
+	# The digested text is exactly JSON.stringify([state.to_words(), tick, ...]):
+	# words_json() renders the word list (GameState.words_json) and the tail
+	# list is spliced after it. The publication guards call this again after
+	# commit; an identical text reuses its digest, any difference recomputes.
+	var tail := JSON.stringify([latched_input.tick, latched_input.held,
 		latched_input.pressed, latched_input.released, rng.profile, rng.state,
-		rng.draw_count, clock.logic_iterations, clock.vblanks]).sha256_text()
+		rng.draw_count, clock.logic_iterations, clock.vblanks])
+	var text := "[" + state.words_json() + "," + tail.substr(1)
+	if text != _state_hash_text:
+		_state_hash_text = text
+		_state_hash_digest = text.sha256_text()
+	return _state_hash_digest

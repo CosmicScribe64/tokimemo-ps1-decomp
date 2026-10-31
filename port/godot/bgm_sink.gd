@@ -4,6 +4,10 @@ extends RefCounted
 const BLOCK_FRAMES: int = 735
 const PREBUFFER_BLOCKS: int = 7
 const MAX_QUEUED_FRAMES: int = BLOCK_FRAMES * PREBUFFER_BLOCKS
+## Route receipts only (tests/route_receipts.gd): called with each block that
+## reaches the generator, in order, and with the activated prebuffer split
+## into blocks. Unset in the game; it never changes what is pushed.
+static var tap: Callable = Callable()
 var generation: int = 1
 var host: Node
 var _reserved: Dictionary = {}
@@ -44,6 +48,8 @@ func reserve(ticket: int, pcm: PackedVector2Array) -> String:
 		player.queue_free()
 		return "actual generator rejected prebuffer"
 	_reserved[ticket] = {"player": player, "playback": playback, "generation": generation, "capacity": capacity}
+	if tap.is_valid():
+		_reserved[ticket]["pcm"] = pcm
 	player.tree_exiting.connect(_reservation_exiting.bind(ticket))
 	return ""
 
@@ -85,6 +91,10 @@ func activate_validated(ticket: int) -> String:
 	_start_skips = _playback.get_skips()
 	_reserved.erase(ticket)
 	_active.stream_paused = false
+	if tap.is_valid():
+		var prebuffer: PackedVector2Array = reservation.get("pcm", PackedVector2Array())
+		for start: int in range(0, prebuffer.size(), BLOCK_FRAMES):
+			tap.call(prebuffer.slice(start, start + BLOCK_FRAMES), "prebuffer")
 	if is_instance_valid(previous):
 		previous.stop()
 		previous.stream = null
@@ -115,7 +125,10 @@ func validate_active(expected_generation: int) -> String:
 func push(pcm: PackedVector2Array) -> String:
 	if pcm.size() != BLOCK_FRAMES or not can_push():
 		return "sink cannot accept exact current block"
-	return "" if _playback.push_buffer(pcm) else "actual generator push rejected"
+	if not _playback.push_buffer(pcm):
+		return "actual generator push rejected"
+	if tap.is_valid(): tap.call(pcm, "push")
+	return ""
 
 func queued_frames() -> int:
 	return _capacity - _playback.get_frames_available() if _playback != null else 0

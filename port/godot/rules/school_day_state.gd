@@ -2,7 +2,12 @@ extends "res://core/game_state.gd"
 ## T-29004: bounded native rule records, loaded from a validated boundary.
 ## Every additional field, including actor counters/readiness, is transactional.
 
+const CanonicalWords = preload("res://core/canonical_words.gd")
+const _SCRIPT_PATH := "res://rules/school_day_state.gd"
+
 var rule_state: Dictionary = {}
+# State-hash text cache (not state: never projected, restored or hashed).
+var _words_text := CanonicalWords.new()
 
 func projection() -> Dictionary:
 	var output: Dictionary = super.projection()
@@ -20,6 +25,12 @@ func to_words() -> Array[int]:
 	for byte: int in JSON.stringify(rule_state).to_utf8_buffer():
 		words.append(byte)
 	return words
+
+## JSON.stringify(to_words()) without the per-byte list (GameState.words_json).
+## A subclass script falls back to its own to_words().
+func words_json() -> String:
+	if get_script().resource_path != _SCRIPT_PATH: return JSON.stringify(to_words())
+	return _words_text.render(JSON.stringify(core_words()), [rule_state])
 
 ## Refusal for a consumer of a rule field that the route stored without a
 ## sourced value (resources.unsourced, written by flow/fresh_gameplay_handoff.gd

@@ -143,6 +143,10 @@ def main() -> int:
     parser.add_argument("golden_run", type=Path)
     parser.add_argument("--json", type=Path)
     args = parser.parse_args()
+    # A development resume (tests/checkpoint) is never golden evidence.
+    if (args.route_out / "resumed-from.json").exists() or (args.route_out / "checkpoint-saved.json").exists():
+        print("REFUSED: %s is a dev checkpoint run (resumed-from.json / checkpoint-saved.json)" % args.route_out)
+        return 2
     report = {}
     for port_key, tag in PAIRS:
         port_path = args.route_out / "states" / (port_key + ".json")
