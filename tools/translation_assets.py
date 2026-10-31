@@ -16,13 +16,13 @@ import struct
 ROOT = Path(__file__).resolve().parents[1]
 PACK_V1 = 'tokimemo.translated-image-pack.v1'
 # v2 adds a `kind` per row: frame (the v1 row), page, bs and frame_part (one
-# part of a multi-part HUD frame). The runtime reader is
-# port/godot/services/translated_image_store.gd.
+# part of a multi-part HUD frame). The runtime reader was
+# port/godot/services/translated_image_store.gd, removed with the port on 2026-10-31.
 PACK_V2 = 'tokimemo.translated-image-pack.v2'
 KINDS = ('frame', 'page', 'bs', 'frame_part')
 MAX_REGIONS = 64
 MAX_FRAME_PARTS = 64
-# Pinned MDEC model identity; must equal port/godot/services/mdec_model_identity.gd.
+# Pinned MDEC model identity (the removed port pinned the same value).
 MDEC_MODEL_ID = 'tokimemo-mdec-fixed-point-v1'
 MDEC_IMPLEMENTATIONS = {'image_mdec.py': '6513b1e6434bdd1c65c804e5d637ae3db1f4fa11f69dd80b495cf05a2f8828ec',
                         'image_mdec_model.py': '3b8e5611bf6f763171b8bf3d5a22269211048b0ec21dc342088e90ec043d2222'}

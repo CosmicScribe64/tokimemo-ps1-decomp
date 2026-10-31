@@ -13,7 +13,7 @@ Input is a `tokimemo.bs-translation-drafts.v1` build directory written by
    (`replicate`: (v << 3) | (v >> 2), the T-39012 PNG export; `shift`: v << 3)
    and the T-39012 PNGs must equal the `replicate` expansion pixel for pixel.
 
-The row is keyed for the runtime (port/godot/services/translated_image_store.gd)
+The row is keyed for the removed port runtime (port/godot/services/translated_image_store.gd)
 by the source container hash, bs index, decoder identity hash and the SHA-256
 of the decoded source RGBA bytes, so a different decoder or expansion falls
 back to the original.

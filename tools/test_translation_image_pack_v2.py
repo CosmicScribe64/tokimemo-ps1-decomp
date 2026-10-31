@@ -1,12 +1,9 @@
 """Phase 4 WP-B: v2 pack emitters (translation_assets, translation_draft_pack).
 
-Synthetic drafts plus the committed artwork snapshot; no original data. The
-runtime reader is checked separately by
-port/godot/tests/translation/run_image_store_v2_tests.gd.
+Synthetic drafts plus the committed artwork snapshot; no original data.
 """
 import json
 from pathlib import Path
-import re
 import tempfile
 import unittest
 
@@ -18,18 +15,6 @@ import translation_draft_pack as drafts
 
 def sha(data):
     return subject.digest(data)
-
-
-class DecoderIdentityTests(unittest.TestCase):
-    def test_pins_match_the_runtime_identity(self):
-        source = (subject.ROOT / 'port/godot/services/mdec_model_identity.gd').read_text()
-        self.assertIn('const ID := "%s"' % subject.MDEC_MODEL_ID, source)
-        for name, value in subject.MDEC_IMPLEMENTATIONS.items():
-            self.assertIn('"%s": "%s"' % (name, value), source)
-        test = (subject.ROOT / 'port/godot/tests/translation/run_image_store_v2_tests.gd').read_text()
-        pinned = re.search(r'PINNED_DECODER := "([0-9a-f]{64})"', test)[1]
-        self.assertEqual(subject.pinned_decoder_identity(), pinned)
-        self.assertNotEqual(subject.decoder_identity('other', subject.MDEC_IMPLEMENTATIONS), pinned)
 
 
 class RowContractTests(unittest.TestCase):

@@ -6,7 +6,6 @@ import unittest
 from unittest import mock
 
 from tools.assets import bs_cohort_profile as profile
-from tools.port.school_day_media import _validate_command7_route
 
 
 def rows():
@@ -80,16 +79,6 @@ class Command7ProfileTests(unittest.TestCase):
             payload[40 + offset] ^= 1
         with self.assertRaises(ValueError):
             profile._validate_iso_directory_record(Source(), dict(expected, record_offset=41))
-
-    def test_native_first_event_and_sequence_are_exact(self):
-        route = {"command": 7, "actual_last_command": 7, "first_day_event": [0, 7, 0, 15],
-                 "sequence_slot": 0, "sd_set_id": 16, "actors": [96]}
-        _validate_command7_route(route)
-        for key, value in [("first_day_event", [0, 7, 1, 15]), ("first_day_event", [False, 7, 0, 15]),
-                           ("sequence_slot", 1), ("sequence_slot", False), ("sd_set_id", 3),
-                           ("actual_last_command", 0), ("actors", [97])]:
-            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
-                _validate_command7_route(dict(route, **{key: value}))
 
 
 if __name__ == '__main__': unittest.main()

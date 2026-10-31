@@ -2828,3 +2828,13 @@ Every relative link in README.md, CONTRIBUTING.md, CODING_STANDARDS.md, AGENTS.m
 - the artwork README: no runtime loader exists.
 
 Removed the port-only pages `english-names` and `notes/name-entry-visual-checkpoints`. [[spec/phase2-completion-audit]] is marked as a pre-closeout historical audit, and [[status]] says so. Lint shows 0 broken links.
+
+## [2026-10-31] lint | Fresh-clone check after the port removal
+
+A fresh clone of `origin/main` showed two tests still depending on removed port files:
+- `tools/test_translation_image_pack_v2.py` read `port/godot/` sources; that cross-check is removed.
+- `tools/test_asset_command7_profile.py` imported `tools/port/school_day_media.py`; the one test using it is removed.
+
+Comments in the translation tools that pointed at port files now say they were removed. Evidence strings written into committed manifests are unchanged, so reproduction tests still match.
+
+The full Python suite (`tools/test_*.py`, `tests/test_*.py`) was run in a checkout without `disc/`, `asm/` or `build/`. It has the same failures as the pre-removal commit c1c2a7aa5 in that state (220, all needing the extracted data), and no new ones. `configure.py`, `tools/docker.sh`, `tools/Dockerfile` and the CI workflow reference no removed file.

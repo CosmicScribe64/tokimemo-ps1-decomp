@@ -3,7 +3,7 @@
 
 The HUD draws the weekday frame (actor 23, frame 0x52 + weekday) inside the
 bracket pair of the date panel (actor 16, frame 0x3C, part 6); see
-port/godot/ui/native_hud.gd build_calendar. The weekday frame is one 16x16 part
+port/godot/ui/native_hud.gd build_calendar (removed with the port on 2026-10-31). The weekday frame is one 16x16 part
 drawn through a per-variant CLUT: base for an ordinary weekday, hud-43 for
 Saturday, hud-44 for Sunday or a calendar holiday (day kind 1 or 2). The icon-51/
 52/53 variants exist in the export but the HUD never draws a weekday with them;

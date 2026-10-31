@@ -8,7 +8,7 @@ writes them into a v2 pack, otherwise the v1 pack is unchanged. Page drafts
 v2 pack. Every pack here is `development_drafts: true`, every row is
 `style: unreviewed`, and an agent review never becomes human approval.
 
-HUD checkpoint drafts (`hud_checkpoint_rows`, used by
+HUD checkpoint drafts (`hud_checkpoint_rows`, used by the removed
 tools/port/build_english_bundle.py) bind a committed checkpoint ledger to the
 installed HUD manifest (tools/port/hud_content.py export). A single-part frame
 becomes a kind-`frame` row keyed by its part PNG hash. A part of a multi-part
