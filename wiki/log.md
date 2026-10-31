@@ -2653,6 +2653,10 @@ Merged `port/m1-game-memory` ([[tickets/T-39300-game-memory-model]]) into `port/
 
 At the first command select, 133 of 159 comparable GameState fields equal the emulator. The other 26 are engine-owned and are listed for [[tickets/T-39301-engine-api-core]] and [[tickets/T-39302-generic-ps1-renderer]]. The ticket stays In Progress until those fields are owned.
 
+## [2026-10-30] ticket | M2 started: disc pack and renderer
+
+Moved [[tickets/T-39303-installed-disc-pack]] and [[tickets/T-39302-generic-ps1-renderer]] to In Progress. Each runs in its own worktree (`port/m2-disc-pack`, `port/m2-renderer`); their files do not overlap. [[tickets/T-39301-engine-api-core]] follows once the disc pack lands.
+
 ## [2026-10-30] build | Installed disc pack and DiscPack reader (T-39303)
 
 `tools/port/disc_pack_content.py` exports every Form 1 file of the raw track (1,355 files, 85 MB) with LBA, sectors, size, mode/form and SHA-256; 17 streams are listed as excluded. New optional role `disc_pack` in `tools/port/build_installed_runtime.py` and `port/godot/services/installed_launch_profile.gd`. `port/godot/services/disc_pack.gd` opens and verifies the pack and reads sectors by LBA into a PackedByteArray or the game memory ([[game-memory-model]]); suite `tests/core/run_disc_pack_tests.gd` (synthetic pack) and `tools/port/test_disc_pack_content.py`. On the real pack: O_11.NBN at 0xAC1E x 33 equals the O11 board role, CUT_08.NBN at 0xAA85 x 49 reads. See [[tickets/T-39303-installed-disc-pack]] and [[disc-layout]].
