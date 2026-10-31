@@ -1,7 +1,7 @@
 ---
 id: T-39301
 title: Port the main-executable engine API under its C names (M2)
-status: Ready
+status: In Progress
 assignee:
 created: 2026-10-30
 updated: 2026-10-30
