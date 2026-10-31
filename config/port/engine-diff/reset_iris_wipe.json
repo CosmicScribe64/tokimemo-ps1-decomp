@@ -7,5 +7,8 @@
  ],
  "exclude": [],
  "functions": {},
- "untested": {}
+ "untested": {
+  "cd_iris_texture_build": "called only from the school_trip and name_entry (file select) overlays, not reached from the available save states; covered by tests/engine/reset_iris_wipe_draw_test.gd",
+  "cd_iris_wipe_draw": "called only from the school_trip and name_entry (file select) overlays, not reached from the available save states; covered by tests/engine/reset_iris_wipe_draw_test.gd"
+ }
 }

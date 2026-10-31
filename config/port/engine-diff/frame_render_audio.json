@@ -1,0 +1,27 @@
+{
+ "captures": [
+  "wpa-fr1",
+  "wpa-fr2",
+  "wpa-s1",
+  "wpa-s2",
+  "wpa-s5",
+  "wpa-s6",
+  "wpa-s7",
+  "wpa-fr3"
+ ],
+ "exclude": [],
+ "functions": {},
+ "untested": {
+  "load_csr_ab": "no caller in src/ (only reachable through function pointers or never); covered by tests/engine/frame_render_audio_test.gd",
+  "StoreSquare": "only called by the shooter_3d overlay (title_and_main_menu.c), not reached from the sampled states; covered by tests/engine/frame_render_audio_test.gd",
+  "func_80044434": "empty function with no caller in src/; covered by tests/engine/frame_render_audio_test.gd",
+  "draw_time_bars": "no caller in src/ (debug display); covered by tests/engine/frame_render_audio_test.gd",
+  "vram_palette_row_copy": "no caller in src/; covered by tests/engine/frame_render_audio_test.gd",
+  "audio_bgm_stop": "called by main (home_screens.c) and overlay code not reached from the sampled states; covered by tests/engine/frame_render_audio_test.gd",
+  "audio_bgm_is_playing": "getter, callers (holiday.c, home_screens.c, scheduler.c) not reached from the sampled states; covered by tests/engine/frame_render_audio_test.gd",
+  "audio_bgm_current_set": "getter, only called by the final_exam overlay; covered by tests/engine/frame_render_audio_test.gd",
+  "audio_bank_state_reset": "callers are overlays (new-year/christmas) and game_mode_reset_to_title, not reached from the sampled states; covered by tests/engine/frame_render_audio_test.gd",
+  "audio_bank_transfer_poll": "only called by the shooter_3d overlay; covered by tests/engine/frame_render_audio_test.gd",
+  "audio_bgm_play_short": "only called by the shooter_3d overlay; covered by tests/engine/frame_render_audio_test.gd"
+ }
+}

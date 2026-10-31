@@ -1,0 +1,18 @@
+{
+ "captures": [
+  "wpa-bg2",
+  "wpa-bg4",
+  "wpa-s2",
+  "wpa-s5"
+ ],
+ "exclude": [],
+ "functions": {},
+ "untested": {
+  "dec_bg_reset": "not reached from the sampled states (title, school first line, prologue, birthday event, name entry); covered by tests/engine/background_images_test.gd",
+  "bg_capture_screen": "not reached from the sampled states (title, school first line, prologue, birthday event, name entry); covered by tests/engine/background_images_test.gd",
+  "bg_wipe_step": "not reached from the sampled states (title, school first line, prologue, birthday event, name entry); covered by tests/engine/background_images_test.gd",
+  "bg_fade_set": "not reached from the sampled states (title, school first line, prologue, birthday event, name entry); covered by tests/engine/background_images_test.gd",
+  "bg_fade_draw": "not reached from the sampled states (title, school first line, prologue, birthday event, name entry); covered by tests/engine/background_images_test.gd",
+  "bg_crossfade_draw": "not reached from the sampled states (title, school first line, prologue, birthday event, name entry); covered by tests/engine/background_images_test.gd"
+ }
+}
