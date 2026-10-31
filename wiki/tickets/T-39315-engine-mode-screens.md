@@ -1,7 +1,7 @@
 ---
 id: T-39315
 title: Port the engine mode-screen files (WP-D)
-status: In Progress
+status: Ready
 assignee: worker agent
 created: 2026-10-30
 updated: 2026-10-30
@@ -19,3 +19,7 @@ Port `scheduler.c`, `home_screens.c`, `holiday.c` and `school_day.c` onto the en
 - [ ] The core suite, `run_engine_diff.sh --all`, the signature check and the opening frame-timing gate pass.
 
 ## Comments
+
+### 2026-10-31 paused
+
+Stopped at the user's request before review. Unmerged work is saved as `refs/snapshots/pause-2026-10-31/` (branch and worktree kept). Not reviewed or merged.

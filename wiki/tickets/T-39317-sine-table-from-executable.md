@@ -1,7 +1,7 @@
 ---
 id: T-39317
 title: Read the libgte sine table from the installed executable
-status: In Progress
+status: Ready
 assignee: worker agent
 created: 2026-10-30
 updated: 2026-10-30
@@ -19,3 +19,7 @@ links: ["[[engine-porting-contract]]", "[[psyq-sdk]]"]
 - [ ] Without the installed executable, `rsin` refuses with a precise error instead of guessing.
 
 ## Comments
+
+### 2026-10-31 paused
+
+Stopped at the user's request before review. Unmerged work is saved as `refs/snapshots/pause-2026-10-31/` (branch and worktree kept). Not reviewed or merged.

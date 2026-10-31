@@ -2778,3 +2778,21 @@ The user told root to follow its recommendations:
 - **Frame timing:** every port frame meets its budget. GetRCnt reports under `frame_scanline_limit`, and VSync(0) ends the frame. This is a documented policy, not a measurement, and it differs only in frames the PS1 itself overran. [[tickets/T-39316-engine-system-boot-main-loop]] (WP-E) builds it with the remaining `src/main` files.
 - **Sine table:** the libgte sine table committed in `core/native_math.gd` becomes runtime data read from the installed executable: [[tickets/T-39317-sine-table-from-executable]].
 - **Cleanup:** the two hung installed-launch test containers are stopped. The 103 stop-all worktrees matched their `refs/snapshots/stop-all-2026-10-30/*` snapshots exactly and were removed with the merge probes (106 in total); 60 GB is now free.
+
+## [2026-10-31] decision | Port work paused by the user
+
+The user asked to stop all port work. Root stopped:
+- the WP-D, WP-E and sine-table workers;
+- their capture and route containers.
+
+Unreviewed work in progress is saved as `refs/snapshots/pause-2026-10-31/{m2-engine-d-mode-screens,m2-engine-e-system,m2-sine-table}`. Their branches and worktrees are kept and nothing of them is merged. [[tickets/T-39315-engine-mode-screens]], [[tickets/T-39316-engine-system-boot-main-loop]] and [[tickets/T-39317-sine-table-from-executable]] are back in Ready.
+
+State at the pause, all on `port/opening-to-gameplay` and verified:
+- The opening is frame-exact.
+- The memory model, generic renderer, disc pack and SDK layer are merged.
+- 16 of 34 `src/main` files are ported onto the engine and reviewed.
+- The matching decomp builds 27/27.
+- The 26 overlays (about 6,100 functions) are not ported to the engine.
+- The engine is not wired into the playable game.
+
+To resume, read [[port-completion-plan]] and [[engine-porting-contract]].

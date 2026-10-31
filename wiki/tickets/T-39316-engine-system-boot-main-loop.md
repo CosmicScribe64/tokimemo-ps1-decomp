@@ -1,7 +1,7 @@
 ---
 id: T-39316
 title: Port the engine system, boot, audio-driver and main-loop files (WP-E)
-status: In Progress
+status: Ready
 assignee: worker agent
 created: 2026-10-30
 updated: 2026-10-30
@@ -26,3 +26,7 @@ Every port frame meets its budget. GetRCnt(0xF2000001) reports a line count unde
 - [ ] The core suite, `run_engine_diff.sh --all`, the signature check and the opening frame-timing gate pass.
 
 ## Comments
+
+### 2026-10-31 paused
+
+Stopped at the user's request before review. Unmerged work is saved as `refs/snapshots/pause-2026-10-31/` (branch and worktree kept). Not reviewed or merged.
