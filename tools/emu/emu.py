@@ -574,6 +574,7 @@ def build_job(args, out, image, syms):
         "shots": [int(x) for x in (args.shot or "").split(",") if x],
         "capture_dumps": [[a, n] for a, n in args.dump],
         "sample_every": args.sample_every,
+        "pokes": args.poke,
         "final_shot": args.cmd == "boot" or args.final_shot,
         "final_dumps": [[a, n] for a, n in args.dump] if args.cmd == "boot" else [],
         "load_state": os.path.abspath(args.state) if args.state else None,
@@ -737,6 +738,20 @@ def parse_dump(spec):
     return address, length
 
 
+def parse_poke(spec):
+    """FRAME:HEXADDR:HEXBYTES, a RAM write at the start of that vsync (frame >= 2, after --state)."""
+    m = re.fullmatch(r"(\d+):([0-9A-Fa-fx]+):([0-9A-Fa-f]+)", spec)
+    if not m or len(m.group(3)) % 2:
+        raise argparse.ArgumentTypeError("poke requires FRAME:HEXADDR:HEXBYTES (even digit count)")
+    frame, address, data = int(m.group(1)), int(m.group(2), 16), bytes.fromhex(m.group(3))
+    if frame < 2:
+        raise argparse.ArgumentTypeError("poke frame must be 2 or later (frame 1 restores --state)")
+    physical = address & 0x1fffffff
+    if not (physical < 0x800000 and (physical & 0x1fffff) + len(data) <= 0x200000):
+        raise argparse.ArgumentTypeError("poke must fit main RAM")
+    return {"frame": frame, "addr": address, "data": data.hex()}
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("cmd", choices=["boot", "break", "watch", "trace", "report", "gdb"])
@@ -753,6 +768,9 @@ def main():
     p.add_argument("--read", action="store_true", help="watch: reads instead of writes")
     p.add_argument("--dump", type=parse_dump, action="append", default=[],
                    help="HEXADDR[:LEN] memory to save at each hit (boot: at the end)")
+    p.add_argument("--poke", type=parse_poke, action="append", default=[],
+                   help="FRAME:HEXADDR:HEXBYTES RAM write at that vsync; the run is then not input-only "
+                        "(every write is listed in result.json pokes)")
     p.add_argument("--input", help="pad 1 presses: FRAME:BUTTON[+BUTTON][/HOLD],...")
     p.add_argument("--mash", action="append", help="BUTTON:FIRST:PERIOD[:LAST] repeated presses")
     p.add_argument("--shot", help="screenshot at these frames: F,F,...")

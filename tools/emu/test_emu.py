@@ -74,6 +74,17 @@ class JobTest(unittest.TestCase):
         self.assertEqual(emu.lua_value({"a": [1, True, None, "x\"y"]}), '{["a"] = {1, true, nil, "x\\"y"}}')
 
 
+class PokeTest(unittest.TestCase):
+    def test_parses_frame_address_and_bytes(self):
+        self.assertEqual(emu.parse_poke("40:800E6454:4200"),
+                         {"frame": 40, "addr": 0x800E6454, "data": "4200"})
+
+    def test_refuses_bad_pokes(self):
+        for spec in ("1:800E6454:42", "40:800E6454:4", "40:1F800000:00", "40:800E6454", "x:800E6454:00"):
+            with self.assertRaises(argparse.ArgumentTypeError, msg=spec):
+                emu.parse_poke(spec)
+
+
 class PngTest(unittest.TestCase):
     def test_16bpp(self):
         with tempfile.TemporaryDirectory() as d:

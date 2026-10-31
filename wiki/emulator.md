@@ -42,6 +42,7 @@ tools/emu/run.sh report build/emu/<run>/result.json            # print a report 
 
 - Targets: `0xADDR`, `func_XXXXXXXX` or any name from the symbol files or the maps. Overlay code needs its overlay (`TARGET@NAME` or `--overlay NAME`): every overlay shares one slot ([[overlays]]), so a hit counts only when the 16 bytes at the address are that overlay's code.
 - `--dump HEXADDR[:LEN]` saves memory at each hit (with `boot`: at the end); `--ram-dump` saves the 2 MB RAM; `--save-state` writes a state when the run stops; `--no-stop` keeps running to `--frames` after the recorded hits.
+- `--poke FRAME:HEXADDR:HEXBYTES` writes main RAM at the start of that vsync (frame 2 or later, after `--state`); `result.json` lists each write under `pokes` with the bytes it replaced. A run with pokes starts from a constructed state: say so wherever its output is used as a golden (e.g. `.asset-cache/emu/school-events-golden-v2`).
 - The report names data addresses as symbol plus offset, and addresses inside GameState as fields: `D_800E7388 = GameState+0x1108` ([[game-state]]).
 - Each run also logs which overlay landed in the slot on which frame and every change of the loader's mode byte `D_800E738E`.
 

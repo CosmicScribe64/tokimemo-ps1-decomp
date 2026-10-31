@@ -257,6 +257,20 @@ local function onVsync()
         releases[frame] = nil
     end
     for _, e in ipairs(inputAt[frame] or {}) do press(e.buttons, e.hold) end
+    for _, w in ipairs(JOB.pokes or {}) do
+        if w.frame == frame then
+            local bytes = unhex(w.data)
+            local ptr = region(w.addr, #bytes)
+            if ptr == nil then
+                note(string.format('poke 0x%08x outside RAM', w.addr))
+            else
+                local before = hex(ffi.string(ptr, #bytes))
+                ffi.copy(ptr, bytes, #bytes)
+                result.pokes = result.pokes or {}
+                result.pokes[#result.pokes + 1] = { frame = frame, addr = w.addr, before = before, after = w.data }
+            end
+        end
+    end
     if (JOB.sample_every or 0) > 0 and frame % JOB.sample_every == 0 then
         result.samples[#result.samples + 1] = captureState('sample_' .. tostring(frame))
     end

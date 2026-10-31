@@ -107,7 +107,7 @@ const PRODUCTION_REJECTIONS: Dictionary = {
 	GAME_MODE_TEL_ACTION: "profile/call branch reads the invented preview roster",
 	GAME_MODE_DATE: "date spot state comes from DateOverlay.create_default_state, not saved state",
 	GAME_MODE_AMUSEMENT_PARK_DATE: "date state comes from DateOverlay.create_default_state, not saved state",
-	GAME_MODE_GEKO: "walk-home topic inputs are fixed and the roster is invented",
+	GAME_MODE_GEKO: "GEKO (native 0x56/0x57/0x59/0x5A/0x5D): player-birthday state rules are in rules/girl_encounters/player_birthday.gd but its scene services (CD waits, backgrounds, portraits, wipes, girl entry/exit, P_BIRTH talk) have no port; walk-home topic inputs are fixed and the roster is invented; girl-birthday, invitation and special-scene rules are not ported",
 	GAME_MODE_EXAM: "exam ranking defaults player total 485, zero flags and the invented roster",
 	GAME_MODE_OMIMAI: "sick-visit dialogue inputs are fixed",
 	GAME_MODE_SHOUGATU: "New Year/Christmas use the invented roster and a fixed eligibility list",

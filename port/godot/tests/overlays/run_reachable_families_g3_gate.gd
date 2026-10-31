@@ -459,24 +459,32 @@ func _test_b_date_choice_cg_ride_movie(tables: Dictionary) -> void:
 	_check_preview_exit_without_rewards(controller, 0x58, ovl_amuse, [PAD_CIRCLE], "AMUSEMENT_PARK_DATE")
 	_leave_refused_family(state)
 
-	# 3. Special Event CG & Ride Movie (event 0x45 -> native 0x5D / 0x5E -> GAME_MODE_EVENT_CG)
-	var mode_cg: int = _queue_day_event_and_step(ctx, 0x45, 0, 0, 0)
-	_check(mode_cg == 0x5D and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == 0x5E,
-		"Day event 0x45 dispatches live to native mode 0x5D -> dispatcher 0x5E (GAME_MODE_EVENT_CG)")
+	# 3. Queue event 0x45 sets native 0x5D (SPECIAL_EVENT), which overlay_loader.c
+	# loads from GEKO: dispatcher 0x44, refused.
+	var mode_special: int = _queue_day_event_and_step(ctx, 0x45, 0, 0, 0)
+	_check(mode_special == 0x5D and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == 0x44,
+		"Day event 0x45 dispatches live to native mode 0x5D -> dispatcher 0x44 (GEKO special scene)")
+	_assert_production_rejection(ctx, 0x5D, "GEKO special scene (0x5D)")
+	_leave_refused_family(state)
+
+	# Special Event CG & Ride Movie preview (native 0x5E DATE_SCENE -> GAME_MODE_EVENT_CG)
+	controller.start_overlay(state, 0x5E)
+	_check(state.game_mode == 0x5E and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == 0x5E,
+		"Entered native mode 0x5E -> dispatcher 0x5E (GAME_MODE_EVENT_CG)")
 	_step_pad(session, 0)
-	_check(state.game_mode == 0x5D, "GAME_MODE_EVENT_CG waits on neutral input")
+	_check(state.game_mode == 0x5E, "GAME_MODE_EVENT_CG waits on neutral input")
 	var ovl_cg_entry: Dictionary = state.rule_state["overlay_state"].duplicate(true)
-	_assert_production_rejection(ctx, 0x5D, "GAME_MODE_EVENT_CG (0x5D)")
+	_assert_production_rejection(ctx, 0x5E, "GAME_MODE_EVENT_CG (0x5E)")
 	ovl_cg_entry["scene_kind"] = "shiori_cg"
 	ovl_cg_entry["spot_place"] = EventCgOverlay.SPOT_KIRAMEKI_CENTRAL_PARK
-	var ovl_cg0: Dictionary = _preview(controller, 0x5D, ovl_cg_entry, [PAD_CIRCLE])
-	var ovl_cg1: Dictionary = _preview(controller, 0x5D, ovl_cg0, [PAD_DOWN])
+	var ovl_cg0: Dictionary = _preview(controller, 0x5E, ovl_cg_entry, [PAD_CIRCLE])
+	var ovl_cg1: Dictionary = _preview(controller, 0x5E, ovl_cg0, [PAD_DOWN])
 	var img_cg0: Image = controller.overlay_dispatcher.render_mode(0x5E, ovl_cg0).get("image")
 	var img_cg1: Image = controller.overlay_dispatcher.render_mode(0x5E, ovl_cg1).get("image")
 	_check(_image_diff_pixels(img_cg0, img_cg1) > 0, "GAME_MODE_EVENT_CG choice cursor shifts pixels")
-	var ovl_cg2: Dictionary = _preview(controller, 0x5D, ovl_cg1, [PAD_CIRCLE])
+	var ovl_cg2: Dictionary = _preview(controller, 0x5E, ovl_cg1, [PAD_CIRCLE])
 	_check(ovl_cg2.has("choice_result"), "GAME_MODE_EVENT_CG preview records special scene choice_result")
-	_check_preview_exit_without_rewards(controller, 0x5D, ovl_cg2, [PAD_CIRCLE], "GAME_MODE_EVENT_CG")
+	_check_preview_exit_without_rewards(controller, 0x5E, ovl_cg2, [PAD_CIRCLE], "GAME_MODE_EVENT_CG")
 	_leave_refused_family(state)
 
 	# Ride movie LBA dispatch check on 0x5E (refused with saved state; LBA checked in preview)
@@ -494,9 +502,9 @@ func _test_b_date_choice_cg_ride_movie(tables: Dictionary) -> void:
 	_family_evidence["date_choice_cg_ride_movie"] = {
 		"native_modes": ["0x50", "0x58", "0x5D", "0x5E"],
 		"day_event_opcodes": ["0x45", "0x49", "0x80"],
-		"dispatcher_modes": ["0x50", "0x58", "0x5E"],
+		"dispatcher_modes": ["0x44", "0x50", "0x58", "0x5E"],
 		"source_functions": ["date_main", "date_setup_spot", "date_arrival_and_looks_check", "date_choice_score", "date2_main", "event_cg_main"],
-		"entry_and_caller": "DayEventModes 0x80/0x49/0x45 -> native 0x50/0x58/0x5D -> SchoolDayController._overlay_mode -> OverlayDispatcher",
+		"entry_and_caller": "DayEventModes 0x80/0x49 -> native 0x50/0x58, start_overlay 0x5E -> SchoolDayController._overlay_mode -> OverlayDispatcher; DayEventModes 0x45 -> native 0x5D is GEKO and refused",
 		"required_content_services": ["OverlayDispatcher.date_presenter", "OverlayDispatcher.event_cg_presenter", "DateOverlay", "EventCgOverlay"],
 		"return_and_state_effects": "T-39006: DATE, AMUSEMENT_PARK_DATE and EVENT_CG are refused with saved state (no affection, tokimeki or date_count write); preview steps render and exit without rewards",
 		"verified_live": false,
