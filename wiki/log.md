@@ -2767,3 +2767,7 @@ An independent review found no serious mistranslation and checked 14 of the 29 u
 - `sprintf` paths have hand checks.
 
 Decomp source change, approved as a one-time exception: `message_window_set_title_hidden(u8 *)` and `portrait_read_step(s32)` now take and forward their argument (the `MAIN_API_OVERRIDE` in `scheduler.c` is removed). `portrait_value_clear_if_high` keeps `(void)`, because a named parameter makes IDO spill a0; `check_engine_signatures.py` has a documented `args_extra` override for it. The worker's matching build gave 27/27 OK. Root reran `configure.py` and `ninja` in the main checkout after the merge: `build/SLPM_86.053.bin` and all 26 overlays are OK, renames, symbols, headers and globals are OK, and ninja exited 0. 25 `scene_library`, 2 `hud_panels` and 1 `scene_display` functions still have neither a capture nor a hand check.
+
+## [2026-10-30] ticket | Engine WP-D started (T-39315)
+
+Opened [[tickets/T-39315-engine-mode-screens]] for `scheduler.c`, `home_screens.c`, `holiday.c` and `school_day.c`. Packages A, B and C and the SDK layer are merged, so its callees are ported. WP-E (system, boot, audio driver, main loop) waits for the user's frame-timing decision about GetRCnt.
