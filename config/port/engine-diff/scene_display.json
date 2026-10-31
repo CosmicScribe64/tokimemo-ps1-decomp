@@ -37,7 +37,7 @@
   "Yubi": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
   "select_girl_by_scores": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd (all three tie-break branches and the bit-field read)",
   "actor_pair_swap_sequences": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd",
-  "portrait_read_step": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check: the function is covered only by the shared paths of its callers",
+  "portrait_read_step": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check either: the body is the mechanical translation of the C that no capture or test exercised (see the ticket notes)",
   "audio_bank_wait_latch": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/scene_display_test.gd"
  }
 }
