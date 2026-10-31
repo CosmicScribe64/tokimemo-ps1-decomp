@@ -1,9 +1,9 @@
 {
  "captures": [
-  "gm-reset",
-  "cd-route",
-  "cd-evt",
-  "cd-xa"
+  "gm2-reset",
+  "cd2-route",
+  "cd2-evt",
+  "cd2-bcd"
  ],
  "exclude": [],
  "functions": {},

@@ -1,11 +1,12 @@
 {
  "captures": [
-  "cd-title",
-  "cd-xa-a",
-  "cd-xa-b",
-  "gm-reset",
-  "cd-route",
-  "cd-evt"
+  "cd2-title",
+  "cd2-xa-a",
+  "cd2-xa-b",
+  "cd2-route",
+  "cd2-evt",
+  "gm2-reset",
+  "cd2-base"
  ],
  "exclude": [
   {
@@ -36,7 +37,8 @@
   {
    "start": "0x801255D4",
    "length": 4,
-   "reason": "GetlocL result bytes 4-7 (file, channel, submode, coding of the XA sector under the head): the XA files are not in the disc pack, so the model cannot return them; cd_queue.c reads bytes 0-2 only"
+   "reason": "GetlocL result bytes 4-7 (file, channel, submode, coding of the XA sector under the head): the XA files are not in the disc pack, so the model cannot return them; cd_queue.c reads bytes 0-2 only",
+   "port": "free"
   }
  ],
  "functions": {
@@ -44,7 +46,8 @@
    "exclude": [
     {
      "global": "cd_sectors_left",
-     "reason": "CdReadSync reports the sectors still to come; the emulator's DMA progress differs from the port's latency model (the status bits and cd_read_count are compared)"
+     "reason": "CdReadSync reports the sectors still to come; the emulator's DMA progress differs from the port's latency model (the status bits and cd_read_count are compared)",
+     "port": "free"
     },
     {
      "global": "cd_audio_position",
@@ -52,7 +55,8 @@
       "global": "cd_state",
       "equals": 4
      },
-     "reason": "head position while XA streams: the model advances 2.5 sectors per frame from the Setloc target, the real drive starts after seek and spin-up (T-39002 measured 5-6 frames from the request to playing)"
+     "reason": "head position while XA streams: the model advances 2.5 sectors per frame from the Setloc target, the real drive starts after seek and spin-up (T-39002 measured 5-6 frames from the request to playing)",
+     "port": "free"
     },
     {
      "global": "cd_result",
@@ -60,19 +64,89 @@
       "global": "cd_state",
       "equals": 4
      },
-     "reason": "GetlocL result bytes while XA streams (the same head position)"
+     "reason": "GetlocL result bytes while XA streams (the same head position)",
+     "port": "free"
     }
    ],
    "not_comparable": {
-    "cd-title:21": "read completion frame: the model counts floor(14 + 0.4 x 3) = 15 frames from the request (cd_command_push, frame 205); this replay issues the pump hits without the push, so it counts from the issue (206) and finishes one frame after the original",
-    "cd-xa-a:82": "read completion frame: counted from the request (cd_command_push, frame 96) in the model; this replay issues the pump hits without the push, so the model counts from the issue and finishes one frame after the original",
-    "cd-xa-a:110": "read completion frame, as cd-xa-a:82"
-   }
-  },
-  "cd_position_lba": {
-   "not_comparable": {
-    "cd-xa-a:*": "reads the head position of an XA stream already playing when the state was saved (drive state is hardware, not in RAM); the model starts idle",
-    "cd-xa-b:*": "head position while XA streams: the model advances 2.5 sectors per frame from the Setloc target, the real drive starts after seek and spin-up"
+    "cd2-title:*": {
+     "reason": "read completion frame: the model counts floor(14 + 0.4 x sectors) from the request (the cd_command_push, a few frames earlier); this replay issues the pump hits without the push, so the model counts from the issue frame and completes one frame after the original. The difference may touch only the ring head, phase, the status bytes and the result bytes the completion writes",
+     "allow": [
+      {
+       "global": "cd_queue_head"
+      },
+      {
+       "global": "cd_read_status"
+      },
+      {
+       "global": "cd_state"
+      },
+      {
+       "global": "cd_read_count"
+      },
+      {
+       "global": "cd_result"
+      },
+      {
+       "global": "cd_sectors_left"
+      },
+      {
+       "global": "cd_queue_phase"
+      }
+     ]
+    },
+    "cd2-xa-a:*": {
+     "reason": "read completion frame: the model counts floor(14 + 0.4 x sectors) from the request (the cd_command_push, a few frames earlier); this replay issues the pump hits without the push, so the model counts from the issue frame and completes one frame after the original. The difference may touch only the ring head, phase, the status bytes and the result bytes the completion writes",
+     "allow": [
+      {
+       "global": "cd_queue_head"
+      },
+      {
+       "global": "cd_read_status"
+      },
+      {
+       "global": "cd_state"
+      },
+      {
+       "global": "cd_read_count"
+      },
+      {
+       "global": "cd_result"
+      },
+      {
+       "global": "cd_sectors_left"
+      },
+      {
+       "global": "cd_queue_phase"
+      }
+     ]
+    },
+    "cd2-xa-b:*": {
+     "reason": "read completion frame: the model counts floor(14 + 0.4 x sectors) from the request (the cd_command_push, a few frames earlier); this replay issues the pump hits without the push, so the model counts from the issue frame and completes one frame after the original. The difference may touch only the ring head, phase, the status bytes and the result bytes the completion writes",
+     "allow": [
+      {
+       "global": "cd_queue_head"
+      },
+      {
+       "global": "cd_read_status"
+      },
+      {
+       "global": "cd_state"
+      },
+      {
+       "global": "cd_read_count"
+      },
+      {
+       "global": "cd_result"
+      },
+      {
+       "global": "cd_sectors_left"
+      },
+      {
+       "global": "cd_queue_phase"
+      }
+     ]
+    }
    }
   },
   "cd_file_checksum_ok": {
@@ -114,6 +188,7 @@
   "cd_audio_request_get": "no hit in the sampled states; hand check in tests/engine/cd_queue_test.gd",
   "cd_read_sync_poll": "no caller in src/ (dead code in the original); hand check in tests/engine/cd_queue_test.gd",
   "cd_sync_poll": "no caller in src/ (dead code in the original); hand check in tests/engine/cd_queue_test.gd",
-  "cd_error_recover": "runs only after a disc error on an XA read, never in the sampled states; hand check (refusal at the blocking VSync) in tests/engine/cd_queue_test.gd"
+  "cd_error_recover": "runs only after a disc error on an XA read, never in the sampled states; hand check (refusal at the blocking VSync) in tests/engine/cd_queue_test.gd",
+  "cd_position_lba": "every captured hit reads the head position of an XA stream whose start the model cannot know (the state was saved mid-stream, or the real drive starts after seek and spin-up: T-39002 measured 5-6 frames); hardware state, not game memory. Hand check in tests/engine/cd_queue_test.gd (2.5 sectors per frame from the Setloc target)"
  }
 }

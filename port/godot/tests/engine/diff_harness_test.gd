@@ -8,6 +8,18 @@ const Differ = preload("res://tests/engine/engine_diff.gd")
 const Memory = preload("res://core/game_memory.gd")
 
 var failures: Array[String] = []
+var _made: Array = []
+
+## Engines are shut down at the end of run() so the engine <-> module cycles are freed.
+func _new():
+	var engine = GameEngine.new()
+	_made.append(engine)
+	return engine
+
+func _shutdown_all() -> void:
+	for engine in _made:
+		engine.shutdown()
+	_made.clear()
 
 func _check(condition: bool, message: String) -> void:
 	if not condition:
@@ -19,6 +31,7 @@ func run() -> Array[String]:
 	_test_callees()
 	_test_exclusions_and_returns()
 	_test_names_and_json()
+	_shutdown_all()
 	return failures
 
 ## Diff of two RAM images as a capture stores it: [[offset, "hex"], ...].
@@ -60,7 +73,7 @@ func _expected_step_next(entry: PackedByteArray) -> PackedByteArray:
 	return memory.snapshot()
 
 func _test_pass_and_fail() -> void:
-	var engine = GameEngine.new()
+	var engine = _new()
 	var differ = Differ.new()
 	var entry: PackedByteArray = _entry()
 	var good: PackedByteArray = _expected_step_next(entry)
@@ -87,13 +100,21 @@ func _test_pass_and_fail() -> void:
 	memory.restore(good)
 	memory.game_state().set_field("substep", 3)
 	var wrong: Dictionary = _hit(entry, memory.snapshot())
+	result = differ.run_hit(engine, "mode_step_next", wrong, entry, signature, [{"field": "GameState.substep", "reason": "invented test reason", "port": "free"}])
+	_check(result.ok, "an excluded field that the port may write is not compared: %s" % [result.problems])
 	result = differ.run_hit(engine, "mode_step_next", wrong, entry, signature, [{"field": "GameState.substep", "reason": "invented test reason"}])
-	_check(result.ok, "an excluded field is not compared: %s" % [result.problems])
+	_check(not result.ok and "\n".join(result.problems).contains("port wrote") and "\n".join(result.problems).contains("GameState.substep"),
+		"exclusions are one-sided: the original may differ, the port must leave the bytes as at entry: %s" % [result.problems])
+	# a not-comparable hit passes only inside its allowance
+	result = differ.run_hit(engine, "mode_step_next", wrong, entry, signature, [], [{"field": "GameState.substep", "reason": "t"}])
+	_check(not result.ok and result.within_allowance, "a difference inside the allowance is within_allowance")
+	result = differ.run_hit(engine, "mode_step_next", wrong, entry, signature, [], [{"field": "GameState.mode_step", "reason": "t"}])
+	_check(not result.within_allowance, "a difference outside the allowance is not")
 	result = differ.run_hit(engine, "mode_step_next", wrong, entry, signature, [{"field": "GameState.substep"}])
 	_check(not result.ok and "\n".join(result.problems).contains("needs a reason"), "an exclusion without a reason is refused: %s" % [result.problems])
 
 func _test_callees() -> void:
-	var engine = GameEngine.new()
+	var engine = _new()
 	var differ = Differ.new()
 	var entry: PackedByteArray = _entry()
 	# game_mode_set(0x30): stores, then message_window_title_show(0) (ovl_target_game_mode is 0 here)

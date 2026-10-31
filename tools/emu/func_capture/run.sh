@@ -10,7 +10,10 @@
 #          [--callee-ptr NAME:0xADDR] ...                    unported callee whose code address is the u32 at ADDR
 #          [--input FRAME:BUTTON[:HOLD]] ...                 pad press (vsyncs counted from the state load)
 #          [--poke FRAME:0xADDR:HEXBYTES] ...                RAM write at the start of that vsync (a constructed state)
-#          [--max-diff BYTES]
+#          [--max-diff BYTES] [--cover] [--ptr-bytes N]
+#   --cover records the executed instruction addresses of every hit (slow: a breakpoint per instruction of the function);
+#   tools/emu/func_capture/coverage.sh <name> then reports unreached blocks. --ptr-bytes: bytes recorded behind a callee's
+#   pointer argument into the stack (default 64).
 #   HITS: hits to keep (default 8). KEYADDR/PER_KEY: keep at most PER_KEY hits per distinct byte value at KEYADDR
 #   (for example --fn game_mode_dispatch:40:0x800E7388:2 keeps two hits per game mode). FROM_VSYNC ignores earlier hits.
 # Then pack the result (gzip the RAM images, write index.json):  pack.sh <name>
@@ -25,7 +28,7 @@ OUT="$DATA/.asset-cache/m2-engine/$NAME"
 [ -e "$OUT" ] && { echo "refusing to reuse $OUT" >&2; exit 2; }
 [ -f "$DATA/$STATE" ] || { echo "missing state $DATA/$STATE" >&2; exit 2; }
 
-FRAMES=600; TARGETS=""; CALLEES=""; INPUTS=""; MAXDIFF=""; POKES=""
+FRAMES=600; TARGETS=""; CALLEES=""; INPUTS=""; MAXDIFF=""; POKES=""; COVER=""; PTRB=""
 addr_of() { # NAME -> 0xADDR from the symbol files
   local a
   a=$(grep -h "^$1 = 0x" "$REPO"/config/symbol_addrs*.txt | head -1 | sed 's/.*= \(0x[0-9A-Fa-f]*\).*/\1/')
@@ -39,7 +42,8 @@ while [ $# -gt 0 ]; do
     --fn)
       IFS=: read -r head hits keyaddr keymax from <<<"$2"
       name=${head%%=*}; if [ "$name" = "$head" ]; then addr=$(addr_of "$name"); else addr=${head#*=}; fi
-      TARGETS+="{ name = '$name', addr = $addr, max = ${hits:-8}${keyaddr:+, key = $keyaddr, key_max = ${keymax:-1}}${from:+, from = $from} },"
+      size=$(grep "\"$name\":" "$REPO/port/godot/engine/_frame_sizes.gd" | tail -1 | sed 's/.*: \(0x[0-9A-F]*\),.*/\1/')
+      TARGETS+="{ name = '$name', addr = $addr, size = ${size:-0}, max = ${hits:-8}${keyaddr:+, key = $keyaddr, key_max = ${keymax:-1}}${from:+, from = $from} },"
       mkdir -p "$OUT/$name"; shift 2 ;;
     --callee)
       head=$2; name=${head%%=*}; if [ "$name" = "$head" ]; then addr=$(addr_of "$name"); else addr=${head#*=}; fi
@@ -49,6 +53,8 @@ while [ $# -gt 0 ]; do
       CALLEES+="{ name = '$name', ptr = $ptr },"; shift 2 ;;
     --input)
       IFS=: read -r f b h <<<"$2"; INPUTS+="{ $f, '$b', ${h:-2} },"; shift 2 ;;
+    --cover) COVER="cover = true,"; shift ;;
+    --ptr-bytes) PTRB="ptr_bytes = $2,"; shift 2 ;;
     --poke)
       IFS=: read -r f a b <<<"$2"; POKES+="{ $f, $a, '$b' },"; shift 2 ;;
     *) echo "unknown argument $1" >&2; exit 2 ;;
@@ -65,7 +71,7 @@ FILE "/disc/track2.bin" BINARY
     INDEX 00 00:00:00
     INDEX 01 00:02:00
 CUE
-{ echo "JOB = { out = '/out', load_state = '/data/$STATE', frames = $FRAMES, ${MAXDIFF}"
+{ echo "JOB = { out = '/out', load_state = '/data/$STATE', frames = $FRAMES, ${MAXDIFF}${COVER}${PTRB}"
   echo "  targets = { $TARGETS }, callees = { $CALLEES }, inputs = { $INPUTS }, pokes = { $POKES } }"
   cat "$HERE/capture.lua"; } > "$OUT/job.lua"
 docker run --rm --name "m2fn-$NAME" --cpus=4 -u "$(id -u):$(id -g)" -e HOME=/tmp \

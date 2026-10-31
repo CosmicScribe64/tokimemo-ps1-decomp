@@ -24,6 +24,9 @@
 --   inputs     optional { {vsync, 'BUTTON', hold}, ... } pad overrides (vsyncs counted from the load vsync)
 --   pokes      optional { {vsync, address, 'hexbytes'}, ... } RAM writes at the start of that vsync (a constructed
 --              state, e.g. a bad game mode to reach game_mode_reset_to_title; say so wherever the capture is used)
+--   ptr_bytes  optional bytes recorded behind a callee's pointer argument that points into the stack (default 64)
+--   cover      optional: true records the executed instruction addresses of each target hit (an Exec breakpoint over
+--              the function's code range, targets[i].size); pack.py/coverage.py report unreached blocks
 --   max_diff   optional cap on the bytes of one diff (default 0x40000); a hit above it is dropped and
 --              counted in meta.jsonl ("dropped_diff")
 --
@@ -114,6 +117,25 @@ local function snapshot()
     return copy
 end
 
+local STACK_LO, STACK_HI = 0x801E0000, 0x80200000
+local function calleeExtraJson()
+    local g = regs.GPR.n
+    local sp = u32(g.sp)
+    local words = {}
+    for i = 0, 7 do words[#words + 1] = tostring(ramWord(sp + 16 + i * 4)) end
+    local mem_parts = {}
+    local n = JOB.ptr_bytes or 64
+    for i, name in ipairs({'a0', 'a1', 'a2', 'a3'}) do
+        local v = u32(g[name])
+        if v >= STACK_LO and v < STACK_HI then
+            local len = math.min(n, STACK_HI - v)
+            local o = bit.band(v, 0x1fffff)
+            mem_parts[#mem_parts + 1] = string.format('"a%d":"%s"', i - 1, hex(mem, o, len))
+        end
+    end
+    return '"stack":[' .. table.concat(words, ',') .. '],"ptr_mem":{' .. table.concat(mem_parts, ',') .. '}'
+end
+
 local function regsJson()
     local g = regs.GPR.n
     return string.format('"a0":%d,"a1":%d,"a2":%d,"a3":%d,"v0":%d,"v1":%d,"sp":%d,"ra":%d',
@@ -154,12 +176,18 @@ local function finishPending(p)
     end
     local callees = {}
     for _, c in ipairs(p.callees) do callees[#callees + 1] = c end
+    local executed = {}
+    if p.exec then
+        for pc, _ in pairs(p.exec) do executed[#executed + 1] = pc end
+        table.sort(executed)
+    end
     local body = string.format('{"function":"%s","address":%d,"hit":%d,"vsync":%d,%s,"stack":[',
         p.def.name, p.def.addr, p.hit, p.vsync, p.argsJson)
     local st = {}
     for i = 0, 7 do st[#st + 1] = tostring(p.stack[i]) end
     body = body .. table.concat(st, ',') .. '],"ret_v0":' .. u32(g.v0) .. ',"ret_v1":' .. u32(g.v1)
-        .. ',"exit_diff_bytes":' .. n .. ',"exit_diff":' .. exitDiff .. ',"callees":[' .. table.concat(callees, ',') .. ']}'
+        .. ',"exit_diff_bytes":' .. n .. ',"exit_diff":' .. exitDiff
+        .. ',"executed":[' .. table.concat(executed, ',') .. '],"callees":[' .. table.concat(callees, ',') .. ']}'
     local dir = p.def.name
     writeFile(string.format('%s/hit%04d.json', dir, p.hit), body)
     appendLine('meta.jsonl', string.format('{"event":"hit","function":"%s","hit":%d,"vsync":%d,"exit_diff_bytes":%d,"callees":%d}',
@@ -216,7 +244,7 @@ local function onTargetEntry(t)
     local stack = {}
     for i = 0, 7 do stack[i] = ramWord(sp + 16 + i * 4) end
     local hit = seq[t.name]
-    local p = { def = t, hit = hit, vsync = frame, sp = sp, ra = u32(g.ra), stack = stack, callees = {},
+    local p = { def = t, hit = hit, exec = JOB.cover and {} or nil, vsync = frame, sp = sp, ra = u32(g.ra), stack = stack, callees = {},
         argsJson = regsJson():gsub('"v0":%d+,"v1":%d+,', ''), entry = snapshot() }
     writeFile(string.format('%s/hit%04d.entry.ram', t.name, hit), ffi.string(p.entry, RAM))
     pendings[#pendings + 1] = p
@@ -252,9 +280,24 @@ function GCalleeEntry(c)
                 p.failed = true
             else
                 p.callee = { def = c, sp = sp, ra = ra, pre = pre, before = snapshot(),
-                    argsJson = '"address":' .. u32(regs.pc) .. ',' .. regsJson():gsub('"v0":%d+,"v1":%d+,', '') }
+                    argsJson = '"address":' .. u32(regs.pc) .. ',' .. calleeExtraJson() .. ',' .. regsJson():gsub('"v0":%d+,"v1":%d+,', '') }
                 returnBreakpoint(ra)
             end
+        end
+    end
+end
+
+-- coverage: one Exec breakpoint over each target's code range records the executed addresses of pending hits
+if JOB.cover then
+    for _, t in ipairs(JOB.targets) do
+        if t.size and t.size > 4 then
+            bps[#bps + 1] = PCSX.addBreakpoint(t.addr, 'Exec', t.size, 'func-capture-cover', function()
+                local pc = u32(regs.pc)
+                for _, p in ipairs(pendings) do
+                    if p.exec and pc >= p.def.addr and pc < p.def.addr + p.def.size then p.exec[pc] = true end
+                end
+                return true
+            end)
         end
     end
 end

@@ -1,9 +1,9 @@
 {
  "captures": [
-  "probe1",
-  "gm-route",
-  "gm-evt",
-  "gm-reset"
+  "gm2-title",
+  "gm2-route",
+  "gm2-evt",
+  "gm2-reset"
  ],
  "exclude": [],
  "functions": {},

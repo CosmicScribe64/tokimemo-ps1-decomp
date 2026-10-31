@@ -11,11 +11,16 @@ extends SceneTree
 ## A spec (config/port/engine-diff/<stem>.json) names the captures that cover a module and the RAM
 ## exclusions (each with a reason):
 ##   {"captures": ["game-mode-v1"], "exclude": [{"field": "...", "reason": "..."}],
-##    "functions": {"<C name>": {"exclude": [...], "not_comparable": {"<capture>:<hit>": "reason"}}},
+##    "functions": {"<C name>": {"exclude": [...], "not_comparable": {"<capture>:<hit>": {"reason": "...",
+##        "allow": [{"global": "cd_queue_head"}], "ret": false}}}},
 ##    "untested": {"<C name>": "reason"}}
-## not_comparable (keys "<capture>:<hit>", "<capture>:<first>-<last>", "<capture>:*"): a hit whose result is known to differ for a stated reason (state the replay cannot load
-## because it lives outside game memory, a timing the model approximates); it is run, counted and printed
-## separately, never silently dropped. Hits replay in capture order on one engine per capture and function.
+## An exclusion lets the ORIGINAL differ; the port's bytes there must still equal the entry RAM unless the entry
+## says "port": "free" (the port computes that field itself).
+## not_comparable (keys "<capture>:<hit>", "<capture>:<first>-<last>", "<capture>:*"): a hit whose result is known
+## to differ for a stated reason (state the replay cannot load because it lives outside game memory, a timing
+## the model approximates). The difference must stay inside the named "allow" ranges (v0 only if "ret" is true);
+## everything else is still compared and shown on failure. Such hits are run, counted and printed separately.
+## Hits replay in capture order on one engine per capture and function.
 ## Every function of the module's C_FUNCTIONS needs hits in a capture unless the spec lists it under
 ## "untested" with a reason (for example a function the emulator never reached from the saved states).
 
@@ -62,10 +67,13 @@ func _run() -> void:
 	for stem: String in stems:
 		if not _run_module(engine, differ, stem, root, specs, only_function):
 			failed = true
+	engine.shutdown()
 	print("RESULT: ", "FAIL" if failed else "PASS")
 	quit(1 if failed else 0)
 
 func _run_module(engine, differ, stem: String, root: String, specs: String, only_function: String) -> bool:
+	engine.shutdown()
+	engine = GameEngine.new() # a fresh engine for every module (and below, for every capture and function)
 	var module: RefCounted = engine.modules.get(stem)
 	if module == null:
 		printerr("%s: no engine module" % stem)
@@ -92,9 +100,12 @@ func _run_module(engine, differ, stem: String, root: String, specs: String, only
 				continue
 			# One engine per capture and function: the hits replay in capture order, so state that lives
 			# outside game memory (the CD drive model) evolves as it did between the captured calls.
+			engine.shutdown()
 			engine = GameEngine.new()
 			var function_spec: Dictionary = spec.get("functions", {}).get(function_name, {})
 			var known: Dictionary = function_spec.get("not_comparable", {})
+			if untested.has(function_name):
+				continue # hits of a function listed untested are not run (the reason says why they cannot be compared)
 			var exclude: Array = (spec.get("exclude", []) as Array) + (function_spec.get("exclude", []) as Array)
 			var tally: Dictionary = tallies.get(function_name, {"hits": 0, "passed": 0, "compared": 0, "callees": 0})
 			for entry: Dictionary in index[function_name]:
@@ -106,13 +117,15 @@ func _run_module(engine, differ, stem: String, root: String, specs: String, only
 					printerr("%s %s hit %s: unreadable capture" % [stem, function_name, entry.file])
 					ok = false
 					continue
-				var result: Dictionary = differ.run_hit(engine, function_name, hit, entry_ram, signatures.get(function_name, {}), exclude)
+				var known_spec: Dictionary = _known_spec(known, capture, int(entry.hit))
+				var result: Dictionary = differ.run_hit(engine, function_name, hit, entry_ram, signatures.get(function_name, {}), exclude,
+					known_spec.get("allow", []), bool(known_spec.get("ret", false)))
 				tally.hits += 1
 				tally.callees += int(result.callees_replayed)
 				if result.ok:
 					tally.passed += 1
 					tally.compared += int(result.compared_bytes)
-				elif not _known_reason(known, capture, int(entry.hit)).is_empty():
+				elif not known_spec.is_empty() and result.within_allowance:
 					tally.not_comparable = int(tally.get("not_comparable", 0)) + 1
 					_note_runs(tally, result.runs)
 				else:
@@ -130,6 +143,9 @@ func _run_module(engine, differ, stem: String, root: String, specs: String, only
 			continue
 		if tallies.has(function_name):
 			var t: Dictionary = tallies[function_name]
+			if int(t.passed) == 0 and not (untested.has(function_name) and not str(untested[function_name]).is_empty()):
+				print("    NO PASSING HIT: every hit of %s fails or is not comparable; add a comparable capture or list it under \"untested\" with a reason" % function_name)
+				ok = false
 			print("%-34s %3d hit(s), %3d passed, %d callee call(s) replayed, %d bytes compared%s%s" % [
 				function_name, t.hits, t.passed, t.callees, t.compared,
 				", %d not comparable (spec)" % int(t.not_comparable) if int(t.get("not_comparable", 0)) > 0 else "",
@@ -158,9 +174,10 @@ func _print_ranges(ranges: Dictionary) -> void:
 		parts.append("0x%08X x%d" % [0x80000000 + key, ranges[key]])
 	print("    differing 16-byte blocks: ", ", ".join(parts))
 
-## The spec's reason for a hit that may differ: keys are "<capture>:<hit>", "<capture>:<first>-<last>" or
-## "<capture>:*". Returns "" when none applies.
-func _known_reason(known: Dictionary, capture: String, hit: int) -> String:
+## The spec entry of a hit that may differ: keys are "<capture>:<hit>", "<capture>:<first>-<last>" or
+## "<capture>:*"; the value is {"reason": ..., "allow": [exclusion-like ranges the difference must stay in],
+## "ret": true when v0 may differ}. {} when none applies or the reason is missing.
+func _known_spec(known: Dictionary, capture: String, hit: int) -> Dictionary:
 	for key: String in known:
 		var parts: PackedStringArray = key.split(":")
 		if parts.size() != 2 or parts[0] != capture:
@@ -171,5 +188,10 @@ func _known_reason(known: Dictionary, capture: String, hit: int) -> String:
 			var bounds: PackedStringArray = span.split("-")
 			matches = bounds.size() == 2 and hit >= int(bounds[0]) and hit <= int(bounds[1])
 		if matches:
-			return str(known[key])
-	return ""
+			var value: Variant = known[key]
+			if value is Dictionary and not str(value.get("reason", "")).strip_edges().is_empty():
+				for allowed: Variant in value.get("allow", []):
+					if allowed is Dictionary and not allowed.has("reason"):
+						allowed["reason"] = value.reason
+				return value
+	return {}

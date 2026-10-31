@@ -28,6 +28,7 @@ extends RefCounted
 
 const Memory = preload("res://core/game_memory.gd")
 const Layout = preload("res://core/game_layout.gd")
+const Narrow = preload("res://tests/engine/_narrow.gd")
 const Math = preload("res://core/native_math.gd")
 
 const DEAD_STACK_BYTES: int = 0x4000
@@ -93,7 +94,7 @@ static func apply_diff_to_memory(memory, diff: Array) -> void:
 ## module's C_SIGNATURES entry, `exclude` the spec's exclusions (Array of Dictionaries).
 ## Returns {"ok", "problems": Array[String], "compared_bytes", "excluded_bytes", "callees_replayed"}.
 func run_hit(engine, function_name: String, hit: Dictionary, entry: PackedByteArray, signature: Dictionary,
-		exclude: Array) -> Dictionary:
+		exclude: Array, allow: Array = [], allow_ret: bool = false) -> Dictionary:
 	var problems: Array[String] = []
 	var regions: Array = _exclusions(exclude, int(hit.sp), problems, entry)
 	last_runs = []
@@ -104,9 +105,12 @@ func run_hit(engine, function_name: String, hit: Dictionary, entry: PackedByteAr
 	engine.clear_failure()
 	engine.clear_stubs()
 	engine.memory.restore(entry)
-	engine.sp = int(hit.sp) # the C stack pointer at entry, so stack buffers sit where the original's did
+	engine.reset_stack_trace(int(hit.sp)) # the C stack pointer at entry (call_c reserves the frame below it)
+	engine.ret_v1 = 0
+	var allow_problems: Array[String] = []
+	var allowed: Array = _exclusions(allow, int(hit.sp), allow_problems, entry)
 	var records: Array = hit.callees
-	var state: Dictionary = {"next": 0}
+	var state: Dictionary = {"next": 0, "touched": []}
 	for name: String in _callee_names(records):
 		engine.set_stub(name, _make_stub(engine, name, records, state, entry, regions, problems))
 	var args: Array[int] = _arguments(hit, signature)
@@ -119,17 +123,39 @@ func run_hit(engine, function_name: String, hit: Dictionary, entry: PackedByteAr
 	elif int(state.next) != records.size():
 		problems.append("the C called %d unported callee(s), the port reached %d (next missing: %s)" % [
 			records.size(), state.next, records[int(state.next)].name])
+	var ret_ok: bool = true
 	if problems.is_empty():
+		var ret_type: String = str(signature.get("ret", "void"))
 		var defined: Array = signature.get("ret_defined", [])
-		if str(signature.get("ret", "void")) != "void" and (defined.is_empty() or (int(hit.ret_v0) & 0xffffffff) in defined):
-			var width_mask: int = _return_mask(str(signature.ret))
-			if (got & width_mask) != (int(hit.ret_v0) & width_mask):
-				problems.append("v0 = 0x%X, the original returned 0x%X" % [got & width_mask, int(hit.ret_v0) & width_mask])
+		var original_v0: int = int(hit.ret_v0) & 0xffffffff
+		if ret_type != "void" and not signature.has("ret_undefined") and (defined.is_empty() or original_v0 in defined):
+			var narrowed_original: int = Narrow.apply(original_v0, ret_type) & 0xffffffff
+			if narrowed_original != original_v0:
+				problems.append("the original's v0 = 0x%X has bits outside the C return type %s (narrowed 0x%X)" % [original_v0, ret_type, narrowed_original])
+				ret_ok = false
+			elif (got & 0xffffffff) != narrowed_original:
+				problems.append("v0 = 0x%X, the original returned 0x%X" % [got & 0xffffffff, narrowed_original])
+				ret_ok = false
+		if signature.get("ret_v1", false) and (engine.ret_v1 & 0xffffffff) != (int(hit.get("ret_v1", 0)) & 0xffffffff):
+			problems.append("v1 = 0x%X, the original returned 0x%X" % [engine.ret_v1 & 0xffffffff, int(hit.get("ret_v1", 0)) & 0xffffffff])
+			ret_ok = false
 		var expected: PackedByteArray = entry.duplicate()
 		apply_diff(expected, hit.exit_diff)
-		problems.append_array(_compare_ram(engine.memory.ram, expected, regions, "at return", true))
+		var ram_problems: Array[String] = _compare_ram(engine.memory.ram, expected, regions, "at return", true)
+		problems.append_array(ram_problems)
+		var written: Array = [[int(engine.min_sp) & 0x1fffffff, int(hit.sp) & 0x1fffffff]] # frames the port reserved
+		written.append_array(state.touched) # and what the replayed callees wrote
+		written.sort_custom(func(a: Array, b: Array) -> bool: return a[0] < b[0])
+		for problem: String in _port_untouched(engine.memory.ram, entry, regions, written):
+			problems.append(problem)
 	result.ok = problems.is_empty()
 	result.runs = last_runs
+	# a hit the spec lists as not comparable passes only if every difference is inside its allowance
+	var outside: int = 0
+	for run: Array in last_runs:
+		outside += _subtract(run, allowed).size()
+	result.within_allowance = outside == 0 and (ret_ok or allow_ret) and engine.refusal.is_empty() and engine.memory.error.is_empty() \
+		and int(state.next) == records.size() and _only_allowed_problems(problems)
 	result.callees_replayed = int(state.next)
 	var excluded: int = 0
 	for region: Array in regions:
@@ -137,6 +163,34 @@ func run_hit(engine, function_name: String, hit: Dictionary, entry: PackedByteAr
 	result.excluded_bytes = excluded
 	result.compared_bytes = Memory.RAM_SIZE - excluded
 	return result
+
+## True when every problem is a RAM or v0 difference (the allowance covers those), not a callee mismatch.
+static func _only_allowed_problems(problems: Array[String]) -> bool:
+	for problem: String in problems:
+		if not (problem.begins_with("RAM differs at return") or problem.begins_with("  0x") or problem.begins_with("v0 = ") \
+				or problem.begins_with("port wrote")):
+			return false
+	return true
+
+## Bytes the port must not have changed: every exclusion that is not marked "port": "free" is one-sided (the
+## original may differ there, the port's bytes must still equal the entry RAM) except where the port reserved
+## stack frames (`written`, RAM offsets).
+func _port_untouched(got: PackedByteArray, entry: PackedByteArray, regions: Array, written: Array) -> Array[String]:
+	var out: Array[String] = []
+	var changed: Array = _diff_runs(got, entry)
+	for run: Array in changed:
+		for region: Array in regions:
+			if region.size() > 3 and region[3]:
+				continue
+			var lo: int = maxi(int(run[0]), int(region[0]))
+			var hi: int = mini(int(run[1]), int(region[1]))
+			if lo >= hi:
+				continue
+			for piece: Array in _subtract([lo, hi], written):
+				if out.size() < MAX_REPORTED:
+					out.append("port wrote 0x%08X..0x%08X %s (excluded for the original, but the port must leave it as at entry: %s)" % [
+						Memory.RAM_BASE + piece[0], Memory.RAM_BASE + piece[1], describe(Memory.RAM_BASE + piece[0]), region[2]])
+	return out
 
 static func _callee_names(records: Array) -> Array[String]:
 	var names: Array[String] = []
@@ -184,7 +238,24 @@ func _make_stub(engine, name: String, records: Array, state: Dictionary, entry: 
 		for i: int in mini(args.size(), 4):
 			if (int(args[i]) & 0xffffffff) != (raw[i] & 0xffffffff):
 				problems.append("%s argument %d = 0x%X, the original passed 0x%X" % [name, i, int(args[i]) & 0xffffffff, raw[i]])
+		var stack: Array = record.get("stack", [])
+		for i: int in range(4, mini(args.size(), 4 + stack.size())):
+			if (int(args[i]) & 0xffffffff) != (int(stack[i - 4]) & 0xffffffff):
+				problems.append("%s stack argument %d = 0x%X, the original passed 0x%X" % [name, i, int(args[i]) & 0xffffffff, int(stack[i - 4]) & 0xffffffff])
+		# the bytes behind a pointer argument that points into the stack (buffers the callee reads)
+		var pointed: Dictionary = record.get("ptr_mem", {})
+		for key: String in pointed:
+			var arg_index: int = int(key.substr(1))
+			if arg_index < args.size():
+				var want: PackedByteArray = String(pointed[key]).hex_decode()
+				var have: PackedByteArray = engine.memory.read_bytes(int(args[arg_index]), want.size())
+				if have != want:
+					problems.append("%s argument %d points at bytes that differ from the original's: port %s, original %s" % [
+						name, arg_index, have.hex_encode().left(48), want.hex_encode().left(48)])
 		apply_diff_to_memory(engine.memory, record.effect_diff)
+		for run: Variant in record.effect_diff: # the callee's own writes (its frames, its data) are not the port's
+			state.touched.append([int(run[0]), int(run[0]) + String(run[1]).length() / 2])
+		engine.ret_v1 = int(record.get("ret_v1", 0))
 		return int(record.ret_v0)
 
 # ---- exclusions and diffing
@@ -193,8 +264,8 @@ func _make_stub(engine, name: String, records: Array, state: Dictionary, entry: 
 func _exclusions(exclude: Array, sp: int, problems: Array[String], entry_ram: PackedByteArray = PackedByteArray()) -> Array:
 	var regions: Array = []
 	var stack_end: int = sp & 0x1fffffff
-	regions.append([maxi(0, stack_end - DEAD_STACK_BYTES), stack_end, DEAD_STACK_REASON])
-	regions.append([stack_end, stack_end + ARG_HOME_BYTES, ARG_HOME_REASON])
+	regions.append([maxi(0, stack_end - DEAD_STACK_BYTES), stack_end, DEAD_STACK_REASON, false])
+	regions.append([stack_end, stack_end + ARG_HOME_BYTES, ARG_HOME_REASON, false])
 	for entry: Variant in exclude:
 		if not entry is Dictionary or str(entry.get("reason", "")).strip_edges().is_empty():
 			problems.append("an exclusion needs a reason: " + str(entry))
@@ -207,23 +278,28 @@ func _exclusions(exclude: Array, sp: int, problems: Array[String], entry_ram: Pa
 				problems.append("unknown exclusion global " + str(entry.global))
 				continue
 			var global_start: int = int(global_row[0]) & 0x1fffffff
-			regions.append([global_start, global_start + maxi(1, int(global_row[3])) * int(global_row[5]), str(entry.reason)])
+			regions.append([global_start, global_start + maxi(1, int(global_row[3])) * int(global_row[5]), str(entry.reason), _free(entry)])
 		elif entry.has("field"):
 			var range_of: Array = field_range(str(entry.field))
 			if range_of.is_empty():
 				problems.append("unknown exclusion field " + str(entry.field))
 				continue
-			regions.append([range_of[0], range_of[1], str(entry.reason)])
+			regions.append([range_of[0], range_of[1], str(entry.reason), _free(entry)])
 		elif entry.has("sp_offset") and entry.has("length"):
 			var from: int = stack_end + int(entry.sp_offset)
-			regions.append([from, from + int(entry.length), str(entry.reason)])
+			regions.append([from, from + int(entry.length), str(entry.reason), _free(entry)])
 		elif entry.has("start") and entry.has("length"):
 			var start: int = int(str(entry.start).hex_to_int()) if str(entry.start).begins_with("0x") else int(entry.start)
-			regions.append([start & 0x1fffffff, (start & 0x1fffffff) + int(entry.length), str(entry.reason)])
+			regions.append([start & 0x1fffffff, (start & 0x1fffffff) + int(entry.length), str(entry.reason), _free(entry)])
 		else:
 			problems.append("an exclusion has neither field nor start/length: " + str(entry))
 	regions.sort_custom(func(a: Array, b: Array) -> bool: return a[0] < b[0])
 	return regions
+
+## "port": "free" on an exclusion lets the port write there (it computes the field itself); otherwise the
+## original may differ but the port's bytes must equal the entry RAM.
+static func _free(entry: Dictionary) -> bool:
+	return str(entry.get("port", "")) == "free"
 
 ## An exclusion's "when": {"global": name, "equals": value} read from the entry RAM (the exclusion applies
 ## only while the original was in that state, for example while XA is streaming).

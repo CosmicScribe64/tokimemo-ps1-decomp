@@ -1,0 +1,34 @@
+{
+ "captures": [
+  "libc-title",
+  "libc-route"
+ ],
+ "exclude": [
+  {
+   "start": "0x80000000",
+   "length": 65536,
+   "reason": "BIOS/kernel RAM (OpenBIOS handlers, event tables): interrupts taken while the BIOS routine runs change it; the port never writes below 0x80010000"
+  },
+  {
+   "start": "0x800DD680",
+   "length": 32,
+   "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+  },
+  {
+   "start": "0x800E3440",
+   "length": 192,
+   "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+  },
+  {
+   "start": "0x800E35F0",
+   "length": 16,
+   "reason": "SDK state of interrupt handlers (libetc/libcd callbacks) changed by the interrupts that fire while this long BIOS copy runs; the port never writes there"
+  }
+ ],
+ "functions": {},
+ "untested": {
+  "memmove": "no caller in the game's C (0 files call it); hand check in tests/engine/libc_test.gd from asm/libc_memmove.s",
+  "strncat": "no hit in the sampled states (title, command select); hand check in tests/engine/libc_test.gd",
+  "strcmp": "no hit in the sampled states (title, command select); hand check in tests/engine/libc_test.gd. The sign/magnitude of the BIOS strcmp is unverified against OpenBIOS"
+ }
+}
