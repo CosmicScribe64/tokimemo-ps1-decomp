@@ -2661,3 +2661,7 @@ Moved [[tickets/T-39303-installed-disc-pack]] and [[tickets/T-39302-generic-ps1-
 
 `tools/port/disc_pack_content.py` exports every Form 1 file of the raw track (1,355 files, 85 MB) with LBA, sectors, size, mode/form and SHA-256; 17 streams are listed as excluded. New optional role `disc_pack` in `tools/port/build_installed_runtime.py` and `port/godot/services/installed_launch_profile.gd`. `port/godot/services/disc_pack.gd` opens and verifies the pack and reads sectors by LBA into a PackedByteArray or the game memory ([[game-memory-model]]); suite `tests/core/run_disc_pack_tests.gd` (synthetic pack) and `tools/port/test_disc_pack_content.py`. On the real pack: O_11.NBN at 0xAC1E x 33 equals the O11 board role, CUT_08.NBN at 0xAA85 x 49 reads. See [[tickets/T-39303-installed-disc-pack]] and [[disc-layout]].
 
+## [2026-10-30] build | Disc pack review fixes (T-39303)
+
+Reads may span contiguous packed files (the date overlays need it); gaps, excluded extents and the pack end still fail. `tools/port/check_literal_disc_reads.py` checks the literal reads in `src/` (879 single-file, 6 spanning, 0 uncovered; computed-LBA reads not covered). The launch profile hashes only the pack manifest and gives it its own caps, with an over-cap pack as a recorded gap (read_pack 379 ms without, 764 ms with whole-pack hashing, 415 ms now). Verified-file cache holds several files; exporter treats audio/video-flagged Form 1 sectors as streams and refuses multi-extent files. See [[tickets/T-39303-installed-disc-pack]].
+

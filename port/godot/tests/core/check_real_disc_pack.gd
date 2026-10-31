@@ -77,9 +77,25 @@ func _run() -> void:
 		var cut_role: PackedByteArray = FileAccess.get_file_as_bytes(board.path_join("cut_07.nbn"))
 		_check(cut_role.size() > 0 and cut_read.ok and cut_read.data.slice(0, cut_role.size()) == cut_role and (cut_role.size() == 49 * 2048 or cut_read.data.slice(cut_role.size()).count(0) == cut_read.data.size() - cut_role.size()), "CUT08 equals the first_arrival_board role (cut_07.nbn, the 0xAA85 read), %d bytes" % cut_role.size())
 
+	# Date overlay reads of 10 sectors at the 9-sector D_11_xx.BS files run into the next file.
+	for row: Array in [[0x4359, "CDROM/BS/D_11_11.BS", "CDROM/BS/D_11_12.BS"], [0x4350, "CDROM/BS/D_11_10.BS", "CDROM/BS/D_11_11.BS"], [0x433E, "CDROM/BS/D_11_08.BS", "CDROM/BS/D_11_09.BS"]]:
+		var first: Dictionary = pack.lookup_path(row[1])
+		var second: Dictionary = pack.lookup_path(row[2])
+		var span: Dictionary = pack.read_sectors(row[0], 10)
+		var joined := PackedByteArray()
+		var a: Dictionary = pack.read_sectors(int(first.lba), int(first.sectors))
+		var b: Dictionary = pack.read_sectors(int(second.lba), 1)
+		if a.ok and b.ok:
+			joined = a.data + b.data
+		_check(int(first.get("lba", 0)) == row[0] and int(first.get("sectors", 0)) == 9 and int(second.get("lba", 0)) == row[0] + 9, "%s is at LBA 0x%X, 9 sectors, and %s follows it" % [row[1], row[0], row[2]])
+		_check(span.ok and span.path == row[1] and span.data == joined and span.data.size() == 10 * 2048, "read_sectors(0x%X, 10) = %s + the first sector of %s" % [row[0], row[1], row[2]])
+		var span_memory := Memory.new()
+		_check(pack.read_into_memory(span_memory, 0x80162000, row[0], 10).ok and span_memory.read_bytes(0x80162000, 10 * 2048) == joined, "read_into_memory of the same 10 sectors at 0x80162000")
+
 	# Refusals on the real pack.
 	var xa: Dictionary = pack.excluded_at(55974)
 	_check(not xa.is_empty() and not pack.read_sectors(55974, 1).ok and pack.read_sectors(55974, 1).error.contains("not readable as data"), "an XA stream sector fails: " + str(pack.read_sectors(55974, 1).get("error")))
-	_check(not pack.read_sectors(0xAC1E, 34).ok, "a read past the end of O_11.NBN fails: " + str(pack.read_sectors(0xAC1E, 34).get("error")))
+	var past: Dictionary = pack.read_sectors(0xDAA6 - 1, 2)
+	_check(not past.ok, "a read running from outside the files into an XA stream fails: " + str(past.get("error")))
 	_check(not pack.read_sectors(3, 1).ok, "an LBA before the first file fails: " + str(pack.read_sectors(3, 1).get("error")))
 	quit(1 if failed else 0)

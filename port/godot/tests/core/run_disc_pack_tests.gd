@@ -6,6 +6,7 @@ extends RefCounted
 
 const DiscPack = preload("res://services/disc_pack.gd")
 const Memory = preload("res://core/game_memory.gd")
+const Profile = preload("res://services/installed_launch_profile.gd")
 
 var failures: Array[String] = []
 var base: String = ""
@@ -19,6 +20,7 @@ func run() -> Array[String]:
 	_test_refusals()
 	_test_integrity()
 	_test_cache()
+	_test_profile_role()
 	_test_bad_manifests()
 	_remove_tree(base)
 	return failures
@@ -223,6 +225,50 @@ func _test_cache() -> void:
 	_check(pack.read_sectors(100, 1).ok and pack.read_sectors(200, 1).ok and pack.read_sectors(100, 1).ok, "alternating reads of verified files are served from the cache")
 	_check(pack._cache.size() == 3 and pack._cache_size == 6 * 2048, "the cache holds all three verified files")
 	_check(not _open_and_read(dir, 100), "a new reader still hashes the changed file")
+
+## A synthetic installed bundle whose only role is disc_pack (locator `locator`).
+func _bundle(label: String, locator: String, claimed_size: int = -1) -> Dictionary:
+	var dir: String = base.path_join(label)
+	var pack_dir: String = dir.path_join(locator)
+	DirAccess.make_dir_recursive_absolute(pack_dir.path_join("files"))
+	var manifest_bytes: PackedByteArray = "{}".to_utf8_buffer()
+	var data: PackedByteArray = _content(9, 4096)
+	for item: Array in [["disc_pack.json", manifest_bytes], ["files/X.BIN", data]]:
+		var file: FileAccess = FileAccess.open(pack_dir.path_join(item[0]), FileAccess.WRITE)
+		file.store_buffer(item[1])
+		file.close()
+	var files: Dictionary = {}
+	files[locator + "/disc_pack.json"] = {"size": manifest_bytes.size(), "sha256": _sha(manifest_bytes)}
+	files[locator + "/files/X.BIN"] = {"size": data.size() if claimed_size < 0 else claimed_size, "sha256": _sha(data)}
+	return {"dir": dir, "manifest": {"schema": Profile.SCHEMA, "version": 1, "release_profile": Profile.RELEASE,
+		"source": {"executable_sha256": Profile.EXE_SHA}, "files": files, "roles": {"disc_pack": locator}}}
+
+func _test_profile_role() -> void:
+	var good: Dictionary = _bundle("profile-good", "packs/disc_pack")
+	var result: Dictionary = Profile.read_pack(good.dir, good.manifest)
+	_check(result.get("valid", false) and result.paths.has("disc_pack") and result.role_manifests.has("disc_pack") and result.optional_role_gaps.is_empty(), "a bundle with a disc_pack role validates")
+	# Pack files are size-checked at launch and hashed by DiscPack on read, not by the profile.
+	var file: FileAccess = FileAccess.open(good.dir.path_join("packs/disc_pack/files/X.BIN"), FileAccess.READ_WRITE)
+	file.store_8(0x5a)
+	file.close()
+	_check(Profile.read_pack(good.dir, good.manifest).get("valid", false), "a same-size change inside the pack is left to DiscPack's per-file hash")
+	file = FileAccess.open(good.dir.path_join("packs/disc_pack/files/X.BIN"), FileAccess.WRITE)
+	file.store_buffer(_content(9, 100))
+	file.close()
+	_check(not Profile.read_pack(good.dir, good.manifest).get("valid", true), "a pack file of the wrong size fails the profile")
+	var tampered: Dictionary = _bundle("profile-manifest", "packs/disc_pack")
+	file = FileAccess.open(tampered.dir.path_join("packs/disc_pack/disc_pack.json"), FileAccess.WRITE)
+	file.store_string("{ }")
+	file.close()
+	_check(not Profile.read_pack(tampered.dir, tampered.manifest).get("valid", true), "the pack manifest is hashed in full")
+	var big: Dictionary = _bundle("profile-big", "packs/disc_pack", 300 * 1024 * 1024)
+	var gapped: Dictionary = Profile.read_pack(big.dir, big.manifest)
+	_check(gapped.get("valid", false) and not gapped.paths.has("disc_pack") and gapped.optional_role_gaps.has("disc_pack"), "an over-cap pack is a recorded gap, not a profile failure")
+	var other: Dictionary = _bundle("profile-other", "packs/other")
+	file = FileAccess.open(other.dir.path_join("packs/other/files/X.BIN"), FileAccess.READ_WRITE)
+	file.store_8(0x5a)
+	file.close()
+	_check(not Profile.read_pack(other.dir, other.manifest).get("valid", true), "a disc_pack role at another locator gets no exemption from hashing")
 
 func _open_and_read(dir: String, lba: int) -> bool:
 	var pack := DiscPack.new()

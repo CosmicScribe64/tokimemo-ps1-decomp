@@ -32,6 +32,15 @@ const ROLE_MANIFESTS := {"prologue_text":"manifest.json","first_arrival_media":"
 const GAMEPLAY_ROLES := ["rule_tables", "school_day_media", "spring_media", "weekday56_media", "club_media", "hud_manifest", "hud_context", "holiday_scene", "holiday_text", "date_preview", "opening_pack"]
 const MAX_FILES := 20000
 const MAX_TOTAL_BYTES := 1024 * 1024 * 1024
+## disc_pack (T-39303) is optional and large: its files count against these caps,
+## not MAX_FILES/MAX_TOTAL_BYTES. Over a cap the role is a recorded gap in
+## `optional_role_gaps`, never a profile failure. At launch only its manifest is
+## hashed and its files are size-checked; DiscPack hashes each file on read.
+const DISC_PACK_ROLE := "disc_pack"
+const DISC_PACK_MANIFEST := "disc_pack.json"
+const DISC_PACK_LOCATOR := "packs/disc_pack"
+const MAX_PACK_FILES := 4096
+const MAX_PACK_BYTES := 256 * 1024 * 1024
 
 ## Top-level directory of the optional language bundles (not inventoried).
 const LANGUAGE_DIR := "language"
@@ -43,9 +52,15 @@ static func read_pack(root: String, manifest: Dictionary) -> Dictionary:
 		return _failure("unsupported installed runtime profile")
 	if not manifest.get("source") is Dictionary or not manifest.source.get("executable_sha256") is String or manifest.source.executable_sha256 != EXE_SHA:
 		return _failure("installed runtime source release differs")
-	if not manifest.get("files") is Dictionary or manifest.files.is_empty() or manifest.files.size() > MAX_FILES or not manifest.get("roles") is Dictionary:
+	if not manifest.get("files") is Dictionary or manifest.files.is_empty() or manifest.files.size() > MAX_FILES + MAX_PACK_FILES or not manifest.get("roles") is Dictionary:
 		return _failure("installed runtime inventory is missing or outside bounds")
 	var files: Dictionary = manifest.files
+	var pack_prefix: String = ""
+	var pack_role: Variant = manifest.roles.get(DISC_PACK_ROLE)
+	# Only the canonical locator gets the pack rules, so no other role's files skip hashing.
+	if pack_role == DISC_PACK_LOCATOR:
+		pack_prefix = DISC_PACK_LOCATOR + "/"
+	var pack_gap: String = _pack_gap(files, pack_prefix)
 	var observed: Dictionary = {}
 	var pending: Array[String] = [""]
 	while not pending.is_empty():
@@ -62,10 +77,10 @@ static func read_pack(root: String, manifest: Dictionary) -> Dictionary:
 				return _failure("installed runtime contains a linked file")
 			if relative != "manifest.json":
 				observed[relative] = true
-			if observed.size() > MAX_FILES:
+			if observed.size() > MAX_FILES + MAX_PACK_FILES:
 				return _failure("installed runtime file count exceeds bounds")
 		for name: String in directory.get_directories():
-			if directory.is_link(name) or pending.size() >= MAX_FILES:
+			if directory.is_link(name) or pending.size() >= MAX_FILES + MAX_PACK_FILES:
 				return _failure("installed runtime contains linked or excessive directories")
 			# The optional language bundles (setup_content.py writes
 			# language/en) are outside the runtime inventory; their members
@@ -77,18 +92,34 @@ static func read_pack(root: String, manifest: Dictionary) -> Dictionary:
 	if observed.size() != files.size():
 		return _failure("installed runtime file inventory differs from disk")
 	var total: int = 0
+	var general_files: int = 0
 	for relative: Variant in files:
 		if not relative is String or not safe_relative(relative) or relative == "manifest.json":
 			return _failure("installed runtime inventory has an unsafe path")
+		var in_pack: bool = not pack_prefix.is_empty() and relative.begins_with(pack_prefix)
+		if not in_pack:
+			general_files += 1
+			if general_files > MAX_FILES:
+				return _failure("installed runtime file count exceeds bounds")
 		if not observed.has(relative):
 			return _failure("installed runtime inventory names a missing file")
 		var record: Variant = files[relative]
 		if not record is Dictionary or record.size() != 2 or not _integer(record.get("size")) or not _sha(record.get("sha256")):
 			return _failure("installed runtime file identity is malformed")
-		total += int(record.size)
-		if total > MAX_TOTAL_BYTES:
-			return _failure("installed runtime exceeds its total byte bound")
 		var path: String = root.path_join(relative)
+		if in_pack:
+			# Pack files: the manifest is hashed in full, the rest only size-checked
+			# (DiscPack hashes each file on read). A gapped pack is not inspected.
+			if not pack_gap.is_empty():
+				continue
+			if relative != pack_prefix + DISC_PACK_MANIFEST:
+				if not ExternalPath.is_external_file(path) or FileAccess.get_size(path) != int(record.size):
+					return _failure("installed runtime file is missing, linked, or changed: " + relative)
+				continue
+		else:
+			total += int(record.size)
+			if total > MAX_TOTAL_BYTES:
+				return _failure("installed runtime exceeds its total byte bound")
 		if not ExternalPath.is_external_file(path) or FileAccess.get_size(path) != int(record.size) or FileAccess.get_sha256(path) != record.sha256:
 			return _failure("installed runtime file is missing, linked, or changed: " + relative)
 	var paths: Dictionary = {}
@@ -99,6 +130,8 @@ static func read_pack(root: String, manifest: Dictionary) -> Dictionary:
 		if not role is String or role not in FILE_ROLES + DIR_ROLES or not manifest.roles[role] is String or not safe_relative(manifest.roles[role]):
 			return _failure("installed runtime has an unsupported role or locator")
 		var relative: String = manifest.roles[role]
+		if role == DISC_PACK_ROLE and not pack_gap.is_empty():
+			continue
 		if role in FILE_ROLES:
 			if not files.has(relative):
 				return _failure("installed runtime role lacks a file identity: " + role)
@@ -141,11 +174,31 @@ static func read_pack(root: String, manifest: Dictionary) -> Dictionary:
 	var missing_gameplay := missing_roles(paths, GAMEPLAY_ROLES)
 	return {"valid": true, "paths": paths, "available_capabilities": available,
 		"role_manifests":role_manifests,"file_identities":file_identities,"missing_opening_resource_roles":missing_opening,
+		"optional_role_gaps": {DISC_PACK_ROLE: pack_gap} if not pack_gap.is_empty() else {},
 		"installation_manifest_sha256":FileAccess.get_sha256(root.path_join("manifest.json")),
 		"unavailable_capabilities": [GAMEPLAY_CAP],
 		"missing_entry_roles": missing_entry, "missing_gameplay_roles": missing_gameplay,
 		"coverage": manifest.get("coverage", {}).duplicate(true) if manifest.get("coverage") is Dictionary else {},
 		"message": "", "profile_root": root}
+
+## Why the optional disc_pack role is dropped ("" when it is kept or absent): its
+## inventory is over its own caps or lacks its manifest.
+static func _pack_gap(files: Dictionary, prefix: String) -> String:
+	if prefix.is_empty():
+		return ""
+	var count: int = 0
+	var bytes: int = 0
+	for relative: Variant in files:
+		if relative is String and relative.begins_with(prefix):
+			count += 1
+			var record: Variant = files[relative]
+			if record is Dictionary and _integer(record.get("size")):
+				bytes += int(record.size)
+	if count == 0 or not files.has(prefix + DISC_PACK_MANIFEST):
+		return "disc_pack has no inventoried manifest"
+	if count > MAX_PACK_FILES or bytes > MAX_PACK_BYTES:
+		return "disc_pack inventory (%d files, %d bytes) exceeds its own bounds" % [count, bytes]
+	return ""
 
 static func missing_roles(paths: Dictionary, roles: Array) -> Array[String]:
 	var missing: Array[String] = []
