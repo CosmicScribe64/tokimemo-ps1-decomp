@@ -10,7 +10,7 @@
 set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 DATA=${TOKIMEMO_DATA_ROOT:-$(CDPATH= cd -- "$(git -C "$ROOT" rev-parse --git-common-dir)/.." && pwd)}
-docker run --rm --name "m2diff-$$" --cpus=4 \
+docker run --rm --name "${CONTAINER_PREFIX:-m2diff}-$$" --cpus=4 \
   -v "$ROOT/port/godot:/workspace" \
   -v "$ROOT/config/port/engine-diff:/specs:ro" \
   -v "$DATA/.asset-cache/m2-engine:/captures:ro" \
