@@ -48,8 +48,17 @@ func _test_registry() -> void:
 				_check(not engine.is_ported(String(unported)), "%s lists %s as unported but a module ports it" % [stem, unported])
 	_check(engine.memory.game_state().base == 0x800E6280, "the engine owns a GameMemory with the GameState at 0x800E6280")
 
+## These tests need a callee that nobody has ported (the refusal itself is under test). Every package that
+## lands ports some of the callees they used, so the facade is told to forget the function (T-39312: the
+## HUD package ported message_window_title_show).
+static func _unport(engine, names: Array) -> void:
+	for function_name: String in names:
+		engine._functions.erase(function_name)
+		engine._callables.erase(function_name)
+
 func _test_refusals() -> void:
 	var engine = GameEngine.new()
+	_unport(engine, ["message_window_title_show"])
 	var gs = engine.memory.game_state()
 	gs.set_field("mode_step", 5)
 	_check(engine.call_c("title_mode_handler") == 0 and engine.refusal.contains("title_mode_handler") \
@@ -119,6 +128,7 @@ func _test_function_table() -> void:
 
 func _test_freeze() -> void:
 	var engine = GameEngine.new()
+	_unport(engine, ["message_window_title_show"])
 	var gs = engine.memory.game_state()
 	gs.set_field("game_mode", 0x30)
 	gs.set_field("mode_step", 3)

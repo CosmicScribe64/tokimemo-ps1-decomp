@@ -13,6 +13,10 @@ var _made: Array = []
 ## Engines are shut down at the end of run() so the engine <-> module cycles are freed.
 func _new():
 	var engine = GameEngine.new()
+	# a callee nobody ported is replayed from the capture (T-39312 ported message_window_title_show: forget it here)
+	for function_name: String in ["message_window_title_show"]:
+		engine._functions.erase(function_name)
+		engine._callables.erase(function_name)
 	_made.append(engine)
 	return engine
 
