@@ -2652,3 +2652,15 @@ Merged `port/m1-game-memory` ([[tickets/T-39300-game-memory-model]]) into `port/
 - April loop route: IDENTICAL to the merge reference.
 
 At the first command select, 133 of 159 comparable GameState fields equal the emulator. The other 26 are engine-owned and are listed for [[tickets/T-39301-engine-api-core]] and [[tickets/T-39302-generic-ps1-renderer]]. The ticket stays In Progress until those fields are owned.
+
+## [2026-10-30] build | Generic PS1 renderer: DrawOTag capture and compare tooling
+
+`tools/emu/gpu_capture/` (`capture.lua`, `run.sh`, `extract.py`, `poison.py`, `capture_frame.sh`) records RAM and the GPU block of a save state before and after a chosen DrawOTag call in PCSX-Redux, and can resume the game over noise-filled frame buffers. Findings: DrawOTag is `func_8009CB9C`, the emulator runs the list synchronously, the draw area and offset come from the PutDrawEnv words libgpu keeps at `0x800DD5B8` (a loaded save state does not restore them), and the game draws with POLY_G4, FT4, GT4, TILE_1, SPRT, SPRT_16 and FILL only. [[tickets/T-39302-generic-ps1-renderer]], [[ps1-renderer]].
+
+## [2026-10-30] build | Generic PS1 renderer: model, extension, wrapper, tests
+
+`tools/port/native_render/gpu.hpp` (VRAM, GP0 decoder, ordering-table walk, rasterizer), `extension.cpp` (`OriginalGpu`), `port/godot/presentation/ps1_renderer.gd`, `port/godot/original_render.gdextension`. Build reproduces (two builds, SHA-256 `0a57ac81d162d27f961440110c7a30bd98a0ec75271175dcd899a2384c4642d8`). Tests in Docker: 35 C++ tests (512 checks, UBSan and ASan) and 161 Godot checks through the wrapper (`tools/port/run_render_tests.sh`). Nothing switched to the new renderer, the audio library is untouched. [[tickets/T-39302-generic-ps1-renderer]], [[ps1-renderer]].
+
+## [2026-10-30] build | Generic PS1 renderer matches the emulator on sampled frames
+
+29 frames from 28 save states (name entry, file select, prologue, command screen, school days, phone, events, VN scenes, saves) drawn from the RAM and VRAM before DrawOTag and compared with the emulator's VRAM after, on the real VRAM and again over noise-filled frame buffers: 52 of 58 comparisons exact over all 524,288 pixels, the other 6 (three phone frames) one pixel off by one 5-bit step. Two rules were fixed on the way: exact barycentric interpolation rounded to nearest (the plane version with truncated slopes missed 8 gradient pixels), and a dithered semi-transparent pixel blends at 8 bits and then dithers (3,008 pixels of one frame). A synthetic ordering table of invented primitives agreed except for scaled and rotated textures (830 pixels), lines (144), and texture flips (559, ignored by the emulator). [[tickets/T-39302-generic-ps1-renderer]], [[ps1-renderer]].
