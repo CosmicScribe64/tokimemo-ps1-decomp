@@ -117,13 +117,14 @@ static func apply_profile_full_name(mem: Memory) -> void:
 	full.resize(0x10)
 	mem.write_bytes(GS + Layout.GAME_STATE_PLAYER_FULL_NAME, full)
 
-## origin value flow/new_game_state_adapter.gd stores in `opening`: the state's core fields
-## and rule_state keys are sourced by the New Game route.
-const ADAPTER_ORIGIN_PREFIX: String = "source-fresh-no-card"
-
+## The adapter's ownership record: flow/new_game_state_adapter.gd stores `opening.unsourced`
+## and `opening.unread_before_owned_write` (the route's `opening.origin` changes later, e.g.
+## "interactive-entry-owned-state-v1", but the record stays). A state with them has its core
+## fields and rule_state keys sourced by the New Game route.
 static func built_by_adapter(state: Object) -> bool:
 	var opening: Variant = state.get("opening")
-	return opening is Dictionary and str(opening.get("origin", "")).begins_with(ADAPTER_ORIGIN_PREFIX)
+	return opening is Dictionary and opening.get("unsourced") is Dictionary \
+		and opening.get("unread_before_owned_write") is Array
 
 ## Fills `mem` (a fresh Memory when omitted; load the executable into it first when the
 ## installed one is available) for a New Game state: defaults, then the state's sourced
@@ -134,7 +135,7 @@ static func new_game_memory(state: Object, mem: Memory = null) -> Memory:
 	if mem == null:
 		mem = Memory.new()
 	if not built_by_adapter(state):
-		mem._fault("state was not built by the New Game adapter (opening.origin); its core fields are not sourced")
+		mem._fault("state was not built by the New Game adapter (opening.unsourced / unread_before_owned_write); its core fields are not sourced")
 		return mem
 	apply_game_state_init(mem)
 	apply_boot_settings_defaults(mem)

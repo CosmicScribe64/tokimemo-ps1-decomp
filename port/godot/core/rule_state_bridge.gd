@@ -98,7 +98,7 @@ static func push(state: Object, mem: Memory, with_core: bool = true) -> void:
 	var opening: Variant = state.get("opening")
 	if rule is Dictionary:
 		var view: Dictionary = rule.duplicate()
-		for key: String in unsourced_keys(state):
+		for key: String in _skipped_keys(state):
 			view.erase(key)
 		_push_rule_state(view, mem)
 	if opening is Dictionary:
@@ -122,7 +122,7 @@ static func pull(mem: Memory, state: Object) -> void:
 	var opening: Variant = state.get("opening")
 	if rule is Dictionary:
 		var kept: Dictionary = {}
-		for key: String in unsourced_keys(state):
+		for key: String in _skipped_keys(state):
 			if rule.has(key):
 				kept[key] = rule[key].duplicate(true) if rule[key] is Array else rule[key]
 		_pull_rule_state(mem, rule)
@@ -151,11 +151,22 @@ static func _placeholders(opening: Variant) -> Array:
 			out.append_array(opening["unsourced"].keys())
 	return out
 
-## Names of the placeholder keys that have a RAM home (for dump metadata).
+## Mapped keys of opening.unsourced (stored as placeholders): the dump metadata lists them so
+## the comparison reports their globals as unsourced.
 static func unsourced_keys(state: Object) -> Array:
 	var out: Array = []
+	var opening: Variant = state.get("opening")
+	if opening is Dictionary and opening.get("unsourced") is Dictionary:
+		for key: String in opening["unsourced"]:
+			if key in MAPPED_KEYS:
+				out.append(key)
+	return out
+
+## Mapped keys neither pushed nor pulled: the unsourced ones and unread_before_owned_write.
+static func _skipped_keys(state: Object) -> Array:
+	var out: Array = unsourced_keys(state)
 	for key: String in _placeholders(state.get("opening")):
-		if key in MAPPED_KEYS:
+		if key in MAPPED_KEYS and key not in out:
 			out.append(key)
 	return out
 

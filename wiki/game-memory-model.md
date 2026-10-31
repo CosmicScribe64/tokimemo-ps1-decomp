@@ -17,7 +17,7 @@ One 2 MiB RAM image with the original layout, so ported C reads and writes the f
 | `core/rule_state_bridge.gd` | `push(state, memory)` and `pull(memory, state)` for the 40 mapped `rule_state` keys, the core fields, and the `opening` fields that are GameState fields. `pull` assigns only values that differ at the C width. Port-only keys (`PORT_ONLY_KEYS`) have no RAM home and are untouched. Placeholder keys (`opening.unread_before_owned_write`) are neither pushed nor pulled. The frame loop does not call the bridge. |
 | `core/game_state_boot.gd` | The plain stores of `game_state_init`, `pad_defaults_set`, `boot_settings_defaults_set` and the full-name derivation of `name_entry_profile_store`, as stores into the memory. `new_game_memory(state)` applies defaults, then the bridge, then the derived names. |
 | `tools/port/compare_game_memory.py` | Field-by-field report of a port RAM dump against an emulator dump, by header field name. `config/port/game-memory-known-diffs.json` gives each remaining difference its reason and ticket. |
-| `port/godot/tests/support/game_memory_dump.gd` | Development dump of the memory at a route key; the playtest observer writes `<out>/game-memory/34-1-0-0.ram.bin` at the first command select. `run_dump_from_state.gd` rebuilds it from a route state file (`states/34-1-0-0.json`). |
+| `port/godot/tests/support/game_memory_dump.gd` | Development dump of the memory at a route key; the playtest observer writes `<out>/game-memory/34-1-0-0.ram.bin` and `.json` at the first command select when `TOKIMEMO_DUMP_GAME_MEMORY=1` is set (off by default). `run_dump_from_state.gd` rebuilds it from a route state file (`states/34-1-0-0.json`). |
 
 ## Using it
 

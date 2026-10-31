@@ -94,7 +94,8 @@ func _fixture() -> Dictionary:
 func _state() -> RouteState:
 	var state := RouteState.new()
 	state.rule_state = _fixture()
-	state.opening = {"icon_mode": 1, "icon_count": 14, "screen_brightness": 0x80, "origin": ORIGIN}
+	state.opening = {"icon_mode": 1, "icon_count": 14, "screen_brightness": 0x80, "origin": ORIGIN,
+		"unsourced": {}, "unread_before_owned_write": []}
 	state.game_mode = 0x34
 	state.mode_stage = 1
 	state.frame_count = 21333
@@ -257,12 +258,17 @@ func _test_unsourced_keys() -> void:
 	Bridge.pull(mem, state)
 	_check(JSON.stringify([state.rule_state["scene_work"], state.rule_state["background_cache"], state.rule_state["background_show"]]) == before, "unsourced keys are not pulled")
 	_check(Bridge.unsourced_keys(state) == ["scene_work", "background_cache", "background_show"], "unsourced_keys lists mapped keys only")
+	state.opening["unread_before_owned_write"] = ["last_picked_girl"]
+	_check(Bridge.unsourced_keys(state).size() == 3, "unread_before_owned_write keys are skipped but not reported unsourced")
 
 func _test_non_adapter_state() -> void:
 	var plain := RouteState.new()
 	plain.rule_state = _fixture()
 	var mem: Memory = Boot.new_game_memory(plain)
-	_check(mem.error.contains("not built by the New Game adapter"), "a state without the adapter's origin is refused")
+	_check(mem.error.contains("not built by the New Game adapter"), "a state without the adapter's ownership record is refused")
+	var later := _state()
+	later.opening["origin"] = "interactive-entry-owned-state-v1" # the live route renames the origin, the record stays
+	_check(Boot.new_game_memory(later).error.is_empty(), "the ownership record, not the origin string, marks an adapter state")
 	_check(mem.u8(0x800e6280 + 0x34) == 0 and mem.u8(0x800e6280 + 0x3e) == 0 and mem.u16(0x800e6280) == 0, "the refused memory is untouched")
 	# Bridge.push without the core fields keeps the C defaults a caller wrote.
 	var defaults := Memory.new()
