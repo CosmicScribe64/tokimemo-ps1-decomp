@@ -85,5 +85,34 @@ class PngTest(unittest.TestCase):
             self.assertFalse(os.path.exists(raw))
 
 
+class MemcardsTest(unittest.TestCase):
+    def test_run_local_copies_leave_source_unchanged(self):
+        with tempfile.TemporaryDirectory() as src, tempfile.TemporaryDirectory() as out:
+            for i, name in enumerate(("memcard1.mcd", "memcard2.mcd")):
+                open(os.path.join(src, name), "wb").write(bytes([i]) * 0x20000)
+            cards = emu.run_local_memcards(src, out)
+            self.assertEqual(cards, os.path.join(out, "cards"))
+            open(os.path.join(cards, "memcard1.mcd"), "r+b").write(b"MC")
+            emu.record_memcards_after(out)
+            self.assertEqual(open(os.path.join(src, "memcard1.mcd"), "rb").read(2), b"\0\0")
+            import json
+            record = json.load(open(os.path.join(out, "cards.json")))
+            one = record["cards"]["memcard1.mcd"]
+            self.assertNotEqual(one["source_sha256"], one["after_sha256"])
+            two = record["cards"]["memcard2.mcd"]
+            self.assertEqual(two["source_sha256"], two["after_sha256"])
+
+    def test_refuses_missing_or_wrong_size(self):
+        with tempfile.TemporaryDirectory() as src, tempfile.TemporaryDirectory() as out:
+            open(os.path.join(src, "memcard1.mcd"), "wb").write(b"\0" * 0x20000)
+            with self.assertRaises(SystemExit):
+                emu.run_local_memcards(src, out)
+        with tempfile.TemporaryDirectory() as src, tempfile.TemporaryDirectory() as out:
+            for name in ("memcard1.mcd", "memcard2.mcd"):
+                open(os.path.join(src, name), "wb").write(b"\0" * 16)
+            with self.assertRaises(SystemExit):
+                emu.run_local_memcards(src, out)
+
+
 if __name__ == "__main__":
     unittest.main()

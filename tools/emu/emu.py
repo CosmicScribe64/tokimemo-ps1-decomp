@@ -628,11 +628,46 @@ def prepare_emulator_cue(source, out):
     return target
 
 
+def run_local_memcards(source, out):
+    """Copy memcard1.mcd and memcard2.mcd from SOURCE into OUT/cards for this run only, so a
+    run never changes the shared build/emu cards or a frozen golden. The source hashes and,
+    after the run, the hashes of the copies (what the original wrote) go to cards.json."""
+    source = os.path.abspath(source)
+    target = os.path.join(out, "cards")
+    os.makedirs(target, exist_ok=False)
+    record = {"source": source, "cards": {}}
+    for name in ("memcard1.mcd", "memcard2.mcd"):
+        path = os.path.join(source, name)
+        if not os.path.isfile(path):
+            die("--memcards: %s is missing" % path)
+        data = open(path, "rb").read()
+        if len(data) != 0x20000:
+            die("--memcards: %s is not a 128 KiB card image" % path)
+        with open(os.path.join(target, name), "xb") as copy:
+            copy.write(data)
+        record["cards"][name] = {"source_sha256": hashlib.sha256(data).hexdigest()}
+    json.dump(record, open(os.path.join(out, "cards.json"), "x"), indent=2)
+    return target
+
+
+def record_memcards_after(out):
+    path = os.path.join(out, "cards.json")
+    if not os.path.exists(path):
+        return
+    record = json.load(open(path))
+    for name in record["cards"]:
+        data = open(os.path.join(out, "cards", name), "rb").read()
+        record["cards"][name]["after_sha256"] = hashlib.sha256(data).hexdigest()
+    json.dump(record, open(path, "w"), indent=2)
+
+
 def run_emulator(args, job, out, extra=()):
     lua = "JOB = %s\n" % lua_value(job) + open(os.path.join(os.path.dirname(__file__), "emu.lua")).read()
     job_path = os.path.join(out, "job.lua")
     open(job_path, "w").write(lua)
     cards = os.path.join(ROOT, "build/emu")
+    if getattr(args, "memcards", None):
+        cards = run_local_memcards(args.memcards, out)
     cmd = [REDUX, "-no-ui", "-stdout", "-lua_stdout", "-run", "-interpreter", "-debugger", "-bios", BIOS,
            "-iso", prepare_emulator_cue(find_iso(args), out), "-memcard1", os.path.join(cards, "memcard1.mcd"),
            "-memcard2", os.path.join(cards, "memcard2.mcd"), "-dofile", job_path] + list(extra)
@@ -645,6 +680,7 @@ def run_emulator(args, job, out, extra=()):
                                 stderr=subprocess.STDOUT, timeout=args.timeout).returncode
         except subprocess.TimeoutExpired:
             rc = "timeout"
+    record_memcards_after(out)
     print("emulator exit %s in %.0f s (log %s)" % (rc, time.time() - t0, os.path.relpath(log_path, ROOT)))
     result = os.path.join(out, "result.json")
     if not os.path.exists(result):
@@ -725,6 +761,9 @@ def main():
     p.add_argument("--state", help="load this save state at the start")
     p.add_argument("--save-state", help="write a save state when the run stops")
     p.add_argument("--ram-dump", action="store_true", help="save the 2 MB RAM when the run stops")
+    p.add_argument("--memcards", metavar="DIR",
+                   help="use run-local copies of DIR/memcard1.mcd and memcard2.mcd (OUT/cards) instead of "
+                        "the shared build/emu cards; hashes before and after go to OUT/cards.json")
     p.add_argument("--iso", help="disc image (default: disc/*.cue)")
     p.add_argument("--out", help="output directory (default build/emu/<cmd>-<time>)")
     p.add_argument("--timeout", type=int, help="wall-clock limit in seconds (default 900; gdb: none)")

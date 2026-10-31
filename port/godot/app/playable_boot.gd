@@ -1148,7 +1148,8 @@ func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> vo
 		if not (current.rule_state.get("overlay_state") is Dictionary) or (current.rule_state["overlay_state"] as Dictionary).is_empty():
 			var active_od: OverlayDispatcher = overlay_dispatcher if overlay_dispatcher != null else (controller.overlay_dispatcher if controller != null else null)
 			if active_od != null:
-				current.rule_state["overlay_state"] = active_od.init_overlay(current.game_mode, current.rule_state)
+				current.rule_state["overlay_state"] = active_od.init_overlay(current.game_mode, current.rule_state, [], _rng)
+				result.error = String(current.rule_state["overlay_state"].get("error", ""))
 		return
 	if current.game_mode in [0x46, 0x50] or (holiday_scene != null and holiday_scene.handles(current)):
 		if holiday_scene == null:

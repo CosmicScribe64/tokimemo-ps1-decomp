@@ -892,11 +892,12 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 	return out
 
 
-func init_overlay(mode: int, rule_state: Dictionary = {}, event: Array = [], _rng: Variant = null) -> Dictionary:
+func init_overlay(mode: int, rule_state: Dictionary = {}, event: Array = [], rng: Variant = null) -> Dictionary:
 	var event_opcode: int = int(event[0]) if not event.is_empty() else -1
 	var disp_mode: int = DayEventModes.dispatcher_mode_for(mode, event_opcode)
 	if disp_mode == GAME_MODE_ENDING or mode == EndingOverlay.GAME_MODE_ENDING:
-		var seq: Dictionary = EndingOverlay.create_graduation_sequence(rule_state)
+		# A refused draw or gate keeps its error; step_overlay then fails closed.
+		var seq: Dictionary = EndingOverlay.create_graduation_sequence(rule_state, EndingOverlay.native_rand(rng))
 		seq["mode"] = mode
 		seq["dispatcher_mode"] = GAME_MODE_ENDING
 		seq["event_opcode"] = event_opcode
@@ -947,6 +948,8 @@ static func _ending_step_out(mode: int, next_seq: Dictionary) -> Dictionary:
 			"clear_save_completed": bool(next_seq.get("clear_save_completed", false)),
 			"album_clear_mask": int(next_seq.get("album_clear_mask", 0)),
 			"clear_name_slot": bool(next_seq.get("clear_name_slot", false)),
+			"system_flag_or": int(next_seq.get("system_flag_or", 0)),
+			"gate_next_mode_stage": int(next_seq.get("gate_next_mode_stage", -1)),
 		}
 	next_seq["deltas"] = ending_deltas
 	return {
@@ -975,6 +978,9 @@ func step_overlay(mode: int, overlay_state: Dictionary, pad_pressed: int, rule_s
 	if current_state.is_empty():
 		current_state = init_overlay(mode, rule_state, [], rng)
 		disp_mode = int(current_state.get("dispatcher_mode", disp_mode))
+	# A graduation sequence whose draw or gate was refused never waits for input.
+	if not String(current_state.get("error", "")).is_empty() and (disp_mode == GAME_MODE_ENDING or mode == EndingOverlay.GAME_MODE_ENDING):
+		return _production_rejection(mode, GAME_MODE_ENDING, current_state, String(current_state["error"]))
 
 	# Interactive menu/VN overlays wait for explicit player input; real-time action subgames (TACO, TT) step frames without auto-completing.
 	if pad_pressed == 0 and disp_mode not in [GAME_MODE_TACO, GAME_MODE_TT]:
@@ -990,7 +996,10 @@ func step_overlay(mode: int, overlay_state: Dictionary, pad_pressed: int, rule_s
 		}
 
 	if disp_mode == GAME_MODE_ENDING or mode == EndingOverlay.GAME_MODE_ENDING or mode == EndingOverlay.GAME_MODE_ETC_C2:
-		return _ending_step_out(mode, EndingOverlay.step_graduation_sequence(current_state, pad_pressed, rule_state))
+		var stepped: Dictionary = EndingOverlay.step_graduation_sequence(current_state, pad_pressed, rule_state, EndingOverlay.native_rand(rng))
+		if not String(stepped.get("error", "")).is_empty():
+			return _production_rejection(mode, GAME_MODE_ENDING, current_state, String(stepped["error"]))
+		return _ending_step_out(mode, stepped)
 
 	if not rule_state.is_empty():
 		if disp_mode == GAME_MODE_BUNKASAI:

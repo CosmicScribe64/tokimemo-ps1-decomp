@@ -430,14 +430,26 @@ func _verify_ending_and_clear_album_matrix() -> void:
 		)
 		_check(int(h_sel["current_girl"]) == h_id and int(h_sel["best_points"]) >= 500, "EndingOverlay selects heroine %d with %d points" % [h_id, int(h_sel["best_points"])])
 		var gate_pass: Dictionary = EndingOverlay.evaluate_candidate_flag_gate(h_id, h_girls)
-		_check(bool(gate_pass["passed_gate"]) and int(gate_pass["redirected_girl"]) == h_id, "Heroine %d passes candidate flag gate when b26 is set" % h_id)
+		_check(bool(gate_pass["passed_gate"]) and int(gate_pass["redirected_girl"]) == h_id and int(gate_pass["system_flag_or"]) == 4, "Heroine %d advances one step at the candidate flag gate" % h_id)
 		album_clear_mask |= (1 << h_id)
 
-	# Verify b26 flag gate redirection to Yoshio (13) when b26 is cleared for Mio (1)
+	# ending_candidate_flag_gate (graduation_candidate_selection.c:130-138): a
+	# heroine is never redirected; Yoshio goes to stage 7 while girls[14]
+	# flag bits 9..11 are below 3, and advances otherwise.
 	var unflagged_girls: Array = girls.duplicate(true)
 	unflagged_girls[1]["flags"] = 0
-	var gate_fail: Dictionary = EndingOverlay.evaluate_candidate_flag_gate(1, unflagged_girls)
-	_check(not bool(gate_fail["passed_gate"]) and int(gate_fail["redirected_girl"]) == EndingOverlay.GIRL_YOSHIO, "Unflagged heroine redirects to GIRL_YOSHIO (13) at candidate flag gate")
+	var heroine_gate: Dictionary = EndingOverlay.evaluate_candidate_flag_gate(1, unflagged_girls)
+	_check(bool(heroine_gate["passed_gate"]) and int(heroine_gate["redirected_girl"]) == 1, "Heroine with any flags is not redirected at candidate flag gate")
+	var gate_girls: Array = []
+	for i: int in 15:
+		gate_girls.append({"flags": 0})
+	var yoshio_low: Dictionary = EndingOverlay.evaluate_candidate_flag_gate(EndingOverlay.GIRL_YOSHIO, gate_girls)
+	_check(int(yoshio_low["next_mode_stage"]) == 7 and int(yoshio_low["system_flag_or"]) == 8, "Yoshio with girls[14] bits 9..11 below 3 goes to stage 7")
+	gate_girls[14]["flags"] = 3 << 9
+	var yoshio_high: Dictionary = EndingOverlay.evaluate_candidate_flag_gate(EndingOverlay.GIRL_YOSHIO, gate_girls)
+	_check(int(yoshio_high["next_mode_stage"]) == -1 and int(yoshio_high["system_flag_or"]) == 4, "Yoshio with girls[14] bits 9..11 at 3 advances one step")
+	var no_record: Dictionary = EndingOverlay.evaluate_candidate_flag_gate(EndingOverlay.GIRL_YOSHIO, [])
+	_check(not String(no_record["error"]).is_empty(), "Yoshio gate refuses a missing girls[14] flag word")
 
 	# 3. Miharu Tatebayashi (11) confession eligibility via story_stage & ENDING_MIHARU_CHANCE_BY_LEVEL
 	var miharu_girls: Array = girls.duplicate(true)

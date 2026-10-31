@@ -221,6 +221,10 @@ func _overlay_mode(base: CoreState, input: InputFrame, rng: Rng, result: Session
 	if ovl_state.is_empty() or int(ovl_state.get("mode", -1)) != mode:
 		ovl_state = overlay_dispatcher.init_overlay(mode, data, event, rng)
 		data["overlay_state"] = ovl_state
+		if not String(ovl_state.get("error", "")).is_empty():
+			# Fail closed; the stored state keeps the refusal, so no second draw.
+			result.error = ovl_state["error"]
+			return
 		if input.pressed == 0:
 			result.presentation.append({
 				"kind": "overlay_mode",

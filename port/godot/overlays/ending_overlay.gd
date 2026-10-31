@@ -275,7 +275,7 @@ static func select_graduation_candidate(
 	girls: Array,
 	points_by_girl: Array,
 	scene_flags: Array,
-	rand_mod_256: int = 0
+	rand_mod_256: Variant = null
 ) -> Dictionary:
 	# Mirrors ending_graduation_candidate_select
 	# (src/ovl/ending/graduation_candidate_selection.c:43-89).
@@ -301,6 +301,8 @@ static func select_graduation_candidate(
 
 	var miharu_chance_level: int = 0
 	var miharu_threshold: int = 0
+	var rand_error: String = ""
+	var rand_drawn: bool = false
 	if current_girl == GIRL_YOSHIO and girls.size() > GIRL_MIHARU:
 		var miharu_girl: Dictionary = girls[GIRL_MIHARU]
 		var story_stage: int = int(miharu_girl.get("story_stage", 0)) & 0xF
@@ -315,8 +317,16 @@ static func select_graduation_candidate(
 		if miharu_chance_level >= 18:
 			miharu_chance_level = 17
 		miharu_threshold = ENDING_MIHARU_CHANCE_BY_LEVEL[miharu_chance_level]
-		if story_stage != 0 and flag_4d == 0 and (rand_mod_256 % 256) < miharu_threshold:
-			current_girl = GIRL_MIHARU
+		# rand() is called only here, on its source condition. A Callable is the
+		# native rand (called once); an int is a value already drawn. Without
+		# either the draw is refused, never assumed to be 0.
+		if story_stage != 0 and flag_4d == 0:
+			var drawn: Variant = rand_mod_256.call() if rand_mod_256 is Callable else rand_mod_256
+			rand_drawn = drawn is int
+			if not drawn is int:
+				rand_error = "ending_graduation_candidate_select needs rand() for the Miharu chance"
+			elif (int(drawn) % 256) < miharu_threshold:
+				current_girl = GIRL_MIHARU
 
 	return {
 		"current_girl": current_girl,
@@ -327,26 +337,29 @@ static func select_graduation_candidate(
 		"weekday": 0, # WEEKDAY_SUNDAY
 		"miharu_chance_level": miharu_chance_level,
 		"miharu_threshold": miharu_threshold,
+		"rand_drawn": rand_drawn,
+		"rand_error": rand_error,
 	}
 
 
 static func evaluate_candidate_flag_gate(current_girl: int, girls: Array) -> Dictionary:
 	# Mirrors ending_candidate_flag_gate
-	# (src/ovl/ending/graduation_candidate_selection.c:91-125).
-	if current_girl in [GIRL_MIO, GIRL_YUINA, GIRL_AYAKO, GIRL_SAKI, GIRL_NOZOMI, GIRL_MIRA, GIRL_YUKO, GIRL_YUMI]:
-		var g: Dictionary = girls[current_girl] if current_girl < girls.size() else {}
-		var b26: bool = (int(g.get("flags", 0)) & (1 << 26)) != 0
-		if not b26:
-			return {
-				"passed_gate": false,
-				"redirected_girl": GIRL_YOSHIO,
-				"next_mode_step": 0xE,
-			}
-	return {
-		"passed_gate": true,
-		"redirected_girl": current_girl,
-		"next_mode_step": -1,
-	}
+	# (src/ovl/ENDING/graduation_candidate_selection.c:130-138). The gate never
+	# changes current_girl. A candidate of Yoshio (13) or above whose
+	# girls[14] flag word has bits 9..11 below 3 goes to mode stage 7 and sets
+	# bit 3 of D_800E7D34 (system_data +0x24, karaoke_unlock_bits[0]); every
+	# other candidate advances one step and sets bit 2. girls[14] must carry
+	# its source flag word when the first test holds; it is never defaulted.
+	if (current_girl & 0xFF) >= GIRL_YOSHIO:
+		var record: Variant = girls[14] if girls.size() > 14 else null
+		if not record is Dictionary or not (record as Dictionary).get("flags") is int:
+			return {"error": "ending_candidate_flag_gate needs girls[14].flags", "passed_gate": false,
+				"redirected_girl": current_girl, "next_mode_stage": -1, "system_flag_or": 0}
+		if (((record as Dictionary).flags >> 9) & 7) < 3:
+			return {"error": "", "passed_gate": false, "redirected_girl": current_girl,
+				"next_mode_stage": 7, "system_flag_or": 8}
+	return {"error": "", "passed_gate": true, "redirected_girl": current_girl,
+		"next_mode_stage": -1, "system_flag_or": 4}
 
 
 static func select_graduation_result_dialogue(
@@ -474,7 +487,7 @@ static func evaluate_confession_candidates(
 	stress_value: int = 0,
 	health_low_nibble: int = 0,
 	scene_flags: Array = [],
-	rand_mod_256: int = 0
+	rand_mod_256: Variant = null
 ) -> Dictionary:
 	# Pure PS1 graduation eligibility evaluation (src/ovl/ending/graduation_candidate_selection.c).
 	# Never fabricates affection; returns GIRL_YOSHIO (13) when no heroine qualifies.
@@ -503,7 +516,15 @@ static func evaluate_confession_candidates(
 		eval_girls, scores["points_by_girl"], eff_scene_flags, rand_mod_256
 	)
 	var candidate_girl: int = int(sel["current_girl"])
-	var gate: Dictionary = evaluate_candidate_flag_gate(candidate_girl, eval_girls)
+	# The gate reads girls[14] (never normalised above); take the caller's record.
+	var gate_girls: Array = eval_girls.duplicate()
+	var raw_girls: Variant = state_or_girls.get("girls") if state_or_girls is Dictionary else state_or_girls
+	if raw_girls is Array and (raw_girls as Array).size() > 14:
+		while gate_girls.size() < 14:
+			gate_girls.append({})
+		gate_girls.resize(14)
+		gate_girls.append((raw_girls as Array)[14])
+	var gate: Dictionary = evaluate_candidate_flag_gate(candidate_girl, gate_girls)
 	var final_girl: int = int(gate["redirected_girl"])
 	var eligible: bool = final_girl >= 0 and final_girl < GIRL_YOSHIO
 	var phases: Array = (
@@ -517,6 +538,8 @@ static func evaluate_confession_candidates(
 		"current_girl": final_girl,
 		"candidate_before_gate": candidate_girl,
 		"passed_flag_gate": bool(gate["passed_gate"]),
+		"flag_gate": gate,
+		"rand_error": String(sel["rand_error"]),
 		"best_points": int(sel["best_points"]),
 		"points_by_girl": scores["points_by_girl"],
 		"closeness_by_girl": scores["closeness_by_girl"],
@@ -525,8 +548,28 @@ static func evaluate_confession_candidates(
 	}
 
 
-static func create_graduation_sequence(state_or_girls: Variant, rand_mod_256: int = 0) -> Dictionary:
+## Wraps the native BIOS rand for select_graduation_candidate: one draw per
+## call under the source caller id; a refused draw (-1) becomes null so the
+## selection refuses instead of using a value.
+static func native_rand(rng: Variant) -> Variant:
+	if rng == null or not rng.has_method("next"):
+		return null
+	return func() -> Variant:
+		var v: int = rng.next("ending_graduation_candidate_select")
+		return v if v >= 0 else null
+
+
+## Builds the graduation sequence. A refused Miharu draw (no native rand) or a
+## refused flag gate (no girls[14] flag word) returns {error, phases: []}: the
+## candidate is then undecided, so no ending is chosen. The gate's source side
+## effects (mode_stage_set(7) or mode_step_next, D_800E7D34 |= 8 or 4) are
+## carried as gate_next_mode_stage and system_flag_or.
+static func create_graduation_sequence(state_or_girls: Variant, rand_mod_256: Variant = null) -> Dictionary:
 	var eval_res: Dictionary = evaluate_confession_candidates(state_or_girls, [], 0, 0, [], rand_mod_256)
+	var gate: Dictionary = eval_res["flag_gate"]
+	for reason: String in [String(eval_res["rand_error"]), String(gate["error"])]:
+		if not reason.is_empty():
+			return {"error": reason, "phases": [], "completed": false, "action": "rejected"}
 	var eligible: bool = bool(eval_res["eligible"])
 	var current_girl: int = int(eval_res["current_girl"])
 	var phases: Array = eval_res["phases"].duplicate()
@@ -538,6 +581,8 @@ static func create_graduation_sequence(state_or_girls: Variant, rand_mod_256: in
 		"confessed_girl": current_girl,
 		"best_points": int(eval_res["best_points"]),
 		"ending_type": String(eval_res["ending_type"]),
+		"gate_next_mode_stage": int(gate["next_mode_stage"]),
+		"system_flag_or": int(gate["system_flag_or"]),
 		"phases": phases,
 		"phase_index": 0,
 		"phase": first_phase,
@@ -690,10 +735,16 @@ static func _step_clear_save(s: Dictionary, pad_pressed: int) -> Dictionary:
 	return s
 
 
-static func step_graduation_sequence(seq_state: Dictionary, pad_pressed: int, rule_state: Dictionary = {}) -> Dictionary:
+static func step_graduation_sequence(seq_state: Dictionary, pad_pressed: int, rule_state: Dictionary = {}, rand_mod_256: Variant = null) -> Dictionary:
 	var s: Dictionary = seq_state.duplicate(true)
+	if not String(s.get("error", "")).is_empty():
+		s["completed"] = false
+		s["action"] = "rejected"
+		return s
 	if not s.has("phases") or not (s["phases"] is Array) or (s["phases"] as Array).is_empty():
-		var init_seq: Dictionary = create_graduation_sequence(rule_state if not rule_state.is_empty() else s)
+		var init_seq: Dictionary = create_graduation_sequence(rule_state if not rule_state.is_empty() else s, rand_mod_256)
+		if not String(init_seq.get("error", "")).is_empty():
+			return init_seq
 		for k: String in init_seq.keys():
 			if not s.has(k):
 				s[k] = init_seq[k]
