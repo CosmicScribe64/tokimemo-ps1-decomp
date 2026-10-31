@@ -2625,3 +2625,12 @@ Opened [[tickets/T-39300-game-memory-model]] (M1, In Progress), plus [[tickets/T
 ## [2026-10-30] build | Merge verified on the actual loop route
 
 On the merged tree, the April loop route (playtest, fast, bundle-r3-holiday, candidate library bfb36a4c) stops where round 3 did: the May rollover at frame 16694. Against `routes/r3-03`, the playtest record, states and transitions are identical, and all 150 shared native PNGs match. The route ran at 39 frames/s.
+
+## [2026-10-30] build | Game memory model layout generator
+
+`tools/port/gen_game_memory.py` generates `port/godot/core/game_layout.gd` (GameState 0x1A90, SystemData, 1,000+ gameplay globals) from the C headers and checks all offset and size comments; `tools/port/test_gen_game_memory.py` guards it. [[tickets/T-39300-game-memory-model]], [[game-memory-model]].
+
+## [2026-10-30] build | Game memory model, bridge and comparison
+
+`port/godot/core/game_memory.gd` (2 MiB, typed views, installed-executable loader), `core/rule_state_bridge.gd`, `core/game_state_boot.gd` and `tools/port/compare_game_memory.py` added. Both route gates unchanged: opening frame timing `pad 2, 104 substeps, 6709 frames to 12/0/0, 0 mismatches`; April loop route IDENTICAL against `.asset-cache/merge-pending-2026-10-30/loop-route-fast`. At 0x34/1/0/0, 133 of 159 comparable GameState fields equal the emulator's RAM; the rest are listed in `config/port/game-memory-known-diffs.json`. [[tickets/T-39300-game-memory-model]], [[game-memory-model]].
+
