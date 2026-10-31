@@ -4,89 +4,312 @@
    "exclude": [
     {
      "start": "0x800084CC",
-     "length": 27,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "length": 3,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800084E4",
+     "length": 3,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x80009370",
-     "length": 129,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "length": 73,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800093C8",
+     "length": 5,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800093DC",
+     "length": 1,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800093E4",
+     "length": 7,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800093F0",
+     "length": 1,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x800E33D8",
-     "length": 111,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "length": 1,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E33E0",
+     "length": 1,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E3410",
+     "length": 11,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E343C",
+     "length": 11,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x800E35E0",
      "length": 1,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x800E5B56",
-     "length": 554,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5B6E",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5B86",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5B98",
+     "length": 8,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5BAF",
+     "length": 1,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5BB6",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5BCE",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5BE6",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5BFE",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5C2E",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5C46",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5C58",
+     "length": 8,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5C6F",
+     "length": 1,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5C8E",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5CA6",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5CD6",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5CEE",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5D06",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5D1E",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5D30",
+     "length": 8,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5D47",
+     "length": 1,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5D4E",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5D66",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E5D7E",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x800E5F48",
      "length": 4,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x800E6041",
-     "length": 38,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "length": 13,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E6060",
+     "length": 7,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x800E60F8",
      "length": 1,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x800E7374",
      "length": 1,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x800E74BC",
      "length": 20,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x800E75A8",
      "length": 7,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x800E76A8",
-     "length": 79,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "length": 7,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E76BC",
+     "length": 3,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E76CC",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E76DC",
+     "length": 3,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E76E6",
+     "length": 1,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E76EC",
+     "length": 3,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x800E76F6",
+     "length": 1,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x800E7D10",
      "length": 3,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x8011F50D",
-     "length": 67,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there; the range holds the portrait actors 30 and 31 (actor_pool + 30 * 0x44), which portrait_build rewrites, so the port computes it itself (portrait_build has its own passing hits)",
+     "length": 18,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls); actor 31 (the portrait actor) is rewritten by portrait_build, so the port computes these fields itself",
+     "port": "free"
+    },
+    {
+     "start": "0x8011F536",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls); actor 31 (the portrait actor) is rewritten by portrait_build, so the port computes these fields itself",
+     "port": "free"
+    },
+    {
+     "start": "0x8011F540",
+     "length": 8,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls); actor 31 (the portrait actor) is rewritten by portrait_build, so the port computes these fields itself",
+     "port": "free"
+    },
+    {
+     "start": "0x8011F54F",
+     "length": 1,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls); actor 31 (the portrait actor) is rewritten by portrait_build, so the port computes these fields itself",
      "port": "free"
     },
     {
      "start": "0x80125E74",
      "length": 1,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x80125EF0",
-     "length": 10,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x80125EF8",
+     "length": 2,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     },
     {
      "start": "0x80129592",
-     "length": 71,
-     "reason": "the function runs cd_file_checksum_ok over a whole file (thousands of cycles), so the original's vertical-blank and CD/SPU interrupt handlers run inside the call and change the sound driver, libcd/SDK state and flag bytes here (listed from the pre_diff of the captured callee calls); the model has no interrupts and the port must not write there"
+     "length": 3,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x801295AA",
+     "length": 3,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
+    },
+    {
+     "start": "0x801295D8",
+     "length": 1,
+     "reason": "the original's vertical-blank, CD and SPU interrupt handlers ran inside cd_file_checksum_ok (a whole-file checksum) and changed these bytes before the first callee call (the pre_diff of the captured callee calls)"
     }
    ]
   }

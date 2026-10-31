@@ -14,39 +14,43 @@
   "wpb-d2",
   "wpb-e2"
  ],
- "exclude": [
-  {
-   "start": "0x80000000",
-   "length": 65536,
-   "reason": "BIOS/kernel RAM (OpenBIOS handlers, event and thread tables): interrupt handlers change it asynchronously while a function runs; the port never writes below 0x80010000"
-  },
-  {
-   "start": "0x800E5B10",
-   "length": 64,
-   "reason": "SDK counters bumped by the vertical-blank interrupt while the function runs"
-  },
-  {
-   "start": "0x800DC600",
-   "length": 80,
-   "reason": "libcd internal state (command, callback and result bookkeeping) updated by the CD interrupt while the function runs"
-  },
-  {
-   "start": "0x800DC8F0",
-   "length": 48,
-   "reason": "libcd internal state (command, callback and result bookkeeping) updated by the CD interrupt while the function runs"
-  },
-  {
-   "start": "0x800E3490",
-   "length": 112,
-   "reason": "libcd internal state (command, callback and result bookkeeping) updated by the CD interrupt while the function runs"
+ "exclude": [],
+ "functions": {
+  "message_window_title_update": {
+   "exclude": [
+    {
+     "start": "0x80000000",
+     "length": 65536,
+     "reason": "BIOS/kernel RAM (OpenBIOS exception and thread tables): in 4 of 16 captured hits a vertical-blank interrupt fell inside the call and the BIOS handler changed it; the port never writes below 0x80010000"
+    },
+    {
+     "start": "0x800DC630",
+     "length": 1,
+     "reason": "libcd internal state byte changed by the CD interrupt during the call"
+    },
+    {
+     "start": "0x800DC8FD",
+     "length": 1,
+     "reason": "libcd internal state byte changed by the CD interrupt during the call"
+    },
+    {
+     "start": "0x800E34B0",
+     "length": 1,
+     "reason": "libcd internal state byte changed by the CD interrupt during the call"
+    },
+    {
+     "start": "0x800E5B10",
+     "length": 1,
+     "reason": "SDK counter bumped by the vertical-blank interrupt during the call"
+    }
+   ]
   }
- ],
- "functions": {},
+ },
  "untested": {
-  "portrait_hide": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
-  "bustup_speech": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
-  "hud_icon_move_allowed": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check either: the body is the mechanical translation of the C that no capture or test exercised (see the ticket notes)",
-  "hud_summer_phase": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); hand check in tests/engine/hud_panels_test.gd",
-  "hud_season_bgm_load": "not reached from any sampled state (route-golden school day, birthday event, title, prologue, phone book); no hand check either: the body is the mechanical translation of the C that no capture or test exercised (see the ticket notes)"
+  "portrait_hide": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/hud_panels_test.gd",
+  "bustup_speech": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/hud_panels_test.gd",
+  "hud_icon_move_allowed": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); no hand check either: the body is the mechanical translation of the C that no capture or test exercised (see the ticket notes)",
+  "hud_summer_phase": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); hand check in tests/engine/hud_panels_test.gd",
+  "hud_season_bgm_load": "not reached from any sampled state (school day, events, phone, title, prologue, seasonal event days); no hand check either: the body is the mechanical translation of the C that no capture or test exercised (see the ticket notes)"
  }
 }
