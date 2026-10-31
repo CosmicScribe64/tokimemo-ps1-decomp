@@ -2708,3 +2708,19 @@ All 8 functions of `src/main/game_mode.c` (`engine/game_mode.gd`), 23 of `src/ma
 ## [2026-10-30] build | Engine base review fixes (T-39301)
 
 Applied the independent review of `port/m2-engine-base`: memory freeze on refusal and fault, loop lint, argument-count and return narrowing in `call_c`, signature check against the C, frame sizes owned by `call_c` (generated from the asm), one-sided exclusions and allowance-bound `not_comparable`, callee stack arguments and pointer bytes in captures, coverage tracing, name/address table with function-pointer dispatch, libc layer, shared measured CD table, cached accessors and `engine.shutdown()`. Details in the ticket comment and [[engine-porting-contract]]. Captures were redone under `.asset-cache/m2-engine/` (`gm2-*`, `cd2-*`, `libc-*`).
+
+## [2026-10-30] build | Engine base merged; engine work packages A-C started
+
+Merged the engine base for [[tickets/T-39301-engine-api-core]]. It adds:
+- the facade and [[engine-porting-contract]];
+- the function-differential harness;
+- ports of `game_mode.c`, `cd_queue.c`, part of `reset_iris_wipe.c`, and libc.
+
+An independent review found the ported logic faithful line by line, and found pattern holes. All are fixed:
+- RAM and services freeze on any refusal or fault;
+- `call_c` refuses on an arity mismatch, narrows returns and owns the stack frames, taken from a generated table;
+- harness exclusions are one-sided, and a function with nothing compared fails;
+- callee stack arguments are compared, and coverage is reported;
+- a function-pointer table, a loop lint and cached accessors were added.
+
+Root reran the core suite (11 suites pass) and `run_engine_diff.sh --all` (PASS). Started file-disjoint packages [[tickets/T-39311-engine-draw-core]], [[tickets/T-39312-engine-scene-hud]] and [[tickets/T-39313-engine-menus-memcard]]. Packages D (mode screens) and E (system, boot, audio driver) come later.
