@@ -2890,3 +2890,7 @@ Round 3 on [[tickets/T-39411-menus-art-fixes]]: the birthday page (`name-panel-0
 ## [2026-11-01] ticket | BS stills third pass: reviewer nits (T-39412)
 
 On [[tickets/T-39412-bs-stills-art-fixes]], in place in `translations/en/graphics/artwork/checkpoints/T39410-stills-fixes-v1/`: monument remnant of 市 left of CENTRAL erased and refilled smooth; LOVELY SHOP 3 px clear at both ends; gate plate letters enlarged to cap 13.5 (at least 6.7 px from every plate edge) with A-T / V-A kerning; P_01_03 sky streaks at the left edge refilled smooth (`smooth` erase key). Changed crops: monument, maiko board, gate plate, roster. `translation_inventory.json` not regenerated (its matches-inputs test fails until the integrator rebuilds it); stills and signs tests 61 OK.
+
+## [2026-11-01] ticket | Merge the third art fix round; art review all clear
+
+Merged the round-3 fixes of [[tickets/T-39410-mainrom-art-fixes]] (the 0144 "Wrestling" t), [[tickets/T-39411-menus-art-fixes]] (birthday grid headers "Month" / "Day") and [[tickets/T-39412-bs-stills-art-fixes]] (monument remnant, LOVELY SHOP margins, larger gate lettering, smoothed roster sky) and regenerated the inventory (272 items: 52 reviewed, 192 drafts, 1 missing, 27 untranslated). The third independent review left one should-fix, the 0144 t, now fixed and checked at 1x and 3x; no must-fix or should-fix remains. Translation suite with originals and disc mounted: 369 run, OK (15 skipped). The tickets stay In Review until the code review.
