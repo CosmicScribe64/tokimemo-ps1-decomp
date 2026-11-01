@@ -74,7 +74,7 @@ class InventoryTests(unittest.TestCase):
 
     def test_agent_review_is_never_human_approval(self):
         reviewed = [c for c in self.built['candidate_records'] if c['review_level'] == 'agent-bounded-in-game']
-        self.assertEqual(len(reviewed), 4)    # five were replaced by the T-39410 redraws
+        self.assertEqual(len(reviewed), 3)    # five were replaced by the T-39410 redraws, one (name panel 0001) by the T-39411 Month/Day headers
         self.assertFalse([c for c in reviewed if c['human_approved']])
         for item in self.built['artwork_items']:
             if item['agent_review']:
@@ -113,8 +113,8 @@ class PinnedCountTests(unittest.TestCase):
             'english-reviewed': 52, 'candidate-only': 192, 'missing': 1, 'unmapped': 0, 'deliberately-untranslated': 27})
         self.assertEqual(summary['historical_assets']['by_status']['english-reviewed'], 44)
         self.assertEqual(summary['historical_assets']['by_status']['unmapped'], 3)
-        self.assertEqual(summary['candidate_records'], {'total': 447, 'distinct_assets': 443, 'agent_reviewed_revisions': 4, 'human_approved': 53})
-        self.assertEqual(summary['superseded_records'], 239)    # 23 + 165 mainrom + 39 menus + 12 stale weekday snapshot assets
+        self.assertEqual(summary['candidate_records'], {'total': 447, 'distinct_assets': 444, 'agent_reviewed_revisions': 3, 'human_approved': 53})
+        self.assertEqual(summary['superseded_records'], 240)    # 23 + 165 mainrom + 40 menus + 12 stale weekday snapshot assets
         self.assertEqual(summary['text_records']['total'], 55911)
         self.assertEqual(summary['text_records']['by_class'], {
             'english-approved': 55094, 'deliberately-untranslated': 817})

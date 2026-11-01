@@ -6,23 +6,23 @@ All PNGs are English-only (no original pixel), port-made, unreviewed (`human_app
 
 ## 1. Register the ledger
 
-- Add `translations/en/graphics/artwork/checkpoints/T39410-menus-fixes-v1/ledger.json` to `LEDGERS`. It holds 30 candidates (29 frame/cell drafts and the ALL_C banner of `catalog-127`, three crops).
+- Add `translations/en/graphics/artwork/checkpoints/T39410-menus-fixes-v1/ledger.json` to `LEDGERS`. It holds 31 candidates (30 frame/cell drafts and the ALL_C banner of `catalog-127`, three crops).
 - `fallback-ledger.json` (17 same-size drafts) is not for `LEDGERS`; register it only if the English build cannot widen sprites (sections 5, 6).
 - Ids follow the existing candidate patterns (`title-NNNN`, `option-label-NNNN`, `name-label-NNNN`, `exam-0001`, `filesel-frame-N.base`, `filesel-page-information-0`, `kasetu-0`, catalog item `catalog-127`). The new English letter page label has no source frame: `name-label-abc.unlit` / `name-label-abc.lit`; `candidate_key` in `tools/translation_inventory.py` maps `name-label-<page>.<state>` to the NAME_ENT atom `name_ent-<page>` (added in this pass).
 
-## 2. Supersedes (declared in `ledger.json`, 39 references)
+## 2. Supersedes (declared in `ledger.json`, 40 references)
 
 - `T39004-2026-10-29` / `title-drafts-v1`: `title-0001`, `title-0002`, `title-0003`, `title-0004`
 - `T39004-2026-10-29` / `exam-drafts-v1`: `exam-0001`
 - `T39004-2026-10-29` / `option-drafts-v1`: `option-label-0063`, `option-label-0064`, `option-label-0079`, `option-label-0080`, `option-label-0103`, `option-label-0104`, `option-label-0113`, `option-label-0114`
 - `T39004-2026-10-29` / `name-drafts-v2`: `name-label-0015`, `name-label-0016`, `name-label-0017`, `name-label-0018`, `name-label-0019`, `name-label-0020`, `name-label-0021`, `name-label-0022`, `name-label-0023`, `name-label-0024`, `name-panel-0000`, `name-panel-0001`, `name-panel-0002`, `name-panel-0014`
-- `T39004-2026-10-29` / `name-reviewed-development-v1`: `name-label-0015`, `name-label-0017`, `name-label-0019`, `name-label-0021`, `name-label-0023`
+- `T39004-2026-10-29` / `name-reviewed-development-v1`: `name-label-0015`, `name-label-0017`, `name-label-0019`, `name-label-0021`, `name-label-0023`, `name-panel-0001`
 - `T39004-2026-10-29` / `filesel-drafts-v2`: `filesel-frame-19.base`, `filesel-frame-20.base`
 - `T39004-2026-10-29` / `sports-drafts-v2`: `kasetu-0`
 - `T39004-filesel-v4` / `filesel-indexed-v4`: `filesel-page-information-0`
 - `T39004-bs-v1` / `bs-v1`: `all-c-banner.source-page-3`, `all-c-banner.source-page-4`, `all-c-banner.source-page-5`
 
-Name-entry panels `name-panel-0000/0001/0002/0014`: the `name-drafts-v2` face is half the Japanese size. The retained `name-reviewed-development-v1` panels (11-12 px, same size as the Japanese) stay the active candidates; only v2 is superseded here and no new art was made. The ten `name-label` selector cells (both older revisions) are replaced by one revision, so lit and unlit states match.
+Name-entry panels `name-panel-0000/0001/0002/0014`: the `name-drafts-v2` face is half the Japanese size. The retained `name-reviewed-development-v1` panels (11-12 px, same size as the Japanese) stay the active candidates for 0000, 0002 and 0014; v2 is superseded here. Panel 0001 (birthday page) is replaced by `name-panel-0001` of this checkpoint: its grid headers read `Month` / `Day` instead of `Birth month` / `Birth day` under the `Birthday:` field. The ten `name-label` selector cells (both older revisions) are replaced by one revision, so lit and unlit states match.
 
 ## 3. Catalog wording and binding edits (`translations/en/graphics/image_text_catalog.jsonl`, 1-based line = row)
 
@@ -113,6 +113,7 @@ Counted from the sprite parts of the restored OPTION.NBN (16x16 cells over four 
 - `filesel-frame-20.base`: given-name buttons in the tight face, glyphs unscaled, 2 or more texels clear of each face edge, nothing in the bevel rows.
 - `filesel-frame-19.base`: Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress in the same face; `Stats` header as before.
 - `filesel-page-information-0`: System tab word moved right two texels (ink starts at x=19; the Japanese ink touched x=17).
+- `name-panel-0001`: the development-v1 birthday page with its grid headers `Birth month` / `Birth day` re-lettered `Month` / `Day` (native font, same ink, shadow and origins; the build first proves the old headers are that font at those origins). Catalog row 106 edited to match. The new draft has no agent review, so `name_ent-0001` no longer carries the development-v1 bounded in-game agent review.
 - `kasetu-0`: title `SCAVENGER RACE` as outlined capitals (one-texel paper strokes, dark outline), rows 41-54 and letter-spaced like the outlined Japanese title; body text unchanged.
 
 ## 9. Transparency and STP
@@ -126,6 +127,7 @@ Checked for every PNG of both folders against the `.stp.png` mask exported besid
 | `filesel.frame-20.base` | clear on every texel | `filesel-frame-20.base` |
 | `filesel.source-page-information-0` | clear on every texel | `filesel-page-information-0` |
 | `kasetu.instruction-card-0` | set on every texel | `kasetu-0` |
+| `name.frame-01` | clear on every texel | `name-panel-0001` |
 | `name.frame-15` | clear on every texel | `name-label-0015`, `name-label-abc.unlit` |
 | `name.frame-16` | clear on every texel | `name-label-0016`, `name-label-abc.lit` |
 | `name.frame-17` | clear on every texel | `name-label-0017` |

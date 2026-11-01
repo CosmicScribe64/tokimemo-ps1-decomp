@@ -13,6 +13,7 @@ One reproducible build for the nine items of the owner/reviewer fix pass:
 8. filesel-frame-19   stat names (approved set)
 9. kasetu-0           sports card title `Scavenger Race` (outlined capitals)
 10. name-label-abc.*  selector label of the English letter page (new cell)
+11. name-panel-0001   birthday page grid headers `Month` / `Day` (round 3)
 
 Second pass (same checkpoint): Hiragana kerning, `Sym` fallback, 1 texel right margin on
 the widened option sprites, the registered System tab region, and a transparency/STP audit
@@ -569,6 +570,63 @@ def build_name_new_labels(sources, face):
     return out
 
 
+# --- 11. name entry birthday panel (name-panel-0001) -----------------------------------------
+# Frame 1 is the birthday page: the top box reads `Birthday:  /` and the two grids below it
+# were headed `Birth month` and `Birth day` in the development-v1 draft (誕生月 / 誕生日).
+# Under the `Birthday:` field the grid headers only need to say which half is picked:
+# `Month` and `Day`. Same native font, ink and (+1,+1) shadow, same origins as that draft.
+NAME_PANEL_DRAFT = OLD / 'name-reviewed-development-v1/frame-0001.png'
+NAME_PANEL_HEADERS = (((16, 33), [16, 32, 64, 14], 'Birth month', 'Month'),
+                      ((16, 80), [16, 80, 64, 14], 'Birth day', 'Day'))
+
+
+def native_word(font, text, origin, shape):
+    """(ink, shadow) masks of a native-font word: glyph advance width + 1, shadow one texel down-right."""
+    letters = np.zeros(shape, bool)
+    x, y = origin
+    for character in text:
+        glyph = font.glyph(character)
+        for dx, dy in glyph['points']:
+            letters[y + dy, x + dx] = True
+        x += glyph['width'] + 1
+    shade = np.zeros(shape, bool)
+    shade[1:, 1:] = letters[:-1, :-1]
+    return letters, shade & ~letters
+
+
+def build_name_panel(sources, font, draft=NAME_PANEL_DRAFT):
+    path = sources / 'original-name-v1' / 'name.frame-01.png'
+    original = load(path)
+    english = load(draft)
+    shape = (english.height, english.width)
+    result = english.copy()
+    placed = []
+    for origin, rect, before, after in NAME_PANEL_HEADERS:
+        x, y, w, h = rect
+        region = Counter(english.getpixel((i, j)) for j in range(y, y + h) for i in range(x, x + w))
+        colors = [c for c in region if c[3]]
+        if len(colors) != 2:
+            raise ValueError('panel header is not one ink and one shadow: ' + before)
+        shadow, ink = sorted(colors, key=lambda c: sum(c[:3]))
+        letters, shade = native_word(font, before, origin, shape)
+        expected = english.copy()
+        for j in range(y, y + h):
+            for i in range(x, x + w):
+                expected.putpixel((i, j), ink if letters[j, i] else shadow if shade[j, i] else TRANSPARENT)
+        if expected.tobytes() != english.tobytes():
+            raise ValueError('the draft header is not the native word at its origin: ' + before)
+        letters, shade = native_word(font, after, origin, shape)
+        for j in range(y, y + h):
+            for i in range(x, x + w):
+                result.putpixel((i, j), ink if letters[j, i] else shadow if shade[j, i] else TRANSPARENT)
+        if (letters | shade)[:, :x].any() or (letters | shade)[:, x + w:].any():
+            raise ValueError('panel header leaves its rect: ' + after)
+        placed.append({'rect': rect, 'origin': list(origin), 'before': before, 'text': after, 'ink_rgba': list(ink), 'shadow_rgba': list(shadow)})
+    return [('name-panel-0001', result, original, path, {
+        'frame': 1, 'source_container_sha256': NAME_SOURCE_SHA, 'text': 'Month / Day', 'headers': placed,
+        'base_draft': 'T39004-2026-10-29/name-reviewed-development-v1', 'base_draft_sha256': digest(draft.read_bytes())})]
+
+
 # --- 6./8. FILESEL button faces (frames 19 and 20) -----------------------------------------
 # Both frames are sheets of 16-row button faces: paper (231) faces, a 2 row bevel under each,
 # dark ink lettering (16). Each button is (face left, face width, ink rect top); the face
@@ -877,6 +935,7 @@ SUPERSEDED = (
     + [(OLD_LEDGER, 'name-label-%04d' % n, 'name-drafts-v2') for n in range(15, 25)]
     + [(OLD_LEDGER, 'name-label-%04d' % n, 'name-reviewed-development-v1') for n in (15, 17, 19, 21, 23)]
     + [(OLD_LEDGER, 'name-panel-%04d' % n, 'name-drafts-v2') for n in (0, 1, 2, 14)]
+    + [(OLD_LEDGER, 'name-panel-0001', 'name-reviewed-development-v1')]
     + [(OLD_LEDGER, 'filesel-frame-19.base', 'filesel-drafts-v2'), (OLD_LEDGER, 'filesel-frame-20.base', 'filesel-drafts-v2'),
        (OLD_LEDGER, 'kasetu-0', 'sports-drafts-v2'), (FILESEL_V4_LEDGER, 'filesel-page-information-0', 'filesel-indexed-v4')]
     + [(BS_V1_LEDGER, 'all-c-banner.source-page-%d' % n, 'bs-v1') for n in (3, 4, 5)])
@@ -917,6 +976,8 @@ LETTERING = {
                 'description': 'unscaled native game font, centred, same ink as the existing draft'}],
     'sports': [{'element': 'lettering', 'face': 'port-skeleton-gothic', 'kind': 'lettering',
                 'description': 'single-stroke skeleton capitals one texel wide left in the card paper and outlined (8-neighbour) in the dark ink of the Japanese title, rows 41-54 like the outlined kanji; body text of the existing draft unchanged'}],
+    'panel': [{'element': 'lettering', 'face': 'native', 'kind': 'lettering',
+               'description': 'grid headers Month / Day in the unscaled native game font at the development-v1 origins, same ink and (+1,+1) shadow; the rest of that draft unchanged'}],
     'page': [{'element': 'lettering', 'face': 'native', 'kind': 'shift',
               'description': 'the existing System word moved right by two texels inside the tab; no glyph redrawn'}],
 }
@@ -989,6 +1050,8 @@ def build(sources, output, disc_root=ROOT / 'disc/files'):
         add(item_id, image, original, path, facts, 'native', 'filesel-page-information-0.png')
     for item_id, image, original, path, facts in build_sports(sources):
         add(item_id, image, original, path, facts, 'port-skeleton-gothic', 'kasetu-0.png')
+    for item_id, image, original, path, facts in build_name_panel(sources, native):
+        add(item_id, image, original, path, facts, 'native', 'name-panel-0001.png')
 
     fallbacks = []
     for kind, item_id, image, original, path, facts in build_fallbacks(sources, faces):
@@ -1087,6 +1150,8 @@ def elements_for(record):
         return LETTERING['page']
     if item == 'kasetu-0':
         return LETTERING['sports']
+    if item == 'name-panel-0001':
+        return LETTERING['panel']
     if record['face'] == 'native':
         return LETTERING['native']
     return LETTERING['menu9']
@@ -1161,7 +1226,8 @@ def register_text(manifest, fallback_manifest, refs, room, agreement):
         lines.append('- `%s` / `%s`: %s' % (ledger, revision, ', '.join('`%s`' % i for i in ids)))
     lines += ['',
               'Name-entry panels `name-panel-0000/0001/0002/0014`: the `name-drafts-v2` face is half the Japanese size. The retained '
-              '`name-reviewed-development-v1` panels (11-12 px, same size as the Japanese) stay the active candidates; only v2 is superseded here and no new art was made. '
+              '`name-reviewed-development-v1` panels (11-12 px, same size as the Japanese) stay the active candidates for 0000, 0002 and 0014; v2 is superseded here. '
+              'Panel 0001 (birthday page) is replaced by `name-panel-0001` of this checkpoint: its grid headers read `Month` / `Day` instead of `Birth month` / `Birth day` under the `Birthday:` field. '
               'The ten `name-label` selector cells (both older revisions) are replaced by one revision, so lit and unlit states match.', '',
               '## 3. Catalog wording and binding edits (`translations/en/graphics/image_text_catalog.jsonl`, 1-based line = row)', '',
               '### Option cast list (rows 72-85): corrections', '',
@@ -1220,6 +1286,7 @@ def register_text(manifest, fallback_manifest, refs, room, agreement):
               '- `filesel-frame-20.base`: given-name buttons in the tight face, glyphs unscaled, 2 or more texels clear of each face edge, nothing in the bevel rows.',
               '- `filesel-frame-19.base`: Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress in the same face; `Stats` header as before.',
               '- `filesel-page-information-0`: System tab word moved right two texels (ink starts at x=19; the Japanese ink touched x=17).',
+              '- `name-panel-0001`: the development-v1 birthday page with its grid headers `Birth month` / `Birth day` re-lettered `Month` / `Day` (native font, same ink, shadow and origins; the build first proves the old headers are that font at those origins). Catalog row 106 edited to match. The new draft has no agent review, so `name_ent-0001` no longer carries the development-v1 bounded in-game agent review.',
               '- `kasetu-0`: title `SCAVENGER RACE` as outlined capitals (one-texel paper strokes, dark outline), rows 41-54 and letter-spaced like the outlined Japanese title; body text unchanged.', '',
               '## 9. Transparency and STP', '',
               'Checked for every PNG of both folders against the `.stp.png` mask exported beside its source (bit 15 of the texel word after the runtime palette load):', '',

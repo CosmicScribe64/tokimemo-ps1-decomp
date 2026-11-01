@@ -2882,3 +2882,7 @@ Merged the round-2 branches of [[tickets/T-39410-mainrom-art-fixes]], [[tickets/
 
 ## [2026-11-01] ticket | T-39410 round 3: 0144 t, STP note, catalog 0144
 [[tickets/T-39410-mainrom-art-fixes]]: the 0144 "Wrestling" t is now the family's t (centred crossbar, hooked foot), one row shorter than the l, with 1 px clear of a flat-topped s. Ink is 30 px, and the g's 4 right-edge shadow pixels are clipped to keep col 31 clear. `REGISTER.md` records that icon-51 STP follows the colour (G1 closed). The 0144 catalog suggestion in `translations/en/graphics/image_text_catalog.jsonl` and `.md` now reads "Wrestling". `translation_inventory.json` must be regenerated.
+
+## [2026-11-01] ticket | Name-entry birthday panel headers Month / Day (T-39411)
+
+Round 3 on [[tickets/T-39411-menus-art-fixes]]: the birthday page (`name-panel-0001`) grid headers now read `Month` / `Day` instead of `Birth month` / `Birth day` under the `Birthday:` field, as a new candidate in `translations/en/graphics/artwork/checkpoints/T39410-menus-fixes-v1/` superseding the development-v1 panel. Catalog row 106 and the inventory test pins updated; `translation_inventory.json` left for the integrator.
