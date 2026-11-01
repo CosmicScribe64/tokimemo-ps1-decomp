@@ -1,0 +1,12 @@
+# xdelta3 for the English patch (T-39501, tools/patch/make_patch.py), on top of the local decomp
+# image so the toolchain image itself is not rebuilt. The image inherits the base's
+# dockerfile.sha256 label, so tools/docker.sh accepts it while the base is current:
+#   docker build -t tokimemo-patch - < tools/Dockerfile.patch
+#   IMG=tokimemo-patch tools/docker.sh python3 tools/patch/make_patch.py ...
+ARG BASE=tokimemo-decomp-arm64
+FROM ${BASE}
+
+ARG XDELTA3_VERSION=3.0.11-dfsg-1.2
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends "xdelta3=${XDELTA3_VERSION}" \
+    && rm -rf /var/lib/apt/lists/*
