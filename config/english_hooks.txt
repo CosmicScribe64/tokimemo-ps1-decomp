@@ -1,0 +1,8 @@
+# English build entry-point redirects (T-39502, wiki/english-text-runtime.md).
+# One line per hook: <unit> <original function> <replacement>. tools/english_link.py writes
+# `j <replacement>; nop` over the first two instructions of the original in the English binary of
+# <unit> (`main` or an overlay name), so every caller, including overlays that call by absolute
+# address, reaches the replacement. The original body stays in place and is never run.
+main load_string english_load_string
+main set_kanji_string english_set_kanji_string
+main disp_string english_disp_string
