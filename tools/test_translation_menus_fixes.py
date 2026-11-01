@@ -123,6 +123,30 @@ class SyntheticSourceTests(unittest.TestCase):
             self.assertEqual(result.getpixel((2, 8)), frame)
             self.assertEqual(result.getpixel((width - 2, 8)), frame)
 
+    def test_stp_audit_refuses_ambiguous_or_black_texels(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'cell.png'
+            original = solid((4, 1), subject.TRANSPARENT)
+            red = (200, 0, 0, 255)
+            original.putpixel((1, 0), red); original.putpixel((2, 0), red)
+            original.save(source)
+            mask = Image.new('L', (4, 1), 0)
+            mask.save(Path(directory) / 'cell.stp.png')
+            facts = subject.stp_audit(source, original)
+            self.assertEqual((facts['transparent_texels'], facts['opaque_stp_clear_texels']), (2, 2))
+            black = original.copy(); black.putpixel((0, 0), (0, 0, 0, 255))
+            with self.assertRaisesRegex(ValueError, 'opaque black'):
+                subject.stp_audit(source, black)
+            mask.putpixel((2, 0), 255); mask.save(Path(directory) / 'cell.stp.png')
+            with self.assertRaisesRegex(ValueError, 'two STP values'):
+                subject.stp_audit(source, original)
+
+    def test_kerning_adds_texels_only_between_the_listed_pairs(self):
+        face = subject.Tight()
+        self.assertEqual(face.width('Hi', kern={'Hi': 1}), face.width('Hi') + 1)
+        self.assertEqual(face.width('iH', kern={'Hi': 1}), face.width('iH'))
+        self.assertEqual(max(x for x, _ in face.points('Hi', 0, 0, kern={'Hi': 1})), face.width('Hi') )
+
     def test_filesel_buttons_leave_the_bevel_alone(self):
         original = solid((60, 40), subject.TRANSPARENT)
         bevel = (198, 189, 189, 255)
@@ -151,7 +175,8 @@ class CheckpointTests(unittest.TestCase):
         entries = inventory.load_ledgers(ledgers)
         active, superseded = inventory.split_superseded(entries, ledgers)
         mine = [e['id'] for e in active if 'T39410-menus-fixes-v1' in e['ledger']]
-        self.assertEqual(len(mine), 30)    # 27 drafts and the three ALL_C crops
+        self.assertEqual(len(mine), 32)    # 29 drafts (two of them the new ABC cell) and the three ALL_C crops
+        self.assertEqual(inventory.candidate_key({'id': 'name-label-abc.lit'}), ('name_ent-abc', 'NAME_ENT', None, 'lit'))
         replaced = {(e['ledger'].split('/')[-2], e['id'], e['revision']) for e in superseded if e['superseded_by'].endswith('T39410-menus-fixes-v1/ledger.json')}
         self.assertEqual(len(replaced), len(self.ledger['supersedes']))
         for entry in active:
@@ -183,16 +208,69 @@ class CheckpointTests(unittest.TestCase):
         by_id = {}
         for item in manifest['items']:
             by_id.setdefault(item['id'], item)
-        self.assertEqual(by_id['option-label-0103']['required_width'], 71)
-        self.assertEqual(by_id['option-label-0113']['required_width'], 82)
+        self.assertEqual(by_id['option-label-0103']['required_width'], 72)
+        self.assertEqual(by_id['option-label-0113']['required_width'], 83)
         self.assertEqual(by_id['option-label-0063']['text'], 'Kanazuki Mami (Fujisaki)')
         self.assertEqual(by_id['option-label-0079']['text'], 'Teppozuka Yoko (Asahina)')
         self.assertEqual(by_id['exam-0001']['text'], 'points')
         self.assertEqual(by_id['kasetu-0']['text'], 'Scavenger Race')
         self.assertEqual({r['text'] for r in manifest['items'] if r['id'].startswith('name-label')},
-                         set(subject.NAME_LABELS.values()))
+                         set(subject.NAME_LABELS.values()) | {'ABC'})
         self.assertEqual(len((CHECKPOINT / 'REGISTER.md').read_text().splitlines()) > 40, True)
         self.assertTrue(manifest['indexed_assets'][0]['gates_passed'])
+
+    def test_widened_option_sprites_keep_a_clear_right_column(self):
+        for name in ('option-label-0103', 'option-label-0104', 'option-label-0113', 'option-label-0114'):
+            image = Image.open(CHECKPOINT / 'menus-fixes-v1' / (name + '.png')).convert('RGBA')
+            last = [image.getpixel((image.width - 1, y))[3] for y in range(subject.OPTION_TEXT_ROWS)]
+            before = [image.getpixel((image.width - 2, y))[3] for y in range(subject.OPTION_TEXT_ROWS)]
+            self.assertEqual(set(last), {0}, name)
+            self.assertIn(255, before, name)
+
+    def test_name_labels_keep_a_clear_column_between_stems(self):
+        manifest = json.loads((CHECKPOINT / 'menus-fixes-v1/manifest.json').read_text())
+        fallback = json.loads((CHECKPOINT / 'fallback-v1/manifest.json').read_text())
+        texts = {(r['id'], r['variant']): r['text'] for r in manifest['items'] + fallback['items'] if r['id'].startswith('name-label')}
+        self.assertEqual(texts[('name-label-0019', 'compact')], 'Sym')
+        self.assertEqual({texts[('name-label-abc.unlit', 'wide')], texts[('name-label-abc.lit', 'compact')]}, {'ABC'})
+        for folder, name in (('menus-fixes-v1', 'name-label-0015'), ('fallback-v1', 'name-label-0015'), ('menus-fixes-v1', 'name-label-abc.lit')):
+            image = Image.open(CHECKPOINT / folder / (name + '.png')).convert('RGBA')
+            frame = image.getpixel((3, 0))
+            columns = [any(image.getpixel((x, y))[3] and image.getpixel((x, y)) != frame for y in range(1, 15)) for x in range(3, image.width - 3)]
+            runs = [r for r in ''.join('#' if c else '.' for c in columns).split('.') if r]
+            if name.endswith('abc.lit'):
+                self.assertEqual(len(runs), 3, name)       # A | B | C, each with its shadow column
+            else:
+                self.assertEqual(len(runs[0]), 6, name)    # H (5 wide) and its shadow, then a clear column before i
+
+    def test_every_output_passes_the_stp_audit(self):
+        for folder in ('menus-fixes-v1', 'fallback-v1'):
+            manifest = json.loads((CHECKPOINT / folder / 'manifest.json').read_text())
+            for item in manifest['items']:
+                stp = item['stp']
+                self.assertEqual(stp['opaque_black_texels'], 0)
+                expected = 'set on every texel' if item['id'] == 'kasetu-0' else 'clear on every texel'
+                self.assertEqual(stp['source_stp'], expected, item['id'])
+                self.assertEqual(stp['opaque_stp_set_texels'] > 0, item['id'] == 'kasetu-0', item['id'])
+        allc = json.loads((CHECKPOINT / 'menus-fixes-v1/manifest.json').read_text())['indexed_assets'][0]['stp']
+        self.assertFalse(any(allc['index_stp_bit'].values()))
+        self.assertIn('## 9. Transparency and STP', (CHECKPOINT / 'REGISTER.md').read_text())
+
+    def test_sports_title_is_outlined_at_the_japanese_rows(self):
+        manifest = json.loads((CHECKPOINT / 'menus-fixes-v1/manifest.json').read_text())
+        card = next(r for r in manifest['items'] if r['id'] == 'kasetu-0')
+        x, y, w, h = card['title_ink_box']
+        self.assertEqual((y, h), (41, 14))
+        self.assertEqual(card['lettering'], 'SCAVENGER RACE')
+
+    def test_system_tab_region_is_registered(self):
+        self.assertEqual(subject.registered_system_tab(), subject.SYSTEM_TAB_RECT)
+
+    def test_script_names_the_event_scavenger_race(self):
+        for path in (subject.ROOT / 'translations/en/supplemental.jsonl', subject.ROOT / 'translations/en/supplemental/tai_tx.md'):
+            text = path.read_text()
+            self.assertNotIn('Scavenger Hunt', text, path.name)
+            self.assertIn('Scavenger Race', text, path.name)
 
     def test_movie_pills_agree_with_the_cast_spellings(self):
         agreement = subject.pill_agreement()

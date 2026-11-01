@@ -157,12 +157,12 @@ Every text label in `OPTION.NBN` consists of a **normal (unselected)** sprite an
 | `0097` / `0098` | `70×16` | `片桐 彩子` | Katagiri Ayako | **`Katagiri Ayako`** (`70×16`) |
 | `0099` / `0100` | `70×16` | `虹野 沙希` | Nijino Saki | **`Nijino Saki`** (`70×16`) |
 | `0101` / `0102` | `84×16` | `古式 ゆかり` | Koshiki Yukari | **`Koshiki Yukari`** (`84×16`) |
-| `0103` / `0104` | `56×16` | `清川 望` | Kiyokawa Nozomi | **`Kiyokawa Nozomi`** (sprite widened to `71px`; fallback **`Kiyokawa`** at the source width `56×16`) |
+| `0103` / `0104` | `56×16` | `清川 望` | Kiyokawa Nozomi | **`Kiyokawa Nozomi`** (sprite widened to `72px`, one clear texel right of the shadow; fallback **`Kiyokawa`** at the source width `56×16`) |
 | `0105` / `0106` | `56×16` | `鏡 魅羅` | Kagami Mira | **`Kagami Mira`** (`56×16`) |
 | `0107` / `0108` | `84×16` | `朝日奈 夕子` | Asahina Yuko | **`Asahina Yuko`** (`84×16`) |
 | `0109` / `0110` | `70×16` | `美樹原 愛` | Mikihara Megumi | **`Mikihara Megumi`** (`70×16` condensed, or **`Mikihara`**) |
 | `0111` / `0112` | `70×16` | `早乙女 優美` | Saotome Yumi | **`Saotome Yumi`** (`70×16`) |
-| `0113` / `0114` | `70×16` | `館林 見晴` | Tatebayashi Miharu | **`Tatebayashi Miharu`** (sprite widened to `82px`; fallback **`Tatebayashi`** at the source width `70×16`) |
+| `0113` / `0114` | `70×16` | `館林 見晴` | Tatebayashi Miharu | **`Tatebayashi Miharu`** (sprite widened to `83px`, one clear texel right of the shadow; fallback **`Tatebayashi`** at the source width `70×16`) |
 | `0115` / `0116` | `84×16` | `伊集院 レイ` | Ijuin Rei | **`Ijuin Rei`** (`84×16`) |
 
 
@@ -186,7 +186,7 @@ Every text label in `OPTION.NBN` consists of a **normal (unselected)** sprite an
 | `frame-0000` / `0001` / `0002` / `0014` | `320×240` *(full layout pages)* | **Top Box**: `名前:`, `あだ名:`, `誕生日:`, `月`, `日`, `血液型:`, `型`<br>**Month Grid**: `誕生月`, `1月`..`12月`<br>**Blood Grid**: `血液型`, `A型`, `B型`, `AB型`, `O型`<br>**Confirm**: `はい`, `いいえ` | **Top Box**: Name:, Nickname:, Birthday:, Month/Day, Blood Type:<br>**Month Grid**: Birth Month, Jan..Dec<br>**Blood Grid**: Blood Type, Type A, B, AB, O<br>**Confirm**: Yes, No | **Top Box**: **`Name:`** (`36×14`), **`Nickname:`** (`48×14`), **`Birthday:`** (`48×14`), replace `月` (`14×14`) with **`/`**, clear `日` (`14×14`), **`Blood type:`** (`48×14`), clear suffix `型` (`16×14`).<br>**Month Grid**: Header **`Birthday`** (`64×14`), cells **`1`**..**`12`** (or **`Jan`**..**`Dec`** in `28×16` cells).<br>**Blood Grid**: Header **`Blood type`** (`64×14`), cells **`A`**, **`B`**, **`AB`**, **`O`**.<br>**Confirm**: **`Yes`** (`32×14`), **`No`** (`32×14`). |
 | `frame-0015` / `0016` | `32×16` | `かな` *(normal / lit)* | Hiragana | **`Hiragana`** (`56×16` full word, outline stretched from `32×16`, interior transparent; fallback **`Hira`** in `32×16`). There is no Latin page selector cell in frames 15-24; when the English build adds one, **`ABC`** in the same cell, face and colours. |
 | `frame-0017` / `0018` | `32×16` | `カナ` *(normal / lit)* | Katakana | **`Katakana`** (`56×16` full word; fallback **`Kata`** in `32×16`) |
-| `frame-0019` / `0020` | `32×16` | `記号` *(normal / lit)* | Symbols | **`Symbols`** (`56×16` full word; fallback **`Symb`** in `32×16`) |
+| `frame-0019` / `0020` | `32×16` | `記号` *(normal / lit)* | Symbols | **`Symbols`** (`56×16` full word; fallback **`Sym`** in `32×16`) |
 | `frame-0021` / `0022` | `32×16` | `漢字` *(normal / lit)* | Kanji | **`Kanji`** (`56×16`; fallback the same word in `32×16`) |
 | `frame-0023` / `0024` | `32×16` | `終了` *(normal / lit)* | Done | **`Done`** (`56×16`; fallback the same word in `32×16`) |
 
@@ -228,7 +228,7 @@ Each file contains full-screen (`320×240`) chalkboard-style event rule cards (`
 
 | Asset Path | Card Index & Size | Original Japanese | English Translation & Suggested Same-Size Layout (`320×240`) |
 |---|---|---|---|
-| `CDROM/TAIIKU/KASETU.BIN` | `index 0` (`320×240`) | **Title**: `借り物競走説明`<br>1. `◯ボタン連打で走ります。`<br>2. `×ボタンでジャンプします。`<br>3. `ハードルをジャンプで飛び越えて下さい。`<br>4. `パンの前では×ボタンでジャンプして、`<br>　 `さらに×ボタンを押すとパンをくわえます。`<br>5. `テーブルの前でお題の品物を×ボタンで`<br>　 `取ってゴールまで走って下さい。` | **Title**: **`Scavenger Race`** (yellow ink 2)<br>• `Tap O repeatedly to run.`<br>• `Press X to jump over the hurdles.`<br>• `Jump in front of the bread and press`<br>  `X again to grab it in your mouth.`<br>• `Pick up the matching item at the`<br>  `table with X and run to the finish!` |
+| `CDROM/TAIIKU/KASETU.BIN` | `index 0` (`320×240`) | **Title**: `借り物競走説明`<br>1. `◯ボタン連打で走ります。`<br>2. `×ボタンでジャンプします。`<br>3. `ハードルをジャンプで飛び越えて下さい。`<br>4. `パンの前では×ボタンでジャンプして、`<br>　 `さらに×ボタンを押すとパンをくわえます。`<br>5. `テーブルの前でお題の品物を×ボタンで`<br>　 `取ってゴールまで走って下さい。` | **Title**: **`Scavenger Race`** (outlined capitals in the dark title ink, like the outlined Japanese title)<br>• `Tap O repeatedly to run.`<br>• `Press X to jump over the hurdles.`<br>• `Jump in front of the bread and press`<br>  `X again to grab it in your mouth.`<br>• `Pick up the matching item at the`<br>  `table with X and run to the finish!` |
 | `CDROM/TAIIKU/NINSETU.BIN` | `index 0` (`320×240`, casual)<br>`index 1` (`320×240`, polite) | **Title**: `二人三脚 説明`<br>1. `◯ボタンと方向キーの右を交互に押すと`<br>　 `走ります。`<br>2. `パートナーとタイミングを合わせて`<br>　 `交互に押して下さい。`<br>3. `タイミングが合わないと転びます。`<br>4. `早くゴールした方が勝ちです。` | **Title**: **`Three-Legged Race`** (yellow ink 2)<br>• `Alternate pressing O and Right`<br>  `on the D-Pad to run.`<br>• `Match your partner's rhythm as`<br>  `you alternate buttons.`<br>• `If your timing is off, you'll trip!`<br>• `First team to the finish line wins!` |
 | `CDROM/TAIIKU/SPSETU.BIN` | `index 0` (`320×240`) | **Title**: `スプーンリレー説明`<br>1. `◯ボタン連打で走ります。`<br>2. `走るとたまごが左右にゆれますので`<br>　 `方向キーの左右でバランスを取って下さい。`<br>3. `たまごを落としてしまったら止まって`<br>　 `ひろいなおします。`<br>4. `たまごを落とさないように早くゴール`<br>　 `して下さい。` | **Title**: **`Egg & Spoon Race`** (or **`Spoon Relay`**)<br>• `Tap O repeatedly to run.`<br>• `Running makes the egg wobble.`<br>• `Use Left and Right on the D-Pad`<br>  `to keep the egg balanced.`<br>• `If you drop the egg, you must stop`<br>  `and pick it back up.` |
 | `CDROM/TAIIKU/TASETU.BIN` | `index 0` (`320×240`) | **Title**: `玉転がし 説明`<br>1. `◯ボタン連打で大玉を転がします。`<br>2. `力の入れすぎや、入れなさすぎで`<br>　 `玉から離れてしまいます。`<br>3. `うまく玉との距離を保ちながら`<br>　 `ゴールまで転がして下さい。` | **Title**: **`Giant Ball Roll`** (or **`Ball Rolling`**)<br>• `Tap O repeatedly to push the ball.`<br>• `Pushing too hard or too softly will`<br>  `throw off your distance.`<br>• `Keep a steady pace to stay close`<br>  `to the ball all the way to the goal!` |
