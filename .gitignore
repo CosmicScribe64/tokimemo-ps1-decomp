@@ -31,6 +31,9 @@ wiki/.obsidian/
 SLPM_*
 !config/SLPM_*
 !tools/SLPM_*
+# macOS matches SLPM_* without case, which would also hide this text table
+!translations/en/system/dictionaries/slpm_86_053.md
+!translations/en/system/main_exe/slpm_86_053.md
 
 # CI bundle material (tools/make_ci_bundle.sh writes under build/, which is already ignored)
 *.enc
