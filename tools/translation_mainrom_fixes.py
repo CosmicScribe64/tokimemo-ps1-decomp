@@ -210,14 +210,20 @@ PANEL7_PERIOD = (['.', '.', '.', '.', '.', '.', '#'], 'period, 1 wide, on the ba
 NARROW_W = (['#.#', '#.#', '#.#', '###', '###', '###', '#.#'], 'narrow cap W, 3 wide (panel7-style W is 5)')
 # Order in which narrow forms are tried: W first (a modest change), r and t last.
 NARROW_ORDER = 'WHoaebgns' + 'rt'
-# Round 2, item 1 (frame 144). The 3-wide W read as H or N, and "Pro / Wrestling" filled all 16
-# rows. The tag now says "Wrestling" on one line with the 5-wide W, in the 7 rows plus shadow
-# that "Baseball" (frame 145) uses. That needs 30 px with the shadow, the tag's width less 1 px
-# each side: e, s, n, g and r take their narrow forms, t is the 2-wide form with the crossbar on
-# the left, and two pairs are kerned to 0 px where the shapes allow it: r-e (only the arm of the
-# r meets the e, corner to corner) and s-t (the top of the s runs into the crossbar).
-CROSSBAR_LEFT_T = (['.#', '.#', '##', '.#', '.#', '.#', '.#'], 'narrow t, 2 wide, crossbar on the left so "st" can join')
-WRESTLING = {'text': 'Wrestling', 'narrow': 'rensg', 'kern': {('r', 'e'): -1, ('s', 't'): -1}}
+# Frame 144 (rounds 2 and 3). "Pro / Wrestling" cannot fit: two 7-row lines with shadows need 16 rows,
+# and the 3-wide W read as H or N. The tag says "Wrestling" on one line with the 5-wide W, in the 7 rows
+# plus shadow that "Baseball" (frame 145) uses. Round 3: the t is the family's t (centred 3 px crossbar,
+# hooked foot), one row shorter than the l. The s has a flat one-pixel top, so its top-right corner is
+# empty. That lets the t's left arm sit in the column after the s and stay 1 px clear of it (s-t kerned
+# to 0 px). r-e is kerned to 0 px too: only the arm of the r meets the e, corner to corner. Every other
+# letter is already at its narrowest form, so the word's ink is 30 px. The tag keeps 1 px clear on both
+# sides, so the drop shadow is clipped at the right margin: the g loses the 4 shadow pixels of its right
+# edge.
+WRESTLING_T = (['...', '.#.', '###', '.#.', '.#.', '.#.', '..#'],
+               't, 3 wide: the panel7 t (centred crossbar, hooked foot) one row shorter, so it does not read as l')
+WRESTLING_S = (['...', '...', '.#.', '#..', '.#.', '..#', '##.'],
+               'narrow s, 3 wide, flat one-pixel top so the t beside it keeps 1 px clear')
+WRESTLING = {'text': 'Wrestling', 'narrow': 'reng', 'kern': {('r', 'e'): -1, ('s', 't'): -1}}
 
 
 class KernedFace(base.Face):
@@ -241,12 +247,12 @@ def wrestling_face(faces):
     glyphs, provenance = dict(compact.glyphs), dict(compact.provenance['glyphs'])
     for ch in WRESTLING['narrow']:
         glyphs[ch], provenance[ch] = narrow.glyphs[ch], narrow.provenance['glyphs'][ch]
-    rows_, description = CROSSBAR_LEFT_T
-    glyphs['t'] = base.bitmap_glyph(rows_)
-    provenance['t'] = {'origin': 'port-made-narrow', 'description': description, 'bitmap': list(rows_),
-                       'replaces': 'recovered-panel7'}
+    for ch, (rows_, description) in (('t', WRESTLING_T), ('s', WRESTLING_S)):
+        glyphs[ch] = base.bitmap_glyph(rows_)
+        provenance[ch] = {'origin': 'port-made-narrow', 'description': description, 'bitmap': list(rows_),
+                          'replaces': provenance[ch]['origin']}
     kern = WRESTLING['kern']
-    return KernedFace('panel7-compact+narrow-%s+t-left+kern' % WRESTLING['narrow'], glyphs, compact.space,
+    return KernedFace('panel7-compact+narrow-%s+st+kern' % WRESTLING['narrow'], glyphs, compact.space,
                       {**compact.provenance, 'glyphs': provenance,
                        'kerning': {a + b: k for (a, b), k in sorted(kern.items())}}, kern)
 
@@ -317,18 +323,19 @@ def extent(face, text):
 
 
 def place(frame, face, text, rect, ink, clut_parts, shadow=None, outline=None, ramp_table=None,
-          align='center', margin=0, top=None, tones=None, report=None, **target):
+          align='center', margin=0, top=None, tones=None, report=None, clip_shadow=False, **target):
     """Draw `text` into rect and return the written bbox.
 
     align 'center' centres ink plus shadow/outline; 'left' puts the lettering's left
     edge `margin` px from the rect. `top` is the frame row of the first ink row (the
     default centres vertically). The lettering plus its shadow must keep `margin` px
-    from the left and right edges of the rect.
+    from the left and right edges of the rect; with `clip_shadow` only the ink must, and
+    shadow pixels inside the right margin are dropped (counted in report['clipped_shadow']).
     """
     left, right, up, down = extent(face, text)
     ml = mt = 1 if outline is not None else 0
     mr = mb = 1 if (outline is not None or shadow is not None) else 0
-    full_w = right - left + 1 + ml + mr
+    full_w = right - left + 1 + ml + (0 if clip_shadow and outline is None else mr)
     full_h = down - up + 1 + mt + mb
     x0, y0, w, h = rect
     if full_w > w - 2 * margin:
@@ -349,6 +356,10 @@ def place(frame, face, text, rect, ink, clut_parts, shadow=None, outline=None, r
                     writes[(x + dx, y + dy)] = outline
     if shadow is not None:
         for x, y in ink_px:
+            if clip_shadow and x + 1 >= x0 + w - margin:
+                if report is not None and (x + 1, y + 1) not in ink_px:
+                    report['clipped_shadow'] = report.get('clipped_shadow', 0) + 1
+                continue
             writes[(x + 1, y + 1)] = shadow
     for x, y in ink_px:
         writes[(x, y)] = ramp_table[y] if ink == 'ramp' else ink
@@ -511,20 +522,26 @@ def plan_tag(frame, faces):
     rect = [0, 0, frame.width, frame.height]
     source = base.lettering(frame, rect)
     ink, shadow = base.ink_and_shadow(source)
-    if lines == (WRESTLING['text'],):
+    clip = lines == (WRESTLING['text'],)
+    if clip:
         face = wrestling_face(faces)
-        if base.line_width(face, lines[0], shadow) > frame.width - 2 * TAG_MARGIN:
+        if base.line_width(face, lines[0], None) > frame.width - 2 * TAG_MARGIN:
             raise ValueError('Wrestling does not fit frame %d' % frame.frame)
     else:
         face = fit_face(faces, lines, frame.width - 2 * TAG_MARGIN, shadow)
     base.clear(frame, rect)
     line_h = frame.height // len(lines)
+    report = {}
     boxes = [place(frame, face, text, [0, n * line_h, frame.width, line_h], ink, base.source_parts(source),
-                   shadow=shadow, align=TAG_ALIGN, margin=TAG_MARGIN) for n, text in enumerate(lines)]
+                   shadow=shadow, align=TAG_ALIGN, margin=TAG_MARGIN, clip_shadow=clip, report=report)
+             for n, text in enumerate(lines)]
     elements = base.used_port_made(face, lines)
-    return {'item': 4, 'text': ' / '.join(lines), 'lines': list(lines), 'font': face.name, 'ink': ink, 'shadow': shadow,
+    plan = {'item': 4, 'text': ' / '.join(lines), 'lines': list(lines), 'font': face.name, 'ink': ink, 'shadow': shadow,
             'alignment': TAG_ALIGN, 'margin': TAG_MARGIN, 'edit_regions': [rect], 'lettering_bbox': boxes,
             'port_made_elements': elements}
+    if clip:
+        plan['clipped_shadow_pixels'] = report.get('clipped_shadow', 0)
+    return plan
 
 
 # Item 1: Save labels. Part-local rows of the lettering layer (the Japanese spans 2-12).
@@ -954,7 +971,7 @@ historical assets still listed on the items (`english.historical_assets`). Mark 
 
 ## 3. Catalog wording (image_text_catalog.jsonl / .md)
 
-"catalog now" is the catalog after round 2, which edited the rows of 0122-0125, 0132 and 0153 to match the art.
+"catalog now" is the catalog after rounds 2 and 3, which edited the rows of 0122-0125, 0132, 0144 and 0153 to match the art.
 
 | frame | catalog now | drawn |
 | :--- | :--- | :--- |
@@ -969,7 +986,7 @@ historical assets still listed on the items (`english.historical_assets`). Mark 
 | 0122-0125 | Spring Issue (3-4-5), Summer Issue (6-7-8), Autumn Issue (9-10-11), Winter Issue (12-1-2) | SPRING / ISSUE, SUMMER / ISSUE, AUTUMN / ISSUE, WINTER / ISSUE |
 | 0061 | Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress | Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress |
 | 0140 | Classical | Classical (the T-39009 draft said Classic; the full word fits) |
-| 0144 | Pro Wrestling (suggestion column still says Wrestl. / ProWres) | Wrestling (one line; "Pro / Wrestling" cannot keep the tag's margins) |
+| 0144 | Pro Wrestling (suggestion: Wrestling) | Wrestling (one line; "Pro / Wrestling" cannot keep the tag's margins) |
 | 0151-0154 | Suikoden, Parodius, Power Pros, TwinBee Puzzle | SUIKODEN, PARODIUS, POWER / PROS, TWINBEE / PUZZLE |
 
 Wording rule of the headline family: 完成 -> "Opens", 特集 -> "Special", 紹介 -> "Guide". "Hum." is used in
@@ -988,8 +1005,13 @@ dictionary has the full word.
 - Headlines 0126-0133 (round 2) are flush left at the column where the Japanese starts (x 0 in all eight) and carry the
   banner's edge tones (highlight = fill - 1, mid = fill + 1, soft = shadow + 1) on the cut corners; the manifest lists
   the tone pixels per banner.
-- 0144 (round 2) reads "Wrestling" in one line with a 5 px W, rows 4-11 like 0145; e, s, n, g and r take their narrow
-  forms, t a 2 px form with the crossbar on the left, and r-e and s-t are kerned to 0 px.
+- 0144 reads "Wrestling" in one line with a 5 px W, rows 4-11 like 0145 (round 2). Round 3: the t is the family's t
+  (centred crossbar, hooked foot), one row shorter than the l, and the s has a flat one-pixel top, so the t keeps 1 px
+  clear of the s; e, n, g and r take their narrow forms and r-e and s-t are kerned to 0 px. The ink is 30 px, so the
+  4 shadow pixels of the g's right edge are clipped to keep 1 px clear at the tag's right edge.
+- Icon-51 STP: the icon-51 variant's semi-transparency follows the colour. QA pass 3 (`tools/stp.py`) found that
+  every English colour maps to exactly one STP value in its source variant, with 0 ambiguous colours across the 32
+  frames, so the STP bits can be restored from the colour alone. This closes G1.
 - Sheet scope: every row records `sheet_scope`; frame-composite-only drafts must be integrated as whole-frame
   replacements, as before.
 - The text dictionary change (item 8) is already in `translations/en/returned-v3.jsonl`: records

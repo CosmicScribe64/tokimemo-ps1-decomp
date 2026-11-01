@@ -47,4 +47,13 @@ Owner decisions from chat and the second independent review (`scratchpad/art-qa2
 
 - Variant colour audit (coordinator request): 0061 icon-51 was reported with light English labels. The PNG and the preview pixels are black (080808, index 9 through the icon-51 CLUT, as the Japanese uses), so there was nothing to fix. The light look was an artefact of viewing the downscaled preview sheet. New build test `test_every_variant_uses_only_the_colours_of_its_japanese`: for all 192 frame and variant files, the colours inside the edit regions are a subset of the original's colours in the same regions. There are 0 violations.
 
+## Round 3 (final review, 2026-11-01)
+
+QA pass 3 (`scratchpad/art-qa3/notes.md`) left one should-fix and two nits. The checkpoint was updated in place; only the six 0144 files changed.
+
+- 0144: the t was full height with a left-only crossbar fused to the s ("stl" read "sll"). It is now the family's t (centred 3 px crossbar, hooked foot), one row shorter than the l. The s has a flat one-pixel top, so the t's left arm keeps 1 px clear of it, corners included (s-t kerned to 0 px with no contact). With every letter at its narrowest legible form and a 5 px W, the ink is exactly 30 px. To keep col 31 clear, the g's 4 right-edge shadow pixels are clipped (`clip_shadow`, recorded as `clipped_shadow_pixels`). A two-sided t with clean gaps cannot reach 30 px including the shadow: e, s, n and g are already 3 px, and the only kerning pairs without contact are r-e and s-t.
+- REGISTER.md now records that icon-51 STP follows the colour (0 ambiguous colours across 32 frames, QA pass 3), which closes G1.
+- The 0144 catalog suggestion (`.jsonl` and `.md`) is now "Wrestling".
+- `translation_inventory.json` is not touched here, so `test_committed_inventory_matches_inputs` fails until it is regenerated. The other tests pass: 128 run, including the reproduction and variant colour audit.
+
 ## Comments

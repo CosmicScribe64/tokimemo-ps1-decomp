@@ -72,7 +72,7 @@ historical assets still listed on the items (`english.historical_assets`). Mark 
 
 ## 3. Catalog wording (image_text_catalog.jsonl / .md)
 
-"catalog now" is the catalog after round 2, which edited the rows of 0122-0125, 0132 and 0153 to match the art.
+"catalog now" is the catalog after rounds 2 and 3, which edited the rows of 0122-0125, 0132, 0144 and 0153 to match the art.
 
 | frame | catalog now | drawn |
 | :--- | :--- | :--- |
@@ -87,7 +87,7 @@ historical assets still listed on the items (`english.historical_assets`). Mark 
 | 0122-0125 | Spring Issue (3-4-5), Summer Issue (6-7-8), Autumn Issue (9-10-11), Winter Issue (12-1-2) | SPRING / ISSUE, SUMMER / ISSUE, AUTUMN / ISSUE, WINTER / ISSUE |
 | 0061 | Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress | Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress |
 | 0140 | Classical | Classical (the T-39009 draft said Classic; the full word fits) |
-| 0144 | Pro Wrestling (suggestion column still says Wrestl. / ProWres) | Wrestling (one line; "Pro / Wrestling" cannot keep the tag's margins) |
+| 0144 | Pro Wrestling (suggestion: Wrestling) | Wrestling (one line; "Pro / Wrestling" cannot keep the tag's margins) |
 | 0151-0154 | Suikoden, Parodius, Power Pros, TwinBee Puzzle | SUIKODEN, PARODIUS, POWER / PROS, TWINBEE / PUZZLE |
 
 Wording rule of the headline family: 完成 -> "Opens", 特集 -> "Special", 紹介 -> "Guide". "Hum." is used in
@@ -106,8 +106,13 @@ dictionary has the full word.
 - Headlines 0126-0133 (round 2) are flush left at the column where the Japanese starts (x 0 in all eight) and carry the
   banner's edge tones (highlight = fill - 1, mid = fill + 1, soft = shadow + 1) on the cut corners; the manifest lists
   the tone pixels per banner.
-- 0144 (round 2) reads "Wrestling" in one line with a 5 px W, rows 4-11 like 0145; e, s, n, g and r take their narrow
-  forms, t a 2 px form with the crossbar on the left, and r-e and s-t are kerned to 0 px.
+- 0144 reads "Wrestling" in one line with a 5 px W, rows 4-11 like 0145 (round 2). Round 3: the t is the family's t
+  (centred crossbar, hooked foot), one row shorter than the l, and the s has a flat one-pixel top, so the t keeps 1 px
+  clear of the s; e, n, g and r take their narrow forms and r-e and s-t are kerned to 0 px. The ink is 30 px, so the
+  4 shadow pixels of the g's right edge are clipped to keep 1 px clear at the tag's right edge.
+- Icon-51 STP: the icon-51 variant's semi-transparency follows the colour. QA pass 3 (`tools/stp.py`) found that
+  every English colour maps to exactly one STP value in its source variant, with 0 ambiguous colours across the 32
+  frames, so the STP bits can be restored from the colour alone. This closes G1.
 - Sheet scope: every row records `sheet_scope`; frame-composite-only drafts must be integrated as whole-frame
   replacements, as before.
 - The text dictionary change (item 8) is already in `translations/en/returned-v3.jsonl`: records

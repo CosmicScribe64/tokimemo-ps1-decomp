@@ -81,7 +81,7 @@ In accordance with the project requirements:
 | `frame-0141` | Magazine genre tag | `32×8` | `アイドル` | Idol Pop | **`Idol`** (`32×8`, centered) |
 | `frame-0142` | Magazine genre tag | `24×8` | `ロック` | Rock | **`Rock`** (`24×8`, centered) |
 | `frame-0143` | Magazine genre tag | `64×8` | `ニューミュージック` | New Music / Pop Music | **`New Music`** or **`Pop Music`** (`64×8`) |
-| `frame-0144` | Magazine event tag | `32×16` | `プロレス` | Pro Wrestling | **`Wrestl.`** or **`ProWres`** (`32×16`, or 2-line `Pro` / `Wres`) |
+| `frame-0144` | Magazine event tag | `32×16` | `プロレス` | Pro Wrestling | **`Wrestling`** (`32×16`, one line, 5px W, 1px clear each side) |
 | `frame-0145` | Magazine event tag | `32×16` | `野球` | Baseball | **`Baseball`** (`32×16`, condensed 4px font or 2-line `Base-` / `ball`) |
 | `frame-0151` | Konami ad insert 1 | `56×66` | `幻想水滸伝 GENSOSUIKODEN` / `'95発売予定` | Suikoden / Coming in '95 | Keep game logo art and its colours; title lettering **`SUIKODEN`** in thin 1px capitals (40px wide); replace bottom `56×12` strip `'95発売予定` with **`Out in '95`** or **`'95 Release`**. |
 | `frame-0152` | Konami ad insert 2 | `56×66` | `極上パロディウス` / `好評発売中` | Parodius / Now on Sale | Keep game logo art and its colours; title lettering **`PARODIUS`** in thin 1px capitals (40px wide); replace bottom `56×12` strip `好評発売中` with **`Out Now!`** or **`On Sale!`**. |

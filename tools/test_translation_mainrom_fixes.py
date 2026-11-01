@@ -158,10 +158,22 @@ class LayoutTests(unittest.TestCase):
     def test_wrestling_fits_with_a_five_pixel_w(self):
         face = subject.wrestling_face(faces())
         self.assertEqual(face.glyphs['W']['width'], 5)
-        self.assertLessEqual(base.line_width(face, 'Wrestling', 1), 32 - 2 * subject.TAG_MARGIN)
+        self.assertLessEqual(base.line_width(face, 'Wrestling', None), 32 - 2 * subject.TAG_MARGIN)
         plain = base.Face('p', face.glyphs, face.space, {})
         self.assertEqual(base.line_width(plain, 'Wrestling', 1) - base.line_width(face, 'Wrestling', 1), 2)
         self.assertEqual(subject.TAG_TEXT[144], ('Wrestling',))
+
+    def test_wrestling_t_is_not_an_l_and_keeps_clear_of_the_s(self):
+        face = subject.wrestling_face(faces())
+        top = lambda ch: min(y for _, y in face.glyphs[ch]['points'])
+        self.assertGreater(top('t'), top('l'))   # shorter than the l
+        t = set(face.glyphs['t']['points'])
+        self.assertTrue({(0, 2), (1, 2), (2, 2)} <= t)   # two-sided crossbar
+        pts = face.points('st')
+        s_pts = set(pts[:len(face.glyphs['s']['points'])])
+        t_pts = set(pts[len(s_pts):])
+        near = {(x + dx, y + dy) for x, y in s_pts for dx in (-1, 0, 1) for dy in (-1, 0, 1)}
+        self.assertFalse(near & t_pts)   # 1 px clear between s and t, corners included
 
 
 class ResolutionTests(unittest.TestCase):
