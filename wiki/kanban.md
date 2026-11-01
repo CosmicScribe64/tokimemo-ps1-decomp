@@ -58,6 +58,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-39410-menus-art-fixes|T-39410 Fix the menu and screen English art after the owner and reviewer pass]]
+
 
 
 

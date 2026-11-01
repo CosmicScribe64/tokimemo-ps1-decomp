@@ -2842,3 +2842,7 @@ The full Python suite (`tools/test_*.py`, `tests/test_*.py`) was run in a checko
 ## [2026-11-01] ticket | Finish the missing English art (T-39400)
 
 The user asked for the 21 missing art items to be made before the English patch. Opened [[tickets/T-39400-finish-missing-english-art]]: register the nine port-made MAINROM genre tags, and fix the bindings, prove the sizes and draw English for the twelve BS sign stills.
+
+## [2026-11-01] ticket | Menu and screen art fixes (T-39410)
+
+Opened [[tickets/T-39410-menus-art-fixes]] for the nine items of the owner and reviewer fix pass and moved it to In Review. New tool `tools/translation_menus_fixes.py` (tests `tools/test_translation_menus_fixes.py`) builds checkpoint `translations/en/graphics/artwork/checkpoints/T39410-menus-fixes-v1`: bold outlined title lettering (title-0001..0004), the ALL_C banner at the Japanese stroke weight (catalog-127, indexed gates pass), `points` for examine-0001, the approved cast spellings and full names for the option screen, full name-entry selector labels (one revision per item), undistorted FILESEL given-name buttons and the approved stat names, a System tab with a left margin, and `Scavenger Race` on the sports card. `REGISTER.md` lists what the integrator must change: 39 supersedes, catalog wording and the option-0065..0090 bindings, widened sprite widths, the `system-tab` region. The ledger loads in `tools/translation_inventory.py`; the registration files were not edited.

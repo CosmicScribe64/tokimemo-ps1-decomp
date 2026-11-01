@@ -70,3 +70,14 @@ python3 tools/translation_bs_signs.py build --output .asset-cache/bs-signs-build
 ```
 
 `build` writes the whole English stills, source stills, an original | English comparison at 2x and a zoomed pair per sign under `previews/`; those contain the original image and stay local. No BS file is written: the later patch step re-encodes the touched macroblocks, and the earlier P_01_02 sweep (T-39012) already found that file hard to re-encode within the ring tolerance.
+
+## Menu and screen art fixes (T-39410)
+
+`checkpoints/T39410-menus-fixes-v1` holds the port-made fix pass for the title screen, the ALL_C banner, the exam suffix, the option cast list, the name-entry selector labels, two FILESEL screens, the System tab and the sports card title: 27 frame or cell drafts and the three ALL_C banner crops, all unreviewed. `ledger.json` supersedes the older candidates it replaces. `fallback-v1` and `fallback-ledger.json` hold same-size fallbacks (family names only, `pt`, compact selector labels) for builds that cannot widen sprites. `REGISTER.md` lists every change the integrator has to make in the shared registration files: catalog wording and bindings, widened sprite widths, the page region edit. The FILESEL frames, the information page and the sports card are whole frames like the drafts they replace; the other files are cells or crops.
+
+Rebuild in the Pillow tooling image with the original exports restored, then publish into a new folder:
+
+```sh
+python3 tools/translation_menus_fixes.py build --sources .asset-cache/translation-assets --output .asset-cache/menus-fixes-build
+python3 tools/translation_menus_fixes.py publish --built .asset-cache/menus-fixes-build
+```
