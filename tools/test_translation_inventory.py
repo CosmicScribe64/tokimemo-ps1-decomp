@@ -108,12 +108,12 @@ class InventoryTests(unittest.TestCase):
 class PinnedCountTests(unittest.TestCase):
     def test_pinned_totals_and_statuses(self):
         summary = subject.build()['summary']
-        self.assertEqual(summary['artwork_items']['total'], 271)
+        self.assertEqual(summary['artwork_items']['total'], 272)    # + name_ent-abc (T-39411 ABC selector cell)
         self.assertEqual(summary['artwork_items']['by_status'], {
-            'english-reviewed': 52, 'candidate-only': 191, 'missing': 1, 'unmapped': 0, 'deliberately-untranslated': 27})
+            'english-reviewed': 52, 'candidate-only': 192, 'missing': 1, 'unmapped': 0, 'deliberately-untranslated': 27})
         self.assertEqual(summary['historical_assets']['by_status']['english-reviewed'], 44)
         self.assertEqual(summary['historical_assets']['by_status']['unmapped'], 3)
-        self.assertEqual(summary['candidate_records'], {'total': 445, 'distinct_assets': 441, 'agent_reviewed_revisions': 4, 'human_approved': 53})
+        self.assertEqual(summary['candidate_records'], {'total': 447, 'distinct_assets': 443, 'agent_reviewed_revisions': 4, 'human_approved': 53})
         self.assertEqual(summary['superseded_records'], 239)    # 23 + 165 mainrom + 39 menus + 12 stale weekday snapshot assets
         self.assertEqual(summary['text_records']['total'], 55911)
         self.assertEqual(summary['text_records']['by_class'], {

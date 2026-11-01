@@ -167,6 +167,10 @@ def candidate_key(entry):
     m = re.fullmatch(r'name-(?:label|panel)-(\d{4})', cid)
     if m:
         return 'name_ent-%04d' % int(m[1]), 'NAME_ENT', int(m[1]), None
+    # Selector label of a page the English build adds (no source frame), e.g. name-label-abc.lit.
+    m = re.fullmatch(r'name-label-([a-z]+)\.(unlit|lit)', cid)
+    if m:
+        return 'name_ent-%s' % m[1], 'NAME_ENT', None, m[2]
     m = re.fullmatch(r'title-(\d{4})', cid)
     if m:
         return 'title-%04d' % int(m[1]), 'TITLE', int(m[1]), None

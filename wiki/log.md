@@ -2867,3 +2867,7 @@ Registered `translations/en/graphics/artwork/checkpoints/T39410-mainrom-fixes-v1
 
 ## [2026-11-01] ticket | T-39410 round 2: variant colour audit
 [[tickets/T-39410-mainrom-art-fixes]]: the 0061 icon-51 labels are black in both the file and the preview (the light look came from a downscaled view). A new build test in `tools/test_translation_mainrom_fixes.py` checks every file of the 32 frames x 6 variants: the English colours in the edit regions must be a subset of the original's colours in the same regions. There are 0 violations; the checkpoint is unchanged.
+
+## [2026-11-01] ticket | Menu art second fix round (T-39411)
+
+Second pass on [[tickets/T-39411-menus-art-fixes]] (stays In Review). The 借り物競争 event is `Scavenger Race` in the script too (`translations/en/supplemental/tai_tx.md` row `0030`, `translations/en/supplemental.jsonl`); the kasetu-0 title is outlined capitals; the name entry gains an `ABC` selector label (`name-label-abc.unlit/.lit`, new inventory atom `name_ent-abc`), `Sym` replaces `Symb` and H-i no longer touch; the widened option sprites keep a 1 px right margin. The FILESEL `system-tab` region is now `[17, 88, 42, 11]`, written by `tools/translation_filesel_indexed.py`, with the `T39004-filesel-v4` pins regenerated; `FileSelectPageTests` now test v4 (they failed because they still used the v3 checkpoint). STP and transparency of every output were checked against the source `.stp.png` masks: no change needed, the build now enforces it (`REGISTER.md` section 9).

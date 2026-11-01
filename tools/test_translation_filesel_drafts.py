@@ -34,8 +34,9 @@ class FileSelectDraftTests(unittest.TestCase):
 
 
 class FileSelectPageTests(unittest.TestCase):
-    """Phase 4 WP-L: information-page drafts as v2 page rows."""
-    CHECKPOINT=subject.ROOT/'translations/en/graphics/artwork/checkpoints/T39004-filesel-v3/filesel-indexed-v3'
+    """Phase 4 WP-L: information-page drafts as v2 page rows (the published v4 index-space build)."""
+    CHECKPOINT=subject.ROOT/'translations/en/graphics/artwork/checkpoints/T39004-filesel-v4/filesel-indexed-v4'
+    MENUS_PAGE=subject.ROOT/'translations/en/graphics/artwork/checkpoints/T39410-menus-fixes-v1/menus-fixes-v1/filesel-page-information-0.png'
     SOURCES=subject.ROOT/'.asset-cache/translation-assets/original-filesel-v1'
 
     def setUp(self):
@@ -44,24 +45,28 @@ class FileSelectPageTests(unittest.TestCase):
 
     def tearDown(self): self.temp.cleanup()
 
-    def test_checkpoint_page_maps_to_its_label_regions(self):
-        result=subject.pages(self.CHECKPOINT,self.SOURCES,self.root/'out')
-        self.assertEqual((result['pages'],result['skipped']),(1,2))
-        manifest=json.loads((self.root/'out/manifest.json').read_text())
-        self.assertEqual(manifest['schema'],subject.PAGE_SCHEMA)
-        self.assertFalse(manifest['human_approved'])
-        row=manifest['assets'][0]
-        self.assertEqual((row['kind'],row['page'],row['style']),('page',2,'unreviewed'))
-        regions=json.loads(subject.REGIONS.read_text())
-        expected=sorted(rect['rect'] for name in row['region_ids'] for rect in next(r for r in regions['regions'] if r['id']==name)['page_rects'] if rect['page']==2)
-        self.assertEqual(sorted(row['regions']),expected)
-        self.assertEqual(row['source_rgba_sha256'],subject.rgba_sha256(Image.open(self.root/'out'/row['source_png'])))
-        source=Image.open(self.root/'out'/row['source_png']).convert('RGBA');english=Image.open(self.root/'out'/row['output']).convert('RGBA')
+    def assert_unchanged_outside(self,out,row):
+        source=Image.open(out/row['source_png']).convert('RGBA');english=Image.open(out/row['output']).convert('RGBA')
         for y in range(source.height):
             for x in range(source.width):
                 if not any(left<=x<left+w and top<=y<top+h for left,top,w,h in row['regions']):
                     self.assertEqual(source.getpixel((x,y)),english.getpixel((x,y)))
-        self.assertEqual({entry['reason'] for entry in manifest['skipped']},{'English page not in this build'})
+
+    def test_checkpoint_page_maps_to_its_label_regions(self):
+        result=subject.pages(self.CHECKPOINT,self.SOURCES,self.root/'out')
+        self.assertEqual((result['pages'],result['skipped']),(3,0))
+        manifest=json.loads((self.root/'out/manifest.json').read_text())
+        self.assertEqual(manifest['schema'],subject.PAGE_SCHEMA)
+        self.assertFalse(manifest['human_approved'])
+        self.assertEqual(manifest['skipped'],[])
+        regions=json.loads(subject.REGIONS.read_text())
+        self.assertEqual(sorted(row['page'] for row in manifest['assets']),[0,1,2])
+        for row in manifest['assets']:
+            self.assertEqual((row['kind'],row['style']),('page','unreviewed'))
+            expected=sorted(rect['rect'] for name in row['region_ids'] for rect in next(r for r in regions['regions'] if r['id']==name)['page_rects'] if rect['page']==row['page'])
+            self.assertEqual(sorted(row['regions']),expected)
+            self.assertEqual(row['source_rgba_sha256'],subject.rgba_sha256(Image.open(self.root/'out'/row['source_png'])))
+            self.assert_unchanged_outside(self.root/'out',row)
 
     def test_changed_region_map_or_stray_pixel_is_refused(self):
         changed=self.root/'regions.json'
@@ -77,6 +82,30 @@ class FileSelectPageTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'outside its label regions'):
             subject.pages(copy,self.SOURCES,self.root/'b')
         self.assertFalse((self.root/'b').exists())
+
+    def page_with_menus_system_tab(self,regions_bytes):
+        """The v4 build with page 0 replaced by the T-39411 page (System moved two texels right)."""
+        copy=self.root/'indexed';shutil.rmtree(copy,ignore_errors=True);shutil.copytree(self.CHECKPOINT,copy)
+        manifest=json.loads((copy/'manifest.json').read_text())
+        row=next(r for r in manifest['assets'] if r['variant']=='source-page-information-0')
+        shutil.copyfile(self.MENUS_PAGE,copy/row['output'])
+        row['output_sha256']=digest((copy/row['output']).read_bytes())
+        manifest['page_regions_sha256']=digest(regions_bytes)
+        (copy/'manifest.json').write_text(json.dumps(manifest))
+        regions=self.root/'regions.json';regions.write_bytes(regions_bytes)
+        return copy,regions
+
+    def test_menus_system_tab_needs_and_fits_the_widened_region(self):
+        regions_bytes=subject.REGIONS.read_bytes()
+        tab=next(r for r in json.loads(regions_bytes)['regions'] if r['id']=='system-tab')
+        self.assertEqual((tab['montage_rect'],tab['page_rects']),([17,88,42,11],[{'page':0,'rect':[17,88,42,11]}]))
+        copy,regions=self.page_with_menus_system_tab(regions_bytes)
+        self.assertEqual(subject.pages(copy,self.SOURCES,self.root/'wide',regions)['pages'],3)
+        narrow=regions_bytes.replace(b'"page_rects":[{"page":0,"rect":[17,88,42,11]}]',b'"page_rects":[{"page":0,"rect":[17,88,39,11]}]')
+        self.assertNotEqual(narrow,regions_bytes)
+        copy,regions=self.page_with_menus_system_tab(narrow)
+        with self.assertRaisesRegex(ValueError,'outside its label regions'):
+            subject.pages(copy,self.SOURCES,self.root/'narrow',regions)
 
 
 if __name__=='__main__': unittest.main()

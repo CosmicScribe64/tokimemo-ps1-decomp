@@ -6,9 +6,9 @@ All PNGs are English-only (no original pixel), port-made, unreviewed (`human_app
 
 ## 1. Register the ledger
 
-- Add `translations/en/graphics/artwork/checkpoints/T39410-menus-fixes-v1/ledger.json` to `LEDGERS`. It holds 28 candidates (27 frame/cell drafts and the ALL_C banner of `catalog-127`, three crops).
-- `fallback-ledger.json` (15 same-size drafts) is not for `LEDGERS`; register it only if the English build cannot widen sprites (sections 5, 6).
-- Ids follow the existing candidate patterns (`title-NNNN`, `option-label-NNNN`, `name-label-NNNN`, `exam-0001`, `filesel-frame-N.base`, `filesel-page-information-0`, `kasetu-0`, catalog item `catalog-127`), so `candidate_key` needs no change.
+- Add `translations/en/graphics/artwork/checkpoints/T39410-menus-fixes-v1/ledger.json` to `LEDGERS`. It holds 30 candidates (29 frame/cell drafts and the ALL_C banner of `catalog-127`, three crops).
+- `fallback-ledger.json` (17 same-size drafts) is not for `LEDGERS`; register it only if the English build cannot widen sprites (sections 5, 6).
+- Ids follow the existing candidate patterns (`title-NNNN`, `option-label-NNNN`, `name-label-NNNN`, `exam-0001`, `filesel-frame-N.base`, `filesel-page-information-0`, `kasetu-0`, catalog item `catalog-127`). The new English letter page label has no source frame: `name-label-abc.unlit` / `name-label-abc.lit`; `candidate_key` in `tools/translation_inventory.py` maps `name-label-<page>.<state>` to the NAME_ENT atom `name_ent-<page>` (added in this pass).
 
 ## 2. Supersedes (declared in `ledger.json`, 39 references)
 
@@ -58,25 +58,25 @@ Result: every frame pair 0063..0090 binds to the row that names the person drawn
 - Rows 92 and 97 (0103/0104, 0113/0114): suggested graphic -> `Kiyokawa Nozomi` (sprite widened to 71) and `Tatebayashi Miharu` (widened to 82); fallback `Kiyokawa` / `Tatebayashi` at the source widths.
 - Row 3 (MAINROM 0061 panel) and row 104 (FILESEL 0019): stat names are Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress (rows now say Liberal Arts / Athletics / Lit. / Sci. / Sport / Condition). "Hum." was not needed on the FILESEL buttons: `Humanities` fits (38 of 43 texels). MAINROM 0061 and the text dictionary are outside this checkpoint.
 - Row 104 heroine buttons: Option A (given names) is what the art uses; Option B is retired.
-- Rows 107-111 (name selector labels): english Hiragana / Katakana / Symbols / Kanji / Done; suggested graphic `56x16` full words (fallback `32x16`: Hira / Kata / Symb / Kanji / Done). There is no Latin/English page selector cell in NAME_ENT frames 15-24; when the English build adds one, "ABC" in the same cell, face and colours is the consistent form.
+- Rows 107-111 (name selector labels): english Hiragana / Katakana / Symbols / Kanji / Done; suggested graphic `56x16` full words (fallback `32x16`: Hira / Kata / Sym / Kanji / Done; row 109 edited from `Symb`, which read as cryptic). There is no Latin/English page selector cell in NAME_ENT frames 15-24. The English build adds the letter page and selects it by default; its label `ABC` is drawn here (`name-label-abc.unlit` / `.lit`, 56x16, fallback 32x16) in the same cell, face and colours as the other labels. The catalog has no row for it: add one under section 4 (`ABC`, new cell, normal / lit) when the build adds the page.
 - Rows 113-116 (title): `GAME START` / `OPTIONS` bold outlined lettering at the Japanese height (replace the `112x16` / `80x16` plain-caps note).
-- Row 118 (EXAMINE 0001): english `points`; suggested graphic `points` in a widened cell (see section 5), fallback `pt` in `8x16`.
-- Row 123 (sports KASETU card 0): title `Scavenger Race` (approved; the card text itself says nothing about borrowing). Use the same name wherever the event is named.
+- Row 118 (EXAMINE 0001): english `points`; suggested graphic `points` in a widened cell (see section 5), fallback `pt` in `8x16`. Code side: the suffix cell is fixed art, so a score of 1 would read `1 points`. The English build handles the singular (draws `point` / `pt`, or skips the suffix cell for 1); no art change here.
+- Row 123 (sports KASETU card 0): title `Scavenger Race` (owner decision: 借り物競走 / 借りもの競争 is `Scavenger Race` everywhere), drawn as outlined capitals; the row says `(yellow ink 2)` and is edited to the outlined dark ink. The script used `Scavenger Hunt` for the same event in `translations/en/supplemental/tai_tx.md` row `0030` and `translations/en/supplemental.jsonl`; both now say `Scavenger Race` (no other instance in `translations/en`).
 - Row 127 (ALL_C banner): suggested graphic says bold yellow/gold; the banner keeps the Japanese blue / red / purple, because the strip holds no gold index and the gates allow only indices the strip already uses. Stroke 3 texels, 18 rows tall like the Japanese.
 
 ## 4. Inventory decisions (`inventory_decisions.json`)
 
-- None required: the ledger ids map to existing atoms, no atom changes status class. If the English build keeps `Hum.` anywhere, record it as an override there, not in art.
+- None required for the frame drafts: their ids map to existing atoms and no atom changes status class. If the English build keeps `Hum.` anywhere, record it as an override there, not in art. The two `name-label-abc.*` cells create one candidate-derived atom, `name_ent-abc` (NAME_ENT, no frame, no catalog line; it builds as candidate-only). When the catalog row for `ABC` is added, bind it there or with an `extra_atoms` entry.
 
 ## 5. Required sprite widths (English build must widen these entries)
 
 | item | source width | required width | note |
 |---|---|---|---|
 | `exam-0001` | 8 | 32 | points |
-| `option-label-0103` | 56 | 71 | Kiyokawa Nozomi; 5 tiles of 16 (source 4) |
-| `option-label-0104` | 56 | 71 | Kiyokawa Nozomi; 5 tiles of 16 (source 4) |
-| `option-label-0113` | 70 | 82 | Tatebayashi Miharu; 6 tiles of 16 (source 5) |
-| `option-label-0114` | 70 | 82 | Tatebayashi Miharu; 6 tiles of 16 (source 5) |
+| `option-label-0103` | 56 | 72 | Kiyokawa Nozomi; 5 tiles of 16 (source 4) |
+| `option-label-0104` | 56 | 72 | Kiyokawa Nozomi; 5 tiles of 16 (source 4) |
+| `option-label-0113` | 70 | 83 | Tatebayashi Miharu; 6 tiles of 16 (source 5) |
+| `option-label-0114` | 70 | 83 | Tatebayashi Miharu; 6 tiles of 16 (source 5) |
 | `name-label-0015` | 32 | 56 | Hiragana |
 | `name-label-0016` | 32 | 56 | Hiragana |
 | `name-label-0017` | 32 | 56 | Katakana |
@@ -87,10 +87,12 @@ Result: every frame pair 0063..0090 binds to the row that names the person drawn
 | `name-label-0022` | 32 | 56 | Kanji |
 | `name-label-0023` | 32 | 56 | Done |
 | `name-label-0024` | 32 | 56 | Done |
+| `name-label-abc.unlit` | 32 | 56 | ABC |
+| `name-label-abc.lit` | 32 | 56 | ABC |
 
 - `exam-0001`: `points` is 25 texels of ink plus a 1 texel left margin; the cell is drawn 32 wide (8-texel multiple). The rest of the score cells stay 8x16, so the build must place the suffix cell with 32 texels of advance (or 26 minimum).
 - `name-label-0015..0024`: all ten selector cells 56x16 (outline stretched, interior transparent); the selector positions need 24 more texels each.
-- `filesel-page-information-0`: the `system-tab` region in `filesel_page_regions.json` must become `[17, 88, 42, 11]` (was `[17, 88, 39, 11]`): the word is shifted right two texels, and the three extra columns are white tab interior in the source.
+- `filesel-page-information-0`: the `system-tab` region in `filesel_page_regions.json` is now `[17, 88, 42, 11]` (was `[17, 88, 39, 11]`): the word is shifted right two texels, and the three extra columns are white tab interior in the source. Done in this pass: `tools/translation_filesel_indexed.py` reserves the rect (`reserve` on the system-tab item) and the region map, the `T39004-filesel-v4` manifest `page_regions_sha256`, its edit regions and the ledger `manifest_sha256` pins were regenerated (PNG outputs unchanged). The build refuses a region map without it.
 
 ## 6. OPTION.NBN texture room
 
@@ -106,9 +108,48 @@ Counted from the sprite parts of the restored OPTION.NBN (16x16 cells over four 
 - `title-0001..0004`: bold skeleton capitals, 3 texel stroke, rows 2-13 with a 1 texel dark outline (rows 1-14, as the Japanese), per-row gradient sampled from the Japanese lettering (grey on 0002/0004, blue on 0001/0003). Highlighted frames keep the slab pixels untouched and the slab hides the lower rows exactly as it hides the Japanese (only the top eight fill rows show).
 - `catalog-127`: one-line `ALL CLEAR CONGRATULATIONS!`, 18 rows tall, stroke 3, centred with 15 texel margins; page 5 crop now holds the tail and the exclamation mark. Indexed gates pass (`english_container_sha256` in the manifest).
 - `exam-0001`: `points` (menu face, source pink, no shadow like the source) and the `pt` fallback.
-- `option-label-0063/0064/0079/0080`: respelled; `0103/0104/0113/0114`: full names (widened).
-- `name-label-0015..0024`: `Hiragana`, `Katakana`, `Symbols`, `Kanji`, `Done` in unlit and lit states, centred, at least 3 texels clear of the outline.
+- `option-label-0063/0064/0079/0080`: respelled; `0103/0104/0113/0114`: full names (widened, one clear texel right of the shadow column).
+- `name-label-0015..0024`: `Hiragana`, `Katakana`, `Symbols`, `Kanji`, `Done` in unlit and lit states, centred, at least 3 texels clear of the outline; one extra texel between H and i (the H shadow had closed the gap; the same for A-B and B-C in ABC). `name-label-abc.unlit/.lit`: `ABC`, same cell, face and colours (outline and colours of frames 15 / 16).
 - `filesel-frame-20.base`: given-name buttons in the tight face, glyphs unscaled, 2 or more texels clear of each face edge, nothing in the bevel rows.
 - `filesel-frame-19.base`: Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress in the same face; `Stats` header as before.
 - `filesel-page-information-0`: System tab word moved right two texels (ink starts at x=19; the Japanese ink touched x=17).
-- `kasetu-0`: title `Scavenger Race`, same face and centring as before; body text unchanged.
+- `kasetu-0`: title `SCAVENGER RACE` as outlined capitals (one-texel paper strokes, dark outline), rows 41-54 and letter-spaced like the outlined Japanese title; body text unchanged.
+
+## 9. Transparency and STP
+
+Checked for every PNG of both folders against the `.stp.png` mask exported beside its source (bit 15 of the texel word after the runtime palette load):
+
+| source | STP in the source | items |
+|---|---|---|
+| `exam.frame-01` | clear on every texel | `exam-0001` |
+| `filesel.frame-19.base` | clear on every texel | `filesel-frame-19.base` |
+| `filesel.frame-20.base` | clear on every texel | `filesel-frame-20.base` |
+| `filesel.source-page-information-0` | clear on every texel | `filesel-page-information-0` |
+| `kasetu.instruction-card-0` | set on every texel | `kasetu-0` |
+| `name.frame-15` | clear on every texel | `name-label-0015`, `name-label-abc.unlit` |
+| `name.frame-16` | clear on every texel | `name-label-0016`, `name-label-abc.lit` |
+| `name.frame-17` | clear on every texel | `name-label-0017` |
+| `name.frame-18` | clear on every texel | `name-label-0018` |
+| `name.frame-19` | clear on every texel | `name-label-0019` |
+| `name.frame-20` | clear on every texel | `name-label-0020` |
+| `name.frame-21` | clear on every texel | `name-label-0021` |
+| `name.frame-22` | clear on every texel | `name-label-0022` |
+| `name.frame-23` | clear on every texel | `name-label-0023` |
+| `name.frame-24` | clear on every texel | `name-label-0024` |
+| `option.frame-063` | clear on every texel | `option-label-0063` |
+| `option.frame-064` | clear on every texel | `option-label-0064` |
+| `option.frame-079` | clear on every texel | `option-label-0079` |
+| `option.frame-080` | clear on every texel | `option-label-0080` |
+| `option.frame-103` | clear on every texel | `option-label-0103` |
+| `option.frame-104` | clear on every texel | `option-label-0104` |
+| `option.frame-113` | clear on every texel | `option-label-0113` |
+| `option.frame-114` | clear on every texel | `option-label-0114` |
+| `title.frame-01` | clear on every texel | `title-0001` |
+| `title.frame-02` | clear on every texel | `title-0002` |
+| `title.frame-03` | clear on every texel | `title-0003` |
+| `title.frame-04` | clear on every texel | `title-0004` |
+
+- Transparent texels are BGR555 word `0x0000` (alpha 0) with STP clear, as in every source; the widened cells add only transparent texels.
+- No source and no English output uses opaque black, so no `0x8000` word is needed; every opaque English colour has exactly one STP value in its source, so mapping colours back to the source CLUT gives every texel the source STP bit (clear everywhere except the KASETU card, where the source export sets it on every texel and so must the English card).
+- `catalog-127` (ALL_C): only indices the source strip already uses, palette unchanged; indices 6, 36, 37, 38, 39, 67, 69, 70, 71, 146, 148, none word 0, STP clear on all.
+- The build fails if an output breaks any of these (`stp_audit`); each manifest item records its counts under `stp`.

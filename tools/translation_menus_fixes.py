@@ -11,7 +11,12 @@ One reproducible build for the nine items of the owner/reviewer fix pass:
 6. filesel-frame-20   given-name buttons in a narrower undistorted face
 7. filesel-page-information-0   System tab left margin
 8. filesel-frame-19   stat names (approved set)
-9. kasetu-0           sports card title `Scavenger Race`
+9. kasetu-0           sports card title `Scavenger Race` (outlined capitals)
+10. name-label-abc.*  selector label of the English letter page (new cell)
+
+Second pass (same checkpoint): Hiragana kerning, `Sym` fallback, 1 texel right margin on
+the widened option sprites, the registered System tab region, and a transparency/STP audit
+of every output against the source `.stp.png` masks.
 
 Run in the Pillow tooling image with the disc extracted and the original-image
 exports restored under --sources (the same `original-*-v1` folders the other
@@ -22,11 +27,11 @@ English PNGs, the manifest, ledger.json and REGISTER.md into the checkpoint.
 Lettering sources, all port-made and recorded as such:
 
 * `bold`: the single-stroke skeleton capitals of translation_bs_font.py stroked
-  at a weight chosen per item (title screen, ALL_C banner);
+  at a weight chosen per item (title screen, ALL_C banner), or outlined (sports card title);
 * `tight`: a 3-texel lowercase / 4-texel capital face authored below for the
   narrow button faces of FILESEL (undistorted; never a squashed wide face);
 * `menu9`/`native`: the existing recovered menu face and the unscaled game font
-  (option cast names, exam suffix, sports title).
+  (option cast names, exam suffix, name-entry labels; the FILESEL `Stats` header).
 
 Every output keeps the original palette: no colour outside the original image
 is introduced, and pixels outside the declared edit regions are unchanged.
@@ -325,18 +330,24 @@ class Face:
     def advance(self, character, gap=1):
         return self.space if character == ' ' else self.glyph(character)['width'] + gap
 
-    def width(self, text, gap=1):
+    @staticmethod
+    def kerning(text, kern):
+        """Extra texels after each letter: kern maps a letter pair to the texels added between them."""
+        kern = kern or {}
+        return [kern.get(text[i:i + 2], 0) for i in range(len(text))]
+
+    def width(self, text, gap=1, kern=None):
         """Ink width: the advances without the gap after the last letter."""
         if not text:
             return 0
-        return sum(self.advance(c, gap) for c in text) - (0 if text[-1] == ' ' else gap)
+        return sum(self.advance(c, gap) + k for c, k in zip(text, self.kerning(text, kern))) - (0 if text[-1] == ' ' else gap)
 
-    def points(self, text, left, top, gap=1):
+    def points(self, text, left, top, gap=1, kern=None):
         points = []
-        for character in text:
+        for character, extra in zip(text, self.kerning(text, kern)):
             if character != ' ':
                 points.extend((left + x, top + y) for x, y in self.glyph(character)['points'])
-            left += self.advance(character, gap)
+            left += self.advance(character, gap) + extra
         return points
 
 
@@ -414,6 +425,7 @@ OPTION_CAST = {
 OPTION_FIXED = {63: OPTION_CAST[63], 79: OPTION_CAST[79], 103: 'Kiyokawa Nozomi', 113: 'Tatebayashi Miharu'}
 OPTION_SHADOW = (24, 24, 24, 255)
 OPTION_TEXT_ROWS = 12     # rows 0-11 hold the lettering, rows 12-15 stay as in the source
+OPTION_RIGHT_MARGIN = 1   # clear texels after the shadow column when a sprite is widened
 
 
 def option_ink(pixel):
@@ -432,8 +444,8 @@ def option_label(original, text, face):
     palette = [colors[round(i * 10 / 8)] for i in range(9)]
     top = baseline - 8
     advance = sum(face.advance(c) for c in text)
-    ink_right = left + advance - 1            # last ink column + 1 (the trailing gap is not ink)
-    needed = max(original.width, ink_right + 1)   # +1: shadow column
+    ink_right = left + advance - 1            # last ink column + 1 = the shadow column (the trailing gap is not ink)
+    needed = max(original.width, ink_right + 1 + OPTION_RIGHT_MARGIN)
     result = Image.new('RGBA', (needed, original.height), TRANSPARENT)
     result.paste(original.crop((0, OPTION_TEXT_ROWS, original.width, original.height)), (0, OPTION_TEXT_ROWS))
     letters = []
@@ -474,9 +486,18 @@ def build_option(sources, face):
 # readable face, so the primary set is 48 wide (the outline stretches, the interior stays
 # transparent); the compact set keeps 32 with the shortest clear forms.
 NAME_LABELS = {15: 'Hiragana', 17: 'Katakana', 19: 'Symbols', 21: 'Kanji', 23: 'Done'}
-NAME_COMPACT = {15: 'Hira', 17: 'Kata', 19: 'Symb', 21: 'Kanji', 23: 'Done'}
+NAME_COMPACT = {15: 'Hira', 17: 'Kata', 19: 'Sym', 21: 'Kanji', 23: 'Done'}
 NAME_WIDE = 56
 NAME_TOP = 3        # glyph box row of the nine-row face: lettering rows 3-11, shadow row 12
+# The (+1,+1) shadow of a full-height right stem lands in the one-texel gap before a left stem,
+# so "Hi" closed up into one shape ("Hlragana") and so did "AB" / "BC"; one extra texel keeps a
+# clear column between them.
+NAME_KERN = {'Hi': 1, 'AB': 1, 'BC': 1}
+# The English letter page the English build adds (and selects by default) has no selector
+# cell in NAME_ENT; its label is drawn in the same cell, face and colours as the others.
+# The unlit and lit states take the outline and colours of frames 15 and 16 (`かな`).
+NAME_NEW = {'abc': ('ABC', 15)}
+NAME_STATES = {0: 'unlit', 1: 'lit'}
 
 
 def name_label(original, text, face, width):
@@ -500,9 +521,9 @@ def name_label(original, text, face, width):
         for y in (0, original.height - 1):
             result.putpixel((x, y), original.getpixel((16, y)))
     inner_left, inner_right = 3, width - 3     # lettering may use columns 3..width-4
-    text_width = face.width(text)
+    text_width = face.width(text, kern=NAME_KERN)
     left = inner_left + (inner_right - inner_left - text_width - 1) // 2   # -1: the shadow column
-    points = face.points(text, left, NAME_TOP)
+    points = face.points(text, left, NAME_TOP, kern=NAME_KERN)
     for x, y in points:
         if not (inner_left <= x + 1 < inner_right and 1 <= y and y + 1 <= original.height - 2):
             raise ValueError('name label touches the frame: ' + text)
@@ -513,7 +534,8 @@ def name_label(original, text, face, width):
     margins = {'left': left - inner_left, 'right': inner_right - (left + text_width + 1)}
     return result, {'text': text, 'ink_rgba': list(ink), 'shadow_rgba': list(shadow), 'frame_rgba': list(frame_color),
                     'text_width': text_width, 'margins_to_frame': margins, 'required_width': width,
-                    'source_width': original.width, 'lit': ink[0] > 200}
+                    'source_width': original.width, 'lit': ink[0] > 200,
+                    'kerning': {pair: n for pair, n in NAME_KERN.items() if pair in text}}
 
 
 def build_name_labels(sources, face):
@@ -526,6 +548,24 @@ def build_name_labels(sources, face):
                 result, facts = name_label(original, text, face, width)
                 out.append((record_id('name-label', frame), result, original, path,
                             {'frame': frame, 'variant': variant, 'source_container_sha256': NAME_SOURCE_SHA, **facts}))
+    return out
+
+
+def build_name_new_labels(sources, face):
+    """Selector labels for pages the English build adds (no source cell): `name-label-<key>.<state>`."""
+    out = []
+    for key, (text, odd) in NAME_NEW.items():
+        for width, variant in ((NAME_WIDE, 'wide'), (32, 'compact')):
+            for step, state in NAME_STATES.items():
+                frame = odd + step
+                path = sources / 'original-name-v1' / ('name.frame-%02d.png' % frame)
+                original = load(path)
+                result, facts = name_label(original, text, face, width)
+                if facts['lit'] != (state == 'lit'):
+                    raise ValueError('name label state differs from its outline frame: %s %d' % (state, frame))
+                out.append(('name-label-%s.%s' % (key, state), result, original, path,
+                            {'frame': None, 'outline_from_frame': frame, 'state': state, 'variant': variant, 'new_cell': True,
+                             'source_container_sha256': NAME_SOURCE_SHA, **facts}))
     return out
 
 
@@ -611,9 +651,16 @@ def build_filesel(sources, face, font):
 
 
 # --- 7. FILESEL information page 0: System tab ----------------------------------------------
-SYSTEM_TAB_SOURCE_RECT = [17, 88, 39, 11]     # the registered region (filesel_page_regions.json, `system-tab`)
+SYSTEM_TAB_WORD_RECT = [17, 88, 39, 11]       # the box the v4 build lettered `System` in
 SYSTEM_TAB_RECT = [17, 88, 42, 11]            # widened by the shift: the tab interior is white there in the source
 SYSTEM_TAB_SHIFT = 2        # the source ink starts 0-1 texels from the tab edge and clips; two clear texels now
+REGIONS = ROOT / 'translations/en/graphics/filesel_page_regions.json'
+
+
+def registered_system_tab(regions_path=REGIONS):
+    """The `system-tab` page rect of the committed region map (written by translation_filesel_indexed)."""
+    region = [r for r in json.loads(Path(regions_path).read_text())['regions'] if r['id'] == 'system-tab'][0]
+    return [piece['rect'] for piece in region['page_rects'] if piece['page'] == 0][0]
 
 
 def build_page_information(sources, checkpoint_root=ARTWORK / 'checkpoints/T39004-filesel-v4/filesel-indexed-v4'):
@@ -621,10 +668,12 @@ def build_page_information(sources, checkpoint_root=ARTWORK / 'checkpoints/T3900
     original = load(path)
     english_path = checkpoint_root / 'source-page-information-0.png'
     english = load(english_path)
+    if registered_system_tab() != SYSTEM_TAB_RECT:
+        raise ValueError('filesel_page_regions.json does not register the widened System tab region')
     x, y, w, h = SYSTEM_TAB_RECT
     white = (255, 255, 255, 255)
     if any(original.getpixel((x + i, y + j)) != white or english.getpixel((x + i, y + j)) != white
-           for i in range(SYSTEM_TAB_SOURCE_RECT[2], w) for j in range(h)):
+           for i in range(SYSTEM_TAB_WORD_RECT[2], w) for j in range(h)):
         raise ValueError('the widened System tab region is not clear white')
     region = english.crop((x, y, x + w, y + h))
     ink = [(i, j) for j in range(h) for i in range(w) if region.getpixel((i, j)) != white]
@@ -638,18 +687,38 @@ def build_page_information(sources, checkpoint_root=ARTWORK / 'checkpoints/T3900
         result.putpixel((x + i + SYSTEM_TAB_SHIFT, y + j), region.getpixel((i, j)))
     left_before = x + min(i for i, j in ink)
     return [('filesel-page-information-0', result, original, path, {
-        'source_container_sha256': FILESEL_SOURCE_SHA, 'page': 0, 'region': SYSTEM_TAB_RECT, 'registered_region': SYSTEM_TAB_SOURCE_RECT, 'shift': SYSTEM_TAB_SHIFT,
+        'source_container_sha256': FILESEL_SOURCE_SHA, 'page': 0, 'region': SYSTEM_TAB_RECT, 'registered_region': registered_system_tab(), 'word_rect_before_shift': SYSTEM_TAB_WORD_RECT, 'shift': SYSTEM_TAB_SHIFT,
         'ink_left_before': left_before, 'ink_left_after': left_before + SYSTEM_TAB_SHIFT, 'base_draft': 'T39004-filesel-v4',
         'base_draft_sha256': digest(english_path.read_bytes())})]
 
 
 # --- 9. sports card title (kasetu-0) -------------------------------------------------------------
+# The Japanese title 借り物競走説明 is outlined lettering: 1 texel dark strokes round a paper
+# interior, 14 rows tall (rows 41-54), letter-spaced across x 89-229. The English title copies
+# that: skeleton capitals one texel wide left in paper, outlined (8-neighbour) in the dark ink.
 SPORTS_TITLE = 'Scavenger Race'
+SPORTS_LETTERING = 'SCAVENGER  RACE'     # capitals; a double space keeps the word gap wider than the letter gap
 SPORTS_HEADING = [56, 40, 208, 16]
+SPORTS_TOP, SPORTS_HEIGHT, SPORTS_STROKE = 42, 12, 1.0     # centre-line box: outline rows 41-54, as the Japanese
+SPORTS_ASPECT, SPORTS_GAP = 0.8, 6.5
 
 
-def build_sports(sources, font, draft=OLD / 'sports-drafts-v2/kasetu-0.png'):
-    """The existing kasetu-0 draft with only its heading re-lettered (same face, same centring)."""
+def sports_title_mask(shape, region):
+    """(outline, interior) masks of the outlined capitals, centred in the heading region."""
+    left, top, width, height = region
+    cap = SPORTS_HEIGHT - SPORTS_STROKE
+    length = int(round(skeleton.text_units(SPORTS_LETTERING, SPORTS_GAP) * cap / skeleton.CAP * SPORTS_ASPECT + SPORTS_STROKE))
+    x0 = left + (width - length) // 2
+    fill = bold_mask(shape, SPORTS_LETTERING, x0, SPORTS_TOP, length, SPORTS_HEIGHT, SPORTS_STROKE, aspect=SPORTS_ASPECT, gap=SPORTS_GAP)
+    outline = dilate(fill) & ~fill
+    bx0, by0, bx1, by1 = ink_box(outline)
+    if bx0 < left or by0 < top or bx1 > left + width or by1 > top + height:
+        raise ValueError('sports title leaves its heading region')
+    return outline, fill
+
+
+def build_sports(sources, draft=OLD / 'sports-drafts-v2/kasetu-0.png'):
+    """The existing kasetu-0 draft with only its heading re-lettered (outlined capitals, centred)."""
     path = sources / 'sports-kasetu' / 'kasetu.instruction-card-0.png'
     original = load(path)
     english = load(draft)
@@ -658,20 +727,61 @@ def build_sports(sources, font, draft=OLD / 'sports-drafts-v2/kasetu-0.png'):
     paper = Counter(region).most_common(1)[0][0]
     inks = Counter(c for c in region if c != paper)
     ink = inks.most_common(1)[0][0]
+    source_region = Counter(original.getpixel((x, y)) for y in range(top, top + height) for x in range(left, left + width))
+    if source_region.most_common(2)[1][0] != ink:
+        raise ValueError('sports title ink is not the Japanese outline colour')
     result = english.copy()
     result.paste(paper, (left, top, left + width, top + height))
-    x = left + (width - font.width(SPORTS_TITLE)) // 2
-    for character in SPORTS_TITLE:
-        glyph = font.glyph(character)
-        for dx, dy in glyph['points']:
-            result.putpixel((x + dx, top + dy), ink)
-        x += glyph['width'] + 1
+    outline, fill = sports_title_mask((result.height, result.width), SPORTS_HEADING)
+    put(result, outline, ink)
     if not colors_of(result) <= colors_of(original):
         raise ValueError('sports title colour outside the card')
+    x0, y0, x1, y1 = ink_box(outline)
     return [('kasetu-0', result, original, path, {
-        'source_container_sha256': SPORTS_SOURCE_SHA, 'text': SPORTS_TITLE, 'heading_region': SPORTS_HEADING,
-        'ink_rgba': list(ink), 'paper_rgba': list(paper), 'base_draft': 'T39004-2026-10-29/sports-drafts-v2',
+        'source_container_sha256': SPORTS_SOURCE_SHA, 'text': SPORTS_TITLE, 'lettering': SPORTS_LETTERING.replace('  ', ' '),
+        'heading_region': SPORTS_HEADING, 'title_ink_box': [x0, y0, x1 - x0, y1 - y0], 'lettering_style': 'outlined capitals',
+        'stroke': SPORTS_STROKE, 'ink_rgba': list(ink), 'paper_rgba': list(paper), 'base_draft': 'T39004-2026-10-29/sports-drafts-v2',
         'base_draft_sha256': digest(draft.read_bytes())})]
+
+
+# --- transparency and STP ---------------------------------------------------------------------
+# Every source export has a `.stp.png` beside it: the bit-15 (semi-transparency) mask of the
+# texel's CLUT word after the runtime palette load, 255 where STP is set. Transparent texels
+# are BGR555 word 0 (alpha 0 in the PNG). The English art is RGBA in source colours only, so
+# the build gets each texel's word, and with it the STP bit, by mapping the colour back to the
+# source CLUT. That is only sound when every colour the English uses has one STP value in the
+# source, and when no opaque black is drawn (it would need word 0x8000, which none of these
+# palettes holds). This audit proves both for every output and records the result.
+
+def stp_audit(source_path, image):
+    stp_path = source_path.with_name(source_path.name[:-4] + '.stp.png')
+    original = load(source_path)
+    mask = Image.open(stp_path).convert('L')
+    if mask.size != original.size:
+        raise ValueError('STP mask size differs: ' + stp_path.name)
+    by_color = {}
+    for pixel, bit in zip(original.getdata(), mask.getdata()):
+        by_color.setdefault(pixel if pixel[3] else TRANSPARENT, set()).add(bit)
+    if by_color.get(TRANSPARENT, {0}) != {0}:
+        raise ValueError('source transparent texels carry STP: ' + stp_path.name)
+    source_bits = set(mask.getdata())
+    counts = Counter()
+    for pixel in image.getdata():
+        if not pixel[3]:
+            counts['transparent'] += 1
+            continue
+        if pixel[:3] == (0, 0, 0):
+            raise ValueError('opaque black needs an STP-only word: ' + source_path.name)
+        bits = by_color.get(pixel)
+        if not bits:
+            raise ValueError('colour outside the source: %r' % (pixel,))
+        if len(bits) != 1:
+            raise ValueError('colour with two STP values in the source: %r' % (pixel,))
+        counts['stp_set' if bits == {255} else 'stp_clear'] += 1
+    return {'source_stp_mask': stp_path.name, 'source_stp': {frozenset({0}): 'clear on every texel', frozenset({255}): 'set on every texel'}.get(
+                frozenset(source_bits), 'mixed (per colour)'),
+            'transparent_texels': counts['transparent'], 'opaque_stp_set_texels': counts['stp_set'], 'opaque_stp_clear_texels': counts['stp_clear'],
+            'opaque_black_texels': 0, 'rule': 'transparent = word 0x0000 (STP clear); every opaque colour maps to one source CLUT word, STP bit as the source'}
 
 
 # --- fallbacks (same cell sizes as the source) ------------------------------------------------
@@ -691,7 +801,7 @@ def build_fallbacks(sources, faces):
     for row in build_exam(sources, faces):
         if row[0].endswith('-fallback'):
             out.append(('exam', 'exam-0001', *row[1:4], {**row[4], 'fallback_for': 'points'}))
-    for row in build_name_labels(sources, faces['menu9']):
+    for row in build_name_labels(sources, faces['menu9']) + build_name_new_labels(sources, faces['menu9']):
         if row[4]['variant'] == 'compact':
             out.append(('name-label', row[0], *row[1:4], {**row[4], 'fallback_for': 'wide selector labels'}))
     return out
@@ -747,7 +857,11 @@ def allc_container(disc_root, strip_english, strip_original):
         failures.append('palette index absent from the source strip')
     if failures:
         raise ValueError('ALL_C draft rejected: ' + '; '.join(failures))
+    stp = {str(index): bool(words[index] & 0x8000) for index in sorted(set(chosen.values()))}
+    if any(stp.values()) or any(words[index] == 0 for index in chosen.values()):
+        raise ValueError('ALL_C banner index is transparent or semi-transparent')
     return {'english_container_sha256': digest(english), 'palette_indices': {'%d,%d,%d' % k: v for k, v in sorted(chosen.items())},
+            'stp': {'index_stp_bit': stp, 'rule': 'only indices the source strip already uses, palette unchanged: every texel keeps its source word; none is word 0 or has STP set'},
             'checks': ['indices outside strip unchanged', 'only indices already in the source strip',
                        'palette and trailer bytes unchanged', 'file size unchanged']}
 
@@ -801,6 +915,8 @@ LETTERING = {
                'description': 'port-made 3-texel lowercase / 4-texel capital face (tools/translation_menus_fixes.py), unscaled, ink 16 on the paper face'}],
     'native': [{'element': 'lettering', 'face': 'native', 'kind': 'lettering',
                 'description': 'unscaled native game font, centred, same ink as the existing draft'}],
+    'sports': [{'element': 'lettering', 'face': 'port-skeleton-gothic', 'kind': 'lettering',
+                'description': 'single-stroke skeleton capitals one texel wide left in the card paper and outlined (8-neighbour) in the dark ink of the Japanese title, rows 41-54 like the outlined kanji; body text of the existing draft unchanged'}],
     'page': [{'element': 'lettering', 'face': 'native', 'kind': 'shift',
               'description': 'the existing System word moved right by two texels inside the tab; no glyph redrawn'}],
 }
@@ -823,10 +939,11 @@ def build(sources, output, disc_root=ROOT / 'disc/files'):
 
     def add(item_id, image, original, path, facts, face, name, folder=primary, collection=None, ledger_extra=None):
         sha = write_png(image, root / folder / name)
-        box = changed_box(original, image) if image.size == original.size else None
+        box = changed_box(original, image) if image.size == original.size and not facts.get('new_cell') else None
         record = {'id': item_id, 'output': name, 'output_sha256': sha, 'dimensions': list(image.size),
                   'source_png': str(path.relative_to(sources)), 'source_png_sha256': digest(path.read_bytes()), 'edit_box': box,
-                  'face': face, 'style': 'unreviewed', 'runtime_integrated': False, 'in_game_verified': False, **facts}
+                  'face': face, 'style': 'unreviewed', 'runtime_integrated': False, 'in_game_verified': False, **facts,
+                  'stp': stp_audit(path, image)}
         (collection if collection is not None else items).append(record)
         return record
 
@@ -849,7 +966,7 @@ def build(sources, output, disc_root=ROOT / 'disc/files'):
                    'palette_id': 'source-offset-0x18000', 'strip_texture_rect': [0, 202, ALLC_WIDTH, ALLC_ROWS],
                    'paper_index': 6, 'lettering': {'runs': runs, 'cap_rows': ALLC_HEIGHT, 'stroke': ALLC_STROKE, 'top_row': ALLC_ROW0 + ALLC_TOP,
                                                    'aspect': ALLC_ASPECT, 'strip_rows': [ALLC_TOP, ALLC_TOP + ALLC_HEIGHT - 1]},
-                   'palette_indices': gates['palette_indices'], 'edit_regions': page_rows, 'gates_passed': True, 'checks': gates['checks'],
+                   'palette_indices': gates['palette_indices'], 'stp': gates['stp'], 'edit_regions': page_rows, 'gates_passed': True, 'checks': gates['checks'],
                    'palette_note': 'blue/red/purple of the Japanese lettering kept (the strip holds no gold index); runtime composition not verified',
                    'runtime_composition_verified': False, 'style': 'unreviewed', 'human_approved': False,
                    'runtime_integrated': False, 'in_game_verified': False}
@@ -862,7 +979,7 @@ def build(sources, output, disc_root=ROOT / 'disc/files'):
     for item_id, image, original, path, facts in build_option(sources, menu9):
         add(item_id, image, original, path, facts, 'menu9', item_id + '.png')
     # 5 name labels
-    for item_id, image, original, path, facts in build_name_labels(sources, menu9):
+    for item_id, image, original, path, facts in build_name_labels(sources, menu9) + build_name_new_labels(sources, menu9):
         if facts['variant'] == 'wide':
             add(item_id, image, original, path, facts, 'menu9', item_id + '.png')
     # 6, 8 filesel buttons; 7 information page; 9 sports
@@ -870,8 +987,8 @@ def build(sources, output, disc_root=ROOT / 'disc/files'):
         add(item_id, image, original, path, facts, 'tight', item_id + '.png')
     for item_id, image, original, path, facts in build_page_information(sources):
         add(item_id, image, original, path, facts, 'native', 'filesel-page-information-0.png')
-    for item_id, image, original, path, facts in build_sports(sources, native):
-        add(item_id, image, original, path, facts, 'native', 'kasetu-0.png')
+    for item_id, image, original, path, facts in build_sports(sources):
+        add(item_id, image, original, path, facts, 'port-skeleton-gothic', 'kasetu-0.png')
 
     fallbacks = []
     for kind, item_id, image, original, path, facts in build_fallbacks(sources, faces):
@@ -902,7 +1019,7 @@ def option_texture_room(sources):
         cells[frame] = used
     ledger = json.loads((ROOT / OLD_LEDGER).read_text())
     width = {int(a['id'][-4:]): a['dimensions'][0] for a in ledger['assets'] if a['id'].startswith('option-label-')}
-    width.update({103: 71, 104: 71, 113: 82, 114: 82})
+    width.update({103: 72, 104: 72, 113: 83, 114: 83})
     # frames that share all their tiles (normal and highlighted state) count once
     groups = {}
     for frame in width:
@@ -968,6 +1085,8 @@ def elements_for(record):
         return LETTERING['tight']
     if item == 'filesel-page-information-0':
         return LETTERING['page']
+    if item == 'kasetu-0':
+        return LETTERING['sports']
     if record['face'] == 'native':
         return LETTERING['native']
     return LETTERING['menu9']
@@ -1032,7 +1151,8 @@ def register_text(manifest, fallback_manifest, refs, room, agreement):
              '- Add `translations/en/graphics/artwork/checkpoints/T39410-menus-fixes-v1/ledger.json` to `LEDGERS`. It holds %d candidates '
              '(%d frame/cell drafts and the ALL_C banner of `catalog-127`, three crops).' % (len(manifest['items']) + 1, len(manifest['items'])),
              '- `fallback-ledger.json` (%d same-size drafts) is not for `LEDGERS`; register it only if the English build cannot widen sprites (sections 5, 6).' % len(fallback_manifest['items']),
-             '- Ids follow the existing candidate patterns (`title-NNNN`, `option-label-NNNN`, `name-label-NNNN`, `exam-0001`, `filesel-frame-N.base`, `filesel-page-information-0`, `kasetu-0`, catalog item `catalog-127`), so `candidate_key` needs no change.', '',
+             '- Ids follow the existing candidate patterns (`title-NNNN`, `option-label-NNNN`, `name-label-NNNN`, `exam-0001`, `filesel-frame-N.base`, `filesel-page-information-0`, `kasetu-0`, catalog item `catalog-127`). '
+             'The new English letter page label has no source frame: `name-label-abc.unlit` / `name-label-abc.lit`; `candidate_key` in `tools/translation_inventory.py` maps `name-label-<page>.<state>` to the NAME_ENT atom `name_ent-<page>` (added in this pass).', '',
              '## 2. Supersedes (declared in `ledger.json`, %d references)' % len(refs), '']
     groups = {}
     for ref in refs:
@@ -1059,13 +1179,17 @@ def register_text(manifest, fallback_manifest, refs, room, agreement):
               '- Rows 92 and 97 (0103/0104, 0113/0114): suggested graphic -> `Kiyokawa Nozomi` (sprite widened to 71) and `Tatebayashi Miharu` (widened to 82); fallback `Kiyokawa` / `Tatebayashi` at the source widths.',
               '- Row 3 (MAINROM 0061 panel) and row 104 (FILESEL 0019): stat names are Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress (rows now say Liberal Arts / Athletics / Lit. / Sci. / Sport / Condition). "Hum." was not needed on the FILESEL buttons: `Humanities` fits (38 of 43 texels). MAINROM 0061 and the text dictionary are outside this checkpoint.',
               '- Row 104 heroine buttons: Option A (given names) is what the art uses; Option B is retired.',
-              '- Rows 107-111 (name selector labels): english Hiragana / Katakana / Symbols / Kanji / Done; suggested graphic `56x16` full words (fallback `32x16`: Hira / Kata / Symb / Kanji / Done). There is no Latin/English page selector cell in NAME_ENT frames 15-24; when the English build adds one, "ABC" in the same cell, face and colours is the consistent form.',
+              '- Rows 107-111 (name selector labels): english Hiragana / Katakana / Symbols / Kanji / Done; suggested graphic `56x16` full words (fallback `32x16`: Hira / Kata / Sym / Kanji / Done; row 109 edited from `Symb`, which read as cryptic). '
+              'There is no Latin/English page selector cell in NAME_ENT frames 15-24. The English build adds the letter page and selects it by default; its label `ABC` is drawn here (`name-label-abc.unlit` / `.lit`, 56x16, fallback 32x16) in the same cell, face and colours as the other labels. '
+              'The catalog has no row for it: add one under section 4 (`ABC`, new cell, normal / lit) when the build adds the page.',
               '- Rows 113-116 (title): `GAME START` / `OPTIONS` bold outlined lettering at the Japanese height (replace the `112x16` / `80x16` plain-caps note).',
-              '- Row 118 (EXAMINE 0001): english `points`; suggested graphic `points` in a widened cell (see section 5), fallback `pt` in `8x16`.',
-              '- Row 123 (sports KASETU card 0): title `Scavenger Race` (approved; the card text itself says nothing about borrowing). Use the same name wherever the event is named.',
+              '- Row 118 (EXAMINE 0001): english `points`; suggested graphic `points` in a widened cell (see section 5), fallback `pt` in `8x16`. '
+              'Code side: the suffix cell is fixed art, so a score of 1 would read `1 points`. The English build handles the singular (draws `point` / `pt`, or skips the suffix cell for 1); no art change here.',
+              '- Row 123 (sports KASETU card 0): title `Scavenger Race` (owner decision: 借り物競走 / 借りもの競争 is `Scavenger Race` everywhere), drawn as outlined capitals; the row says `(yellow ink 2)` and is edited to the outlined dark ink. '
+              'The script used `Scavenger Hunt` for the same event in `translations/en/supplemental/tai_tx.md` row `0030` and `translations/en/supplemental.jsonl`; both now say `Scavenger Race` (no other instance in `translations/en`).',
               '- Row 127 (ALL_C banner): suggested graphic says bold yellow/gold; the banner keeps the Japanese blue / red / purple, because the strip holds no gold index and the gates allow only indices the strip already uses. Stroke 3 texels, 18 rows tall like the Japanese.', '',
               '## 4. Inventory decisions (`inventory_decisions.json`)', '',
-              '- None required: the ledger ids map to existing atoms, no atom changes status class. If the English build keeps `Hum.` anywhere, record it as an override there, not in art.', '',
+              '- None required for the frame drafts: their ids map to existing atoms and no atom changes status class. If the English build keeps `Hum.` anywhere, record it as an override there, not in art. The two `name-label-abc.*` cells create one candidate-derived atom, `name_ent-abc` (NAME_ENT, no frame, no catalog line; it builds as candidate-only). When the catalog row for `ABC` is added, bind it there or with an `extra_atoms` entry.', '',
               '## 5. Required sprite widths (English build must widen these entries)', '',
               '| item | source width | required width | note |', '|---|---|---|---|']
     for r in widths:
@@ -1074,7 +1198,8 @@ def register_text(manifest, fallback_manifest, refs, room, agreement):
     lines += ['',
               '- `exam-0001`: `points` is %d texels of ink plus a 1 texel left margin; the cell is drawn 32 wide (8-texel multiple). The rest of the score cells stay 8x16, so the build must place the suffix cell with 32 texels of advance (or 26 minimum).' % by_id['exam-0001']['ink_width'],
               '- `name-label-0015..0024`: all ten selector cells 56x16 (outline stretched, interior transparent); the selector positions need 24 more texels each.',
-              '- `filesel-page-information-0`: the `system-tab` region in `filesel_page_regions.json` must become `[17, 88, 42, 11]` (was `[17, 88, 39, 11]`): the word is shifted right two texels, and the three extra columns are white tab interior in the source.', '',
+              '- `filesel-page-information-0`: the `system-tab` region in `filesel_page_regions.json` is now `[17, 88, 42, 11]` (was `[17, 88, 39, 11]`): the word is shifted right two texels, and the three extra columns are white tab interior in the source. '
+              'Done in this pass: `tools/translation_filesel_indexed.py` reserves the rect (`reserve` on the system-tab item) and the region map, the `T39004-filesel-v4` manifest `page_regions_sha256`, its edit regions and the ledger `manifest_sha256` pins were regenerated (PNG outputs unchanged). The build refuses a region map without it.', '',
               '## 6. OPTION.NBN texture room', '',
               'Counted from the sprite parts of the restored OPTION.NBN (16x16 cells over four 128x128 pages): %d cells in total, %d used by sprites, %d free. '
               'The %d English label pairs of the option drafts need %d cells unshared (every English sprite owns its tiles; the Japanese sprites share kanji tiles), '
@@ -1090,12 +1215,26 @@ def register_text(manifest, fallback_manifest, refs, room, agreement):
     lines += ['- `title-0001..0004`: bold skeleton capitals, 3 texel stroke, rows 2-13 with a 1 texel dark outline (rows 1-14, as the Japanese), per-row gradient sampled from the Japanese lettering (grey on 0002/0004, blue on 0001/0003). Highlighted frames keep the slab pixels untouched and the slab hides the lower rows exactly as it hides the Japanese (only the top eight fill rows show).',
               '- `catalog-127`: one-line `ALL CLEAR CONGRATULATIONS!`, 18 rows tall, stroke 3, centred with 15 texel margins; page 5 crop now holds the tail and the exclamation mark. Indexed gates pass (`english_container_sha256` in the manifest).',
               '- `exam-0001`: `points` (menu face, source pink, no shadow like the source) and the `pt` fallback.',
-              '- `option-label-0063/0064/0079/0080`: respelled; `0103/0104/0113/0114`: full names (widened).',
-              '- `name-label-0015..0024`: `Hiragana`, `Katakana`, `Symbols`, `Kanji`, `Done` in unlit and lit states, centred, at least 3 texels clear of the outline.',
+              '- `option-label-0063/0064/0079/0080`: respelled; `0103/0104/0113/0114`: full names (widened, one clear texel right of the shadow column).',
+              '- `name-label-0015..0024`: `Hiragana`, `Katakana`, `Symbols`, `Kanji`, `Done` in unlit and lit states, centred, at least 3 texels clear of the outline; one extra texel between H and i (the H shadow had closed the gap; the same for A-B and B-C in ABC). `name-label-abc.unlit/.lit`: `ABC`, same cell, face and colours (outline and colours of frames 15 / 16).',
               '- `filesel-frame-20.base`: given-name buttons in the tight face, glyphs unscaled, 2 or more texels clear of each face edge, nothing in the bevel rows.',
               '- `filesel-frame-19.base`: Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress in the same face; `Stats` header as before.',
               '- `filesel-page-information-0`: System tab word moved right two texels (ink starts at x=19; the Japanese ink touched x=17).',
-              '- `kasetu-0`: title `Scavenger Race`, same face and centring as before; body text unchanged.', '']
+              '- `kasetu-0`: title `SCAVENGER RACE` as outlined capitals (one-texel paper strokes, dark outline), rows 41-54 and letter-spaced like the outlined Japanese title; body text unchanged.', '',
+              '## 9. Transparency and STP', '',
+              'Checked for every PNG of both folders against the `.stp.png` mask exported beside its source (bit 15 of the texel word after the runtime palette load):', '',
+              '| source | STP in the source | items |', '|---|---|---|']
+    groups = {}
+    for r in manifest['items'] + fallback_manifest['items']:
+        groups.setdefault((r['stp']['source_stp_mask'][:-len('.stp.png')], r['stp']['source_stp']), []).append(r['id'])
+    for (source, rule), ids in sorted(groups.items()):
+        lines.append('| `%s` | %s | %s |' % (source, rule, ', '.join('`%s`' % i for i in sorted(set(ids)))))
+    allc = manifest['indexed_assets'][0]['stp']
+    lines += ['',
+              '- Transparent texels are BGR555 word `0x0000` (alpha 0) with STP clear, as in every source; the widened cells add only transparent texels.',
+              '- No source and no English output uses opaque black, so no `0x8000` word is needed; every opaque English colour has exactly one STP value in its source, so mapping colours back to the source CLUT gives every texel the source STP bit (clear everywhere except the KASETU card, where the source export sets it on every texel and so must the English card).',
+              '- `catalog-127` (ALL_C): only indices the source strip already uses, palette unchanged; indices %s, none word 0, STP clear on all.' % ', '.join(sorted(allc['index_stp_bit'], key=int)),
+              '- The build fails if an output breaks any of these (`stp_audit`); each manifest item records its counts under `stp`.', '']
     return '\n'.join(lines)
 
 

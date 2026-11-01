@@ -19,7 +19,7 @@ DECISIONS = subject.ROOT / 'translations/en/graphics/decisions/filesel.json'
 EXPECTED_EDIT_REGIONS = {
     'filesel-frame-0.base': [[1, 1, 40, 16]], 'filesel-frame-1.base': [[4, 1, 40, 16]],
     'filesel-frame-2.base': [[1, 12, 40, 16]], 'filesel-frame-3.base': [[4, 12, 40, 16]],
-    'filesel-page-information-0': [[120, 45, 8, 11], [121, 61, 7, 11], [121, 77, 7, 11], [121, 95, 7, 11], [17, 88, 39, 11],
+    'filesel-page-information-0': [[120, 45, 8, 11], [121, 61, 7, 11], [121, 77, 7, 11], [121, 95, 7, 11], [17, 88, 42, 11],
                                    [17, 25, 40, 16], [60, 25, 40, 16], [17, 44, 40, 16], [60, 44, 40, 16]],
     'filesel-page-information-1': [[0, 45, 36, 11], [0, 61, 39, 11], [89, 28, 11, 11], [120, 28, 8, 11], [0, 77, 37, 11], [0, 95, 59, 11]],
     'filesel-page-information-2': [[0, 28, 3, 11], [24, 28, 8, 11], [5, 95, 11, 11]],
