@@ -65,6 +65,11 @@ the frame and not translated.
 | `bs-d-24-03-ticket-plaque-v2` | Unchanged: TICKETS does not fit. The face is 20 px wide; seven 3 px letters with 1 px gaps need 25 px, and the skeleton face at 18 px gives 2.6 px a letter, which does not read. |
 | `bs-d-15-03-monument-v2` | Unchanged (CENTRAL / CITY ART / MUSEUM, owner). |
 
+Third pass (final reviewer nits): monument remnant left of CENTRAL (top of 市, x 229-234) force-erased and refilled
+without grain; LOVELY SHOP narrowed (2 px L, 2 px word space) to 3 px clear at each end; gate plate letters enlarged
+(cap 13.5, leading 14; ink at least 6.7 px from every plate edge) with A-T and V-A kerning (PRIVATE); P_01_03 sky at the
+cut left-edge glyph refilled without grain (no streaks). New erase key `smooth` (rectangles filled without donor grain).
+
 ## 5. P_01_02 student names: not done, with evidence
 
 The board names are family and given names of about 5 x 6 px per character, blurred together at the macroblock level;

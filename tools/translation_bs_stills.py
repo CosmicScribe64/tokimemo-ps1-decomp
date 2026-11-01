@@ -57,16 +57,47 @@ BRUSH = {'entry': 0.35, 'taper': 0.6, 'contrast': 0.5, 'wobble': 0.14}
 PLATE_ERASE = {'polarity': 'dark', 'threshold': 12, 'margin': 1}
 
 
-def natural_length(text, cap, aspect, gap):
+# Pair kerning in glyph units for runs with `kern` (the skeleton face sets every pair the same, which leaves a hole
+# between a slanted leg and a crossbar: PRIVATE read as PRIVA TE).
+KERN = {('A', 'T'): -2.4, ('T', 'A'): -2.4, ('A', 'V'): -1.6, ('V', 'A'): -1.6}
+
+
+def text_units(text, gap, kern=False):
+    """font.text_units plus the KERN adjustments when `kern`."""
+    units = font.text_units(text, gap)
+    return units + (sum(KERN.get(pair, 0.0) for pair in zip(text, text[1:])) if kern else 0.0)
+
+
+def kerned_strokes(text, length, cap, aspect, gap):
+    """font.strokes_for with KERN applied: (local poly-lines, extent facts)."""
+    units = text_units(text, gap, True)
+    sy = cap / font.CAP
+    sx = min(sy * aspect, length / units)
+    start = (length - units * sx) / 2.0
+    cursor, lines = start, []
+    for i, ch in enumerate(text):
+        if ch == ' ':
+            cursor += font.SPACE * sx
+            continue
+        width, parts = font.GLYPHS[ch]
+        lines.extend([[(cursor + px * sx, py * sy) for px, py in part] for part in parts])
+        cursor += (width + gap + (KERN.get((ch, text[i + 1]), 0.0) if i + 1 < len(text) else 0.0)) * sx
+    return lines, {'x_scale': round(sx, 4), 'y_scale': round(sy, 4), 'length_px': round(units * sx, 3), 'offset_px': round(start, 3)}
+
+
+def natural_length(text, cap, aspect, gap, kern=False):
     """Length in px of text at cap height with the given aspect and letter gap (no fitting)."""
-    return font.text_units(text, gap) * cap / font.CAP * aspect
+    return text_units(text, gap, kern) * cap / font.CAP * aspect
 
 
-def brush_run(text, center, angle, cap, aspect, gap, weight, slant=0.0, **brush_options):
+def brush_run(text, center, angle, cap, aspect, gap, weight, slant=0.0, kern=False, **brush_options):
     """A brush-lettered line of natural length centred on `center` (angle: 0 text goes right, 90 down the picture)."""
-    return {'text': text, 'box': [0, 0, 0, 0], 'length': round(natural_length(text, cap, aspect, gap), 3), 'center': list(center),
-            'angle': round(angle, 2), 'slant': slant, 'cap': cap, 'aspect': aspect, 'stroke': weight, 'gap': gap,
-            'brush': {**BRUSH, **brush_options}}
+    run = {'text': text, 'box': [0, 0, 0, 0], 'length': round(natural_length(text, cap, aspect, gap, kern), 3), 'center': list(center),
+           'angle': round(angle, 2), 'slant': slant, 'cap': cap, 'aspect': aspect, 'stroke': weight, 'gap': gap,
+           'brush': {**BRUSH, **brush_options}}
+    if kern:
+        run['kern'] = True
+    return run
 
 
 # P_01_03 / P_01_03B: calligraphy columns. Each column of kanji runs down and to the left; the axis is the line through
@@ -80,7 +111,9 @@ ROSTER_COLUMNS = [  # (family, given, axis point, slope dx/dy)
 ROSTER_INK = {'P_01_03': [5, 5, 6], 'P_01_03B': [6, 6, 6]}
 # broad-nib calligraphy: thick across the nib edge, thin along it, swelling entry, tapered exit
 CALLIGRAPHY = {'nib': 20, 'contrast': 1.2, 'entry': 0.25, 'taper': 0.7, 'wobble': 0.04}
-SKY_ERASE = {'region': [0, 0, 303, 160], 'below': 48, 'margin': 2}
+# `smooth`: erased pixels there take the smooth fill without donor grain (the cut glyph at the left edge, where the copied
+# grain showed as vertical streaks)
+SKY_ERASE = {'region': [0, 0, 303, 160], 'below': 48, 'margin': 2, 'smooth': [[0, 48, 14, 32]]}
 
 
 def rotated_runs(columns, cap=13, aspect=0.74, gap=4.0, weight=2.0, only=None):
@@ -99,8 +132,8 @@ def rotated_runs(columns, cap=13, aspect=0.74, gap=4.0, weight=2.0, only=None):
 # edges at its own height, measured at the top and bottom of its letters (the left edge leans much more than the right one).
 GATE_PLATE = [(114, 67), (236, 88), (221, 147), (73, 123)]  # top-left, top-right, bottom-right, bottom-left
 GATE_ANGLE = 9.5
-GATE_LEADING = 12.0
-GATE_FACE = {'cap': 10.5, 'aspect': 0.84, 'gap': 3.2, 'weight': 1.6, 'slant': 12}
+GATE_LEADING = 14.0
+GATE_FACE = {'cap': 13.5, 'aspect': 0.71, 'gap': 2.7, 'weight': 1.75, 'slant': 12}
 GATE_LINES = ('KIRAMEKI  PRIVATE', 'HIGH  SCHOOL')
 
 
@@ -142,7 +175,7 @@ def gate_centres(lines=GATE_LINES, face=GATE_FACE, angle=GATE_ANGLE, leading=GAT
     centres = []
     for text, dv in zip(lines, (-leading, leading)):
         point = along(middle, angle, 0, dv)
-        length = natural_length(text, face['cap'], face['aspect'], face['gap'])
+        length = natural_length(text, face['cap'], face['aspect'], face['gap'], kern=True)
         left, right = line_margins(point, length, angle, face['cap'], face['slant'], corners)
         x, y = along(point, angle, (right - left) / 2.0, 0)
         centres.append((round(x, 2), round(y, 2)))
@@ -150,7 +183,7 @@ def gate_centres(lines=GATE_LINES, face=GATE_FACE, angle=GATE_ANGLE, leading=GAT
 
 
 def gate_runs(lines=GATE_LINES, face=GATE_FACE):
-    return [brush_run(text, centre, GATE_ANGLE, face['cap'], face['aspect'], face['gap'], face['weight'], face['slant'], **CALLIGRAPHY)
+    return [brush_run(text, centre, GATE_ANGLE, face['cap'], face['aspect'], face['gap'], face['weight'], face['slant'], kern=True, **CALLIGRAPHY)
             for text, centre in zip(lines, gate_centres(lines, face))]
 
 
@@ -159,7 +192,7 @@ def gate_runs(lines=GATE_LINES, face=GATE_FACE):
 PIXEL_FONT = {
     5: {'A': ['.#.', '#.#', '###', '#.#', '#.#'], 'E': ['###', '#..', '##.', '#..', '###'], 'G': ['.##.', '#...', '#.##', '#..#', '.##.'],
         'H': ['#.#', '#.#', '###', '#.#', '#.#'], 'I': ['#', '#', '#', '#', '#'], 'K': ['#.#', '#.#', '##.', '#.#', '#.#'],
-        'L': ['#..', '#..', '#..', '#..', '###'], 'M': ['#...#', '##.##', '#.#.#', '#...#', '#...#'], 'O': ['.#.', '#.#', '#.#', '#.#', '.#.'],
+        'L': ['#.', '#.', '#.', '#.', '##'], 'M': ['#...#', '##.##', '#.#.#', '#...#', '#...#'], 'O': ['.#.', '#.#', '#.#', '#.#', '.#.'],
         'P': ['##.', '#.#', '##.', '#..', '#..'], 'R': ['##.', '#.#', '##.', '#.#', '#.#'], 'S': ['.##', '#..', '.#.', '..#', '##.'],
         'V': ['#.#', '#.#', '#.#', '#.#', '.#.'], 'Y': ['#.#', '#.#', '.#.', '.#.', '.#.'],
         '(': ['.#', '#.', '#.', '#.', '.#'], ')': ['#.', '.#', '.#', '.#', '#.'], '/': ['..#', '..#', '.#.', '#..', '#..']},
@@ -189,7 +222,7 @@ PLANS = [
     # --- catalog-143/139/145/144/149: small signs, texture kept (replace T-39400 flat-face crops) ---
     {'id': 'bs-d-15-03-monument-v2', 'file': 'D_15_03', 'catalog_item': 'catalog-143', 'supersedes': 'bs-d-15-03-monument',
      'sign': 'stone monument plaque, three lines', 'rect': [229, 127, 55, 33],
-     'erase': {'polarity': 'light', 'threshold': 14, 'margin': 1},
+     'erase': {'polarity': 'light', 'threshold': 14, 'margin': 1, 'also': [[229, 130, 6, 10]], 'smooth': [[229, 130, 6, 10]]},
      'runs': [{'text': 'CENTRAL', 'box': [236, 130, 42, 6], 'cap': 6, 'aspect': 1.0, 'stroke': 0.95, 'gap': 2.4},
               {'text': 'CITY ART', 'box': [236, 141, 42, 6], 'cap': 6, 'aspect': 1.0, 'stroke': 0.95, 'gap': 2.4},
               {'text': 'MUSEUM', 'box': [236, 152, 42, 6], 'cap': 6, 'aspect': 1.0, 'stroke': 0.95, 'gap': 2.4}]},
@@ -202,12 +235,13 @@ PLANS = [
      'sign': 'ticket booth plaque', 'rect': [235, 62, 20, 11],
      'erase': {'polarity': 'dark', 'threshold': 8, 'margin': 1, 'plane': {'fit': [235, 62, 20, 11], 'init': 'light'}},
      'runs': [{'text': 'TICKET', 'box': [236, 62, 18, 10], 'cap': 6, 'aspect': 9, 'stroke': 0.8, 'gap': 2.2}]},
-    # white band y 40-46 above MAIKO: 5 px pixel letters in the strongest pink of the Japanese line. The Japanese is so
+    # white band x 136-179, y 40-46 above MAIKO: 5 px pixel letters (a 2 px L and a 2 px word space keep 3 px clear at each
+    # end) in the strongest pink of the Japanese line. The Japanese is so
     # faint that a relative rule misses its long-vowel bar, so every pixel of the band below a channel sum of 84 is erased.
     {'id': 'bs-d-19-02-maiko-board-v2', 'file': 'D_19_02', 'catalog_item': 'catalog-144', 'supersedes': 'bs-d-19-02-maiko-board',
      'sign': 'rink dasher board, small shop line', 'rect': [136, 41, 44, 5], 'ink': [18, 12, 12],
      'erase': {'below': 84, 'margin': 1, 'plane': {'fit': [136, 40, 44, 7]}},
-     'runs': [pixel_run('LOVELY SHOP', 5, (157.5, 43), space=3)]},
+     'runs': [pixel_run('LOVELY SHOP', 5, (157.5, 43), space=2)]},
     # white plate x 108-143, y 42-51: 6 px pixel letters, black like the kanji, 2 px margins
     {'id': 'bs-i-17-01-hanging-sign-v2', 'file': 'I_17_01', 'catalog_item': 'catalog-149', 'supersedes': 'bs-i-17-01-hanging-sign',
      'sign': 'library aisle hanging sign', 'rect': [109, 43, 34, 8], 'ink': [2, 2, 2],
@@ -237,8 +271,11 @@ def text_lines(run):
     bx, by, bw, bh = spec['box']
     angle = spec.get('angle', spec.get('rotation', 0))
     length = spec.get('length', bh if angle == 90 else bw)
-    local = font.strokes_for(spec['text'], length, spec['cap'], spec['aspect'], spec['gap'])
-    facts = font.text_extent(spec['text'], length, spec['cap'], spec['aspect'], spec['gap'])
+    if spec.get('kern'):
+        local, facts = kerned_strokes(spec['text'], length, spec['cap'], spec['aspect'], spec['gap'])
+    else:
+        local = font.strokes_for(spec['text'], length, spec['cap'], spec['aspect'], spec['gap'])
+        facts = font.text_extent(spec['text'], length, spec['cap'], spec['aspect'], spec['gap'])
     if 'origin' in spec:
         origin = tuple(spec['origin'])
     elif angle == 0:
@@ -361,6 +398,12 @@ def draw_plan(source, plan):
             outside[fy:fy + fh, fx:fx + fw] = False
             exclude = outside if exclude is None else exclude | outside
         base = brush.inpaint(source, mask, erase.get('fill_sigma', 3.0), erase.get('grain', 1.0), exclude)
+        if erase.get('smooth'):
+            # these rectangles take the smooth part only (no donor grain)
+            flat = brush.known_background(source, mask if exclude is None else mask | exclude, erase.get('fill_sigma', 3.0))
+            for rx, ry, rw, rh in erase['smooth']:
+                inside = mask[ry:ry + rh, rx:rx + rw]
+                base[ry:ry + rh, rx:rx + rw][inside] = flat[ry:ry + rh, rx:rx + rw][inside]
     coverage = np.zeros((h, w))
     placed = []
     for run in plan['runs']:

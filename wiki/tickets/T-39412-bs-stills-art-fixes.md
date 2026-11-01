@@ -49,3 +49,10 @@ catalog-147 reworded (jsonl and md). `translation_inventory.json` is not regener
 until the integrator rebuilds it. Tests: `tools/test_translation_bs_stills.py` and `tools/test_translation_bs_signs.py`
 59 OK; translation discovery 351 run, failures only the inventory matches-inputs test and the `test_translation_tree` and
 `test_translation_filesel_drafts` failures that HEAD has too.
+
+## Third pass (2026-11-01)
+
+Third pass (final reviewer nits): monument remnant left of CENTRAL (top of 市, x 229-234) force-erased and refilled
+without grain; LOVELY SHOP narrowed (2 px L, 2 px word space) to 3 px clear at each end; gate plate letters enlarged
+(cap 13.5, leading 14; ink at least 6.7 px from every plate edge) with A-T and V-A kerning (PRIVATE); P_01_03 sky at the
+cut left-edge glyph refilled without grain (no streaks). New erase key `smooth` (rectangles filled without donor grain).
