@@ -10,8 +10,10 @@ which flattened stone and gradient. Here every plan keeps the picture as it is a
 2. the pixels the English strokes cover.
 
 The stroke letters are the single-stroke skeletons of tools/translation_bs_font.py, drawn either with a
-constant stroke (signs, chalk) or with the brush stroker of tools/translation_bs_brush.py (gate plate,
-roster boards, calligraphy close-ups).
+constant stroke (monument, ticket plaque, chalk heading) or with the broad-nib brush stroker of
+tools/translation_bs_brush.py (gate plate, calligraphy close-ups). Signs with 5 to 6 px of lettering
+(placard, library sign, shop line, chalk date) use the hand-set pixel glyphs of PIXEL_FONT instead, so that
+no two letters touch at 1x.
 
 `build` decodes the original BS files with the pinned fixed-point MDEC model and writes, under the output
 directory only (ignored, never committed: they hold the original picture), the whole English stills, source
@@ -69,53 +71,106 @@ def brush_run(text, center, angle, cap, aspect, gap, weight, slant=0.0, **brush_
 
 # P_01_03 / P_01_03B: calligraphy columns. Each column of kanji runs down and to the left; the axis is the line through
 # `point` (the middle of the column, measured on the decode) with slope dx/dy. Names are family first (the script's
-# spelling, no long-vowel marks). The right-edge column (x >= 303, cut off by the frame) stays as it is.
+# spelling, no long-vowel marks). The right-edge column (x >= 303, cut off by the frame) stays as it is. MOGAMI sits right
+# of and below its kanji axis and MIZUKAWA 4 px down its axis, so that both keep a margin from the top and left edges.
 ROSTER_COLUMNS = [  # (family, given, axis point, slope dx/dy)
-    ('MOGAMI', '', (18, 28), -0.30), ('MIZUKAWA', 'MIHO', (48, 58), -0.47), ('HONDA', 'MEGUMI', (92, 68), -0.50),
+    ('MOGAMI', '', (21, 34), -0.30), ('MIZUKAWA', 'MIHO', (46.1, 62), -0.47), ('HONDA', 'MEGUMI', (92, 68), -0.50),
     ('FUJISAKI', 'SHIORI', (147, 78), -0.44), ('HASHIMOTO', 'YOSHIKO', (210, 83), -0.38), ('TANAKA', 'SAKI', (266, 92), -0.40)]
-# stacked version: the columns alternate between an upper and a lower band so that neighbouring stacks never share a
-# row; the centre of each line sits on the column axis at the band's height (family line, then given line below it).
-STACK_BANDS = {'MOGAMI': 26, 'MIZUKAWA': 96, 'HONDA': 26, 'FUJISAKI': 96, 'HASHIMOTO': 26, 'TANAKA': 96}
-STACK_LEADING = 22
-STACK_MARGIN = 3
-
-
-def stack_centres(columns=ROSTER_COLUMNS, bands=STACK_BANDS, leading=STACK_LEADING):
-    """{family: (family line centre, given line centre or None)} on the slanted column axes."""
-    out = {}
-    for family, given, (px, py), slope in columns:
-        y = bands[family]
-        out[family] = ((round(px + slope * (y - py), 1), y), (round(px + slope * (y + leading - py), 1), y + leading) if given else None)
-    return out
-
-
-ROSTER_STACKS = stack_centres()
-INK_BLACK = [1, 1, 2]
+# the brush ink of the Japanese names: median colour of the stroke cores (channel sum < 30) of each decode
+ROSTER_INK = {'P_01_03': [5, 5, 6], 'P_01_03B': [6, 6, 6]}
+# broad-nib calligraphy: thick across the nib edge, thin along it, swelling entry, tapered exit
+CALLIGRAPHY = {'nib': 20, 'contrast': 1.2, 'entry': 0.25, 'taper': 0.7, 'wobble': 0.04}
 SKY_ERASE = {'region': [0, 0, 303, 160], 'below': 48, 'margin': 2}
 
 
-def rotated_runs(columns, cap=13.5, aspect=0.75, gap=3.3, weight=2.8, only=None):
+def rotated_runs(columns, cap=13, aspect=0.74, gap=4.0, weight=2.0, only=None):
     runs = []
     for family, given, point, slope in columns:
         if only and family != only:
             continue
         text = family + ('  ' + given if given else '')
-        runs.append(brush_run(text, point, 90 + math.degrees(math.atan(-slope)), cap, aspect, gap, weight))
+        runs.append(brush_run(text, point, 90 + math.degrees(math.atan(-slope)), cap, aspect, gap, weight, **CALLIGRAPHY))
     return runs
 
 
-def stacked_runs(columns, stacks, cap=14, aspect=0.7, gap=2.8, weight=2.1, slant=8, only=None):
-    runs = []
-    for family, given, point, slope in columns:
-        if only and family != only:
-            continue
-        for text, center in zip((family, given), stacks[family]):
-            if text and center:
-                run = brush_run(text, center, 0, cap, aspect, gap, weight, slant)
-                half = run['length'] / 2.0 + STACK_MARGIN
-                run['center'][0] = round(min(max(center[0], half), 320 - half), 1)
-                runs.append(run)
-    return runs
+# P_01_01 gate plate: a white plate seen at an angle, corners measured on the decode (white = every channel >= 26). The
+# text runs along the top and bottom edges (9.5 degrees) and leans like the sides. Both lines share one face, size and set
+# width; they sit one leading above and below the plate middle, and each is centred between the left and right plate
+# edges at its own height, measured at the top and bottom of its letters (the left edge leans much more than the right one).
+GATE_PLATE = [(114, 67), (236, 88), (221, 147), (73, 123)]  # top-left, top-right, bottom-right, bottom-left
+GATE_ANGLE = 9.5
+GATE_LEADING = 12.0
+GATE_FACE = {'cap': 10.5, 'aspect': 0.84, 'gap': 3.2, 'weight': 1.6, 'slant': 12}
+GATE_LINES = ('KIRAMEKI  PRIVATE', 'HIGH  SCHOOL')
+
+
+def along(point, angle, du, dv):
+    """`point` moved du along a text at `angle` and dv down its letters."""
+    a = math.radians(angle)
+    return (point[0] + du * math.cos(a) - dv * math.sin(a), point[1] + du * math.sin(a) + dv * math.cos(a))
+
+
+def edge_span(point, angle, corners=GATE_PLATE):
+    """(t left, t right): where the line through `point` at `angle` crosses the plate's left and right edges, as
+    distances along the line from `point`."""
+    a = math.radians(angle)
+    ux, uy = math.cos(a), math.sin(a)
+    out = []
+    for (ax, ay), (bx, by) in ((corners[0], corners[3]), (corners[1], corners[2])):
+        ex, ey = bx - ax, by - ay
+        det = ux * -ey - uy * -ex
+        out.append(((ax - point[0]) * -ey - (ay - point[1]) * -ex) / det)
+    return tuple(out)
+
+
+def line_margins(center, length, angle, cap, slant, corners=GATE_PLATE):
+    """(left, right): the smallest gap in px, along the line, between a slanted text line and the plate's side edges,
+    taken at the top and at the bottom of the letters (the left edge leans more than the letters, the right one less)."""
+    t = math.tan(math.radians(slant))
+    lefts, rights = [], []
+    for dv in (-cap / 2.0, cap / 2.0):
+        left, right = edge_span(along(center, angle, 0, dv), angle, corners)
+        lefts.append((-length / 2.0 - dv * t) - left)
+        rights.append(right - (length / 2.0 - dv * t))
+    return min(lefts), min(rights)
+
+
+def gate_centres(lines=GATE_LINES, face=GATE_FACE, angle=GATE_ANGLE, leading=GATE_LEADING, corners=GATE_PLATE):
+    """Centre of each line: the plate middle moved one leading up / down, then moved along the line until the clearest
+    gap to the left edge equals the one to the right edge."""
+    middle = (sum(c[0] for c in corners) / 4.0, sum(c[1] for c in corners) / 4.0)
+    centres = []
+    for text, dv in zip(lines, (-leading, leading)):
+        point = along(middle, angle, 0, dv)
+        length = natural_length(text, face['cap'], face['aspect'], face['gap'])
+        left, right = line_margins(point, length, angle, face['cap'], face['slant'], corners)
+        x, y = along(point, angle, (right - left) / 2.0, 0)
+        centres.append((round(x, 2), round(y, 2)))
+    return centres
+
+
+def gate_runs(lines=GATE_LINES, face=GATE_FACE):
+    return [brush_run(text, centre, GATE_ANGLE, face['cap'], face['aspect'], face['gap'], face['weight'], face['slant'], **CALLIGRAPHY)
+            for text, centre in zip(lines, gate_centres(lines, face))]
+
+
+# Tiny signs (5 to 8 px of lettering): hand-set pixel glyphs, one ink colour, 1 px letter gaps, so that no two letters
+# touch at 1x. Rows are top to bottom, '#' = ink.
+PIXEL_FONT = {
+    5: {'A': ['.#.', '#.#', '###', '#.#', '#.#'], 'E': ['###', '#..', '##.', '#..', '###'], 'G': ['.##.', '#...', '#.##', '#..#', '.##.'],
+        'H': ['#.#', '#.#', '###', '#.#', '#.#'], 'I': ['#', '#', '#', '#', '#'], 'K': ['#.#', '#.#', '##.', '#.#', '#.#'],
+        'L': ['#..', '#..', '#..', '#..', '###'], 'M': ['#...#', '##.##', '#.#.#', '#...#', '#...#'], 'O': ['.#.', '#.#', '#.#', '#.#', '.#.'],
+        'P': ['##.', '#.#', '##.', '#..', '#..'], 'R': ['##.', '#.#', '##.', '#.#', '#.#'], 'S': ['.##', '#..', '.#.', '..#', '##.'],
+        'V': ['#.#', '#.#', '#.#', '#.#', '.#.'], 'Y': ['#.#', '#.#', '.#.', '.#.', '.#.'],
+        '(': ['.#', '#.', '#.', '#.', '.#'], ')': ['#.', '.#', '.#', '.#', '#.'], '/': ['..#', '..#', '.#.', '#..', '#..']},
+    6: {'A': ['.#.', '#.#', '#.#', '###', '#.#', '#.#'], 'E': ['###', '#..', '##.', '#..', '#..', '###'], 'F': ['###', '#..', '##.', '#..', '#..', '#..'],
+        'I': ['#', '#', '#', '#', '#', '#'], 'N': ['#..#', '##.#', '##.#', '#.##', '#.##', '#..#'], 'R': ['##.', '#.#', '#.#', '##.', '#.#', '#.#'],
+        'S': ['.##', '#..', '.#.', '..#', '..#', '##.'], 'T': ['###', '.#.', '.#.', '.#.', '.#.', '.#.']},
+}
+
+
+def pixel_run(text, height, center, gap=1, space=2):
+    return {'text': text, 'height': height, 'center': list(center), 'gap': gap, 'space': space}
 
 
 FULL = [0, 0, 320, 160]
@@ -124,24 +179,13 @@ PLANS = [
     {'id': 'bs-p-01-01-gate-plate', 'file': 'P_01_01', 'catalog_item': 'catalog-129', 'sign': 'school gate plate, two lines',
      'rect': [76, 68, 160, 82], 'ink_share': 0.1,
      'erase': {'polarity': 'dark', 'threshold': 7, 'margin': 2, 'polygon': [(118, 72), (231, 93), (217, 143), (86, 122)]},
-     'runs': [brush_run('KIRAMEKI  PRIVATE', (170, 92), 11, 11, 0.78, 3.0, 1.6, 6, taper=0.65),
-              brush_run('HIGH  SCHOOL', (162, 125), 12, 11.5, 0.9, 3.4, 1.7, 6, taper=0.65)]},
-    # --- catalog-131: roster close-ups, rotated (a) and stacked (b) ---
-    {'id': 'bs-p-01-03-roster-a-rotated', 'file': 'P_01_03', 'catalog_item': 'catalog-131', 'group': 'p-01-03', 'sign': 'brush roster, names run down their columns',
-     'rect': FULL, 'erase': SKY_ERASE, 'ink': INK_BLACK, 'runs': rotated_runs(ROSTER_COLUMNS)},
-    {'id': 'bs-p-01-03-roster-b-stacked', 'file': 'P_01_03', 'catalog_item': 'catalog-131', 'group': 'p-01-03', 'sign': 'brush roster, family name over given name',
-     'rect': FULL, 'erase': SKY_ERASE, 'ink': INK_BLACK, 'runs': stacked_runs(ROSTER_COLUMNS, ROSTER_STACKS)},
-    # P_01_03B: the game cross-fades P_01_03 to P_01_03B and the name keeps its place, so a and b repeat the P_01_03 lines
-    {'id': 'bs-p-01-03b-name-a-rotated', 'file': 'P_01_03B', 'catalog_item': 'catalog-131', 'group': 'p-01-03b', 'sign': 'Fujisaki Shiori alone, name runs down (same line as roster a)',
-     'rect': FULL, 'erase': {'region': FULL, 'below': 48, 'margin': 2}, 'ink': INK_BLACK, 'runs': rotated_runs(ROSTER_COLUMNS, only='FUJISAKI')},
-    {'id': 'bs-p-01-03b-name-b-stacked', 'file': 'P_01_03B', 'catalog_item': 'catalog-131', 'group': 'p-01-03b', 'sign': 'Fujisaki Shiori alone, family over given (same lines as roster b)',
-     'rect': FULL, 'erase': {'region': FULL, 'below': 48, 'margin': 2}, 'ink': INK_BLACK, 'runs': stacked_runs(ROSTER_COLUMNS, ROSTER_STACKS, only='FUJISAKI')},
-    {'id': 'bs-p-01-03b-name-a-large', 'file': 'P_01_03B', 'catalog_item': 'catalog-131', 'group': 'p-01-03b', 'sign': 'Fujisaki Shiori alone, large, runs down the middle',
-     'rect': FULL, 'erase': {'region': FULL, 'below': 48, 'margin': 2}, 'ink': INK_BLACK,
-     'runs': [brush_run('FUJISAKI  SHIORI', (148, 82), 90 + math.degrees(math.atan(0.40)), 19, 0.62, 3.0, 3.0, 0, taper=0.65)]},
-    {'id': 'bs-p-01-03b-name-b-large', 'file': 'P_01_03B', 'catalog_item': 'catalog-131', 'group': 'p-01-03b', 'sign': 'Fujisaki Shiori alone, large, family over given, centred',
-     'rect': FULL, 'erase': {'region': FULL, 'below': 48, 'margin': 2}, 'ink': INK_BLACK,
-     'runs': [brush_run('FUJISAKI', (160, 56), 0, 26, 0.85, 2.8, 3.8, 8, taper=0.65), brush_run('SHIORI', (160, 108), 0, 26, 0.85, 2.8, 3.8, 8, taper=0.65)]},
+     'runs': gate_runs()},
+    # --- catalog-131: roster close-up (owner chose the rotated layout, 2026-11-01) ---
+    {'id': 'bs-p-01-03-roster-a-rotated', 'file': 'P_01_03', 'catalog_item': 'catalog-131', 'sign': 'brush roster, names run down their columns',
+     'rect': FULL, 'erase': SKY_ERASE, 'ink': ROSTER_INK['P_01_03'], 'runs': rotated_runs(ROSTER_COLUMNS)},
+    # P_01_03B: the game cross-fades P_01_03 to P_01_03B and the name keeps its place, so it repeats the P_01_03 line
+    {'id': 'bs-p-01-03b-name-a-rotated', 'file': 'P_01_03B', 'catalog_item': 'catalog-131', 'sign': 'Fujisaki Shiori alone, name runs down (same line as the roster)',
+     'rect': FULL, 'erase': {'region': FULL, 'below': 48, 'margin': 2}, 'ink': ROSTER_INK['P_01_03B'], 'runs': rotated_runs(ROSTER_COLUMNS, only='FUJISAKI')},
     # --- catalog-143/139/145/144/149: small signs, texture kept (replace T-39400 flat-face crops) ---
     {'id': 'bs-d-15-03-monument-v2', 'file': 'D_15_03', 'catalog_item': 'catalog-143', 'supersedes': 'bs-d-15-03-monument',
      'sign': 'stone monument plaque, three lines', 'rect': [229, 127, 55, 33],
@@ -149,30 +193,38 @@ PLANS = [
      'runs': [{'text': 'CENTRAL', 'box': [236, 130, 42, 6], 'cap': 6, 'aspect': 1.0, 'stroke': 0.95, 'gap': 2.4},
               {'text': 'CITY ART', 'box': [236, 141, 42, 6], 'cap': 6, 'aspect': 1.0, 'stroke': 0.95, 'gap': 2.4},
               {'text': 'MUSEUM', 'box': [236, 152, 42, 6], 'cap': 6, 'aspect': 1.0, 'stroke': 0.95, 'gap': 2.4}]},
+    # white plate x 211-245, y 57-69 (13 rows): two 5 px lines with a 1 px margin above, between and below
     {'id': 'bs-d-03-08-march-placard-v2', 'file': 'D_03_08', 'catalog_item': 'catalog-139', 'supersedes': 'bs-d-03-08-march-placard',
-     'sign': 'march placard', 'rect': [213, 57, 31, 13],
-     'erase': {**PLATE_ERASE, 'plane': {'fit': [213, 57, 31, 13], 'init': 'light'}},
-     'runs': [{'text': 'KIRAMEKI', 'box': [215, 58, 27, 11], 'cap': 7, 'aspect': 9, 'stroke': 0.85, 'gap': 3.0}]},
+     'sign': 'march placard, two lines', 'rect': [211, 57, 35, 13], 'ink': [1, 1, 1],
+     'erase': {**PLATE_ERASE, 'plane': {'fit': [211, 57, 35, 13], 'init': 'light'}},
+     'runs': [pixel_run('KIRAMEKI', 5, (228, 60)), pixel_run('HIGH', 5, (228, 66))]},
     {'id': 'bs-d-24-03-ticket-plaque-v2', 'file': 'D_24_03', 'catalog_item': 'catalog-145', 'supersedes': 'bs-d-24-03-ticket-plaque',
      'sign': 'ticket booth plaque', 'rect': [235, 62, 20, 11],
      'erase': {'polarity': 'dark', 'threshold': 8, 'margin': 1, 'plane': {'fit': [235, 62, 20, 11], 'init': 'light'}},
      'runs': [{'text': 'TICKET', 'box': [236, 62, 18, 10], 'cap': 6, 'aspect': 9, 'stroke': 0.8, 'gap': 2.2}]},
+    # white band y 40-46 above MAIKO: 5 px pixel letters in the strongest pink of the Japanese line. The Japanese is so
+    # faint that a relative rule misses its long-vowel bar, so every pixel of the band below a channel sum of 84 is erased.
     {'id': 'bs-d-19-02-maiko-board-v2', 'file': 'D_19_02', 'catalog_item': 'catalog-144', 'supersedes': 'bs-d-19-02-maiko-board',
-     'sign': 'rink dasher board, small shop line', 'rect': [139, 41, 37, 5],
-     'erase': {'polarity': 'dark', 'threshold': 8, 'margin': 1, 'plane': {'fit': [138, 40, 40, 7]}},
-     'runs': [{'text': 'LOVELY SHOP', 'box': [140, 41, 35, 5], 'cap': 5, 'aspect': 9, 'stroke': 0.8, 'gap': 1.5}]},
+     'sign': 'rink dasher board, small shop line', 'rect': [136, 41, 44, 5], 'ink': [18, 12, 12],
+     'erase': {'below': 84, 'margin': 1, 'plane': {'fit': [136, 40, 44, 7]}},
+     'runs': [pixel_run('LOVELY SHOP', 5, (157.5, 43), space=3)]},
+    # white plate x 108-143, y 42-51: 6 px pixel letters, black like the kanji, 2 px margins
     {'id': 'bs-i-17-01-hanging-sign-v2', 'file': 'I_17_01', 'catalog_item': 'catalog-149', 'supersedes': 'bs-i-17-01-hanging-sign',
-     'sign': 'library aisle hanging sign', 'rect': [109, 43, 34, 8],
+     'sign': 'library aisle hanging sign', 'rect': [109, 43, 34, 8], 'ink': [2, 2, 2],
      'erase': {**PLATE_ERASE, 'plane': {'fit': [109, 43, 34, 8], 'init': 'light'}},
-     'runs': [{'text': 'FINE ARTS', 'box': [110, 43, 32, 8], 'cap': 7, 'aspect': 9, 'stroke': 0.8, 'gap': 2.4}]},
+     'runs': [pixel_run('FINE ARTS', 6, (125.5, 46.5), space=3)]},
     # --- catalog-147: final exams chalkboard, chalk-sized lettering and the date column ---
+    # The column x 305-311 held 月 / 日 / ︵ ︶ (month, day, weekday in vertical brackets). English: a blank date "( ) / ( )"
+    # top to bottom in chalk (2 px inside each pair, so that a pair does not close into a 0); the brackets are erased too.
+    # Only board pixels feed the fill (not the chalk ledge at y >= 40).
     {'id': 'bs-c-01-28-final-exams-v2', 'file': 'C_01_28', 'catalog_item': 'catalog-147', 'supersedes': 'bs-c-01-28-final-exams',
-     'sign': 'blackboard: final exams heading and month / day column', 'rect': [268, 0, 45, 40], 'ink': [19, 20, 20],
-     'erase': {'region': [268, 0, 45, 38], 'above': 27, 'margin': 1, 'keep': [[305, 26, 7, 13]]},
+     'sign': 'blackboard: final exams heading and a blank month / day', 'rect': [268, 0, 45, 40], 'ink': [19, 20, 20],
+     'erase': {'region': [268, 0, 45, 40], 'above': 27, 'margin': 1, 'fill_from': [268, 0, 45, 40]},
      'runs': [{'text': 'FINAL', 'box': [0, 0, 0, 0], 'length': 22, 'center': [283, 10], 'angle': 0, 'cap': 6, 'aspect': 1.0, 'stroke': 0.9, 'gap': 2.6},
               {'text': 'EXAMS', 'box': [0, 0, 0, 0], 'length': 28, 'center': [283, 19], 'angle': 0, 'cap': 6, 'aspect': 1.0, 'stroke': 0.9, 'gap': 2.6},
-              {'text': 'M', 'box': [0, 0, 0, 0], 'length': 5, 'center': [308.5, 6], 'angle': 0, 'cap': 5, 'aspect': 1.0, 'stroke': 0.9, 'gap': 2.0},
-              {'text': 'D', 'box': [0, 0, 0, 0], 'length': 5, 'center': [308.5, 20.5], 'angle': 0, 'cap': 5, 'aspect': 1.0, 'stroke': 0.9, 'gap': 2.0}]},
+              {**pixel_run('( )', 5, (308, 8), space=2), 'opacity': 0.85},
+              {**pixel_run('/', 5, (308.5, 20)), 'opacity': 0.85},
+              {**pixel_run('( )', 5, (308, 32), space=2), 'opacity': 0.85}]},
 ]
 
 
@@ -209,7 +261,44 @@ def text_lines(run):
                    'origin_px': [round(origin[0], 2), round(origin[1], 2)], 'stroke_px': spec['stroke'], 'letter_gap_units': spec['gap'], **facts}
 
 
+def pixel_rows(text, height, gap=1, space=2):
+    """Boolean bitmap (height, width) of text in the PIXEL_FONT face of that height."""
+    glyphs = PIXEL_FONT[height]
+    columns = []
+    for i, ch in enumerate(text):
+        if ch == ' ':
+            columns.extend([[False] * height] * space)
+            continue
+        if ch not in glyphs:
+            raise ValueError('no %d px pixel glyph for %r' % (height, ch))
+        rows = glyphs[ch]
+        columns.extend([[row[c] == '#' for row in rows] for c in range(len(rows[0]))])
+        if i + 1 < len(text) and text[i + 1] != ' ':
+            columns.extend([[False] * height] * gap)
+    return np.array(columns, bool).T if columns else np.zeros((height, 0), bool)
+
+
+def pixel_coverage(shape, run, offset):
+    """Coverage of a pixel-font run: 1 on the glyph pixels. run: text, height, origin = [x, y] of the top-left of the
+    first glyph or center = [x, y] of the bitmap (rounded to whole pixels), optional gap and space (px)."""
+    bitmap = pixel_rows(run['text'], run['height'], run.get('gap', 1), run.get('space', 2))
+    h, w = bitmap.shape
+    if 'center' in run:
+        x0, y0 = int(math.floor(run['center'][0] - w / 2.0 + 0.5)), int(math.floor(run['center'][1] - h / 2.0 + 0.5))
+    else:
+        x0, y0 = run['origin']
+    cover = np.zeros(shape)
+    for yy, xx in zip(*np.nonzero(bitmap)):
+        py, px = y0 + yy - offset[1], x0 + xx - offset[0]
+        if not (0 <= py < shape[0] and 0 <= px < shape[1]):
+            raise ValueError('pixel text %r leaves its rectangle' % run['text'])
+        cover[py, px] = 1.0
+    return cover, {'text': run['text'], 'face': 'port-pixel-%d' % run['height'], 'bbox_px': [x0, y0, w, h]}
+
+
 def run_coverage(shape, run, offset):
+    if run.get('height'):
+        return pixel_coverage(shape, run, offset)
     lines, facts = text_lines(run)
     angle = run.get('angle', run.get('rotation', 0))
     if run.get('brush'):
@@ -262,7 +351,16 @@ def draw_plan(source, plan):
         block = base[y:y + h, x:x + w]
         block[inside] = face[inside]
     elif mask.any():
-        base = brush.inpaint(source, mask, erase.get('fill_sigma', 3.0), erase.get('grain', 1.0))
+        # only the surface the lettering is on feeds the fill: the erase polygon and / or the fill_from rectangle
+        exclude = None
+        if erase.get('polygon'):
+            exclude = ~(np.asarray(poly) > 0)
+        if erase.get('fill_from'):
+            fx, fy, fw, fh = erase['fill_from']
+            outside = np.ones((height, width), bool)
+            outside[fy:fy + fh, fx:fx + fw] = False
+            exclude = outside if exclude is None else exclude | outside
+        base = brush.inpaint(source, mask, erase.get('fill_sigma', 3.0), erase.get('grain', 1.0), exclude)
     coverage = np.zeros((h, w))
     placed = []
     for run in plan['runs']:

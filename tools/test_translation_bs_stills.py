@@ -79,6 +79,16 @@ class BrushTests(unittest.TestCase):
         across = brush.brush_coverage((20, 60), [[(5, 10), (55, 10)]], 3.0, taper=0.0, entry=0.0, wobble=0.0, contrast=0.6)
         self.assertGreater(down.sum(), across.sum() * 1.2)  # strokes down the letter weigh more
 
+    def test_broad_nib_is_thin_along_its_edge_and_thick_across_it(self):
+        # nib edge rising 30 degrees: the up-right stroke along it is thin, the down-right stroke across it thick
+        options = {'taper': 0.0, 'entry': 0.0, 'wobble': 0.0, 'contrast': 1.4, 'nib': 30}
+        c, s = math.cos(math.radians(30)), math.sin(math.radians(30))
+        along = brush.brush_coverage((60, 60), [[(10, 50), (10 + 40 * c, 50 - 40 * s)]], 3.0, **options)
+        across = brush.brush_coverage((60, 60), [[(20, 10), (20 + 40 * s, 10 + 40 * c)]], 3.0, **options)
+        self.assertGreater(across.sum(), along.sum() * 2.5)
+        turned = brush.brush_coverage((60, 60), [[(50, 10), (50 - 40 * c, 10 + 40 * s)]], 3.0, angle=90, **options)
+        self.assertAlmostEqual(turned.sum(), across.sum(), delta=across.sum() * 0.05)  # the nib turns with the text
+
     def test_brush_is_deterministic(self):
         a = brush.brush_coverage((20, 60), [[(5, 10), (30, 14), (55, 8)]], 2.4, seed=3)
         b = brush.brush_coverage((20, 60), [[(5, 10), (30, 14), (55, 8)]], 2.4, seed=3)
@@ -161,7 +171,10 @@ class PlanTests(unittest.TestCase):
         self.assertEqual(len(ids), len(set(ids)))
         for plan in subject.PLANS:
             for run in plan['runs']:
-                font.text_units(run['text'], run['gap'])
+                if run.get('height'):
+                    subject.pixel_rows(run['text'], run['height'])
+                else:
+                    font.text_units(run['text'], run['gap'])
 
     def test_rectangles_fit_their_pictures(self):
         sizes = {**{p['file']: (320, 160) for p in subject.PLANS}, **subject.STILL_SIZES}
@@ -179,15 +192,11 @@ class PlanTests(unittest.TestCase):
                 bx, by, bw, bh = b['rect']
                 self.assertTrue(ax + aw <= bx or bx + bw <= ax or ay + ah <= by or by + bh <= ay, '%s overlaps %s' % (a['id'], b['id']))
 
-    def test_every_alternative_group_has_at_least_two_members_and_one_file(self):
-        groups = {}
-        for plan in subject.PLANS:
-            if plan.get('group'):
-                groups.setdefault(plan['group'], []).append(plan)
-        self.assertEqual(set(groups), {'p-01-03', 'p-01-03b'})
-        for members in groups.values():
-            self.assertGreaterEqual(len(members), 2)
-            self.assertEqual(len({m['file'] for m in members}), 1)
+    def test_only_the_chosen_roster_layout_is_drafted(self):
+        # owner decision 2026-11-01: layout A; the stacked and large alternatives were deleted
+        ids = {p['id'] for p in subject.PLANS if p['file'] in ('P_01_03', 'P_01_03B')}
+        self.assertEqual(ids, {'bs-p-01-03-roster-a-rotated', 'bs-p-01-03b-name-a-rotated'})
+        self.assertFalse(any(p.get('group') for p in subject.PLANS))
 
     def test_superseded_drafts_are_named_and_replaced_by_a_v2_id(self):
         for plan in subject.PLANS:
@@ -204,33 +213,96 @@ class PlanTests(unittest.TestCase):
         for pair in ('OU', 'UU', 'OO'):
             self.assertNotIn(pair, text)  # no doubled vowels from long-vowel romanisation
 
-    def test_roster_lines_stay_inside_the_picture_and_names_run_together_in_both_versions(self):
+    def test_roster_lines_keep_a_margin_from_the_picture_edges(self):
         for plan in subject.PLANS:
             if plan['file'] not in ('P_01_03', 'P_01_03B'):
                 continue
             for run in plan['runs']:
                 lines, facts = subject.text_lines(run)
                 points = np.array([p for line in lines for p in line])
-                self.assertGreater(points[:, 0].min(), -4, plan['id'])
-                self.assertLess(points[:, 0].max(), 324, plan['id'])
-                self.assertGreater(points[:, 1].min(), -4, plan['id'])
-                self.assertLess(points[:, 1].max(), 164, plan['id'])
+                reach = run['stroke'] * 1.5  # widest brush half-width beyond the skeleton
+                self.assertGreater(points[:, 0].min() - reach, 3, run['text'])
+                self.assertLess(points[:, 0].max() + reach, 303, run['text'])  # and clear of the cut right-edge column
+                self.assertGreater(points[:, 1].min() - reach, 3, run['text'])
+                self.assertLess(points[:, 1].max() + reach, 160, run['text'])
 
-    def test_crossfade_pairs_repeat_the_roster_lines(self):
+    def test_crossfade_pair_repeats_the_roster_line_in_its_own_ink(self):
         by_id = {p['id']: p for p in subject.PLANS}
-        for a, b in (('bs-p-01-03-roster-a-rotated', 'bs-p-01-03b-name-a-rotated'), ('bs-p-01-03-roster-b-stacked', 'bs-p-01-03b-name-b-stacked')):
-            wanted = [r for r in by_id[a]['runs'] if r['text'].startswith(('FUJISAKI', 'SHIORI'))]
-            self.assertEqual(wanted, by_id[b]['runs'])
+        roster, single = by_id['bs-p-01-03-roster-a-rotated'], by_id['bs-p-01-03b-name-a-rotated']
+        self.assertEqual([r for r in roster['runs'] if r['text'].startswith('FUJISAKI')], single['runs'])
+        self.assertEqual(roster['ink'], subject.ROSTER_INK['P_01_03'])
+        self.assertEqual(single['ink'], subject.ROSTER_INK['P_01_03B'])
+        for ink in subject.ROSTER_INK.values():
+            self.assertTrue(10 < sum(ink) < 24, ink)  # the dark grey of the Japanese brush, not pure black
+
+    def test_brush_lines_use_the_broad_nib(self):
+        for plan in subject.PLANS:
+            for run in plan['runs']:
+                if run.get('brush'):
+                    self.assertEqual(run['brush']['nib'], subject.CALLIGRAPHY['nib'], plan['id'])
+                    self.assertGreaterEqual(run['brush']['contrast'], 1.0, plan['id'])
+
+    def test_gate_lines_share_one_face_and_keep_a_margin_inside_the_plate(self):
+        runs = subject.gate_runs()
+        self.assertEqual([r['text'] for r in runs], list(subject.GATE_LINES))
+        for key in ('cap', 'aspect', 'gap', 'stroke', 'slant', 'angle'):
+            self.assertEqual(runs[0][key], runs[1][key], key)
+        for run in runs:
+            left, right = subject.line_margins(run['center'], run['length'], subject.GATE_ANGLE, run['cap'], run['slant'])
+            self.assertAlmostEqual(left, right, delta=0.05)  # as clear of the left edge as of the right one
+            self.assertGreaterEqual(left, 7.0, run['text'])
+
+    def test_edge_span_of_a_rectangle(self):
+        square = [(0, 0), (100, 0), (100, 40), (0, 40)]
+        self.assertEqual(tuple(round(v, 6) for v in subject.edge_span((30, 20), 0, square)), (-30.0, 70.0))
 
     def test_cited_source_lines_still_hold_the_calls(self):
         self.assertEqual(subject.check_callers(), [])
 
-    def test_stack_centres_follow_the_axes(self):
-        centres = subject.stack_centres()
-        self.assertIsNone(centres['MOGAMI'][1])
-        (fx, fy), (gx, gy) = centres['FUJISAKI']
-        self.assertEqual(gy - fy, subject.STACK_LEADING)
-        self.assertLess(gx, fx)  # columns run down and to the left
+
+
+class PixelFontTests(unittest.TestCase):
+    def test_glyphs_have_their_face_height_and_one_width(self):
+        for height, glyphs in subject.PIXEL_FONT.items():
+            for ch, rows in glyphs.items():
+                self.assertEqual(len(rows), height, ch)
+                self.assertEqual(len({len(r) for r in rows}), 1, ch)
+                self.assertTrue(set(''.join(rows)) <= {'#', '.'}, ch)
+
+    def test_letters_never_touch(self):
+        for plan in subject.PLANS:
+            for run in plan['runs']:
+                if not run.get('height'):
+                    continue
+                bitmap = subject.pixel_rows(run['text'], run['height'], run.get('gap', 1), run.get('space', 2))
+                empty = ~bitmap.any(0)
+                letters = len(run['text'].replace(' ', ''))
+                # one run of inked columns per letter: the gap columns separate every pair
+                runs = int((~empty[:1]).sum()) + int((empty[:-1] & ~empty[1:]).sum())
+                self.assertEqual(runs, letters, run['text'])
+
+    def test_pixel_text_is_placed_whole_inside_its_rectangle(self):
+        cover, facts = subject.pixel_coverage((7, 20), subject.pixel_run('HI', 5, (10, 3.5)), (0, 0))
+        self.assertEqual(int(cover.sum()), 11 + 5)
+        self.assertEqual(facts['bbox_px'], [8, 1, 5, 5])
+        with self.assertRaises(ValueError):
+            subject.pixel_coverage((4, 20), subject.pixel_run('HI', 5, (10, 2)), (0, 0))
+
+    def test_small_signs_read_as_asked(self):
+        texts = {p['id']: [r['text'] for r in p['runs']] for p in subject.PLANS}
+        self.assertEqual(texts['bs-d-03-08-march-placard-v2'], ['KIRAMEKI', 'HIGH'])
+        self.assertEqual(texts['bs-i-17-01-hanging-sign-v2'], ['FINE ARTS'])
+        self.assertEqual(texts['bs-d-19-02-maiko-board-v2'], ['LOVELY SHOP'])
+        self.assertEqual(texts['bs-c-01-28-final-exams-v2'], ['FINAL', 'EXAMS', '( )', '/', '( )'])
+
+    def test_fine_arts_keeps_a_two_pixel_margin_on_its_plate(self):
+        plan = next(p for p in subject.PLANS if p['id'] == 'bs-i-17-01-hanging-sign-v2')
+        _, facts = subject.pixel_coverage((8, 34), plan['runs'][0], (109, 43))
+        x, y, w, h = facts['bbox_px']
+        self.assertGreaterEqual(x - 108, 2)  # white face x 108-143, y 42-51
+        self.assertGreaterEqual(143 - (x + w - 1), 2)
+        self.assertGreaterEqual(y - 42, 2)
+        self.assertGreaterEqual(51 - (y + h - 1), 2)
 
 
 class OriginalDataTests(unittest.TestCase):
@@ -291,6 +363,16 @@ class OriginalDataTests(unittest.TestCase):
             diff = np.abs(signs.expand(source).astype(int) - english).sum(-1)
             unchanged = (diff == 0).mean()
             self.assertGreater(unchanged, 0.6)
+            # the date column (x 305-311, above the ledge) holds no chalk but the English: 月, 日 and the brackets are gone
+            plan = next(p for p in plans if p['id'] == 'bs-c-01-28-final-exams-v2')
+            board = np.asarray(Image.open(output / 'previews' / 'bs-c-01-28-final-exams-v2.still.png').convert('RGB')).astype(int) >> 3
+            x, y, w, h = plan['rect']
+            cover = np.zeros((h, w))
+            for run in plan['runs']:
+                cover = np.maximum(cover, subject.run_coverage((h, w), run, (x, y))[0])
+            chalk = board[0:40, 305:312].sum(-1) > 27
+            self.assertFalse((chalk & (cover[0:40, 305 - x:312 - x] == 0)).any())
+            self.assertTrue(chalk.any())
 
 
 class PublishedCheckpointTests(unittest.TestCase):

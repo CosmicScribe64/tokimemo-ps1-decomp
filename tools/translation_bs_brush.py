@@ -11,7 +11,8 @@ MDEC decode returns them, and on float coverage planes.
 * `stroke_mask`: the pixels of a lettering colour (dark or light against the local
   background), grown by a margin so the soft MDEC edge is erased too.
 * `brush_coverage`: variable-width strokes for handwritten and brush lettering
-  (entry blob, thick down-strokes, tapered ends, a little deterministic wobble).
+  (entry blob, thick down-strokes or a broad-nib thick / thin, tapered ends, a little
+  deterministic wobble).
 * `place`: map the local (u along the text, v down the cap) strokes of
   tools/translation_bs_font.py into the picture at any angle, with an optional slant.
 
@@ -64,23 +65,25 @@ def known_background(picture, unknown, sigma=3.0):
     return out
 
 
-def inpaint(picture, unknown, sigma=3.0, grain=1.0):
+def inpaint(picture, unknown, sigma=3.0, grain=1.0, exclude=None):
     """Float picture with the `unknown` pixels rebuilt; known pixels are returned unchanged.
 
     Smooth part: known_background. Grain: for each unknown pixel the residual of the first
-    clean donor at a fixed step (DONOR_STEPS) scaled by `grain`. The result is a deterministic
-    function of the inputs.
+    clean donor at a fixed step (DONOR_STEPS) scaled by `grain`. `exclude` (bool mask) marks
+    known pixels that must not feed the fill (another surface next to the erased one, such as
+    the chalk ledge under a blackboard). The result is a deterministic function of the inputs.
     """
     height, width = unknown.shape
-    background = known_background(picture, unknown, sigma)
-    residual = np.where(unknown[..., None], 0.0, picture - background)
+    barred = unknown if exclude is None else unknown | exclude
+    background = known_background(picture, barred, sigma)
+    residual = np.where(barred[..., None], 0.0, picture - background)
     out = picture.astype(np.float64).copy()
     ys, xs = np.nonzero(unknown)
     for y, x in zip(ys, xs):
         add = np.zeros(3)
         for dx, dy in DONOR_STEPS:
             sx, sy = x + dx, y + dy
-            if 0 <= sx < width and 0 <= sy < height and not unknown[sy, sx]:
+            if 0 <= sx < width and 0 <= sy < height and not barred[sy, sx]:
                 add = residual[sy, sx] * grain
                 break
         out[y, x] = background[y, x] + add
@@ -159,17 +162,25 @@ def resample(line, step=0.25):
     return points
 
 
-def brush_coverage(shape, lines, weight, offset=(0, 0), angle=0.0, entry=0.35, taper=0.6, contrast=0.45, wobble=0.12, seed=0):
+def brush_coverage(shape, lines, weight, offset=(0, 0), angle=0.0, entry=0.35, taper=0.6, contrast=0.45, wobble=0.12, seed=0, nib=None):
     """Coverage 0..1 (float, shape = (height, width)) of brush-stroked poly-lines.
 
     weight: mean stroke width in px. entry: extra width at the stroke start (relative), taper:
     how far the width falls towards the stroke end (0 none, 1 to a point), contrast: how much
-    more the strokes that run down the letters weigh than the ones that run along the text, wobble:
-    relative wavering of the width. `angle` is the text rotation used by `place`, so "down the
-    letters" follows the text. Deterministic in `seed` and the stroke order.
+    more the thick strokes weigh than the thin ones, wobble: relative wavering of the width.
+    `angle` is the text rotation used by `place`, so the letter frame follows the text.
+    nib None: the strokes that run down the letters are the thick ones. nib = degrees: a broad
+    nib whose edge rises at that angle from the text direction (pens are held at 20-45): a stroke
+    along the edge is thinnest and one across it thickest, so in an A the left leg is thin and
+    the right leg thick. Deterministic in `seed` and the stroke order.
     """
     a = math.radians(angle)
     vx, vy = -math.sin(a), math.cos(a)
+    if nib is not None:
+        # the nib edge in picture space: along the text turned towards the letter tops (-v)
+        n = math.radians(nib)
+        vx, vy = math.cos(n) * math.cos(a) - math.sin(n) * vx, math.cos(n) * math.sin(a) - math.sin(n) * vy
+        vx, vy = -vy, vx  # thickest across the edge: weigh the component normal to it
     height, width = shape
     big = Image.new('L', (width * SUPERSAMPLE, height * SUPERSAMPLE), 0)
     draw = ImageDraw.Draw(big)

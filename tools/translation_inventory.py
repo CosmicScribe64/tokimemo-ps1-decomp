@@ -67,12 +67,9 @@ UNREGISTERED = {'translations/en/graphics/artwork/checkpoints/T39004-mainrom-por
                 'translations/en/graphics/artwork/checkpoints/T39400-bs-signs-v1/ledger.json': (
                     'bs-d-15-03-monument', 'bs-d-03-08-march-placard', 'bs-d-24-03-ticket-plaque',
                     'bs-d-19-02-maiko-board', 'bs-i-17-01-hanging-sign'),
-                'translations/en/graphics/artwork/checkpoints/T39004-bs-v1/ledger.json': ('bs-c-01-28-final-exams',),
-                # Owner decision 2026-11-01: layout A (rotated) for the P_01_03 / P_01_03B names; the stacked (b) and
-                # larger centred alternatives are rejected and stay unregistered.
-                'translations/en/graphics/artwork/checkpoints/T39410-stills-fixes-v1/ledger.json': (
-                    'bs-p-01-03-roster-b-stacked', 'bs-p-01-03b-name-b-stacked',
-                    'bs-p-01-03b-name-a-large', 'bs-p-01-03b-name-b-large')}
+                'translations/en/graphics/artwork/checkpoints/T39004-bs-v1/ledger.json': ('bs-c-01-28-final-exams',)}
+# Owner decision 2026-11-01: layout A (rotated) for the P_01_03 / P_01_03B names. The rejected stacked (b) and larger
+# centred alternatives were deleted from T39410-stills-fixes-v1 in the second T-39412 pass, so that ledger needs no skip.
 TEXT_MAIN = ROOT / 'translations/en/returned-v3.jsonl'
 TEXT_SUPP = ROOT / 'translations/en/supplemental.jsonl'
 TEXT_MANIFEST = ROOT / 'translations/en/manifest.json'
