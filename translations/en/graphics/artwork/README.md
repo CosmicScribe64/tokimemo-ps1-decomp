@@ -58,3 +58,15 @@ python3 tools/translation_date_panel_checkpoint.py --frame60 <mainrom port-made 
 ```
 
 To see the whole frame-60 composite, rebuild it locally from the installed HUD with `--hud-manifest <installed>/packs/hud_manifest/manifest.json --preview <new png>`.
+
+## BS sign drafts (T-39400)
+
+`checkpoints/T39400-bs-signs-v1` holds 17 port-made English lettering drafts for signs in BS background stills: the three class headers of P_01_02, the two festival boards, the computer-club banner, the march placard, the museum monument, the rink entrance sign and shop board, the ticket plaque, the brass-band banner, the library aisle sign and the shoe-rental counter sign. Each PNG is exactly the rebuilt rectangle of its sign (face refilled from the clean pixels around it, English drawn on it) and holds no original pixel; the whole still is never committed. `bs-signs-v1/manifest.json` records, per asset, the source container hash, the pinned MDEC decoder identity, the proven picture size and its code evidence, the rectangle, the 16x16 macroblocks it touches and the lettering description. The ledger flags every asset `port_made` and unapproved.
+
+The lettering comes from `tools/translation_bs_font.py`: single-stroke skeleton capitals authored in the port, laid out in the sign's own box (rotated to run down the board where the original does), stroked at a weight matched to the original and softened by the same box filter the decode gives the original lettering. It is not a system font, a scaled raster font or an AI image. To rebuild the drafts and the local comparison previews, run this in the Pillow tooling image with the disc extracted; the output folder must be new and under `.asset-cache`:
+
+```sh
+python3 tools/translation_bs_signs.py build --output .asset-cache/bs-signs-build
+```
+
+`build` writes the whole English stills, source stills, an original | English comparison at 2x and a zoomed pair per sign under `previews/`; those contain the original image and stay local. No BS file is written: the later patch step re-encodes the touched macroblocks, and the earlier P_01_02 sweep (T-39012) already found that file hard to re-encode within the ring tolerance.
