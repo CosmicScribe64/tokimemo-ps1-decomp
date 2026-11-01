@@ -10,6 +10,8 @@ script -> objcopy to the PS-X EXE -> sha1sum -c config/SLPM_86.053.sha1.
 Each overlay in config/overlays.txt (T-0008) is its own target: splat split
 config/overlays/<NAME>.yaml -> IDO C + asm -> ld -> objcopy -> sha1 check
 (build/ovl/<NAME>.ok, or `ninja overlays` for all). Also writes objdiff.json.
+`ninja english` (not a default target) builds the English variant into build/en/ (T-39502,
+wiki/english-text-runtime.md).
 """
 import glob
 import json
@@ -222,6 +224,147 @@ def overlay_targets(n, overlays):
     return oks
 
 
+# English build variant (T-39502, wiki/english-text-runtime.md): `ninja english`, never part of the
+# default targets. Objects whose C source mentions the flag are rebuilt with -DTOKIMEMO_ENGLISH into
+# build/en/ and linked at their original addresses; all other objects are the default build's own.
+EN_FLAG = "TOKIMEMO_ENGLISH"
+EN_DIR = "build/en"
+EN_HOOKS = "config/english_hooks.txt"
+EN_FONT = "translations/en/font/latin12.txt"
+EN_FONT_S = EN_DIR + "/gen/english_font.s"
+EN_BOOT = "src/english/boot.s"
+EN_ISLAND_SYMS = EN_DIR + "/island_syms.ld"
+EN_TOOLS = ["tools/english_link.py"]
+
+
+def uses_english(path):
+    with open(path, encoding="utf-8") as f:
+        return EN_FLAG in f.read()
+
+
+def english_obj(obj):
+    """build/<path>.o of the default build -> build/en/<path>.o."""
+    return EN_DIR + "/" + obj[len("build/"):]
+
+
+def check_english_headers():
+    """The flag may change code only in .c files: a header outside include/english/ that tests it would
+    make every object that includes it differ, and only flagged .c files are rebuilt."""
+    bad = [h for h in HEADER_FILES if not h.startswith("include/english/") and uses_english(h)]
+    if bad:
+        sys.exit("configure.py: %s used in %s; keep English code in .c files or include/english/"
+                 % (EN_FLAG, ", ".join(bad)))
+
+
+def english_cc(n, src, obj, toolchain, implicit, rule="cc"):
+    """Compile with the flag: `cc` for an original object (same steps as the default build), `encc`
+    for island code, which has no original span for tools/object_layout.py."""
+    if toolchain[0] != "ido":
+        sys.exit("configure.py: %s uses %s but is built with %s; only IDO objects take the flag"
+                 % (src, EN_FLAG, " ".join(toolchain)))
+    n.build(obj, rule, src, variables={"toolchain": " ".join(toolchain + ["-D" + EN_FLAG])},
+            implicit=implicit, order_only=[HEADERS_OK])
+
+
+def english_targets(n, overlays, objs, cc_implicit):
+    """Rules for build/en/: the main executable with its island, and every overlay."""
+    check_english_headers()
+    n.rule("enlink", command="python3 tools/english_link.py $args", description="ENGLISH $out")
+    n.rule("enfont", command="python3 tools/english_font.py $in $out", description="FONT $in")
+    n.rule("encc", command="python3 tools/cc.py $in $out $toolchain", depfile="$out.d", deps="gcc",
+           description="CC $in")
+    n.rule("enas", command="mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 $in -o $out",
+           description="AS $in")
+    n.rule("enld",
+           command=("mips-linux-gnu-ld -EL -T $script -T build/undefined_funcs_auto.txt "
+                    "-T build/undefined_syms_auto.txt -T build/%s_data_syms.ld "
+                    "-Map $map -o $out") % EXE,
+           description="LD $out")
+    n.rule("enold",
+           command=("mips-linux-gnu-ld -EL -T $script "
+                    "-T build/ovl/${name}_undefined_funcs_auto.txt "
+                    "-T build/ovl/${name}_undefined_syms_auto.txt "
+                    "-T build/ovl/${name}_data_syms.ld "
+                    "-T build/main_names.ld -T %s "
+                    "-Map $map -o $out") % EN_ISLAND_SYMS,
+           description="LD $out")
+    outputs = []
+
+    # main executable: flagged objects, island objects, boot stub
+    redirect = [o for c, o in objs if c.endswith(".c") and uses_english(c)]
+    en_objs = []
+    for c, o in objs:
+        if o in redirect:
+            english_cc(n, c, english_obj(o), C_FILES[c], cc_implicit)
+            en_objs.append(english_obj(o))
+        else:
+            en_objs.append(o)
+    font_json = EN_DIR + "/font_metrics.json"
+    n.build([EN_FONT_S, font_json], "enfont", EN_FONT, implicit=["tools/english_font.py"])
+    island = []
+    for c in sorted(glob.glob("src/english/*.c")):
+        o = english_obj("build/" + c[:-2] + ".o")
+        english_cc(n, c, o, C_TOOLCHAIN, cc_implicit, rule="encc")
+        island.append(o)
+    font_o = EN_FONT_S[:-2] + ".o"
+    n.build(font_o, "enas", EN_FONT_S)
+    island.append(font_o)
+    boot = english_obj("build/" + EN_BOOT[:-2] + ".o")
+    n.build(boot, "as", EN_BOOT, implicit=["include/macro.inc", "tools/asm.py"])
+    script = EN_DIR + "/%s.ld" % EXE
+    n.build(script, "enlink", ["build/%s.ld" % EXE],
+            implicit=["build/%s.elf" % EXE] + EN_TOOLS,
+            variables={"args": "ld main build/%s.ld build/%s.map %s --redirect %s --island %s --boot %s"
+                       % (EXE, EXE, script, " ".join(redirect), " ".join(island), boot)})
+    elf = EN_DIR + "/%s.elf" % EXE
+    n.build(elf, "enld", en_objs + island + [boot], implicit=[script],
+            variables={"script": script, "map": EN_DIR + "/%s.map" % EXE})
+    raw = EN_DIR + "/%s.raw" % EXE
+    n.build(raw, "objcopy", elf)
+    exe = EN_DIR + "/%s.bin" % EXE
+    n.build(exe, "enlink", [elf, raw], implicit=["build/%s.elf" % EXE, EN_HOOKS] + EN_TOOLS,
+            variables={"args": "exe %s %s build/%s.elf %s %s" % (elf, raw, EXE, EN_HOOKS, exe)})
+    n.build(EN_ISLAND_SYMS, "enlink", elf, implicit=EN_TOOLS,
+            variables={"args": "syms %s %s" % (elf, EN_ISLAND_SYMS)})
+    outputs += [exe, font_json]
+
+    # overlays: flagged objects relinked at their original addresses, then size and checksum fixup
+    for name, _base, _text in overlays:
+        default_elf = "build/ovl/%s.elf" % name
+        ovl_objs = [o for o in n_overlay_objects(name)]
+        redirect = []
+        en_objs = []
+        for cf in srcscan.unit_c_files(name):
+            if uses_english(str(cf.src)):
+                tc = OBJECT_TOOLCHAINS.get(cf.name, OVL_C_TOOLCHAIN)
+                english_cc(n, str(cf.src), english_obj(cf.obj), tc,
+                           cc_implicit + ["build/ovl/%s.stamp" % name])
+                redirect.append(cf.obj)
+        for o in ovl_objs:
+            en_objs.append(english_obj(o) if o in redirect else o)
+        script = EN_DIR + "/ovl/%s.ld" % name
+        n.build(script, "enlink", ["build/ovl/%s.ld" % name], implicit=[default_elf] + EN_TOOLS,
+                variables={"args": "ld %s build/ovl/%s.ld build/ovl/%s.map %s%s"
+                           % (name, name, name, script,
+                              (" --redirect " + " ".join(redirect)) if redirect else "")})
+        elf = EN_DIR + "/ovl/%s.elf" % name
+        n.build(elf, "enold", en_objs, implicit=[script, EN_ISLAND_SYMS, "build/main_names.ld"],
+                variables={"name": name, "script": script, "map": EN_DIR + "/ovl/%s.map" % name})
+        raw = EN_DIR + "/ovl/%s.raw" % name
+        n.build(raw, "objcopy", elf)
+        out = EN_DIR + "/ovl/%s.bin" % name
+        n.build(out, "enlink", [elf, raw], implicit=[default_elf, EN_HOOKS] + EN_TOOLS,
+                variables={"args": "ovl %s %s %s %s %s %s" % (name, elf, raw, default_elf, EN_HOOKS, out)})
+        outputs.append(out)
+    n.build("english", "phony", outputs)
+
+
+def n_overlay_objects(name):
+    """Default-build objects of overlay `name`, as overlay_targets links them."""
+    return ([cf.obj for cf in srcscan.unit_c_files(name)]
+            + ["build/ovl/%s/%s.o" % (name, s[:-2]) for s in overlay_data_files(name)])
+
+
 def main():
     # -M records files read, not failed higher-priority include lookups. A new
     # or removed file can change resolution without touching an old dependency.
@@ -321,18 +464,21 @@ def main():
             implicit=[DISC_STAMP, "tools/data_pieces.py"])
 
     objs = []
+    sources = []
+    cc_implicit = [stamp, SYMBOLS_OK, INCLUDE_FILES, "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py",
+                   "tools/ugen_pass.py", "tools/object_layout.py", "include/asmproc_prelude.inc",
+                   "include/gte_macros.inc", "include/macro.inc", "include/labels.inc"]
     for c, toolchain in sorted(C_FILES.items()):
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
-                implicit=[stamp, SYMBOLS_OK, INCLUDE_FILES, "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py", "tools/ugen_pass.py",
-                          "tools/object_layout.py", "include/asmproc_prelude.inc",
-                          "include/gte_macros.inc", "include/macro.inc", "include/labels.inc"],
-                order_only=[HEADERS_OK])
+                implicit=cc_implicit, order_only=[HEADERS_OK])
         objs.append(o)
+        sources.append((c, o))
     for s in ASM_FILES:
         o = "build/" + s[:-2] + ".o"
         n.build(o, "as", s, implicit=[stamp, "include/macro.inc", "tools/asm.py"])
         objs.append(o)
+        sources.append((s, o))
 
     elf = "build/%s.elf" % EXE
     n.build(elf, "ld", objs, implicit=[stamp])
@@ -341,6 +487,7 @@ def main():
     n.rule("progress", command="python3 tools/progress.py", description="PROGRESS", pool="console")
     n.build("progress", "progress")
     oks = overlay_targets(n, read_overlays())
+    english_targets(n, read_overlays(), sources, cc_implicit)
     n.default(["build/%s.ok" % EXE] + oks + [GLOBALS_OK, SYMBOLS_OK, RENAMES_OK])
     n.close()
 
