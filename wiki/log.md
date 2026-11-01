@@ -2838,3 +2838,7 @@ A fresh clone of `origin/main` showed two tests still depending on removed port 
 Comments in the translation tools that pointed at port files now say they were removed. Evidence strings written into committed manifests are unchanged, so reproduction tests still match.
 
 The full Python suite (`tools/test_*.py`, `tests/test_*.py`) was run in a checkout without `disc/`, `asm/` or `build/`. It has the same failures as the pre-removal commit c1c2a7aa5 in that state (220, all needing the extracted data), and no new ones. `configure.py`, `tools/docker.sh`, `tools/Dockerfile` and the CI workflow reference no removed file.
+
+## [2026-11-01] ticket | Finish the missing English art (T-39400)
+
+The user asked for the 21 missing art items to be made before the English patch. Opened [[tickets/T-39400-finish-missing-english-art]]: register the nine port-made MAINROM genre tags, and fix the bindings, prove the sizes and draw English for the twelve BS sign stills.
