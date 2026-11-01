@@ -60,6 +60,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-39410-mainrom-art-fixes|T-39410 Fix the MAINROM English art after the owner review]]
 - [ ] [[tickets/T-39411-menus-art-fixes|T-39411 Fix the menu and screen English art after the owner and reviewer pass]]
+- [ ] [[tickets/T-39412-bs-stills-art-fixes|T-39412 Fix the BS still drafts after the owner art review]]
 
 
 
