@@ -913,6 +913,19 @@ void file_select_mode_stage_init(void) {
         return;
     }
 }
+#ifdef TOKIMEMO_ENGLISH
+/* T-39502: first English text on screen, two C literals in place of the two rodata strings (the
+ * English build pins this object's rodata to its original size, so the originals are left out). The
+ * text writers (T-39503) replace this with the generated English string table. */
+void file_select_memory_card_check_begin(void) {
+    memory_card_state_reset();
+    text_system_reset();
+    set_kanji_string(-0x40, 0x20, 0xF, "Checking the Memory Card.", 0);
+    set_kanji_string(-0x40, 0x30, 0xF, "Please wait.", 0);
+    k_disp_start(2);
+    mode_step_next();
+}
+#else
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/name_entry/file_select.rodata", file_select_memory_card_check_text_1);
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/name_entry/file_select.rodata", file_select_memory_card_check_text_2);
@@ -925,6 +938,7 @@ void file_select_memory_card_check_begin(void) {
     k_disp_start(2);
     mode_step_next();
 }
+#endif
 
 void file_select_memory_card_check_poll(void) {
     u8 memory_card_result;
