@@ -538,17 +538,21 @@
   },
   "mainrom-0134": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/mainrom-port-made.json (ticket T-39009); registered under T-39400; revisable agent defaults, no human approval",
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists, so the earlier \"new glyphs not allowed\" reasons no longer apply",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: tag cells are shared between tags"
    ],
-   "reason": "Comedy: panel7 lacks m, d, y; the 12-row native font cannot fit the 8-row tag; new glyphs not allowed (Battle Miss precedent).",
-   "status": "missing"
+   "reason": "draft candidate \"Comedy\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only"
   },
   "mainrom-0135": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/mainrom-port-made.json (ticket T-39009); registered under T-39400; revisable agent defaults, no human approval",
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists, so the earlier \"new glyphs not allowed\" reasons no longer apply",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: tag cells are shared between tags"
    ],
-   "reason": "Romance: panel7 lacks R, m; native font cannot fit 8 rows; new glyphs not allowed.",
-   "status": "missing"
+   "reason": "draft candidate \"Romance\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only"
   },
   "mainrom-0136": {
    "notes": [
@@ -568,17 +572,21 @@
   },
   "mainrom-0138": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/mainrom-port-made.json (ticket T-39009); registered under T-39400; revisable agent defaults, no human approval",
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists, so the earlier \"new glyphs not allowed\" reasons no longer apply",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: tag cells are shared between tags"
    ],
-   "reason": "Horror: panel7 has no H-o-r-r-o-r problem glyph-wise but the width (27px) exceeds the 24px tag; no scaling allowed.",
-   "status": "missing"
+   "reason": "draft candidate \"Horror\" with port-made lettering (panel7-compact+narrow-Ho); unreviewed, human_approved false",
+   "status": "candidate-only"
   },
   "mainrom-0139": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/mainrom-port-made.json (ticket T-39009); registered under T-39400; revisable agent defaults, no human approval",
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists, so the earlier \"new glyphs not allowed\" reasons no longer apply",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: tag cells are shared between tags"
    ],
-   "reason": "Anime: panel7 lacks m; native font cannot fit 8 rows; new glyphs not allowed.",
-   "status": "missing"
+   "reason": "draft candidate \"Anime\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only"
   },
   "mainrom-0140": {
    "notes": [
@@ -590,38 +598,48 @@
   },
   "mainrom-0141": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/mainrom-port-made.json (ticket T-39009); registered under T-39400; revisable agent defaults, no human approval",
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists, so the earlier \"new glyphs not allowed\" reasons no longer apply",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: tag cells are shared between tags"
    ],
-   "reason": "Idol: panel7 lacks I, d; native font cannot fit 8 rows; new glyphs not allowed.",
-   "status": "missing"
+   "reason": "draft candidate \"Idol\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only"
   },
   "mainrom-0142": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/mainrom-port-made.json (ticket T-39009); registered under T-39400; revisable agent defaults, no human approval",
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists, so the earlier \"new glyphs not allowed\" reasons no longer apply",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: tag cells are shared between tags"
    ],
-   "reason": "Rock: panel7 lacks R; native font cannot fit 8 rows; new glyphs not allowed.",
-   "status": "missing"
+   "reason": "draft candidate \"Rock\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only"
   },
   "mainrom-0143": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/mainrom-port-made.json (ticket T-39009); registered under T-39400; revisable agent defaults, no human approval",
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists, so the earlier \"new glyphs not allowed\" reasons no longer apply",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: tag cells are shared between tags"
    ],
-   "reason": "New Music: panel7 lacks N, w, M; native font cannot fit 8 rows; new glyphs not allowed.",
-   "status": "missing"
+   "reason": "draft candidate \"New Music\" with port-made lettering (panel7-compact); unreviewed, human_approved false",
+   "status": "candidate-only"
   },
   "mainrom-0144": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/mainrom-port-made.json (ticket T-39009); registered under T-39400; revisable agent defaults, no human approval",
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists, so the earlier \"new glyphs not allowed\" reasons no longer apply",
+    "sheet-patch draft: changes only texels no undrafted frame draws"
    ],
-   "reason": "Pro Wrestling: native font (Wrestling 48px) does not fit 32px and cannot set two lines in 16 rows; panel7 lacks P, W, g.",
-   "status": "missing"
+   "reason": "draft candidate \"Pro / Wrestling\" with port-made lettering (panel7-compact+narrow-egnsrt); unreviewed, human_approved false",
+   "status": "candidate-only"
   },
   "mainrom-0145": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/mainrom-port-made.json (ticket T-39009); registered under T-39400; revisable agent defaults, no human approval",
+    "user decision 2026-10-30: port-made lettering allowed where no usable original glyph exists, so the earlier \"new glyphs not allowed\" reasons no longer apply",
+    "sheet-patch draft: changes only texels no undrafted frame draws"
    ],
-   "reason": "Baseball: native font (41px) does not fit 32px; panel7 lacks B, b.",
-   "status": "missing"
+   "reason": "draft candidate \"Baseball\" with port-made lettering (panel7-compact+narrow-a); unreviewed, human_approved false",
+   "status": "candidate-only"
   },
   "mainrom-0151": {
    "notes": [

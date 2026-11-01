@@ -47,9 +47,14 @@ LEDGERS = [SNAPSHOT / 'checkpoints/T39004-2026-10-29/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-filesel-v4/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-bs-v1/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-date-panel-v1/ledger.json',
-           SNAPSHOT / 'checkpoints/T39004-movie-pills-v1/ledger.json']
+           SNAPSHOT / 'checkpoints/T39004-movie-pills-v1/ledger.json',
+           SNAPSHOT / 'checkpoints/T39004-mainrom-port-made-v1/ledger.json']
 # Superseded checkpoints stay on disk as history but are not read:
 # T39004-battle-miss-v1 (3-wide M) by -v2, T39004-filesel-v3 (Clear, partial pages) by -v4.
+# Candidates of a registered ledger that are left out (id prefix per ledger): the port-made MAINROM ledger
+# also holds the "Apr 4" month-name composites of frame 60, a form the owner did not choose (the date panel
+# checkpoint holds the chosen captions), so they are not evidence for mainrom-0060.
+UNREGISTERED = {'translations/en/graphics/artwork/checkpoints/T39004-mainrom-port-made-v1/ledger.json': ('mainrom-draft-0060.',)}
 TEXT_MAIN = ROOT / 'translations/en/returned-v3.jsonl'
 TEXT_SUPP = ROOT / 'translations/en/supplemental.jsonl'
 TEXT_MANIFEST = ROOT / 'translations/en/manifest.json'
@@ -255,9 +260,11 @@ def load_ledgers(ledgers=None, snapshot=SNAPSHOT):
             if asset.get('status') not in LEDGER_STATUSES:
                 raise ValueError('ledger %s has unknown status %r: %s' % (path.name, asset.get('status'), asset.get('id')))
             records = whole_file_records(asset, path) if 'catalog_item' in asset else [asset]
+            name = str(path.relative_to(ROOT)) if path.resolve().is_relative_to(ROOT) else path.name
             for record in records:
-                entries.append({**record, 'ledger': str(path.relative_to(ROOT)) if path.resolve().is_relative_to(ROOT) else path.name,
-                                'ledger_sha256': digest(path.read_bytes())})
+                if record['id'].startswith(UNREGISTERED.get(name, ())):
+                    continue
+                entries.append({**record, 'ledger': name, 'ledger_sha256': digest(path.read_bytes())})
     return entries
 
 

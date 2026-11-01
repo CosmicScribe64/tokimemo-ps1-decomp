@@ -106,10 +106,10 @@ class PinnedCountTests(unittest.TestCase):
         summary = subject.build()['summary']
         self.assertEqual(summary['artwork_items']['total'], 271)
         self.assertEqual(summary['artwork_items']['by_status'], {
-            'english-reviewed': 52, 'candidate-only': 169, 'missing': 21, 'unmapped': 0, 'deliberately-untranslated': 29})
+            'english-reviewed': 52, 'candidate-only': 178, 'missing': 12, 'unmapped': 0, 'deliberately-untranslated': 29})
         self.assertEqual(summary['historical_assets']['by_status']['english-reviewed'], 56)
         self.assertEqual(summary['historical_assets']['by_status']['unmapped'], 3)
-        self.assertEqual(summary['candidate_records'], {'total': 360, 'distinct_assets': 351, 'agent_reviewed_revisions': 9, 'human_approved': 53})
+        self.assertEqual(summary['candidate_records'], {'total': 407, 'distinct_assets': 398, 'agent_reviewed_revisions': 9, 'human_approved': 53})
         self.assertEqual(summary['superseded_records'], 23)
         self.assertEqual(summary['text_records']['total'], 55911)
         self.assertEqual(summary['text_records']['by_class'], {
@@ -195,6 +195,18 @@ class PinnedCountTests(unittest.TestCase):
                          {'all-c-banner.source-page-%d' % n for n in (3, 4, 5)})
         with self.assertRaisesRegex(ValueError, 'disagrees with its frame or palette'):
             subject.candidate_key({'id': 'mainrom-draft-0057.base', 'frame': 58, 'palette_id': 'base'})
+
+    def test_port_made_mainrom_tags_are_registered_as_drafts(self):
+        built = subject.build()
+        items = {i['id']: i for i in built['artwork_items']}
+        for n in (134, 135, 138, 139, 141, 142, 143, 144, 145):
+            item = items['mainrom-%04d' % n]
+            self.assertEqual(item['status'], 'candidate-only', item['id'])
+            self.assertEqual(len(item['english']['candidates']), 5 if n < 144 else 6, item['id'])
+            self.assertEqual(set(item['variant_status'].values()), {'candidate-only'}, item['id'])
+        records = [c for c in built['candidate_records'] if c['ledger'].endswith('T39004-mainrom-port-made-v1/ledger.json')]
+        self.assertEqual(len(records), 47)  # the six month-name composites of frame 60 stay out
+        self.assertFalse(any(c['human_approved'] for c in records))
 
     def test_date_panel_style_drafts_replace_older_weekday_drafts(self):
         built = subject.build()
