@@ -2862,3 +2862,12 @@ Script strings cannot use plain ASCII with the original control letters (0x20 li
 ## [2026-11-01] ticket | Open T-39505 for English memory room
 
 Merged [[tickets/T-39501-disc-rebuild-and-xdelta]] and [[tickets/T-39502-english-text-runtime]] into `patch/english`. The runtime pins every object to its original address, so overlays cannot grow; opened [[tickets/T-39505-english-memory-and-relink]] for a RAM map and a free relink of the English build.
+
+## [2026-11-01] build | Text-container writers for the English patch (T-39503)
+
+Added `tools/patch/text/`, `tools/patch_text.py` and `tools/test_patch_text.py`; page [[english-text-containers]]. Every file that holds a translated record rebuilds byte-exact from its original records: 143 files and 53,178 slots, with the talk scripts laid out again from scratch through 31,334 pointer words. All 2,201 C literals render back to their bytes, and a build with every literal rendered passed all SHA-1 checks. All 55,911 English ids map to one location. Text without records was found only in the unloaded EVENT and GYOZI overlays; the four magazine tables are fully covered. With a provisional one-byte ASCII encoding, talk files grow by 208,896 bytes and 32 of them gain sectors; ten DATE files exceed the largest original read into their buffer; overlays and the main executable fit after a relink. Findings for [[tickets/T-39502-english-text-runtime]]: control letters collide with ASCII, inline labels have a fixed length, and 557 overlay-table targets wrap the Japanese. The export ran against a source snapshot because three pinned files changed in 92f7cc070.
+
+## [2026-11-01] ticket | T-39503 to In Review
+
+[[tickets/T-39503-text-container-writers]] waits for code review against `CODING_STANDARDS.md`.
+

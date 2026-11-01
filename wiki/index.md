@@ -23,6 +23,7 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[asset-export]] - engine-independent readers for the original inputs, full text export and media/localization inventories
 - [[assets-input]] - Original-game input inventory and provenance
 - [[assets-text]] - Text/script extraction coverage and fidelity gates
+- [[english-text-containers]] - English patch: writers that rebuild every text container from its records, control codes, coverage map and size report
 - [[assets-media]] - Image/audio readers, authentic palette galleries and visual-text catalog
 
 ## Matching

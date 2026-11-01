@@ -22,7 +22,6 @@ kanban-plugin: board
 ## In Progress
 
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
-- [ ] [[tickets/T-39503-text-container-writers|T-39503 Write every text container back from records]]
 - [ ] [[tickets/T-39505-english-memory-and-relink|T-39505 Give the English build room to grow (memory map and free relink)]]
 - [ ] [[tickets/T-39504-emulator-screen-route|T-39504 Script an emulator route through the main screens with screenshots]]
 - [ ] [[tickets/T-39400-finish-missing-english-art|T-39400 Finish the missing English art]]
@@ -64,6 +63,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-39501-disc-rebuild-and-xdelta|T-39501 Rebuild the disc image with replaced files and make the xdelta patch]]
 
 - [ ] [[tickets/T-39502-english-text-runtime|T-39502 Add the English text runtime behind a build flag]]
+- [ ] [[tickets/T-39503-text-container-writers|T-39503 Write every text container back from records]]
 
 
 
