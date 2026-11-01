@@ -106,10 +106,10 @@ class PinnedCountTests(unittest.TestCase):
         summary = subject.build()['summary']
         self.assertEqual(summary['artwork_items']['total'], 271)
         self.assertEqual(summary['artwork_items']['by_status'], {
-            'english-reviewed': 52, 'candidate-only': 178, 'missing': 12, 'unmapped': 0, 'deliberately-untranslated': 29})
+            'english-reviewed': 52, 'candidate-only': 189, 'missing': 1, 'unmapped': 0, 'deliberately-untranslated': 29})
         self.assertEqual(summary['historical_assets']['by_status']['english-reviewed'], 56)
         self.assertEqual(summary['historical_assets']['by_status']['unmapped'], 3)
-        self.assertEqual(summary['candidate_records'], {'total': 407, 'distinct_assets': 398, 'agent_reviewed_revisions': 9, 'human_approved': 53})
+        self.assertEqual(summary['candidate_records'], {'total': 424, 'distinct_assets': 415, 'agent_reviewed_revisions': 9, 'human_approved': 53})
         self.assertEqual(summary['superseded_records'], 23)
         self.assertEqual(summary['text_records']['total'], 55911)
         self.assertEqual(summary['text_records']['by_class'], {
@@ -196,17 +196,32 @@ class PinnedCountTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'disagrees with its frame or palette'):
             subject.candidate_key({'id': 'mainrom-draft-0057.base', 'frame': 58, 'palette_id': 'base'})
 
-    def test_port_made_mainrom_tags_are_registered_as_drafts(self):
+    def test_missing_art_is_drafted_except_the_cut_off_ride_sign(self):
+        items = {i['id']: i for i in subject.build()['artwork_items']}
+        tags = {'mainrom-%04d' % n: (5 if n < 144 else 6) for n in (134, 135, 138, 139, 141, 142, 143, 144, 145)}
+        for item_id, count in tags.items():
+            self.assertEqual(items[item_id]['status'], 'candidate-only', item_id)
+            self.assertEqual(len(items[item_id]['english']['candidates']), count, item_id)
+        signs = {'catalog-130': ('P_01_02', 6), 'catalog-133': ('D_01_47', 1), 'catalog-134': ('D_01_48', 1),
+                 'catalog-136': ('D_01_70', 1), 'catalog-139': ('D_03_08', 1), 'catalog-141': ('D_29_09', 1),
+                 'catalog-143': ('D_15_03', 1), 'catalog-144': ('D_19_02', 2), 'catalog-145': ('D_24_03', 1),
+                 'catalog-146': ('I_28_02', 1), 'catalog-149': ('I_17_01', 1)}
+        for item_id, (name, count) in signs.items():
+            self.assertEqual(items[item_id]['status'], 'candidate-only', item_id)
+            self.assertTrue(items[item_id]['container'].endswith('/%s.BS' % name), item_id)
+            self.assertEqual(len(items[item_id]['english']['candidates']), count, item_id)
+            self.assertTrue(items[item_id]['container_sha256'], item_id)
+        self.assertEqual(items['catalog-142']['status'], 'missing')
+        self.assertTrue(items['catalog-142']['container'].endswith('/D_11_11.BS'))
+        self.assertEqual([i for i, v in items.items() if v['status'] == 'missing'], ['catalog-142'])
+        self.assertTrue(items['catalog-135']['container'].endswith('/D_01_69.BS'))
+
+    def test_registered_checkpoints_keep_their_drafts_unapproved(self):
         built = subject.build()
-        items = {i['id']: i for i in built['artwork_items']}
-        for n in (134, 135, 138, 139, 141, 142, 143, 144, 145):
-            item = items['mainrom-%04d' % n]
-            self.assertEqual(item['status'], 'candidate-only', item['id'])
-            self.assertEqual(len(item['english']['candidates']), 5 if n < 144 else 6, item['id'])
-            self.assertEqual(set(item['variant_status'].values()), {'candidate-only'}, item['id'])
-        records = [c for c in built['candidate_records'] if c['ledger'].endswith('T39004-mainrom-port-made-v1/ledger.json')]
-        self.assertEqual(len(records), 47)  # the six month-name composites of frame 60 stay out
+        records = [c for c in built['candidate_records'] if c['ledger'].endswith(('T39400-bs-signs-v1/ledger.json', 'T39004-mainrom-port-made-v1/ledger.json'))]
+        self.assertEqual(len(records), 17 + 53 - 6)  # the six month-name composites of frame 60 stay out
         self.assertFalse(any(c['human_approved'] for c in records))
+        self.assertEqual({c['status'] for c in records}, {'candidate-only'})
 
     def test_date_panel_style_drafts_replace_older_weekday_drafts(self):
         built = subject.build()

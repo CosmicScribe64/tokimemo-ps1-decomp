@@ -22,6 +22,8 @@ Agent acceptance is never recorded as human approval. Runtime verification is a
 separate field. Operations (all Docker, Python 3 with Pillow not required):
 
   sources   capture original container/frame hashes from local caches and disc
+  containers  refresh only the container hashes (and PROLODIR corrections) of an existing
+            sources file from the disc, after the catalog binds a different file
   generate  write translations/en/graphics/translation_inventory.json
   check     verify the committed inventory against its committed inputs
 
@@ -48,7 +50,8 @@ LEDGERS = [SNAPSHOT / 'checkpoints/T39004-2026-10-29/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-bs-v1/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-date-panel-v1/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-movie-pills-v1/ledger.json',
-           SNAPSHOT / 'checkpoints/T39004-mainrom-port-made-v1/ledger.json']
+           SNAPSHOT / 'checkpoints/T39004-mainrom-port-made-v1/ledger.json',
+           SNAPSHOT / 'checkpoints/T39400-bs-signs-v1/ledger.json']
 # Superseded checkpoints stay on disk as history but are not read:
 # T39004-battle-miss-v1 (3-wide M) by -v2, T39004-filesel-v3 (Clear, partial pages) by -v4.
 # Candidates of a registered ledger that are left out (id prefix per ledger): the port-made MAINROM ledger
@@ -606,8 +609,8 @@ def summarize(items, hist, cands, text):
                              'context_status': context_counts, 'groups': len(text['groups'])}}
 
 
-def capture_sources(disc, cache):
-    """Collect original container hashes and per-frame PNG hashes from local caches."""
+def capture_containers(disc):
+    """(container hashes, PROLODIR->BS path corrections, absent paths) for every container the catalog names."""
     rows = [json.loads(l) for l in CATALOG.read_bytes().splitlines() if l]
     paths = set(CONTAINER_KEYS)
     paths.update('CDROM/BATTLE/VS_%s.BIN' % enc for enc in ('HABU', 'KUMA', 'ROBO', 'SIKA', 'UFO'))
@@ -623,6 +626,12 @@ def capture_sources(disc, cache):
             containers[path] = digest(target.read_bytes())
         else:
             absent.append(str(disc / path))
+    return containers, corrections, absent
+
+
+def capture_sources(disc, cache):
+    """Collect original container hashes and per-frame PNG hashes from local caches."""
+    containers, corrections, absent = capture_containers(disc)
     frames = {}
     mapping = {'MAINROM': 'original-mainrom-v1', 'OPTION': 'original-option-v1', 'FILESEL': 'original-filesel-v1',
                'NAME_ENT': 'original-name-v1', 'TITLE': 'original-title-v1', 'EXAMINE': 'original-exam-v1'}
@@ -768,7 +777,7 @@ def validate(inventory):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('operation', choices=['sources', 'generate', 'check'])
+    parser.add_argument('operation', choices=['sources', 'containers', 'generate', 'check'])
     parser.add_argument('--disc', type=Path, default=ROOT / 'disc/files')
     parser.add_argument('--cache', type=Path, default=ROOT / '.asset-cache/translation-assets')
     parser.add_argument('--catalog', type=Path, default=CATALOG)
@@ -779,6 +788,15 @@ def main():
     args = parser.parse_args()
     if args.operation == 'sources':
         args.sources.write_bytes(encoded(capture_sources(args.disc, args.cache)) + b'\n')
+        print('wrote', args.sources)
+        return
+    if args.operation == 'containers':
+        containers, corrections, absent = capture_containers(args.disc)
+        if absent:
+            raise SystemExit('cannot capture container hashes; missing inputs:\n' + '\n'.join(absent))
+        identities = load_json(args.sources)
+        identities['containers'], identities['path_corrections'] = containers, corrections
+        args.sources.write_bytes(encoded(identities) + b'\n')
         print('wrote', args.sources)
         return
     inventory = build(args.catalog, args.decisions, args.sources, args.snapshot)

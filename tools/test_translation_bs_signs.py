@@ -85,6 +85,13 @@ class PlanTests(unittest.TestCase):
     def test_cited_source_lines_still_hold_the_calls(self):
         self.assertEqual(subject.check_callers(), [])
 
+    def test_catalog_bindings_match_the_plans(self):
+        rows = [json.loads(line) for line in (subject.ROOT / 'translations/en/graphics/image_text_catalog.jsonl').read_bytes().splitlines() if line]
+        bound = {int(plan['catalog_item'].split('-')[1]): plan['file'] for plan in subject.SIGNS}
+        for line, name in bound.items():
+            path = rows[line - 1]['asset_path']
+            self.assertIn(name + '.BS', path, 'catalog line %d' % line)
+
 
 class DrawingTests(unittest.TestCase):
     @staticmethod

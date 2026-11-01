@@ -254,21 +254,21 @@ Diegetic signage, chalkboards, and title cards in background MDEC `.BS` images:
 | `CDROM/PROLODIR/P_01_04B.BS` & `P_01_07.BS` | `320×160` | Suspected | *(Unreadable 1–2px chalk/bulletin squiggles)* | N/A (No legible text) | No change required. |
 | `CDROM/BS/D_01_47.BS` | `320×160` | Confirmed | `きらめき高校 体育祭` *(vertical standing sign)* + `私立きらめき高等学校` *(gate pillar)* | Kirameki High Sports Festival | Standing signboard (`28×96`): vertical/stacked **`KIRAMEKI HIGH`** / **`SPORTS FEST`** (`Sports` / `Festival`). |
 | `CDROM/BS/D_01_48.BS` | `320×160` | Confirmed | `きらめき高校 文化祭` *(vertical standing sign)* + `私立きらめき高等学校` *(gate pillar)* | Kirameki High Cultural Festival | Standing signboard (`28×96`): stacked **`KIRAMEKI HIGH`** / **`CULTURE FEST`** (`Cultural` / `Festival`). |
-| `CDROM/BS/D_01_67.BS` | `320×160` | Confirmed | `科学部` *(vertical door plaque)* | Science Club | Door plaque (`14×36`): vertical **`SCI`** or **`LAB`** (`Science Club`). |
-| `CDROM/BS/D_01_69.BS` | `320×160` | Confirmed | `電脳部` *(wall banner)* | Computer Club | Wall banner (`48×18`): **`PC CLUB`** or **`COMP. CLUB`**. |
-| `CDROM/BS/D_01_70.BS` | `320×160` | Suspected | *(Art Club easel paintings)* | N/A (No legible text) | No change required. |
+| `CDROM/BS/D_01_69.BS` | `320×160` | Confirmed | `科学部` *(vertical door plaque)* | Science Club | Door plaque (`14×36`): vertical **`SCI`** or **`LAB`** (`Science Club`). |
+| `CDROM/BS/D_01_70.BS` | `320×160` | Confirmed | `電脳部` *(wall banner)* | Computer Club | Wall banner (`48×18`): **`PC CLUB`** or **`COMP. CLUB`**. |
+| `CDROM/BS/D_01_72.BS` | `320×160` | Suspected | *(Art Club easel paintings)* | N/A (No legible text) | No change required. |
 | `CDROM/BS/D_03_06.BS` | `320×160` | Confirmed | `甲` / `子` / `園` *(3 vertical ivy plaques on stadium wall)* | Koshien Stadium | 3 plaques (`16×16` each): **`K`** / **`S`** / **`E`** or horizontal **`KOSHIEN`** across the scoreboard header. |
 | `CDROM/BS/D_03_08.BS` | `320×160` | Confirmed | `きらめき高校` *(team march placard)* | Kirameki High | March placard (`22×64`): vertical **`KIRAMEKI`** or **`K.H.S.`**. |
 | `CDROM/BS/D_03_09.BS` | `320×160` | Confirmed | `衛生室` *(door nameplate)* | Infirmary / Nurse's Office | Door plate (`28×10`): **`NURSE`** or **`CLINIC`**. |
-| `CDROM/BS/D_11_11.BS` | `320×160` | Confirmed | `国際吹奏楽コンクール優勝公演` *(stage banner)* | International Brass Band Competition Winners' Concert | Stage banner (`168×14`): **`INT'L BRASS BAND WINNERS CONCERT`**. |
-| `CDROM/BS/D_15_03.BS` | `320×160` | Confirmed | `スピンコースター` / `ビート` *(coaster arch sign)* | Spin Coaster Beat | Arch sign (`84×16`): **`SPIN COASTER`**. |
-| `CDROM/BS/D_19_02.BS` | `320×160` | Confirmed | `市立中央美術館` *(stone monument)* | Central City Art Museum | Stone monument (`24×68`): stacked **`CITY`** / **`ART`** / **`MUSEUM`** or vertical **`ART MUSEUM`**. |
-| `CDROM/BS/D_29_09.BS` | `320×160` | Confirmed | `←入口` *(hanging sign)*, `ラブリーショップ MAIKO` *(rink dasher board)* | `← Entrance`, `Lovely Shop MAIKO` | Hanging sign (`44×16`): **`← ENTER`** or **`← ENTRY`**. Dasher board (`64×12`): **`LOVELY SHOP MAIKO`**. |
-| `CDROM/BS/I_17_01.BS` | `320×160` | Confirmed | `チケット` *(booth sign next to `GREEN GARDEN`)* | Tickets | Booth sign (`36×12`): **`TICKETS`**. |
+| `CDROM/BS/D_29_09.BS` | `320×160` | Confirmed | `国際吹奏楽コンクール優勝公演` *(stage banner)* | International Brass Band Competition Winners' Concert | Stage banner (`168×14`): **`INT'L BRASS BAND WINNERS CONCERT`**. |
+| `CDROM/BS/D_11_11.BS` | `320×160` | Suspected | `スピンコースター` / `ビート` *(coaster arch sign)* | Spin Coaster Beat | Arch sign (`84×16`): **`SPIN COASTER`**. |
+| `CDROM/BS/D_15_03.BS` | `320×160` | Confirmed | `市立中央美術館` *(stone monument)* | Central City Art Museum | Stone monument (`24×68`): stacked **`CITY`** / **`ART`** / **`MUSEUM`** or vertical **`ART MUSEUM`**. |
+| `CDROM/BS/D_19_02.BS` | `320×160` | Confirmed | `←入口` *(hanging sign)*, `ラブリーショップ MAIKO` *(rink dasher board)* | `← Entrance`, `Lovely Shop MAIKO` | Hanging sign (`44×16`): **`← ENTER`** or **`← ENTRY`**. Dasher board (`64×12`): **`LOVELY SHOP MAIKO`**. |
+| `CDROM/BS/D_24_03.BS` | `320×160` | Confirmed | `チケット` *(booth sign next to `GREEN GARDEN`)* | Tickets | Booth plaque (`20×10`): **`TICKET`**. |
 | `CDROM/BS/I_28_02.BS` | `320×160` | Confirmed | `レンタルシューズ` *(neon counter sign)* | Shoe Rental / Rental Shoes | Neon sign (`80×14`): **`SHOE RENTAL`**. |
 | `CDROM/BS/C_01_28.BS` | `320×88` | Confirmed | `期末テスト` *(chalkboard)* + `月 日 ( )` | Final Exams + Month/Day | Chalkboard (`64×18`): **`FINAL EXAMS`** in white chalk pixel lettering. |
 | `CDROM/BS/C_01_30.BS` | `320×88` | Confirmed | `文` *(yellow traffic diamond)* + `神宮前` *(utility pole)* | School Zone symbol + Jingumae | Keep authentic Japanese street sign or replace `神宮前` (`12×32`) with vertical **`JINGUMAE`**. |
-| `CDROM/BS/I_11_15.BS` | `320×160` | Suspected | `美術・芸術` *(library aisle sign)* | Fine Arts | Hanging sign (`36×10`): **`FINE ARTS`** or **`ART`**. |
+| `CDROM/BS/I_17_01.BS` | `320×160` | Confirmed | `美術・芸術` *(library aisle sign)* | Fine Arts | Hanging sign (`36×10`): **`FINE ARTS`** or **`ART`**. |
 
 
 ## 11. character bust-up sprites(`CDROM/BUSTUP/*.BIN`) & sd sprites (`CDROM/*_SD/*.BIN`)

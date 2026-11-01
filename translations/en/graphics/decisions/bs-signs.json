@@ -1,0 +1,180 @@
+{
+ "catalog_corrections": [
+  {
+   "catalog_line": 135,
+   "evidence": "the science-club plaque is in D_01_69 (decoded still, 320x160); D_01_67 holds only illegible exhibition panels",
+   "field": "asset_path",
+   "from": "D_01_67.BS",
+   "to": "D_01_69.BS"
+  },
+  {
+   "catalog_line": 136,
+   "evidence": "the computer-club banner is in D_01_70",
+   "field": "asset_path",
+   "from": "D_01_69.BS",
+   "to": "D_01_70.BS"
+  },
+  {
+   "catalog_line": 137,
+   "evidence": "D_01_72 shows the art-club easels; D_01_70 is the computer-club room (catalog-136)",
+   "field": "asset_path",
+   "from": "D_01_70.BS",
+   "to": "D_01_72.BS"
+  },
+  {
+   "catalog_line": 141,
+   "evidence": "the brass-band banner is in D_29_09; the club-master flow reads it with the winner title",
+   "field": "asset_path",
+   "from": "D_11_11.BS",
+   "to": "D_29_09.BS"
+  },
+  {
+   "catalog_line": 142,
+   "evidence": "D_15_03 is the museum; D_11_11 shows the ride with a starburst sign cut off by the frame edge",
+   "field": "asset_path, status",
+   "from": "D_15_03.BS (Confirmed)",
+   "to": "D_11_11.BS (Suspected)"
+  },
+  {
+   "catalog_line": 143,
+   "evidence": "the stone monument is in D_15_03",
+   "field": "asset_path",
+   "from": "D_19_02.BS",
+   "to": "D_15_03.BS"
+  },
+  {
+   "catalog_line": 144,
+   "evidence": "the entrance sign and the MAIKO board are in D_19_02",
+   "field": "asset_path",
+   "from": "D_29_09.BS",
+   "to": "D_19_02.BS"
+  },
+  {
+   "catalog_line": 145,
+   "evidence": "the ticket booth beside the GREEN GARDEN gate is in D_24_03; its plaque face is 20x10 px",
+   "field": "asset_path, suggested graphic",
+   "from": "I_17_01.BS, booth sign 36x12 TICKETS",
+   "to": "D_24_03.BS, booth plaque 20x10 TICKET"
+  },
+  {
+   "catalog_line": 149,
+   "evidence": "I_11_15 has no sign; the hanging aisle sign is in I_17_01",
+   "field": "asset_path, status",
+   "from": "I_11_15.BS (Suspected)",
+   "to": "I_17_01.BS (Confirmed)"
+  }
+ ],
+ "checkpoint": "translations/en/graphics/artwork/checkpoints/T39400-bs-signs-v1",
+ "decisions": [
+  {
+   "assets": [
+    "bs-p-01-02-class-1a-top",
+    "bs-p-01-02-class-1a-bottom",
+    "bs-p-01-02-class-1b-top",
+    "bs-p-01-02-class-1b-bottom",
+    "bs-p-01-02-class-1c-top",
+    "bs-p-01-02-class-1c-bottom"
+   ],
+   "item_id": "catalog-130",
+   "reason": "Class header drafts in all three columns: the year mark is redrawn as a hyphenated 1 (reads 1-A, 1-B, 1-C with the painted Latin letters) and the class mark is removed (six rectangles, 640x160 proved from prologue_board_load: 9-sector read at LBA 0x4954 and bg_still_decode_to_vram(0x140, 0, 0x280, 0xA0)). Port-made skeleton lettering; unreviewed, human_approved false. The re-encode of this file is still the hard part: the T-39012 sweep (18 runs) found ring error 6-7 and a fixed-point wrap on the white paper, which this checkpoint does not change.",
+   "status": "candidate-only"
+  },
+  {
+   "assets": [
+    "bs-d-01-47-standing-sign"
+   ],
+   "item_id": "catalog-133",
+   "reason": "Standing sign draft: KIRAMEKI HIGH and SPORTS FESTIVAL run down the board with the letter tops to the right, in the two columns of the original. The gate pillar plate is left as it is (catalog-129 keeps it). Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "status": "candidate-only"
+  },
+  {
+   "assets": [
+    "bs-d-01-48-standing-sign"
+   ],
+   "item_id": "catalog-134",
+   "reason": "Standing sign draft: KIRAMEKI HIGH and CULTURAL FESTIVAL run down the board with the letter tops to the right. The gate pillar plate is left as it is (catalog-129 keeps it). Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "status": "candidate-only"
+  },
+  {
+   "assets": [
+    "bs-d-01-70-club-banner"
+   ],
+   "item_id": "catalog-136",
+   "reason": "Binding corrected from D_01_69 to D_01_70 (D_01_69 holds the science-club plaque, now bound to catalog-135). Draft COMPUTER CLUB on the cream banner with the blue roses. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "status": "candidate-only"
+  },
+  {
+   "assets": [
+    "bs-d-03-08-march-placard"
+   ],
+   "item_id": "catalog-139",
+   "reason": "Draft KIRAMEKI on the march placard (the catalog's own option). The placard face is about 31x13 px, so the full planned wording Kirameki High would need two 5 px lines that do not read. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "status": "candidate-only"
+  },
+  {
+   "assets": [
+    "bs-d-29-09-stage-banner"
+   ],
+   "item_id": "catalog-141",
+   "reason": "Binding corrected from D_11_11 to D_29_09 (the concert scene of the club-master winner flow). Draft INT'L BRASS BAND WINNERS CONCERT on the stage banner. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "status": "candidate-only"
+  },
+  {
+   "assets": [],
+   "item_id": "catalog-142",
+   "reason": "Binding corrected from D_15_03 (the museum) to D_11_11, the only still with a ride sign (a starburst sign on the swing ride). The sign runs off the right edge of the frame and only a few katakana are inside it; they do not match the catalog wording, so neither the sign nor its text is proven. No draft. Size of D_11_11 is proved (320x160, rides.c read 0x4359 and dec_bg_decode_to_vram(1)).",
+   "status": "missing"
+  },
+  {
+   "assets": [
+    "bs-d-15-03-monument"
+   ],
+   "item_id": "catalog-143",
+   "reason": "Binding corrected from D_19_02 to D_15_03 (museum steps, black stone monument bottom right). Draft CENTRAL CITY over ART MUSEUM in thin light letters on the stone. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "status": "candidate-only"
+  },
+  {
+   "assets": [
+    "bs-d-19-02-entrance-sign",
+    "bs-d-19-02-maiko-board"
+   ],
+   "item_id": "catalog-144",
+   "reason": "Binding corrected from D_29_09 to D_19_02 (the rink). Two drafts: the hanging entrance sign reads ENTER (the red arrow is kept) and the small shop line above the already Latin MAIKO reads LOVELY SHOP. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "status": "candidate-only"
+  },
+  {
+   "assets": [
+    "bs-d-24-03-ticket-plaque"
+   ],
+   "item_id": "catalog-145",
+   "reason": "Binding corrected from I_17_01 to D_24_03 (the GREEN GARDEN gate with the ticket booth). Draft TICKET on the booth plaque, a face of 20x10 px, too small for the planned TICKETS. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "status": "candidate-only"
+  },
+  {
+   "assets": [
+    "bs-i-28-02-counter-sign"
+   ],
+   "item_id": "catalog-146",
+   "reason": "Binding confirmed (I_28_02, neon counter sign). Draft SHOE RENTAL in the dark red of the original lettering. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "status": "candidate-only"
+  },
+  {
+   "assets": [
+    "bs-i-17-01-hanging-sign"
+   ],
+   "item_id": "catalog-149",
+   "reason": "Binding corrected from I_11_15 (night scene, no text) to I_17_01 (library, hanging aisle sign). Draft FINE ARTS. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "status": "candidate-only"
+  }
+ ],
+ "geometry": "manifest geometry_proofs: width and height from src/ callers (dec_bg_cd_read(lba, 1) + dec_bg_decode_to_vram(1) = 320x160; P_01_02 from prologue_board_load = 640x160), macroblock count (w/16)*(h/16) with an end marker and only zero bytes after it (P_01_02 keeps its known 4 non-zero tail bytes); LBAs from the back-to-back layout pinned by 11 LBAs the game code uses",
+ "group": "bs-signs",
+ "method": "tools/translation_bs_signs.py: decode with the pinned fixed-point MDEC model, rebuild only the declared rectangle (face fit from the clean pixels around it, skeleton lettering from tools/translation_bs_font.py), crop PNGs and manifest published; whole stills and comparisons stay in .asset-cache",
+ "not_changed": [
+  "catalog-135 stays deliberately-untranslated (outside the twelve)",
+  "gate pillar plate of D_01_47/D_01_48 untouched",
+  "D_01_67 and I_11_15 no longer appear in the catalog or in source_identities.json; D_01_72 and D_24_03 were added to it (tools/translation_inventory.py containers)"
+ ],
+ "schema": "tokimemo.translation-decisions.v1",
+ "ticket": "T-39400"
+}
