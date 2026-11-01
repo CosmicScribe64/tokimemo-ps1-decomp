@@ -2846,3 +2846,11 @@ The user asked for the 21 missing art items to be made before the English patch.
 ## [2026-11-01] ticket | Open the English translation patch tickets
 
 The owner asked for the patch and emulator testing to go ahead while the art fixes finish. Opened [[tickets/T-39500-english-translation-patch]] with [[tickets/T-39501-disc-rebuild-and-xdelta]], [[tickets/T-39502-english-text-runtime]], [[tickets/T-39503-text-container-writers]] and [[tickets/T-39504-emulator-screen-route]], all In Progress.
+
+## [2026-11-01] build | English text runtime behind TOKIMEMO_ENGLISH (T-39502)
+
+`ninja english` builds the English variant into `build/en/`: the main exe and all 26 overlays, without SHA-1 checks but with size checks. Every original address is pinned. New code goes to an island after the main bss (0x8012B540-0x80132000), which `src/english/boot.s` copies into place before `boot_start`. The hooks in `config/english_hooks.txt` redirect `load_string`, `set_kanji_string` and `disp_string` to `src/english/text.c`. That code takes single-byte ASCII mixed with Shift-JIS and keeps a pen position per glyph slot. The proportional font is our own drawing (`translations/en/font/latin12.txt`, 105 glyphs, `tools/english_font.py`).
+
+The first English text is the NAME_ENT file select memory-card message (`src/ovl/name_entry/file_select.c`, under the flag). In the emulator it renders correctly next to the original Japanese labels; the title menu labels turned out to be sprite art. The default build still prints OK for all 27 binaries.
+
+Script strings cannot use plain ASCII with the original control letters (0x20 line end, `q`, `n`, name letters), so English script strings get control bytes 0x0A-0x1A. The design, the full function list and the open risks (pinned overlays cannot grow, island size, VRAM slots) are on [[english-text-runtime]]. [[tickets/T-39502-english-text-runtime]] moved to In Review.
