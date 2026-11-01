@@ -70,3 +70,7 @@ python3 tools/translation_bs_signs.py build --output .asset-cache/bs-signs-build
 ```
 
 `build` writes the whole English stills, source stills, an original | English comparison at 2x and a zoomed pair per sign under `previews/`; those contain the original image and stay local. No BS file is written: the later patch step re-encodes the touched macroblocks, and the earlier P_01_02 sweep (T-39012) already found that file hard to re-encode within the ring tolerance.
+
+## MAINROM fixes after the owner review (T-39410)
+
+`checkpoints/T39410-mainrom-fixes-v1` redraws 32 MAINROM frames in all six palette variants (192 PNGs): the Save labels (57-59), the stat labels (61), the issue banners (122-125), the magazine headline banners (126-133), the genre tags (134-145) and the game-cover titles (151-154). `tools/translation_mainrom_fixes.py` rebuilds it in the Pillow Docker image with the disc extracted, like the other MAINROM tools; `ledger.json` lists the earlier candidates each file supersedes, `weekday-resolution.json` shows that every weekday variant resolves to the approved two-letter set, and `REGISTER.md` lists what the inventory step must change. All new lettering is port-made and unreviewed.

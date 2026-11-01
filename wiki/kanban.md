@@ -58,6 +58,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-39410-mainrom-art-fixes|T-39410 Fix the MAINROM English art after the owner review]]
+
 
 
 

@@ -2842,3 +2842,9 @@ The full Python suite (`tools/test_*.py`, `tests/test_*.py`) was run in a checko
 ## [2026-11-01] ticket | Finish the missing English art (T-39400)
 
 The user asked for the 21 missing art items to be made before the English patch. Opened [[tickets/T-39400-finish-missing-english-art]]: register the nine port-made MAINROM genre tags, and fix the bindings, prove the sizes and draw English for the twelve BS sign stills.
+
+## [2026-11-01] ticket | MAINROM art fixes after the owner review (T-39410)
+
+Opened and finished [[tickets/T-39410-mainrom-art-fixes]] (In Review). `tools/translation_mainrom_fixes.py` redraws, in texel-index space and per palette variant, the Save labels 57-59, the headline banners 126-133 (hand-drawn 17-row bold face, wording rule Opens/Special/Guide), the issue banners 122-125 ("Issue" restores 月号), the genre tags 134-145 (centred, 1 px margin both sides, `TAG_ALIGN` switch), the stat labels in frame 61 (Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress) and the cover titles 151-154. Output is checkpoint `translations/en/graphics/artwork/checkpoints/T39410-mainrom-fixes-v1` (192 PNGs, ledger, `weekday-resolution.json`, `REGISTER.md`); tests are `tools/test_translation_mainrom_fixes.py`.
+
+Text: `parameter_names:00/01/04` and their `SLPM_86.053:00072ad0/ad8/af0` twins now read Health, Humanities, Sports. The SLPM Markdown tables are gitignored, so `translations/en/returned-v3.jsonl` was edited directly; the inventory pins its hash, so `test_translation_inventory` fails until the integrator rebuilds the inventory (REGISTER.md). No shared registration file was edited.
