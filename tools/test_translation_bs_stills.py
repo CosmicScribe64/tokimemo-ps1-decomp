@@ -140,6 +140,25 @@ class DrawingTests(unittest.TestCase):
         english, _ = subject.draw_plan(source, plan)
         self.assertTrue((np.abs(english[8:16, 10:30] - np.array([28, 29, 30])).max() <= 1))
 
+    def test_smooth_rectangles_take_the_fill_without_grain(self):
+        rng = np.random.RandomState(2)
+        source = 20 + rng.randint(-3, 4, size=(40, 60, 3))
+        source[10:20, 10:40] = 31
+        plan = {'rect': [5, 5, 50, 30], 'erase': {'above': 80, 'margin': 0, 'smooth': [[5, 5, 20, 30]]}, 'runs': []}
+        english, _ = subject.draw_plan(source, plan)
+        self.assertLess(float(english[10:20, 12:24].std()), 0.6)  # smooth part: no copied grain
+        self.assertGreater(float(english[10:20, 26:38].std()), 0.6)  # outside the rectangle the grain stays
+
+    def test_kerning_closes_the_a_t_pair_only_where_asked(self):
+        plain = subject.natural_length('PRIVATE', 10, 1.0, 3.0)
+        kerned = subject.natural_length('PRIVATE', 10, 1.0, 3.0, kern=True)
+        self.assertAlmostEqual(plain - kerned, -(subject.KERN[('V', 'A')] + subject.KERN[('A', 'T')]), places=6)
+        lines, facts = subject.kerned_strokes('AT', 20, 10, 1.0, 3.0)
+        a_right = max(x for line in lines[:2] for x, _ in line)
+        t_left = min(x for line in lines[2:] for x, _ in line)
+        self.assertLess(t_left - a_right, 3.0 - 2.0)  # closer than the plain letter gap
+        self.assertTrue(all(r.get('kern') for r in subject.gate_runs()))
+
     def test_a_centre_run_is_centred_on_its_point_at_any_angle(self):
         for angle in (0, 11, 90, 113.5):
             lines, facts = subject.text_lines({'text': 'I', 'box': [0, 0, 0, 0], 'length': 10, 'center': [50, 40], 'angle': angle, 'cap': 10,

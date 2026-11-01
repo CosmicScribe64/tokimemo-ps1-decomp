@@ -2886,3 +2886,7 @@ Merged the round-2 branches of [[tickets/T-39410-mainrom-art-fixes]], [[tickets/
 ## [2026-11-01] ticket | Name-entry birthday panel headers Month / Day (T-39411)
 
 Round 3 on [[tickets/T-39411-menus-art-fixes]]: the birthday page (`name-panel-0001`) grid headers now read `Month` / `Day` instead of `Birth month` / `Birth day` under the `Birthday:` field, as a new candidate in `translations/en/graphics/artwork/checkpoints/T39410-menus-fixes-v1/` superseding the development-v1 panel. Catalog row 106 and the inventory test pins updated; `translation_inventory.json` left for the integrator.
+
+## [2026-11-01] ticket | BS stills third pass: reviewer nits (T-39412)
+
+On [[tickets/T-39412-bs-stills-art-fixes]], in place in `translations/en/graphics/artwork/checkpoints/T39410-stills-fixes-v1/`: monument remnant of 市 left of CENTRAL erased and refilled smooth; LOVELY SHOP 3 px clear at both ends; gate plate letters enlarged to cap 13.5 (at least 6.7 px from every plate edge) with A-T / V-A kerning; P_01_03 sky streaks at the left edge refilled smooth (`smooth` erase key). Changed crops: monument, maiko board, gate plate, roster. `translation_inventory.json` not regenerated (its matches-inputs test fails until the integrator rebuilds it); stills and signs tests 61 OK.
