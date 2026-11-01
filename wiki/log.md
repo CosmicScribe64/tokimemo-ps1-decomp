@@ -2871,3 +2871,7 @@ Added `tools/patch/text/`, `tools/patch_text.py` and `tools/test_patch_text.py`;
 
 [[tickets/T-39503-text-container-writers]] waits for code review against `CODING_STANDARDS.md`.
 
+
+## [2026-11-01] ticket | Open T-39506 and T-39507 for the playable English slice
+
+Merged [[tickets/T-39503-text-container-writers]] into `patch/english`. Opened [[tickets/T-39506-english-script-runtime]] (dialogue, choices, names and name entry in English) and [[tickets/T-39507-english-disc-build]] (one-command English disc and patch build).
