@@ -2846,3 +2846,8 @@ The user asked for the 21 missing art items to be made before the English patch.
 ## [2026-11-01] ticket | Open the English translation patch tickets
 
 The owner asked for the patch and emulator testing to go ahead while the art fixes finish. Opened [[tickets/T-39500-english-translation-patch]] with [[tickets/T-39501-disc-rebuild-and-xdelta]], [[tickets/T-39502-english-text-runtime]], [[tickets/T-39503-text-container-writers]] and [[tickets/T-39504-emulator-screen-route]], all In Progress.
+
+## [2026-11-01] build | Disc rebuild, EDC/ECC and xdelta patch tool (T-39501)
+
+New `tools/patch/` (`sector.py`, `disc.py`, `make_patch.py`), `tools/test_patch_disc.py` (17 tests pass) and `tools/Dockerfile.patch` (xdelta3 3.0.11 on top of the decomp image). The Python EDC/ECC reproduces every Form 1 sector of track 1 except the last, whose ECC covers the header. No-change rebuild and the matching exe both give the original SHA-1; replaced and moved files read back with valid EDC/ECC; xdelta round trips. Discs with the exe header changed in place, and moved to the end of the data area, boot to NAME_ENT in the emulator (`tools/emu/emu.py --cue`, new). Disc facts in [[disc-layout]]; API in [[tickets/T-39501-disc-rebuild-and-xdelta]], moved to In Review. `tools/emu/run.sh` rebuilds `tokimemo-emu` each call because the image has no Dockerfile label.
+
