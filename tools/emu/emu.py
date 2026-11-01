@@ -782,7 +782,8 @@ def main():
     p.add_argument("--memcards", metavar="DIR",
                    help="use run-local copies of DIR/memcard1.mcd and memcard2.mcd (OUT/cards) instead of "
                         "the shared build/emu cards; hashes before and after go to OUT/cards.json")
-    p.add_argument("--iso", help="disc image (default: disc/*.cue)")
+    p.add_argument("--iso", "--cue", dest="iso", metavar="PATH",
+                   help="disc image or cue inside the repository (default: the one disc/*.cue)")
     p.add_argument("--out", help="output directory (default build/emu/<cmd>-<time>)")
     p.add_argument("--timeout", type=int, help="wall-clock limit in seconds (default 900; gdb: none)")
     p.add_argument("--port", type=int, default=3333, help="gdb: GDB server port")
