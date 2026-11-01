@@ -2842,3 +2842,7 @@ The full Python suite (`tools/test_*.py`, `tests/test_*.py`) was run in a checko
 ## [2026-11-01] ticket | Finish the missing English art (T-39400)
 
 The user asked for the 21 missing art items to be made before the English patch. Opened [[tickets/T-39400-finish-missing-english-art]]: register the nine port-made MAINROM genre tags, and fix the bindings, prove the sizes and draw English for the twelve BS sign stills.
+
+## [2026-11-01] ticket | Open the English translation patch tickets
+
+The owner asked for the patch and emulator testing to go ahead while the art fixes finish. Opened [[tickets/T-39500-english-translation-patch]] with [[tickets/T-39501-disc-rebuild-and-xdelta]], [[tickets/T-39502-english-text-runtime]], [[tickets/T-39503-text-container-writers]] and [[tickets/T-39504-emulator-screen-route]], all In Progress.
