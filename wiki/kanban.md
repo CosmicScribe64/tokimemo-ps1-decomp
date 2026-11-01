@@ -58,6 +58,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-39410-bs-stills-art-fixes|T-39410 Fix the BS still drafts after the owner art review]]
+
 
 
 

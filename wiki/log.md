@@ -2842,3 +2842,8 @@ The full Python suite (`tools/test_*.py`, `tests/test_*.py`) was run in a checko
 ## [2026-11-01] ticket | Finish the missing English art (T-39400)
 
 The user asked for the 21 missing art items to be made before the English patch. Opened [[tickets/T-39400-finish-missing-english-art]]: register the nine port-made MAINROM genre tags, and fix the bindings, prove the sizes and draw English for the twelve BS sign stills.
+
+## [2026-11-01] ticket | BS still art fixes after the owner review (T-39410)
+
+Opened [[tickets/T-39410-bs-stills-art-fixes]] and made the drafts in `translations/en/graphics/artwork/checkpoints/T39410-stills-fixes-v1/` with `tools/translation_bs_stills.py` and `tools/translation_bs_brush.py`. The Japanese lettering is erased by colour rule and the picture under it rebuilt from the clean pixels around it with their grain, so stone, paper and sky keep their texture; crops are RGBA with alpha only on port-made pixels. Drafted: gate plate P_01_01, roster close-ups P_01_03 / P_01_03B (rotated and stacked alternatives), the monument (three lines now), four small signs, and the C_01_28 chalkboard at chalk size with the month / day column. P_01_02 student names are not legible (5 x 6 px glyphs, template match found no peak) and were left alone. P_01_01 and P_01_03B carry a 4-byte trailer after the end marker. Shared registration files untouched; `REGISTER.md` in the checkpoint lists the integrator steps. Tests: `tools/test_translation_bs_stills.py`, translation discovery 284 run with the same two `test_translation_tree` errors as main.
+
