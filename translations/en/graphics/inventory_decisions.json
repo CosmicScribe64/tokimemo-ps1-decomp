@@ -92,22 +92,28 @@
    "status": "deliberately-untranslated"
   },
   "catalog-129": {
-   "reason": "Catalog offers keep-as-authentic-kanji or optional vertical English; the gate pillar plate is retained and the arch already carries English. Retention is a style decision, not required work.",
-   "status": "deliberately-untranslated"
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39412, checkpoint T39410-stills-fixes-v1); owner art review 2026-11-01; revisable agent defaults, no human approval"
+   ],
+   "reason": "Gate pillar plate of P_01_01 (320x160): owner asked for it on 2026-11-01 (note 19). Draft bs-p-01-01-gate-plate: brush lettering KIRAMEKI PRIVATE / HIGH SCHOOL on the white plate; plate border and stone untouched. RGBA crop (alpha 255 = port-made pixel), composited over the decoded still at patch time. Unreviewed, human_approved false.",
+   "status": "candidate-only"
   },
   "catalog-130": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval",
+    "T-39412: the P_01_02 student names were attempted and are not legible enough at game resolution (about 5x6 px per character, blurred at macroblock level; a template match of the P_01_03 columns gave no unique peak), so they stay as picture texture; the scope stays the header marks only, not partial or complete"
    ],
    "reason": "Class header drafts in all three columns: the year mark is redrawn as a hyphenated 1 (reads 1-A, 1-B, 1-C with the painted Latin letters) and the class mark is removed (six rectangles, 640x160 proved from prologue_board_load: 9-sector read at LBA 0x4954 and bg_still_decode_to_vram(0x140, 0, 0x280, 0xA0)). Port-made skeleton lettering; unreviewed, human_approved false. The re-encode of this file is still the hard part: the T-39012 sweep (18 runs) found ring error 6-7 and a fixed-point wrap on the white paper, which this checkpoint does not change.",
    "status": "candidate-only"
   },
   "catalog-131": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39412, checkpoint T39410-stills-fixes-v1); owner art review 2026-11-01; revisable agent defaults, no human approval",
+    "owner decision 2026-11-01 (chat): layout A. bs-p-01-03-roster-a-rotated (P_01_03) and bs-p-01-03b-name-a-rotated (P_01_03B) are the chosen candidates; the stacked (b) pair and the two larger centred P_01_03B versions are rejected alternatives and stay unregistered",
+    "catalog row text corrected: the picture reads 水川美穂 (Mizukawa Miho), 最上 with the given name cut off by the left edge (Mogami), 本田めぐみ (Honda Megumi)"
    ],
-   "reason": "P_01_03/P_01_03B brush-calligraphy name scrolls fill most of the frame; replacing them is new art, not lettering",
-   "status": "deliberately-untranslated"
+   "reason": "Owner note 21: the P_01_03 / P_01_03B calligraphy names are drafted as port-made brush lettering. Owner chose layout A on 2026-11-01: bs-p-01-03-roster-a-rotated (each name runs down its slanted column as one brush line) and the identical bs-p-01-03b-name-a-rotated, so the crossfade keeps the name in place. The right-edge column at x >= 303 is cut off by the frame and not translated. The stacked and larger alternatives are rejected and unregistered. Unreviewed, human_approved false.",
+   "status": "candidate-only"
   },
   "catalog-133": {
    "notes": [
@@ -155,9 +161,10 @@
   },
   "catalog-139": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval",
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39412, checkpoint T39410-stills-fixes-v1); owner art review 2026-11-01; revisable agent defaults, no human approval"
    ],
-   "reason": "Draft KIRAMEKI on the march placard (the catalog's own option). The placard face is about 31x13 px, so the full planned wording Kirameki High would need two 5 px lines that do not read. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "reason": "Draft bs-d-03-08-march-placard-v2 (replaces the T-39400 draft): KIRAMEKI on the march placard (the catalog's own option), an RGBA overlay that keeps the placard texture. The placard face is about 31x13 px, so the full planned wording Kirameki High would need two 5 px lines that do not read. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "catalog-140": {
@@ -183,23 +190,26 @@
   },
   "catalog-143": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval",
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39412, checkpoint T39410-stills-fixes-v1); owner art review 2026-11-01; revisable agent defaults, no human approval"
    ],
-   "reason": "Binding corrected from D_19_02 to D_15_03 (museum steps, black stone monument bottom right). Draft CENTRAL CITY over ART MUSEUM in thin light letters on the stone. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "reason": "Binding corrected from D_19_02 to D_15_03 (museum steps, black stone monument bottom right). Draft bs-d-15-03-monument-v2 (replaces the T-39400 draft): CENTRAL / CITY ART / MUSEUM in three lines on the stone (the two-line CENTRAL CITY / ART MUSEUM was cramped), an RGBA overlay that keeps the stone texture. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "catalog-144": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval",
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39412, checkpoint T39410-stills-fixes-v1); owner art review 2026-11-01; revisable agent defaults, no human approval"
    ],
-   "reason": "Binding corrected from D_29_09 to D_19_02 (the rink). Two drafts: the hanging entrance sign reads ENTER (the red arrow is kept) and the small shop line above the already Latin MAIKO reads LOVELY SHOP. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "reason": "Binding corrected from D_29_09 to D_19_02 (the rink). Two drafts: the hanging entrance sign reads ENTER (the red arrow is kept) and the small shop line above the already Latin MAIKO reads LOVELY SHOP (bs-d-19-02-maiko-board-v2 replaces the T-39400 draft, an RGBA overlay that keeps the board texture). Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "catalog-145": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval",
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39412, checkpoint T39410-stills-fixes-v1); owner art review 2026-11-01; revisable agent defaults, no human approval"
    ],
-   "reason": "Binding corrected from I_17_01 to D_24_03 (the GREEN GARDEN gate with the ticket booth). Draft TICKET on the booth plaque, a face of 20x10 px, too small for the planned TICKETS. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "reason": "Binding corrected from I_17_01 to D_24_03 (the GREEN GARDEN gate with the ticket booth). Draft bs-d-24-03-ticket-plaque-v2 (replaces the T-39400 draft): TICKET on the booth plaque as an RGBA overlay that keeps its texture, a face of 20x10 px, too small for the planned TICKETS. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "catalog-146": {
@@ -212,9 +222,9 @@
   "catalog-147": {
    "notes": [
     "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval",
-    "coverage partial: exam heading drafted; month/day/weekday placeholder column still Japanese"
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39412, checkpoint T39410-stills-fixes-v1); owner art review 2026-11-01; revisable agent defaults, no human approval"
    ],
-   "reason": "C_01_28 chalkboard draft covers the exam heading only (FINAL / EXAMS): spliced BS v1 stream parses with the project reader, outside the 48x32 edited macroblocks bit-identical, ring max 1, float cross-check 1, 19298 bytes within the 10-sector caller read (the file grows 566 bytes past its original 18732-byte extent, recorded as file_extent_grew). The catalog row also lists the month/day/weekday placeholder column at x 304-314, which is still Japanese. candidate-only covers the heading only (the inventory has no partial status; D-7 records the gap). Agent-reviewed draft, not human-approved",
+   "reason": "C_01_28 chalkboard draft bs-c-01-28-final-exams-v2 covers the exam heading (FINAL / EXAMS) and the month / day column, drawn as an RGBA pixel overlay on the decoded still (320x88, 120 macroblocks plus end marker; texture kept). The re-encode is the patch step. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "catalog-148": {
@@ -223,9 +233,10 @@
   },
   "catalog-149": {
    "notes": [
-    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval"
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval",
+    "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39412, checkpoint T39410-stills-fixes-v1); owner art review 2026-11-01; revisable agent defaults, no human approval"
    ],
-   "reason": "Binding corrected from I_11_15 (night scene, no text) to I_17_01 (library, hanging aisle sign). Draft FINE ARTS. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "reason": "Binding corrected from I_11_15 (night scene, no text) to I_17_01 (library, hanging aisle sign). Draft bs-i-17-01-hanging-sign-v2 (replaces the T-39400 draft): FINE ARTS as an RGBA overlay that keeps the sign texture. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
   "catalog-150": {
@@ -1004,6 +1015,20 @@
   }
  },
  "schema": "tokimemo.translation-inventory-decisions.v1",
+ "superseded_historical": {
+  "draft:mainrom-weekday-fri-base": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json",
+  "draft:mainrom-weekday-fri-hud-44": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json",
+  "draft:mainrom-weekday-mon-hud-44": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json",
+  "draft:mainrom-weekday-sat-hud-43": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json",
+  "draft:mainrom-weekday-sat-hud-44": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json",
+  "draft:mainrom-weekday-sun-hud-44": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json",
+  "draft:mainrom-weekday-thu-base": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json",
+  "draft:mainrom-weekday-thu-hud-44": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json",
+  "draft:mainrom-weekday-tue-base": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json",
+  "draft:mainrom-weekday-tue-hud-44": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json",
+  "draft:mainrom-weekday-wed-base": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json",
+  "draft:mainrom-weekday-wed-hud-44": "translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json"
+ },
  "text_approval": {
   "addenda": [
    {

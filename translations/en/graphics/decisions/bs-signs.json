@@ -165,8 +165,92 @@
    "item_id": "catalog-149",
    "reason": "Binding corrected from I_11_15 (night scene, no text) to I_17_01 (library, hanging aisle sign). Draft FINE ARTS. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
    "status": "candidate-only"
+  },
+  {
+   "assets": [
+    "bs-p-01-01-gate-plate"
+   ],
+   "item_id": "catalog-129",
+   "reason": "Owner asked for the P_01_01 gate plate on 2026-11-01 (note 19): brush lettering KIRAMEKI PRIVATE / HIGH SCHOOL on the white plate; plate border and stone untouched. Was deliberately-untranslated (retention was a style decision). Unreviewed, human_approved false.",
+   "status": "candidate-only",
+   "ticket": "T-39412"
+  },
+  {
+   "assets": [
+    "bs-p-01-03-roster-a-rotated",
+    "bs-p-01-03b-name-a-rotated"
+   ],
+   "item_id": "catalog-131",
+   "reason": "Owner note 21 and owner decision 2026-11-01 (chat): layout A. Each name runs down its slanted column as one brush line (P_01_03) and P_01_03B carries the identical line so the crossfade keeps the name in place. Rejected and left unregistered: bs-p-01-03-roster-b-stacked, bs-p-01-03b-name-b-stacked, bs-p-01-03b-name-a-large, bs-p-01-03b-name-b-large. Catalog row text corrected to the reading 水川美穂 (Mizukawa Miho), 本田めぐみ (Honda Megumi), 最上 with the given name cut off by the left edge (Mogami). Unreviewed, human_approved false.",
+   "status": "candidate-only",
+   "ticket": "T-39412"
+  },
+  {
+   "assets": [],
+   "item_id": "catalog-130",
+   "reason": "P_01_02 student names: not legible at game resolution (about 5x6 px per character, blurred at macroblock level; a template match of the P_01_03 columns gave no unique peak), left as picture texture. Scope stays the six header marks.",
+   "status": "candidate-only",
+   "ticket": "T-39412"
+  },
+  {
+   "assets": [
+    "bs-c-01-28-final-exams-v2"
+   ],
+   "item_id": "catalog-147",
+   "reason": "Now covers the exam heading and the month / day column as an RGBA overlay; replaces bs-c-01-28-final-exams (T39004-bs-v1). The old splice facts (ring 1, 19298 bytes) described the T-39004 re-encoded crop; the re-encode is the patch step.",
+   "status": "candidate-only",
+   "ticket": "T-39412"
+  },
+  {
+   "assets": [
+    "bs-d-15-03-monument-v2"
+   ],
+   "item_id": "catalog-143",
+   "reason": "Replaces bs-d-15-03-monument: CENTRAL / CITY ART / MUSEUM in three lines (two lines were cramped); RGBA overlay keeping the stone texture.",
+   "status": "candidate-only",
+   "ticket": "T-39412"
+  },
+  {
+   "assets": [
+    "bs-d-03-08-march-placard-v2"
+   ],
+   "item_id": "catalog-139",
+   "reason": "Replaces bs-d-03-08-march-placard; RGBA overlay keeping the placard texture.",
+   "status": "candidate-only",
+   "ticket": "T-39412"
+  },
+  {
+   "assets": [
+    "bs-d-24-03-ticket-plaque-v2"
+   ],
+   "item_id": "catalog-145",
+   "reason": "Replaces bs-d-24-03-ticket-plaque; RGBA overlay keeping the plaque texture.",
+   "status": "candidate-only",
+   "ticket": "T-39412"
+  },
+  {
+   "assets": [
+    "bs-d-19-02-maiko-board-v2"
+   ],
+   "item_id": "catalog-144",
+   "reason": "Replaces bs-d-19-02-maiko-board (LOVELY SHOP); RGBA overlay keeping the board texture.",
+   "status": "candidate-only",
+   "ticket": "T-39412"
+  },
+  {
+   "assets": [
+    "bs-i-17-01-hanging-sign-v2"
+   ],
+   "item_id": "catalog-149",
+   "reason": "Replaces bs-i-17-01-hanging-sign; RGBA overlay keeping the sign texture.",
+   "status": "candidate-only",
+   "ticket": "T-39412"
   }
  ],
+ "follow_up": {
+  "checkpoint": "translations/en/graphics/artwork/checkpoints/T39410-stills-fixes-v1",
+  "ticket": "T-39412"
+ },
  "geometry": "manifest geometry_proofs: width and height from src/ callers (dec_bg_cd_read(lba, 1) + dec_bg_decode_to_vram(1) = 320x160; P_01_02 from prologue_board_load = 640x160), macroblock count (w/16)*(h/16) with an end marker and only zero bytes after it (P_01_02 keeps its known 4 non-zero tail bytes); LBAs from the back-to-back layout pinned by 11 LBAs the game code uses",
  "group": "bs-signs",
  "method": "tools/translation_bs_signs.py: decode with the pinned fixed-point MDEC model, rebuild only the declared rectangle (face fit from the clean pixels around it, skeleton lettering from tools/translation_bs_font.py), crop PNGs and manifest published; whole stills and comparisons stay in .asset-cache",

@@ -44,13 +44,17 @@ class InventoryTests(unittest.TestCase):
 
     def test_every_historical_asset_and_candidate_is_accounted_for(self):
         report = subject.audit(subject.SNAPSHOT)
-        self.assertEqual({h['id'] for h in self.built['historical_assets']}, {a['id'] for a in report['assets']})
-        self.assertEqual(len(self.built['historical_assets']), 59)
+        stale = set(json.loads(subject.DECISIONS.read_text())['superseded_historical'])
+        self.assertEqual({h['id'] for h in self.built['historical_assets']} | stale, {a['id'] for a in report['assets']})
+        self.assertEqual(len(stale), 12)
+        self.assertFalse({h['id'] for h in self.built['historical_assets']} & stale)
+        # the 12 stale three-letter weekday drafts are superseded by the date panel ledger and listed there
+        self.assertEqual(len(self.built['historical_assets']), 59 - 12)
         by_status = self.built['summary']['historical_assets']['by_status']
-        self.assertEqual((by_status['english-reviewed'], by_status['unmapped']), (56, 3))
+        self.assertEqual((by_status['english-reviewed'], by_status['unmapped']), (56 - 12, 3))
         ledger_ids = {(e['ledger'], e['id'], e['revision']) for e in subject.load_ledgers()}
         inv_ids = {(c['ledger'], c['id'], c['revision']) for c in self.built['candidate_records']}
-        superseded = {(c['ledger'], c['id'], c['revision']) for c in self.built['superseded_records']}
+        superseded = {(c['ledger'], c['id'], c['revision']) for c in self.built['superseded_records'] if not c['ledger'].startswith('snapshot:')}
         self.assertFalse(inv_ids & superseded)
         self.assertEqual(ledger_ids, inv_ids | superseded)
         referenced = {c['id'] + '@' + c['revision'] for i in self.built['artwork_items'] for c in i['english']['candidates']}
@@ -70,7 +74,7 @@ class InventoryTests(unittest.TestCase):
 
     def test_agent_review_is_never_human_approval(self):
         reviewed = [c for c in self.built['candidate_records'] if c['review_level'] == 'agent-bounded-in-game']
-        self.assertEqual(len(reviewed), 9)
+        self.assertEqual(len(reviewed), 4)    # five were replaced by the T-39410 redraws
         self.assertFalse([c for c in reviewed if c['human_approved']])
         for item in self.built['artwork_items']:
             if item['agent_review']:
@@ -106,11 +110,11 @@ class PinnedCountTests(unittest.TestCase):
         summary = subject.build()['summary']
         self.assertEqual(summary['artwork_items']['total'], 271)
         self.assertEqual(summary['artwork_items']['by_status'], {
-            'english-reviewed': 52, 'candidate-only': 189, 'missing': 1, 'unmapped': 0, 'deliberately-untranslated': 29})
-        self.assertEqual(summary['historical_assets']['by_status']['english-reviewed'], 56)
+            'english-reviewed': 52, 'candidate-only': 191, 'missing': 1, 'unmapped': 0, 'deliberately-untranslated': 27})
+        self.assertEqual(summary['historical_assets']['by_status']['english-reviewed'], 44)
         self.assertEqual(summary['historical_assets']['by_status']['unmapped'], 3)
-        self.assertEqual(summary['candidate_records'], {'total': 424, 'distinct_assets': 415, 'agent_reviewed_revisions': 9, 'human_approved': 53})
-        self.assertEqual(summary['superseded_records'], 23)
+        self.assertEqual(summary['candidate_records'], {'total': 445, 'distinct_assets': 441, 'agent_reviewed_revisions': 4, 'human_approved': 53})
+        self.assertEqual(summary['superseded_records'], 239)    # 23 + 165 mainrom + 39 menus + 12 stale weekday snapshot assets
         self.assertEqual(summary['text_records']['total'], 55911)
         self.assertEqual(summary['text_records']['by_class'], {
             'english-approved': 55094, 'deliberately-untranslated': 817})
@@ -195,10 +199,14 @@ class PinnedCountTests(unittest.TestCase):
                          {'all-c-banner.source-page-%d' % n for n in (3, 4, 5)})
         with self.assertRaisesRegex(ValueError, 'disagrees with its frame or palette'):
             subject.candidate_key({'id': 'mainrom-draft-0057.base', 'frame': 58, 'palette_id': 'base'})
+        self.assertEqual(subject.candidate_key({'id': 'mainrom-fix-0126.hud-43', 'frame': 126, 'palette_id': 'hud-43'}),
+                         ('mainrom-0126', 'MAINROM', 126, 'hud-43'))
+        with self.assertRaisesRegex(ValueError, 'disagrees with its frame or palette'):
+            subject.candidate_key({'id': 'mainrom-fix-0126.hud-43', 'frame': 127, 'palette_id': 'hud-43'})
 
     def test_missing_art_is_drafted_except_the_cut_off_ride_sign(self):
         items = {i['id']: i for i in subject.build()['artwork_items']}
-        tags = {'mainrom-%04d' % n: (5 if n < 144 else 6) for n in (134, 135, 138, 139, 141, 142, 143, 144, 145)}
+        tags = {'mainrom-%04d' % n: 6 for n in (134, 135, 138, 139, 141, 142, 143, 144, 145)}    # one T-39410 file per palette variant
         for item_id, count in tags.items():
             self.assertEqual(items[item_id]['status'], 'candidate-only', item_id)
             self.assertEqual(len(items[item_id]['english']['candidates']), count, item_id)
@@ -219,7 +227,9 @@ class PinnedCountTests(unittest.TestCase):
     def test_registered_checkpoints_keep_their_drafts_unapproved(self):
         built = subject.build()
         records = [c for c in built['candidate_records'] if c['ledger'].endswith(('T39400-bs-signs-v1/ledger.json', 'T39004-mainrom-port-made-v1/ledger.json'))]
-        self.assertEqual(len(records), 17 + 53 - 6)  # the six month-name composites of frame 60 stay out
+        # 17 sign crops minus the 5 redrawn by T-39412; the 47 registered port-made MAINROM rows are all superseded by T-39410
+        # (the six month-name composites of frame 60 stay out)
+        self.assertEqual(len(records), 17 - 5)
         self.assertFalse(any(c['human_approved'] for c in records))
         self.assertEqual({c['status'] for c in records}, {'candidate-only'})
 
@@ -244,9 +254,12 @@ class PinnedCountTests(unittest.TestCase):
             candidates = items['mainrom-%04d' % frame]['english']['candidates']
             self.assertEqual({c['revision'] for c in candidates}, {'date-panel-drafts-v1'}, frame)
             self.assertEqual(len(candidates), 5, frame)
-        superseded = built['superseded_records']
-        self.assertEqual({s['superseded_by'] for s in superseded}, {str(date_panel.relative_to(subject.ROOT))})
+        superseded = [s for s in built['superseded_records'] if s['superseded_by'] == str(date_panel.relative_to(subject.ROOT))]
+        self.assertEqual(len(superseded), 35)    # 23 older drafts and the 12 stale three-letter snapshot assets
         self.assertTrue(all(s['atom'] in ['mainrom-%04d' % n for n in range(82, 89)] for s in superseded))
+        self.assertEqual({s['superseded_by'] for s in built['superseded_records']} - {str(date_panel.relative_to(subject.ROOT))},
+                         {'translations/en/graphics/artwork/checkpoints/T39410-mainrom-fixes-v1/ledger.json',
+                          'translations/en/graphics/artwork/checkpoints/T39410-menus-fixes-v1/ledger.json'})
         # The month-name form of frame 60 was dropped, never published.
         self.assertFalse([c for c in built['candidate_records'] if c['id'].startswith('mainrom-draft-0060')])
 
@@ -323,14 +336,50 @@ class PinnedCountTests(unittest.TestCase):
                 subject.build(ledgers=ledgers)
 
     def test_palette_hash_mismatch_is_rejected(self):
-        broken = copy.deepcopy(subject.build())
-        asset = next(h for h in broken['historical_assets'] if h['id'] == 'draft:mainrom-weekday-tue-base')
-        asset['palette'] = 'hud-44'
-        self.assertTrue(any('names palette hud-44' in p for p in subject.validate(broken)))
-        broken = copy.deepcopy(subject.build())
-        asset = next(h for h in broken['historical_assets'] if h['id'] == 'draft:mainrom-weekday-tue-base')
+        built = subject.build()
+        # No mapped historical asset is left on a multi-palette item (T-39410 superseded the weekday drafts), so
+        # a second palette is added to the item of the first mapped asset.
+        item = next(i for i in built['artwork_items'] if i['english']['historical_assets'])
+        hid_, other = item['english']['historical_assets'][0], 'hud-44'
+        broken = copy.deepcopy(built)
+        asset = next(h for h in broken['historical_assets'] if h['id'] == hid_)
+        asset['palette'] = other
+        next(i for i in broken['artwork_items'] if i['id'] == item['id'])['source_png_sha256'][other] = '1' * 64
+        self.assertTrue(any('names palette %s' % other in p for p in subject.validate(broken)))
+        broken = copy.deepcopy(built)
+        asset = next(h for h in broken['historical_assets'] if h['id'] == hid_)
         asset['source_png_sha256'] = '0' * 64
         self.assertTrue(any('not a known source image' in p for p in subject.validate(broken)))
+
+    def test_t39410_checkpoints_are_registered_with_their_alternatives_resolved(self):
+        built = subject.build()
+        ledgers = {str(p.relative_to(subject.ROOT)) for p in subject.LEDGERS}
+        base = 'translations/en/graphics/artwork/checkpoints/'
+        for name in ('T39410-mainrom-fixes-v1', 'T39410-menus-fixes-v1', 'T39410-stills-fixes-v1'):
+            self.assertIn(base + name + '/ledger.json', ledgers)
+        self.assertNotIn(base + 'T39410-menus-fixes-v1/fallback-ledger.json', ledgers)
+        ids = {c['id'] for c in built['candidate_records']}
+        # owner decision 2026-11-01: layout A; the stacked and large alternatives stay unregistered
+        self.assertLessEqual({'bs-p-01-03-roster-a-rotated', 'bs-p-01-03b-name-a-rotated'}, ids)
+        self.assertFalse(ids & {'bs-p-01-03-roster-b-stacked', 'bs-p-01-03b-name-b-stacked',
+                                'bs-p-01-03b-name-a-large', 'bs-p-01-03b-name-b-large'})
+        # the T-39400 crops and the T-39004 exam heading redrawn by T-39412 are not evidence any more
+        self.assertFalse(ids & {'bs-d-15-03-monument', 'bs-d-03-08-march-placard', 'bs-d-24-03-ticket-plaque',
+                                'bs-d-19-02-maiko-board', 'bs-i-17-01-hanging-sign', 'bs-c-01-28-final-exams'})
+        self.assertLessEqual({'bs-d-15-03-monument-v2', 'bs-c-01-28-final-exams-v2'}, ids)
+        # the 12 stale weekday snapshot assets are superseded records, not item evidence
+        stale = [s for s in built['superseded_records'] if s['ledger'].startswith('snapshot:')]
+        self.assertEqual(len(stale), 12)
+        self.assertTrue(all(s['superseded_by'].endswith('T39004-date-panel-v1/ledger.json') and not s['human_approved'] for s in stale))
+        items = {i['id']: i for i in built['artwork_items']}
+        for item_id in ('catalog-129', 'catalog-131'):
+            self.assertEqual(items[item_id]['status'], 'candidate-only', item_id)
+        self.assertEqual(len(items['catalog-131']['english']['candidates']), 2)
+        self.assertEqual(len(items['mainrom-0126']['english']['candidates']), 6)
+        # every option pair 0063..0090 is bound to exactly one catalog row
+        lines = [items['option-%04d' % n]['catalog_line'] for n in range(63, 91)]
+        self.assertTrue(all(lines[i] == lines[i + 1] for i in range(0, 28, 2)))
+        self.assertEqual(len(set(lines)), 14)
 
     def test_every_catalog_container_is_bound_through_corrections(self):
         built = subject.build()

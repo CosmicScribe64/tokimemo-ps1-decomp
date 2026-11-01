@@ -615,6 +615,8 @@ def superseded_candidates(inventory_path=INVENTORY):
             continue
         rows_ = []
         for c in item['english']['candidates']:
+            if c['revision'] == REVISION:
+                continue    # this checkpoint's own rows, once it is registered in the inventory
             ledger_path = REVISION_LEDGERS.get(c['revision'])
             if ledger_path is None:
                 raise ValueError('candidate %s of frame %d has an unknown revision %s' % (c['id'], f, c['revision']))
@@ -659,6 +661,11 @@ def weekday_resolution(inventory_path=INVENTORY, date_ledger=DATE_PANEL_LEDGER, 
                                               'output_sha256': a['output_sha256'], 'human_approved': a['human_approved']}
         for hid in item['english']['historical_assets']:
             stale.append({'frame': f, 'id': hid})
+        # After registration the inventory lists them as superseded snapshot assets instead.
+        for rec in inventory.get('superseded_records', []):
+            if rec['atom'] == item['id'] and rec['ledger'].startswith('snapshot:') \
+                    and rec['superseded_by'] == str(date_ledger.relative_to(ROOT)):
+                stale.append({'frame': f, 'id': rec['id']})
     return {'rule': 'two-letter set (Mo Tu We Th Fr Sa Su), approved 2026-10-30 (T39004-date-panel-v1)',
             'resolves_to': resolution, 'stale_three_letter_to_supersede': stale,
             'stale_ledger_note': 'ids are batch-002 historical assets (translations/en/graphics/artwork/manifest.json, '

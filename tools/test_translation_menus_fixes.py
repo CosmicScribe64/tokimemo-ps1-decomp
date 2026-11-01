@@ -146,15 +146,16 @@ class CheckpointTests(unittest.TestCase):
         self.ledger = json.loads((CHECKPOINT / 'ledger.json').read_text())
 
     def test_ledger_loads_in_the_inventory_and_supersedes_exactly(self):
-        ledgers = inventory.LEDGERS + [CHECKPOINT / 'ledger.json']
+        ledgers = list(inventory.LEDGERS)
+        self.assertIn(CHECKPOINT / 'ledger.json', ledgers)    # registered (T-39411 integration)
         entries = inventory.load_ledgers(ledgers)
         active, superseded = inventory.split_superseded(entries, ledgers)
-        mine = [e['id'] for e in active if 'T39410' in e['ledger']]
+        mine = [e['id'] for e in active if 'T39410-menus-fixes-v1' in e['ledger']]
         self.assertEqual(len(mine), 30)    # 27 drafts and the three ALL_C crops
         replaced = {(e['ledger'].split('/')[-2], e['id'], e['revision']) for e in superseded if e['superseded_by'].endswith('T39410-menus-fixes-v1/ledger.json')}
         self.assertEqual(len(replaced), len(self.ledger['supersedes']))
         for entry in active:
-            if 'T39410' in entry['ledger']:
+            if 'T39410-menus-fixes-v1' in entry['ledger']:
                 inventory.candidate_key(entry)
 
     def test_output_hashes_and_manifest_bindings(self):

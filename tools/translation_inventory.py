@@ -51,13 +51,28 @@ LEDGERS = [SNAPSHOT / 'checkpoints/T39004-2026-10-29/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-date-panel-v1/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-movie-pills-v1/ledger.json',
            SNAPSHOT / 'checkpoints/T39004-mainrom-port-made-v1/ledger.json',
-           SNAPSHOT / 'checkpoints/T39400-bs-signs-v1/ledger.json']
+           SNAPSHOT / 'checkpoints/T39400-bs-signs-v1/ledger.json',
+           SNAPSHOT / 'checkpoints/T39410-mainrom-fixes-v1/ledger.json',
+           SNAPSHOT / 'checkpoints/T39410-menus-fixes-v1/ledger.json',
+           SNAPSHOT / 'checkpoints/T39410-stills-fixes-v1/ledger.json']
 # Superseded checkpoints stay on disk as history but are not read:
 # T39004-battle-miss-v1 (3-wide M) by -v2, T39004-filesel-v3 (Clear, partial pages) by -v4.
 # Candidates of a registered ledger that are left out (id prefix per ledger): the port-made MAINROM ledger
 # also holds the "Apr 4" month-name composites of frame 60, a form the owner did not choose (the date panel
 # checkpoint holds the chosen captions), so they are not evidence for mainrom-0060.
-UNREGISTERED = {'translations/en/graphics/artwork/checkpoints/T39004-mainrom-port-made-v1/ledger.json': ('mainrom-draft-0060.',)}
+# The T-39412 sign crops (T39410-stills-fixes-v1) redraw five T-39400 crops and the T-39004 exam-heading crop with texture kept;
+# the older rows are left out of their ledgers as the 3-wide-M and Clear drafts were (prefix match, so no `-v2` row is hit
+# because each prefix is scoped to the older ledger). The T39004-bs-v1 `all-c-banner` rows stay.
+UNREGISTERED = {'translations/en/graphics/artwork/checkpoints/T39004-mainrom-port-made-v1/ledger.json': ('mainrom-draft-0060.',),
+                'translations/en/graphics/artwork/checkpoints/T39400-bs-signs-v1/ledger.json': (
+                    'bs-d-15-03-monument', 'bs-d-03-08-march-placard', 'bs-d-24-03-ticket-plaque',
+                    'bs-d-19-02-maiko-board', 'bs-i-17-01-hanging-sign'),
+                'translations/en/graphics/artwork/checkpoints/T39004-bs-v1/ledger.json': ('bs-c-01-28-final-exams',),
+                # Owner decision 2026-11-01: layout A (rotated) for the P_01_03 / P_01_03B names; the stacked (b) and
+                # larger centred alternatives are rejected and stay unregistered.
+                'translations/en/graphics/artwork/checkpoints/T39410-stills-fixes-v1/ledger.json': (
+                    'bs-p-01-03-roster-b-stacked', 'bs-p-01-03b-name-b-stacked',
+                    'bs-p-01-03b-name-a-large', 'bs-p-01-03b-name-b-large')}
 TEXT_MAIN = ROOT / 'translations/en/returned-v3.jsonl'
 TEXT_SUPP = ROOT / 'translations/en/supplemental.jsonl'
 TEXT_MANIFEST = ROOT / 'translations/en/manifest.json'
@@ -164,7 +179,7 @@ def candidate_key(entry):
     m = re.fullmatch(r'filesel-page-information-(\d)', cid)
     if m:
         return cid, 'FILESEL', None, None
-    m = re.fullmatch(r'mainrom-draft-(\d{4})\.([a-z]+(?:-\d+)?)', cid)
+    m = re.fullmatch(r'mainrom-(?:draft|fix)-(\d{4})\.([a-z]+(?:-\d+)?)', cid)
     if m:
         if entry.get('frame') != int(m[1]) or entry.get('palette_id') != m[2]:
             raise ValueError('candidate id disagrees with its frame or palette: ' + cid)
@@ -335,6 +350,18 @@ def build(catalog=CATALOG, decisions_path=DECISIONS, sources_path=SOURCES, snaps
     hist = historical(report)
     all_entries = load_ledgers(ledgers, snapshot)
     ledger, superseded = split_superseded(all_entries, ledgers)
+    # Historical (snapshot) assets that a registered ledger replaces: `superseded_historical` in the decisions maps
+    # the asset id to the ledger that replaces it. They leave the item evidence and are listed as superseded records.
+    stale = decisions.get('superseded_historical', {})
+    loaded_ledgers = {e['ledger'] for e in all_entries}
+    unknown = sorted(set(stale) - {a['id'] for a in hist})
+    if unknown:
+        raise ValueError('superseded historical asset is not in the snapshot: %s' % unknown[0])
+    for asset_id, by in stale.items():
+        if by not in loaded_ledgers:
+            raise ValueError('historical asset %s is superseded by a ledger that is not registered: %s' % (asset_id, by))
+    stale_assets = [a for a in hist if a['id'] in stale]
+    hist = [a for a in hist if a['id'] not in stale]
     atoms = {}
     order = []
 
@@ -434,8 +461,12 @@ def build(catalog=CATALOG, decisions_path=DECISIONS, sources_path=SOURCES, snaps
         known = sources['containers'].get(path) if path else None
         if known is None and atom['candidates']:
             known = atom['candidates'][0]['source_container_sha256']
+        # A group row that names several files (catalog-131: P_01_03 and P_01_03B) accepts a candidate bound to any of them.
+        allowed = {known}
+        if atom['scope'] == 'group':
+            allowed |= {sources['containers'].get(q) for q in all_paths}
         for candidate in atom['candidates']:
-            if candidate['source_container_sha256'] != known:
+            if candidate['source_container_sha256'] not in allowed:
                 raise ValueError('candidate %s is bound to a different source container than %s' % (candidate['id'], atom_id))
         item = {
             'id': atom_id, 'scope': atom['scope'], 'catalog_line': line,
@@ -501,6 +532,12 @@ def build(catalog=CATALOG, decisions_path=DECISIONS, sources_path=SOURCES, snaps
                   'palette': entry.get('palette_id'), 'atom': candidate_key(entry)[0], 'status': 'superseded',
                   'superseded_by': entry['superseded_by'], 'human_approved': entry['human_approved']}
                  for entry in superseded]
+    sup_items += [{'id': asset['id'], 'revision': asset['revision'], 'path': asset['output'], 'ledger': 'snapshot:' + asset['batch'],
+                   'output_sha256': asset['output_sha256'], 'source_png_sha256': asset['source_png_sha256'],
+                   'palette': asset['palette'], 'atom': '%s-%04d' % (asset['container_key'].lower(), asset['frame']),
+                   'status': 'superseded', 'superseded_by': stale[asset['id']], 'human_approved': False,
+                   'was_human_approved': asset['style'] == 'approve'}
+                  for asset in stale_assets]
     approval = decisions.get('text_approval')
     text = text_groups(text_main, text_supplemental, sources.get('text_blank_checks', {}), approval is not None)
     summary = summarize(items, hist_items, cand_items, text)
