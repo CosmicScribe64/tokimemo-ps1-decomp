@@ -45,4 +45,6 @@ Owner decisions from chat and the second independent review (`scratchpad/art-qa2
 - `superseded_candidates` also reads the inventory's `superseded_records` for this ledger, so the rebuilt `supersedes` list matches the registered one now that the checkpoint is in the inventory.
 - `translation_inventory.json` is not rebuilt here: `test_committed_inventory_matches_inputs` fails until the integrator regenerates it. `test_translation_tree` errors in this worktree because the gitignored `translations/en/system/dictionaries/slpm_86_053.md` is missing; the catalog edits did not cause that error.
 
+- Variant colour audit (coordinator request): 0061 icon-51 was reported with light English labels. The PNG and the preview pixels are black (080808, index 9 through the icon-51 CLUT, as the Japanese uses), so there was nothing to fix. The light look was an artefact of viewing the downscaled preview sheet. New build test `test_every_variant_uses_only_the_colours_of_its_japanese`: for all 192 frame and variant files, the colours inside the edit regions are a subset of the original's colours in the same regions. There are 0 violations.
+
 ## Comments

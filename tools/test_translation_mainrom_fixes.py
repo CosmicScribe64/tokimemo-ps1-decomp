@@ -255,6 +255,18 @@ class BuildTests(unittest.TestCase):
             if row['frame'] in subject.FRAMES['save'] and row['palette_id'] == 'base':
                 self.assertEqual(image.getpixel((2, 1)), original.getpixel((2, 1)))
 
+    def test_every_variant_uses_only_the_colours_of_its_japanese(self):
+        """Per frame and palette variant: the colours inside the edit regions of the English are a
+        subset of the colours the original shows in the same regions of the same variant."""
+        with tempfile.TemporaryDirectory(dir=subject.ROOT / '.asset-cache') as tmp:
+            _, prepared, _ = subject.build(SOURCES, PACK, EXECUTABLE, Path(tmp) / 'out')
+        for image, original, row in prepared:
+            pts = {(x, y) for x0, y0, w, h in row['edit_regions'] for x in range(x0, x0 + w)
+                   for y in range(y0, y0 + h) if 0 <= x < image.width and 0 <= y < image.height}
+            english = {image.getpixel(p) for p in pts if image.getpixel(p)[3]}
+            japanese = {original.getpixel(p) for p in pts if original.getpixel(p)[3]}
+            self.assertLessEqual(english, japanese, row['id'])
+
 
 if __name__ == '__main__':
     unittest.main()
