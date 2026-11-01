@@ -23,6 +23,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
 - [ ] [[tickets/T-39503-text-container-writers|T-39503 Write every text container back from records]]
+- [ ] [[tickets/T-39505-english-memory-and-relink|T-39505 Give the English build room to grow (memory map and free relink)]]
 - [ ] [[tickets/T-39504-emulator-screen-route|T-39504 Script an emulator route through the main screens with screenshots]]
 - [ ] [[tickets/T-39400-finish-missing-english-art|T-39400 Finish the missing English art]]
 

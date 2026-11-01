@@ -2858,3 +2858,7 @@ New `tools/patch/` (`sector.py`, `disc.py`, `make_patch.py`), `tools/test_patch_
 The first English text is the NAME_ENT file select memory-card message (`src/ovl/name_entry/file_select.c`, under the flag). In the emulator it renders correctly next to the original Japanese labels; the title menu labels turned out to be sprite art. The default build still prints OK for all 27 binaries.
 
 Script strings cannot use plain ASCII with the original control letters (0x20 line end, `q`, `n`, name letters), so English script strings get control bytes 0x0A-0x1A. The design, the full function list and the open risks (pinned overlays cannot grow, island size, VRAM slots) are on [[english-text-runtime]]. [[tickets/T-39502-english-text-runtime]] moved to In Review.
+
+## [2026-11-01] ticket | Open T-39505 for English memory room
+
+Merged [[tickets/T-39501-disc-rebuild-and-xdelta]] and [[tickets/T-39502-english-text-runtime]] into `patch/english`. The runtime pins every object to its original address, so overlays cannot grow; opened [[tickets/T-39505-english-memory-and-relink]] for a RAM map and a free relink of the English build.
