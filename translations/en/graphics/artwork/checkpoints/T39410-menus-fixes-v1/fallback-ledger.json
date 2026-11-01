@@ -1,0 +1,508 @@
+{
+ "assets": [
+  {
+   "dimensions": [
+    56,
+    16
+   ],
+   "edit_regions": [
+    [
+     0,
+     0,
+     52,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "option-label-0103",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "a4deb287a535c6d84d4ee795db2dff46ee0c6ea75be2ee34919d6f560aa5094d",
+   "path": "fallback-v1/option-label-0103.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "285aebdee243903fc1eba7b38ea9a6e432c6961d16021aa1a812c36194a420fe",
+   "source_png_sha256": "f7a37171a0cf3a997ff1609d3a69bd15dd7a0a0c701c2c18042a97a64358b6de",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    56,
+    16
+   ],
+   "edit_regions": [
+    [
+     0,
+     0,
+     52,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "option-label-0104",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "c196b7a16f915b0eccebc59281856b7ca497dd8a56987a027763fe6e4d2b1344",
+   "path": "fallback-v1/option-label-0104.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "285aebdee243903fc1eba7b38ea9a6e432c6961d16021aa1a812c36194a420fe",
+   "source_png_sha256": "5a568c7b766f6cffae1388670ce998b911b971571e5f687c601410c690604e40",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    70,
+    16
+   ],
+   "edit_regions": [
+    [
+     0,
+     0,
+     66,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "option-label-0113",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "c528e1085013e29045611440b9a5654eaee7300502b09e8a54d8fb65cbc3f131",
+   "path": "fallback-v1/option-label-0113.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "285aebdee243903fc1eba7b38ea9a6e432c6961d16021aa1a812c36194a420fe",
+   "source_png_sha256": "56b34a5bb1396de95c79bf84f84b5322b69fba055840bba4afaf18af2b521fdc",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    70,
+    16
+   ],
+   "edit_regions": [
+    [
+     0,
+     0,
+     66,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "option-label-0114",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "f36301690a968bf8367a531dab33bc47338979fe2bdfc9d79f22f0a0f174c1f9",
+   "path": "fallback-v1/option-label-0114.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "285aebdee243903fc1eba7b38ea9a6e432c6961d16021aa1a812c36194a420fe",
+   "source_png_sha256": "8c43530617da243aff8f03a412e2a0291cb937f20329ffbe1ee690079ce59488",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    8,
+    16
+   ],
+   "edit_regions": [
+    [
+     0,
+     1,
+     8,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "exam-0001",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "d3105dd3794c6840cae3f387a6156569a7abf2d57d0efb6bfacc885a30869275",
+   "path": "fallback-v1/exam-0001.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "port-made 3-texel lowercase / 4-texel capital face (tools/translation_menus_fixes.py), unscaled, ink 16 on the paper face",
+     "element": "lettering",
+     "face": "tight",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "f990c8a8eb5cc547204102d1e25fc2d5fda5fa18ed076bc543a77eb76e0dc37a",
+   "source_png_sha256": "0be355eb77a469f5deef3de3bd7674d5f8cb0ef3ba645f04c1548846cfc7472c",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    32,
+    16
+   ],
+   "edit_regions": [
+    [
+     4,
+     2,
+     25,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "name-label-0015",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "4bf2d0b2cbbb5f175e09149907edd83917e53e680770e43cd73e077efa32c413",
+   "path": "fallback-v1/name-label-0015.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "8bfdd21c0fc2b63fb9b3041a21c7fdba82f3a071e6375193cdc4e679e165cb2f",
+   "source_png_sha256": "9e269ddad1b95503c8cad1a95af5579669cd233b95c3925c4f866c8cdb3bd025",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    32,
+    16
+   ],
+   "edit_regions": [
+    [
+     4,
+     2,
+     25,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "name-label-0016",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "60c54aaf03e99848e393ce19184f9c026575a88e00c22de2e3c5be70c9d9672d",
+   "path": "fallback-v1/name-label-0016.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "8bfdd21c0fc2b63fb9b3041a21c7fdba82f3a071e6375193cdc4e679e165cb2f",
+   "source_png_sha256": "c51168d843e34093665ac7f968868a04f0b8c239fcd7ebbb8c9f38c4f6a4cebe",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    32,
+    16
+   ],
+   "edit_regions": [
+    [
+     4,
+     2,
+     25,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "name-label-0017",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "31b76ed3ff5c57b9c6eac81e70c6ff50b01d9eb76a0475269400fb1b4a920b6f",
+   "path": "fallback-v1/name-label-0017.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "8bfdd21c0fc2b63fb9b3041a21c7fdba82f3a071e6375193cdc4e679e165cb2f",
+   "source_png_sha256": "9af6e68e4b0b0e6aceae8035c2ce5744e2965aead386a5f9f465a62078b7bcf7",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    32,
+    16
+   ],
+   "edit_regions": [
+    [
+     4,
+     2,
+     25,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "name-label-0018",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "766acdb8c9f5891927d9662fb59044dc7237ea50a11eb45898e3ecdf3ba3a7e6",
+   "path": "fallback-v1/name-label-0018.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "8bfdd21c0fc2b63fb9b3041a21c7fdba82f3a071e6375193cdc4e679e165cb2f",
+   "source_png_sha256": "e4b3e6ada8aa9a0df948b1dfde49db61ff15456c065658b8664d0e95df3884ff",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    32,
+    16
+   ],
+   "edit_regions": [
+    [
+     4,
+     2,
+     26,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "name-label-0019",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "9b25979c975c6a359e3f63bdd20aef297e9f9b398d914d59e95e341720e5897a",
+   "path": "fallback-v1/name-label-0019.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "8bfdd21c0fc2b63fb9b3041a21c7fdba82f3a071e6375193cdc4e679e165cb2f",
+   "source_png_sha256": "202b7f841df7f8fb6bc9b4574a88b14c61871bea5f2987163c6d4a2a095a0d7d",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    32,
+    16
+   ],
+   "edit_regions": [
+    [
+     4,
+     2,
+     26,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "name-label-0020",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "557e26c096c403e8473b19a6db2c7f5b672b36663fcffebf19032068a7d192fd",
+   "path": "fallback-v1/name-label-0020.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "8bfdd21c0fc2b63fb9b3041a21c7fdba82f3a071e6375193cdc4e679e165cb2f",
+   "source_png_sha256": "4b22ea72b4d416bda30e4d55e8411420311980e2d78b9e241fa994dd68e4f257",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    32,
+    16
+   ],
+   "edit_regions": [
+    [
+     4,
+     2,
+     26,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "name-label-0021",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "8563c1a94c27038d5a6b09edefb6e08f4e3d64c3c70414076b26c974f53e5c4f",
+   "path": "fallback-v1/name-label-0021.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "8bfdd21c0fc2b63fb9b3041a21c7fdba82f3a071e6375193cdc4e679e165cb2f",
+   "source_png_sha256": "043235e44f289c8b20e5f0ea3eb5202a98485d8a479dc9ae00a9347fe2a40172",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    32,
+    16
+   ],
+   "edit_regions": [
+    [
+     4,
+     2,
+     26,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "name-label-0022",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "bc01efec51e2c8b6ed268d066c1cebefbcdae52aef388d83a75f9403db8869b4",
+   "path": "fallback-v1/name-label-0022.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "8bfdd21c0fc2b63fb9b3041a21c7fdba82f3a071e6375193cdc4e679e165cb2f",
+   "source_png_sha256": "4a970fd16be91d03a464c0ed62169f49045d8333a32eed7ff70f9813ffa8e5e5",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    32,
+    16
+   ],
+   "edit_regions": [
+    [
+     4,
+     2,
+     25,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "name-label-0023",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "d1b74ce85e23a2498fb6e2c68e600362e3bde0e0425ec418636f6a005c030c08",
+   "path": "fallback-v1/name-label-0023.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "8bfdd21c0fc2b63fb9b3041a21c7fdba82f3a071e6375193cdc4e679e165cb2f",
+   "source_png_sha256": "37eab31e2c2bf6c42b77589027c8923119d7c29a69db7a985a48468b8177aa29",
+   "status": "draft"
+  },
+  {
+   "dimensions": [
+    32,
+    16
+   ],
+   "edit_regions": [
+    [
+     4,
+     2,
+     25,
+     12
+    ]
+   ],
+   "human_approved": false,
+   "id": "name-label-0024",
+   "manifest_sha256": "b12726b00122ccb89177959af38e3d50da9be41e1d529177d17cad430002faf7",
+   "output_sha256": "730c99e41a196c47935120a34664ab56da5b2409eb2acb9e559f103461f7bf13",
+   "path": "fallback-v1/name-label-0024.png",
+   "port_made": true,
+   "port_made_elements": [
+    {
+     "description": "recovered 9-row menu face, source ink gradient rows and (+1,+1) shadow as the other option labels",
+     "element": "lettering",
+     "face": "menu9",
+     "kind": "lettering"
+    }
+   ],
+   "reason": "Candidate artwork; port-made menu fix pass (T-39411); unreviewed, not runtime integrated.",
+   "revision": "fallback-v1",
+   "source_container_sha256": "8bfdd21c0fc2b63fb9b3041a21c7fdba82f3a071e6375193cdc4e679e165cb2f",
+   "source_png_sha256": "eafaadb44d0d4b327f09a36e3b47679ae460b92d30b5c81ad7b39cd6c1fb2ef0",
+   "status": "draft"
+  }
+ ],
+ "candidate_assets": 15,
+ "complete_translation_inventory": false,
+ "note": "Same-size fallbacks. Register only if the English build cannot widen the sprite; supersedes nothing by itself.",
+ "original_images_included": false,
+ "port_made_assets": 15,
+ "publication_authorization": "Owner art fix pass, 2026-11-01 (T-39411); owner approved the naming decisions recorded in REGISTER.md.",
+ "schema": "tokimemo.translation-checkpoint.v1",
+ "separate_reviewed_revisions": 0,
+ "ticket": "T-39411"
+}
