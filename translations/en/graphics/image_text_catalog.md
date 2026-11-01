@@ -59,17 +59,17 @@ In accordance with the project requirements:
 | `frame-0118` | Magazine base page | `328×171` | `メモリアルスポット` / `MEMORIAL SPOT` / `MOVIE` / `CONCERT` / `EVENT` | Memorial Spot (Town Information Magazine) | Section headers (`MOVIE`, `CONCERT`, `EVENT`) and subtitle (`MEMORIAL SPOT`) are already in English. Either keep the stylized katakana masthead with its existing `MEMORIAL SPOT` sub-banner, or replace the katakana banner (`144×20`) with bold retro magazine lettering **`MEMORIAL SPOT`**. |
 | `frame-0120` *(suspected)* | Magazine stadium graphic | `136×56` | `STADIUM` | Stadium | Already Latin text (`STADIUM`); no change required. |
 | `frame-0121` | Issue badge (Spring Y1) | `32×16` | `創刊` | Inaugural Issue / Issue #1 | **`No.1`** or **`1st`** in white/pink pixel type inside the `32×16` badge. |
-| `frame-0122` | Issue badge (Spring) | `56×16` | `3・4・5月号` | 3-4-5 Issue | **`3-4-5`** in green pixel type inside `56×16`. |
-| `frame-0123` | Issue badge (Summer) | `56×16` | `6・7・8月号` | 6-7-8 Issue | **`6-7-8`** in blue pixel type inside `56×16`. |
-| `frame-0124` | Issue badge (Autumn) | `56×16` | `9・10・11月号` | 9-10-11 Issue | **`9-10-11`** in orange pixel type inside `56×16`. |
-| `frame-0125` | Issue badge (Winter) | `56×16` | `12・1・2月号` | 12-1-2 Issue | **`12-1-2`** in purple pixel type inside `56×16`. |
+| `frame-0122` | Issue badge (Spring) | `56×16` | `3・4・5月号` | Spring Issue (3-4-5) | **`SPRING`** / **`ISSUE`** in two bold 6px lines with the badge's green colour ramp, filling `56×16` (the months 3-4-5 are spring). |
+| `frame-0123` | Issue badge (Summer) | `56×16` | `6・7・8月号` | Summer Issue (6-7-8) | **`SUMMER`** / **`ISSUE`** in two bold 6px lines with the badge's blue colour ramp, filling `56×16` (the months 6-7-8 are summer). |
+| `frame-0124` | Issue badge (Autumn) | `56×16` | `9・10・11月号` | Autumn Issue (9-10-11) | **`AUTUMN`** / **`ISSUE`** in two bold 6px lines with the badge's orange colour ramp, filling `56×16` (the months 9-10-11 are autumn). |
+| `frame-0125` | Issue badge (Winter) | `56×16` | `12・1・2月号` | Winter Issue (12-1-2) | **`WINTER`** / **`ISSUE`** in two bold 6px lines with the badge's purple colour ramp, filling `56×16` (the months 12-1-2 are winter). |
 | `frame-0126` | `chunk 11 (0x16000)` (`x=0, y=64`) | `136×24` | `中央公園紹介` | Central Park Guide | **`CENTRAL PARK GUIDE`** (`128×24`, 16px bold serif/sans with 1px shadow; ink 2 green, shadow 4). |
 | `frame-0127` | `chunk 11 (0x16000)` (`x=0, y=88`) | `120×24` | `美術館完成` | Art Museum Opens | **`ART MUSEUM OPENS`** (`120×24`, ink 7 pink, shadow 9). |
 | `frame-0128` | `chunk 11 (0x16000)` (`x=0, y=112`) | `112×24` | `水族館特集` | Aquarium Special | **`AQUARIUM SPECIAL`** (`112×24`, ink 12 blue, shadow 14). |
 | `frame-0129` | `chunk 2 (0x4000)` (`x=0, y=184`) | `144×24` | `スタジアム完成` | Stadium Opens | **`STADIUM OPENS`** (`128×24` + clear 16px tail, ink 2 orange, shadow 4). |
 | `frame-0130` | `chunk 2 (0x4000)` (`x=0, y=208`) | `112×24` | `植物園特集` | Botanical Garden Special | **`GARDEN SPECIAL`** (`112×24`, ink 7 pink, shadow 9). |
 | `frame-0131` | `chunk 2 (0x4000)` (`x=0, y=232`) | `144×24` | `ボーリング特集` | Bowling Alley Special | **`BOWLING SPECIAL`** (`128×24` + clear 16px tail, ink 12 yellow/blue, shadow 14). |
-| `frame-0132` | `chunk 7 (0xE000)` (`x=0, y=184`) | `152×24` | `カラオケBOX完成` | Karaoke Box Opens | **`KARAOKE OPENS`** (`128×24` + clear 24px tail, ink 2 pink, shadow 4). |
+| `frame-0132` | `chunk 7 (0xE000)` (`x=0, y=184`) | `152×24` | `カラオケBOX完成` | Karaoke Box Opens | **`KARAOKE BOX OPENS`** (`113×24` flush left + clear 39px tail, ink 2 pink, shadow 4). |
 | `frame-0133` | `chunk 7 (0xE000)` (`x=0, y=208`) | `152×24` | `プラネタリウム特集` | Planetarium Special | **`PLANETARIUM SPECIAL`** (`128×24` + clear 24px tail, ink 7 purple, shadow 9). |
 | `frame-0134` | Magazine genre tag | `40×8` | `コメディー` | Comedy | **`Comedy`** (`40×8`, 5×7 compact font) |
 | `frame-0135` | Magazine genre tag | `48×8` | `ラブロマンス` | Romance | **`Romance`** (`48×8`, 5×7 compact font) |
@@ -85,7 +85,7 @@ In accordance with the project requirements:
 | `frame-0145` | Magazine event tag | `32×16` | `野球` | Baseball | **`Baseball`** (`32×16`, condensed 4px font or 2-line `Base-` / `ball`) |
 | `frame-0151` | Konami ad insert 1 | `56×66` | `幻想水滸伝 GENSOSUIKODEN` / `'95発売予定` | Suikoden / Coming in '95 | Keep game logo art and its colours; title lettering **`SUIKODEN`** in thin 1px capitals (40px wide); replace bottom `56×12` strip `'95発売予定` with **`Out in '95`** or **`'95 Release`**. |
 | `frame-0152` | Konami ad insert 2 | `56×66` | `極上パロディウス` / `好評発売中` | Parodius / Now on Sale | Keep game logo art and its colours; title lettering **`PARODIUS`** in thin 1px capitals (40px wide); replace bottom `56×12` strip `好評発売中` with **`Out Now!`** or **`On Sale!`**. |
-| `frame-0153` | Konami ad insert 3 | `56×66` | `実況パワフルプロ野球'95` / `好評発売中` | Pro Baseball / Now on Sale | Keep game logo art and its colours; title lettering **`PRO BASEBALL`** in thin 1px capitals (40px wide); replace bottom `56×12` strip `好評発売中` with **`Out Now!`**. |
+| `frame-0153` | Konami ad insert 3 | `56×66` | `実況パワフルプロ野球'95` / `好評発売中` | Power Pros / Now on Sale | Keep game logo art and its colours; title lettering **`POWER`** / **`PROS`** in two lines of bold 2px-stem capitals (yellow on a red outline, green shadow, clear of the baseball); replace bottom `56×12` strip `好評発売中` with **`Out Now!`**. |
 | `frame-0154` | Konami ad insert 4 | `56×66` | `ツインビー対戦ぱずるだま` / `好評発売中` | TwinBee Puzzle / Now on Sale | Keep game logo art and its colours; title lettering **`TWINBEE PUZZLE`** in thin 1px capitals (40px wide); replace bottom `56×12` strip `好評発売中` with **`Out Now!`**. |
 | `frame-0173` *(suspected)* | Small ribbon icon | `16×16` | *(Pictorial ribbon icon)* | N/A (No text) | No change required. |
 | `sheet-02000` | Unreferenced VRAM sheet (`0x2000`) | `128×128` | `星座:` / `B.W.H` / `電話:` / `血液型` / `日` / `考:` | Sign: / B.W.H / Tel: / Blood Type / Day / Note: | Unused prototype profile labels in VRAM (`Sign:`, `B.W.H`, `Tel:`, `Blood`). Safe to leave or replace in-place. |

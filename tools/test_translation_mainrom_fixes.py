@@ -35,8 +35,18 @@ def faces():
 class BitmapTests(unittest.TestCase):
     def test_bitmaps_are_well_formed(self):
         subject.check_bitmaps()
-        self.assertEqual({len(b) for b in subject.BOLD.values()}, {subject.BOLD_HEIGHT})
-        self.assertEqual({len(b) for b in subject.DIGITS.values()}, {subject.DIGIT_HEIGHT})
+        for ch, bitmap in subject.BOLD.items():
+            self.assertEqual(len(bitmap), subject.BOLD_HEIGHT + len(subject.BOLD_DESCENDERS.get(ch, ())), ch)
+        faces = subject.round2_faces()   # raises on a malformed drawing
+        self.assertEqual({max(y for _, y in g['points']) + 1 for g in faces['bold6'].glyphs.values()}, {6})
+        self.assertEqual({max(y for _, y in g['points']) + 1 for g in faces['bold7'].glyphs.values()}, {7})
+        self.assertEqual({max(y for _, y in g['points']) + 1 for g in faces['semi10'].glyphs.values()}, {10})
+
+    def test_q_has_a_tail_below_the_baseline(self):
+        q = subject.bold_face().glyphs['Q']['points']
+        tail = [(x, y) for x, y in q if y >= subject.BOLD_HEIGHT]
+        self.assertGreaterEqual(len(tail), 4)
+        self.assertGreater(max(x for x, _ in tail), max(x for x, _ in subject.bold_face().glyphs['O']['points']))
 
     def test_bold_face_has_every_capital_of_the_headlines(self):
         face = subject.bold_face()
@@ -51,11 +61,22 @@ class BitmapTests(unittest.TestCase):
         self.assertEqual(sorted(set(out)), sorted(drawing))
 
     def test_cover_glyphs_exist_for_every_title(self):
-        cover = subject.cover_faces()
+        faces = subject.round2_faces()
         for spec in subject.COVERS.values():
-            for text, face, *_ in spec['lines']:
-                for ch in text.replace(' ', ''):
-                    self.assertIn(ch, cover[face].glyphs)
+            for line in spec['lines']:
+                for ch in line['text'].replace(' ', ''):
+                    self.assertIn(ch, faces[line['face']].glyphs)
+
+    def test_cover_titles_fit_the_logo_columns(self):
+        faces = subject.round2_faces()
+        for frame, spec in subject.COVERS.items():
+            for line in spec['lines']:
+                xs = [x for x, _ in subject.layout_line(faces[line['face']], line)]
+                rim = 1 if line['outline'] is not None else 0
+                right = max(xs) + rim + (1 if line['shadow'] is not None else 0)
+                self.assertGreaterEqual(min(xs) - rim, subject.COVER_X[0], (frame, line['text']))
+                self.assertLess(right, sum(subject.COVER_X), (frame, line['text']))
+        self.assertEqual(subject.COVERS[153]['title'], 'POWER PROS')
 
 
 class LayoutTests(unittest.TestCase):
@@ -87,7 +108,20 @@ class LayoutTests(unittest.TestCase):
         for frame, (text, *_) in subject.HEADLINES.items():
             _, right, up, down = subject.extent(face, text)
             self.assertLessEqual(right + 2, BANNER_WIDTH[frame], text)
-            self.assertEqual(down - up + 1, subject.BOLD_HEIGHT)
+            self.assertEqual(down - up + 1, subject.BOLD_HEIGHT + (2 if 'Q' in text else 0), text)
+        self.assertEqual(subject.HEADLINES[132][0], 'KARAOKE BOX OPENS')
+        self.assertEqual(subject.HEADLINE_ALIGN, 'left')
+
+    def test_soft_edges_take_only_corner_notches(self):
+        o = base.bitmap_glyph(['.####.', '######', '##..##', '##..##', '######', '.####.'])['points']
+        ink = set(o)
+        shadow = {(x + 1, y + 1) for x, y in ink} - ink
+        edges = subject.soft_edges(ink, shadow)
+        self.assertEqual(edges.get((0, 0)), 'highlight')
+        self.assertEqual(edges.get((5, 0)), 'highlight')
+        self.assertEqual(edges.get((0, 5)), 'mid')
+        for counter in ((2, 2), (3, 2), (2, 3), (3, 3)):
+            self.assertNotIn(counter, edges)   # the counter stays open
 
     def test_headline_wording_follows_the_suffix_rule(self):
         suffix = {'完成': 'OPENS', '特集': 'SPECIAL', '紹介': 'GUIDE'}
@@ -104,16 +138,30 @@ class LayoutTests(unittest.TestCase):
         for text in labels:
             self.assertLessEqual(base.line_width(face, text, None), subject.STAT_MAX_WIDTH)
 
-    def test_issue_word_fits_beside_the_longest_numerals(self):
-        digits = subject.digit_face()
-        longest = max(subject.extent(digits, t)[1] + 1 for t in subject.ISSUE_DIGITS.values())
-        face = subject.fit_face(faces(), [subject.ISSUE_WORD], 56 - longest - 1)
-        self.assertLessEqual(longest + 1 + base.line_width(face, subject.ISSUE_WORD, None), 56)
+    def test_issue_badges_name_the_seasons(self):
+        self.assertEqual(subject.ISSUE_SEASONS, {122: 'SPRING', 123: 'SUMMER', 124: 'AUTUMN', 125: 'WINTER'})
+        self.assertEqual(subject.ISSUE_MONTHS[124], '9-10-11')
 
-    def test_digits_are_even_widths_except_one(self):
-        widths = {ch: len(rows[0]) for ch, rows in subject.DIGITS.items() if ch != '.'}
-        self.assertEqual({w for ch, w in widths.items() if ch != '1'}, {5})
-        self.assertEqual(widths['1'], 3)
+    def test_season_lines_fill_the_badge_rows_in_one_size(self):
+        face = subject.round2_faces()['bold6w']
+        widths = [base.line_width(face, t, None) for t in list(subject.ISSUE_SEASONS.values()) + [subject.ISSUE_WORD]]
+        self.assertLessEqual(max(widths), 56 - 2)   # 1 px clear each side, as the Japanese
+        self.assertGreaterEqual(max(widths), 40)
+        first, second = subject.ISSUE_ROWS
+        self.assertEqual((first, second + subject.BOLD6_HEIGHT - 1), (1, 14))   # the Japanese rows
+        self.assertGreater(second, first + subject.BOLD6_HEIGHT)
+
+    def test_line_ramp_keeps_the_dark_edges(self):
+        table = {y: (7 if y in (1, 14) else 2) for y in range(16)}
+        self.assertEqual(subject.line_ramp(table, 1, 14, 6), [7, 2, 2, 2, 2, 7])
+
+    def test_wrestling_fits_with_a_five_pixel_w(self):
+        face = subject.wrestling_face(faces())
+        self.assertEqual(face.glyphs['W']['width'], 5)
+        self.assertLessEqual(base.line_width(face, 'Wrestling', 1), 32 - 2 * subject.TAG_MARGIN)
+        plain = base.Face('p', face.glyphs, face.space, {})
+        self.assertEqual(base.line_width(plain, 'Wrestling', 1) - base.line_width(face, 'Wrestling', 1), 2)
+        self.assertEqual(subject.TAG_TEXT[144], ('Wrestling',))
 
 
 class ResolutionTests(unittest.TestCase):
@@ -193,6 +241,15 @@ class BuildTests(unittest.TestCase):
             _, prepared, _ = subject.build(SOURCES, PACK, EXECUTABLE, Path(tmp) / 'out')
         for image, original, row in prepared:
             base.check(original, image, row['edit_regions'], row['id'])
+        for image, original, row in prepared:
+            if row['palette_id'] != 'base':
+                continue
+            if row['item'] == 2:   # flush left where the Japanese starts
+                self.assertEqual(row['lettering_bbox'][0], row['japanese_left'], row['id'])
+            if row['frame'] == 144:   # 1 px clear on top and 2 px at the bottom, as the original
+                alpha = [[image.getpixel((x, y))[3] for x in range(32)] for y in range(16)]
+                self.assertFalse(any(alpha[0]) or any(alpha[14]) or any(alpha[15]))
+                self.assertFalse(any(r[0] for r in alpha) or any(r[31] for r in alpha))
         # the card layer of the Save frames is untouched: only rows inside the lettering part change
         for image, original, row in prepared:
             if row['frame'] in subject.FRAMES['save'] and row['palette_id'] == 'base':

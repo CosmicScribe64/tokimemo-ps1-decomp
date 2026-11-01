@@ -16,11 +16,11 @@ Redraw the MAINROM items the 2026-11-01 owner and reviewer notes sent back (Save
 
 - [x] Save labels 57-59: "Save" in the Japanese rows on the lettering layer; the card layer (frame border and icon) is untouched; all six palette variants.
 - [x] Banners 126-133: one bold 17-row face at one size, one wording rule (完成 Opens, 特集 Special, 紹介 Guide), one file per variant.
-- [x] Issue banners 122-125: "Issue" restores 月号; digits even (the 1 is 3 wide), layout balanced.
+- [x] Issue banners 122-125: season name over ISSUE restores 月号 (round 2; round 1 used even digits plus "Issue").
 - [x] Genre tags 134-145: 1 px margin on both sides, centred (owner decision 2026-11-01); `TAG_ALIGN` is the one switch.
 - [x] Weekdays 82-88: `weekday-resolution.json` shows every variant resolves to the approved two-letter set; the twelve stale three-letter drafts are listed for the integrator to supersede.
 - [x] Stat labels 61: Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress, left-aligned, clear of the arrow marker.
-- [x] Covers 151-154: English titles (SUIKODEN, PARODIUS, PRO BASEBALL, TWINBEE PUZZLE) in each logo's colours; the rest of the cover art is unchanged.
+- [x] Covers 151-154: English titles (SUIKODEN, PARODIUS, POWER / PROS, TWINBEE / PUZZLE; round 2) in each logo's colours; the rest of the cover art is unchanged.
 - [x] Text dictionary: Health, Humanities, Sports in the three stat records and their three executable-offset twins.
 - [x] Drafts reproducible with `tools/translation_mainrom_fixes.py`, tests in `tools/test_translation_mainrom_fixes.py`, checkpoint `T39410-mainrom-fixes-v1` with ledger and `REGISTER.md`; no shared registration file edited.
 - [ ] Code review against `CODING_STANDARDS.md`.
@@ -29,6 +29,20 @@ Redraw the MAINROM items the 2026-11-01 owner and reviewer notes sent back (Save
 
 - Checkpoint: `translations/en/graphics/artwork/checkpoints/T39410-mainrom-fixes-v1` (192 PNGs, 32 frames x 6 variants). The integrator step is in its `REGISTER.md`.
 - The SLPM tables the translation tree builds from are gitignored (`SLPM_*`), so the text change was made in `translations/en/returned-v3.jsonl` directly. The inventory pins that file's hash, so `test_translation_inventory` fails until `translation_inventory.json` is rebuilt (REGISTER.md).
-- All new lettering is port-made and unreviewed; nothing is approved or integrated. The covers are thin 1 px capitals because eight letters must fit 40 px, flagged for owner review.
+- All new lettering is port-made and unreviewed; nothing is approved or integrated. Round 2 made the covers bolder (see below).
+
+## Round 2 (second review, 2026-11-01)
+
+Owner decisions from chat and the second independent review (`scratchpad/art-qa2/notes.md`, MAINROM items). The checkpoint `T39410-mainrom-fixes-v1` was updated in place: same candidate ids and `supersedes` list, new hashes for the 17 changed frames (0122-0133, 0144, 0151-0154; 102 files). Save labels, stat labels and the other tags are byte-identical.
+
+- 0144 Pro Wrestling: now "Wrestling" on one line, rows 4-11 like 0145 "Baseball", so 4 px clear on top and bottom (the original keeps 1 and 2) and 1 px each side. The W is the 5 px port-made W. "Pro / Wrestling" cannot fit: two 7-row lines with shadows need 16 rows. A 5 px W also leaves "Wrestling" 2 px too wide even with narrow e, s, n, g and r. The fix: a 2 px t with its crossbar on the left, and the pairs r-e and s-t kerned to 0 px (`KernedFace`).
+- Headlines 0126-0133: flush left at the column where the Japanese starts (x 0 in all eight); same face and size. `KARAOKE BOX OPENS` fits 0132 at the shared size (113 of 152 px).
+- 0128: the Q has a tail. It leaves the bowl at the bottom right and runs 2 rows below the baseline (shadow on row 22).
+- Edge tones (nit 14): each banner's three extra tones (highlight = fill - 1, mid = fill + 1, soft = shadow + 1 in every banner CLUT) go on the cut corners and shadow steps. That is 18-29 px per banner (the Japanese has 20-60). The manifest lists the count for each banner.
+- Issue badges 0122-0125: SPRING / SUMMER / AUTUMN / WINTER over ISSUE, in two 6-row bold lines on rows 1-6 and 9-14, the rows the Japanese uses. The face is a wide 2 px-stem `bold6w`, one size for all four; SUMMER and AUTUMN set the width (44 of 56 px). Each line carries the badge's ramp, dark at its edges and bright in the middle.
+- Covers: SUIKODEN uses 8-row semi-bold capitals (4 px wide, 2 px main stem) with the logo's ramp, and the GENSOSUIKODEN subtitle stays. PARODIUS uses 10-row semi-bold capitals, yellow to orange with a white outline and a navy shadow. POWER / PROS (owner decision; was PRO BASEBALL) uses two lines of 2 px-stem capitals, yellow on a red outline with a green shadow, left-aligned and 6 px clear of the baseball. TWINBEE / PUZZLE uses 7-row and 6-row 2 px-stem capitals with the navy outline. Eight 5 px letters do not fit the logos' 40 px, so the two eight-letter titles are semi-bold, not full 2 px. `plan_cover` refuses any title pixel within 1 px of kept artwork.
+- Catalog: `image_text_catalog.jsonl` and `.md` rows 0122-0125 (season wording), 0132 (KARAOKE BOX OPENS) and 0153 (Power Pros) were edited together. The 0144 suggestion column still says Wrestl. / ProWres; it was not edited (out of scope for this round).
+- `superseded_candidates` also reads the inventory's `superseded_records` for this ledger, so the rebuilt `supersedes` list matches the registered one now that the checkpoint is in the inventory.
+- `translation_inventory.json` is not rebuilt here: `test_committed_inventory_matches_inputs` fails until the integrator regenerates it. `test_translation_tree` errors in this worktree because the gitignored `translations/en/system/dictionaries/slpm_86_053.md` is missing; the catalog edits did not cause that error.
 
 ## Comments

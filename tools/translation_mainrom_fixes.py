@@ -9,14 +9,19 @@ items the owner review sent back:
 * magazine banners 126-133: one bold condensed headline face (hand-drawn here,
   17 rows, 2 px strokes, 1 px shadow, the weight of the Japanese) at one size, one
   wording pattern ("<Subject> Opens" for 完成, "<Subject> Special" for 特集,
-  "Central Park Guide" for 紹介);
-* issue banners 122-125: the original month numerals are replaced by even-width
-  bold digits and the word "Issue" restores the meaning of 月号;
+  "Central Park Guide" for 紹介), flush left where the Japanese starts, with the
+  banner's own edge tones on the cut corners;
+* issue banners 122-125: the three-month runs named by season, "SPRING / ISSUE" and
+  so on, in two bold lines with the badge's vertical colour ramp;
 * genre tags 134-145: re-lettered with a 1 px margin on both sides, centred
-  (TAG_ALIGN is the one switch to move them to the left);
+  (TAG_ALIGN is the one switch to move them to the left); 144 is "Wrestling";
 * stat labels, frame 61: the approved stat names (Health, Hum., Science, Art,
   Sports, Trivia, Looks, Guts, Stress), left-aligned in the label strips;
-* game covers 151-154: English title lettering in each logo's style.
+* game covers 151-154: English title lettering in each logo's colours and close to
+  its weight (SUIKODEN, PARODIUS, POWER / PROS, TWINBEE / PUZZLE).
+
+Round 2 (the second review of the same day) changed items 1-7 of the brief in
+wiki/tickets/T-39410-mainrom-art-fixes.md; the checkpoint keeps its revision and ids.
 
 Every variant of every frame is rendered from the one edited index map, so the
 variants cannot drift. Pixels outside the declared edit regions equal the exact
@@ -91,7 +96,7 @@ BOLD_DRAWN = {
     'N': rows('##..##', ('###.##', 6), ('##.###', 7), '##..##'),
     'O': rows('.####.', '######', ('##..##', 11), '######', '.####.'),
     'P': rows('#####.', '######', ('##..##', 4), ('#####.', 2), ('##....', 7)),
-    'Q': rows('.####.', '######', ('##..##', 10), '##.###', '######', '.#####'),
+    'Q': rows('.####..', '######.', ('##..##.', 10), '##.###.', '######.', '.######'),
     'R': rows('#####.', '######', ('##..##', 4), ('#####.', 2), ('##.##.', 2), ('##..##', 5)),
     'S': rows('.####.', '######', '##..##', ('##....', 3), '.####.', '..####', ('....##', 3), '##..##', '######', '.####.', '......')[:BOLD_SOURCE_HEIGHT],
     'T': rows(('######', 2), ('..##..', 13)),
@@ -102,32 +107,148 @@ BOLD_DRAWN = {
     'Y': rows(('##..##', 6), ('.####.', 3), ('..##..', 6)),
     'Z': rows(('######', 2), ('....##', 2), ('...##.', 2), ('..##..', 3), ('.##...', 2), ('##....', 2), ('######', 2)),
 }
-BOLD = {ch: stretched(bitmap) for ch, bitmap in BOLD_DRAWN.items()}
-# Bold digits for the issue banners: 14 rows, 5 wide, 2 px strokes, no shadow
-# (the Japanese numerals have none; they carry a vertical colour ramp instead).
-DIGIT_HEIGHT = 14
-DIGITS = {
-    '0': rows('.###.', '#####', ('##.##', 10), '#####', '.###.'),
-    # '1' is the one proportional digit (3 wide, flag, no foot): with it the longest numeral row
-    # 9-10-11 leaves room for the word; every other digit is 5 wide.
-    '1': rows('.##', '###', ('.##', 12)),
-    '2': rows('.###.', '#####', ('...##', 2), '..###', '.###.', '.##..', ('##...', 5), ('#####', 2)),
-    '3': rows('.###.', '#####', ('...##', 2), '..###', '..##.', '..###', ('...##', 4), '##.##', '#####', '.###.'),
-    '4': rows(('##.##', 7), ('#####', 2), ('...##', 5)),
-    '5': rows(('#####', 2), ('##...', 2), '####.', '#####', ('...##', 5), '##.##', '#####', '.###.'),
-    '6': rows('.###.', '#####', ('##...', 3), '####.', '#####', ('##.##', 5), '#####', '.###.'),
-    '7': rows(('#####', 2), ('...##', 2), ('..##.', 2), ('.##..', 8)),
-    '8': rows('.###.', '#####', ('##.##', 3), '#####', '.###.', '#####', ('##.##', 4), '#####', '.###.'),
-    '9': rows('.###.', '#####', ('##.##', 4), '#####', '.####', ('...##', 4), '#####', '.###.'),
-    # middle dot of 3・4・5, on the rows of the digit centre
-    '.': rows(('..', 6), ('##', 2), ('..', 6)),
+# Descender rows below the baseline (round 2, item 3): the Q's tail runs out of the bowl's
+# bottom right and down two rows, so the word cannot read "AOUARIUM".
+BOLD_DESCENDERS = {'Q': ['....###', '.....##']}
+BOLD = {ch: stretched(bitmap) + BOLD_DESCENDERS.get(ch, []) for ch, bitmap in BOLD_DRAWN.items()}
+# Round 2 bold small capitals: 6 rows, 2 px stems, 1-row bars (items 3 and 6: the season badges
+# and the two-line cover titles). T is 4 wide so TWINBEE fits the cover's 40 px with its outline.
+BOLD6_HEIGHT = 6
+BOLD6 = {
+    'A': ['.###.', '##.##', '##.##', '#####', '##.##', '##.##'],
+    'B': ['####.', '##.##', '####.', '##.##', '##.##', '####.'],
+    'E': ['####', '##..', '###.', '##..', '##..', '####'],
+    'G': ['.####', '##...', '##...', '##.##', '##.##', '.####'],
+    'I': ['##'] * 6,
+    'L': ['##..'] * 5 + ['####'],
+    'M': ['##...##', '###.###', '#######', '##.#.##', '##...##', '##...##'],
+    'N': ['##..##', '###.##', '######', '##.###', '##..##', '##..##'],
+    'O': ['.###.', '##.##', '##.##', '##.##', '##.##', '.###.'],
+    'P': ['####.', '##.##', '##.##', '####.', '##...', '##...'],
+    'R': ['####.', '##.##', '##.##', '####.', '##.##', '##.##'],
+    'S': ['.####', '##...', '.###.', '...##', '...##', '####.'],
+    'T': ['####'] + ['.##.'] * 5,
+    'U': ['##.##'] * 5 + ['.###.'],
+    'W': ['##...##', '##...##', '##.#.##', '##.#.##', '#######', '.##.##.'],
+    'Z': ['#####', '...##', '..##.', '.##..', '##...', '#####'],
 }
+# Wide form for the season badges (2 px counters): the lines then span 38-44 of the badge's 56 px,
+# as the Japanese numerals and 月号 fill it.
+BOLD6_WIDE = {
+    'A': ['.####.', '##..##', '##..##', '######', '##..##', '##..##'],
+    'E': ['#####', '##...', '####.', '##...', '##...', '#####'],
+    'G': ['.#####', '##....', '##....', '##.###', '##..##', '.#####'],
+    'I': ['##'] * 6,
+    'M': ['##....##', '###..###', '########', '##.##.##', '##....##', '##....##'],
+    'N': ['##...##', '###..##', '####.##', '##.####', '##..###', '##...##'],
+    'P': ['#####.', '##..##', '##..##', '#####.', '##....', '##....'],
+    'R': ['#####.', '##..##', '##..##', '#####.', '##..##', '##..##'],
+    'S': ['.#####', '##....', '.####.', '....##', '....##', '#####.'],
+    'T': ['######'] + ['..##..'] * 5,
+    'U': ['##..##'] * 5 + ['.####.'],
+    'W': ['##....##', '##....##', '##.##.##', '##.##.##', '########', '.##..##.'],
+}
+# The 7-row form (cover 154, first line) repeats one stem row: row 4, or row 3 for W.
+BOLD6_STRETCH = {'W': 3}
+# Round 2 semi-bold capitals for the eight-letter cover titles (SUIKODEN, PARODIUS): 8 rows, 4 wide,
+# a 2 px main stem and 1 px elsewhere (N is 5 wide for its diagonal). Eight 2 px-stem letters
+# of 5 px would need 47 px; the logos have 40.
+SEMI8_HEIGHT = 8
+SEMI8 = {
+    'A': ['.##.', '##.#', '##.#', '##.#', '####', '##.#', '##.#', '##.#'],
+    'D': ['###.'] + ['##.#'] * 6 + ['###.'],
+    'E': ['####', '##..', '##..', '###.', '##..', '##..', '##..', '####'],
+    'I': ['##'] * 8,
+    'K': ['##.#', '##.#', '###.', '##..', '###.', '##.#', '##.#', '##.#'],
+    'N': ['##..#', '###.#', '###.#', '##.##', '##.##', '##..#', '##..#', '##..#'],
+    'O': ['.##.'] + ['##.#'] * 6 + ['.##.'],
+    'P': ['###.', '##.#', '##.#', '##.#', '###.', '##..', '##..', '##..'],
+    'R': ['###.', '##.#', '##.#', '##.#', '###.', '##.#', '##.#', '##.#'],
+    'S': ['.###', '##..', '##..', '.##.', '..##', '..##', '..##', '###.'],
+    'U': ['##.#'] * 7 + ['.###'],
+}
+# The 10-row form (PARODIUS) repeats rows 1 and 5 of every semi-bold letter.
+SEMI_STRETCH = (1, 5)
+
+
+def stretch_rows(bitmap, repeat):
+    """Rows of `bitmap` with the rows numbered in `repeat` drawn twice (no resampling)."""
+    out = []
+    for n, row in enumerate(bitmap):
+        out += [row, row] if n in repeat else [row]
+    return out
+
+
+def small_bold_face(name, table, height, description, repeat=None):
+    glyphs, provenance = {}, {}
+    for ch, bitmap in table.items():
+        if len(bitmap) != height or len({len(r) for r in bitmap}) != 1:
+            raise ValueError('%s glyph %r is malformed' % (name, ch))
+        drawn = stretch_rows(bitmap, repeat(ch)) if repeat else bitmap
+        glyphs[ch] = base.bitmap_glyph(drawn)
+        provenance[ch] = {'origin': 'port-made', 'description': description, 'bitmap': list(drawn)}
+    return base.Face(name, glyphs, 3, {'style': description, 'rescaled': False, 'generated': False,
+                                       'glyphs': provenance})
+
+
+def round2_faces():
+    return {
+        'bold6': small_bold_face('bold6', BOLD6, BOLD6_HEIGHT, 'bold capital, 6 rows, 2 px stems, 1-row bars'),
+        'bold6w': small_bold_face('bold6w', BOLD6_WIDE, BOLD6_HEIGHT, 'wide bold capital, 6 rows, 2 px stems, '
+                                  '2 px counters, 1-row bars'),
+        'bold7': small_bold_face('bold7', BOLD6, BOLD6_HEIGHT, 'bold capital, 7 rows (the 6-row drawing with one '
+                                 'stem row repeated), 2 px stems', lambda ch: {BOLD6_STRETCH.get(ch, 4)}),
+        'semi8': small_bold_face('semi8', SEMI8, SEMI8_HEIGHT, 'semi-bold capital, 8 rows, 2 px main stem'),
+        'semi10': small_bold_face('semi10', SEMI8, SEMI8_HEIGHT, 'semi-bold capital, 10 rows (the 8-row drawing '
+                                  'with rows 1 and 5 repeated), 2 px main stem', lambda ch: set(SEMI_STRETCH)),
+    }
+
+
 # Small-word additions in panel7 style (7 rows, 1 px stroke), port-made.
 PANEL7_PERIOD = (['.', '.', '.', '.', '.', '.', '#'], 'period, 1 wide, on the baseline row')
 # Narrow capital W (3 wide), used only where "Wrestling" cannot fit the 30 px (ink plus shadow) a 32 px tag leaves.
 NARROW_W = (['#.#', '#.#', '#.#', '###', '###', '###', '#.#'], 'narrow cap W, 3 wide (panel7-style W is 5)')
 # Order in which narrow forms are tried: W first (a modest change), r and t last.
 NARROW_ORDER = 'WHoaebgns' + 'rt'
+# Round 2, item 1 (frame 144). The 3-wide W read as H or N, and "Pro / Wrestling" filled all 16
+# rows. The tag now says "Wrestling" on one line with the 5-wide W, in the 7 rows plus shadow
+# that "Baseball" (frame 145) uses. That needs 30 px with the shadow, the tag's width less 1 px
+# each side: e, s, n, g and r take their narrow forms, t is the 2-wide form with the crossbar on
+# the left, and two pairs are kerned to 0 px where the shapes allow it: r-e (only the arm of the
+# r meets the e, corner to corner) and s-t (the top of the s runs into the crossbar).
+CROSSBAR_LEFT_T = (['.#', '.#', '##', '.#', '.#', '.#', '.#'], 'narrow t, 2 wide, crossbar on the left so "st" can join')
+WRESTLING = {'text': 'Wrestling', 'narrow': 'rensg', 'kern': {('r', 'e'): -1, ('s', 't'): -1}}
+
+
+class KernedFace(base.Face):
+    """A face with per-pair kerning (added to the 1 px gap between two glyphs)."""
+
+    def __init__(self, name, glyphs, space, provenance, kern):
+        super().__init__(name, glyphs, space, provenance)
+        self.kern = dict(kern)
+
+    def points(self, text):
+        pts, x = [], 0
+        for n, ch in enumerate(text):
+            g = self.glyph(ch)
+            pts += [(px + x, py) for px, py in g['points']]
+            x += g['width'] + 1 + (self.kern.get((ch, text[n + 1]), 0) if n + 1 < len(text) else 0)
+        return pts
+
+
+def wrestling_face(faces):
+    compact, narrow = faces['panel7-compact'], faces['panel7-narrow']
+    glyphs, provenance = dict(compact.glyphs), dict(compact.provenance['glyphs'])
+    for ch in WRESTLING['narrow']:
+        glyphs[ch], provenance[ch] = narrow.glyphs[ch], narrow.provenance['glyphs'][ch]
+    rows_, description = CROSSBAR_LEFT_T
+    glyphs['t'] = base.bitmap_glyph(rows_)
+    provenance['t'] = {'origin': 'port-made-narrow', 'description': description, 'bitmap': list(rows_),
+                       'replaces': 'recovered-panel7'}
+    kern = WRESTLING['kern']
+    return KernedFace('panel7-compact+narrow-%s+t-left+kern' % WRESTLING['narrow'], glyphs, compact.space,
+                      {**compact.provenance, 'glyphs': provenance,
+                       'kerning': {a + b: k for (a, b), k in sorted(kern.items())}}, kern)
 
 
 def check_bitmaps():
@@ -135,11 +256,8 @@ def check_bitmaps():
         if len(bitmap) != BOLD_SOURCE_HEIGHT:
             raise ValueError('bold drawing %r is malformed (%d rows)' % (ch, len(bitmap)))
     for ch, bitmap in BOLD.items():
-        if len(bitmap) != BOLD_HEIGHT or len({len(r) for r in bitmap}) != 1:
+        if len(bitmap) != BOLD_HEIGHT + len(BOLD_DESCENDERS.get(ch, ())) or len({len(r) for r in bitmap}) != 1:
             raise ValueError('bold glyph %r is malformed (%d rows)' % (ch, len(bitmap)))
-    for ch, bitmap in DIGITS.items():
-        if len(bitmap) != DIGIT_HEIGHT or len({len(r) for r in bitmap}) != 1:
-            raise ValueError('digit glyph %r is malformed (%d rows)' % (ch, len(bitmap)))
 
 
 def bold_face():
@@ -152,18 +270,6 @@ def bold_face():
     return base.Face('bold17', glyphs, 4, {
         'style': 'bold condensed capitals, 17 rows, 2 px strokes, ink plus (+1,+1) drop shadow, 1 blank column '
                  '(taken by the shadow) between glyphs',
-        'rescaled': False, 'generated': False, 'glyphs': provenance})
-
-
-def digit_face():
-    check_bitmaps()
-    glyphs, provenance = {}, {}
-    for ch, bitmap in DIGITS.items():
-        glyphs[ch] = base.bitmap_glyph(bitmap)
-        provenance[ch] = {'origin': 'port-made', 'description': 'bold digit, 14 rows, 2 px strokes'
-                          if ch != '.' else 'middle dot 2x2 on the digit centre rows', 'bitmap': list(bitmap)}
-    return base.Face('digits14', glyphs, 3, {
-        'style': 'bold digits, 14 rows x 5 (the 1 is 3 wide, no foot), 2 px strokes, vertical colour ramp of the source numerals',
         'rescaled': False, 'generated': False, 'glyphs': provenance})
 
 
@@ -211,7 +317,7 @@ def extent(face, text):
 
 
 def place(frame, face, text, rect, ink, clut_parts, shadow=None, outline=None, ramp_table=None,
-          align='center', margin=0, top=None, **target):
+          align='center', margin=0, top=None, tones=None, report=None, **target):
     """Draw `text` into rect and return the written bbox.
 
     align 'center' centres ink plus shadow/outline; 'left' puts the lettering's left
@@ -246,10 +352,55 @@ def place(frame, face, text, rect, ink, clut_parts, shadow=None, outline=None, r
             writes[(x + 1, y + 1)] = shadow
     for x, y in ink_px:
         writes[(x, y)] = ramp_table[y] if ink == 'ramp' else ink
+    if tones is not None:
+        shadow_px = {p for p, i in writes.items() if p not in ink_px}
+        for p, role in soft_edges(ink_px, shadow_px).items():
+            if 0 <= p[0] < frame.width and 0 <= p[1] < frame.height and frame.covering(*p):
+                writes[p] = tones[role]
+                if report is not None:
+                    report[role] = report.get(role, 0) + 1
     for (x, y), index in sorted(writes.items(), key=lambda kv: (kv[0][1], kv[0][0])):
         base.put(frame, x, y, index, clut_parts, **target)
     xs, ys = [x for x, _ in writes], [y for _, y in writes]
     return [min(xs), min(ys), max(xs) - min(xs) + 1, max(ys) - min(ys) + 1]
+
+
+# The Japanese headlines carry three edge tones besides fill and shadow: a light one on the upper
+# edges of slanted strokes, a mid one where fill turns into shadow, and a soft one outside the
+# shadow's steps. In every banner CLUT they sit next to the fill and shadow: highlight = fill - 1,
+# mid = fill + 1, soft = shadow + 1 (checked against the source lettering by headline_tones).
+TONE_OFFSETS = {'highlight': ('ink', -1), 'mid': ('ink', 1), 'soft': ('shadow', 1)}
+
+
+def soft_edges(ink_px, shadow_px):
+    """{pixel: role} for the clear notches of a drawn word: (round 2, item 7)
+
+    * highlight: a notch with ink below and on one side (the cut top corners of round letters,
+      the upper steps of slanted strokes);
+    * mid: a notch with ink above and to the right (cut bottom-left corners, lower steps);
+    * soft: a notch with shadow above and to the left (the steps of the shadow).
+    A notch has the three neighbours of one corner set (two sides and the diagonal between
+    them) and no other fill around it, so counters and gaps between letters are never filled.
+    """
+    out = {}
+    taken = ink_px | shadow_px
+    xs = [x for x, _ in taken]
+    ys = [y for _, y in taken]
+    corners = {'highlight': [((0, 1), (1, 0)), ((0, 1), (-1, 0))], 'mid': [((0, -1), (1, 0))],
+               'soft': [((0, -1), (-1, 0))]}
+    for y in range(min(ys) - 1, max(ys) + 2):
+        for x in range(min(xs) - 1, max(xs) + 2):
+            if (x, y) in taken:
+                continue
+            for role, pairs in corners.items():
+                cells = shadow_px if role == 'soft' else ink_px
+                for (ax, ay), (bx, by) in pairs:
+                    corner = {(x + ax, y + ay), (x + bx, y + by), (x + ax + bx, y + ay + by)}
+                    near = {(x + dx, y + dy) for dx in (-1, 0, 1) for dy in (-1, 0, 1) if dx or dy}
+                    # the other five neighbours hold no fill (a neighbouring letter's shadow may touch)
+                    if corner <= cells and not (near - corner) & (ink_px if role != 'soft' else taken):
+                        out[(x, y)] = role
+    return out
 
 
 def source_ink(frame, rect):
@@ -269,9 +420,27 @@ HEADLINES = {
     129: ('STADIUM OPENS', 'スタジアム完成', 'Opens'),
     130: ('GARDEN SPECIAL', '植物園特集', 'Special'),
     131: ('BOWLING SPECIAL', 'ボーリング特集', 'Special'),
-    132: ('KARAOKE OPENS', 'カラオケBOX完成', 'Opens'),
+    132: ('KARAOKE BOX OPENS', 'カラオケBOX完成', 'Opens'),
     133: ('PLANETARIUM SPECIAL', 'プラネタリウム特集', 'Special'),
 }
+
+
+# Round 2 (owner decision, 2026-11-01): headlines are flush left, starting at the column where the
+# Japanese starts in the same banner. The ink keeps the vertical position of round 1 (centred on the
+# 17 cap rows, so a descender such as the Q's tail hangs below without moving the baseline).
+HEADLINE_ALIGN = 'left'
+
+
+def headline_tones(source, ink, shadow):
+    """{role: index} of the source's edge tones (see TONE_OFFSETS); each must be in the source lettering."""
+    used = {i for _, i in source.values()}
+    tones = {}
+    for role, (anchor, offset) in TONE_OFFSETS.items():
+        index = (ink if anchor == 'ink' else shadow) + offset
+        if index not in used or index in (ink, shadow):
+            raise ValueError('edge tone %s (index %d) is not in the source lettering' % (role, index))
+        tones[role] = index
+    return tones
 
 
 def plan_headline(frame, face):
@@ -281,46 +450,60 @@ def plan_headline(frame, face):
     expected = base.CATALOG_INK.get(frame.frame)
     if expected and expected != (ink, shadow):
         raise ValueError('derived ink/shadow %r differs from catalog %r: frame %d' % ((ink, shadow), expected, frame.frame))
+    tones = headline_tones(source, ink, shadow)
+    left = min(x for x, _ in source)
+    top = (frame.height - (BOLD_HEIGHT + 1)) // 2
     base.clear(frame, rect)
-    box = place(frame, face, text, rect, ink, base.source_parts(source), shadow=shadow)
-    return {'item': 2, 'text': text, 'font': 'bold17', 'ink': ink, 'shadow': shadow, 'edit_regions': [rect],
+    counts = {}
+    box = place(frame, face, text, [left, 0, frame.width - left, frame.height], ink, base.source_parts(source),
+                shadow=shadow, align=HEADLINE_ALIGN, top=top, tones=tones, report=counts)
+    return {'item': 2, 'text': text, 'font': 'bold17', 'ink': ink, 'shadow': shadow, 'edge_tones': tones,
+            'edge_tone_pixels': dict(sorted(counts.items())),
+            'alignment': HEADLINE_ALIGN, 'japanese_left': left, 'cap_top': top, 'edit_regions': [rect],
             'lettering_bbox': box, 'wording_rule': HEADLINES[frame.frame][1:]}
 
 
-# Item 3: issue banners.
-ISSUE_DIGITS = {122: '3.4.5', 123: '6.7.8', 124: '9.10.11', 125: '12.1.2'}
-ISSUE_WORD = 'Issue'
-ISSUE_SHOWS = {122: '3-4-5', 123: '6-7-8', 124: '9-10-11', 125: '12-1-2'}
+# Item 3: issue banners. Round 2 (owner decision, 2026-11-01): the three-month runs are named by
+# season, in two bold lines (season over ISSUE) that fill the badge's rows 1-14 like the Japanese
+# numerals. One size for all four; SUMMER and AUTUMN are the widest lines.
+ISSUE_SEASONS = {122: 'SPRING', 123: 'SUMMER', 124: 'AUTUMN', 125: 'WINTER'}
+ISSUE_MONTHS = {122: '3-4-5', 123: '6-7-8', 124: '9-10-11', 125: '12-1-2'}
+ISSUE_WORD = 'ISSUE'
+ISSUE_ROWS = (1, 9)   # first ink row of each 6-row line; rows 7-8 are the gap
 
 
-def plan_issue(frame, digits, faces):
-    text = ISSUE_DIGITS[frame.frame]
+def line_ramp(table, first, last, height):
+    """The source's vertical ramp (rows first..last) squeezed onto a line of `height` rows."""
+    span = last - first
+    return [table[first + round(k * span / (height - 1))] for k in range(height)]
+
+
+def plan_issue(frame, face):
     rect = [0, 0, frame.width, frame.height]
     source = base.lettering(frame, rect)
     table = base.ramp(source, range(frame.height))
-    top = min(y for _, y in source)
-    bottom = max(y for _, y in source)
-    word_width = 0
-    # The word sits on the digits' baseline and ends at the banner's right edge, where 月号 ended.
-    # It takes the narrowest panel7 forms only as far as the longest numeral row needs.
-    longest = max(extent(digits, t)[1] + 1 for t in ISSUE_DIGITS.values())
-    room = frame.width - longest - 1
-    face = fit_face(faces, [ISSUE_WORD], room)
-    word_width = extent(face, ISSUE_WORD)[1] + 1
+    first = min(y for _, y in source)
+    last = max(y for _, y in source)
     parts = base.source_parts(source)
     base.clear(frame, rect)
-    box = place(frame, digits, text, rect, 'ramp', parts, ramp_table=table, align='left', top=top)
-    word_top = bottom - 6
-    box2 = place(frame, face, ISSUE_WORD, [frame.width - word_width, 0, word_width, frame.height], 'ramp', parts,
-                 ramp_table=table, align='left', top=word_top)
-    return {'item': 3, 'text': ISSUE_SHOWS[frame.frame] + ' Issue', 'font': 'digits14 + ' + face.name, 'ink': 'ramp',
-            'ramp': [table[y] for y in range(frame.height)], 'edit_regions': [rect], 'lettering_bbox': [box, box2],
-            'digits_top': top, 'word_top': word_top, 'word_width': word_width,
-            'port_made_elements': base.used_port_made(face, [ISSUE_WORD])}
+    lines = (ISSUE_SEASONS[frame.frame], ISSUE_WORD)
+    boxes, ramps = [], []
+    for text, top in zip(lines, ISSUE_ROWS):
+        colours = line_ramp(table, first, last, BOLD6_HEIGHT)
+        ramps.append(colours)
+        boxes.append(place(frame, face, text, rect, 'ramp', parts, top=top,
+                           ramp_table={top + k: c for k, c in enumerate(colours)}))
+    return {'item': 3, 'text': ' '.join(lines), 'lines': list(lines), 'months': ISSUE_MONTHS[frame.frame],
+            'font': face.name, 'ink': 'ramp', 'line_ramps': ramps, 'line_tops': list(ISSUE_ROWS),
+            'edit_regions': [rect], 'lettering_bbox': boxes,
+            'port_made_elements': [{'kind': 'glyph', 'face': face.name, 'char': c, 'origin': 'port-made',
+                                    'description': face.provenance['glyphs'][c]['description']}
+                                   for c in sorted(set(''.join(lines)))]}
 
 
 # Item 4: genre tags.
-TAG_TEXT = {**base.PORT_MADE_TAGS, 136: ('Action',), 137: ('Suspense',), 140: ('Classical',)}
+TAG_TEXT = {**base.PORT_MADE_TAGS, 136: ('Action',), 137: ('Suspense',), 140: ('Classical',),
+            144: (WRESTLING['text'],)}
 
 
 def plan_tag(frame, faces):
@@ -328,7 +511,12 @@ def plan_tag(frame, faces):
     rect = [0, 0, frame.width, frame.height]
     source = base.lettering(frame, rect)
     ink, shadow = base.ink_and_shadow(source)
-    face = fit_face(faces, lines, frame.width - 2 * TAG_MARGIN, shadow)
+    if lines == (WRESTLING['text'],):
+        face = wrestling_face(faces)
+        if base.line_width(face, lines[0], shadow) > frame.width - 2 * TAG_MARGIN:
+            raise ValueError('Wrestling does not fit frame %d' % frame.frame)
+    else:
+        face = fit_face(faces, lines, frame.width - 2 * TAG_MARGIN, shadow)
     base.clear(frame, rect)
     line_h = frame.height // len(lines)
     boxes = [place(frame, face, text, [0, n * line_h, frame.width, line_h], ink, base.source_parts(source),
@@ -390,65 +578,53 @@ def plan_stats(frame, faces):
             'lettering_bbox': boxes, 'alignment': 'left', 'port_made_elements': base.used_port_made(face, labels)}
 
 
-# Item 7: game covers 151-154. The titles are small multi-colour pixel logos (40x16);
-# they are re-lettered in small hand-drawn capitals with the logo's own indices.
-CAPS8 = {   # 8 rows, 4 wide (I 3, W 5), 1 px strokes
-    'A': ['.##.', '#..#', '#..#', '####', '#..#', '#..#', '#..#', '#..#'],
-    'B': ['###.', '#..#', '#..#', '###.', '#..#', '#..#', '#..#', '###.'],
-    'D': ['###.', '#..#', '#..#', '#..#', '#..#', '#..#', '#..#', '###.'],
-    'E': ['####', '#...', '#...', '###.', '#...', '#...', '#...', '####'],
-    'I': ['###', '.#.', '.#.', '.#.', '.#.', '.#.', '.#.', '###'],
-    'K': ['#..#', '#..#', '#.#.', '##..', '##..', '#.#.', '#..#', '#..#'],
-    'N': ['#..#', '##.#', '##.#', '#.##', '#.##', '#..#', '#..#', '#..#'],
-    'O': ['.##.', '#..#', '#..#', '#..#', '#..#', '#..#', '#..#', '.##.'],
-    'P': ['###.', '#..#', '#..#', '###.', '#...', '#...', '#...', '#...'],
-    'R': ['###.', '#..#', '#..#', '###.', '##..', '#.#.', '#..#', '#..#'],
-    'S': ['.###', '#...', '#...', '.##.', '...#', '...#', '...#', '###.'],
-    'T': ['####', '.##.', '.##.', '.##.', '.##.', '.##.', '.##.', '.##.'],
-    'U': ['#..#', '#..#', '#..#', '#..#', '#..#', '#..#', '#..#', '.##.'],
-    'W': ['#...#', '#...#', '#...#', '#.#.#', '#.#.#', '#.#.#', '##.##', '#...#'],
-}
-CAPS5 = {   # 5 rows, 3 wide, 1 px strokes
-    'A': ['.#.', '#.#', '###', '#.#', '#.#'],
-    'B': ['##.', '#.#', '##.', '#.#', '##.'],
-    'E': ['###', '#..', '##.', '#..', '###'],
-    'L': ['#..', '#..', '#..', '#..', '###'],
-    'P': ['##.', '#.#', '##.', '#..', '#..'],
-    'S': ['.##', '#..', '.#.', '..#', '##.'],
-    'U': ['#.#', '#.#', '#.#', '#.#', '###'],
-    'Z': ['###', '..#', '.#.', '#..', '###'],
-}
+# Item 7: game covers 151-154. The titles are small multi-colour pixel logos (40x16, frame x 8-47);
+# they are re-lettered with the logo's own indices. Round 2 (owner review, 2026-11-01): bolder
+# letters, close to each logo's weight; 0153 says POWER PROS (owner decision) on two lines, like
+# TWINBEE / PUZZLE; PARODIUS keeps the logo's yellow and white; no letter may touch the artwork
+# that stays (the 0153 baseball): every written pixel keeps one clear pixel from it.
+COVER_X = (8, 40)   # title columns of every cover logo
 
 
-def cover_faces():
-    out = {}
-    for name, table, height in (('caps8', CAPS8, 8), ('caps5', CAPS5, 5)):
-        glyphs, provenance = {}, {}
-        for ch, bitmap in table.items():
-            if len(bitmap) != height or len({len(r) for r in bitmap}) != 1:
-                raise ValueError('cover glyph %r is malformed' % ch)
-            glyphs[ch] = base.bitmap_glyph(bitmap)
-            provenance[ch] = {'origin': 'port-made', 'description': '%d-row capital, 1 px strokes' % height,
-                              'bitmap': list(bitmap)}
-        out[name] = base.Face(name, glyphs, 3, {'style': 'small capitals for cover logos, 1 px strokes',
-                                                'rescaled': False, 'generated': False, 'glyphs': provenance})
-    return out
+def cover_line(text, face, top, fill, outline=None, shadow=None, left=None):
+    """One title line. fill: an index, 'ramp' (the source's row ramp), ('rows', [index per ink row])
+    or ('letters', [index per letter]). left: first ink column; default centres the line (with its
+    outline and shadow) on the logo columns."""
+    return {'text': text, 'face': face, 'top': top, 'fill': fill, 'outline': outline, 'shadow': shadow, 'left': left}
 
 
-# frame -> title spec. Lines are (text, face, first ink row, fill, outline, shadow). 'fill' is an index,
-# a list of indices by ink row, or ('letters', [index per letter]). Rects are frame-relative and
-# list the title pixels to clear; everything else of the cover is kept.
+PARODIUS_FILL = ('rows', [8, 8, 8, 7, 7, 6, 6, 5, 5, 4])   # yellow to orange, like the logo's band
 COVERS = {
     151: {'title': 'SUIKODEN', 'clear': [[8, 0, 40, 10]],
-          'lines': [('SUIKODEN', 'caps8', 1, 'ramp', None, None)]},
+          'lines': [cover_line('SUIKODEN', 'semi8', 1, 'ramp')]},
     152: {'title': 'PARODIUS', 'clear': [[8, 0, 40, 16]],
-          'lines': [('PARODIUS', 'caps8', 4, 12, None, 2)]},
-    153: {'title': 'PRO BASEBALL', 'clear': [[8, 0, 32, 16], [40, 0, 8, 10], [45, 10, 3, 1]],
-          'lines': [('PRO', 'caps8', 1, 15, None, 2), ('BASEBALL', 'caps5', 10, 15, None, 2)]},
+          'lines': [cover_line('PARODIUS', 'semi10', 2, PARODIUS_FILL, outline=15, shadow=2)]},
+    153: {'title': 'POWER PROS', 'clear': [[8, 0, 32, 16], [40, 0, 8, 10], [45, 10, 3, 1]],
+          'lines': [cover_line('POWER', 'bold6', 1, 15, outline=11, shadow=2, left=9),
+                    cover_line('PROS', 'bold6', 8, 15, outline=11, shadow=2, left=9)]},
     154: {'title': 'TWINBEE PUZZLE', 'clear': [[8, 0, 40, 16]],
-          'lines': [('TWINBEE', 'caps8', 1, ('letters', [15, 14, 13, 12, 15, 14, 13]), 1, None),
-                    ('PUZZLE', 'caps5', 10, 8, 1, None)]},
+          'lines': [cover_line('TWINBEE', 'bold7', 1, ('letters', [15, 14, 13, 12, 15, 14, 13]), outline=1),
+                    cover_line('PUZZLE', 'bold6', 9, 8, outline=1)]},
 }
+ARTWORK_GAP = 1   # clear pixels between new lettering and any kept artwork pixel of the title rows
+
+
+def layout_line(face, line):
+    """{(x, y): letter number} of the line's ink."""
+    letters, x = {}, 0
+    for n, ch in enumerate(line['text']):
+        g = face.glyph(ch)
+        for gx, gy in g['points']:
+            letters[(x + gx, line['top'] + gy)] = n
+        x += g['width'] + 1
+    width = x - 1
+    if line['left'] is not None:
+        dx = line['left']
+    else:
+        rim = (1 if line['outline'] is not None else 0)
+        full = width + 2 * rim + (1 if line['shadow'] is not None else 0)
+        dx = COVER_X[0] + (COVER_X[1] - full) // 2 + rim
+    return {(x_ + dx, y_): n for (x_, y_), n in letters.items()}
 
 
 def plan_cover(frame, faces):
@@ -456,96 +632,84 @@ def plan_cover(frame, faces):
     source = {}
     for rect in spec['clear']:
         source.update(base.lettering(frame, rect))
-    table = base.ramp(source, range(frame.height)) if any(l[3] == 'ramp' for l in spec['lines']) else None
+    title_rows = [COVER_X[0], 0, COVER_X[1], 16]
+    kept = {p for p in base.lettering(frame, title_rows) if p not in source}
+    table = base.ramp(source, range(frame.height))
     parts = base.source_parts(source)
     for rect in spec['clear']:
         base.clear(frame, rect)
-    boxes, regions = [], [list(r) for r in spec['clear']]
-    for text, face_name, top, fill, outline, shadow in spec['lines']:
-        face = faces[face_name]
-        left = 8
-        width = 40
-        if frame.frame == 153:
-            width = 32 if face_name == 'caps5' or True else 40
-        # per-letter placement so that each letter can take its own colour
-        if isinstance(fill, tuple):
-            colours = fill[1]
-        else:
-            colours = None
-        pts = []
-        x = 0
-        for n, ch in enumerate(text):
-            g = face.glyph(ch)
-            pts.append((n, ch, x, g))
-            x += g['width'] + 1
-        total = x - 1
-        ox0 = left + (width - total) // 2
-        height = max(y for _, _, _, g in pts for _, y in g['points']) + 1
-        letters = []
-        for n, ch, dx, g in pts:
-            for gx, gy in g['points']:
-                letters.append((ox0 + dx + gx, top + gy, n))
-        occupied = {(x_, y_) for x_, y_, _ in letters}
-        writes = {}
-        if outline is not None:
-            for x_, y_ in occupied:
-                for ddx in (-1, 0, 1):
-                    for ddy in (-1, 0, 1):
-                        q = (x_ + ddx, y_ + ddy)
-                        if q not in occupied and frame.covering(*q) if 0 <= q[0] < frame.width and 0 <= q[1] < frame.height else False:
-                            writes[q] = outline
-        if shadow is not None:
-            for x_, y_ in occupied:
-                q = (x_ + 1, y_ + 1)
-                if q not in occupied and 0 <= q[0] < frame.width and 0 <= q[1] < frame.height and frame.covering(*q):
-                    writes[q] = shadow
-        for x_, y_, n in letters:
-            if colours is not None:
-                writes[(x_, y_)] = colours[n % len(colours)]
-            elif isinstance(fill, list):
-                writes[(x_, y_)] = fill[y_ - top]
-            elif fill == 'ramp':
-                writes[(x_, y_)] = table[y_]
+    layers = {'shadow': {}, 'outline': {}, 'ink': {}}
+    boxes = []
+    for line in spec['lines']:
+        ink = layout_line(faces[line['face']], line)
+        rim = set()
+        if line['outline'] is not None:
+            rim = {(x + dx, y + dy) for x, y in ink for dx in (-1, 0, 1) for dy in (-1, 0, 1)} - set(ink)
+            layers['outline'].update({p: line['outline'] for p in rim})
+        if line['shadow'] is not None:
+            body = set(ink) | rim
+            layers['shadow'].update({(x + 1, y + 1): line['shadow'] for x, y in body if (x + 1, y + 1) not in body})
+        fill = line['fill']
+        top = line['top']
+        for (x, y), n in ink.items():
+            if fill == 'ramp':
+                layers['ink'][(x, y)] = table[y]
+            elif isinstance(fill, tuple) and fill[0] == 'rows':
+                layers['ink'][(x, y)] = fill[1][y - top]
+            elif isinstance(fill, tuple) and fill[0] == 'letters':
+                layers['ink'][(x, y)] = fill[1][n % len(fill[1])]
             else:
-                writes[(x_, y_)] = fill
-        for (x_, y_), index in sorted(writes.items(), key=lambda kv: (kv[0][1], kv[0][0])):
-            base.put(frame, x_, y_, index, parts)
-        xs, ys = [x_ for x_, _ in writes], [y_ for _, y_ in writes]
+                layers['ink'][(x, y)] = fill
+        drawn = set(ink) | rim | ({(x + 1, y + 1) for x, y in set(ink) | rim} if line['shadow'] is not None else set())
+        xs, ys = [x for x, _ in drawn], [y for _, y in drawn]
         boxes.append([min(xs), min(ys), max(xs) - min(xs) + 1, max(ys) - min(ys) + 1])
-    elements = [{'kind': 'glyph', 'face': n, 'char': c, 'origin': 'port-made', 'description': 'cover capital'}
-                for n, table_ in (('caps8', CAPS8), ('caps5', CAPS5)) for c in sorted(table_)
-                if any(c in l[0] and l[1] == n for l in spec['lines'])]
-    return {'item': 7, 'text': spec['title'], 'lines': [l[0] for l in spec['lines']], 'font': 'caps8/caps5',
-            'ink': 'logo indices', 'edit_regions': regions, 'lettering_bbox': boxes, 'port_made_elements': elements,
+    writes = {**layers['shadow'], **layers['outline'], **layers['ink']}
+    near = {(x + dx, y + dy) for x, y in kept for dx in range(-ARTWORK_GAP, ARTWORK_GAP + 1)
+            for dy in range(-ARTWORK_GAP, ARTWORK_GAP + 1)}
+    if near & set(writes):
+        raise ValueError('cover %d title touches kept artwork at %r' % (frame.frame, sorted(near & set(writes))[:4]))
+    if any(not any(r[0] <= x < r[0] + r[2] and r[1] <= y < r[1] + r[3] for r in spec['clear']) for x, y in writes):
+        raise ValueError('cover %d title leaves its cleared rects' % frame.frame)
+    for (x, y), index in sorted(writes.items(), key=lambda kv: (kv[0][1], kv[0][0])):
+        base.put(frame, x, y, index, parts)
+    used = {line['face']: set(line['text']) for line in spec['lines']}
+    elements = [{'kind': 'glyph', 'face': name, 'char': c, 'origin': 'port-made',
+                 'description': faces[name].provenance['glyphs'][c]['description']}
+                for name in sorted(used) for c in sorted(used[name])]
+    return {'item': 7, 'text': spec['title'], 'lines': [l['text'] for l in spec['lines']],
+            'font': '/'.join(sorted(used)), 'ink': 'logo indices',
+            'line_styles': [{k: l[k] for k in ('text', 'face', 'top', 'fill', 'outline', 'shadow', 'left')}
+                            for l in spec['lines']],
+            'edit_regions': [list(r) for r in spec['clear']], 'lettering_bbox': boxes,
+            'artwork_gap': ARTWORK_GAP, 'port_made_elements': elements,
             'logo': 'cover art outside the title rows kept unchanged; bottom strip not touched'}
 
 
 # ---- Build ------------------------------------------------------------------
 
-FRAMES = {'save': (57, 58, 59), 'headline': tuple(sorted(HEADLINES)), 'issue': tuple(sorted(ISSUE_DIGITS)),
+FRAMES = {'save': (57, 58, 59), 'headline': tuple(sorted(HEADLINES)), 'issue': tuple(sorted(ISSUE_SEASONS)),
           'tag': tuple(sorted(TAG_TEXT)), 'stats': (61,)}
 
 
 def compose(frames, panel7, native=None):
     """{frame: (edited Frame, plan)} for every frame this tool redraws (no covers)."""
     small = small_faces(panel7)
-    bold, digits = bold_face(), digit_face()
+    bold, round2 = bold_face(), round2_faces()
     out = {}
     for f in FRAMES['headline']:
         model = frames[f].copy()
         out[f] = (model, plan_headline(model, bold))
     for f in FRAMES['issue']:
         model = frames[f].copy()
-        out[f] = (model, plan_issue(model, digits, small))
+        out[f] = (model, plan_issue(model, round2['bold6w']))
     for f in FRAMES['tag']:
         model = frames[f].copy()
         out[f] = (model, plan_tag(model, small))
-    cover = cover_faces()
     for f in sorted(COVERS):
         model = frames[f].copy()
         # The bottom strip keeps its English ("Out in '95" / "Out Now!") exactly as the T-39009 draft had it.
         strip = base.plan_bar(model, native, strip_top=50)
-        plan = plan_cover(model, cover)
+        plan = plan_cover(model, round2)
         plan['edit_regions'] = strip['edit_regions'] + plan['edit_regions']
         plan['strip'] = {'text': strip['text'], 'face': 'native', 'outline': strip['outline'],
                          'lettering_bbox': strip['lettering_bbox'], 'source': 'unchanged from T-39009 (translation_mainrom_drafts.plan_bar)'}
@@ -556,7 +720,8 @@ def compose(frames, panel7, native=None):
     for f in FRAMES['save']:
         model = frames[f].copy()
         out[f] = (model, plan_save(model, small['panel7-compact'], frames[56]))
-    return out, {'bold17': bold, 'digits14': digits, **small}
+    wrestling = wrestling_face(small)
+    return out, {'bold17': bold, **round2, **small, wrestling.name: wrestling}
 
 
 def rows_for(f, model, plan, original_frame, hashes, sources, users):
@@ -609,12 +774,17 @@ def superseded_candidates(inventory_path=INVENTORY):
     items = {i['id']: i for i in inventory['artwork_items']}
     ledgers = {}
     out = {}
+    own = 'translations/en/graphics/artwork/checkpoints/%s/ledger.json' % CHECKPOINT
     for f in sorted(set(sum(FRAMES.values(), ())) | set(COVERS)):
         item = items.get('mainrom-%04d' % f)
         if item is None:
             continue
         rows_ = []
-        for c in item['english']['candidates']:
+        # Once this checkpoint is registered, the inventory lists the candidates it replaced as
+        # superseded records (superseded_by this ledger) instead of as candidates of the item.
+        replaced = [r for r in inventory.get('superseded_records', [])
+                    if r['atom'] == item['id'] and r.get('superseded_by') == own]
+        for c in item['english']['candidates'] + replaced:
             if c['revision'] == REVISION:
                 continue    # this checkpoint's own rows, once it is registered in the inventory
             ledger_path = REVISION_LEDGERS.get(c['revision'])
@@ -782,22 +952,25 @@ historical assets still listed on the items (`english.historical_assets`). Mark 
 
 {stale_list}
 
-## 3. Catalog wording (image_text_catalog.jsonl / .md; not edited here)
+## 3. Catalog wording (image_text_catalog.jsonl / .md)
+
+"catalog now" is the catalog after round 2, which edited the rows of 0122-0125, 0132 and 0153 to match the art.
 
 | frame | catalog now | drawn |
 | :--- | :--- | :--- |
-| 0126 | Central Park Guide (suggestion column says "Central Park") | CENTRAL PARK GUIDE; 紹介 is a feature heading like the others, so it keeps "Guide" |
-| 0127 | Art Museum Completed | ART MUSEUM OPENS |
-| 0128 | Aquarium Feature | AQUARIUM SPECIAL |
-| 0129 | Stadium Completed | STADIUM OPENS |
-| 0130 | Botanical Garden Feature | GARDEN SPECIAL |
-| 0131 | Bowling Alley Feature | BOWLING SPECIAL |
-| 0132 | Karaoke Box Completed | KARAOKE OPENS |
-| 0133 | Planetarium Feature | PLANETARIUM SPECIAL |
-| 0122-0125 | Mar / Apr / May Issue ... | 3-4-5 Issue, 6-7-8 Issue, 9-10-11 Issue, 12-1-2 Issue |
-| 0061 | Condition / Liberal Arts / Athletics | Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress |
+| 0126 | Central Park Guide | CENTRAL PARK GUIDE; 紹介 is a feature heading like the others, so it keeps "Guide" |
+| 0127 | Art Museum Opens | ART MUSEUM OPENS |
+| 0128 | Aquarium Special | AQUARIUM SPECIAL |
+| 0129 | Stadium Opens | STADIUM OPENS |
+| 0130 | Botanical Garden Special | GARDEN SPECIAL |
+| 0131 | Bowling Alley Special | BOWLING SPECIAL |
+| 0132 | Karaoke Box Opens | KARAOKE BOX OPENS |
+| 0133 | Planetarium Special | PLANETARIUM SPECIAL |
+| 0122-0125 | Spring Issue (3-4-5), Summer Issue (6-7-8), Autumn Issue (9-10-11), Winter Issue (12-1-2) | SPRING / ISSUE, SUMMER / ISSUE, AUTUMN / ISSUE, WINTER / ISSUE |
+| 0061 | Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress | Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress |
 | 0140 | Classical | Classical (the T-39009 draft said Classic; the full word fits) |
-| 0151-0154 | Gensosuikoden, Gokujou Parodius, Jikkyou Powerful Pro Yakyuu '95, TwinBee Taisen Puzzle-Dama | SUIKODEN, PARODIUS, PRO BASEBALL, TWINBEE PUZZLE |
+| 0144 | Pro Wrestling (suggestion column still says Wrestl. / ProWres) | Wrestling (one line; "Pro / Wrestling" cannot keep the tag's margins) |
+| 0151-0154 | Suikoden, Parodius, Power Pros, TwinBee Puzzle | SUIKODEN, PARODIUS, POWER / PROS, TWINBEE / PUZZLE |
 
 Wording rule of the headline family: 完成 -> "Opens", 特集 -> "Special", 紹介 -> "Guide". "Hum." is used in
 frame 61 because "Humanities" does not fit the 26 px a label strip leaves before the arrow marker; the text
@@ -808,8 +981,15 @@ dictionary has the full word.
 - Frame 0057-0059: the earlier reading note (セーブ中, "Save" kept) still holds; "Save" is now in the Japanese band.
 - Tags 0134-0145 are centred with a 1 px margin on both sides (owner decision 2026-11-01). If the in-game check
   prefers left alignment, set `TAG_ALIGN = 'left'` in the tool and rebuild; only the tag files change.
-- All 0151-0154 title lettering is thin 1 px capitals (eight letters must fit 40 px); it keeps each logo's colours and
-  the cover art outside the title rows and the bottom strip exactly as T-39009 drew them.
+- 0151-0154 title lettering (round 2): SUIKODEN and PARODIUS are 4 px semi-bold capitals (eight 2 px-stem letters of
+  5 px would need 47 px of the logo's 40); POWER / PROS and TWINBEE / PUZZLE are two lines of 2 px-stem capitals.
+  PARODIUS is yellow to orange with a white outline and a navy shadow. Every title keeps 1 px clear of the artwork
+  that stays (the 0153 baseball). The cover art outside the title rows and the bottom strip are as T-39009 drew them.
+- Headlines 0126-0133 (round 2) are flush left at the column where the Japanese starts (x 0 in all eight) and carry the
+  banner's edge tones (highlight = fill - 1, mid = fill + 1, soft = shadow + 1) on the cut corners; the manifest lists
+  the tone pixels per banner.
+- 0144 (round 2) reads "Wrestling" in one line with a 5 px W, rows 4-11 like 0145; e, s, n, g and r take their narrow
+  forms, t a 2 px form with the crossbar on the left, and r-e and s-t are kerned to 0 px.
 - Sheet scope: every row records `sheet_scope`; frame-composite-only drafts must be integrated as whole-frame
   replacements, as before.
 - The text dictionary change (item 8) is already in `translations/en/returned-v3.jsonl`: records

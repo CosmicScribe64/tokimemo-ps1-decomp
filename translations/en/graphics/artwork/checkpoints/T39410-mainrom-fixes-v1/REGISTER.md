@@ -70,22 +70,25 @@ historical assets still listed on the items (`english.historical_assets`). Mark 
 - mainrom-0087: draft:mainrom-weekday-sat-hud-44
 - mainrom-0088: draft:mainrom-weekday-sun-hud-44
 
-## 3. Catalog wording (image_text_catalog.jsonl / .md; not edited here)
+## 3. Catalog wording (image_text_catalog.jsonl / .md)
+
+"catalog now" is the catalog after round 2, which edited the rows of 0122-0125, 0132 and 0153 to match the art.
 
 | frame | catalog now | drawn |
 | :--- | :--- | :--- |
-| 0126 | Central Park Guide (suggestion column says "Central Park") | CENTRAL PARK GUIDE; 紹介 is a feature heading like the others, so it keeps "Guide" |
-| 0127 | Art Museum Completed | ART MUSEUM OPENS |
-| 0128 | Aquarium Feature | AQUARIUM SPECIAL |
-| 0129 | Stadium Completed | STADIUM OPENS |
-| 0130 | Botanical Garden Feature | GARDEN SPECIAL |
-| 0131 | Bowling Alley Feature | BOWLING SPECIAL |
-| 0132 | Karaoke Box Completed | KARAOKE OPENS |
-| 0133 | Planetarium Feature | PLANETARIUM SPECIAL |
-| 0122-0125 | Mar / Apr / May Issue ... | 3-4-5 Issue, 6-7-8 Issue, 9-10-11 Issue, 12-1-2 Issue |
-| 0061 | Condition / Liberal Arts / Athletics | Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress |
+| 0126 | Central Park Guide | CENTRAL PARK GUIDE; 紹介 is a feature heading like the others, so it keeps "Guide" |
+| 0127 | Art Museum Opens | ART MUSEUM OPENS |
+| 0128 | Aquarium Special | AQUARIUM SPECIAL |
+| 0129 | Stadium Opens | STADIUM OPENS |
+| 0130 | Botanical Garden Special | GARDEN SPECIAL |
+| 0131 | Bowling Alley Special | BOWLING SPECIAL |
+| 0132 | Karaoke Box Opens | KARAOKE BOX OPENS |
+| 0133 | Planetarium Special | PLANETARIUM SPECIAL |
+| 0122-0125 | Spring Issue (3-4-5), Summer Issue (6-7-8), Autumn Issue (9-10-11), Winter Issue (12-1-2) | SPRING / ISSUE, SUMMER / ISSUE, AUTUMN / ISSUE, WINTER / ISSUE |
+| 0061 | Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress | Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress |
 | 0140 | Classical | Classical (the T-39009 draft said Classic; the full word fits) |
-| 0151-0154 | Gensosuikoden, Gokujou Parodius, Jikkyou Powerful Pro Yakyuu '95, TwinBee Taisen Puzzle-Dama | SUIKODEN, PARODIUS, PRO BASEBALL, TWINBEE PUZZLE |
+| 0144 | Pro Wrestling (suggestion column still says Wrestl. / ProWres) | Wrestling (one line; "Pro / Wrestling" cannot keep the tag's margins) |
+| 0151-0154 | Suikoden, Parodius, Power Pros, TwinBee Puzzle | SUIKODEN, PARODIUS, POWER / PROS, TWINBEE / PUZZLE |
 
 Wording rule of the headline family: 完成 -> "Opens", 特集 -> "Special", 紹介 -> "Guide". "Hum." is used in
 frame 61 because "Humanities" does not fit the 26 px a label strip leaves before the arrow marker; the text
@@ -96,8 +99,15 @@ dictionary has the full word.
 - Frame 0057-0059: the earlier reading note (セーブ中, "Save" kept) still holds; "Save" is now in the Japanese band.
 - Tags 0134-0145 are centred with a 1 px margin on both sides (owner decision 2026-11-01). If the in-game check
   prefers left alignment, set `TAG_ALIGN = 'left'` in the tool and rebuild; only the tag files change.
-- All 0151-0154 title lettering is thin 1 px capitals (eight letters must fit 40 px); it keeps each logo's colours and
-  the cover art outside the title rows and the bottom strip exactly as T-39009 drew them.
+- 0151-0154 title lettering (round 2): SUIKODEN and PARODIUS are 4 px semi-bold capitals (eight 2 px-stem letters of
+  5 px would need 47 px of the logo's 40); POWER / PROS and TWINBEE / PUZZLE are two lines of 2 px-stem capitals.
+  PARODIUS is yellow to orange with a white outline and a navy shadow. Every title keeps 1 px clear of the artwork
+  that stays (the 0153 baseball). The cover art outside the title rows and the bottom strip are as T-39009 drew them.
+- Headlines 0126-0133 (round 2) are flush left at the column where the Japanese starts (x 0 in all eight) and carry the
+  banner's edge tones (highlight = fill - 1, mid = fill + 1, soft = shadow + 1) on the cut corners; the manifest lists
+  the tone pixels per banner.
+- 0144 (round 2) reads "Wrestling" in one line with a 5 px W, rows 4-11 like 0145; e, s, n, g and r take their narrow
+  forms, t a 2 px form with the crossbar on the left, and r-e and s-t are kerned to 0 px.
 - Sheet scope: every row records `sheet_scope`; frame-composite-only drafts must be integrated as whole-frame
   replacements, as before.
 - The text dictionary change (item 8) is already in `translations/en/returned-v3.jsonl`: records
