@@ -175,7 +175,7 @@ class CheckpointTests(unittest.TestCase):
         entries = inventory.load_ledgers(ledgers)
         active, superseded = inventory.split_superseded(entries, ledgers)
         mine = [e['id'] for e in active if 'T39410-menus-fixes-v1' in e['ledger']]
-        self.assertEqual(len(mine), 32)    # 29 drafts (two of them the new ABC cell) and the three ALL_C crops
+        self.assertEqual(len(mine), 33)    # 30 drafts (the new ABC cell twice, name-panel-0001) and the three ALL_C crops
         self.assertEqual(inventory.candidate_key({'id': 'name-label-abc.lit'}), ('name_ent-abc', 'NAME_ENT', None, 'lit'))
         replaced = {(e['ledger'].split('/')[-2], e['id'], e['revision']) for e in superseded if e['superseded_by'].endswith('T39410-menus-fixes-v1/ledger.json')}
         self.assertEqual(len(replaced), len(self.ledger['supersedes']))
