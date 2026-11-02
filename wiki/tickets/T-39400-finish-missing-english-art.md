@@ -1,7 +1,7 @@
 ---
 id: T-39400
 title: Finish the missing English art
-status: In Progress
+status: Done
 assignee: worker agent
 created: 2026-11-01
 updated: 2026-11-01
@@ -45,3 +45,5 @@ citations name the C function and the call text; line numbers stay in the manife
 or diffusion face reproduces flat original colours; nothing is copied) and a `crop.fill` statement; the class-mark
 removals now say "Laplace (diffusion) fill". `fit_plane` reports the sample count of its final coefficients. The 17
 crops kept their bytes; manifest and ledger of `T39400-bs-signs-v1` were republished (Pillow / numpy versions recorded).
+
+- 2026-11-01: Code review against CODING_STANDARDS.md passed on the second look (all ten findings resolved; remaining nits recorded in the log). Three independent side-by-side art reviews ended with no must-fix or should-fix left. Done.

@@ -1,7 +1,7 @@
 ---
 id: T-39410
 title: Fix the MAINROM English art after the owner review
-status: In Review
+status: Done
 assignee: worker agent
 created: 2026-11-01
 updated: 2026-11-01
@@ -67,3 +67,5 @@ Findings from the code review of `tools/translation_mainrom_fixes.py` and its ch
 - `REGISTER.md` is generated from data (supersedes, stale weekday drafts, drawn text per frame, tag settings, source-pixel counts). The reasoning and dated notes that the old 80-line text carried stay in this ticket: the text dictionary edit (item 8) and the inventory hash pin are in the notes above; the icon-51 STP finding is in Round 3; the catalog rows (0122-0125, 0132, 0140, 0144, 0153) were edited in rounds 2 and 3.
 - Tool: change-history comments removed (round and item numbers); `round2_faces` is now `small_bold_faces`; `publish` stages in a `.partial` folder and renames; tests: the palette-count test is renamed to what it checks (the first twelve dimensions; the palette check is `test_every_variant_uses_only_the_colours_of_its_japanese`), the pinned `len(stale) == 12` is explained, and a build test reproduces ledger, manifest, `weekday-resolution.json` and `REGISTER.md` byte for byte.
 - `test_committed_inventory_matches_inputs` pins the ledger hash and fails until `translation_inventory.json` is regenerated after the merge.
+
+- 2026-11-01: Code review against CODING_STANDARDS.md passed on the second look (all ten findings resolved; remaining nits recorded in the log). Three independent side-by-side art reviews ended with no must-fix or should-fix left. Done.

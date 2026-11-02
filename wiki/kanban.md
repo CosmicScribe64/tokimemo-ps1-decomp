@@ -21,7 +21,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-39400-finish-missing-english-art|T-39400 Finish the missing English art]]
 
 
 - [ ] [[tickets/T-39212-english-artwork-drafts|T-39212 English WP-L: remaining artwork drafts and provenance]]
@@ -58,9 +57,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-39410-mainrom-art-fixes|T-39410 Fix the MAINROM English art after the owner review]]
-- [ ] [[tickets/T-39411-menus-art-fixes|T-39411 Fix the menu and screen English art after the owner and reviewer pass]]
-- [ ] [[tickets/T-39412-bs-stills-art-fixes|T-39412 Fix the BS still drafts after the owner art review]]
 
 
 
@@ -81,6 +77,10 @@ kanban-plugin: board
 
 ## Done
 
+- [x] [[tickets/T-39412-bs-stills-art-fixes|T-39412 Fix the BS still drafts after the owner art review]]
+- [x] [[tickets/T-39411-menus-art-fixes|T-39411 Fix the menu and screen English art after the owner and reviewer pass]]
+- [x] [[tickets/T-39410-mainrom-art-fixes|T-39410 Fix the MAINROM English art after the owner review]]
+- [x] [[tickets/T-39400-finish-missing-english-art|T-39400 Finish the missing English art]]
 - [ ] [[tickets/T-28009-version-translation-overlays|T-28009 Version English translation overlays for repository backup]]
 - [ ] [[tickets/T-28007-complete-text-and-translator-handoff|T-28007 Complete text evidence and prepare translator handoff]]
 - [ ] [[tickets/T-28005-fan-patch-crosscheck|T-28005 Cross-check text and image-text coverage against the fan patch]]

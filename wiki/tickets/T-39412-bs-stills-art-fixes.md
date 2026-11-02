@@ -1,7 +1,7 @@
 ---
 id: T-39412
 title: Fix the BS still drafts after the owner art review
-status: In Review
+status: Done
 assignee: worker agent
 created: 2026-11-01
 updated: 2026-11-01
@@ -88,3 +88,5 @@ checkpoint folders):
   unused `texture`, `STILL_SIZES['P_01_02']`, publish `revision`, side_by_side `rect`, brush `n` removed; font docstring
   corrected; change-history comments and the REGISTER "(done in ...)" note removed; `translation_inventory.py`
   `UNREGISTERED` holds exact ids and the orphan layout comment is gone.
+
+- 2026-11-01: Code review against CODING_STANDARDS.md passed on the second look (all ten findings resolved; remaining nits recorded in the log). Three independent side-by-side art reviews ended with no must-fix or should-fix left. Done.

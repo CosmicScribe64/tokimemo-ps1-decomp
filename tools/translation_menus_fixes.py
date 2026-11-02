@@ -13,9 +13,9 @@ One reproducible build for the nine items of the owner/reviewer fix pass:
 8. filesel-frame-19   stat names (approved set)
 9. kasetu-0           sports card title `Scavenger Race` (outlined capitals)
 10. name-label-abc.*  selector label of the English letter page (new cell)
-11. name-panel-0001   birthday page grid headers `Month` / `Day` (round 3)
+11. name-panel-0001   birthday page grid headers `Month` / `Day`
 
-Second pass (same checkpoint): Hiragana kerning, `Sym` fallback, 1 texel right margin on
+The checkpoint also covers Hiragana kerning, `Sym` fallback, 1 texel right margin on
 the widened option sprites, the registered System tab region, and a transparency/STP audit
 of every output against the source `.stp.png` masks.
 

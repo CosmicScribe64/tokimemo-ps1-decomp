@@ -1,7 +1,7 @@
 ---
 id: T-39411
 title: Fix the menu and screen English art after the owner and reviewer pass
-status: In Review
+status: Done
 assignee: worker agent
 created: 2026-11-01
 updated: 2026-11-01
@@ -55,3 +55,5 @@ Findings from the code review of `tools/translation_menus_fixes.py` and the chec
 - Basis: the owner asked for translated assets to be kept in the repository (`translations/en/graphics/artwork/checkpoints/T39004-2026-10-29/README.md`, [[tickets/T-39004-english-asset-completion]]), and the whole-frame FILESEL, sports and name-entry drafts this checkpoint supersedes were committed the same way (the T39004-filesel-v4 ledger already carries a `source_pixels_note` for them). See also the counter-example in [[tickets/T-39410-mainrom-art-fixes]].
 - Tool: `publish` copies only the files the manifest lists, each checked against its hash, through a `.partial` folder (no `copytree`); ledgers use `encoded()`; function-local imports moved to the top; unused `sys` removed. Tests: `assertGreater`-style section checks instead of a line count of `REGISTER.md`, comments on the pinned 33 candidates, a publish test, and the reproduction test also compares `fallback-ledger.json` and both manifests.
 - `test_committed_inventory_matches_inputs` pins the ledger hash and fails until `translation_inventory.json` is regenerated after the merge.
+
+- 2026-11-01: Code review against CODING_STANDARDS.md passed on the second look (all ten findings resolved; remaining nits recorded in the log). Three independent side-by-side art reviews ended with no must-fix or should-fix left. Done.

@@ -240,7 +240,8 @@ class PublishedCheckpointTests(unittest.TestCase):
             record = next(r for r in manifest['assets'] if r['id'] == asset['id'])
             self.assertEqual(record['crop']['sha256'], asset['crop_sha256'])
             self.assertEqual(record['source_container_sha256'], asset['source_container_sha256'])
-            self.assertEqual(list(Image.open(PUBLISHED / asset['path']).size), asset['dimensions'])
+            with Image.open(PUBLISHED / asset['path']) as image:
+                self.assertEqual(list(image.size), asset['dimensions'])
         for path in PUBLISHED.rglob('*'):
             self.assertIn(path.suffix, ('.png', '.json', ''), str(path))
         self.assertEqual({p.name for p in (PUBLISHED / 'bs-signs-v1').iterdir()} - {'manifest.json'},
