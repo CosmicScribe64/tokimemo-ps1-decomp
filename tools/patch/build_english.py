@@ -522,8 +522,36 @@ def build(args) -> dict:
         "binaries": binaries,
     })
     report["timings"] = dict(steps.timings, total=steps.total())
+    report["layout"] = layout_report(text)
     (out_dir / "report.json").write_text(json.dumps(report, indent=1, sort_keys=True) + "\n")
+    (out_dir / "layout.json").write_text(json.dumps(layout_records(text), indent=1, sort_keys=True) + "\n")
     return report
+
+
+def layout_records(text) -> dict:
+    """Per reflowed record: rows before and after, breaks kept and why, orphans, pages over the window
+    (T-39506); ids and counts only."""
+    return {rid: dict(note["reflow"], window=note.get("window")) for rid, note in text.notes.items()
+            if "reflow" in note}
+
+
+def layout_report(text) -> dict:
+    """Totals of the reflow (T-39506): breaks seen, forced (reflowed), kept by rule or category,
+    ambiguous; rows before and after; orphans and pages longer than their window."""
+    totals = Counter()
+    kept_reasons = Counter()
+    for note in text.notes.values():
+        flow = note.get("reflow")
+        if not flow:
+            continue
+        totals["records"] += 1
+        for key in ("breaks", "forced", "kept_rule", "kept_category", "ambiguous", "rows_before", "rows_after",
+                    "orphans", "pages_over_lines"):
+            totals[key] += flow.get(key, 0)
+        totals["records_shorter"] += flow.get("rows_after", 0) < flow.get("rows_before", 0)
+        for reason, _fill in flow["kept"]:
+            kept_reasons[reason] += 1
+    return {"totals": dict(totals), "kept_by_reason": dict(kept_reasons), "per_record": "layout.json"}
 
 
 def main(argv=None) -> int:

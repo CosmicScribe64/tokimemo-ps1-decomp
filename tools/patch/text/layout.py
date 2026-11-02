@@ -19,7 +19,8 @@ from .english import EnglishEncoder, end_inline_label, untokenized_name_codes
 from .segments import Control, encode
 from .translations import target_of
 from .windows import window_for
-from .wrap import FontMetrics, wrap
+from .wrap import FontMetrics, label_end, wrap
+from . import reflow as source_reflow
 
 SKIPPED_KINDS = ("speaktst", "reference_only")
 # Tables that must stay Japanese: the kana pages and the kanji reading labels of the name entry, where a
@@ -106,10 +107,23 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                 payload = untokenized_name_codes(payload, bytes.fromhex((record.unit or {}).get("raw_hex") or ""))
             note["status"] = "placed"
             if window is not None:
-                result = wrap(payload, window, metrics)
+                joined = False
+                if window.reflow:
+                    rows_before = payload.count(b"\n") + 1
+                    payload, flow = source_reflow.reflow(payload, label_end(payload), record.segments,
+                                                         window.name, path)
+                    joined = True
+                    note["reflow"] = {"breaks": flow.breaks_seen, "forced": flow.forced, "kept_rule": flow.kept_rule,
+                                      "kept_category": flow.kept_category, "ambiguous": flow.ambiguous,
+                                      "kept": flow.kept, "rows_before": rows_before}
+                result = wrap(payload, window, metrics, joined=joined)
                 payload = result.payload
                 note.update(window=window.name, basis=basis, rows=result.rows,
                             breaks_added=result.breaks_added)
+                if window.reflow:
+                    note["reflow"]["rows_after"] = result.payload.count(b"\n") + 1
+                    note["reflow"]["orphans"], note["reflow"]["pages_over_lines"] = \
+                        _orphans_and_long_pages(result.payload, window, metrics)
                 if result.long_rows:
                     note["rows_over_row_buffer"] = result.long_rows
                 if result.overflow_rows or result.too_many_lines:
@@ -120,3 +134,16 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                 note["width_px"] = metrics.width(payload)
             out.payloads.setdefault(path, {})[record.id] = payload
     return out
+
+
+def _orphans_and_long_pages(payload: bytes, window, metrics: FontMetrics) -> tuple[int, int]:
+    """Pages whose last row is one word under a third of the window, and pages with more rows than
+    the window shows (they scroll, as long pages do in the original)."""
+    orphans = long_pages = 0
+    for page in payload[label_end(payload):].split(b"\x0b"):
+        rows = page.split(b"\n")
+        if len(rows) > 1 and b" " not in rows[-1].strip() and metrics.width(rows[-1]) < window.width // 3:
+            orphans += 1
+        if len(rows) > window.lines:
+            long_pages += 1
+    return orphans, long_pages

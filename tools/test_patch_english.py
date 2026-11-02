@@ -24,6 +24,7 @@ from tools.patch.text.inplace import patch_built
 from tools.patch.text.layout import english_payloads
 from tools.patch.text.segments import Control, Text, encode
 from tools.patch.text.windows import NAME_PX, WINDOWS, Window, window_for
+from tools.patch.text import reflow as source_reflow
 from tools.patch.text.wrap import FontMetrics, label_end, wrap
 
 REPOSITORY = Path(__file__).resolve().parents[1]
@@ -148,6 +149,42 @@ class WrapTest(unittest.TestCase):
         self.assertEqual(wrap(b"aaaa\nbbbb\ncccc", window(60, reflow=True), METRICS).payload, b"aaaa bbbb\ncccc")
         # windows without reflow keep the rows
         self.assertEqual(wrap(b"aa\nbb", window(1000), METRICS).payload, b"aa\nbb")
+
+
+class SourceReflowTest(unittest.TestCase):
+    """tools/patch/text/reflow.py: breaks judged on the Japanese row before them."""
+
+    def segments(self, *rows):
+        out = []
+        for i, row in enumerate(rows):
+            if i:
+                out.append(Control("separator", "row", b" "))
+            out.append(Text(row))
+        return out
+
+    def test_judge(self):
+        rows = ["あ" * 13, "いう。", "えお", "「か」"]
+        kinds = [b.kind for b in source_reflow.judge(rows, 14)]
+        self.assertEqual(kinds, ["forced", "intentional", "intentional"])
+        self.assertEqual(source_reflow.judge(["あい", "う"], 14)[0].kind, "short")
+
+    def test_full_rows_reflow_and_short_sentences_keep_their_break(self):
+        segments = self.segments("あ" * 13, "いう。", "えお")
+        payload, notes = source_reflow.reflow(b"What'll I do\nthis\nweek? Fine", 0, segments, "message_speech", "X")
+        self.assertEqual(payload, b"What'll I do this\nweek? Fine")
+        self.assertEqual((notes.breaks_seen, notes.forced, notes.kept_rule), (2, 1, 1))
+        # different break counts: the kept break goes to the same sentence end in the English
+        payload, notes = source_reflow.reflow(b"One. Two three", 0, self.segments("あい。", "う"), "message_speech", "X")
+        self.assertEqual(payload, b"One.\nTwo three")
+        # an unmappable intentional break is dropped and logged
+        payload, notes = source_reflow.reflow(b"a b\nc", 0, self.segments("あい。", "う", "え。"),
+                                              "message_speech", "X")
+        self.assertEqual(notes.ambiguous, 1)
+
+    def test_balanced_rows_avoid_a_lone_word(self):
+        # greedy would leave "dd" alone; balanced fills two rows evenly
+        result = wrap(b"aaaa bbbb cccc dd", window(80, reflow=True), METRICS, joined=True)
+        self.assertEqual(result.payload, b"aaaa bbbb\ncccc dd")
 
 
 class WindowTest(unittest.TestCase):
