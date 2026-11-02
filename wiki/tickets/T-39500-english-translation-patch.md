@@ -18,6 +18,7 @@ Ship an English translation patch for the original disc (PlayStation the Best, S
 - [ ] All dialogue and system text in English.
 - [ ] All registered English art in place.
 - [ ] Scripted emulator runs with screenshots across the main screens; patcher tested in a headless browser against the command-line build.
+- [ ] No Japanese is left on screen anywhere in the game, apart from the owner-approved exceptions: the title logo (TITLE frame 0 and the TOKIMEKI.BS splash), the magazine masthead (mainrom-0118), tiny authentic signs in stills (catalog-135, 138, 140, 148, 150), the illegible roster board P_01_02 and the off-frame ride sign (catalog-142). Checked by [[tickets/T-39510-no-japanese-left-check]].
 - [ ] Owner review and sign-off, then GitHub Pages, README link and repository description.
 
 ## Notes

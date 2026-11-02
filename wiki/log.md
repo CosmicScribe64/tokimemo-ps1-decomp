@@ -2983,3 +2983,7 @@ Ticket back to In Progress for this round, now In Review again. Merged `patch/en
 ## [2026-11-01] decision | Ship the English name pills in the opening movie
 
 The owner chose to include the heroine name and voice-actress pills of `CDROM/OPENXA.STR` in the first release, by re-encoding only the frames that show them. Opened [[tickets/T-39509-opening-movie-pills]].
+
+## [2026-11-01] decision | English patch bar: no Japanese left
+
+The owner set the bar for the English patch: no Japanese on screen anywhere, apart from the title logo, the magazine masthead, tiny authentic signs, the illegible roster board and the off-frame ride sign. Added it to [[tickets/T-39500-english-translation-patch]] and opened [[tickets/T-39510-no-japanese-left-check]] (Ready) for the whole-game check.
