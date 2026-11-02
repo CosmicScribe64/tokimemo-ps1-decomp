@@ -7,7 +7,7 @@
 | ID | Context | Japanese | Translation | Notes |
 | :--- | :--- | :--- | :--- | :--- |
 | `0000` | Match commentary (line 0) | 今日は体育祭だ。[[T001:row]]どの競技に参加しようかな？ | It's sports day.[[T001:row]]Which event should I enter? | Speaker: . |
-| `0030` | Match commentary (line 1) | スプーンリレー[[T001:choice_option]]借りもの競争[[T002:choice_option]]別の競技に参加する | Spoon Relay[[T001:choice_option]]Scavenger Hunt[[T002:choice_option]]Other Events | Speaker: . |
+| `0030` | Match commentary (line 1) | スプーンリレー[[T001:choice_option]]借りもの競争[[T002:choice_option]]別の競技に参加する | Spoon Relay[[T001:choice_option]]Scavenger Race[[T002:choice_option]]Other Events | Speaker: . |
 | `0064` | Match commentary (line 2) | 二人三脚[[T001:choice_option]]玉転がし[[T002:choice_option]]別の競技に参加する | Three-Legged Race[[T001:choice_option]]Ball Roll[[T002:choice_option]]Other Events | Speaker: . |
 | `0090` | Match commentary (line 3) | このミニゲームは、[[T001:row]]マウスではプレイできないの。 | This minigame can't[[T001:row]]be played with a mouse. | Speaker: . |
 | `00c4` | Match commentary (line 4) | コントローラを[[T001:row]]つないでください。 | Please plug in[[T001:row]]a controller. | Speaker: . |

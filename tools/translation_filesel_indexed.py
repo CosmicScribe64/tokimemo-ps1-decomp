@@ -89,8 +89,11 @@ ERASED = [
     {'id': 'clear-count-label', 'japanese': 'クリア人数', 'search': [118, 93, 50, 14], 'ink': INK, 'shadow': None,
      'english': 'Girls Cleared', 'top': 95, 'matched_cells': [('数', 155, 95)], 'match': 'partial'},
     {'id': 'system-tab', 'japanese': 'システム', 'search': [14, 86, 40, 16], 'ink': 219, 'shadow': 134, 'english': 'System', 'top': 88,
-     'matched_cells': [], 'match': 'none'},
+     'matched_cells': [], 'match': 'none', 'reserve': [17, 88, 42, 11]},
 ]
+# `reserve`: a region rect wider than the word this build draws. The menu fix pass (T-39411,
+# tools/translation_menus_fixes.py) moves `System` two texels right of the tab edge, so the
+# region map must already cover those columns (white tab interior in the source).
 # The page-0 button panel repeats frames 0-3: four 40x16 interiors whose
 # lettering masks equal the button frames' (checked), on one continuous
 # gradient in other indices. [montage x, y, button frame].
@@ -305,6 +308,13 @@ def bbox(mask, left=0, top=0):
     return [int(xs.min()) + left, int(ys.min()) + top, int(xs.max() - xs.min()) + 1, int(ys.max() - ys.min()) + 1]
 
 
+def union_rect(a, b):
+    """Smallest [x, y, width, height] holding both rects."""
+    left, top = min(a[0], b[0]), min(a[1], b[1])
+    right, bottom = max(a[0] + a[2], b[0] + b[2]), max(a[1] + a[3], b[1] + b[3])
+    return [left, top, right - left, bottom - top]
+
+
 def right_shadow(mask):
     shifted = np.zeros_like(mask)
     shifted[:, 1:] = mask[:, :-1]
@@ -361,6 +371,12 @@ def reletter(result, montage, font, item):
     out[drawn] = item['ink']
     out[shadow] = item['shadow'] if item['shadow'] is not None else paper
     full = bbox(erased | touched)
+    if item.get('reserve'):
+        full = union_rect(full, item['reserve'])
+        tx, ty, tw, th = TAB_INTERIOR
+        x0, y0, w0, h0 = full
+        if x0 < tx or y0 < ty or x0 + w0 > tx + tw or y0 + h0 > ty + th:
+            raise ValueError('reserved region leaves the tab interior: ' + item['id'])
     return out, {'id': item['id'], 'japanese': item['japanese'], 'english': item['english'], 'status': 'candidate',
                  'match': item['match'], 'method': 'erase ink box to paper, NativeLatin word' +
                  (' with the source right-shadow rule' if item['shadow'] is not None else ''),

@@ -23,8 +23,8 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
 - [ ] [[tickets/T-39506-english-script-runtime|T-39506 Make dialogue, choices, names and name entry work in English]]
-- [ ] [[tickets/T-39507-english-disc-build|T-39507 Build the English disc and patch in one command]]
-- [ ] [[tickets/T-39400-finish-missing-english-art|T-39400 Finish the missing English art]]
+- [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
+- [ ] [[tickets/T-39505-english-memory-and-relink|T-39505 Give the English build room to grow (memory map and free relink)]]
 
 
 - [ ] [[tickets/T-39212-english-artwork-drafts|T-39212 English WP-L: remaining artwork drafts and provenance]]
@@ -60,12 +60,13 @@ kanban-plugin: board
 
 
 ## In Review
-- [ ] [[tickets/T-39505-english-memory-and-relink|T-39505 Give the English build room to grow (memory map and free relink)]]
+- [ ] [[tickets/T-39507-english-disc-build|T-39507 Build the English disc and patch in one command]]
 - [ ] [[tickets/T-39501-disc-rebuild-and-xdelta|T-39501 Rebuild the disc image with replaced files and make the xdelta patch]]
 
 - [ ] [[tickets/T-39502-english-text-runtime|T-39502 Add the English text runtime behind a build flag]]
 - [ ] [[tickets/T-39503-text-container-writers|T-39503 Write every text container back from records]]
 - [ ] [[tickets/T-39504-emulator-screen-route|T-39504 Script an emulator route through the main screens with screenshots]]
+
 
 
 
@@ -85,6 +86,10 @@ kanban-plugin: board
 
 ## Done
 
+- [x] [[tickets/T-39412-bs-stills-art-fixes|T-39412 Fix the BS still drafts after the owner art review]]
+- [x] [[tickets/T-39411-menus-art-fixes|T-39411 Fix the menu and screen English art after the owner and reviewer pass]]
+- [x] [[tickets/T-39410-mainrom-art-fixes|T-39410 Fix the MAINROM English art after the owner review]]
+- [x] [[tickets/T-39400-finish-missing-english-art|T-39400 Finish the missing English art]]
 - [ ] [[tickets/T-28009-version-translation-overlays|T-28009 Version English translation overlays for repository backup]]
 - [ ] [[tickets/T-28007-complete-text-and-translator-handoff|T-28007 Complete text evidence and prepare translator handoff]]
 - [ ] [[tickets/T-28005-fan-patch-crosscheck|T-28005 Cross-check text and image-text coverage against the fan patch]]

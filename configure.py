@@ -247,11 +247,28 @@ EN_FONT = "translations/en/font/latin12.txt"
 EN_TOOLS = ["tools/english_link.py", "tools/raw_addrs.py", "tools/elf32.py",
             "config/english_overlay_entries.txt", "config/english_raw_addrs.txt"]
 UNLOADED_OVERLAYS = ("EVENT", "GYOZI")  # the game never loads them (wiki/overlays.md): copied unchanged
+# English disc build (T-39507, tools/patch/build_english.py, wiki/english-build.md): C files with English
+# string literals are generated into build/en/src/<path> and compiled in place of src/<path>; the CD
+# remap table of src/english/cd.c comes from the disc layout. Rerun configure.py after either changes.
+EN_SRC = EN_DIR + "/src"
+EN_CD_LAYOUT = EN_DIR + "/cd_layout.json"
+EN_CD_REMAP_S = EN_DIR + "/gen/english_cd_remap.s"
 
 
 def uses_english(path):
     with open(path, encoding="utf-8") as f:
         return EN_FLAG in f.read()
+
+
+def english_text(path):
+    """build/en/src/<path> when the disc build generated English literals for src/<path>, else None."""
+    text = EN_DIR + "/" + path
+    return text if path.startswith("src/") and os.path.exists(text) else None
+
+
+def english_variant(path):
+    """True when the English build compiles `path` itself: it tests the flag or has English literals."""
+    return path.endswith(".c") and (uses_english(path) or english_text(path) is not None)
 
 
 def variant_obj(obj, out_dir):
@@ -274,8 +291,13 @@ def english_cc(n, src, obj, toolchain, implicit, rule="cc"):
     if toolchain[0] != "ido":
         sys.exit("configure.py: %s uses %s but is built with %s; only IDO objects take the flag"
                  % (src, EN_FLAG, " ".join(toolchain)))
-    n.build(obj, rule, src, variables={"toolchain": " ".join(toolchain + ["-D" + EN_FLAG])},
-            implicit=implicit, order_only=[HEADERS_OK])
+    variables = {"toolchain": " ".join(toolchain + ["-D" + EN_FLAG])}
+    text = english_text(src)
+    if text is not None:
+        rule = "cctext" if rule == "cc" else rule
+        variables["text"] = text
+        implicit = implicit + [text]
+    n.build(obj, rule, src, variables=variables, implicit=implicit, order_only=[HEADERS_OK])
 
 
 def side_scripts(unit):
@@ -292,6 +314,12 @@ def relink_rules(n):
     n.rule("enfont", command="python3 tools/english_font.py $in $out", description="FONT $in")
     n.rule("encc", command="python3 tools/cc.py $in $out $toolchain", depfile="$out.d", deps="gcc",
            description="CC $in")
+    n.rule("cctext",
+           command=("python3 tools/cc.py --source-text $text $in $out $toolchain"
+                    " && python3 tools/object_layout.py $in $out"),
+           depfile="$out.d", deps="gcc", description="CC $text")
+    n.rule("encdmap", command="python3 tools/patch/cd_layout.py remap-asm %s $out" % EN_CD_LAYOUT,
+           description="CDMAP $out")
     n.rule("enas", command="mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 $in -o $out",
            description="AS $in")
     n.rule("rld", command="mips-linux-gnu-ld -EL -T $script -T $aux -Map $map -o $out", description="LD $out")
@@ -309,7 +337,7 @@ def relink_targets(n, overlays, objs, cc_implicit, out_dir, english, shifts=None
     outputs = []
 
     # main executable
-    redirect = [o for c, o in objs if english and c.endswith(".c") and uses_english(c)]
+    redirect = [o for c, o in objs if english and english_variant(c)]
     main_objs = []
     for c, o in objs:
         if o in redirect:
@@ -329,6 +357,11 @@ def relink_targets(n, overlays, objs, cc_implicit, out_dir, english, shifts=None
         font_o = font_s[:-2] + ".o"
         n.build(font_o, "enas", font_s)
         extra.append(font_o)
+        n.build(EN_CD_REMAP_S, "encdmap", [], implicit=["tools/patch/cd_layout.py"]
+                + ([EN_CD_LAYOUT] if os.path.exists(EN_CD_LAYOUT) else []))
+        cd_remap_o = EN_CD_REMAP_S[:-2] + ".o"
+        n.build(cd_remap_o, "enas", EN_CD_REMAP_S)
+        extra.append(cd_remap_o)
         outputs.append(font_json)
     default = ["build/%s.elf" % EXE, "build/%s.map" % EXE]
     script = out_dir + "/%s.ld" % EXE
@@ -347,7 +380,7 @@ def relink_targets(n, overlays, objs, cc_implicit, out_dir, english, shifts=None
     ovl_elfs = []
     for name, _base, _text in overlays:
         out = out_dir + "/ovl/%s.bin" % name
-        flagged = [cf for cf in srcscan.unit_c_files(name) if english and uses_english(str(cf.src))]
+        flagged = [cf for cf in srcscan.unit_c_files(name) if english and english_variant(str(cf.src))]
         if name in UNLOADED_OVERLAYS:
             if flagged:
                 sys.exit("configure.py: %s is never loaded; do not flag its files" % name)

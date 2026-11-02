@@ -48,6 +48,7 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[english-text-runtime]] - English build variant (`ninja english`), single-byte encoding, proportional font, pixel layout and the function list for full English
 - [[ram-map]] - who owns each RAM region and when; free room for the English build (main gap, overlay tails)
 - [[relink]] - free relink of the main executable and overlays, raw-address census and decisions, emulator validation
+- [[english-build]] - English build pipeline: one command from records to disc and xdelta (encoder, window widths and wrap, English C sources, CD remap, report)
 - Data tables: [[data/true-gaps]], [[data/t0018-cases]], [[data/shared-at-groups]], [[data/t13600-remaining-census]]
 
 ## Build and toolchain

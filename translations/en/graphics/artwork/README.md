@@ -58,3 +58,30 @@ python3 tools/translation_date_panel_checkpoint.py --frame60 <mainrom port-made 
 ```
 
 To see the whole frame-60 composite, rebuild it locally from the installed HUD with `--hud-manifest <installed>/packs/hud_manifest/manifest.json --preview <new png>`.
+
+## BS sign drafts (T-39400)
+
+`checkpoints/T39400-bs-signs-v1` holds 17 port-made English lettering drafts for signs in BS background stills: the three class headers of P_01_02, the two festival boards, the computer-club banner, the march placard, the museum monument, the rink entrance sign and shop board, the ticket plaque, the brass-band banner, the library aisle sign and the shoe-rental counter sign. Each PNG is exactly the rebuilt rectangle of its sign (face refilled by a fitted plane or a diffusion fill from the clean pixels around it, English drawn on it); every pixel is computed and none is copied, but on a flat face many computed pixels equal the source value, and the manifest counts them per crop (`crop.source_equal_pixels`). The whole still is never committed. `bs-signs-v1/manifest.json` records, per asset, the source container hash, the pinned MDEC decoder identity, the proven picture size and its code evidence (file, function and call text), the rectangle, the 16x16 macroblocks it touches, the lettering description, the fill method and the Pillow / numpy versions. The ledger flags every asset `port_made` and unapproved.
+
+The lettering comes from `tools/translation_bs_font.py`: single-stroke skeleton capitals authored in the port, laid out in the sign's own box (rotated to run down the board where the original does), stroked at a weight matched to the original and softened by the same box filter the decode gives the original lettering. It is not a system font, a scaled raster font or an AI image. To rebuild the drafts and the local comparison previews, run this in the Pillow tooling image with the disc extracted; the output folder must be new and under `.asset-cache`:
+
+```sh
+python3 tools/translation_bs_signs.py build --output .asset-cache/bs-signs-build
+```
+
+`build` writes the whole English stills, source stills, an original | English comparison at 2x and a zoomed pair per sign under `previews/`; those contain the original image and stay local. No BS file is written: the later patch step re-encodes the touched macroblocks, and the earlier P_01_02 sweep (T-39012) already found that file hard to re-encode within the ring tolerance.
+
+## MAINROM fixes after the owner review (T-39410)
+
+`checkpoints/T39410-mainrom-fixes-v1` redraws 32 MAINROM frames in all six palette variants (192 PNGs): the Save labels (57-59), the stat labels (61), the issue banners (122-125), the magazine headline banners (126-133), the genre tags (134-145) and the game-cover titles (151-154). `tools/translation_mainrom_fixes.py` rebuilds it in the Pillow Docker image with the disc extracted, like the other MAINROM tools; `ledger.json` lists the earlier candidates each file supersedes, `weekday-resolution.json` shows that every weekday variant resolves to the approved two-letter set, and `REGISTER.md` lists what the inventory step must change. All new lettering is port-made and unreviewed.
+
+## Menu and screen art fixes (T-39411)
+
+`checkpoints/T39410-menus-fixes-v1` holds the port-made fix pass for the title screen, the ALL_C banner, the exam suffix, the option cast list, the name-entry selector labels, two FILESEL screens, the System tab and the sports card title: 27 frame or cell drafts and the three ALL_C banner crops, all unreviewed. `ledger.json` supersedes the older candidates it replaces. `fallback-v1` and `fallback-ledger.json` hold same-size fallbacks (family names only, `pt`, compact selector labels) for builds that cannot widen sprites. `REGISTER.md` lists every change the integrator has to make in the shared registration files: catalog wording and bindings, widened sprite widths, the page region edit. The FILESEL frames, the information page and the sports card are whole frames like the drafts they replace; the other files are cells or crops.
+
+Rebuild in the Pillow tooling image with the original exports restored, then publish into a new folder:
+
+```sh
+python3 tools/translation_menus_fixes.py build --sources .asset-cache/translation-assets --output .asset-cache/menus-fixes-build
+python3 tools/translation_menus_fixes.py publish --built .asset-cache/menus-fixes-build
+```

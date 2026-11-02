@@ -1,7 +1,7 @@
 ---
 id: T-39505
 title: Give the English build room to grow (memory map and free relink)
-status: In Review
+status: In Progress
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-01

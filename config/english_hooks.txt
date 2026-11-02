@@ -6,3 +6,6 @@
 main load_string english_load_string
 main set_kanji_string english_set_kanji_string
 main disp_string english_disp_string
+# CD file remap for the English disc (T-39507, src/english/cd.c)
+main cd_read_sectors english_cd_read_sectors
+main cd_read_sectors_nowait english_cd_read_sectors_nowait

@@ -107,16 +107,37 @@ def locate_sites(repository: str | Path, units: list[dict]) -> list[LiteralSite]
                 end = tokens[i]["end"]
                 i += 1
             groups[start] = (end, b"".join(_string_bytes(lit) for lit in literals))
+        exact, moved = [], []
         for unit in items:
             start = unit["context"].get("source_character_offset")
-            if start not in groups:
-                raise LiteralError(f"{unit['id']}: no literal at {path} character {start}")
-            end, raw = groups[start]
             payload = bytes.fromhex(unit["raw_hex"] or "")
-            if raw != payload:
-                raise LiteralError(f"{unit['id']}: source literal bytes differ from the record")
-            sites.append(LiteralSite(unit["id"], path, start, end, payload))
+            (exact if start in groups and groups[start][1] == payload else moved).append((unit, start, payload))
+        taken = {start for _, start, _ in exact}
+        for unit, start, payload in moved:
+            start = _relocated(unit, path, start, payload, groups, taken)
+            taken.add(start)
+            exact.append((unit, start, payload))
+        for unit, start, payload in exact:
+            sites.append(LiteralSite(unit["id"], path, start, groups[start][0], payload))
     return sites
+
+
+def _relocated(unit: dict, path: str, start: int | None, payload: bytes, groups: dict, taken: set) -> int:
+    """The literal of ``unit`` after the file changed since the export (T-39507).
+
+    Code added after the units were exported (English-only blocks, for example) shifts the
+    recorded character offset. The site is then the nearest free literal with the same bytes;
+    two candidates at the same distance, or none, stop with an error.
+    """
+    if start is None:
+        raise LiteralError(f"{unit['id']}: no source character offset")
+    candidates = sorted((abs(at - start), at) for at, (_, raw) in groups.items()
+                        if raw == payload and at not in taken)
+    if not candidates:
+        raise LiteralError(f"{unit['id']}: no literal with the record's bytes in {path}")
+    if len(candidates) > 1 and candidates[0][0] == candidates[1][0]:
+        raise LiteralError(f"{unit['id']}: two literals with the record's bytes are equally near in {path}")
+    return candidates[0][1]
 
 
 def rewrite_sources(repository: str | Path, sites: list[LiteralSite], payloads: dict[str, bytes],
