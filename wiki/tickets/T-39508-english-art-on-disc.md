@@ -1,11 +1,11 @@
 ---
 id: T-39508
 title: Put the English art on the disc
-status: In Progress
+status: In Review
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-01
-links: ["[[tickets/T-39500-english-translation-patch]]", "[[tickets/T-39507-english-disc-build]]"]
+links: ["[[tickets/T-39500-english-translation-patch]]", "[[tickets/T-39507-english-disc-build]]", "[[english-build]]", "tools/patch/art/", "tools/test_patch_art.py"]
 ---
 
 ## Goal
@@ -14,14 +14,23 @@ The English disc build writes every registered English image into its container 
 
 ## Acceptance criteria
 
-- [ ] Every artwork item with a registered English candidate is written by `tools/patch/build_english.py`; the report lists each item as placed, deferred (with the reason) or untranslated by decision.
-- [ ] Indexed images round-trip byte-exact with the original pixels; English pixels use only colours (and STP values) the container's palette allows.
-- [ ] Stills are re-encoded to fit their read size or moved, and decode back to the intended image within the codec's error.
-- [ ] The emulator route on the English disc shows the English art at the title, file select, name entry, the magazine, the opening stills and the sports card.
-- [ ] The default build still matches 27/27.
+- [x] Every artwork item with a registered English candidate is written by `tools/patch/build_english.py`; the report lists each item as placed, deferred (with the reason) or untranslated by decision. (All 272 items; 230 placed and verified on the disc, 14 deferred with reasons.)
+- [x] Indexed images round-trip byte-exact with the original pixels; English pixels use only colours (and STP values) the container's palette allows.
+- [x] Stills are re-encoded to fit their read size or moved, and decode back to the intended image within the codec's error. (14 stills; 2 deferred, see Notes.)
+- [ ] The emulator route on the English disc shows the English art at the title, file select, name entry, the magazine, the opening stills and the sports card. (Title, options, file select, name-entry labels, stat bar, prologue stills shown; the magazine screen and the sports card are not on the route.)
+- [x] The default build still matches 27/27.
 
 ## Notes
 
 Part of [[tickets/T-39500-english-translation-patch]]. Art sources: `translations/en/graphics/translation_inventory.json` and the checkpoints under `translations/en/graphics/artwork/checkpoints/`.
+
+Implementation and results: [[english-build]] section Art.
+
+- Modules: `tools/patch/art/` (`items.py` registered art, `indexed.py` views and in-place plan, `placer.py` repack, `sheets.py` container profiles, `sprites.py`, `stills.py`, `build.py` plan and report, `hook.py` build hooks, `verify.py` read-back check). `build_english.py` gained three calls and `--no-art`. `tools/Dockerfile.patch` adds numpy and Pillow.
+- No C change: widened sprites are drawn by rewritten part records (OPTION frame records are in the file). The name-entry selector cells and the exam suffix ship their fallbacks (fixed positions in code, no texture room); Kiyokawa and Tatebayashi ship the family-name fallbacks (no room on the OPTION pages).
+- Verification: `verify art` reads every written container back from the built track; a placed image that does not match stops the build.
+- Route `build/emu/route-en-art/` (149 shots), compare `build/emu/compare-route-jp-route-en-art/compare.html`.
+
+Round 2 (2026-11-01): merged `patch/english` (free relink, T-39505); the art step and the disc read-back pass on the relinked executable. Grown MAINROM frames in `english_hud_frames` (`src/english/hud_frames.c`) place the Save labels, the date-panel captions and every weekday: 235 placed and verified, 9 deferred. The still encoder softens strokes where the fixed-point IDCT overflows (P_01_02 and D_03_08 still fail). NAME_ENT panels and the 56-texel selector labels need a second name-entry texture page in `name_entry.c` (T-39506); the facts are in [[english-build]] section Art.
 
 ## Comments
