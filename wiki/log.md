@@ -3845,3 +3845,13 @@ Inspected SHUGAKU table 11/group 34/line 0 and table 12/group 14/line 0 for [[ti
 ## [2026-11-02] build | Publish the invitation-layout release
 
 Published [[tickets/T-39532-school-trip-phrase-wrap]] at Pages commit b63573498b411486ec0b108dee596ebb931f7774. Workflow 41541172525 succeeded, and all 37 served files match the tested package. The public patch and local preview now produce target c3706ff4c86b9237ff3342ba332b58f08c0eb077. Updated the release receipt with deployment and hash evidence.
+
+## [2026-11-02] query | Consolidate contact sheets and expand route coverage
+
+For [[tickets/T-39511-english-text-quality]], began a labelled review gallery combining the existing main-route sheets with off-route emulator captures. Capture provenance and controlled-line fixtures stay distinct from natural route coverage. Started a current-build school-trip replay with Mira to cover another companion and prepare her two pending long-page checks.
+
+## [2026-11-02] query | Inspect the bulk visual gallery and two Kagami passages
+
+Built and opened `build/visual-review-pack/index.html`: 235 captures on 31 labelled sheets. Inspected the new festival and Kagami samples, Nijino trip, sports and ending sheets, plus all 16 patched background stills. Native inspection found cramped shoe-rental and roster lettering; created Ready ticket [[tickets/T-39533-sign-lettering-quality]]. Game images remain ignored.
+
+For [[tickets/T-39511-english-text-quality]], rejected a forced jump that retained unfinished text. A corrected probe waits for the prior page; both Kagami long passages now scroll cleanly through their closing quotes. Thirty samples match the current disc header and table pointers, with 25 post-selection group checks. Receipt `translations/en/reviews/mira-trip-long-pages-2026-11-02.json` leaves 44 of 67 long-page records pending. No patch bytes changed in this review.

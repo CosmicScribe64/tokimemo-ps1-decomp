@@ -1,0 +1,60 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "c3706ff4c86b9237ff3342ba332b58f08c0eb077",
+  "scope": "Controlled line selection with Kagami loaded. Verifies two scrolling passages, not natural route traversal.",
+  "run": "build/emu/trip-mira-long-clean",
+  "header_samples_verified": 30,
+  "selected_group_samples_verified": 25,
+  "table_pointers_verified": true,
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-4:g0009:l0000",
+      "choice": 1,
+      "result": "Opening rows and final three rows inspected; complete closing quote, no clipping or stale letters.",
+      "captures": [
+        {
+          "frame": 450,
+          "sha256": "5100cb06122ade9886203913265cccf4be7b3a23296f331ad08b5a5d1ab1a5e0"
+        },
+        {
+          "frame": 750,
+          "sha256": "271aaa377bbb7af82afc79d50c0a0212ac7265631a0c5a1a0eaa9c1dd20a8e78"
+        },
+        {
+          "frame": 900,
+          "sha256": "2a35da1ecd55500536c005140096f08f5dcff277379e6b89ad4eaa7b5ceb18f2"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-4:g0038:l0001",
+      "choice": 0,
+      "result": "Opening rows and final three rows inspected; complete closing quote, no clipping or stale letters.",
+      "captures": [
+        {
+          "frame": 1050,
+          "sha256": "d52b442cc99d3e1ae428abb19ef79e65ed693387fb32c77e85e931694fd41760"
+        },
+        {
+          "frame": 1350,
+          "sha256": "6c523169823fea4e0ec443bf64cc09eedc3dc976d1f3f2408ad3d64c1e76f8be"
+        },
+        {
+          "frame": 1800,
+          "sha256": "c7d5dcfb2528252b3684b7245dcdc500246bfdeccf9b197d271b437e9dea4353"
+        }
+      ]
+    }
+  ],
+  "rejected_run": "build/emu/trip-mira-long: first selection interrupted unfinished text and retained stale letters. Not accepted as game-layout evidence.",
+  "font_trace": {
+    "frame_origin": "start of this emulator run",
+    "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+    "calls": 0,
+    "unknown_calls": 0,
+    "overflow_calls": 0,
+    "entries": {},
+    "load_address": 2147808100,
+    "ranges_address": 2148237164
+  }
+}

@@ -598,7 +598,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see mira-trip-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-4:g0037:l0000",
@@ -623,7 +623,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see mira-trip-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-5:g0037:l0000",

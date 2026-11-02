@@ -15,6 +15,8 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-39533-sign-lettering-quality|T-39533 Improve shoe-rental and class-roster lettering]]
+
 
 
 
