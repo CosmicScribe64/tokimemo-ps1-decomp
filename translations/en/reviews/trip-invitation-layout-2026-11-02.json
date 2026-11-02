@@ -78,5 +78,65 @@
     "passed": 41,
     "skipped": 1
   },
-  "full_release": "build and audits pending"
+  "full_release": {
+    "target": {
+      "sha1": "c3706ff4c86b9237ff3342ba332b58f08c0eb077",
+      "size": 703097472
+    },
+    "patch": {
+      "file": "assets/tokimemo-en.xdelta",
+      "size": 6564305,
+      "sha256": "f9fed4a8ac6aa76aa00d5794f4002e38555322734e2316fc9ef6982f8e3b5a09"
+    },
+    "matches_inspected_disc": true,
+    "audio_unchanged": true,
+    "artwork_verified": 252,
+    "script_audit": {
+      "containers": 105,
+      "strings": 31471,
+      "pointers": 31334
+    },
+    "executable_audit": {
+      "status": "pass",
+      "slots": 2940,
+      "exact_slots": 2827,
+      "derived_records": 291,
+      "derived_pointers": 286,
+      "source_only_literals": 321
+    },
+    "browser": {
+      "status": "passed",
+      "target_sha1": "c3706ff4c86b9237ff3342ba332b58f08c0eb077",
+      "checks": [
+        "wrong size",
+        "wrong source hash",
+        "corrupted patch",
+        "cancel",
+        "full patch",
+        "download hash",
+        "cue",
+        "no upload",
+        "responsive layout",
+        "invalid archive",
+        "archive drop",
+        "extraction cancel",
+        "audio download hash",
+        "archive cue",
+        "mobile result"
+      ]
+    },
+    "inspected_browser_screenshots": {
+      "archive-complete.png": "ec7e4e450293e9aa57b3613ab907c7288fe53deb27ce4e6ff55c83d080b7b5a3",
+      "archive-mobile.png": "a8b6e850f37bbae76589a45744964d2b7199e8bb7149e952db33a780c793f9f9"
+    },
+    "publication": {
+      "status": "verified live",
+      "url": "https://cosmicscribe64.github.io/tokimemo-ps1-decomp/",
+      "source_commit": "25e879800",
+      "pages_commit": "b63573498b411486ec0b108dee596ebb931f7774",
+      "workflow_run": 41541172525,
+      "workflow_conclusion": "success",
+      "served_files_matching_tested_package": 37
+    }
+  }
 }

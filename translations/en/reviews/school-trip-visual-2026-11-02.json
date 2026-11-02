@@ -8,7 +8,7 @@
       "run": "school-trip-sightseeing-review",
       "frame": 2700,
       "finding": "The invitation splits the phrase day after tomorrow across rows. Check source and available width before changing layout.",
-      "follow_up": "T-39532: corrected and visually verified on an isolated disc; full build and publication pending."
+      "follow_up": "T-39532: corrected, visually verified and published in target c3706ff4c86b9237ff3342ba332b58f08c0eb077."
     }
   ],
   "pending_long_page_records": 58,
@@ -163,7 +163,8 @@
         "ranges_address": 2148237164,
         "frame_origin": "start of this emulator run"
       },
-      "result": "The five-row passage scrolls through its final sentence and closing quote without clipping. This is a line-rendering check in the hotel fixture, not proof of the Hokkaido scene background."
+      "result": "The four-row passage scrolls through its final sentence and closing quote without clipping. This is a line-rendering check in the hotel fixture, not proof of the Hokkaido scene background.",
+      "rendered_rows": 4
     }
   ]
 }

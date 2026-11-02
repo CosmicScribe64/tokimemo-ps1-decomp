@@ -22,7 +22,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-39532-school-trip-phrase-wrap|T-39532 Keep the school-trip invitation phrase together]]
 
 
 
@@ -114,6 +113,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39532-school-trip-phrase-wrap|T-39532 Keep the school-trip invitation phrase together]]
 
 - [ ] [[tickets/T-39531-literature-club-wrap|T-39531 Fix the split Literature Club question]]
 

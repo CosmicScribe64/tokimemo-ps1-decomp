@@ -1,0 +1,193 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "b8b5be606a64650203c4b6c452fb8f61cdadef83",
+  "run": "build/emu/trip-table-variants",
+  "scope": "Controlled table and line selection in the hotel fixture. Each source command is player speech. These checks verify text rendering, not natural traversal or destination artwork.",
+  "frames": 6000,
+  "setup_writes": 70,
+  "memory_samples": {
+    "path": "/work/build/emu/trip-table-variants/memory-samples.jsonl",
+    "count": 100,
+    "sha256": "98d99f3c69e223379be128bc750a98698100169357789ecec5fb984ba536951a",
+    "every_vsync": 60
+  },
+  "verified_samples": 100,
+  "table_pointers_and_group_match": true,
+  "loaded_headers_match_disc": true,
+  "font_trace": {
+    "load_address": 2147808100,
+    "ranges_address": 2148237164,
+    "frame_origin": "start of this emulator run",
+    "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+    "calls": 0,
+    "unknown_calls": 0,
+    "overflow_calls": 0,
+    "entries": {}
+  },
+  "result": "All twelve checked passages start from the selected line and scroll through their final sentence and closing quote without clipping.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-0:g0037:l0000",
+      "inspected_frames": [
+        150,
+        450,
+        600
+      ],
+      "screenshots": {
+        "150": "f648412c57e2e4340dffd78057366bc843c7222f18cbcffade2227bcadb2966a",
+        "450": "b617a95b33d8dbccc394e85a3e823bc1027452a51fb7169a666c9d4c6b8b6e39",
+        "600": "563ffb5e40856fe7b7301c361e9538c584d9c925b797f83b4223cfadc0565e11"
+      }
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-1:g0037:l0000",
+      "inspected_frames": [
+        750,
+        1200
+      ],
+      "screenshots": {
+        "750": "efeb54b88ceb3abdbb7e3201582f8c22f9ac41fd3c9a3c7e5dfaf2394e0f5e07",
+        "1200": "91b8e7fa1cbc4a0ba2497e636ea572cf2f6927bc1f5368cd9488bae97385ff65"
+      }
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-2:g0037:l0000",
+      "inspected_frames": [
+        1350,
+        1800
+      ],
+      "screenshots": {
+        "1350": "07359c0f2313473424cad59fe4871ba725a3d93d42da57044322cd4d96dfd4ff",
+        "1800": "4aae0a76b74fa9ebca912d43d3a8157ea16ed5e0cb1a3e4da06231512402ee52"
+      }
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-3:g0037:l0000",
+      "inspected_frames": [
+        1950,
+        2400
+      ],
+      "screenshots": {
+        "1950": "e53fd665596b7b916a23eb20beb8f329a1b33469685b53ca8c838d4aac00632c",
+        "2400": "92d177202741fb06959cef9b3bd7a9dac562c1522a5e756662dd93ca0c72b0b6"
+      }
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-4:g0037:l0000",
+      "inspected_frames": [
+        2550,
+        3000
+      ],
+      "screenshots": {
+        "2550": "b7d4d7c04145362734fd2eae5a52e8ab85adeedba24733e8cb76a762fd5cd1c7",
+        "3000": "41e2b6e09702f1fd74e8d1046a785116a2a0f540e7b826256af25a1ec838f6f9"
+      }
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-5:g0037:l0000",
+      "inspected_frames": [
+        3150,
+        3600
+      ],
+      "screenshots": {
+        "3150": "e28694bfe4b76d88760db0f644c4278f0345c633a340f5c82a370ceda0c7c3ce",
+        "3600": "7feb8938d81d9074005f925b4ba8a0aa17b30cc6d548b1f2a2316b6d5e563d62"
+      }
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-6:g0037:l0000",
+      "inspected_frames": [
+        3750,
+        4200
+      ],
+      "screenshots": {
+        "3750": "4ed9620e14400236a02cd6a335f1d86f7c17f4460c862840416974ad9f5af6d8",
+        "4200": "57c3b46f9f71b9343c696c00c4f5844846ea55699ac250fa80541ca62bded0e1"
+      }
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-7:g0037:l0000",
+      "inspected_frames": [
+        4350,
+        4800
+      ],
+      "screenshots": {
+        "4350": "393e76fd25e4bff46a9f8a2c6f0f056714e7921a6b38204509ec87e986c27403",
+        "4800": "d48929d318bc28ff047a1a4079a18796eee48e4087b268ae7203a28789dc7097"
+      }
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-8:g0037:l0000",
+      "inspected_frames": [
+        4950,
+        5400
+      ],
+      "screenshots": {
+        "4950": "f648412c57e2e4340dffd78057366bc843c7222f18cbcffade2227bcadb2966a",
+        "5400": "73dc732a8f15bcb6432015fadaa246be8f12f5c81179018e970c7f8da298c311"
+      }
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-9:g0037:l0000",
+      "inspected_frames": [
+        5550,
+        6000
+      ],
+      "screenshots": {
+        "5550": "efeb54b88ceb3abdbb7e3201582f8c22f9ac41fd3c9a3c7e5dfaf2394e0f5e07",
+        "6000": "2b2b91b8758bccbc77678ac946ad6058662c1de8e24ac6cd73c6659a767f53c4"
+      }
+    }
+  ],
+  "additional_run": {
+    "run": "build/emu/trip-final-tables",
+    "cue_target_sha1": "c3706ff4c86b9237ff3342ba332b58f08c0eb077",
+    "saved_state_target_sha1": "b8b5be606a64650203c4b6c452fb8f61cdadef83",
+    "frames": 1200,
+    "verified_samples": 20,
+    "table_pointers_and_group_match": true,
+    "loaded_headers_match_disc": true,
+    "font_trace": {
+      "frame_origin": "start of this emulator run",
+      "calls": 0,
+      "unknown_calls": 0,
+      "overflow_calls": 0,
+      "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+      "entries": {},
+      "ranges_address": 2148237164,
+      "load_address": 2147808100
+    },
+    "checks": [
+      {
+        "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-11:g0034:l0000",
+        "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+        "unchanged_from_saved_state_disc": true,
+        "inspected_frames": [
+          150,
+          450,
+          600
+        ],
+        "screenshots": {
+          "150": "f648412c57e2e4340dffd78057366bc843c7222f18cbcffade2227bcadb2966a",
+          "450": "b617a95b33d8dbccc394e85a3e823bc1027452a51fb7169a666c9d4c6b8b6e39",
+          "600": "563ffb5e40856fe7b7301c361e9538c584d9c925b797f83b4223cfadc0565e11"
+        }
+      },
+      {
+        "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-12:g0014:l0000",
+        "payload_sha256": "01270172a7604edc371ef8f0b69a0be3214a718f0c6071c62797cf44426a8745",
+        "unchanged_from_saved_state_disc": true,
+        "inspected_frames": [
+          750,
+          1050,
+          1200
+        ],
+        "screenshots": {
+          "750": "efeb54b88ceb3abdbb7e3201582f8c22f9ac41fd3c9a3c7e5dfaf2394e0f5e07",
+          "1050": "b48ae164a788d33d7ec8c5c06555d4d59bb9e2f73a0a34ab904c7e3686f29582",
+          "1200": "0c41e7c004691a8215067ff3ccf5ade76b05ab5ef80267234257acfbdb2721d7"
+        }
+      }
+    ]
+  }
+}

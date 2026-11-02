@@ -3821,3 +3821,27 @@ For [[tickets/T-39511-english-text-quality]], inspected SHUGAKU table 10/group 3
 ## [2026-11-02] build | Verify the invitation layout in-game
 
 For [[tickets/T-39532-school-trip-phrase-wrap]], inspected the revised invitation at frame 8400 of a fresh scene-entry replay. The date phrase and closing quote fit together on row two. All twelve encoded changes preserve wording, and 41 tests pass with one optional skip. Standards review found no unresolved issue. Started the full build at `build/trip-phrase-release/disc`; final-disc checks and publication remain pending.
+
+## [2026-11-02] lint | Correct the school-trip rendered row count
+
+The SHUGAKU group-37 payload has four rendered rows after reflow. The preceding review entry incorrectly called it five rows, counting the inherited source breaks. Corrected the visual receipt, queue status and [[tickets/T-39511-english-text-quality]] note. The inspected final sentence, closing quote and table/header proof remain valid.
+
+## [2026-11-02] query | Check the remaining school-trip table variants
+
+Started a controlled replay for SHUGAKU tables 0 through 9, group 37/line 0, under [[tickets/T-39511-english-text-quality]]. The fixture checks each source command is player speech, selects its text/command/voice tables from the source-backed profile, and records the writes and memory samples. Table 10 already has separate proof. Inspected table 0 through its closing quote; the remaining captures are still being produced. The full T-39532 build remains active in movie encoding.
+
+## [2026-11-02] query | Verify ten school-trip table variants
+
+Completed the 6,000-frame controlled replay for [[tickets/T-39511-english-text-quality]]. Inspected tables 0 through 9 near each passage's start and after scrolling to its final sentence and closing quote. All 100 runtime samples confirm the selected table pointers/group and the exact disc header. Recorded the scoped evidence in `translations/en/reviews/trip-table-variants-2026-11-02.json`; 48 long-page records remain pending.
+
+## [2026-11-02] build | Verify the complete invitation-layout release
+
+Target c3706ff4c86b9237ff3342ba332b58f08c0eb077 exactly matches the inspected disc. All 252 artwork checks, 105-container script/pointer audit, executable audit and 15 browser checks pass. Inspected desktop/mobile result pages. Updated the release receipt and moved [[tickets/T-39532-school-trip-phrase-wrap]] to Done after standards review and final-disc verification. Publication is in progress; the broader campaign remains open.
+
+## [2026-11-02] query | Verify the final two player-speech trip tables
+
+Inspected SHUGAKU table 11/group 34/line 0 and table 12/group 14/line 0 for [[tickets/T-39511-english-text-quality]]. Both scroll to their final sentence and closing quote. Twenty memory samples verify the table selection and header; payloads match between the saved-state disc and current build. Added the proof to the existing table-variant receipt. The long-page queue now has 46 pending records.
+
+## [2026-11-02] build | Publish the invitation-layout release
+
+Published [[tickets/T-39532-school-trip-phrase-wrap]] at Pages commit b63573498b411486ec0b108dee596ebb931f7774. Workflow 41541172525 succeeded, and all 37 served files match the tested package. The public patch and local preview now produce target c3706ff4c86b9237ff3342ba332b58f08c0eb077. Updated the release receipt with deployment and hash evidence.
