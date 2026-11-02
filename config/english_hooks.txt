@@ -6,3 +6,13 @@
 main load_string english_load_string
 main set_kanji_string english_set_kanji_string
 main disp_string english_disp_string
+# T-39506: script parsers and names (src/english/script.c)
+main talk_render english_talk_render
+main talk_speak_part english_talk_speak_part
+main make_three_select english_make_three_select
+main talk_names_set english_talk_names_set
+main gnsx english_gnsx
+main sndisp english_sndisp
+main sndi english_sndi
+main get_g_name english_get_g_name
+main get_p_name english_get_p_name

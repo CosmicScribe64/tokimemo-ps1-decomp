@@ -26,6 +26,7 @@
 #ifdef TOKIMEMO_ENGLISH
 
 s16 english_glyph_pen[ENGLISH_GLYPH_SLOTS];
+s32 english_text_cell = 0;
 
 /* Expands one 18-byte 1bpp glyph to 16 x 12 4bpp in the upload ring and loads it into the next glyph
  * slot, as vload_font does for the game's font. */
@@ -115,6 +116,14 @@ s32 english_load_string(u8 *text) {
             }
             advance = text_state.glyph_advance;
         }
+        if (english_text_cell != 0) {
+            /* the ink is advance - 1 pixels wide, starting at the glyph's left edge */
+            if (slot < ENGLISH_GLYPH_SLOTS) {
+                english_glyph_pen[slot] = pen + (english_text_cell - advance + 1) / 2;
+            }
+            pen += english_text_cell;
+            continue;
+        }
         if (slot < ENGLISH_GLYPH_SLOTS) {
             english_glyph_pen[slot] = pen;
         }
@@ -123,7 +132,30 @@ s32 english_load_string(u8 *text) {
     return text_state.total - first_glyph;
 }
 
-/* set_kanji_string without the two-byte minimum: a one-letter English string is valid. */
+s32 english_text_width(u8 *text) {
+    s32 width;
+    u32 c;
+
+    width = 0;
+    while ((c = *text) != 0) {
+        if (c < 0x80 || (c >= 0xA0 && c < 0xE0)) {
+            text++;
+            if (english_font_index[c] != 0xFF) {
+                width += english_font_advance[english_font_index[c]];
+            }
+        } else {
+            if (text[1] == 0) {
+                break;
+            }
+            text += 2;
+            width += text_state.glyph_advance;
+        }
+    }
+    return width;
+}
+
+/* set_kanji_string without the two-byte minimum (a one-letter English string is valid), and with no glyphs
+ * for an empty string. */
 s32 english_set_kanji_string(s16 x, s16 y, u8 color_index, u8 *text, s32 ordering_slot) {
     TextEntry *entry;
 
@@ -132,7 +164,9 @@ s32 english_set_kanji_string(s16 x, s16 y, u8 color_index, u8 *text, s32 orderin
     }
     entry = (TextEntry *)text_list + text_state.count;
     if (text == 0 || text[0] == 0) {
+        /* the original leaves the glyph count of the slot's previous string here, and k_reset sums it */
         entry->active = 0;
+        entry->glyph_count = 0;
     } else {
         entry->y = y;
         entry->attribute = color_index;
@@ -163,7 +197,8 @@ void english_disp_string(void) {
     }
     flag = 1;
     for (i = 0, k = 0; i < text_state.total && i < text_state.pos; i++, k++) {
-        if (k >= ((TextEntry *)text_list)[j].glyph_count) {
+        /* a loop, not one step as in the original: entries without glyphs (empty strings) are skipped */
+        while (k >= ((TextEntry *)text_list)[j].glyph_count && j < 0x33) {
             k = 0;
             j++;
         }

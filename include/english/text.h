@@ -19,6 +19,15 @@ extern u8 english_font_glyphs[];     /* 18-byte 12 x 12 1bpp bitmaps per glyph n
 /* x offset in pixels of each loaded glyph slot from the start of its text entry */
 extern s16 english_glyph_pen[ENGLISH_GLYPH_SLOTS];
 
+/* Nonzero: english_load_string places each glyph centered in a cell of this many pixels instead of at
+ * its proportional advance (grids such as the name entry letter page). Set it around the
+ * set_kanji_string calls that need it and clear it again; disp_string reads the pen positions that
+ * were recorded at load time. */
+extern s32 english_text_cell;
+
+/* Width in pixels of a string as english_load_string lays it out (proportional mode). */
+s32 english_text_width(u8 *text);
+
 /* Replacements reached through the jumps in config/english_hooks.txt. */
 s32 english_set_kanji_string(s16 x, s16 y, u8 color_index, u8 *text, s32 ordering_slot);
 s32 english_load_string(u8 *text);
