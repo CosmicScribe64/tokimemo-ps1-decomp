@@ -3417,3 +3417,7 @@ T-39516 moves In Progress -> In Review. Sports and culture festival captures at 
 ## [2026-11-02] ticket | Complete festival gate-plate repair
 
 T-39516 moves In Review -> Done after standards review: guarded original inputs, explicit geometry/lettering bounds, synthetic fill, changed-pixel RGBA output, standard encoder verification, no raw/generated media staged, tests and both actual GPU scenes checked. Inventory prose no longer incorrectly exempts either gate plate. Human release signoff remains separate. [[tickets/T-39516-festival-gate-plates]].
+
+## [2026-11-02] build | Refresh browser review with verified festival plates
+
+The festival-plate package passes all nine Chromium acceptance checks, including browser-download equality with the CLI-built disc. Updated the local server on port 8769 to `build/patcher-festival-plates-review`, retaining the same review URL. T-39517 remains the next concrete layout repair; no whole-game completion claim. [[tickets/T-39512-browser-patcher]], [[tickets/T-39516-festival-gate-plates]], [[tickets/T-39517-ending-summary-layout]].
