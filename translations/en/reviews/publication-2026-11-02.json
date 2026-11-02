@@ -1,0 +1,25 @@
+{
+  "url": "https://cosmicscribe64.github.io/tokimemo-ps1-decomp/",
+  "files_verified": [
+    "app.js",
+    "assets/tokimemo-en.xdelta",
+    "index.html",
+    "release.json",
+    "style.css",
+    "vendor/BinFile.js",
+    "vendor/HashCalculator.js",
+    "vendor/LICENSE",
+    "vendor/LICENSE-Apache-2.0",
+    "vendor/LICENSE-Victor-Alexiev",
+    "vendor/RomPatcher.format.vcdiff.js",
+    "vendor/THIRD-PARTY.txt",
+    "vendor/UPSTREAM.txt",
+    "worker.js"
+  ],
+  "target_sha1": "2f9fd663374c4e7aa55c4f46e3690be28624f806",
+  "patch_sha256": "2c8cff9647b55f6c13b7ebd682c22c5158b2f2220c752181d761d537b4fbc0d9",
+  "source_commit": "a916ad549ad487867e34a3ce45920b6c896f735f",
+  "pages_commit": "96a1a438a025e7356530dcdd762d1a8d1a396156",
+  "live_browser": "expected review build loaded without script errors",
+  "input_support": "two original BIN tracks; expanded inputs are pending T-39527"
+}

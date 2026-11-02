@@ -3653,3 +3653,7 @@ Read all 49 unique payloads behind 67 long-page warnings. Checked each window's 
 ## [2026-11-02] build | Inspect current opening and telephone layouts
 
 Fresh boundary-candidate captures 032, 039, 041 and 100 retain complete names, closing marks and readable rows. Verified speaker-label pixels against the earlier accepted captures; apparent missing fragments in combined tool previews are absent from the actual images. Added hashes to the visual receipt. The settled Sunday state shows the expected menu and now feeds the festival retry. [[tickets/T-39525-english-break-boundaries]].
+
+## [2026-11-02] build | Publish the verified review patcher
+
+At the owner's request, pushed verified source and README updates to main and patch/english at `a916ad549`, and published the review package on gh-pages at `96a1a438`. GitHub Pages deployment succeeded; all 14 served files match the tested package. Browser smoke, desktop/mobile review and acceptance tests pass. Updated and read back the GitHub description and website URL. T-39526 moves to Done. The later boundary code remains local. The owner then requested drag-and-drop support matching the extractor; opened T-39527 and added the initial raw/CUE resolver with passing smoke checks. [[tickets/T-39526-publish-review-patcher]], [[tickets/T-39527-patcher-disc-inputs]], [[tickets/T-39512-browser-patcher]].
