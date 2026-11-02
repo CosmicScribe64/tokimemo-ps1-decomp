@@ -15,13 +15,41 @@ from collections import Counter
 from dataclasses import dataclass, field
 
 from .containers import Container
-from .english import EnglishEncoder
+from .english import EnglishEncoder, end_inline_label, untokenized_name_codes
 from .segments import Control, encode
 from .translations import target_of
 from .windows import window_for
 from .wrap import FontMetrics, wrap
 
 SKIPPED_KINDS = ("speaktst", "reference_only")
+# Tables that must stay Japanese: the kana pages and the kanji reading labels of the name entry, where a
+# player still picks kana (T-39506). The translators gave romaji there.
+KEPT_TABLES = ("dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:",
+               "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:",
+               "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:")
+# Data that the handoff read as text: ETC album_background_lba_cat_00 .. _15 (0x8014E0C4-0x8014EA1C) are
+# tables of CD sector numbers whose bytes decode as half-width katakana. Writing the "translations" there
+# would load the wrong album backgrounds (T-39506).
+NOT_TEXT_RANGES = {"CDROM/EXEDIR/ETC.EXN": ((0x1C0C4, 0x1CA1C),)}
+
+
+# Name entry presets become the player's name, which holds at most 7 letters (11 for the nickname) in the
+# English build (T-39506); a longer English preset keeps the original kana one and is reported.
+PRESET_LIMITS = {"dictionary:CDROM/EXEDIR/NAME_ENT.EXN:preset_family_names:": 7,
+                 "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:preset_given_names:": 7,
+                 "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:preset_nicknames:": 11}
+
+
+def _preset_too_long(record_id: str, payload: bytes) -> bool:
+    for prefix, limit in PRESET_LIMITS.items():
+        if record_id.startswith(prefix):
+            return len(payload) > limit
+    return False
+
+
+def _not_text(record) -> bool:
+    ranges = NOT_TEXT_RANGES.get(record.path or "", ())
+    return record.offset is not None and any(start <= record.offset < end for start, end in ranges)
 
 
 @dataclass
@@ -47,6 +75,12 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
             note = {"path": path, "kind": record.kind, "container": container.kind}
             out.notes[record.id] = note
             row = targets.get(record.id)
+            if _not_text(record):
+                note["status"], note["reason"] = "kept_original", "data, not text (T-39506)"
+                continue
+            if record.id.startswith(KEPT_TABLES):
+                note["status"], note["reason"] = "kept_original", "name entry kana page (T-39506)"
+                continue
             if row is None:
                 note["status"] = "kept_original"
                 note["reason"] = "no_translation_row"
@@ -61,9 +95,15 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                 note["status"], note["reason"] = "kept_original", problem
                 continue
             encoder.take_record_notes()
-            payload = encode(segments, encoder)
+            payload = end_inline_label(encode(segments, encoder))
+            if _preset_too_long(record.id, payload):
+                note["status"], note["reason"] = "kept_original", "preset longer than the English name limit (T-39506)"
+                continue
             note.update(encoder.take_record_notes())
             window, basis = window_for(container.kind, record)
+            if window is not None and window.name == "telephone_narration" \
+                    and not any(isinstance(s, Control) and s.kind == "substitution" for s in segments):
+                payload = untokenized_name_codes(payload, bytes.fromhex((record.unit or {}).get("raw_hex") or ""))
             note["status"] = "placed"
             if window is not None:
                 result = wrap(payload, window, metrics)

@@ -541,6 +541,17 @@ s32 camp_club_practice_point_threshold_gate(void) {
     mode_step_next();
 }
 
+#ifdef TOKIMEMO_ENGLISH
+/* T-39506: pointer view of the fixed-stride club name table D_8013A088 (11 names of 21 bytes): every entry
+ * is reached through its own address, so the English build can move a name longer than 20 letters
+ * (tools/patch/text/retarget.py). */
+static u8 *camp_english_club_names_m[11] = {
+    D_8013A088.name[0], D_8013A088.name[1], D_8013A088.name[2], D_8013A088.name[3], D_8013A088.name[4],
+    D_8013A088.name[5], D_8013A088.name[6], D_8013A088.name[7], D_8013A088.name[8], D_8013A088.name[9],
+    D_8013A088.name[10],
+};
+#endif
+
 void camp_club_scene_actor_setup(void) {
     s16 var_s0;
     s32 pad; /* FAKE: unused slot above the name tables, the original puts them 8 bytes lower (sp+0x13C, sp+0x54); real source unknown. T-22016 */
@@ -558,7 +569,11 @@ void camp_club_scene_actor_setup(void) {
     load_palette(D_80139DEC, 0x10, 1, 0, 0);
     load_palette(D_80139DEC, 0x11, 1, 0, 1);
     strcpy(name_code_a, club_names_a.name[(u16) game_state.player_flags.h >> 0xC]);
+#ifdef TOKIMEMO_ENGLISH
+    strcpy(&name_code_m, camp_english_club_names_m[(u16) game_state.player_flags.h >> 0xC]);
+#else
     strcpy(&name_code_m, club_names_m.name[(u16) game_state.player_flags.h >> 0xC]);
+#endif
     actor_clear(0x60);
     ((Actor *)actor_pool)[96].unk_01 = 0xB;
     ((Actor *)actor_pool)[96].flags = 0;

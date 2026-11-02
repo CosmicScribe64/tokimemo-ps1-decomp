@@ -24,6 +24,9 @@
 #include "main/text.h"
 #include "main/tpage.h"
 #include "main/vram.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/text.h"
+#endif
 
 void ending_set_song_scene_assets(void) {
     D_8013CBB0.unk_00 = 0x801C22CC;
@@ -189,12 +192,30 @@ void ending_advance_song_lyrics(void) {
     }
 }
 
+#ifdef TOKIMEMO_ENGLISH
+/* T-39506: pointer view of the fixed-stride line table D_8013CC48 (12 lines of 0x19 bytes): every line is
+ * reached through its own address, so the English build can move a longer line
+ * (tools/patch/text/retarget.py); lines are centred by pixel width. */
+static u8 *ending_english_song_lines[12] = {
+    D_8013CC48 + 0x00 * 0x19, D_8013CC48 + 0x01 * 0x19, D_8013CC48 + 0x02 * 0x19, D_8013CC48 + 0x03 * 0x19,
+    D_8013CC48 + 0x04 * 0x19, D_8013CC48 + 0x05 * 0x19, D_8013CC48 + 0x06 * 0x19, D_8013CC48 + 0x07 * 0x19,
+    D_8013CC48 + 0x08 * 0x19, D_8013CC48 + 0x09 * 0x19, D_8013CC48 + 0x0A * 0x19, D_8013CC48 + 0x0B * 0x19,
+};
+
+void ending_draw_song_lyric(s16 lyric_index) {
+    u8 *p;
+
+    p = ending_english_song_lines[lyric_index];
+    k_disp_start(set_kanji_string(-english_text_width(p) / 2, 0x50, 0, p, 0));
+}
+#else
 void ending_draw_song_lyric(s16 lyric_index) {
     u8 *p;
 
     p = D_8013CC48 + lyric_index * 0x19;
     k_disp_start(set_kanji_string((s16) (-strlen(p) * 7 / 2), 0x50, 0, p, 0));
 }
+#endif
 
 void ending_wait_song_visual_timeout(void) {
     if (game_state.mode_step_timer.w == 0) {

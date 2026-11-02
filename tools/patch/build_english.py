@@ -48,7 +48,7 @@ from tools import english_link
 from tools.patch import cd_layout
 from tools.patch import disc as disc_mod
 from tools.patch import make_patch
-from tools.patch.text import c_literals
+from tools.patch.text import c_literals, retarget
 from tools.patch.text.containers import EXE_PATH, build_containers, load_units
 from tools.patch.text.image import SECTOR
 from tools.patch.text.inplace import patch_built
@@ -317,6 +317,27 @@ def relinked_offsets(disc_path: str, built_path: Path, base: int):
     return locate
 
 
+def retargeter(disc_path: str, built_path: Path, built: bytes) -> retarget.Retargeter:
+    """Moves over-capacity slots of one English binary (tools/patch/text/retarget.py, T-39506)."""
+    unit = "main" if disc_path == EXE_PATH else built_path.stem
+    if unit == "main":
+        elf, map_path = EN_DIR / ("%s.elf" % english_link.EXE), EN_DIR / ("%s.map" % english_link.EXE)
+        vram = english_link.EXE_VRAM - english_link.EXE_HEADER
+    else:
+        elf, map_path = EN_DIR / "ovl" / ("%s.elf" % unit), EN_DIR / "ovl" / ("%s.map" % unit)
+        vram = english_link.OVERLAY_SLOT
+    old_dir = os.getcwd()
+    os.chdir(REPOSITORY)  # map paths are relative to the repository
+    try:
+        refs = retarget.References(str(map_path), str(elf))
+    finally:
+        os.chdir(old_dir)
+    elf = REPOSITORY / elf
+    pool = retarget.main_pool(built, str(elf), vram) if unit == "main" else retarget.overlay_pool(built, str(elf), vram)
+    default_elf = REPOSITORY / ("build/%s.elf" % english_link.EXE if unit == "main" else "build/ovl/%s.elf" % unit)
+    return retarget.Retargeter(refs, pool, str(default_elf))
+
+
 def place_binaries(disc, containers, text, files_root: Path) -> dict:
     """In-place records into the built overlays and executable, then onto the disc."""
     out = {"overlays_replaced": [], "in_place": {}}
@@ -329,11 +350,13 @@ def place_binaries(disc, containers, text, files_root: Path) -> dict:
         built = built_path.read_bytes()
         container = containers.get(disc_path)
         if container is not None and container.kind in BINARY_KINDS:
+            mover = retargeter(disc_path, built_path, built)
             result = patch_built(container, text.payloads.get(disc_path, {}), built,
-                                 relinked_offsets(disc_path, built_path, container.image.base))
+                                 relinked_offsets(disc_path, built_path, container.image.base), mover)
             built = result.data
             out["in_place"][disc_path] = {"written": len(result.written), "overflows": result.overflows,
-                                          "moved_in_build": result.moved_in_build}
+                                          "moved_in_build": result.moved_in_build,
+                                          "retargeted": mover.moved, "not_retargeted": mover.refused}
         if built == (files_root / disc_path).read_bytes():
             continue
         lba = disc.replace(disc_path, built)

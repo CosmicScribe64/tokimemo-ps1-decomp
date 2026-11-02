@@ -2,6 +2,9 @@
 #define MAIN_API_OVERRIDE_talk_names_set /* Word argument at this call; T-9520. */
 #include "common.h"
 #include "ovl/new_year_christmas.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/script.h"
+#endif
 void talk_names_set();
 
 void new_year_shrine_actor_mode_step_dispatch(void) {
@@ -75,6 +78,12 @@ void new_year_shrine_background_and_log_setup(void) {
     mode_step_next();
 }
 
+#ifdef TOKIMEMO_ENGLISH
+/* T-39506: pointer view of the fixed-stride wish table D_80143D88 (3 strings of 9 bytes), so the English
+ * build can move a longer wish (tools/patch/text/retarget.py). */
+static u8 *new_year_english_wishes[3] = { D_80143D88.s[0], D_80143D88.s[1], D_80143D88.s[2] };
+#endif
+
 void new_year_shrine_choice_effect_apply(void) {
     s32 pad; /* FAKE: unused local declared first puts tbl at sp+0x28 as in the original; real source unknown. T-9340 */
     SjisStr3 tbl;
@@ -82,10 +91,17 @@ void new_year_shrine_choice_effect_apply(void) {
     tbl = D_80143D88;
     new_year_omikuji_scene_selector = talk_choice;
     new_year_dialogue_group += talk_choice;
+#ifdef TOKIMEMO_ENGLISH
+    english_value_set(ENGLISH_CODE_W, new_year_english_wishes[talk_choice]);
+    if (new_year_fallback_dialogue_flag == 0 && game_state.date_girl == GIRL_AYAKO && talk_choice == 2) {
+        english_value_set(ENGLISH_CODE_W, new_year_english_wishes[1]);
+    }
+#else
     strcpy(name_code_w, tbl.s[talk_choice]);
     if (new_year_fallback_dialogue_flag == 0 && game_state.date_girl == GIRL_AYAKO && talk_choice == 2) {
         strcpy(name_code_w, tbl.s[1]);
     }
+#endif
     if (talk_choice == 0) {
         game_state.param_liberal_arts.value += 0xA;
         game_state.param_science.value += 0xA;
