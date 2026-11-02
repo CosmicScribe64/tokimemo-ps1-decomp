@@ -10,11 +10,14 @@ The library API (used by the patch build):
     disc = Disc(track1_path)                                     # also a context manager
     lba = disc.replace("CDROM/EXEDIR/DATE.EXN", data)            # in place if it fits, else moved
     lba = disc.replace("SLPM_86.053", data, relocate=True)       # always moved to the free area
+    n = disc.replace_stream("OPENXA.STR", raw)                    # same-layout STR video sectors (T-39509)
     disc.write(out_track1, cue_path=out_cue, track2_path=track2)  # returns the output SHA-1
 
 Disc facts this relies on (wiki/disc-layout.md):
-  - Raw MODE2/2352 sectors; files are Mode 2 Form 1 except the XA/STR streams (Form 2), which
-    are never written. Sectors that are not written are copied byte for byte.
+  - Raw MODE2/2352 sectors; files are Mode 2 Form 1 except the XA/STR streams (Form 2). A
+    stream is never moved or resized; replace_stream rewrites only its Form 1 video sectors in
+    place (same subheaders, new EDC/ECC), never an audio sector. Sectors that are not written
+    are copied byte for byte.
   - LBA 14515 (first sector of the /CDROM directory) has no valid subheader: its records start
     at byte 16, where the subheader would be. Its EDC/ECC are valid over the raw Form 1 layout,
     so a record update patches the raw bytes and recomputes EDC/ECC at the Form 1 positions.
@@ -274,6 +277,37 @@ class Disc:
         if (lba, len(data)) != (e.lba, e.size):
             self._update_record(e, lba, len(data))
         return lba
+
+    def replace_stream(self, path, raw):
+        """Put new raw sectors (2352 bytes each) over the stream `path` (an STR movie, T-39509),
+        same size and same layout. Only Form 1 sectors with the video submode bit may differ, and
+        each one must keep its sync, address and subheader and carry a valid EDC/ECC. Audio
+        (Form 2) and every other sector must be byte-identical. Returns the number of sectors
+        rewritten."""
+        e = self.iso.find(path)
+        if e.is_dir or not self.iso.is_stream(e):
+            raise DiscError("%r is not an XA/STR stream" % path)
+        if e.path in self.done:
+            raise DiscError("%r is already replaced" % path)
+        if e.lba + e.sectors > self.count or len(raw) != e.sectors * cs.SIZE:
+            raise DiscError("%r: new stream is %d bytes, the extent is %d sectors" % (path, len(raw), e.sectors))
+        self.done.add(e.path)
+        changed = {}
+        for i in range(e.sectors):
+            new = raw[i * cs.SIZE:(i + 1) * cs.SIZE]
+            old = self.track.raw(e.lba + i)
+            if new == old:
+                continue
+            video = cs.has_subheader(old) and not cs.is_form2(old) and old[18] & cs.SUB_VIDEO
+            if not video:
+                raise DiscError("%r sector %d is not a video sector; only video sectors may change" % (path, i))
+            if new[:cs.DATA] != old[:cs.DATA]:
+                raise DiscError("%r sector %d: sync, address or subheader changed" % (path, i))
+            if not cs.form1_valid(new):
+                raise DiscError("%r sector %d: EDC/ECC do not match the data" % (path, i))
+            changed[e.lba + i] = bytearray(new)
+        self.sectors.update(changed)
+        return len(changed)
 
     def _shift_streams(self):
         """Move the PVD volume space size and the extents past track 1 by the inserted count."""
