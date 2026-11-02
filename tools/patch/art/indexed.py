@@ -313,6 +313,19 @@ class Sheet:
             if index is not None:
                 self.used[index][part.v:part.v + part.height, part.u:part.u + part.width] = True
 
+    def hold(self, part: Part, indices) -> None:
+        """Keep a part's own texels with these indices (screen order, the part's flip applied)."""
+        by_offset = {(offset, bpp): index for index, (offset, bpp) in self.pages.items()}
+        index = by_offset.get((part.page, part.bpp))
+        if index is None:
+            return
+        for ly in range(part.height):
+            for lx in range(part.width):
+                sx = part.width - 1 - lx if part.flip & 2 else lx
+                sy = part.height - 1 - ly if part.flip & 1 else ly
+                self.used[index][part.v + sy, part.u + sx] = True
+                self.value[index][part.v + sy, part.u + sx] = indices[ly * part.width + lx]
+
     def free(self, index: int) -> int:
         return int((~self.used[index]).sum())
 

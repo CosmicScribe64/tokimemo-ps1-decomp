@@ -187,6 +187,7 @@ class Piece:
     part: Part          # geometry and palette; page, u and v are set when it is placed
     number: int | None  # the original part it replaces (relocate), None for a new part (rebuild)
     home: int | None = None   # the part whose palette it uses (frame part number, rebuild)
+    fixed: bool = False       # rewritten where it is: no other part draws these texels
 
 
 @dataclass
@@ -200,14 +201,15 @@ class Repack:
 
     @property
     def area(self) -> int:
-        return sum(p.width * p.height for p in self.pieces)
+        return sum(p.width * p.height for p in self.pieces if not p.fixed)
 
 
-def _relocate(data, group: list[Target], palettes: list[Part]):
+def _relocate(data, group: list[Target], palettes: list[Part], exclusive=lambda number: False):
     """Pieces for every part whose desired image differs, at the same place on screen.
 
     A part keeps its palette when it can draw the part's English pixels; a frame drawn with one
     palette set may take another palette of the container (its record's palette field changes).
+    A part whose texels no other part draws is rewritten where it is (`fixed`).
     """
     desired, why = _desired(data, group)
     if why:
@@ -236,6 +238,9 @@ def _relocate(data, group: list[Target], palettes: list[Part]):
                 break
         else:
             return None, "part %d: no palette draws its colours" % number
+        if option is part and exclusive(number):
+            pieces.append(Piece(part.bpp, part.width, part.height, tuple(indices), part, number, number, True))
+            continue
         moved = replace(part, flip=0, palette=option.palette, clut=option.clut)
         pieces.append(Piece(part.bpp, part.width, part.height, tuple(indices), moved, number, number))
     if not pieces:
@@ -381,7 +386,7 @@ def _split(piece: Piece, align: int):
 
 
 def _allocate(data, repacks: list[Repack], pages: dict, align: int, reserved: list[Part], every_part: list[Part],
-              page_sets: dict):
+              page_sets: dict, referenced: set):
     """Place every piece; returns ({group key: placed parts}, {group key: why it found no room}).
 
     Pieces go largest first. A piece may overlap texels that already hold the indices it needs
@@ -395,15 +400,21 @@ def _allocate(data, repacks: list[Repack], pages: dict, align: int, reserved: li
         held += [p for r in repacks if r.key in failed for t in r.group for p in t.view.parts]
         held += [p for r in live for p in r.kept]
         sheet = Sheet(data, pages, align, held, every_part)
-        order = sorted(((piece.width * piece.height, r.key, i) for r in live for i, piece in enumerate(r.pieces)),
+        for r in live:
+            for piece in r.pieces:
+                if piece.fixed:
+                    sheet.hold(piece.part, piece.indices)
+        order = sorted(((piece.width * piece.height, r.key, i) for r in live for i, piece in enumerate(r.pieces)
+                        if not piece.fixed),
                        key=lambda e: (-e[0], e[1], e[2]))
         by_key = {r.key: r for r in live}
-        placed: dict[str, dict[int, Part]] = {r.key: {} for r in live}
+        placed: dict[str, dict[int, Part]] = {r.key: {i: p.part for i, p in enumerate(r.pieces) if p.fixed}
+                                              for r in live}
         seen: dict = {}
         missing = None
         for _area, key, i in order:
             piece = by_key[key].pieces[i]
-            allowed = page_sets.get(by_key[key].group[0].view.key)
+            allowed = page_sets.get(by_key[key].group[0].view.key, referenced)
             content = (piece.bpp, piece.width, piece.height, piece.indices,
                        None if allowed is None else tuple(sorted(allowed)))
             where = seen.get(content)
@@ -424,7 +435,18 @@ def _allocate(data, repacks: list[Repack], pages: dict, align: int, reserved: li
             if halves:
                 repack.pieces[biggest:biggest + 1] = halves
                 continue
-        failed[_drop(repacks, failed, reserved, pages, align)] = missing[1]
+        # a piece that does not fit even with no other new piece placed: its own group goes
+        alone = Sheet(data, pages, align, held, every_part)
+        for r in live:
+            for piece in r.pieces:
+                if piece.fixed:
+                    alone.hold(piece.part, piece.indices)
+        lone = by_key[missing[0]].pieces
+        allowed = page_sets.get(by_key[missing[0]].group[0].view.key, referenced)
+        if any(not p.fixed and alone.take(p.width, p.height, p.bpp, p.indices, allowed) is None for p in lone):
+            failed[missing[0]] = missing[1]
+        else:
+            failed[_drop(repacks, failed, reserved, pages, align)] = missing[1]
 
 
 def _drop(repacks: list[Repack], failed: dict, reserved: list[Part], pages: dict, align: int) -> str:
@@ -523,8 +545,19 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
             if part.record is not None and (part.palette, part.clut) not in seen:
                 seen.add((part.palette, part.clut))
                 palettes.append(part)
+    owners: dict = {}       # texel -> (group, part number) of every part that draws it
+    for view in list(protect_views) + [t.view for g in groups.values() for t in g]:
+        for number, part in enumerate(view.parts):
+            for address in _texels(part):
+                owners.setdefault(address, set()).add((group_of(view), number))
+
+    def exclusive_to(key):
+        def check(number):
+            part = groups[key][0].view.parts[number]
+            return all(owners.get(a, set()) <= {(key, number)} for a in _texels(part))
+        return check
     for key in sorted(repack):
-        made, why = _prepare(data, groups[key], records, palettes)
+        made, why = _prepare(data, groups[key], records, palettes, exclusive_to(key))
         if made is None and len({t.view.record for t in groups[key]}) > 1:
             # frames that cannot share texels in English: each frame on its own
             subgroups = {}
@@ -534,7 +567,7 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
             for sub_key, sub in sorted(subgroups.items()):
                 for t in sub:
                     t.group = sub_key
-                single, why_single = _prepare(data, sub, records, palettes)
+                single, why_single = _prepare(data, sub, records, palettes)  # shared texels: none exclusive
                 if single is None:
                     singles = None
                     why = "%s; alone: %s" % (why, why_single)
@@ -552,8 +585,12 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
     reserved = [p for v in protect_views if group_of(v) not in repack for p in v.parts]
     reserved += [p for key in reasons for t in groups[key] for p in t.view.parts]
     every_part = [p for v in protect_views for p in v.parts] if profile.direct else []
+    # only pages some frame draws: a sheet no frame uses may not be in VRAM when the frame is drawn
+    # (MAINROM uploads 13 sheets, but slots of the unreferenced ones are reused at run time)
+    referenced = {i for i, (offset, bpp) in profile.pages.items()
+                  if any(p.page == offset and p.bpp == bpp for v in protect_views for p in v.parts)}
     placed, failed = _allocate(out.data, prepared, profile.pages, profile.align, reserved, every_part,
-                               profile.page_sets)
+                               profile.page_sets, referenced)
     for key, why in reasons.items():
         for t in groups[key]:
             out.deferred[t.image_id] = "repack: " + why
@@ -588,8 +625,10 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
                     moved = {piece.number: (part if single else replace(part, palette=own[piece.number].palette,
                                                                          clut=own[piece.number].clut))
                              for piece, part in zip(made.pieces, parts)}
+                    fixed = {piece.number for piece in made.pieces if piece.fixed}
                     for number, part in moved.items():
-                        put(own[number].record, pack(part, profile.encode(part.page_index, part.u, part.v)))
+                        if number not in fixed:
+                            put(own[number].record, pack(part, profile.encode(part.page_index, part.u, part.v)))
                     new = [moved.get(n, p) for n, p in enumerate(own)]
                     views_here[t.view.key] = View(t.view.key, new, t.view.left, t.view.top, t.view.width,
                                                   t.view.height, t.view.frame, t.view.record)
@@ -625,9 +664,9 @@ class _SharedRecord(Exception):
     pass
 
 
-def _prepare(data, group, records, palettes):
+def _prepare(data, group, records, palettes, exclusive=lambda number: False):
     """The cheaper of relocate and rebuild that can draw the group, or (None, why)."""
-    relocated, why = _relocate(data, group, palettes)
+    relocated, why = _relocate(data, group, palettes, exclusive)
     rebuilt, why_rebuild = _rebuild(data, group, _record_count(records, group[0].view), palettes)
     options = [m for m in (relocated, rebuilt) if m is not None]
     if not options:

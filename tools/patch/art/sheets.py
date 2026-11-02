@@ -81,7 +81,10 @@ def _exe_palette(read, address: int) -> tuple:
 def mainrom_profile(pack: bytes, exe: bytes) -> Profile:
     """MAINROM.NBN: 4bpp sheets; frame records and palettes in the executable."""
     read, _base, frames, _sequences = mainrom._parse(pack, exe)
-    profile = Profile("CDROM/FUKUTEST/MAINROM.NBN", align=8,
+    # boot_hud_textures_load uploads sheets 0-3 and 7-10 only (4-6 are not in VRAM, so the
+    # allocator never uses them: no frame draws them). The one direct sprite into these tpages
+    # (hud_panels.c, the checker background) samples u 128-159, outside the sheets.
+    profile = Profile("CDROM/FUKUTEST/MAINROM.NBN", align=8, direct=False,
                       pages={i: (offset, 4) for i, offset in enumerate(mainrom.TEXTURE_OFFSETS)},
                       encode=lambda page, u, v: (page << 8) | ((v // 8) << 4) | (u // 8), exe=exe)
     for variant in ("base",) + tuple(mainrom.OVERRIDES):
