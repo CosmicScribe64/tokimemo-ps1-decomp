@@ -209,6 +209,9 @@ class TestTranslationTree(unittest.TestCase):
                 base_supplemental_path=os.path.join(tree_dir, "supplemental.jsonl"),
             )
 
+            # Pinned hashes of the built files. A deliberate edit to the corpus changes them:
+            # returned-v3.jsonl moved with the text dictionary stat names (Health, Humanities, Sports; T-39410),
+            # supplemental.jsonl with the Scavenger Race row of tai_tx.md (T-39411).
             expected_ret = "7f3ed304ca62d994e91c588680ee12c65cae7f6b81de341e00aa03c7c58f86de"
             expected_sup = "2614bec9d14a7e622af4b3b82ffb1af4af3c434be5fe60c72993f10c2ae20efa"
 

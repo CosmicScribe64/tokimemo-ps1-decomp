@@ -37,7 +37,7 @@ class BitmapTests(unittest.TestCase):
         subject.check_bitmaps()
         for ch, bitmap in subject.BOLD.items():
             self.assertEqual(len(bitmap), subject.BOLD_HEIGHT + len(subject.BOLD_DESCENDERS.get(ch, ())), ch)
-        faces = subject.round2_faces()   # raises on a malformed drawing
+        faces = subject.small_bold_faces()   # raises on a malformed drawing
         self.assertEqual({max(y for _, y in g['points']) + 1 for g in faces['bold6'].glyphs.values()}, {6})
         self.assertEqual({max(y for _, y in g['points']) + 1 for g in faces['bold7'].glyphs.values()}, {7})
         self.assertEqual({max(y for _, y in g['points']) + 1 for g in faces['semi10'].glyphs.values()}, {10})
@@ -61,14 +61,14 @@ class BitmapTests(unittest.TestCase):
         self.assertEqual(sorted(set(out)), sorted(drawing))
 
     def test_cover_glyphs_exist_for_every_title(self):
-        faces = subject.round2_faces()
+        faces = subject.small_bold_faces()
         for spec in subject.COVERS.values():
             for line in spec['lines']:
                 for ch in line['text'].replace(' ', ''):
                     self.assertIn(ch, faces[line['face']].glyphs)
 
     def test_cover_titles_fit_the_logo_columns(self):
-        faces = subject.round2_faces()
+        faces = subject.small_bold_faces()
         for frame, spec in subject.COVERS.items():
             for line in spec['lines']:
                 xs = [x for x, _ in subject.layout_line(faces[line['face']], line)]
@@ -143,7 +143,7 @@ class LayoutTests(unittest.TestCase):
         self.assertEqual(subject.ISSUE_MONTHS[124], '9-10-11')
 
     def test_season_lines_fill_the_badge_rows_in_one_size(self):
-        face = subject.round2_faces()['bold6w']
+        face = subject.small_bold_faces()['bold6w']
         widths = [base.line_width(face, t, None) for t in list(subject.ISSUE_SEASONS.values()) + [subject.ISSUE_WORD]]
         self.assertLessEqual(max(widths), 56 - 2)   # 1 px clear each side, as the Japanese
         self.assertGreaterEqual(max(widths), 40)
@@ -189,6 +189,8 @@ class ResolutionTests(unittest.TestCase):
 
     def test_stale_three_letter_drafts_are_listed(self):
         stale = subject.weekday_resolution()['stale_three_letter_to_supersede']
+        # 12 drafts: the batch-002 three-letter weekday drafts the items 82-88 list, one per bound variant
+        # (two each for frames 83-87, one each for 82 and 88).
         self.assertEqual(len(stale), 12)
         self.assertTrue(all(s['id'].startswith('draft:mainrom-weekday-') for s in stale))
 
@@ -225,15 +227,28 @@ class PublishedTests(unittest.TestCase):
             self.assertEqual(len(s['output_sha256']), 64)
             self.assertTrue((subject.ROOT / s['ledger']).exists())
 
-    def test_register_note_exists(self):
+    def test_register_note_has_its_data_sections(self):
         text = (PUBLISHED / 'REGISTER.md').read_text()
-        self.assertIn('Supersedes', text)
+        for heading in ('## 1. Ledger and supersedes', '## 2. Weekday items', '## 3. Drawn text', '## 4. Settings'):
+            self.assertIn(heading, text)
         self.assertIn('weekday-resolution.json', text)
 
-    def test_images_stay_inside_the_original_palette_counts(self):
+    def test_first_twelve_images_have_the_ledger_dimensions(self):
+        # The palette check is BuildTests.test_every_variant_uses_only_the_colours_of_its_japanese.
         for a in self.ledger['assets'][:12]:
             image = Image.open(PUBLISHED / a['path']).convert('RGBA')
             self.assertEqual(list(image.size), a['dimensions'])
+
+    def test_ledger_says_the_whole_frames_hold_original_art(self):
+        self.assertIs(self.ledger['original_images_included'], True)
+        self.assertEqual(self.ledger['source_pixels_note'], subject.SOURCE_PIXELS_NOTE)
+        for a in self.ledger['assets']:
+            counts = a['source_pixels']
+            self.assertGreater(counts['kept_from_source'], 0, a['id'])
+            self.assertLessEqual(counts['kept_from_source'], counts['opaque_texels'], a['id'])
+        text = (PUBLISHED / 'REGISTER.md').read_text()
+        self.assertIn('## 5. Original pixels in the committed files', text)
+        self.assertNotIn('no original pixel', text)
 
 
 @unittest.skipUnless(PACK.exists() and SOURCES.exists(), 'needs the extracted disc and original MAINROM renders')
@@ -247,6 +262,17 @@ class BuildTests(unittest.TestCase):
         built = {row['id']: row['output_sha256'] for _, _, row in prepared}
         self.assertEqual(built, published)
         self.assertEqual(result['assets'], len(published))
+
+    def test_publish_reproduces_the_committed_text_files(self):
+        if not PUBLISHED.exists():
+            self.skipTest('checkpoint not published')
+        with tempfile.TemporaryDirectory(dir=subject.ROOT / '.asset-cache') as tmp:
+            _, prepared, old = subject.build(SOURCES, PACK, EXECUTABLE, Path(tmp) / 'out')
+            subject.publish(Path(tmp) / 'out', prepared, old, subject.weekday_resolution(), Path(tmp) / 'published')
+            for name in ('ledger.json', 'weekday-resolution.json', 'REGISTER.md', subject.REVISION + '/manifest.json'):
+                self.assertEqual((Path(tmp) / 'published' / name).read_bytes(), (PUBLISHED / name).read_bytes(), name)
+            self.assertEqual(sorted(p.name for p in (Path(tmp) / 'published' / subject.REVISION).glob('*.png')),
+                             sorted(p.name for p in (PUBLISHED / subject.REVISION).glob('*.png')))
 
     def test_pixels_outside_edit_regions_equal_the_source(self):
         with tempfile.TemporaryDirectory(dir=subject.ROOT / '.asset-cache') as tmp:

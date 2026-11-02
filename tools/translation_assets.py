@@ -32,6 +32,19 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def source_pixels(original, image):
+    """Opaque texels of `image` (PIL RGBA), and how many equal the source texel at the same position.
+
+    Where the sizes differ (a widened cell) the overlap at the top-left corner is compared. It measures
+    how much original art a committed derivative still holds; it does not say which texels are art.
+    """
+    width, height = min(original.width, image.width), min(original.height, image.height)
+    before = original.crop((0, 0, width, height)).getdata()
+    after = image.crop((0, 0, width, height)).getdata()
+    return {'opaque_texels': sum(1 for texel in image.getdata() if texel[3] > 0),
+            'kept_from_source': sum(1 for old, new in zip(before, after) if new[3] > 0 and old == new)}
+
+
 def encoded(value):
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
 

@@ -20,12 +20,10 @@ items the owner review sent back:
 * game covers 151-154: English title lettering in each logo's colours and close to
   its weight (SUIKODEN, PARODIUS, POWER / PROS, TWINBEE / PUZZLE).
 
-Round 2 (the second review of the same day) changed items 1-7 of the brief in
-wiki/tickets/T-39410-mainrom-art-fixes.md; the checkpoint keeps its revision and ids.
-
 Every variant of every frame is rendered from the one edited index map, so the
 variants cannot drift. Pixels outside the declared edit regions equal the exact
-source render, which is itself gated byte-for-byte against the original export.
+source render, which is itself gated byte-for-byte against the original export, so
+every committed PNG is a whole frame that still holds the original art (SOURCE_PIXELS_NOTE).
 All new lettering is port-made (hand-drawn bitmaps, never scaled or generated)
 and is flagged as such in the ledger. Outputs are unreviewed drafts. Run in
 Docker only.
@@ -36,7 +34,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from translation_assets import ROOT, digest, encoded, new_output
+from translation_assets import ROOT, digest, encoded, new_output, source_pixels
 import translation_mainrom_drafts as base
 
 VARIANTS = base.VARIANTS
@@ -44,10 +42,15 @@ CLEAR = base.CLEAR
 CHECKPOINT = 'T39410-mainrom-fixes-v1'
 REVISION = 'mainrom-fixes-v1'
 TICKET = 'T-39410'
-# Genre-tag alignment: the owner decision (2026-11-01) is centred with a 1 px margin
-# on both sides. 'left' keeps a 1 px left margin and is the quick alternative.
+# Genre-tag alignment (owner decision): centred with a 1 px margin on both sides.
+# 'left' keeps a 1 px left margin and is the alternative.
 TAG_ALIGN = 'center'
 TAG_MARGIN = 1
+# What the committed PNGs hold (ledger.json, REGISTER.md). Every file is a whole frame, so it keeps the
+# original art outside the edit regions. The owner asked for translated assets to be kept in the repository
+# (T39004-2026-10-29/README.md, T-39004); the whole-frame drafts these files supersede are committed the same way.
+SOURCE_PIXELS_NOTE = ('edited English derivatives, not source exports: a whole frame keeps the original art outside '
+                      'its edit regions, and source_pixels counts the texels kept from the source')
 
 
 # ---- Hand-drawn bitmaps -------------------------------------------------------
@@ -107,12 +110,12 @@ BOLD_DRAWN = {
     'Y': rows(('##..##', 6), ('.####.', 3), ('..##..', 6)),
     'Z': rows(('######', 2), ('....##', 2), ('...##.', 2), ('..##..', 3), ('.##...', 2), ('##....', 2), ('######', 2)),
 }
-# Descender rows below the baseline (round 2, item 3): the Q's tail runs out of the bowl's
-# bottom right and down two rows, so the word cannot read "AOUARIUM".
+# Descender rows below the baseline: the Q's tail runs out of the bowl's bottom right and
+# down two rows, so the word cannot read "AOUARIUM".
 BOLD_DESCENDERS = {'Q': ['....###', '.....##']}
 BOLD = {ch: stretched(bitmap) + BOLD_DESCENDERS.get(ch, []) for ch, bitmap in BOLD_DRAWN.items()}
-# Round 2 bold small capitals: 6 rows, 2 px stems, 1-row bars (items 3 and 6: the season badges
-# and the two-line cover titles). T is 4 wide so TWINBEE fits the cover's 40 px with its outline.
+# Bold small capitals: 6 rows, 2 px stems, 1-row bars (the season badges and the two-line cover
+# titles). T is 4 wide so TWINBEE fits the cover's 40 px with its outline.
 BOLD6_HEIGHT = 6
 BOLD6 = {
     'A': ['.###.', '##.##', '##.##', '#####', '##.##', '##.##'],
@@ -150,7 +153,7 @@ BOLD6_WIDE = {
 }
 # The 7-row form (cover 154, first line) repeats one stem row: row 4, or row 3 for W.
 BOLD6_STRETCH = {'W': 3}
-# Round 2 semi-bold capitals for the eight-letter cover titles (SUIKODEN, PARODIUS): 8 rows, 4 wide,
+# Semi-bold capitals for the eight-letter cover titles (SUIKODEN, PARODIUS): 8 rows, 4 wide,
 # a 2 px main stem and 1 px elsewhere (N is 5 wide for its diagonal). Eight 2 px-stem letters
 # of 5 px would need 47 px; the logos have 40.
 SEMI8_HEIGHT = 8
@@ -191,7 +194,7 @@ def small_bold_face(name, table, height, description, repeat=None):
                                        'glyphs': provenance})
 
 
-def round2_faces():
+def small_bold_faces():
     return {
         'bold6': small_bold_face('bold6', BOLD6, BOLD6_HEIGHT, 'bold capital, 6 rows, 2 px stems, 1-row bars'),
         'bold6w': small_bold_face('bold6w', BOLD6_WIDE, BOLD6_HEIGHT, 'wide bold capital, 6 rows, 2 px stems, '
@@ -210,15 +213,14 @@ PANEL7_PERIOD = (['.', '.', '.', '.', '.', '.', '#'], 'period, 1 wide, on the ba
 NARROW_W = (['#.#', '#.#', '#.#', '###', '###', '###', '#.#'], 'narrow cap W, 3 wide (panel7-style W is 5)')
 # Order in which narrow forms are tried: W first (a modest change), r and t last.
 NARROW_ORDER = 'WHoaebgns' + 'rt'
-# Frame 144 (rounds 2 and 3). "Pro / Wrestling" cannot fit: two 7-row lines with shadows need 16 rows,
-# and the 3-wide W read as H or N. The tag says "Wrestling" on one line with the 5-wide W, in the 7 rows
-# plus shadow that "Baseball" (frame 145) uses. Round 3: the t is the family's t (centred 3 px crossbar,
-# hooked foot), one row shorter than the l. The s has a flat one-pixel top, so its top-right corner is
-# empty. That lets the t's left arm sit in the column after the s and stay 1 px clear of it (s-t kerned
-# to 0 px). r-e is kerned to 0 px too: only the arm of the r meets the e, corner to corner. Every other
-# letter is already at its narrowest form, so the word's ink is 30 px. The tag keeps 1 px clear on both
-# sides, so the drop shadow is clipped at the right margin: the g loses the 4 shadow pixels of its right
-# edge.
+# Frame 144 says "Wrestling" on one line with the 5-wide W, in the 7 rows plus shadow that "Baseball"
+# (frame 145) uses. "Pro / Wrestling" cannot fit (two 7-row lines with shadows need 16 rows) and a
+# 3-wide W reads as H or N. The t is the family's t (centred 3 px crossbar, hooked foot), one row
+# shorter than the l. The s has a flat one-pixel top, so its top-right corner is empty; that lets the
+# t's left arm sit in the column after the s and stay 1 px clear of it (s-t kerned to 0 px). r-e is
+# kerned to 0 px too: only the arm of the r meets the e, corner to corner. Every other letter is at its
+# narrowest form, so the word's ink is 30 px. The tag keeps 1 px clear on both sides, so the drop
+# shadow is clipped at the right margin: the g loses the 4 shadow pixels of its right edge.
 WRESTLING_T = (['...', '.#.', '###', '.#.', '.#.', '.#.', '..#'],
                't, 3 wide: the panel7 t (centred crossbar, hooked foot) one row shorter, so it does not read as l')
 WRESTLING_S = (['...', '...', '.#.', '#..', '.#.', '..#', '##.'],
@@ -384,7 +386,7 @@ TONE_OFFSETS = {'highlight': ('ink', -1), 'mid': ('ink', 1), 'soft': ('shadow', 
 
 
 def soft_edges(ink_px, shadow_px):
-    """{pixel: role} for the clear notches of a drawn word: (round 2, item 7)
+    """{pixel: role} for the clear notches of a drawn word:
 
     * highlight: a notch with ink below and on one side (the cut top corners of round letters,
       the upper steps of slanted strokes);
@@ -423,7 +425,7 @@ def source_ink(frame, rect):
 
 # ---- Plans ------------------------------------------------------------------
 
-# Item 2: one wording pattern for the whole headline family.
+# One wording pattern for the whole headline family.
 HEADLINES = {
     126: ('CENTRAL PARK GUIDE', '中央公園紹介', 'Guide'),
     127: ('ART MUSEUM OPENS', '美術館完成', 'Opens'),
@@ -436,9 +438,9 @@ HEADLINES = {
 }
 
 
-# Round 2 (owner decision, 2026-11-01): headlines are flush left, starting at the column where the
-# Japanese starts in the same banner. The ink keeps the vertical position of round 1 (centred on the
-# 17 cap rows, so a descender such as the Q's tail hangs below without moving the baseline).
+# Headlines are flush left (owner decision), starting at the column where the Japanese starts in the
+# same banner. The ink is centred vertically on the 17 cap rows, so a descender such as the Q's tail
+# hangs below without moving the baseline.
 HEADLINE_ALIGN = 'left'
 
 
@@ -474,8 +476,7 @@ def plan_headline(frame, face):
             'lettering_bbox': box, 'wording_rule': HEADLINES[frame.frame][1:]}
 
 
-# Item 3: issue banners. Round 2 (owner decision, 2026-11-01): the three-month runs are named by
-# season, in two bold lines (season over ISSUE) that fill the badge's rows 1-14 like the Japanese
+# Issue banners: the three-month runs are named by season (owner decision), in two bold lines (season over ISSUE) that fill the badge's rows 1-14 like the Japanese
 # numerals. One size for all four; SUMMER and AUTUMN are the widest lines.
 ISSUE_SEASONS = {122: 'SPRING', 123: 'SUMMER', 124: 'AUTUMN', 125: 'WINTER'}
 ISSUE_MONTHS = {122: '3-4-5', 123: '6-7-8', 124: '9-10-11', 125: '12-1-2'}
@@ -512,7 +513,7 @@ def plan_issue(frame, face):
                                    for c in sorted(set(''.join(lines)))]}
 
 
-# Item 4: genre tags.
+# Genre tags.
 TAG_TEXT = {**base.PORT_MADE_TAGS, 136: ('Action',), 137: ('Suspense',), 140: ('Classical',),
             144: (WRESTLING['text'],)}
 
@@ -544,7 +545,7 @@ def plan_tag(frame, faces):
     return plan
 
 
-# Item 1: Save labels. Part-local rows of the lettering layer (the Japanese spans 2-12).
+# Save labels. Part-local rows of the lettering layer (the Japanese spans 2-12).
 SAVE_BAND = (2, 12)
 
 
@@ -571,7 +572,7 @@ def plan_save(frame, face, card_frame):
             'edit_regions': [region], 'lettering_bbox': box}
 
 
-# Item 6: stat labels (frame 61). Label strips are parts 25-27 (32x40 each, three 12-row labels at a 14 row pitch).
+# Stat labels (frame 61). Label strips are parts 25-27 (32x40 each, three 12-row labels at a 14 row pitch).
 STATS = {25: ('Health', 'Art', 'Looks'), 26: ('Hum.', 'Sports', 'Guts'), 27: ('Science', 'Trivia', 'Stress')}
 STAT_NAMES = ('Health', 'Humanities', 'Science', 'Art', 'Sports', 'Trivia', 'Looks', 'Guts', 'Stress')
 STAT_MAX_WIDTH = 26  # strip columns kept clear of the arrow marker (it starts at strip column 29; 3 px gap)
@@ -595,10 +596,9 @@ def plan_stats(frame, faces):
             'lettering_bbox': boxes, 'alignment': 'left', 'port_made_elements': base.used_port_made(face, labels)}
 
 
-# Item 7: game covers 151-154. The titles are small multi-colour pixel logos (40x16, frame x 8-47);
-# they are re-lettered with the logo's own indices. Round 2 (owner review, 2026-11-01): bolder
-# letters, close to each logo's weight; 0153 says POWER PROS (owner decision) on two lines, like
-# TWINBEE / PUZZLE; PARODIUS keeps the logo's yellow and white; no letter may touch the artwork
+# Game covers 151-154. The titles are small multi-colour pixel logos (40x16, frame x 8-47); they are
+# re-lettered with the logo's own indices, in letters close to each logo's weight. 0153 says POWER PROS
+# (owner decision) on two lines, like TWINBEE / PUZZLE; PARODIUS keeps the logo's yellow and white; no letter may touch the artwork
 # that stays (the 0153 baseball): every written pixel keeps one clear pixel from it.
 COVER_X = (8, 40)   # title columns of every cover logo
 
@@ -711,22 +711,22 @@ FRAMES = {'save': (57, 58, 59), 'headline': tuple(sorted(HEADLINES)), 'issue': t
 def compose(frames, panel7, native=None):
     """{frame: (edited Frame, plan)} for every frame this tool redraws (no covers)."""
     small = small_faces(panel7)
-    bold, round2 = bold_face(), round2_faces()
+    bold, bold_small = bold_face(), small_bold_faces()
     out = {}
     for f in FRAMES['headline']:
         model = frames[f].copy()
         out[f] = (model, plan_headline(model, bold))
     for f in FRAMES['issue']:
         model = frames[f].copy()
-        out[f] = (model, plan_issue(model, round2['bold6w']))
+        out[f] = (model, plan_issue(model, bold_small['bold6w']))
     for f in FRAMES['tag']:
         model = frames[f].copy()
         out[f] = (model, plan_tag(model, small))
     for f in sorted(COVERS):
         model = frames[f].copy()
-        # The bottom strip keeps its English ("Out in '95" / "Out Now!") exactly as the T-39009 draft had it.
+        # The bottom strip keeps the English of the T-39009 draft ("Out in '95" / "Out Now!").
         strip = base.plan_bar(model, native, strip_top=50)
-        plan = plan_cover(model, round2)
+        plan = plan_cover(model, bold_small)
         plan['edit_regions'] = strip['edit_regions'] + plan['edit_regions']
         plan['strip'] = {'text': strip['text'], 'face': 'native', 'outline': strip['outline'],
                          'lettering_bbox': strip['lettering_bbox'], 'source': 'unchanged from T-39009 (translation_mainrom_drafts.plan_bar)'}
@@ -738,7 +738,7 @@ def compose(frames, panel7, native=None):
         model = frames[f].copy()
         out[f] = (model, plan_save(model, small['panel7-compact'], frames[56]))
     wrestling = wrestling_face(small)
-    return out, {'bold17': bold, **round2, **small, wrestling.name: wrestling}
+    return out, {'bold17': bold, **bold_small, **small, wrestling.name: wrestling}
 
 
 def rows_for(f, model, plan, original_frame, hashes, sources, users):
@@ -755,7 +755,7 @@ def rows_for(f, model, plan, original_frame, hashes, sources, users):
             'dimensions': [model.width, model.height], 'output': 'mainrom-frame-%04d-%s.png' % (f, v),
             'runtime_variant_scope': base.applicability(f, [v], model), 'style': 'unreviewed',
             'human_approved': False, 'runtime_integrated': False, 'in_game_verified': False,
-            'port_made': True, 'sheet_scope': scope, **plan}))
+            'port_made': True, 'sheet_scope': scope, 'source_pixels': source_pixels(original, image), **plan}))
     return out
 
 
@@ -818,7 +818,7 @@ def superseded_candidates(inventory_path=INVENTORY):
 
 
 def weekday_resolution(inventory_path=INVENTORY, date_ledger=DATE_PANEL_LEDGER, sources=None):
-    """Item 5: every variant of frames 82-88 resolves to the approved two-letter file.
+    """Every variant of frames 82-88 resolves to the approved two-letter file.
 
     The approved file of a variant is the T39004-date-panel-v1 asset whose palette_ids hold it
     (base and icon-52 share one source image and one file). The stale three-letter drafts are
@@ -922,14 +922,15 @@ def ledger_for(built, prepared, old, weekday):
                        'port_made_elements': row.get('port_made_elements', []), 'revision': REVISION,
                        'sheet_scope': row['sheet_scope']['scope'], 'source_container': row['source_container'],
                        'source_container_sha256': row['source_container_sha256'],
+                       'source_pixels': row['source_pixels'],
                        'source_png_sha256': row['source_png_sha256'], 'status': 'draft', 'supersedes': row['supersedes'],
                        'text': row['text'],
                        'reason': 'Owner-review fix of the MAINROM draft (item %d); unreviewed, no approval transfers.' % row['item']})
     supersedes = [{'id': c['id'], 'ledger': c['ledger'], 'output_sha256': c['output_sha256'], 'revision': c['revision']}
                   for f in sorted(old) for c in old[f]]
     return {'schema': 'tokimemo.translation-checkpoint.v1', 'ticket': TICKET, 'assets': assets,
-            'candidate_assets': len(assets), 'original_images_included': False,
-            'complete_translation_inventory': False, 'separate_reviewed_revisions': 0,
+            'candidate_assets': len(assets), 'original_images_included': True,
+            'source_pixels_note': SOURCE_PIXELS_NOTE, 'complete_translation_inventory': False, 'separate_reviewed_revisions': 0,
             'port_made_assets': len(assets), 'supersedes': supersedes,
             'weekday_resolution': 'weekday-resolution.json',
             'tag_alignment': {'mode': TAG_ALIGN, 'margin': TAG_MARGIN,
@@ -941,116 +942,108 @@ def ledger_for(built, prepared, old, weekday):
 
 REGISTER_TEXT = """# T39410 register note for the integrator
 
-This checkpoint redraws the MAINROM items the 2026-11-01 owner review sent back. It does not edit any shared
-registration file. Every PNG is an unreviewed draft (`human_approved: false`), one file per palette variant.
-Run `python3 tools/translation_mainrom_fixes.py --output .asset-cache/<new dir> [--publish <new dir>]` in the
-Pillow Docker image to rebuild it.
+Every PNG is an unreviewed draft (`human_approved: false`), one file per palette variant. This note holds the
+data the integrator needs; why each item is drawn as it is lives in `wiki/tickets/T-39410-mainrom-art-fixes.md`.
+To rebuild, run `python3 tools/translation_mainrom_fixes.py --output .asset-cache/<new dir> [--publish <new dir>]`
+in the Pillow Docker image.
 
-## 1. Supersedes (translation_inventory.py / inventory_decisions.json)
+## 1. Ledger and supersedes (translation_inventory.py / inventory_decisions.json)
 
-Register `translations/en/graphics/artwork/checkpoints/T39410-mainrom-fixes-v1/ledger.json` as a ledger and bind
-`mainrom-fix-NNNN.<variant>` to the item `mainrom-NNNN` (frame NNNN) for NNNN in {frames}. Candidate ids
-follow `mainrom-fix-<frame>.<palette_id>` (`candidate_key` needs that pattern). The `supersedes` list of the
-ledger names the {count} earlier candidates they replace (each asset also lists the ones for its own variant);
-mark every one `superseded` with `superseded_by` this ledger:
+Register `translations/en/graphics/artwork/checkpoints/{checkpoint}/ledger.json` as a ledger and bind
+`mainrom-fix-NNNN.<variant>` to the item `mainrom-NNNN` (frame NNNN) for NNNN in {frames}. `candidate_key` needs
+the id pattern `mainrom-fix-<frame>.<palette_id>`. The ledger's `supersedes` list names the {count} earlier
+candidates these files replace (each asset also lists the ones for its own variant). Mark each `superseded`
+with `superseded_by` this ledger:
 
 {lists}
 
-Every variant of every frame is covered, so the variant groups of the inventory items can be one per palette
-(the previous `hud-43|hud-44|icon-52|icon-53` groups of frame 126 are now four files; the manifest's
-`identical_variant_outputs` names the variants whose files are byte-identical because their source image is).
+The manifest's `identical_variant_outputs` names the variants whose files are byte-identical because their
+source image is: {identical}.
 
 ## 2. Weekday items 82-88 (mainrom-0082 .. 0088)
 
-`weekday-resolution.json` proves that every variant resolves to the approved two-letter file
-(T39004-date-panel-v1; base and icon-52 share one file). The stale three-letter drafts are the {stale} batch-002
-historical assets still listed on the items (`english.historical_assets`). Mark each of them superseded by
-`T39004-date-panel-v1/ledger.json` and drop them from the items so no packer can choose them:
+`weekday-resolution.json` shows that every variant resolves to the approved two-letter file
+(T39004-date-panel-v1; base and icon-52 share one file). The {stale_count} three-letter drafts below are batch-002
+historical assets listed on the items (`english.historical_assets`). Mark each superseded by
+`T39004-date-panel-v1/ledger.json` and drop it from the item:
 
 {stale_list}
 
-## 3. Catalog wording (image_text_catalog.jsonl / .md)
+## 3. Drawn text
 
-"catalog now" is the catalog after rounds 2 and 3, which edited the rows of 0122-0125, 0132, 0144 and 0153 to match the art.
+The catalog row of each frame must describe the text drawn here.
 
-| frame | catalog now | drawn |
-| :--- | :--- | :--- |
-| 0126 | Central Park Guide | CENTRAL PARK GUIDE; 紹介 is a feature heading like the others, so it keeps "Guide" |
-| 0127 | Art Museum Opens | ART MUSEUM OPENS |
-| 0128 | Aquarium Special | AQUARIUM SPECIAL |
-| 0129 | Stadium Opens | STADIUM OPENS |
-| 0130 | Botanical Garden Special | GARDEN SPECIAL |
-| 0131 | Bowling Alley Special | BOWLING SPECIAL |
-| 0132 | Karaoke Box Opens | KARAOKE BOX OPENS |
-| 0133 | Planetarium Special | PLANETARIUM SPECIAL |
-| 0122-0125 | Spring Issue (3-4-5), Summer Issue (6-7-8), Autumn Issue (9-10-11), Winter Issue (12-1-2) | SPRING / ISSUE, SUMMER / ISSUE, AUTUMN / ISSUE, WINTER / ISSUE |
-| 0061 | Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress | Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress |
-| 0140 | Classical | Classical (the T-39009 draft said Classic; the full word fits) |
-| 0144 | Pro Wrestling (suggestion: Wrestling) | Wrestling (one line; "Pro / Wrestling" cannot keep the tag's margins) |
-| 0151-0154 | Suikoden, Parodius, Power Pros, TwinBee Puzzle | SUIKODEN, PARODIUS, POWER / PROS, TWINBEE / PUZZLE |
+| frame | drawn |
+| :--- | :--- |
+{drawn}
 
-Wording rule of the headline family: 完成 -> "Opens", 特集 -> "Special", 紹介 -> "Guide". "Hum." is used in
-frame 61 because "Humanities" does not fit the 26 px a label strip leaves before the arrow marker; the text
-dictionary has the full word.
+## 4. Settings
 
-## 4. Inventory decisions
+- Genre tags 0134-0145: alignment `{align}`, margin {margin} px (`TAG_ALIGN` in the tool; set it to `left` and rebuild to
+  move them, only the tag files change).
+- Sheet scope of the files: {scopes}. A frame-composite-only draft is integrated as a whole-frame replacement.
 
-- Frame 0057-0059: the earlier reading note (セーブ中, "Save" kept) still holds; "Save" is now in the Japanese band.
-- Tags 0134-0145 are centred with a 1 px margin on both sides (owner decision 2026-11-01). If the in-game check
-  prefers left alignment, set `TAG_ALIGN = 'left'` in the tool and rebuild; only the tag files change.
-- 0151-0154 title lettering (round 2): SUIKODEN and PARODIUS are 4 px semi-bold capitals (eight 2 px-stem letters of
-  5 px would need 47 px of the logo's 40); POWER / PROS and TWINBEE / PUZZLE are two lines of 2 px-stem capitals.
-  PARODIUS is yellow to orange with a white outline and a navy shadow. Every title keeps 1 px clear of the artwork
-  that stays (the 0153 baseball). The cover art outside the title rows and the bottom strip are as T-39009 drew them.
-- Headlines 0126-0133 (round 2) are flush left at the column where the Japanese starts (x 0 in all eight) and carry the
-  banner's edge tones (highlight = fill - 1, mid = fill + 1, soft = shadow + 1) on the cut corners; the manifest lists
-  the tone pixels per banner.
-- 0144 reads "Wrestling" in one line with a 5 px W, rows 4-11 like 0145 (round 2). Round 3: the t is the family's t
-  (centred crossbar, hooked foot), one row shorter than the l, and the s has a flat one-pixel top, so the t keeps 1 px
-  clear of the s; e, n, g and r take their narrow forms and r-e and s-t are kerned to 0 px. The ink is 30 px, so the
-  4 shadow pixels of the g's right edge are clipped to keep 1 px clear at the tag's right edge.
-- Icon-51 STP: the icon-51 variant's semi-transparency follows the colour. QA pass 3 (`tools/stp.py`) found that
-  every English colour maps to exactly one STP value in its source variant, with 0 ambiguous colours across the 32
-  frames, so the STP bits can be restored from the colour alone. This closes G1.
-- Sheet scope: every row records `sheet_scope`; frame-composite-only drafts must be integrated as whole-frame
-  replacements, as before.
-- The text dictionary change (item 8) is already in `translations/en/returned-v3.jsonl`: records
-  `dictionary:SLPM_86.053:parameter_names:00/01/04` and `SLPM_86.053:00072ad0/00072ad8/00072af0` now read Health,
-  Humanities, Sports (they read Condition, Liberal Arts, Athletics); the other stat names already matched. The SLPM
-  tables that `translation_tree.py` builds from are gitignored (`SLPM_*`), so the JSONL was edited directly.
-  `translations/en/manifest.json` was already out of date with the file and is unchanged.
-- Rebuild `translations/en/graphics/translation_inventory.json` (it pins the `returned-v3.jsonl` hash):
-  `test_translation_inventory.InventoryTests.test_committed_inventory_matches_inputs` fails until it is rebuilt,
-  because the JSONL hash changed (inventory `ed180f9f...`, now `7f3ed304...`).
+## 5. Original pixels in the committed files
+
+{pixels_note}. This is why the ledger says `original_images_included: true`. The owner asked for translated
+assets to be kept in the repository (`translations/en/graphics/artwork/checkpoints/T39004-2026-10-29/README.md`,
+T-39004); the whole-frame drafts these files supersede are committed the same way. No unmodified source export is
+committed. Counts are per frame over its palette variants: opaque texels, and those equal to the source texel at
+the same position.
+
+| frame | size | variants | opaque texels | kept from source |
+| :--- | :--- | ---: | ---: | ---: |
+{pixels}
 """
 
 
-def register_text(frames, old, weekday):
-    lists = []
-    for f in sorted(old):
-        lists.append('- mainrom-%04d: %s' % (f, ', '.join(c['id'] for c in old[f])))
+def span(values):
+    return str(min(values)) if min(values) == max(values) else '%d-%d' % (min(values), max(values))
+
+
+def register_text(prepared, old, weekday, manifest):
+    rows_ = [row for _, _, row in prepared]
+    frames = sorted({row['frame'] for row in rows_})
+    lists = ['- mainrom-%04d: %s' % (f, ', '.join(c['id'] for c in old[f])) for f in sorted(old)]
     stale = weekday['stale_three_letter_to_supersede']
-    return REGISTER_TEXT.format(frames=', '.join('%04d' % f for f in frames), count=sum(len(v) for v in old.values()),
-                                lists='\n'.join(lists), stale=len(stale),
-                                stale_list='\n'.join('- mainrom-%04d: %s' % (s['frame'], s['id']) for s in stale))
+    drawn = ['| %04d | %s |' % (row['frame'], row['text']) for row in rows_ if row['palette_id'] == 'base']
+    pixels = []
+    for f in frames:
+        group = [row for row in rows_ if row['frame'] == f]
+        pixels.append('| %04d | %dx%d | %d | %s | %s |' % (
+            f, group[0]['dimensions'][0], group[0]['dimensions'][1], len(group),
+            span([row['source_pixels']['opaque_texels'] for row in group]),
+            span([row['source_pixels']['kept_from_source'] for row in group])))
+    identical = ', '.join('%s (%s)' % (f, ' = '.join(v)) for f, v in sorted(manifest['identical_variant_outputs'].items()))
+    return REGISTER_TEXT.format(
+        checkpoint=CHECKPOINT, frames=', '.join('%04d' % f for f in frames), count=sum(len(v) for v in old.values()),
+        lists='\n'.join(lists), identical=identical, stale_count=len(stale),
+        stale_list='\n'.join('- mainrom-%04d: %s' % (x['frame'], x['id']) for x in stale), drawn='\n'.join(drawn),
+        align=TAG_ALIGN, margin=TAG_MARGIN, scopes=', '.join('`%s`' % x for x in sorted({row['sheet_scope']['scope'] for row in rows_})),
+        pixels_note=SOURCE_PIXELS_NOTE[0].upper() + SOURCE_PIXELS_NOTE[1:], pixels='\n'.join(pixels))
 
 
 def publish(built, prepared, old, weekday, destination):
+    """Copy the listed outputs (each checked against its recorded hash), the ledger and the register note."""
     destination = destination.absolute()
     if destination.exists():
         raise ValueError('destination must be new')
-    (destination / REVISION).mkdir(parents=True)
+    staging = destination.with_name(destination.name + '.partial')
+    if staging.exists():
+        raise ValueError('stale staging directory: ' + str(staging))
+    (staging / REVISION).mkdir(parents=True)
     for _, _, row in prepared:
         data = (built / REVISION / row['output']).read_bytes()
         if digest(data) != row['output_sha256']:
             raise ValueError('built output changed: ' + row['id'])
-        (destination / REVISION / row['output']).write_bytes(data)
-    (destination / REVISION / 'manifest.json').write_bytes((built / REVISION / 'manifest.json').read_bytes())
+        (staging / REVISION / row['output']).write_bytes(data)
+    manifest_bytes = (built / REVISION / 'manifest.json').read_bytes()
+    (staging / REVISION / 'manifest.json').write_bytes(manifest_bytes)
     ledger = ledger_for(built, prepared, old, weekday)
-    (destination / 'ledger.json').write_bytes(encoded(ledger) + b'\n')
-    (destination / 'weekday-resolution.json').write_bytes(encoded(weekday) + b'\n')
-    frames = sorted({row['frame'] for _, _, row in prepared})
-    (destination / 'REGISTER.md').write_text(register_text(frames, old, weekday))
+    (staging / 'ledger.json').write_bytes(encoded(ledger) + b'\n')
+    (staging / 'weekday-resolution.json').write_bytes(encoded(weekday) + b'\n')
+    (staging / 'REGISTER.md').write_text(register_text(prepared, old, weekday, json.loads(manifest_bytes)))
+    staging.rename(destination)
     return {'destination': str(destination), 'assets': len(ledger['assets'])}
 
 

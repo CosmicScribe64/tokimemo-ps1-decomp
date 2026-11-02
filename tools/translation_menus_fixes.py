@@ -41,15 +41,17 @@ import argparse
 from collections import Counter
 import json
 from pathlib import Path
-import shutil
-import sys
+import struct
 
 import numpy as np
 from PIL import Image
 
-from translation_assets import ROOT, digest, encoded, new_output
+from translation_assets import ROOT, digest, encoded, new_output, source_pixels
+from translation_bs_drafts import page_texture, texture_bytes
 import translation_bs_font as skeleton
+import translation_movie_pills as pills
 from translation_native_font import NativeLatin
+from translation_option_drafts import recover_font
 
 SCHEMA = 'tokimemo.menus-fixes-drafts.v1'
 TICKET = 'T-39411'
@@ -59,6 +61,12 @@ EXE = ROOT / 'disc/files/SLPM_86.053'
 TRANSPARENT = (0, 0, 0, 0)
 ARTWORK = ROOT / 'translations/en/graphics/artwork'
 OLD = ARTWORK / 'checkpoints/T39004-2026-10-29'
+
+# What the committed PNGs hold (ledger.json, manifest.json, REGISTER.md). The owner asked for the translated
+# assets to be kept in the repository (T39004-2026-10-29/README.md, T-39004); the whole-frame drafts that
+# this checkpoint supersedes were committed the same way.
+SOURCE_PIXELS_NOTE = ('edited English derivatives, not source exports: a whole frame or cell keeps the original art outside '
+                      'its edit region, and source_pixels counts the texels kept from the source')
 
 TITLE_SOURCE_SHA = '7116859fbb555b3e7b33dabbcd1bd2afc10862d4496e26156fb5f442f8b03206'
 OPTION_SOURCE_SHA = '285aebdee243903fc1eba7b38ea9a6e432c6961d16021aa1a812c36194a420fe'
@@ -370,7 +378,6 @@ class Tight(Face):
 class Menu9(Face):
     """The recovered 9-row menu face (see translation_option_drafts.recover_font)."""
     def __init__(self):
-        from translation_option_drafts import recover_font
         self.glyphs, self.proof = recover_font(ARTWORK)
 
     def glyph(self, character):
@@ -872,8 +879,6 @@ def allc_container(disc_root, strip_english, strip_original):
     Every English colour must be a colour of an index the original strip already uses;
     nothing outside the strip, the palette or the trailer changes, and the size is the same.
     """
-    import struct
-    from translation_bs_drafts import page_texture, texture_bytes
     data = (disc_root / 'CDROM/LASTPHOT/ALL_C.NBN').read_bytes()
     if digest(data) != ALLC_SOURCE_SHA:
         raise ValueError('ALL_C source differs')
@@ -1004,7 +1009,7 @@ def build(sources, output, disc_root=ROOT / 'disc/files'):
         record = {'id': item_id, 'output': name, 'output_sha256': sha, 'dimensions': list(image.size),
                   'source_png': str(path.relative_to(sources)), 'source_png_sha256': digest(path.read_bytes()), 'edit_box': box,
                   'face': face, 'style': 'unreviewed', 'runtime_integrated': False, 'in_game_verified': False, **facts,
-                  'stp': stp_audit(path, image)}
+                  'source_pixels': source_pixels(original, image), 'stp': stp_audit(path, image)}
         (collection if collection is not None else items).append(record)
         return record
 
@@ -1017,7 +1022,8 @@ def build(sources, output, disc_root=ROOT / 'disc/files'):
     page_rows = []
     for page, crop, original_crop, path, rect in crops:
         name = 'all-c.source-page-%d.en.edit-region.png' % page
-        page_rows.append({'page': page, 'page_rect': rect, 'png': name, 'sha256': write_png(crop, root / primary / name)})
+        page_rows.append({'page': page, 'page_rect': rect, 'png': name, 'sha256': write_png(crop, root / primary / name),
+                          'source_pixels': source_pixels(original_crop, crop)})
     pages_sha = {}
     for page in range(6):
         pages_sha['source-page-%d' % page] = digest((sources / 'allc' / ('all-c.source-page-%d.png' % page)).read_bytes())
@@ -1059,7 +1065,7 @@ def build(sources, output, disc_root=ROOT / 'disc/files'):
     manifest = {'schema': SCHEMA, 'ticket': TICKET, 'revision': primary, 'human_approved': False, 'items': items,
                 'indexed_assets': [allc_record], 'font_provenance': {'menu9': menu9.provenance(), 'tight': tight.provenance(),
                 'native': native.provenance(), 'skeleton': {'module': 'translation_bs_font', 'glyphs': ''.join(sorted(skeleton.GLYPHS))}},
-                'committed_files': 'English crops and cells only; no original pixel'}
+                'committed_files': SOURCE_PIXELS_NOTE}
     (root / primary / 'manifest.json').write_bytes(encoded(manifest) + b'\n')
     fallback_manifest = {'schema': SCHEMA, 'ticket': TICKET, 'revision': 'fallback-v1', 'human_approved': False, 'items': fallbacks,
                          'note': 'same-size fallbacks for builds that cannot widen a sprite; not superseding anything on their own'}
@@ -1103,7 +1109,6 @@ def option_texture_room(sources):
 
 def pill_agreement():
     """The movie pills and the option labels spell every name the same way."""
-    import translation_movie_pills as pills
     actress = {english for _, _, rows in pills.CUES for _, role, _, english, _, _ in rows if role == 'actress'}
     character = {english for _, _, rows in pills.CUES for _, role, _, english, _, _ in rows if role == 'character'}
     manifest = json.loads((OLD / 'option-drafts-v1/manifest.json').read_text())
@@ -1162,7 +1167,7 @@ def ledger_entry(record, manifest_sha, folder, revision):
              'output_sha256': record['output_sha256'], 'path': '%s/%s' % (folder, record['output']), 'port_made': True,
              'port_made_elements': elements_for(record), 'reason': STATUS_NOTE, 'revision': revision,
              'source_container_sha256': record['source_container_sha256'], 'source_png_sha256': record['source_png_sha256'],
-             'status': 'draft'}
+             'source_pixels': record['source_pixels'], 'status': 'draft'}
     if record.get('edit_box'):
         entry['edit_regions'] = [record['edit_box']]
     if record.get('region'):
@@ -1179,21 +1184,25 @@ def finish(root, manifest, fallback_manifest, sources):
                    'id': 'all-c-banner', 'manifest_sha256': manifest_sha,
                    'paths': ['%s/%s' % (REVISION, r['png']) for r in allc['edit_regions']],
                    'source_container_sha256': ALLC_SOURCE_SHA, 'status': 'draft', 'port_made': True,
+                   'source_pixels': {key: sum(r['source_pixels'][key] for r in allc['edit_regions'])
+                                     for key in ('opaque_texels', 'kept_from_source')},
                    'port_made_elements': LETTERING['allc']})
     refs = superseded_refs()
     ledger = {'assets': assets, 'candidate_assets': len(assets), 'complete_translation_inventory': False,
-              'original_images_included': False, 'port_made_assets': len(assets),
+              'original_images_included': True, 'port_made_assets': len(assets),
+              'source_pixels_note': SOURCE_PIXELS_NOTE,
               'publication_authorization': 'Owner art fix pass, 2026-11-01 (T-39411); owner approved the naming decisions recorded in REGISTER.md.',
               'schema': 'tokimemo.translation-checkpoint.v1', 'separate_reviewed_revisions': 0,
               'supersedes': refs, 'ticket': TICKET}
-    (root / 'ledger.json').write_bytes(json.dumps(ledger, indent=1, sort_keys=True, ensure_ascii=False).encode() + b'\n')
+    (root / 'ledger.json').write_bytes(encoded(ledger) + b'\n')
     fallback_assets = [ledger_entry(r, fallback_sha, 'fallback-v1', 'fallback-v1') for r in fallback_manifest['items']]
     fallback_ledger = {'assets': fallback_assets, 'candidate_assets': len(fallback_assets), 'complete_translation_inventory': False,
-                       'original_images_included': False, 'port_made_assets': len(fallback_assets),
+                       'original_images_included': True, 'port_made_assets': len(fallback_assets),
+                       'source_pixels_note': SOURCE_PIXELS_NOTE,
                        'note': 'Same-size fallbacks. Register only if the English build cannot widen the sprite; supersedes nothing by itself.',
                        'publication_authorization': ledger['publication_authorization'],
                        'schema': 'tokimemo.translation-checkpoint.v1', 'separate_reviewed_revisions': 0, 'ticket': TICKET}
-    (root / 'fallback-ledger.json').write_bytes(json.dumps(fallback_ledger, indent=1, sort_keys=True, ensure_ascii=False).encode() + b'\n')
+    (root / 'fallback-ledger.json').write_bytes(encoded(fallback_ledger) + b'\n')
     room = option_texture_room(sources)
     agreement = pill_agreement()
     if not (agreement['actress_names_equal'] and agreement['character_names_in_pills']):
@@ -1211,7 +1220,7 @@ def register_text(manifest, fallback_manifest, refs, room, agreement):
     lines = ['# REGISTER: T39410-menus-fixes-v1', '',
              'What the integrator (who owns `tools/translation_inventory.py`, `translation_inventory.json`, the image text catalog and',
              '`inventory_decisions.json`) must change to take this checkpoint. Nothing in those files was edited here.',
-             'All PNGs are English-only (no original pixel), port-made, unreviewed (`human_approved: false`).', '',
+             'All PNGs are port-made and unreviewed (`human_approved: false`). They are edited derivatives that keep original art outside the edit regions: see section 10.', '',
              '## 1. Register the ledger', '',
              '- Add `translations/en/graphics/artwork/checkpoints/T39410-menus-fixes-v1/ledger.json` to `LEDGERS`. It holds %d candidates '
              '(%d frame/cell drafts and the ALL_C banner of `catalog-127`, three crops).' % (len(manifest['items']) + 1, len(manifest['items'])),
@@ -1301,18 +1310,48 @@ def register_text(manifest, fallback_manifest, refs, room, agreement):
               '- Transparent texels are BGR555 word `0x0000` (alpha 0) with STP clear, as in every source; the widened cells add only transparent texels.',
               '- No source and no English output uses opaque black, so no `0x8000` word is needed; every opaque English colour has exactly one STP value in its source, so mapping colours back to the source CLUT gives every texel the source STP bit (clear everywhere except the KASETU card, where the source export sets it on every texel and so must the English card).',
               '- `catalog-127` (ALL_C): only indices the source strip already uses, palette unchanged; indices %s, none word 0, STP clear on all.' % ', '.join(sorted(allc['index_stp_bit'], key=int)),
-              '- The build fails if an output breaks any of these (`stp_audit`); each manifest item records its counts under `stp`.', '']
+              '- The build fails if an output breaks any of these (`stp_audit`); each manifest item records its counts under `stp`.', '',
+              '## 10. Original pixels in the committed files', '',
+              'The files are %s. This is why the ledgers say `original_images_included: true`. '
+              'The owner asked for the translated assets to be kept in the repository (`translations/en/graphics/artwork/checkpoints/T39004-2026-10-29/README.md`, T-39004), '
+              'and the whole-frame drafts this checkpoint supersedes are committed the same way. No unmodified source export is committed. '
+              'The counts below are per file: opaque texels, and those equal to the source texel at the same position (a widened cell is compared over the overlap).' % SOURCE_PIXELS_NOTE, '',
+              '| file | size | opaque texels | kept from source |', '|---|---|---|---|']
+    for folder, rows_ in (('menus-fixes-v1', manifest['items']), ('fallback-v1', fallback_manifest['items'])):
+        for r in rows_:
+            lines.append('| `%s/%s` | %dx%d | %d | %d |' % (folder, r['output'], r['dimensions'][0], r['dimensions'][1],
+                                                          r['source_pixels']['opaque_texels'], r['source_pixels']['kept_from_source']))
+    for r in manifest['indexed_assets'][0]['edit_regions']:
+        lines.append('| `menus-fixes-v1/%s` | %dx%d | %d | %d |' % (r['png'], r['page_rect'][2], r['page_rect'][3],
+                                                                 r['source_pixels']['opaque_texels'], r['source_pixels']['kept_from_source']))
+    lines.append('')
     return '\n'.join(lines)
 
 
 def publish(built, destination):
-    """Copy a finished build into a new checkpoint folder (PNGs, manifests, ledgers, REGISTER.md)."""
+    """Copy the listed outputs of a finished build into a new checkpoint folder, each checked against its recorded hash."""
     built = Path(built)
-    destination = Path(destination)
+    destination = Path(destination).absolute()
     if destination.exists():
-        raise ValueError('destination exists')
-    shutil.copytree(built, destination)
-    return {'destination': str(destination)}
+        raise ValueError('destination must be new')
+    staging = destination.with_name(destination.name + '.partial')
+    if staging.exists():
+        raise ValueError('stale staging directory: ' + str(staging))
+    manifest = json.loads((built / REVISION / 'manifest.json').read_bytes())
+    fallback = json.loads((built / 'fallback-v1' / 'manifest.json').read_bytes())
+    listed = {(REVISION, r['output']): r['output_sha256'] for r in manifest['items']}
+    listed.update({(REVISION, r['png']): r['sha256'] for r in manifest['indexed_assets'][0]['edit_regions']})
+    listed.update({('fallback-v1', r['output']): r['output_sha256'] for r in fallback['items']})
+    for (folder, name), sha in sorted(listed.items()):
+        data = (built / folder / name).read_bytes()
+        if digest(data) != sha:
+            raise ValueError('built output changed: %s/%s' % (folder, name))
+        (staging / folder).mkdir(parents=True, exist_ok=True)
+        (staging / folder / name).write_bytes(data)
+    for name in (REVISION + '/manifest.json', 'fallback-v1/manifest.json', 'ledger.json', 'fallback-ledger.json', 'REGISTER.md'):
+        (staging / name).write_bytes((built / name).read_bytes())
+    staging.rename(destination)
+    return {'destination': str(destination), 'files': len(listed) + 5}
 
 
 def main():

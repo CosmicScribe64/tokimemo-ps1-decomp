@@ -175,7 +175,9 @@ class CheckpointTests(unittest.TestCase):
         entries = inventory.load_ledgers(ledgers)
         active, superseded = inventory.split_superseded(entries, ledgers)
         mine = [e['id'] for e in active if 'T39410-menus-fixes-v1' in e['ledger']]
-        self.assertEqual(len(mine), 33)    # 30 drafts (the new ABC cell twice, name-panel-0001) and the three ALL_C crops
+        # 33 candidates: the ledger's 30 frame or cell drafts plus the ALL_C banner, which the inventory
+        # counts once for each of its three page crops.
+        self.assertEqual(len(mine), 33)
         self.assertEqual(inventory.candidate_key({'id': 'name-label-abc.lit'}), ('name_ent-abc', 'NAME_ENT', None, 'lit'))
         replaced = {(e['ledger'].split('/')[-2], e['id'], e['revision']) for e in superseded if e['superseded_by'].endswith('T39410-menus-fixes-v1/ledger.json')}
         self.assertEqual(len(replaced), len(self.ledger['supersedes']))
@@ -216,7 +218,9 @@ class CheckpointTests(unittest.TestCase):
         self.assertEqual(by_id['kasetu-0']['text'], 'Scavenger Race')
         self.assertEqual({r['text'] for r in manifest['items'] if r['id'].startswith('name-label')},
                          set(subject.NAME_LABELS.values()) | {'ABC'})
-        self.assertEqual(len((CHECKPOINT / 'REGISTER.md').read_text().splitlines()) > 40, True)
+        register = (CHECKPOINT / 'REGISTER.md').read_text()
+        for heading in ('## 1. Register the ledger', '## 2. Supersedes', '## 5. Required sprite widths', '## 10. Original pixels'):
+            self.assertIn(heading, register)
         self.assertTrue(manifest['indexed_assets'][0]['gates_passed'])
 
     def test_widened_option_sprites_keep_a_clear_right_column(self):
@@ -278,6 +282,47 @@ class CheckpointTests(unittest.TestCase):
         self.assertTrue(agreement['character_names_in_pills'])
 
 
+class SourcePixelTests(unittest.TestCase):
+    def test_ledgers_state_that_original_art_is_included(self):
+        for name in ('ledger.json', 'fallback-ledger.json'):
+            ledger = json.loads((CHECKPOINT / name).read_text())
+            self.assertIs(ledger['original_images_included'], True, name)
+            self.assertEqual(ledger['source_pixels_note'], subject.SOURCE_PIXELS_NOTE)
+            kept = {a['id']: a['source_pixels']['kept_from_source'] for a in ledger['assets']}
+            self.assertTrue(any(kept.values()), name)
+        # whole screens keep most of their art (the sports card is 320x240 with a re-lettered title)
+        card = next(a for a in json.loads((CHECKPOINT / 'ledger.json').read_text())['assets'] if a['id'] == 'kasetu-0')
+        self.assertGreater(card['source_pixels']['kept_from_source'], 10000)
+        manifest = json.loads((CHECKPOINT / 'menus-fixes-v1/manifest.json').read_text())
+        self.assertNotIn('no original pixel', manifest['committed_files'])
+        self.assertNotIn('no original pixel', (CHECKPOINT / 'REGISTER.md').read_text())
+
+    def test_publish_copies_only_the_listed_outputs_and_checks_hashes(self):
+        with tempfile.TemporaryDirectory(dir=subject.ROOT / '.asset-cache') as directory:
+            built = Path(directory) / 'built'
+            (built / subject.REVISION).mkdir(parents=True)
+            (built / 'fallback-v1').mkdir()
+            files = {subject.REVISION + '/a.png': b'a', subject.REVISION + '/crop.png': b'c', 'fallback-v1/f.png': b'f'}
+            for name, data in files.items():
+                (built / name).write_bytes(data)
+            (built / 'stray.png').write_bytes(b'not listed')
+            manifest = {'items': [{'output': 'a.png', 'output_sha256': assets.digest(b'a')}],
+                        'indexed_assets': [{'edit_regions': [{'png': 'crop.png', 'sha256': assets.digest(b'c')}]}]}
+            (built / subject.REVISION / 'manifest.json').write_bytes(assets.encoded(manifest))
+            (built / 'fallback-v1' / 'manifest.json').write_bytes(assets.encoded(
+                {'items': [{'output': 'f.png', 'output_sha256': assets.digest(b'f')}]}))
+            for name in ('ledger.json', 'fallback-ledger.json', 'REGISTER.md'):
+                (built / name).write_bytes(b'{}')
+            result = subject.publish(built, Path(directory) / 'published')
+            self.assertEqual(result['files'], 8)
+            self.assertFalse((Path(directory) / 'published' / 'stray.png').exists())
+            self.assertEqual((Path(directory) / 'published' / 'fallback-v1' / 'f.png').read_bytes(), b'f')
+            (built / subject.REVISION / 'a.png').write_bytes(b'changed')
+            with self.assertRaises(ValueError):
+                subject.publish(built, Path(directory) / 'again')
+            self.assertFalse((Path(directory) / 'again').exists())
+
+
 class RegenerationTests(unittest.TestCase):
     def test_build_reproduces_the_committed_outputs(self):
         sources = ORIGINALS
@@ -286,7 +331,9 @@ class RegenerationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(dir=subject.ROOT / '.asset-cache') as directory:
             output = Path(directory) / 'build'
             subject.build(sources, output)
-            for path in sorted(output.rglob('*.png')) + [output / 'ledger.json', output / 'REGISTER.md']:
+            texts = [output / name for name in ('ledger.json', 'fallback-ledger.json', 'REGISTER.md', subject.REVISION + '/manifest.json',
+                                                 'fallback-v1/manifest.json')]
+            for path in sorted(output.rglob('*.png')) + texts:
                 self.assertEqual(path.read_bytes(), (CHECKPOINT / path.relative_to(output)).read_bytes(), str(path))
             with self.assertRaises(ValueError):
                 subject.build(sources, output)
