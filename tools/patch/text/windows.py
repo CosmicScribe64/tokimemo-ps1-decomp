@@ -81,12 +81,12 @@ COMMAND_WINDOWS = {
 LABEL_COMMAND = 0x7  # inline label: speech when the record starts with a label, else narration
 
 # Width of a name or value code once the runtime expands it (T-39506): player names hold at most
-# 7 single-byte letters, 6 px is the advance of most lower-case letters; the player form adds an
+# 56 pixels under the name editor's cap, including full pair-encoded presets; the player form adds an
 # honorific ("-kun"), the girl name is a family name with "-san" (the longest is measured).
 NAME_LETTERS = 7
-NAME_PX = NAME_LETTERS * 6
+NAME_PX = 56
 NAME_CODE_PX = {
-    0x10: b"Aaaaaaa-kun",       # P player form: name and honorific
+    0x10: 88,                  # P: nickname cap, or 56 px name plus 22 px honorific
     0x11: NAME_PX,              # p family name
     0x12: NAME_PX,              # m given name
     0x13: 2 * NAME_PX + 4,      # F full name, family + space + given

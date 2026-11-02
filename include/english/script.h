@@ -31,10 +31,10 @@
 #define ENGLISH_LABEL_THOUGHT 0x1D /* `<`: label, then the thought in parentheses */
 #define ENGLISH_LABEL_END 0x1F
 
-/* Longest player family or given name in letters: the GameState fields and name_code_family/given are
- * 8 bytes and their readers use strcpy, so a name keeps its NUL. */
+/* Stored byte limits, excluding NUL. Pair-encoded English names may contain more
+ * letters while GameState, name_code buffers and saves keep their original sizes. */
 #define ENGLISH_NAME_LETTERS 7
-/* Longest nickname: name_code_player_form, which receives it, is 12 bytes. */
+/* name_code_player_form, which receives the nickname, is 12 bytes. */
 #define ENGLISH_NICKNAME_LETTERS 11
 
 /* Replacements reached through config/english_hooks.txt. Parameters are the promoted K&R ones. */

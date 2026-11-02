@@ -13,7 +13,8 @@ Input: the text bitmap described at the top of the font file (`glyph 0xNN name` 
     (12 x 12 pixels, 1 bit per pixel, rows of 12 bits packed MSB first, as `text_glyph_expand` reads);
   - a JSON width table (`{"advance": {"0x41": 6, ...}, "sjis_advance": 14, "line_height": 16}`) for
     the build-time word wrap of the text writers (T-39503).
-Exits non-zero on a malformed glyph, a duplicate code or a code outside 0x20-0x7E / 0xA0-0xDF.
+Exits non-zero on a malformed glyph, a duplicate code or a code outside 0x20-0x7E / 0xA0-0xAF.
+Codes 0xB0-0xDF are reserved for persistent player-name letter pairs (T-39506).
 """
 import json
 import os
@@ -26,7 +27,7 @@ LINE_HEIGHT = 16   # row step of talk_render and the menus
 
 
 def valid_code(code):
-    return 0x20 <= code <= 0x7E or 0xA0 <= code <= 0xDF
+    return 0x20 <= code <= 0x7E or 0xA0 <= code <= 0xAF
 
 
 def parse(path):
@@ -50,7 +51,7 @@ def parse(path):
             words = words[:-1]
         name = " ".join(words[2:])
         if not valid_code(code):
-            sys.exit("%s:%d: code 0x%02X is outside 0x20-0x7E and 0xA0-0xDF" % (path, i, code))
+            sys.exit("%s:%d: code 0x%02X is outside 0x20-0x7E and 0xA0-0xAF (name-pair range reserved)" % (path, i, code))
         if code in seen:
             sys.exit("%s:%d: code 0x%02X defined twice" % (path, i, code))
         seen.add(code)

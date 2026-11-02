@@ -22,6 +22,7 @@ from .windows import window_for
 from .wrap import FontMetrics, label_end, wrap
 from . import reflow as source_reflow
 from . import speech
+from . import names
 
 SKIPPED_KINDS = ("speaktst", "reference_only")
 # Tables that must stay Japanese: the kana pages and the kanji reading labels of the name entry, where a
@@ -35,8 +36,7 @@ KEPT_TABLES = ("dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:",
 NOT_TEXT_RANGES = {"CDROM/EXEDIR/ETC.EXN": ((0x1C0C4, 0x1CA1C),)}
 
 
-# Name entry presets become the player's name, which holds at most 7 letters (11 for the nickname) in the
-# English build (T-39506); a longer English preset keeps the original kana one and is reported.
+# Name storage keeps its original byte limits; reversible letter pairs preserve full presets.
 PRESET_LIMITS = {"dictionary:CDROM/EXEDIR/NAME_ENT.EXN:preset_family_names:": 7,
                  "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:preset_given_names:": 7,
                  "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:preset_nicknames:": 11}
@@ -100,8 +100,10 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
             encoder.take_record_notes()
             payload = end_inline_label(encode(segments, encoder))
             if _preset_too_long(record.id, payload):
-                note["status"], note["reason"] = "kept_original", "preset longer than the English name limit (T-39506)"
-                continue
+                payload = names.pack(payload)
+                if _preset_too_long(record.id, payload):
+                    raise ValueError("English preset exceeds packed name storage: " + record.id)
+                note["name_pair_encoding"] = True
             note.update(encoder.take_record_notes())
             window, basis = window_for(container.kind, record)
             if window is not None and window.name == "telephone_narration" \

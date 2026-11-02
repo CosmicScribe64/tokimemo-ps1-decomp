@@ -4,7 +4,7 @@ title: Make dialogue, choices, names and name entry work in English
 status: In Progress
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-01
+updated: 2026-11-02
 links: ["[[tickets/T-39500-english-translation-patch]]"]
 ---
 
@@ -39,3 +39,13 @@ Remaining: the draw sites listed in [[english-text-runtime]] that need overlay c
 2026-11-01 (Codex): integrated branch build with compact, independently allocated talk strings places all 134 data files and keeps zero whole files original. DATE dialogue fits its existing RAM buffer; no RAM relocation is needed. The eight JOHO label overflows still need the fixed-stride layout update. Visual checks and remaining NAME_ENT work are in progress.
 
 2026-11-01 (Codex): JOHO labels and NAME_ENT panels/ABC are now placed; the fresh final-layout route verifies birthday digits and dialogue fixes through save/load. Nine overlong romanized presets still retain Japanese, so this ticket remains In Progress. Corrected frontmatter to match the board after wiki lint caught stale In Review status.
+
+2026-11-02: pursuing full long-preset support without changing GameState/save field sizes or substituting shorter names. Proposed reversible encoding uses currently unused English-font single-byte codes for common two-letter sequences; renderer/width expand them, and name editing unpacks, edits one character, then repacks. Full two-byte Japanese characters must remain opaque so trail bytes cannot be mistaken for pairs. Persistent pair assignments will be explicit and stable. Validate all 45 presets, editing boundaries, script width/typewriter behavior, save/load, and original build matching before acceptance. This is implementation work under the existing ticket, not yet a completion claim.
+
+2026-11-02: all 45 presets round-trip and fit with stable pair storage; largest family/given representation is seven bytes. C helpers and text load/width expansion are implemented; editor unpacks, edits one character and repacks, preserving full Shift-JIS pairs. Pixel caps are 56 for family/given and 88 for nickname, and build-time name width reservations were increased. Eight synthetic tests pass, including native execution of production C encoder/decoder/renderer loops and overflow sentinel checks. Full English build is running; default checksum, actual selection/editing/save/load and visual route checks remain required.
+
+2026-11-02: corrected entry geometry uses original family x, given x six pixels farther right, and a 72-pixel nickname cap (supersedes earlier 88-pixel editor-cap note; placeholder reservation remains 88). Fresh controller route completes editing and save/load, 171 captures/38,703 frames, zero original-font calls/unknown/overflow. Actual preset chord and final-disc audit verify full names. Save-summary overflow discovered during review is now fixed with bounded complete copies and adaptive rows; focused production-helper tests pass. New build/GPU check pending.
+
+2026-11-02: save-summary helper now GPU-verified in `route-en-name-save-card/019_full_name_load_summary.png`. Fresh boot of the updated executable successfully loads and reloads a previous build's test card; full family/given are preserved, all details fit, and trace records zero original-font calls/unknown/overflow. Confirmation screen needed six pixels of extra family/given separation; final overlay build is running.
+
+2026-11-02: final confirmation GPU route passes (6,548 frames/146 s/27 captures), visible family/given separation, zero original-font trace calls/unknown/overflow. Full-name change set reviewed against CODING_STANDARDS with no unresolved findings; default build matches all 27 binaries, globals and 14,449 rename rows pass. Final review disc f3af6fdd9c30c47ad930503bccf56d7bb55f04d5 and browser package are verified. Ticket remains In Progress for the documented date ambush short-name overflow and remaining runtime coverage.

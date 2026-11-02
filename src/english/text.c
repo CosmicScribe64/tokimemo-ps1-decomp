@@ -4,12 +4,13 @@
  * tools/english_link.py writes at their entry points (config/english_hooks.txt). Design and encoding:
  * wiki/english-text-runtime.md.
  *
- * Encoding: a byte 0x20-0x7E or 0xA0-0xDF is one glyph of the proportional English font
- * (translations/en/font/latin12.txt); any other byte from 0x80 up starts a two-byte Shift-JIS character
+ * Encoding: a byte 0x20-0x7E or 0xA0-0xAF is one glyph of the proportional English font
+ * (translations/en/font/latin12.txt); 0xB0-0xDF expands to two letters of the persistent player-name
+ * encoding (T-39506). Other bytes from 0x80 up start a two-byte Shift-JIS character
  * that is drawn from the game's font at the fixed advance; bytes 0x01-0x1F are skipped (control codes of
  * the English script format). Each glyph still takes one VRAM slot, in the order the original uses, so
- * the typewriter (k_disp_inc) and every glyph count keep their meaning; only the x position of a glyph
- * comes from english_glyph_pen instead of index * advance. */
+ * the typewriter (k_disp_inc) and every glyph count keep their meaning (a pair loads two slots).
+ * The x position comes from english_glyph_pen instead of index * advance. */
 #include "common.h"
 #include "game_enums.h"
 #include "libapi.h"
@@ -22,6 +23,7 @@
 #include "main/vram.h"
 #include "psx_types.h"
 #include "english/text.h"
+#include "english/names.h"
 
 #ifdef TOKIMEMO_ENGLISH
 
@@ -75,6 +77,8 @@ static void english_glyph_load(u8 *bits) {
 /* Lays out one string: loads a glyph slot per character and records its pen position; returns the
  * number of glyphs (the TextEntry glyph count). */
 s32 english_load_string(u8 *text) {
+    u8 *resume;
+    u8 *pair;
     s32 first_glyph;
     s32 pen;
     s32 slot;
@@ -85,7 +89,22 @@ s32 english_load_string(u8 *text) {
 
     first_glyph = text_state.total;
     pen = 0;
-    while ((c = *text) != 0) {
+    resume = 0;
+    for (;;) {
+        if (*text == 0) {
+            if (resume == 0) {
+                break;
+            }
+            text = resume;
+            resume = 0;
+            continue;
+        }
+        pair = english_name_pair(*text);
+        if (pair != 0) {
+            resume = text + 1;
+            text = pair;
+        }
+        c = *text;
         slot = text_state.total;
         if (c < 0x80 || (c >= 0xA0 && c < 0xE0)) {
             text++;
@@ -133,11 +152,28 @@ s32 english_load_string(u8 *text) {
 }
 
 s32 english_text_width(u8 *text) {
+    u8 *resume;
+    u8 *pair;
     s32 width;
     u32 c;
 
     width = 0;
-    while ((c = *text) != 0) {
+    resume = 0;
+    for (;;) {
+        if (*text == 0) {
+            if (resume == 0) {
+                break;
+            }
+            text = resume;
+            resume = 0;
+            continue;
+        }
+        pair = english_name_pair(*text);
+        if (pair != 0) {
+            resume = text + 1;
+            text = pair;
+        }
+        c = *text;
         if (c < 0x80 || (c >= 0xA0 && c < 0xE0)) {
             text++;
             if (english_font_index[c] != 0xFF) {

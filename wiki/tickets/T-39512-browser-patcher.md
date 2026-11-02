@@ -35,3 +35,5 @@ Final recheck passed after the review fixes; moved to In Review. Added the Apach
 The current local review package is now served at http://localhost:8768 (Docker server); localhost:8767 remains the historical banner package. No public publication.
 
 Browser-download emulator verification completed: `build/emu/route-en-browser-slice` boots through the first school day in 24,063 frames / 555 s with 82 screenshots and zero original-font uploads, unknown mappings or overflow. `cue-provenance.json` binds the run to the actual downloaded files. This closes the campaign's browser-built playable-slice evidence requirement, not remaining whole-game language coverage.
+
+2026-11-02: refreshed `build/patcher-names-review` for full-name/runtime fixes, SHA-1 f3af6fdd9c30c47ad930503bccf56d7bb55f04d5. Nine browser acceptance checks pass; actual download hash equals CLI build. Desktop completion and 390-pixel layout reviewed. Latest local review URL is http://localhost:8769; earlier ports serve historical builds. The earlier still-build browser test evidence is preserved in `build/patcher-still-test-evidence` and its downloaded playable disc in `build/browser-still-disc`.

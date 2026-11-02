@@ -2165,7 +2165,12 @@ void name_entry_confirm_init(void) {
     name_entry_confirm_actors_init();
     set_kanji_string(-0x18, 0x40, 0xA, "これでいい？", 0);
     set_kanji_string(-0x38, -0x37, 0xA, name_entry_family_name, 0);
+#ifdef TOKIMEMO_ENGLISH
+    /* T-39506: leave six pixels after a maximum-width family name. */
+    set_kanji_string(6, -0x37, 0xA, name_entry_given_name, 0);
+#else
     set_kanji_string(0, -0x37, 0xA, name_entry_given_name, 0);
+#endif
     set_kanji_string(-0x38, -0x17, 0xA, name_entry_nickname, 0);
     if (name_entry_player_month + 1 >= 10) {
         set_kanji_string(-0x38, 8, 0xA, D_800B3288[(name_entry_player_month + 1) / 10], 0);
@@ -2640,14 +2645,15 @@ s32 name_entry_exit_to_prologue(void) {
  *   - a sixth tab, the English letter page (A-Z, a-z, hyphen, apostrophe, period, space), placed first and
  *     selected when the screen opens; the five original tabs move down to make room (0x1A apart instead of
  *     0x20). Its selector uses the extended ABC frames, with text as the no-art fallback;
- *   - names are NUL-terminated strings of single-byte letters, with kana from the original pages appended as
+ *   - names are NUL-terminated strings of letters or persistent letter-pair codes, with kana appended as
  *     two-byte characters: at most ENGLISH_NAME_LETTERS bytes for the family and given names,
  *     ENGLISH_NICKNAME_LETTERS for the nickname. The original fills unused slots with full-width spaces and
- *     overwrites in place; here a letter is appended at the end and CROSS deletes the last character;
+ *     overwrites in place; here editing unpacks and repacks so CROSS deletes one displayed character;
  *   - one insertion marker after the last letter instead of one marker per two-byte slot;
  *   - name_entry_profile_store copies the strings as they are and joins the full name with a space. */
 #include "english/script.h"
 #include "english/text.h"
+#include "english/names.h"
 
 #define NAME_ENTRY_TAB_LATIN 5 /* English letter page; NameEntryTab values 0-4 are the original tabs */
 #define ENGLISH_TAB_COUNT 6
@@ -2689,7 +2695,7 @@ static s32 name_entry_english_name_x(s32 name_part) {
     if (name_part == NAME_ENTRY_NAME_PART_FAMILY) {
         return -0x68;
     }
-    return name_part == NAME_ENTRY_NAME_PART_GIVEN ? -0x30 : 0x48;
+    return name_part == NAME_ENTRY_NAME_PART_GIVEN ? -0x2A : 0x48;
 }
 
 static s32 name_entry_english_name_limit(s32 name_part) {
@@ -2844,6 +2850,8 @@ static s32 name_entry_english_cell_character(u8 *out) {
 
 static void name_entry_english_character_put(s32 name_part) {
     u8 character[3];
+    u8 expanded[32];
+    u8 packed[12];
     u8 *name;
     s32 n;
     s32 k;
@@ -2853,30 +2861,45 @@ static void name_entry_english_character_put(s32 name_part) {
         return;
     }
     name = name_entry_english_name_buffer(name_part);
-    n = strlen(name);
-    if (n + k > name_entry_english_name_limit(name_part) || (character[0] == ' ' && n == 0)) {
+    n = english_name_unpack(expanded, name, sizeof(expanded));
+    if (n < 0 || n + k >= (s32)sizeof(expanded) || (character[0] == ' ' && n == 0)) {
         return;
     }
-    name[n] = character[0];
+    expanded[n] = character[0];
     if (k == 2) {
-        name[n + 1] = character[1];
+        expanded[n + 1] = character[1];
     }
-    name[n + k] = 0;
+    expanded[n + k] = 0;
+    if (english_text_width(expanded) > (name_part == NAME_ENTRY_NAME_PART_NICKNAME ? 72 : 56)) {
+        return;
+    }
+    if (english_name_pack(packed, expanded, name_entry_english_name_limit(name_part) + 1) < 0) {
+        return;
+    }
+    english_copy(name, packed, name_entry_english_name_limit(name_part) + 1);
 }
 
 /* CROSS: removes the last character (two bytes for a kana). */
 static void name_entry_english_character_delete(s32 name_part) {
     u8 *name;
+    u8 expanded[32];
+    u8 packed[12];
     s32 i;
     s32 last;
 
     name = name_entry_english_name_buffer(name_part);
+    if (english_name_unpack(expanded, name, sizeof(expanded)) < 0) {
+        return;
+    }
     last = -1;
-    for (i = 0; name[i] != 0; i += (name[i] >= 0x80 && (name[i] < 0xA0 || name[i] >= 0xE0) && name[i + 1] != 0) ? 2 : 1) {
+    for (i = 0; expanded[i] != 0; i += (expanded[i] >= 0x80 && (expanded[i] < 0xA0 || expanded[i] >= 0xE0) && expanded[i + 1] != 0) ? 2 : 1) {
         last = i;
     }
     if (last >= 0) {
-        name[last] = 0;
+        expanded[last] = 0;
+        if (english_name_pack(packed, expanded, name_entry_english_name_limit(name_part) + 1) >= 0) {
+            english_copy(name, packed, name_entry_english_name_limit(name_part) + 1);
+        }
     }
 }
 
@@ -2890,7 +2913,7 @@ static void name_entry_english_slot_markers_update(s32 name_part) {
         marker[i].draw_flags &= 0x7F;
     }
     name = name_entry_english_name_buffer(name_part);
-    if ((s32)strlen(name) >= name_entry_english_name_limit(name_part)) {
+    if (english_text_width(name) >= (name_part == NAME_ENTRY_NAME_PART_NICKNAME ? 72 : 56)) {
         marker->draw_flags &= 0x7F;
         return;
     }

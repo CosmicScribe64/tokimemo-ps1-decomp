@@ -51,6 +51,54 @@ s32 prim_gradient_line(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 a
 u8 *strncat();
 extern Actor actor_pool[];
 
+#ifdef TOKIMEMO_ENGLISH
+#include "english/script.h"
+#include "english/text.h"
+
+/* T-39506: keep full names inside the 124-pixel save summary column. */
+static s32 hud_english_save_name_lines(s32 x, u8 *family, u8 *given, u8 *nickname, s32 *next_y) {
+    static u8 name_label[] = "Name: ";
+    static u8 nickname_label[] = "Nickname: ";
+    static u8 nickname_heading[] = "Nickname:";
+    static u8 separator[] = " ";
+    u8 name[32];
+    u8 nick[32];
+    s32 y;
+    s32 rows;
+
+    english_copy(name, name_label, sizeof(name));
+    english_append(name, family, sizeof(name));
+    english_append(name, separator, sizeof(name));
+    english_append(name, given, sizeof(name));
+    y = -0x30;
+    rows = 0;
+    if (english_text_width(name) > 124) {
+        english_copy(name, name_label, sizeof(name));
+        english_append(name, family, sizeof(name));
+        set_kanji_string(x, y, 0xF, name, 0);
+        y += 14;
+        rows++;
+        english_copy(name, given, sizeof(name));
+        set_kanji_string(x + english_text_width(name_label), y, 0xF, name, 0);
+    } else {
+        set_kanji_string(x, y, 0xF, name, 0);
+    }
+    y += 14;
+    rows++;
+    english_copy(nick, nickname_label, sizeof(nick));
+    english_append(nick, nickname, sizeof(nick));
+    if (english_text_width(nick) > 124) {
+        set_kanji_string(x, y, 0xF, nickname_heading, 0);
+        y += 14;
+        rows++;
+        english_copy(nick, nickname, sizeof(nick));
+    }
+    set_kanji_string(x, y, 0xF, nick, 0);
+    *next_y = y + 14;
+    return rows + 1;
+}
+#endif
+
 
 void hud_day_bgm_load(void) {
     u8 vacation_type;
@@ -771,6 +819,10 @@ void data_save_load_class_init(void) {
  * original reloads after every call"); the test emits no code. T-17002 */
 #define KEEP_UNK_1117() if ((s32)game_state.album_slot) { }
 void hud_save_slot_info_show(s32 arg0, s32 left_summary_column) {
+#ifdef TOKIMEMO_ENGLISH
+    s32 name_rows;
+    s32 detail_y;
+#endif
     s32 i;
     s32 cleared_girl_count;
     s32 summary_x;
@@ -782,6 +834,10 @@ void hud_save_slot_info_show(s32 arg0, s32 left_summary_column) {
     u8 clear_count_text[32];
     s32 sp44; /* FAKE: unused; keeps the original frame slot below clear_count_text, real local unknown. T-17002 */
 
+#ifdef TOKIMEMO_ENGLISH
+    name_rows = 2;
+    detail_y = -0x10;
+#endif
     if (left_summary_column != 0) {
         summary_x = -0x8C;
     } else {
@@ -819,6 +875,10 @@ void hud_save_slot_info_show(s32 arg0, s32 left_summary_column) {
                 strncat(slot_date_text, D_800B3288[system_data.day[D_800E7D36] % 10U], 2);
                 strncat(slot_date_text, "日", 2);
                 set_kanji_string((s16) summary_x, -0x40, 0xFU, slot_date_text, 0);
+#ifdef TOKIMEMO_ENGLISH
+                name_rows = hud_english_save_name_lines(summary_x, system_data.family_name[D_800E7D36],
+                    system_data.given_name[D_800E7D36], system_data.nickname[D_800E7D36], &detail_y);
+#else
                 strcpy(player_name_text, "名前…");
                 strncat(player_name_text, system_data.family_name[D_800E7D36], 6);
                 strncat(player_name_text, system_data.given_name[D_800E7D36], 6);
@@ -826,10 +886,15 @@ void hud_save_slot_info_show(s32 arg0, s32 left_summary_column) {
                 strncat(nickname_text, system_data.nickname[D_800E7D36], 0xD);
                 set_kanji_string((s16) summary_x, -0x30, 0xFU, player_name_text, 0);
                 set_kanji_string((s16) summary_x, -0x20, 0xFU, nickname_text, 0);
+#endif
                 strcpy(club_name_text, "所属部‥");
                 /* two arguments as in the original: no count is loaded into $a2 before this call */
                 strncat(club_name_text, club_name_table[system_data.club[D_800E7D36]]);
+#ifdef TOKIMEMO_ENGLISH
+                set_kanji_string((s16) summary_x, detail_y, 0xFU, club_name_text, 0);
+#else
                 set_kanji_string((s16) summary_x, -0x10, 0xFU, club_name_text, 0);
+#endif
                 strcpy(clear_count_text, "クリア人数‥");
                 if (cleared_girl_count >= 0x64) {
                     cleared_girl_count = 0x63;
@@ -838,7 +903,11 @@ void hud_save_slot_info_show(s32 arg0, s32 left_summary_column) {
                     strncat(clear_count_text, D_800B3288[cleared_girl_count / 10], 2);
                 }
                 strncat(clear_count_text, D_800B3288[cleared_girl_count % 10], 2);
+#ifdef TOKIMEMO_ENGLISH
+                set_kanji_string((s16) summary_x, detail_y + 14, 0xFU, clear_count_text, 0);
+#else
                 set_kanji_string((s16) summary_x, 0, 0xFU, clear_count_text, 0);
+#endif
             }
         }
     } else {
@@ -872,6 +941,12 @@ void hud_save_slot_info_show(s32 arg0, s32 left_summary_column) {
             strncat(slot_date_text, D_800B3288[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].day % 10U], 2);
             strncat(slot_date_text, "日", 2);
             set_kanji_string((s16) summary_x, -0x40, 0xFU, slot_date_text, 0);
+#ifdef TOKIMEMO_ENGLISH
+            name_rows = hud_english_save_name_lines(summary_x,
+                ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].family_name,
+                ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].given_name,
+                ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].nickname, &detail_y);
+#else
             strcpy(player_name_text, "名前…");
             KEEP_UNK_1117();
             strncat(player_name_text, ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].family_name, 6);
@@ -882,11 +957,16 @@ void hud_save_slot_info_show(s32 arg0, s32 left_summary_column) {
             strncat(nickname_text, ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].nickname, 0xD);
             set_kanji_string((s16) summary_x, -0x30, 0xFU, player_name_text, 0);
             set_kanji_string((s16) summary_x, -0x20, 0xFU, nickname_text, 0);
+#endif
             strcpy(club_name_text, "所属部‥");
             KEEP_UNK_1117();
             /* two arguments as in the original: no count is loaded into $a2 before this call */
             strncat(club_name_text, club_name_table[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].club >> 12]);
+#ifdef TOKIMEMO_ENGLISH
+            set_kanji_string((s16) summary_x, detail_y, 0xFU, club_name_text, 0);
+#else
             set_kanji_string((s16) summary_x, -0x10, 0xFU, club_name_text, 0);
+#endif
             strcpy(clear_count_text, "クリア人数‥");
             if (cleared_girl_count >= 0x64) {
                 cleared_girl_count = 0x63;
@@ -895,10 +975,18 @@ void hud_save_slot_info_show(s32 arg0, s32 left_summary_column) {
                 strncat(clear_count_text, D_800B3288[cleared_girl_count / 10], 2);
             }
             strncat(clear_count_text, D_800B3288[cleared_girl_count % 10], 2);
+#ifdef TOKIMEMO_ENGLISH
+            set_kanji_string((s16) summary_x, detail_y + 14, 0xFU, clear_count_text, 0);
+#else
             set_kanji_string((s16) summary_x, 0, 0xFU, clear_count_text, 0);
+#endif
         }
     }
+#ifdef TOKIMEMO_ENGLISH
+    k_sub_disp_start(4 + name_rows);
+#else
     k_sub_disp_start(6);
+#endif
 }
 
 /* Implicit int in the original (K&R definition, no return): $v0 stays live at the exit, so the last

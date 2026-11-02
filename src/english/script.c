@@ -830,7 +830,7 @@ static void english_phone_wrap(u8 *text, s32 speaker_style) {
         one[2] = 0;
         /* Name codes expand later in sndi; allow the longest player full name. */
         if (text[i] == ENGLISH_CODE_PLAYER_FORM || text[i] == ENGLISH_CODE_GIRL) {
-            width += 88;
+            width += 116;
         } else {
             width += english_text_width(one);
         }

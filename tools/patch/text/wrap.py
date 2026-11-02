@@ -39,6 +39,7 @@ from pathlib import Path
 
 from .english import LABEL_END, LABEL_MARKERS, LINE_END, NAME_CODE_BYTES, OPTION_END
 from .windows import NAME_CODE_PX, Window
+from .names import PAIRS
 
 SPACE = 0x20
 OPENERS = (b"(", b"\"", b"\xa0", b"\xa2", b"'")
@@ -72,6 +73,8 @@ class FontMetrics:
             elif 0x81 <= byte <= 0x9F or 0xE0 <= byte <= 0xFC:
                 total += self.sjis_advance
                 pos += 1
+            elif byte in PAIRS:
+                total += self.width(PAIRS[byte])
             else:
                 total += self.advance.get(byte, self.sjis_advance)
             pos += 1
