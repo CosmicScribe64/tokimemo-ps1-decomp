@@ -37,6 +37,7 @@ class Target:
     width: int
     part: int | None = None       # the image covers this part of view's frame only
     group: str = ""               # frames drawn from the same texels (set by place)
+    prefer: dict = field(default_factory=dict)   # view pixel -> part that should draw it (part images)
 
 
 @dataclass
@@ -95,6 +96,10 @@ def _merge_parts(data, targets: list[Target]) -> list[Target]:
         else:
             pixels = frame_image(data, target.view, target.part, target.pixels, target.width)
             out[key] = Target(target.image_id, target.item_id, target.view, pixels, target.view.width)
+        p = target.view.parts[target.part]
+        for ly in range(p.height):
+            for lx in range(p.width):
+                out[key].prefer[(p.x - target.view.left + lx, p.y - target.view.top + ly)] = target.part
     return list(out.values())
 
 
@@ -146,6 +151,10 @@ def _desired(data, group: list[Target]) -> tuple[dict, str | None]:
                         local[_n][(view.top + y - p.y) * p.width + view.left + x - p.x] = TRANSPARENT
                     continue
                 decide = visible if visible is not None else 0
+                preferred = t.prefer.get((x, y))
+                if preferred is not None:
+                    # a pixel of a part image is drawn by that part (the parts above it stay clear)
+                    decide = next((i for i, (n, _p, _a) in enumerate(parts) if n == preferred), decide)
                 for i, (n, p, _a) in enumerate(parts[:decide + 1]):
                     local[n][(view.top + y - p.y) * p.width + view.left + x - p.x] = want if i == decide else TRANSPARENT
         for n in local:
@@ -209,7 +218,8 @@ def _relocate(data, group: list[Target], palettes: list[Part], exclusive=lambda 
 
     A part keeps its palette when it can draw the part's English pixels; a frame drawn with one
     palette set may take another palette of the container (its record's palette field changes).
-    A part whose texels no other part draws is rewritten where it is (`fixed`).
+    A part whose texels no other part draws is rewritten where it is (`fixed`); a moved part is
+    cut to the box of its opaque pixels (its record's position and size change).
     """
     desired, why = _desired(data, group)
     if why:
@@ -242,10 +252,25 @@ def _relocate(data, group: list[Target], palettes: list[Part], exclusive=lambda 
             pieces.append(Piece(part.bpp, part.width, part.height, tuple(indices), part, number, number, True))
             continue
         moved = replace(part, flip=0, palette=option.palette, clut=option.clut)
-        pieces.append(Piece(part.bpp, part.width, part.height, tuple(indices), moved, number, number))
+        box = _opaque_box([desired[number][k] for k in range(len(group))], part.width, part.height)
+        if box is None:
+            box = (0, 0, 1, 1)      # nothing left to draw: one transparent texel keeps the record valid
+        bx, by, bw, bh = box
+        indices = [indices[(by + y) * part.width + bx + x] for y in range(bh) for x in range(bw)]
+        moved = replace(moved, x=part.x + bx, y=part.y + by, width=bw, height=bh)
+        pieces.append(Piece(part.bpp, bw, bh, tuple(indices), moved, number, number))
     if not pieces:
         return None, "nothing to change"
     return Repack(group[0].group, group, "relocated", pieces, kept), None
+
+
+def _opaque_box(images: list, width: int, height: int):
+    """Smallest rectangle holding every opaque pixel of the part-local images, or None."""
+    xs = [i % width for image in images for i, c in enumerate(image) if c != TRANSPARENT]
+    ys = [i // width for image in images for i, c in enumerate(image) if c != TRANSPARENT]
+    if not xs:
+        return None
+    return min(xs), min(ys), max(xs) - min(xs) + 1, max(ys) - min(ys) + 1
 
 
 def _chunks(x0: int, y0: int, w: int, h: int, limit: int = 128):

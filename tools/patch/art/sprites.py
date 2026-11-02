@@ -84,7 +84,8 @@ def view_for(profile, item, image):
     frame = meta.get("frame", item.frame)
     if frame is None:
         return None, "no source frame (new sprite)"
-    variant = meta.get("palette_id") or "base"
+    suffix = image.id.rsplit(".", 1)[-1] if "." in image.id else ""
+    variant = meta.get("palette_id") or (suffix if profile.frame(frame, suffix) is not None else "base")
     view = profile.frame(frame, variant)
     if view is None:
         return None, "frame %s variant %s is not in the container" % (frame, variant)
