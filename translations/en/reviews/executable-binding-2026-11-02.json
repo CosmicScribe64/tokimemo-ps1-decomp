@@ -1,0 +1,1574 @@
+{
+ "schema": "tokimemo.executable-binding-review.v1",
+ "date": "2026-11-02",
+ "target_sha1": "cd882b6238075dd9d36fd7af7fe6b546e04ecfa2",
+ "reviewer": "Codex",
+ "scope": "Source-generation equality, mapped executable strings, compiled function-level references, derived pointers and referenced-byte scan. Not complete event playthrough coverage.",
+ "counts": {
+  "source_literal_replacements": 1964,
+  "generated_source_files": 171,
+  "non_c_slots": 2940,
+  "exact_slots": 2827,
+  "dictionary_exact": 816,
+  "additional_canonical_exact": 3,
+  "compiled_extent_function_bindings": 104,
+  "save_helper_extent_replacements": 4,
+  "memory_prompt_extent_replacements": 2,
+  "derived_stage_pointers": 286,
+  "initial_rpg_buffers": 5,
+  "source_only_literals_present": 321,
+  "approved_keyboard_scan_hits": 79,
+  "numeric_scan_hits": 11,
+  "code_pointer_scan_hits": 1
+ },
+ "reports": {
+  "executable-table-stream-final.json": "2e75358608454dd7b14d4f6b2597ea43fcb969b4aa048d2399c2ff0df1ea466d",
+  "extent-reference-binding.json": "ca9ca37da9b4d866c47ca00921f9587a8376606663ae9b14d54d7a291c1a461f",
+  "current-source-literal-proof.json": "0997f99e43e74e0bb96327916d24411ef81702d74ee481c518515d905375dcea",
+  "save-helper-binding.json": "f9d449e9b092bc2e04d67d49e61d6ee5c2a7df25410efdeedba226b1b9f4ef78",
+  "memory-prompt-binding.json": "07b4a1b58c74ba0f90655c2de1a9251abd89e167864db40a2e2c7844dbbe3a81",
+  "honorific-binding.json": "a75d23261229de95a9dac796e9687003c9eb4ebf619e9d063c27b2d8a979000b",
+  "derived-text-view-proof.json": "23a0ddf2030436442ca2d67d00db51d8cc6180c09992576f255c7576da8463d9",
+  "executable-stream-final-classification.json": "55eba526cbd38709b4745025dc09437467f96354c9aedf67856de4fe75c06d7c",
+  "source-only-stream-final.json": "d83a95e0e0b215735bdbd8581bb8cb26821bcd95e9a4228b14d83f5351180e0b"
+ },
+ "source_files": {
+  "src/main/game_init.c": "dcba7a3d869365b4348c49457c68d75861fd9ba4552099fe9ea007981f33a374",
+  "src/main/holiday.c": "e87b106da0095bce0dc92e6f34ffcb32e5e0a5bd7c30a8f8846943bb3b3f20b4",
+  "src/main/home_screens.c": "2e01601408ae6822242864c0ef3f57bf275da43ab184053a3aae59c1d903ca23",
+  "src/main/hud_screens.c": "b9b094f796a4567eabd408a1c4208b5816ef639dadaa019d42b2a333f94041d2",
+  "src/main/memory_card.c": "911c98e79fb54078b6016b9294e492f8ed6ece3c9c7f56c09c8b70ba3cee4c30",
+  "src/main/menu_speaker_girl.c": "411f23897210266a3406d9e43c3c6a2fea0cf5f0a8968d8dd35adf53252f7a91",
+  "src/main/scene_library.c": "b7a81c43ade8d1e6b341fe294be10777068bd3c876265e267991aaead2a5fb5a",
+  "src/main/scheduler.c": "250d6eaa78e4a988a0c07fef7631b4703a57240568b97b1213b5a061f4ecb161",
+  "src/ovl/amusement_park_date/date_scene_state.c": "3c3ad7070453afd5e529e6dac5f1d11afd5f03b030a10ac893a5c8bc4cc9a2db",
+  "src/ovl/amusement_park_date/date_scene_steps.c": "2af06519fdc5294afc091ad50d5009a2fe62e931db659d14f242f8cf88fb2b7d",
+  "src/ovl/amusement_park_date/karaoke_scene_and_return.c": "4d53679fde038f3440f896045b2ae9350a21920b93758faade72e65774e46b5b",
+  "src/ovl/amusement_park_date/scene_choices_and_saved_return.c": "906499334c5bb6a10a228d61a26598b707aea83ef06d7b7e3cc3a95b4c50b598",
+  "src/ovl/club_master/club_master_mode_stage_dispatch.c": "3722ea1d847d166951390ba8806c3033d9a796029f29d37ed65a29973e3f1181",
+  "src/ovl/club_master/club_master_scene_and_tables.c": "e1a61234a563276af1a4a6b9f792bf451f9e096b9c57d72333a633df3f5990b7",
+  "src/ovl/club_master/club_tournament_scene.c": "ad59be2fdd59b9d204855cec7741a1ee6bc123017e7ea6d5b309b3d344440cee",
+  "src/ovl/culture_festival/birthday_scene.c": "20a86fbc8408f395ffc9aba0de1704718f91651f9aab7a4b47c221ddfa2e3e96",
+  "src/ovl/culture_festival/festival_entry.c": "3e323879eb2a7fb09f69940882cba236c5628c4738b5270638cc077e6d711c73",
+  "src/ovl/culture_festival/fortune_telling.c": "54a52a060355e31236a52d544edcff3687d524585bb75f1c5efc53f660435569",
+  "src/ovl/culture_festival/mode_stage_dispatch.c": "da3edd671f21b962a9cd4fbb7a8f87a37d2c841dcac81bf14602eefb3617ff93",
+  "src/ovl/culture_festival/shiori_member.c": "482e05e44bc82febb23ff0d060d1b8dd9483b190766cb8319d9bf6882ae03023",
+  "src/ovl/culture_festival_tour/birthday.c": "ac8963d3f0324fd592ad00c75b2e3d678659a87b83198baaf5c5b3bd41648dc8",
+  "src/ovl/culture_festival_tour/computer_fortune.c": "e66ffce6f95c95016415d37048caae469510aa0509352939a6f1ca72bbfff7d9",
+  "src/ovl/culture_festival_tour/festival_frame_control.c": "02a0d94d89b42bd8b4cffbad6c96bd1ac30f541b2eede50aedc8d48e194dcafa",
+  "src/ovl/culture_festival_tour/mode_stage_and_club_routes.c": "01b593e1ac6a1801cb31af682d405e78e4146c5caa79e8b0a9d50a64e09f76d7",
+  "src/ovl/culture_stage_shows/drama_final_year_show.c": "b8dbd149d945e9002eee034a52ae703e6f457a449bfeaf623774f623a09e033e",
+  "src/ovl/culture_stage_shows/drama_first_year_show.c": "1daef18582111ecae66f529f1567892c47407a75b794afc0683605c80fc07353",
+  "src/ovl/culture_stage_shows/drama_second_year_show.c": "3495f8fcc83ea6bb97572d97bbb2a1a65abdb4abedaf4b6d9a640f1066fa57cd",
+  "src/ovl/culture_stage_shows/literature_speech_contest.c": "b485cb62ef6d3bd737e129fde5037144ffec82a7e64494f88d8e25bb6259e5e6",
+  "src/ovl/date/girl_birthday.c": "b627cbee4273c7d6d5c0d5cafc62d5565689d7d000e9cf79daaf1d6773a01e35",
+  "src/ovl/date/miharu_yumi_scenes.c": "f6e6a724a5e9760eab83e782988f1f7ce0bcd2352cadd08ca3130afd1319135b",
+  "src/ovl/date/place_scenes.c": "493109415a943b6362239632b890f33338c3c5d5c7d08e566149198c4f34a750",
+  "src/ovl/date/scene_megumi.c": "0aa22515877948f1e483aa3ef037648e903d6bbc0db20f8717c3f124e0833c0d",
+  "src/ovl/date/scene_mio.c": "6896f826ac4dd044694c68de8b7cfc3ac468be27a5149045c2ec065208f894ff",
+  "src/ovl/date/scene_mira.c": "897ff2ee6d0f8f49ecccba4665b4d21fe2868b6cd6f2c783ef68b56b3380b7ae",
+  "src/ovl/date/scene_nozomi.c": "b09cbc9d1e1d3ffc7d7c18a729842888d30c2077cfd72ed9301b0706f85542df",
+  "src/ovl/date/scene_shiori.c": "05eb20ece9fe00aeb228c17f1aefeb0be6436ba367a590d775232fb46cee88a8",
+  "src/ovl/date/scene_yuina.c": "3c1fba58df5dc960e0654c71b02be0cb4fcd191fb3c6fc2736043f5cd2979975",
+  "src/ovl/date/scene_yuko.c": "d31fc8ab6290d16fe00b204dfd539f30d354e88f9d5728923e54cfc053ad655c",
+  "src/ovl/date/scene_yumi.c": "c33bdcab10fc9999151999d999640942f523ae5f71a0837bd0c3e1c831b41e47",
+  "src/ovl/ending/career_and_epilogue_summary.c": "ba43922b9ee19749f6c8de89410e0f23b060a0fa492e2693c415d5cce178b29c",
+  "src/ovl/ending/graduation_candidate_selection.c": "56b58482de3c9e34fa8275b835af63a0ff358282b96a0fe990b9fa6e4c57d4bc",
+  "src/ovl/ending/graduation_epilogue_handlers.c": "3bcf50bae3edcefaa6ff5cc294444063e9f39bb22e078a1d8869d8858f2cfa5c",
+  "src/ovl/ending/graduation_scene_handlers.c": "1f7a69c5d842574837155f48e0b299d3cdb90796ac7ce17c351773f6da2af2f3",
+  "src/ovl/ending/graduation_script_resources.c": "e2938736687ba8533b72454c1924d1105b593d01109127fbe72a5d8187e5d4db",
+  "src/ovl/girl_encounters/ayako_scenes.c": "377df6cfbf95ef7a2801c69d8e6dea23410d32d450ecc5972cdc27df04a9f0a0",
+  "src/ovl/girl_encounters/birthday_and_shared_scene_flow.c": "7d2c6176ab729de82cb7621aba12e0f840381b63154866e4b13d9502fa6e94a0",
+  "src/ovl/girl_encounters/invite.c": "4ab42a4e7069f46899189b41c162c4d7a3724226dc0a5e04e80ac231ff9b84b8",
+  "src/ovl/girl_encounters/megumi_scenes.c": "eb9dda01aeb4e2fc2d02abca2bb4d0790eba3e231c5a0cf78d0c6fc6ef53e141",
+  "src/ovl/girl_encounters/miharu_scenes.c": "07f9b4ef95852fde6bbdc57c0a4bab9a7c6f70842fcb6be756c585da6d298d75",
+  "src/ovl/girl_encounters/mio_scenes.c": "fbcd4a6ea38b5dad4c1f07bcc18bf94113cb47256a9152c9589d098a279395d5",
+  "src/ovl/girl_encounters/mira_scenes.c": "2a43059cd6c3fd4ecd6518954f7f92323f8569bceec82a6e5e8958764fda1ded",
+  "src/ovl/girl_encounters/nozomi_scenes.c": "4e54571bcc8d7094ad0a926fc30f6c24f86be11e6fb6feaaab9e7a485321dec6",
+  "src/ovl/girl_encounters/player_birthday.c": "3e291e186fedf0a5864562fe120dcb697958f1ad5835a2fc60d19ca7f56e91a9",
+  "src/ovl/girl_encounters/rei_scenes.c": "bd9617f6ac04d70a5b13165a309070f7fd825c7561aeb4c055ef05fec21513f3",
+  "src/ovl/girl_encounters/saki_scenes.c": "98eb2a87094dea98cc1b1cd22cf3c97d50fc80ab721c51e1dd51e325716ab1c1",
+  "src/ovl/girl_encounters/shiori_scenes.c": "e5f91113e21000e6df11859d7fa2dba4db318bbee38988be41e33c1b04047f95",
+  "src/ovl/girl_encounters/walk_home.c": "b2bb6af56a189cd8d254e3f561dc66018f99514415505b58ee8dc1ffe54f884c",
+  "src/ovl/girl_encounters/yoshio_scenes.c": "7488a2066a4ebdba2429e185453a64e5eca89d413c4d42a34ac472c1d5d3801a",
+  "src/ovl/girl_encounters/yuina_scenes.c": "3760f91478106388087f0c7ac2d6a32254ea8a1a5f50aa0f776bc4ac44668b91",
+  "src/ovl/girl_encounters/yukari_scenes.c": "9981dd61e6adbf492b15b0051f83e0b2936c177040a69f1a5c3924d5e2ef4e50",
+  "src/ovl/girl_encounters/yuko_scenes.c": "489a0f8449b00c7fa52d3616b2081d5ce054e8c20487fcde98a119814e9dbdee",
+  "src/ovl/girl_encounters/yumi_scenes.c": "12504ca0bbc47c5f3aeb0f91e9e5d4ea88c6ad71ee7f850d04e26d7a99d605b3",
+  "src/ovl/help/help_biorhythm_page.c": "c8ea42fab1461325ff9e6d736b98950575c544ca3bd00ad83af8b88deec7e42e",
+  "src/ovl/help/help_file_select_page.c": "76d944f56fedf6d115860e727aa6421be1bffa9bc071ba2cecdb2c0a679815ed",
+  "src/ovl/help/help_icons_page.c": "f98bf3e39bb3a4d0273f8ad73325f7382431607b6da5cd9cda6ac59a410444b9",
+  "src/ovl/help/help_memory_card_page.c": "3de7406063f3765fc620e99c8e58701554d8ffad78d9df9c86d1506b889e305d",
+  "src/ovl/help/help_minigame_page.c": "3e8c4af4b698d6b07d9b999c36a5dc590b2e7a67f40d82576e245445167f55e5",
+  "src/ovl/help/help_questions_and_answers_page.c": "b220d1db71fbc5bb64171158d0f565deb5c43c5ae898a38a9b3d0ef83642f5fb",
+  "src/ovl/help/help_system_settings_page.c": "cb66fbb3a346cef8b3119a8ce81918249c6fba617a1db01ff37a0d86f4be6824",
+  "src/ovl/help/help_trivia_page.c": "bc7f98f87142255f5866f4ec0732db6c62428cf07018d34903cd804854942bbf",
+  "src/ovl/misc_scenes/album_save_flow.c": "d9e86d48df532fd1d3b9aabd2d6b62367a0acf2c27041734a3e497422e28b7af",
+  "src/ovl/misc_scenes/career_choice.c": "ec12b746316e2a87db3cc7babdf6262cc3a49d6bac4b3e3246ae6579230a0c3f",
+  "src/ovl/misc_scenes/career_guidance.c": "73f8f3d5296e2e445411ba19f211f97bff1ea3038e2467d2feb1378d96b39f8b",
+  "src/ovl/misc_scenes/confession_and_epilogue_handlers.c": "f813e57814c9eb35b25a31b117972294f502a1f8b5ee44a52eadd2ae6fcb1c9a",
+  "src/ovl/misc_scenes/final_exam.c": "024daf9d211e78968ac210bd65e5aeecffdbe38d747c43dec65f00581de86f6f",
+  "src/ovl/misc_scenes/staff_roll_and_clear_save.c": "c0b7b0daae006e73a340f62bb5d9682b74c97c98d96a47d5046cb606c24ebcb4",
+  "src/ovl/name_entry/file_select.c": "555ad3d9185b63d8fa2f51a36df93cc7bcb5fed90d4e2516b8bb34a1a7eca8bc",
+  "src/ovl/name_entry/name_entry.c": "3709fb0a1616e0a2260b4053a3822d2309eb56ee514fd48dd391dea78a1e6b23",
+  "src/ovl/name_entry/opening.c": "341e2f96997136ab32a7aa90686578ea962dea11d322fdc4c0760910278991c8",
+  "src/ovl/name_entry/prologue.c": "b4e2c6c1599ebb2120dbfa255db8afef74d02b4a548884d0b5870a8f581c6348",
+  "src/ovl/new_year_christmas/ayako_scene_handlers.c": "8215609c7b28d309f9882ec67a3e957a01c00e3d5857873bd34efec55491b186",
+  "src/ovl/new_year_christmas/christmas_mansion_entry.c": "dd4d8443af3cdd2c493132b5074b810a7d7a88617be73839dc6cc9f9f7171448",
+  "src/ovl/new_year_christmas/christmas_party_dialogue.c": "9dceb89360724fefa80bbe82fba3e17c252785adc969abd81341633a0feddce1",
+  "src/ovl/new_year_christmas/girl_dialogue_setup.c": "abf7dfe059a3f2177f37f130e7d9a206eed6e56a4989119328ffcbb2b66cdba6",
+  "src/ovl/new_year_christmas/mira_scene_resources.c": "eb0559e8a482c76e45be98157f39cf0248223a26ccdb0084741c2c7ded67c6c7",
+  "src/ovl/new_year_christmas/new_year_dialogue.c": "5eb008abe45f1728039040a34e0f37aa7f6fb7e2cc9c52a77b99e28dc903539c",
+  "src/ovl/new_year_christmas/new_year_outcome.c": "ef0695cffdd6c540ee74d7d0380b17a254ce5f5fd00737c32ca063b795f57378",
+  "src/ovl/new_year_christmas/new_year_scene_setup.c": "a180dd262102ff6d3372276f192e339761acbda28d36ac630c15890540444a29",
+  "src/ovl/new_year_christmas/nozomi_scene_handlers.c": "688381124161b4b3567e64c04874e39a082bb4840683314a88d506016ce6eb76",
+  "src/ovl/new_year_christmas/omikuji_draw_scene.c": "0769349543aa7b67bbf81c8c504354137826489eb5d3df28a32bd36dcb7d33a1",
+  "src/ovl/new_year_christmas/saki_scene_handlers.c": "a841500b13bfebc02c3923cf4c702391927097c9f72b273c446615d4f0d831fb",
+  "src/ovl/new_year_christmas/scene_particle_helpers.c": "451a160fd24097e6a2ca6afa38e4c12998d32066376be30461f66712797384dc",
+  "src/ovl/new_year_christmas/scene_step_handlers.c": "497366a522e87d54c890841830d6ba5fbeedf85576d6f0d9b694764b0eebddbb",
+  "src/ovl/new_year_christmas/shrine_visit_dialogue.c": "86b173a370a3a3b039313fbc5e394c44a3f197b902b5d85eb11ea276c8eed87c",
+  "src/ovl/new_year_christmas/yuina_scene_handlers.c": "9dea78f9b9cfeeacc08255b471bedc586e5705c08a63cd18e2bae5a297cdcf25",
+  "src/ovl/new_year_christmas/yukari_scene_handlers.c": "6f81aecad5f35d4e86d6aab6eac9281c07ea8f6babd497a1386b1255c8d1a0ae",
+  "src/ovl/new_year_christmas/yuko_scene_handlers.c": "79bd6140b9a8464cadaa80a0e670c49f79e15566d39e24d501529ed0e61df173",
+  "src/ovl/new_year_christmas/yumi_scene_handlers.c": "5bcf0e803d45d5dd623a2cb057168c56b33457bc4d5356faf3e4971a684aefd2",
+  "src/ovl/options/debug_game_data_editors.c": "ab2b2782375ddb06ec5580fe1086305cfc1ea13bd788d659bf7f1b03191c59fa",
+  "src/ovl/options/settings_sound_test_and_extras.c": "525fba6ff0f951b8246454a7ba35cdb647170c29bf5b4784d0e3d513b4f1fbc8",
+  "src/ovl/options/voice_test_browser.c": "714ba6a277edf8b600f7fd8636193b16125381765c53cfac745c150a21ad1eb8",
+  "src/ovl/practice_match/practice_match_mode_stage_dispatch.c": "c1100454ae77263732935f785c59d4ad2964669b01fa41088879f53f2efd8eae",
+  "src/ovl/rpg_battle/art_club_move.c": "20c1e8cc6328000411a728154c12ceae36b8748523cd53e11899b7ac9c748c48",
+  "src/ovl/rpg_battle/bear_finale_and_rescue.c": "2a1bae02d4a64c3a61db37edd468bf13767846822361ca19d46e4c7e9c14389b",
+  "src/ovl/rpg_battle/club_move_baseball.c": "152eead958113d3c96a7a54782b48c9ae769a9e4b82c744adaef15cfc7fd82f1",
+  "src/ovl/rpg_battle/club_move_basketball.c": "8b084de4c9c2c8d7c39e320cf98ac576b897a5ee3bfeda7a0782822402307de8",
+  "src/ovl/rpg_battle/club_move_brass_band.c": "526284196fba3639ee952b2f813d5eb138344b73cd2c0df32187946c601714b9",
+  "src/ovl/rpg_battle/club_move_computer.c": "f6000f282f1b12db3c9b17cb3cb7d15e9d373d5031c8cbc35b8f00732872a7f4",
+  "src/ovl/rpg_battle/club_move_literature.c": "d7ef97624789de105de724e2e9bf46390febb720211827b3cada935c6dce7365",
+  "src/ovl/rpg_battle/club_move_no_club.c": "9390ab9f73e028c8949d5c9c29b09472734577aca57387c7b540441e6c3bfe61",
+  "src/ovl/rpg_battle/club_move_soccer.c": "0c9103a9f993ed1679d3079fca7a41b0f1c1e47bc84ececa7e80e9d02b81939c",
+  "src/ovl/rpg_battle/club_move_swimming.c": "7000c790c879c337c595675555300c97a1ffe09b5cc117dae57468b2e981ae22",
+  "src/ovl/rpg_battle/club_move_tennis.c": "31a2a67d4b7bc5ff6157e2930aef0f5a04e2342686fd79fc16de267a3349927a",
+  "src/ovl/rpg_battle/deer_finale_and_rescue.c": "182a172445ee5a25d76950504175f54a9af412ea10b9dd3dd98a94304961a466",
+  "src/ovl/rpg_battle/drama_move_and_partner_assists.c": "3780496ba80ee97829ee0517cf0a7a92371a159c23f3ef64e664b3c54e5bce81",
+  "src/ovl/rpg_battle/enemy_alien.c": "f05e5a0e2997dce9806788b73fad36e199b97a4e487c229c59d7b11192441d85",
+  "src/ovl/rpg_battle/enemy_bancho.c": "4182f692f0a1c9090eaf881b72e22bf778c56e383c26e36dd50ee641c652b5bf",
+  "src/ovl/rpg_battle/enemy_delinquents.c": "2a950aa6c3041f4e4c7153591ffff976378ccf9725e35a85f98fae8110b3c7e1",
+  "src/ovl/rpg_battle/enemy_robot.c": "5b6de25bd13e30256993feafe68ce35ab123c858bec633e511f874842be27920",
+  "src/ovl/rpg_battle/finale_aliens.c": "103dacbabbb4ea4573e7c06e325948af8419635c622c64833e411b20db208fa7",
+  "src/ovl/rpg_battle/girl_action_ayako.c": "59f51d394bb8f9572afa9c3cce50e3faca46e86e74e97d53307906d395813daf",
+  "src/ovl/rpg_battle/girl_action_megumi.c": "1075533eb773112da445cd70169e0088a8d07e8c6e92de3787a63ecaa50ce4e5",
+  "src/ovl/rpg_battle/girl_action_mio.c": "9985558512213e8b55a1dde5bd2de791c96b05b66c485f81214c22810890051f",
+  "src/ovl/rpg_battle/girl_action_mira.c": "d29d89ab341ab3a0277c9cac80235d3d63e8b03bdd31bb62c91035e4bda547a9",
+  "src/ovl/rpg_battle/girl_action_nozomi.c": "7677c6c7571cf5a83826db72a2c3964c3cedbaaf28a4fc9f746966880a05ac9c",
+  "src/ovl/rpg_battle/girl_action_saki.c": "dd13702496ce601b77a71ba490c20b1db93d5dde4218cba219d5af26519d27ef",
+  "src/ovl/rpg_battle/girl_action_shiori.c": "5977f23711102f2164517f7eee3c3a008cfc78ef1f82960f57c481e8e6221fc5",
+  "src/ovl/rpg_battle/girl_action_yoshio.c": "7e9808f4b89eb0b2423401b5c718ded9bf49a9bc2f82feaf996e8ec50fc4cdde",
+  "src/ovl/rpg_battle/girl_action_yuina.c": "1dac155d31af5a5010b17ab1cb4256fdc905980f158b2ccbffb4bfc192967e5b",
+  "src/ovl/rpg_battle/girl_action_yukari.c": "7f6e67c4d262085f5b665d01a47ed1d6d6ce332431cc83ab257e5e743219a42a",
+  "src/ovl/rpg_battle/girl_action_yuko.c": "e524489cf198798d5698d148e8a9f269139fc9b845e03c5d12a5526e0a192dd7",
+  "src/ovl/rpg_battle/girl_action_yumi.c": "4f78c4535daf258b2115d6de000001a256c04adc8a71f9acfed8a2c40ae1bbeb",
+  "src/ovl/rpg_battle/hud_messages_and_swimming_effect.c": "671a1e31887819b1c87bb8ebfb74d7624eafc3642cf3011f332ba93950972cd3",
+  "src/ovl/rpg_battle/labels_intro_and_wave_transition.c": "5b72d4ad4a625caa0ca262d86e041bde7041226aac4c581116de47a43797ab80",
+  "src/ovl/rpg_battle/move_assist_ayako.c": "ed49480c9c0ec8b615be7f4b7091054f58e80bfa92773c51b32fc80fa86c91a7",
+  "src/ovl/rpg_battle/move_assist_megumi.c": "a8c79270011c3827c9e6ccdcbc4ce17afeab84fe7815ff9394556a2fd198bc9b",
+  "src/ovl/rpg_battle/move_assist_mio.c": "4fe8109bf9cdb6713404fefdd4d1b184afd2cf84b05840ef489f1a0f31420e1e",
+  "src/ovl/rpg_battle/move_assist_mira.c": "8137cfd84d5cd465a26761f752dbca6c346ffafcb9121965ecf11dd733ca5cb4",
+  "src/ovl/rpg_battle/move_assist_nozomi.c": "443f7f9b7a0321284494ce534fc0b5537378ecaa6e1dcdd51fcc2accacf2526b",
+  "src/ovl/rpg_battle/move_assist_saki.c": "4d7f45d03f71c1aeebb586d01d35be641dae829d5e6031c6a682285689991dd4",
+  "src/ovl/rpg_battle/move_assist_shiori.c": "c3d9ed2db74dbf595fafee2481a6235b46d7006ff916d9a7c2897a2f04a95782",
+  "src/ovl/rpg_battle/move_assist_yuina.c": "0105971658e194bf58c4075d41ed4fedb2db83339cc0cc468fa4b03d89342f7c",
+  "src/ovl/rpg_battle/move_assist_yukari.c": "bcc7e1b95cd4a1374f82d4134246e374448bc8a1b07898532886eba467b14cb0",
+  "src/ovl/rpg_battle/move_assist_yuko.c": "b904d8cfef5bf03eebbeac07ee46f83de23c968500a12a02bf39039b4cf02d80",
+  "src/ovl/rpg_battle/move_assist_yumi.c": "a476d2e10ab2fa81b143e10077612938b81c07abd0d58328e7736b92e42ee90b",
+  "src/ovl/rpg_battle/player_attack_guard.c": "dfc746acb420d69c160891ce00470d778b42bac2f8921670a55fae0f2e7bdeb3",
+  "src/ovl/rpg_battle/science_club_move.c": "5bd36addc91f12394f71f5b76e4ff977e76db289229bf1aee68ac95e24698883",
+  "src/ovl/rpg_battle/snake_finale_and_rescue.c": "a058aa19f11d20498760b655124bb0fec8ba8cd0446aed357150c5b4834d2c3a",
+  "src/ovl/rpg_battle/trip_enemy_attacks_and_rewards.c": "5cb9805986bcec56c9c9dfd132bea921cd95914c0d6a7ce15a93bec2615338a7",
+  "src/ovl/school_trip/corridor_choices_and_return.c": "3c99e9007588819311b9cb954552725ef7a183b8c5b3d04d819127382a444f49",
+  "src/ovl/school_trip/destination_choice_and_detour_routing.c": "d7b7c403f190cc47681072db473c21653b5114c23be5a12fadd0e755e022842b",
+  "src/ovl/school_trip/destination_label_and_day_resume.c": "22e5e9da1012482f80e71ae8fc19505f71266410d6204ad96b23d4f5f8ca2d01",
+  "src/ovl/school_trip/destination_outings_and_hotel_lobby.c": "173598b1c45dd39d363d4dc893b2b54cf7773626846d5ca09ee61f26a51f96be",
+  "src/ovl/school_trip/sightseeing_and_companion_selection.c": "287b5792fa1d74812dcf413e110025de632cf9c71c90e6d68a5e094aa85115e2",
+  "src/ovl/school_trip/yukari_corridor_scene.c": "75de47ff026a647ad8e041bcdd413bafe251b4009d4bdc45eb46c75690f8df76",
+  "src/ovl/sick_visit/sick_visit_girl_resource_addresses.c": "2e66f8631053e142cbae202ef2d8342b7b2b7a725fc7dd8d1cb9eb29a3d192aa",
+  "src/ovl/sick_visit/sick_visit_scene_dialogue.c": "87288dc44400be3848227d835805afb718031317d7eef8db338adf76596dd3f0",
+  "src/ovl/sports_festival/candidate_scene_state_handlers.c": "433f65c0920820b8d60a2b9b84bc9e7beff610ae9da3eb10754051db3e9fb381",
+  "src/ovl/sports_festival/festival_entry_and_competition_select.c": "97091572298cd83e870a0d1efac6d828d7154da39d4b66e93dfea1bc5182b9d7",
+  "src/ovl/sports_festival/folk_dance_scene.c": "e4191a9f2af250673887bcd376900ba9c170e6e73a77000deced903184cfaa17",
+  "src/ovl/sports_festival/runner_scene_handlers.c": "f92caaa9f8a11c99622665f7f30385fe14927c46d9704a2dea57046be84a21e4",
+  "src/ovl/sports_festival/scene_actor_resource_tables.c": "5ae1d99e5bfa1b92c159fd622f5f378a902cac84425ad16e91b1d15937b4a8f7",
+  "src/ovl/summer_camp/girl_meeting_routes.c": "1538b8b4f1b90ba2919c991d656eb0e290e63a26a5166fe23fcd8031623eba5b",
+  "src/ovl/summer_camp/scene_callbacks.c": "a895bd6cf39922885a9456c2090577e6d2de72a84b8d72fc5172e5fe62af1c9c",
+  "src/ovl/summer_camp/scene_load_and_display.c": "3f42fba43954a9f374507df709b1bd03dc039a46d9f618c3ad8bddc76709edfc",
+  "src/ovl/telephone/appointment_call_scenes.c": "59f713baba38576a504947b75756f03ff8605c6eea3095046f3d9aa3d7b8db31",
+  "src/ovl/telephone/call_and_invitation_flow.c": "1b7290f8beb414cf52009f77d507f414e568c6a8712c324611809c4f652d5c02",
+  "src/ovl/telephone/profile_and_place_availability.c": "634ad0fb4c2261498148405b9bdcbcbf26ffd67e484ca0e1f5b4740a0c95540d",
+  "src/ovl/valentine/valentine_girl_selection.c": "b03777013f383232cbc445762ed7257961e12b4a4d3208762114713f95b8e7a3",
+  "src/ovl/valentine/valentine_home_scene.c": "826380dbc1dd6b6833e185dc97d7b9f77533e230f2cdb478525b491598645c6d",
+  "src/ovl/valentine/valentine_scene_handlers.c": "ae28f34f0b352f50c646b87f812069ae47d46f9d3d32af2f5113271c009b8c0b"
+ },
+ "helper_proofs": {
+  "save-helper-binding.json": {
+   "helper_start": 2147906736,
+   "helper_end": 2147907248,
+   "caller": "hud_save_slot_info_show",
+   "verified_calls": [
+    2147916816,
+    2147917848
+   ],
+   "labels": {
+    "4e616d653a2000": [
+     {
+      "site": 2147906780,
+      "target": 2148430096
+     },
+     {
+      "site": 2147906880,
+      "target": 2148430096
+     },
+     {
+      "site": 2147906972,
+      "target": 2148430096
+     }
+    ],
+    "4e69636b6e616d653a2000": [
+     {
+      "site": 2147907068,
+      "target": 2148430104
+     }
+    ]
+   }
+  },
+  "memory-prompt-binding.json": {
+   "function": "file_select_memory_card_check_begin",
+   "start": 2148785592,
+   "end": 2148785704,
+   "verified_references": [
+    [
+     {
+      "site": 2148785620,
+      "target": 2148847924
+     }
+    ],
+    [
+     {
+      "site": 2148785648,
+      "target": 2148847952
+     }
+    ]
+   ]
+  },
+  "honorific-binding.json": {
+   "function": "new_year_yumi_scene_state_init",
+   "calls": {
+    "english_copy": [
+     2148774076
+    ],
+    "english_append": [
+     2148774100
+    ]
+   },
+   "suffix_references": [
+    {
+     "site": 2148774092,
+     "target": 2148808992
+    }
+   ]
+  }
+ },
+ "candidate_classification": [
+  {
+   "unit": "main",
+   "address": 2147994604,
+   "bytes_sha256": "03289b27d3a2dc0fc2e8a535d7062aaaacaa2d2f20924917d16ecfa2d9f223e1",
+   "owners": [
+    {
+     "site": "0x800b5ac8",
+     "object": "build/en/src/main/scene_library.o",
+     "section": ".rodata"
+    }
+   ],
+   "classification": "code_pointer",
+   "basis": "Jump-table target inside scene_bg_wipe_in_step; bytes belong to MIPS instruction 0x00609025."
+  },
+  {
+   "unit": "main",
+   "address": 2148236064,
+   "bytes_sha256": "12da48e9e3f039c235e43de98f584fbf9a3f0c031cf957472b6e609d95e393f2",
+   "owners": [
+    {
+     "site": "0x800526b0",
+     "object": "build/en/src/main/menu_speaker_girl.o",
+     "section": ".text"
+    }
+   ],
+   "classification": "numeric_data",
+   "symbol": "girl_tokimeki_weight",
+   "basis": "numeric relationship weights"
+  },
+  {
+   "unit": "main",
+   "address": 2148236224,
+   "bytes_sha256": "13cd4eb41a1d731a28861eaeab14e317b97d25c23b34f284bcfe3dd09521167a",
+   "owners": [
+    {
+     "site": "0x80052cb4",
+     "object": "build/en/src/main/menu_speaker_girl.o",
+     "section": ".text"
+    }
+   ],
+   "classification": "numeric_data",
+   "symbol": "girl_affection_weight",
+   "basis": "numeric relationship weights"
+  },
+  {
+   "unit": "main",
+   "address": 2148246528,
+   "bytes_sha256": "8c04e9aaa54f2cb062429c63c4a41d51917aa51f3937978fceb29bc6227a5166",
+   "owners": [
+    {
+     "site": "0x800750d4",
+     "object": "build/src/main/school_day.o",
+     "section": ".text"
+    },
+    {
+     "site": "0x80077708",
+     "object": "build/en/src/main/holiday.o",
+     "section": ".text"
+    }
+   ],
+   "classification": "numeric_data",
+   "symbol": "holiday_sd_set_sectors",
+   "basis": "CD sector table"
+  },
+  {
+   "unit": "BUNKAKEN",
+   "address": 2148884236,
+   "bytes_sha256": "0248c38694c48f9bdda902d32d49a099c09c999ce6dabc3f0937f3c122a4f6d3",
+   "owners": [
+    {
+     "site": "0x8013b5f0",
+     "object": "build/ovl/BUNKAKEN/src/ovl/culture_festival_tour/invitation.o",
+     "section": ".text"
+    },
+    {
+     "site": "0x801440d8",
+     "object": "build/ovl/BUNKAKEN/src/ovl/culture_festival_tour/companion_menu.o",
+     "section": ".text"
+    }
+   ],
+   "classification": "numeric_data",
+   "symbol": "tour_invite_script_lba",
+   "basis": "CD sector table"
+  },
+  {
+   "unit": "ETC",
+   "address": 2148853164,
+   "bytes_sha256": "a799b0a03f29ef57259b6cc3ad40a591a3acc46c4d9d063ec690809fa2e18044",
+   "owners": [
+    {
+     "site": "0x8014e6f0",
+     "object": "build/ovl/ETC/asm/ovl/ETC/data/ETC_data.data.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "numeric_data",
+   "symbol": "album_background_lba_cat_12",
+   "basis": "CD sector table"
+  },
+  {
+   "unit": "ETC",
+   "address": 2148857800,
+   "bytes_sha256": "ef125c0dae993140d7d5476f1c247d1038d2164a6a9f323bcbad1663a45b6021",
+   "owners": [
+    {
+     "site": "0x8013ba48",
+     "object": "build/ovl/ETC/src/ovl/misc_scenes/album_portrait_selection.o",
+     "section": ".text"
+    }
+   ],
+   "classification": "numeric_data",
+   "symbol": "album_portrait_lba_b",
+   "basis": "CD sector table"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846208,
+   "bytes_sha256": "4f23ff3c75d080e0671c7c4512e836ae2c7bc9def2748abad74bc62aa4634c6d",
+   "owners": [
+    {
+     "site": "0x8014e528",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:00"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846220,
+   "bytes_sha256": "67487ad297e5a310de3b9062f5b4d35177cbb43f956b8638d14572862b7f8600",
+   "owners": [
+    {
+     "site": "0x8014e52c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:01"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846232,
+   "bytes_sha256": "487366aa23cb995aaf4d1b87dd690503781bef7e61b53751d237227357ae45c4",
+   "owners": [
+    {
+     "site": "0x8014e530",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:02"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846244,
+   "bytes_sha256": "d25dcaf5d5bca30bb1da35f5529429db35430b7ed10e5291fe1df1372c7d4f80",
+   "owners": [
+    {
+     "site": "0x8014e534",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:03"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846256,
+   "bytes_sha256": "0c6353c1024a86c2c5502e089df6a2f163ffca83c46af17aafbe9c548dd74c80",
+   "owners": [
+    {
+     "site": "0x8014e538",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:04"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846268,
+   "bytes_sha256": "195c7eb6347a6d4a61fe4c226194d7ade06521986405219895e14f9fea851374",
+   "owners": [
+    {
+     "site": "0x8014e53c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:05"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846280,
+   "bytes_sha256": "c04d5e8b327d536ee090216a4602ae86f6ae90d6922ec15e61a0874364037b6c",
+   "owners": [
+    {
+     "site": "0x8014e540",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:06"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846292,
+   "bytes_sha256": "85fdb3e4c459f566e3018560003736b9b769cd3d1643a7f90f4f2708fd56aaf9",
+   "owners": [
+    {
+     "site": "0x8014e544",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:07"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846300,
+   "bytes_sha256": "22ac2df294dffa2855e4e371b0c5c9444fd2ae3e84653a2e8a48bef6f3f87f13",
+   "owners": [
+    {
+     "site": "0x8014e548",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:08"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846312,
+   "bytes_sha256": "c5ff9c49e0fa7ae24e05c0cf29502ce1195bd18467be43f008005a312c003061",
+   "owners": [
+    {
+     "site": "0x8014e54c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:09"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846320,
+   "bytes_sha256": "41414bc1555cf4e7864ef45893d0640c6fa47ebe3e030dba8bcca9fa4fd8dd92",
+   "owners": [
+    {
+     "site": "0x8014e550",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:10"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846332,
+   "bytes_sha256": "6cf4d06be85e8fb2d3fbdada4f270ba350c590c22e3b775b9b403dc447251aca",
+   "owners": [
+    {
+     "site": "0x8014e554",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:11"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846344,
+   "bytes_sha256": "f383ef7bcd5b1fa10ef328944d8b78d655970f6a55bdbb747104e5a5164b62c1",
+   "owners": [
+    {
+     "site": "0x8014e558",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:12"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846356,
+   "bytes_sha256": "ff3cbc54af46d3ffa1eb44f54bd829d82a02ba86e79ce7e3deb14ada8990767d",
+   "owners": [
+    {
+     "site": "0x8014e55c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:13"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846368,
+   "bytes_sha256": "15bca0ae91e544cad3ee8aa3f91c89307e283dc29db86e7ba3aba2eeb6e85e3f",
+   "owners": [
+    {
+     "site": "0x8014e560",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:14"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846380,
+   "bytes_sha256": "8c05f4d5d61efc8ffbeed0cd52444bf072dbf922ffe238d703f817ec22d086be",
+   "owners": [
+    {
+     "site": "0x8014e564",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:15"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846392,
+   "bytes_sha256": "d99be267b7e6cfe74b2e604da7fb20a210c1cb42bbc7a3bed8bdb9d290f81ad8",
+   "owners": [
+    {
+     "site": "0x8014e568",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:16"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846404,
+   "bytes_sha256": "f2713f8d5133c169126e8bfcad4f17c23ea962b71b740aa6794bc9451d757fdf",
+   "owners": [
+    {
+     "site": "0x8014e56c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:00"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846416,
+   "bytes_sha256": "f5aa1b1fc6484e4688fd6e564ffffb3ee42eda7efa1065a92b855487dbf67e17",
+   "owners": [
+    {
+     "site": "0x8014e570",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:01"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846428,
+   "bytes_sha256": "a0ec97970b58f101a1789b63437c2716c0f2370e72170d3298c1287d82f7d860",
+   "owners": [
+    {
+     "site": "0x8014e574",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:02"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846440,
+   "bytes_sha256": "41e70e483629ff7410c2ef8c75d0003f5fa19f9fc3ae131be8ab5aea0f265827",
+   "owners": [
+    {
+     "site": "0x8014e578",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:03"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846452,
+   "bytes_sha256": "44f8290f4462da917f06b82d3737177bf3fa9940eae7f9b9c5f5ec26ecd2a709",
+   "owners": [
+    {
+     "site": "0x8014e57c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:04"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846464,
+   "bytes_sha256": "5304b4b304962fffb46b6f42ce3facd33919fdb9bab571e5aea5b5853c832a23",
+   "owners": [
+    {
+     "site": "0x8014e580",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:05"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846476,
+   "bytes_sha256": "e6fc89f9e7cbc63934e5f93d23f6c09ce2e3e4b1efa312e5ad0225052b208389",
+   "owners": [
+    {
+     "site": "0x8014e584",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:06"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846488,
+   "bytes_sha256": "5011338e7bf0be4a3848c52c8e0b455ed47405c9714a0342b341375ae8f285af",
+   "owners": [
+    {
+     "site": "0x8014e588",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:07"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846496,
+   "bytes_sha256": "f84673dd3d73471fc43e5d3b57e41abb1731033eb14efe668327dfcdbad02c5e",
+   "owners": [
+    {
+     "site": "0x8014e58c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:08"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846508,
+   "bytes_sha256": "a2df3eb745c0f2b1c91411ab6dfedbdb0e5580929e7a82444f76a6c1781c39c6",
+   "owners": [
+    {
+     "site": "0x8014e590",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:09"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846516,
+   "bytes_sha256": "b6d5280284a73370bb817c0ef1b3f32fb62dcbc7740af4e54f8975e9aaa5115f",
+   "owners": [
+    {
+     "site": "0x8014e594",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:10"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846528,
+   "bytes_sha256": "b67a215b18e175cab6bf45bde5a63f58b38f6137b04d46490a2b21103fcecba2",
+   "owners": [
+    {
+     "site": "0x8014e598",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:11"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846540,
+   "bytes_sha256": "56ab7b3495b5ee80b28b3f8dd75ca0602536a27dc4fd30f32e367c5b67c157b5",
+   "owners": [
+    {
+     "site": "0x8014e59c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:12"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846552,
+   "bytes_sha256": "959581ac600f4bf39df7021e14ed08a7b6208922eb2616da3f2b7ef752be86fd",
+   "owners": [
+    {
+     "site": "0x8014e5a0",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:13"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846564,
+   "bytes_sha256": "be6f6ba421e02ea38257a4c5fbeb9fe8869e0ce9d3f30f67c7a1465fa0af497a",
+   "owners": [
+    {
+     "site": "0x8014e5a4",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:14"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846576,
+   "bytes_sha256": "619001983eb15df9c91b5a6d96cf0d4dc64beb1be27cb80d33002575760a3a39",
+   "owners": [
+    {
+     "site": "0x8014e5a8",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:15"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846588,
+   "bytes_sha256": "5f0580e87bb6baa53f633329a9c5b76072d2db3cabcbd458eb2dd5f27b63a761",
+   "owners": [
+    {
+     "site": "0x8014e5ac",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:katakana_grid:16"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846600,
+   "bytes_sha256": "b10afe27edb54e5ebc33a7f911c2aee95f22e37a41d726fc2b4eaaddc5892b34",
+   "owners": [
+    {
+     "site": "0x8014e5b0",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:00"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846612,
+   "bytes_sha256": "acb1a2af5c980fe5f21ba23e341a386c47ba4837e982c530c38acb2b219ffee8",
+   "owners": [
+    {
+     "site": "0x8014e5b4",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:01"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846624,
+   "bytes_sha256": "42b7aa5f6a992dd7a02cc5cb1c89f3a8b3f7347904b0ca5d597066dead1d6fa5",
+   "owners": [
+    {
+     "site": "0x8014e5b8",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:02"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846636,
+   "bytes_sha256": "0881e7ef57c677f92bde770cb1af06019b1b9ff09e0bca787f4de13107107674",
+   "owners": [
+    {
+     "site": "0x8014e5bc",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:03"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846648,
+   "bytes_sha256": "2b4292e21aaf31f7a8226d8abf0493a6cb35a9e6f08975db83a6279569a16807",
+   "owners": [
+    {
+     "site": "0x8014e5c0",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:04"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846660,
+   "bytes_sha256": "7a681d0da8dd063474ed4e6910cf4f18c36e6134d8ecdb5b77f2e6170097da22",
+   "owners": [
+    {
+     "site": "0x8014e5c4",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:05"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846672,
+   "bytes_sha256": "bc8ba549a1fc82491192cc41051c5ee19b4a2c2760cd29ff8b3ca691b0e281ff",
+   "owners": [
+    {
+     "site": "0x8014e5c8",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:06"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846684,
+   "bytes_sha256": "d662d13e3897ba2eb188c285f9786b94493f9fcbd11138f93adc4f7bb7378f7b",
+   "owners": [
+    {
+     "site": "0x8014e5cc",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:07"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846696,
+   "bytes_sha256": "889e86eaff260b71efca53cf76b2fbef2ac68f9b1ae377f71410450fbaebcf40",
+   "owners": [
+    {
+     "site": "0x8014e5d0",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:08"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846708,
+   "bytes_sha256": "cd013cfb85d76833b300acce7b9d6d82e0f17a12502465d30f28650cb63b4db9",
+   "owners": [
+    {
+     "site": "0x8014e5d4",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:09"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846720,
+   "bytes_sha256": "85ab016b2127ea9e5f641b7e44d13d577fdd0ade24422fd9db304db9de40d26a",
+   "owners": [
+    {
+     "site": "0x8014e5d8",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:10"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846732,
+   "bytes_sha256": "68c829bcbb31f4b91d92dbeda27166b06e833359ec60c00110fe76bef4159a0d",
+   "owners": [
+    {
+     "site": "0x8014e5dc",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:11"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846744,
+   "bytes_sha256": "3762167c1172548315276a258b5a5e9deb8ed550af54d021f131da35dcaf397d",
+   "owners": [
+    {
+     "site": "0x8014e5e0",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:12"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846756,
+   "bytes_sha256": "c615565dc2733db1f4f65856bad1387afbdcea1e9ba076e17bdaed33fb668918",
+   "owners": [
+    {
+     "site": "0x8014e5e4",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:13"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846768,
+   "bytes_sha256": "dae04148b7713735e912118986ec406cc204924859d9144befa36cbc1b03b113",
+   "owners": [
+    {
+     "site": "0x8014e5e8",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:14"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846780,
+   "bytes_sha256": "d4c0ae04b9f0390e0828c5110c6fa78d7e7c09d4767d4f6f4184a5293cdeca82",
+   "owners": [
+    {
+     "site": "0x8014e5ec",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:15"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846792,
+   "bytes_sha256": "2fefb6bdd855be37a7c7754bdc7048e922a3ef82236c672578ad980ebfd75f03",
+   "owners": [
+    {
+     "site": "0x8014e5f0",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:16"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846804,
+   "bytes_sha256": "149c2682f99579e20ad9c2b4382a8994b2b3ab43a08ce90808b4556ba602632a",
+   "owners": [
+    {
+     "site": "0x8014e5f4",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:17"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846816,
+   "bytes_sha256": "6b939ba4840bdc126ba296599ed42941b45e7bb7875c773df8510c19bd284a3a",
+   "owners": [
+    {
+     "site": "0x8014e5f8",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:18"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846828,
+   "bytes_sha256": "c8c040e3b8ee28a2baebb17a495d443b4cb63aa75019090049afd727bea004f8",
+   "owners": [
+    {
+     "site": "0x8014e5fc",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:19"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846840,
+   "bytes_sha256": "b4679d94e477c712e337611433c0bb4634f2324defbf940aba2edaf0777f8e4a",
+   "owners": [
+    {
+     "site": "0x8014e600",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:20"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846848,
+   "bytes_sha256": "d5db0599c09b40f9ef2dd968b177e34536814e1347592e3243fa287eb08fdc4c",
+   "owners": [
+    {
+     "site": "0x8014e604",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:21"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846856,
+   "bytes_sha256": "e3059727d2075adaf48845ba0962f7ddbf9e8d251dd43c039984cd248e0f069e",
+   "owners": [
+    {
+     "site": "0x8014e608",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:22"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846864,
+   "bytes_sha256": "5255f2eca84c5c4c8b5d4973eb73cd9875b3de2d3aaa0b3d67de911517ff8c84",
+   "owners": [
+    {
+     "site": "0x8014e60c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:23"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846872,
+   "bytes_sha256": "85a5014083d49ef57ce9f634d26241765d33c7cde321534dafd61e289556e2a1",
+   "owners": [
+    {
+     "site": "0x8014e610",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:24"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846880,
+   "bytes_sha256": "cc056dae8e71ab392114ac1eba29b174150ff0f00d40975bf96604f02babb877",
+   "owners": [
+    {
+     "site": "0x8014e614",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:25"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846896,
+   "bytes_sha256": "572868709f475873badab729de865ee44f0bb7a5de24dfd080267c274aed49b8",
+   "owners": [
+    {
+     "site": "0x8014e618",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:26"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846912,
+   "bytes_sha256": "ebd5aa2a98fe22452c101a787344298d88f541bd85e039b9bf8da163fcb8c12a",
+   "owners": [
+    {
+     "site": "0x8014e61c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:27"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846928,
+   "bytes_sha256": "1b86f816bb513af79127f9bf7947540a1a7f136a83f17d4033ae24fffc2af760",
+   "owners": [
+    {
+     "site": "0x8014e620",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:28"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846944,
+   "bytes_sha256": "646f06e2ef9b98bdd3078bbdeacc1ff5c97b10334b26ca8eed94dac1082a6d31",
+   "owners": [
+    {
+     "site": "0x8014e624",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:29"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846960,
+   "bytes_sha256": "914559e5b9cbf3dc74d071b631e61ff04f3a93ced170f568b9cf1379b1135995",
+   "owners": [
+    {
+     "site": "0x8014e628",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:30"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846968,
+   "bytes_sha256": "e62840450db6e0c58adb6584a7647efc75df9a5eb1ec778bd2f3f3a3ac2bf948",
+   "owners": [
+    {
+     "site": "0x8014e62c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:31"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846976,
+   "bytes_sha256": "2fac5a5cb7327c32510ba68444b86fcb6055b9a045b5d359d6d61b67419f2086",
+   "owners": [
+    {
+     "site": "0x8014e630",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:32"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846984,
+   "bytes_sha256": "fcdfd6ddd19bad0238417abc65846026923ecf119ec4851adf62ee03192c2422",
+   "owners": [
+    {
+     "site": "0x8014e634",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:33"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148846992,
+   "bytes_sha256": "b800fd84e5feb58a8697cd0fff015ec37885dff2b11c0e2e86227c0681005420",
+   "owners": [
+    {
+     "site": "0x8014e638",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:34"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148847000,
+   "bytes_sha256": "5a3a9887687bccf8c358d9d2b2f6533b37fd8b4ed2b336c8376d0d08c7874b8a",
+   "owners": [
+    {
+     "site": "0x8014e63c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:35"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148847008,
+   "bytes_sha256": "963555dd0198cd0cab84a5920482e6a25a02c4d70230f7ba79f79b5f9cb7a177",
+   "owners": [
+    {
+     "site": "0x8014e640",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:36"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148847016,
+   "bytes_sha256": "c45afc9808563966babba3aa39f7605e08629b816b5e203df6a29051f65761c1",
+   "owners": [
+    {
+     "site": "0x8014e644",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:37"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148847024,
+   "bytes_sha256": "5845a3f69ea59cfc12219a5272b8be0b9f9bb60648ed002627e6637041b1bff3",
+   "owners": [
+    {
+     "site": "0x8014e648",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:38"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148847028,
+   "bytes_sha256": "053c63577475190840f7d7a3f4ee9f87ccf69f5c7b6682b7962c80d80dfc4f4f",
+   "owners": [
+    {
+     "site": "0x8014e64c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:39"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148847036,
+   "bytes_sha256": "352937534959ffec75041f293c05d6b09ed8ea2fbec8c0b20d16087f863f0794",
+   "owners": [
+    {
+     "site": "0x8014e650",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:40"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148847044,
+   "bytes_sha256": "d13179a9e74c1326e954ed00c990e325079ce2b7f10428bccdc6d6f845ccd25e",
+   "owners": [
+    {
+     "site": "0x8014e654",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:41"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148847052,
+   "bytes_sha256": "e7c63f36edfe5f7c3b8a234bf88f95d787b86805f71ddbb6da4df079d2befb6b",
+   "owners": [
+    {
+     "site": "0x8014e658",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:42"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148847060,
+   "bytes_sha256": "e370fc583d7e233cfedb6fe7a29cab7eb1ef591b2fb242ddf05044d29904665c",
+   "owners": [
+    {
+     "site": "0x8014e65c",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:43"
+  },
+  {
+   "unit": "NAME_ENT",
+   "address": 2148847068,
+   "bytes_sha256": "9b0c411bdd7c7849ad28e351d39514570abf3baa1b66eb9dafa7f184d32f9f30",
+   "owners": [
+    {
+     "site": "0x8014e660",
+     "object": "build/en/ovl/NAME_ENT/src/ovl/name_entry/name_entry.o",
+     "section": ".data"
+    }
+   ],
+   "classification": "approved_keyboard",
+   "record_id": "dictionary:CDROM/EXEDIR/NAME_ENT.EXN:reading_labels:44"
+  },
+  {
+   "unit": "OPTION",
+   "address": 2148783896,
+   "bytes_sha256": "09c4f68892d4f558077bd64ef4ce312f43678254028ada049424143af89d9de8",
+   "owners": [
+    {
+     "site": "0x8013a230",
+     "object": "build/en/ovl/OPTION/src/ovl/options/voice_test_browser.o",
+     "section": ".text"
+    }
+   ],
+   "classification": "numeric_data",
+   "symbol": "options_voice_test_character_bank_load_commands",
+   "basis": "audio-bank command table"
+  },
+  {
+   "unit": "TACO",
+   "address": 2148922752,
+   "bytes_sha256": "7707be9071e6e163b9312e99ad5317a808fa0302d57efd50e5efd25c453dfcaf",
+   "owners": [
+    {
+     "site": "0x801413c0",
+     "object": "build/ovl/TACO/src/ovl/shooter_3d/primary_weapons.o",
+     "section": ".text"
+    }
+   ],
+   "classification": "numeric_data",
+   "symbol": "shooter_vulcan_frame_u",
+   "basis": "texture coordinate table"
+  },
+  {
+   "unit": "TACO",
+   "address": 2148922756,
+   "bytes_sha256": "7707be9071e6e163b9312e99ad5317a808fa0302d57efd50e5efd25c453dfcaf",
+   "owners": [
+    {
+     "site": "0x801416f0",
+     "object": "build/ovl/TACO/src/ovl/shooter_3d/primary_weapons.o",
+     "section": ".text"
+    }
+   ],
+   "classification": "numeric_data",
+   "symbol": "shooter_wide_shot_frame_u",
+   "basis": "texture coordinate table"
+  },
+  {
+   "unit": "TACO",
+   "address": 2148922768,
+   "bytes_sha256": "9e50069e9783169e22141366ddddd561b12d991a1afc2f76feb5d051a3e97d49",
+   "owners": [
+    {
+     "site": "0x801424b0",
+     "object": "build/ovl/TACO/src/ovl/shooter_3d/bombs.o",
+     "section": ".text"
+    }
+   ],
+   "classification": "numeric_data",
+   "symbol": "shooter_blast_shot_frame_u",
+   "basis": "texture coordinate table"
+  },
+  {
+   "unit": "TT",
+   "address": 2148895424,
+   "bytes_sha256": "f3205b009f6d5e765dc943433316708a93bfbdcdae8934f946bd9f0b9310d15b",
+   "owners": [
+    {
+     "site": "0x8014b96c",
+     "object": "build/ovl/TT/src/ovl/TT/air_enemies_and_sprite_drawing.o",
+     "section": ".text"
+    }
+   ],
+   "classification": "numeric_data",
+   "symbol": "tt_air_enemy_kind44_pose",
+   "basis": "sprite pose table"
+  }
+ ]
+}

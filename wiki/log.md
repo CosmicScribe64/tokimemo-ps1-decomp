@@ -3469,3 +3469,15 @@ Previous turn completed T-39517 with GPU/browser verification and commit f90102f
 ## [2026-11-02] ticket | Complete SD source binding and pixel audit
 
 T-39518 In Progress -> In Review -> Done after standards review. 69 SD files resolve to original hashes/caller-proven layouts and match the current disc; all 585 distinct frames reviewed on 25 sheets, no Japanese lettering. Added metadata-only hash receipt; no game pixels staged. Retained menu/still/portrait reviews recorded too. 37 tests and inventory check pass, prior source hashes preserved. [[tickets/T-39518-sd-art-inventory-coverage]], [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] query | Trace rebuilt executable strings to compiled users
+
+Previous turn made concrete progress with the complete SD source/pixel audit (c05f6426d). Refreshed executable census against the accepted ending-stream disc. All 1,964 active source-literal replacements regenerate exactly to the 171 frozen/current English sources. Of 108 non-exact rebuilt extents, 104 have original relocation owners whose corresponding English functions reference the expected payload on the actual disc. Four save/album labels moved to the full-name helper; both compiled JAL calls and its Name/Nickname references are verified on-disc. Both replaced NAME_ENT memory-card prompt references are verified in their current function. Exploratory Shift-JIS-reference census remains 91 candidates (79 NAME_ENT keyboard exceptions, 12 prior numeric/code cases); exhaustive classification and reusable audit consolidation remain next. Reports: `build/extent-reference-binding.json`, `build/current-source-literal-proof.json`, `build/save-helper-binding.json`, `build/memory-prompt-binding.json`. [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] query | Verify derived stage pointers and RPG initial buffers
+
+All 286 BUNKA_SD derived records resolve to exact translated physical slots; all 286 actual disc pointer words reach those payloads. Five RPG initial-buffer views also map to exact translated physical slots. Current executable-source equality covers 1,964 literal replacements in 171 files. Both replacement memory-card prompts and save/album helper label paths are verified on-disc. Consolidation into a reusable audit remains open; no whole-game completion claim. [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] query | Classify final executable scan and preserve binding receipt
+
+All 91 referenced-byte candidates classified: 79 exact retained keyboard records, 11 named numeric tables and one MIPS jump target. Rechecked 321 source-only literals, all present. The obsolete honorific formatter has verified replacement helper calls/suffix. Saved metadata-only receipt with target/source/report hashes and helper evidence. Consolidated reusable verification remains next. [[tickets/T-39510-no-japanese-left-check]].
