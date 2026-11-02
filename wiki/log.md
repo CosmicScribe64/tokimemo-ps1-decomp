@@ -3665,3 +3665,7 @@ At the owner's request, pushed verified source and README updates to main and pa
 ## [2026-11-02] ticket | Disc-input candidate in review
 
 Moved [[tickets/T-39527-patcher-disc-inputs]] to In Review. Full dropped-archive flow, malformed ZIP handling, extraction cancellation and download checks pass. Real CHD, archived CHD, 7z and combined raw ISO inputs recover both original track hashes. Desktop and mobile screenshots were opened and inspected. Code review found no unresolved issues; publication and final prose review remain.
+
+## [2026-11-02] ticket | Drag-and-drop patcher published
+
+Closed [[tickets/T-39527-patcher-disc-inputs]] after code review, 15 browser checks, real-disc format checks and desktop/mobile visual inspection. GitHub Pages workflow `41525374227` succeeded. All 36 served files match the tested package; the deployed CHD reader also reconstructs both original track hashes. README instructions now cover disc images and ZIP/7z archives. The source commit is `981fbce05`; the public package is `7cec4eb`. Preserved upstream decoder and license line endings byte-for-byte.

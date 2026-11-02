@@ -1,0 +1,265 @@
+{
+  "ticket": "T-39527",
+  "date": "2026-11-02",
+  "browser": {
+    "status": "passed",
+    "target_sha1": "2f9fd663374c4e7aa55c4f46e3690be28624f806",
+    "checks": [
+      "wrong size",
+      "wrong source hash",
+      "corrupted patch",
+      "cancel",
+      "full patch",
+      "download hash",
+      "cue",
+      "no upload",
+      "responsive layout",
+      "invalid archive",
+      "archive drop",
+      "extraction cancel",
+      "audio download hash",
+      "archive cue",
+      "mobile result"
+    ]
+  },
+  "formats": [
+    {
+      "inputs": [
+        "combined.iso"
+      ],
+      "source": "00b595095e26108d0e07d76492a11aaf3f71ccf1",
+      "audio": "6cdd8500168ab4ecb18b78ef7589586d26bc4501",
+      "audioName": "tokimemo-en-track2.bin",
+      "extractedAudio": true
+    },
+    {
+      "inputs": [
+        "disc.7z"
+      ],
+      "source": "00b595095e26108d0e07d76492a11aaf3f71ccf1",
+      "audio": "6cdd8500168ab4ecb18b78ef7589586d26bc4501",
+      "audioName": "disc/orig/track2.bin",
+      "extractedAudio": true
+    },
+    {
+      "inputs": [
+        "original.chd"
+      ],
+      "source": "00b595095e26108d0e07d76492a11aaf3f71ccf1",
+      "audio": "6cdd8500168ab4ecb18b78ef7589586d26bc4501",
+      "audioName": "disc.bin",
+      "extractedAudio": true
+    },
+    {
+      "inputs": [
+        "chd.zip"
+      ],
+      "source": "00b595095e26108d0e07d76492a11aaf3f71ccf1",
+      "audio": "6cdd8500168ab4ecb18b78ef7589586d26bc4501",
+      "audioName": "disc.bin",
+      "extractedAudio": true
+    }
+  ],
+  "visual_review": {
+    "desktop": "build/patcher-test/desktop.png",
+    "mobile": "build/patcher-test/archive-mobile.png",
+    "result": "Inspected: no clipping or horizontal overflow."
+  },
+  "source_commit": "981fbce05cd2d4ece356629bc14c91cc6c0c9387",
+  "pages_commit": "7cec4eb7c89d73591475cadf9ccbfefa48f63810",
+  "publication": {
+    "url": "https://cosmicscribe64.github.io/tokimemo-ps1-decomp/",
+    "pages_commit": "7cec4eb7c89d73591475cadf9ccbfefa48f63810",
+    "files": [
+      {
+        "file": "index.html",
+        "size": 3542,
+        "sha256": "4707f190bde2033f482647fb71b03dc60168eed9ffdae076f10d1f6fd8ac77ad"
+      },
+      {
+        "file": "disc-inputs.js",
+        "size": 5615,
+        "sha256": "b64c6f86a7826a4a22256249c9f8547b7274e9694250bb7a37717e5712dc1b89"
+      },
+      {
+        "file": "worker.js",
+        "size": 2750,
+        "sha256": "def58fafa2c153bf34fbe5163769ef3d79be8314df049e00f30f79a6f57f7eac"
+      },
+      {
+        "file": "input-worker.js",
+        "size": 3677,
+        "sha256": "e86f0651d6bb4005b062d4a2ec62207347baee45ef9c4f71eeb8573c808d9728"
+      },
+      {
+        "file": "release.json",
+        "size": 515,
+        "sha256": "dd832e4728a3a58da406b85f9294c202cfb2ffe9b77ea95de8c82a1c7b164341"
+      },
+      {
+        "file": "style.css",
+        "size": 3347,
+        "sha256": "d7962ac8b6d6c4af843219000f16e09694cec2eb5ad3b57740d5f1a473683197"
+      },
+      {
+        "file": "app.js",
+        "size": 7153,
+        "sha256": "2d17e99f47a0e3a218205f8a5d89147a79daca01ea65b29983555d60fb3b54fa"
+      },
+      {
+        "file": "assets/tokimemo-en.xdelta",
+        "size": 6567128,
+        "sha256": "2c8cff9647b55f6c13b7ebd682c22c5158b2f2220c752181d761d537b4fbc0d9"
+      },
+      {
+        "file": "vendor/LICENSE",
+        "size": 1229,
+        "sha256": "a379dd012587a2fbe434ea6fcef30f502f32077738c2bd36e9e20cce621162bb"
+      },
+      {
+        "file": "vendor/BinFile.js",
+        "size": 14745,
+        "sha256": "3856e2f30bb8f105796a0371231a9b2aa37266148ac496711f07fd1e80fef688"
+      },
+      {
+        "file": "vendor/UPSTREAM.txt",
+        "size": 154,
+        "sha256": "e4a3bdcf248ac6e7b0f4de0d1670584d7c06c8ad80480b98213f6dd6f30855a0"
+      },
+      {
+        "file": "vendor/THIRD-PARTY.txt",
+        "size": 673,
+        "sha256": "13e7712ff2717555b4ed3fd0a5019edbefddf6e0dbaa9a6be438fe72fde802f6"
+      },
+      {
+        "file": "vendor/LICENSE-Apache-2.0",
+        "size": 11358,
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "file": "vendor/LICENSE-Victor-Alexiev",
+        "size": 1072,
+        "sha256": "297def7ad779ede0099ce4b52103a302252ee0d4edc914b1894368765b4800d1"
+      },
+      {
+        "file": "vendor/RomPatcher.format.vcdiff.js",
+        "size": 28758,
+        "sha256": "9fa42f57c6bbb0483798a8b5914813aba1100f226464296aba8c7e3c44a76a86"
+      },
+      {
+        "file": "vendor/HashCalculator.js",
+        "size": 9027,
+        "sha256": "9d3a437aa3a75706533a44745f0201f773718be276d4e60bc2d7613ec01ab95a"
+      },
+      {
+        "file": "vendor/chdman/chdman.wasm",
+        "size": 1412982,
+        "sha256": "e562b2315a9bc5d73ab7fd9efb4682116b8d757393f1336fa36895cc60fd399d"
+      },
+      {
+        "file": "vendor/chdman/source.tar.gz",
+        "size": 27113399,
+        "sha256": "bb2c521d7e3429f5d9c7f84e8ff01753b3bce4d35c880c6797481273f7b64595"
+      },
+      {
+        "file": "vendor/chdman/UPSTREAM.txt",
+        "size": 1229,
+        "sha256": "8967fb57e32e86bc1af5f58cc51b7eb58b9faaca7ee425b267651a6ba3d74616"
+      },
+      {
+        "file": "vendor/chdman/upstream-build.yml",
+        "size": 7777,
+        "sha256": "16bdc8e4a4e66175c415e2e939cb4a9324ad2cff84fdddfa6a0ff0dc94af7797"
+      },
+      {
+        "file": "vendor/chdman/chdman.js",
+        "size": 220493,
+        "sha256": "358e7b1c953f5960e44701775403debac40685bead91191c24a6b8d0374152db"
+      },
+      {
+        "file": "vendor/chdman/licenses/GPL-2.0",
+        "size": 17958,
+        "sha256": "ba20c40872287b52eeca54d48e875879b33d841b98f8cedba3558b405467d5de"
+      },
+      {
+        "file": "vendor/chdman/licenses/BSD-2-Clause",
+        "size": 1283,
+        "sha256": "32bef3825a21972c113e32b123fad97ae146ffc32c1b22ab5e7c06c35a692f1c"
+      },
+      {
+        "file": "vendor/chdman/licenses/LGPL-2.1",
+        "size": 26433,
+        "sha256": "04dec8d7181eefc5a8d239bb459c2e0625c2d1153d85f305e8596d6e874c42e2"
+      },
+      {
+        "file": "vendor/chdman/licenses/Zlib",
+        "size": 899,
+        "sha256": "7490df3d98428f2672e17ced7b19559b9909c002e4d2362eb23ec263685fe2f0"
+      },
+      {
+        "file": "vendor/chdman/licenses/CC0",
+        "size": 6648,
+        "sha256": "7097c533bb812bce9e9ad17b919dcab3f66f9c1aecf5a16291f3d0468a217ad0"
+      },
+      {
+        "file": "vendor/chdman/licenses/BSL-1.0",
+        "size": 1281,
+        "sha256": "3602a15699004c836ba75fd667207389b20795e933436b761cdd97fba3eb00d6"
+      },
+      {
+        "file": "vendor/chdman/licenses/MIT",
+        "size": 1060,
+        "sha256": "1e718db2273870673b631bfcbf1712746c7495b0e3991df1c86ab0025a03becb"
+      },
+      {
+        "file": "vendor/chdman/licenses/BSD-3-Clause",
+        "size": 1481,
+        "sha256": "a27554938d3dd6569931e5e18b93214a57f47bc1bb8b75fc32fdd18abe042a07"
+      },
+      {
+        "file": "vendor/7z/7zz.wasm",
+        "size": 1651931,
+        "sha256": "e16c6997e2eaa89575c0dd1f305074be629c3f4d87246244d37fd19debc8a285"
+      },
+      {
+        "file": "vendor/7z/unRarLicense.txt",
+        "size": 1961,
+        "sha256": "bf6343bbe251ec177a0e8a371516c58350daac298eba6883cf978f456fae3d89"
+      },
+      {
+        "file": "vendor/7z/7z-wasm-v1.2.0.tar.gz",
+        "size": 763157,
+        "sha256": "be5744c41abf941969ac3b153e0c9ed9cdda8512a0af3ed617a99975b998b220"
+      },
+      {
+        "file": "vendor/7z/7z2409-src.7z",
+        "size": 1498342,
+        "sha256": "a33569eed0ce628fb9ceb9f46ac257d3f36b3966471667e65ba01878673c9faa"
+      },
+      {
+        "file": "vendor/7z/UPSTREAM.txt",
+        "size": 747,
+        "sha256": "991c4b876182474a376e52e9751b9b37f4e51764a9aea1db4fab0ba3fc7b4e90"
+      },
+      {
+        "file": "vendor/7z/7zz.umd.js",
+        "size": 83122,
+        "sha256": "163ddd968550dccf3da53afd0384f03868b33e5cb146a76080e6368721a75d08"
+      },
+      {
+        "file": "vendor/7z/License.txt",
+        "size": 1932,
+        "sha256": "3d52f98857cb4b34e4ed4c637135884a65d0fa94aef7f992df4b149b6055e23a"
+      }
+    ]
+  },
+  "live_chd": {
+    "inputs": [
+      "original.chd"
+    ],
+    "source": "00b595095e26108d0e07d76492a11aaf3f71ccf1",
+    "audio": "6cdd8500168ab4ecb18b78ef7589586d26bc4501",
+    "audioName": "disc.bin",
+    "extractedAudio": true
+  }
+}

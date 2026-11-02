@@ -77,7 +77,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-39527-patcher-disc-inputs|T-39527 Accept dropped disc images and archives in the browser patcher]]
 
 
 
@@ -113,6 +112,7 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-39526-publish-review-patcher|T-39526 Publish the verified review patcher and update repository information]]
+- [ ] [[tickets/T-39527-patcher-disc-inputs|T-39527 Accept dropped disc images and archives in the browser patcher]]
 - [ ] [[tickets/T-39524-phone-orphan-lines|T-39524 Avoid orphaned words in assembled phone sentences]]
 - [ ] [[tickets/T-39522-speaker-label-contrast|T-39522 Distinguish speaker names from dialogue]]
 
