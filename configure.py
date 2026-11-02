@@ -234,6 +234,7 @@ EN_FONT = "translations/en/font/latin12.txt"
 EN_FONT_S = EN_DIR + "/gen/english_font.s"
 EN_BOOT = "src/english/boot.s"
 EN_ISLAND_SYMS = EN_DIR + "/island_syms.ld"
+EN_ISLAND_IMPORTS = EN_DIR + "/island_imports.ld"  # overlay symbols the island uses (T-39506)
 EN_TOOLS = ["tools/english_link.py"]
 
 
@@ -277,8 +278,8 @@ def english_targets(n, overlays, objs, cc_implicit):
            description="AS $in")
     n.rule("enld",
            command=("mips-linux-gnu-ld -EL -T $script -T build/undefined_funcs_auto.txt "
-                    "-T build/undefined_syms_auto.txt -T build/%s_data_syms.ld "
-                    "-Map $map -o $out") % EXE,
+                    "-T build/undefined_syms_auto.txt -T build/%s_data_syms.ld -T %s "
+                    "-Map $map -o $out") % (EXE, EN_ISLAND_IMPORTS),
            description="LD $out")
     n.rule("enold",
            command=("mips-linux-gnu-ld -EL -T $script "
@@ -317,7 +318,12 @@ def english_targets(n, overlays, objs, cc_implicit):
             variables={"args": "ld main build/%s.ld build/%s.map %s --redirect %s --island %s --boot %s"
                        % (EXE, EXE, script, " ".join(redirect), " ".join(island), boot)})
     elf = EN_DIR + "/%s.elf" % EXE
-    n.build(elf, "enld", en_objs + island + [boot], implicit=[script],
+    n.rule("enimports", command="python3 tools/english_imports.py $out --overlays $overlays --island $in",
+           description="IMPORTS $out")
+    default_ovl_elfs = ["build/ovl/%s.elf" % name for name, _base, _text in overlays]
+    n.build(EN_ISLAND_IMPORTS, "enimports", island, implicit=default_ovl_elfs + ["tools/english_imports.py"],
+            variables={"overlays": " ".join(default_ovl_elfs)})
+    n.build(elf, "enld", en_objs + island + [boot], implicit=[script, EN_ISLAND_IMPORTS],
             variables={"script": script, "map": EN_DIR + "/%s.map" % EXE})
     raw = EN_DIR + "/%s.raw" % EXE
     n.build(raw, "objcopy", elf)
