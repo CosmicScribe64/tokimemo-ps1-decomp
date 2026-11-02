@@ -3509,3 +3509,19 @@ Source confirms the visually missing phone closing marks bypass english_sndisp a
 ## [2026-11-02] ticket | Complete album-prompt visual repair
 
 T-39519 In Progress -> In Review -> Done after standards review. Fresh 4,850-frame/14-capture GPU route confirms separate Yes/No groups, zero font calls/unknown/overflow. All 27 original hashes, headers, globals and 14,449 rename rows pass. Saved metadata-only receipt for 160 inspected captures plus corrected prompt and a local before/after image. No whole-game visual pass: direct-row phone quotes and uncaptured scenes remain open. [[tickets/T-39519-album-prompt-visual-layout]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] ticket | Start direct-row phone punctuation repair
+
+Previous turn progressed with the visually verified album prompt repair (85f49ed25) and 160-capture review. T-39520 Ready -> In Progress. Traced telephone row batches to k_sub_disp_start; plan to reuse block wrapping/closing at that boundary, retaining speaker placement and invalidating cached rows on reset/interleaving. No acceptance claim until native and GPU checks pass. [[tickets/T-39520-phone-row-closing-marks]].
+
+## [2026-11-02] build | Implement direct-row phone page closing
+
+English-only row batching reuses the existing block renderer at display start; resets/interleaving invalidate pending batches. Production C89 batching/wrapping/closing regression plus runtime/name suites pass 15/15. Full phone-row disc build running; main-memory capacity, GPU pages and original checks remain unverified. [[tickets/T-39520-phone-row-closing-marks]].
+
+## [2026-11-02] build | Run phone-page visual verification
+
+The final phone-page build completed in 182.5 seconds with a 6,565,120-byte patch. All 27 original executable hashes match. Saved the build inputs and started a fresh emulator route with full-length names. Pages of up to three rows keep the original voice/typewriter state; longer pages use scrolling. Visual review remains open. The user also requested the linked deslop guidance and Humanizer for repository and website prose before commits or pushes, excluding game text. [[tickets/T-39520-phone-row-closing-marks]].
+
+## [2026-11-02] build | Consolidate executable byte census
+
+The reusable audit scans 33,522 actual reference targets on the phone-page build. All 91 Japanese-looking candidates match approved keyboard records or reviewed numeric/code hashes. Ten pairs overlap verified entry hooks and are reported as excluded. The scan validates instructions and removes the exploratory 512-byte read limit. Combined regression suites pass 37 tests. This verifies referenced executable bytes within the documented scan scope; whole-game visual coverage remains open. [[tickets/T-39510-no-japanese-left-check]].

@@ -8,12 +8,40 @@ from types import SimpleNamespace
 
 from tools.patch.audit_executable_disc import (
     FunctionOwners, audit_derived, audit_slots, bind_extent, pair_target,
-    payload_references, read_address, snapshot_translator, verify_hooks,
+    payload_references, read_address, referenced_candidates, snapshot_translator, verify_hooks,
 )
 from tools.patch.text.image import Image, Slot
 
 
 class ExecutableAuditTest(unittest.TestCase):
+    def test_census_reads_actual_words_and_does_not_limit_text_to_512_bytes(self):
+        data = bytearray(800)
+        base = 0x80132000
+        struct.pack_into('<I', data, 0, base + 32)
+        payload = b'A' * 600 + '\u3042'.encode('shift_jis') + b'\0'
+        data[32:32 + len(payload)] = payload
+        refs = SimpleNamespace(words={123: [base]}, pairs={})
+        result = referenced_candidates(data, base, refs, {})
+        self.assertEqual([row['address'] for row in result['candidates']], [base + 32])
+        struct.pack_into('<I', data, 0, base + 799)
+        self.assertEqual(referenced_candidates(data, base, refs, {})['candidates'], [])
+
+    def test_census_checks_each_shared_high_and_rejects_invalid_opcodes(self):
+        data = bytearray(80)
+        base = 0x80132000
+        struct.pack_into('<III', data, 0, 0x3C088013, 0x3C088014, 0x25082030)
+        data[48:51] = '\u3042'.encode('shift_jis') + b'\0'
+        refs = SimpleNamespace(words={}, pairs={0: [([base, base + 4], base + 8)]})
+        result = referenced_candidates(data, base, refs, {})
+        self.assertEqual(result['targets'], 2)
+        self.assertEqual(len(result['candidates']), 1)
+        struct.pack_into('<I', data, 0, 0)
+        with self.assertRaisesRegex(ValueError, 'not LUI'):
+            referenced_candidates(data, base, refs, {})
+        result = referenced_candidates(data, base, refs, {'hook': {'site': base}})
+        self.assertEqual(len(result['excluded_pairs']), 2)
+        self.assertEqual(result['targets'], 0)
+
     def setUp(self):
         self.base = 0x80132000
         self.data = bytearray(96)

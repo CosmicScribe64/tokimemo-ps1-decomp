@@ -2,10 +2,9 @@
 
 Run from the repository root in Docker. Link metadata must match the frozen
 release before translating original addresses. Exact mapped slots and derived
-views are checked against actual disc bytes. Recompiled C extents still needing
-function-reference proof remain explicitly pending: the CLI exits 2, never a
-false success. Invalid physical records or pointers fail immediately. Reports
-contain metadata only, not extracted game text.
+views are checked against actual disc bytes. Unresolved compiled extents or
+unclassified referenced text make the CLI exit 2. Invalid physical records or
+pointers fail immediately. Reports contain metadata only, not extracted game text.
 """
 import argparse
 import bisect
@@ -351,6 +350,106 @@ def audit_derived(record, data, base, translate, payloads, slots):
     return result
 
 
+def referenced_candidates(data, base, references, hooks):
+    """Scan NUL-terminated targets of actual R32 and HI/LO references.
+
+    This detects printable Shift-JIS text containing Japanese punctuation,
+    kana or ideographs. It does not discover computed pointers or image text.
+    Entry-hook instructions are excluded only after hook verification.
+    """
+    targets = {}
+    excluded = []
+    replaced = {site for hook in hooks.values()
+                for site in (hook['site'], hook['site'] + 4)}
+    for sites in references.words.values():
+        for site in sites:
+            target = struct.unpack('<I', read_address(data, base, site, 4))[0]
+            targets.setdefault(target, set()).add(site)
+    for pairs in references.pairs.values():
+        for highs, low in pairs:
+            if not highs:
+                raise ValueError('Missing high instruction in census address pair')
+            for high in highs:
+                if high in replaced or low in replaced:
+                    excluded.append({'high': high, 'low': low, 'reason': 'verified entry hook'})
+                    continue
+                # A shared low may serve different high halves on separate paths.
+                target = pair_target(data, base, [high], low)
+                targets.setdefault(target, set()).add(low)
+    candidates = []
+    for target, sites in sorted(targets.items()):
+        offset = target - base
+        if not 0 <= offset < len(data):
+            continue
+        end = data.find(b'\0', offset)
+        if end < 0:
+            continue
+        raw = data[offset:end]
+        try:
+            decoded = raw.decode('shift_jis')
+        except UnicodeDecodeError:
+            continue
+        if any(ord(char) < 32 and char not in '\n\r\t' for char in decoded):
+            continue
+        if not any('\u3000' <= char <= '\u30ff' or '\u3400' <= char <= '\u9fff'
+                   or '\uff01' <= char <= '\uff60' for char in decoded):
+            continue
+        candidates.append({'address': target, 'sites': sorted(sites),
+                           'bytes_sha256': hashlib.sha256(raw).hexdigest()})
+    return {'targets': len(targets), 'excluded_pairs': excluded, 'candidates': candidates}
+
+
+def audit_language_census(files, bases, translations, units, report, link):
+    reviewed = json.loads(Path('translations/en/reviews/executable-binding-2026-11-02.json')
+                          .read_text())['candidate_classification']
+    numeric = {(row['unit'], row['symbol']): row for row in reviewed
+               if row['classification'] == 'numeric_data'}
+    code = next(row for row in reviewed if row['classification'] == 'code_pointer')
+    by_id = {record['id']: record for record in units}
+    keyboard_path = 'CDROM/EXEDIR/NAME_ENT.EXN'
+    keyboard = {}
+    for row in report['records']['records']['kept_original']:
+        if row['reason'] != 'name entry kana page (T-39506)':
+            continue
+        record = by_id[row['id']]
+        if record['source_path'] != keyboard_path:
+            raise ValueError('Keyboard exception outside NAME_ENT')
+        address = translations[keyboard_path](english_link.OVERLAY_SLOT + record['source_offset'])
+        keyboard[address] = record
+    results, unexplained = {}, []
+    for path, data in files.items():
+        unit = 'main' if path == EXE_PATH else Path(path).stem
+        stem = 'SLPM_86.053' if unit == 'main' else 'ovl/' + unit
+        refs = References(str(link / (stem + '.map')), str(link / (stem + '.elf')))
+        hooks = verify_hooks(data, bases[path], refs.syms,
+                             dict(english_link.read_hooks('config/english_hooks.txt', unit)))
+        scan = referenced_candidates(data, bases[path], refs, hooks)
+        owners = FunctionOwners(refs)
+        for row in scan['candidates']:
+            address = row['address']
+            if unit == 'NAME_ENT' and address in keyboard:
+                record = keyboard[address]
+                expected = bytes.fromhex(record['raw_hex']).rstrip(b'\0')
+                if row['bytes_sha256'] == hashlib.sha256(expected).hexdigest():
+                    row.update(classification='approved_keyboard', record_id=record['id'])
+            for name, value in refs.syms.items():
+                reviewed_row = numeric.get((unit, name.removesuffix('.NON_MATCHING')))
+                if value[0] == address and reviewed_row and row['bytes_sha256'] == reviewed_row['bytes_sha256']:
+                    row.update(classification='numeric_data', symbol=reviewed_row['symbol'])
+            if (unit == 'main' and owners.at(address) == 'scene_bg_wipe_in_step'
+                    and address == refs.syms['scene_bg_wipe_in_step'][0] + 532
+                    and row['bytes_sha256'] == code['bytes_sha256']
+                    and all(any(section == '.rodata' and start <= site < start + size
+                                for (_, section), (start, size) in refs.placed.items())
+                            for site in row['sites'])):
+                row['classification'] = 'code_pointer'
+            if 'classification' not in row:
+                unexplained.append({'unit': unit, **row})
+        results[unit] = scan
+    return {'scope': 'NUL-terminated Shift-JIS candidates at R32 and HI/LO targets',
+            'units': results, 'unexplained': unexplained}
+
+
 def audit(build, link):
     units = load_units('.asset-cache/text/units/units.jsonl')
     supplemental = 'translations/en/supplemental.jsonl'
@@ -428,9 +527,13 @@ def audit(build, link):
             raise ValueError('Replacement recipe does not match a pending extent: ' + rid)
         bindings[rid] = evidence
     pending = [item for item in pending if bindings[item['id']]['status'] == 'pending']
-    return {'status': 'incomplete',
-            'scope': 'source generation, mapped executable slots and derived consumer pointers',
-            'remaining_checks': ['referenced-byte language census'],
+    census = audit_language_census(files, bases, translations, units, report, link)
+    remaining = (['compiled extent bindings'] if pending else [])
+    if census['unexplained']:
+        remaining.append('unclassified referenced bytes')
+    return {'status': 'incomplete' if remaining else 'pass',
+            'scope': 'source generation, mapped executable slots, derived pointers and referenced-byte census',
+            'remaining_checks': remaining, 'language_census': census,
             'excluded_units': list(english_link.UNLOADED), 'source_generation': source,
             'containers': len(files), 'slots': sum(len(rows) for rows in slots.values()),
             'exact_slots': sum(item['exact'] for rows in slots.values() for item in rows.values()),
@@ -451,5 +554,5 @@ if __name__ == '__main__':
     args.out.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
     print(f"Exact slots {result['exact_slots']}/{result['slots']}; "
           f"derived records {result['derived_records']}, pointers {result['derived_pointers']}; "
-          f"pending slots {len(result['pending_slots'])}; audit incomplete")
-    raise SystemExit(2)
+          f"pending slots {len(result['pending_slots'])}; audit {result['status']}")
+    raise SystemExit(0 if result['status'] == 'pass' else 2)
