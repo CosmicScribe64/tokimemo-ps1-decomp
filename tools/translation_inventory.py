@@ -57,19 +57,17 @@ LEDGERS = [SNAPSHOT / 'checkpoints/T39004-2026-10-29/ledger.json',
            SNAPSHOT / 'checkpoints/T39410-stills-fixes-v1/ledger.json']
 # Superseded checkpoints stay on disk as history but are not read:
 # T39004-battle-miss-v1 (3-wide M) by -v2, T39004-filesel-v3 (Clear, partial pages) by -v4.
-# Candidates of a registered ledger that are left out (id prefix per ledger): the port-made MAINROM ledger
+# Candidates of a registered ledger that are left out (exact record ids per ledger): the port-made MAINROM ledger
 # also holds the "Apr 4" month-name composites of frame 60, a form the owner did not choose (the date panel
 # checkpoint holds the chosen captions), so they are not evidence for mainrom-0060.
 # The T-39412 sign crops (T39410-stills-fixes-v1) redraw five T-39400 crops and the T-39004 exam-heading crop with texture kept;
-# the older rows are left out of their ledgers as the 3-wide-M and Clear drafts were (prefix match, so no `-v2` row is hit
-# because each prefix is scoped to the older ledger). The T39004-bs-v1 `all-c-banner` rows stay.
-UNREGISTERED = {'translations/en/graphics/artwork/checkpoints/T39004-mainrom-port-made-v1/ledger.json': ('mainrom-draft-0060.',),
-                'translations/en/graphics/artwork/checkpoints/T39400-bs-signs-v1/ledger.json': (
+# the older rows are left out of their ledgers as the 3-wide-M and Clear drafts were. The T39004-bs-v1 `all-c-banner` rows stay.
+UNREGISTERED = {'translations/en/graphics/artwork/checkpoints/T39004-mainrom-port-made-v1/ledger.json': frozenset(
+                    'mainrom-draft-0060.' + part for part in ('base', 'hud-43', 'hud-44', 'icon-51', 'icon-52', 'icon-53')),
+                'translations/en/graphics/artwork/checkpoints/T39400-bs-signs-v1/ledger.json': frozenset((
                     'bs-d-15-03-monument', 'bs-d-03-08-march-placard', 'bs-d-24-03-ticket-plaque',
-                    'bs-d-19-02-maiko-board', 'bs-i-17-01-hanging-sign'),
-                'translations/en/graphics/artwork/checkpoints/T39004-bs-v1/ledger.json': ('bs-c-01-28-final-exams',)}
-# Owner decision 2026-11-01: layout A (rotated) for the P_01_03 / P_01_03B names. The rejected stacked (b) and larger
-# centred alternatives were deleted from T39410-stills-fixes-v1 in the second T-39412 pass, so that ledger needs no skip.
+                    'bs-d-19-02-maiko-board', 'bs-i-17-01-hanging-sign')),
+                'translations/en/graphics/artwork/checkpoints/T39004-bs-v1/ledger.json': frozenset(('bs-c-01-28-final-exams',))}
 TEXT_MAIN = ROOT / 'translations/en/returned-v3.jsonl'
 TEXT_SUPP = ROOT / 'translations/en/supplemental.jsonl'
 TEXT_MANIFEST = ROOT / 'translations/en/manifest.json'
@@ -281,7 +279,7 @@ def load_ledgers(ledgers=None, snapshot=SNAPSHOT):
             records = whole_file_records(asset, path) if 'catalog_item' in asset else [asset]
             name = str(path.relative_to(ROOT)) if path.resolve().is_relative_to(ROOT) else path.name
             for record in records:
-                if record['id'].startswith(UNREGISTERED.get(name, ())):
+                if record['id'] in UNREGISTERED.get(name, ()):
                     continue
                 entries.append({**record, 'ledger': name, 'ledger_sha256': digest(path.read_bytes())})
     return entries

@@ -4,10 +4,15 @@ Everything here works on RGB555 integer pictures (height, width, 3) as the pinne
 MDEC decode returns them, and on float coverage planes.
 
 * `known_background` / `inpaint`: rebuild the picture under an erase mask from the
-  clean pixels around it. The smooth part (gradient, shading) comes from a
-  normalised Gaussian average of the clean pixels; the grain comes from the
-  residual (pixel minus smooth part) of clean donor pixels a short step away, so
-  stone, paper and sky keep their texture instead of turning into a flat fill.
+  clean pixels around it. The smooth part (gradient, shading) is a normalised
+  Gaussian average of the clean pixels. The grain is synthetic: seeded Gaussian
+  noise, blurred so that its pixel-to-pixel correlation along x and y matches the
+  residual (pixel minus smooth part) of the clean neighbours, coloured by their
+  residual covariance and scaled to their local residual energy (`grain_model`,
+  `synthetic_grain`). No source pixel or residual is copied into the fill, so stone,
+  paper and sky keep a texture of the same strength and fineness without carrying
+  any of the original picture's grain. `shift_correlation` measures that: it is
+  near 1 for a fill that copies the grain from a fixed step and near 0 here.
 * `stroke_mask`: the pixels of a lettering colour (dark or light against the local
   background), grown by a margin so the soft MDEC edge is erased too.
 * `brush_coverage`: variable-width strokes for handwritten and brush lettering
@@ -16,7 +21,8 @@ MDEC decode returns them, and on float coverage planes.
 * `place`: map the local (u along the text, v down the cap) strokes of
   tools/translation_bs_font.py into the picture at any angle, with an optional slant.
 
-Nothing is random: the wobble is a fixed function of the stroke index and position.
+Everything is deterministic: the grain comes from a fixed seed per item and the wobble is a
+fixed function of the stroke index and position.
 """
 import math
 
@@ -24,8 +30,11 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 SUPERSAMPLE = 8
-DONOR_STEPS = [(0, 3), (3, 0), (0, -3), (-3, 0), (3, 3), (-3, -3), (3, -3), (-3, 3), (0, 6), (6, 0), (0, -6), (-6, 0),
-               (6, 6), (-6, -6), (6, -6), (-6, 6), (0, 9), (9, 0), (0, -9), (-9, 0), (0, 12), (12, 0), (0, -12), (-12, 0)]
+GRAIN_BAND = (2, 10)    # clean neighbours that set the grain statistics: known pixels 2 to 10 px from the erase mask
+ENERGY_SIGMA = 6.0      # reach (px) of the local residual energy that scales the grain
+QUANTIZATION = 1.0 / 12  # variance the final rounding to whole RGB555 steps adds per channel
+OUTLIER = 3.0           # robust deviations beyond which a neighbour does not set the grain statistics
+GRAIN_SIGMA = 1.5       # px; the grain is what the clean pixels hold below this scale (shading and sheen above it are not grain)
 
 
 def gaussian_kernel(sigma):
@@ -35,19 +44,28 @@ def gaussian_kernel(sigma):
     return kernel / kernel.sum()
 
 
+def blur_axes(plane, sigma_y, sigma_x):
+    """Separable Gaussian blur of a 2-D or 3-D float array, sigma_y down axis 0 and sigma_x along axis 1 (zero padded).
+    An axis with a sigma below 0.3 px is left as it is."""
+    out = plane.astype(np.float64)
+    for axis, sigma in ((0, sigma_y), (1, sigma_x)):
+        if sigma < 0.3:
+            continue
+        kernel = gaussian_kernel(sigma)
+        radius = (len(kernel) - 1) // 2
+        pad = [(0, 0)] * out.ndim
+        pad[axis] = (radius, radius)
+        padded = np.pad(out, pad)
+        total = np.zeros_like(out)
+        for i, k in enumerate(kernel):
+            total += k * np.take(padded, range(i, i + out.shape[axis]), axis=axis)
+        out = total
+    return out
+
+
 def blur(plane, sigma):
     """Separable Gaussian blur of a 2-D or 3-D float array over its first two axes (zero padded)."""
-    kernel = gaussian_kernel(sigma)
-    radius = (len(kernel) - 1) // 2
-    out = np.zeros_like(plane, dtype=np.float64)
-    padded = np.pad(plane.astype(np.float64), [(radius, radius)] + [(0, 0)] * (plane.ndim - 1))
-    for i, k in enumerate(kernel):
-        out += k * padded[i:i + plane.shape[0]]
-    padded = np.pad(out, [(0, 0), (radius, radius)] + [(0, 0)] * (plane.ndim - 2))
-    out = np.zeros_like(plane, dtype=np.float64)
-    for i, k in enumerate(kernel):
-        out += k * padded[:, i:i + plane.shape[1]]
-    return out
+    return blur_axes(plane, sigma, sigma)
 
 
 def known_background(picture, unknown, sigma=3.0):
@@ -65,29 +83,130 @@ def known_background(picture, unknown, sigma=3.0):
     return out
 
 
-def inpaint(picture, unknown, sigma=3.0, grain=1.0, exclude=None):
-    """Float picture with the `unknown` pixels rebuilt; known pixels are returned unchanged.
+def lag_sigma(rho):
+    """Blur sigma (px) that gives Gaussian-blurred white noise a lag-1 autocorrelation of rho (exp(-1 / (4 sigma^2)));
+    0 (white noise) at rho <= 0.05, capped at rho 0.9."""
+    if not rho > 0.05:
+        return 0.0
+    return 1.0 / (2.0 * math.sqrt(-math.log(min(rho, 0.9))))
 
-    Smooth part: known_background. Grain: for each unknown pixel the residual of the first
-    clean donor at a fixed step (DONOR_STEPS) scaled by `grain`. `exclude` (bool mask) marks
-    known pixels that must not feed the fill (another surface next to the erased one, such as
-    the chalk ledge under a blackboard). The result is a deterministic function of the inputs.
+
+def lag_correlation(values, clean, axis):
+    """Correlation of `values` with its neighbour one pixel further along `axis`, over pairs of two clean pixels."""
+    if axis == 0:
+        a, b, pair = values[:-1], values[1:], clean[:-1] & clean[1:]
+    else:
+        a, b, pair = values[:, :-1], values[:, 1:], clean[:, :-1] & clean[:, 1:]
+    a, b = a[pair], b[pair]
+    if len(a) < 16 or a.std() == 0 or b.std() == 0:
+        return 0.0
+    return float(np.corrcoef(a, b)[0, 1])
+
+
+def grain_model(picture, unknown, barred, within=None):
+    """Grain statistics of the clean neighbours of `unknown` (known pixels GRAIN_BAND px from it, not `barred`, inside
+    `within` when given: the surface the lettering is on). The residual is the picture less its normalised Gaussian
+    average at GRAIN_SIGMA, so a gradient or sheen across the surface does not count as grain.
+
+    Outliers (lettering edges the erase mask missed, a border) are dropped: a neighbour whose channel-sum residual lies
+    more than OUTLIER robust deviations (1.4826 x median absolute deviation) from the median does not count. Returns mean
+    and covariance of that residual per channel, the blur sigma along x and y that reproduces its
+    lag-1 correlation, and the local residual energy (normalised Gaussian average, ENERGY_SIGMA) relative to its mean,
+    which scales the grain where the texture is stronger or weaker.
     """
-    height, width = unknown.shape
+    allowed = ~barred if within is None else ~barred & within
+    clean = allowed & grow(unknown, GRAIN_BAND[1]) & ~grow(unknown, GRAIN_BAND[0])
+    if clean.sum() < 32:
+        clean = allowed
+    residual = picture.astype(np.float64) - known_background(picture, barred, GRAIN_SIGMA)
+    total = residual.sum(-1)
+    if clean.sum() >= 32:
+        middle = np.median(total[clean])
+        spread = 1.4826 * np.median(np.abs(total[clean] - middle))
+        clean = clean & (np.abs(total - middle) <= OUTLIER * spread if spread > 0 else total == middle)
+    sample = residual[clean]
+    mean = sample.mean(0) if len(sample) else np.zeros(3)
+    covariance = np.cov((sample - mean).T) if len(sample) > 1 else np.zeros((3, 3))
+    total = residual.sum(-1) - mean.sum()
+    energy_pixel = ((residual - mean) ** 2).sum(-1)
+    weight = blur(clean.astype(np.float64), ENERGY_SIGMA)
+    local = blur(energy_pixel * clean, ENERGY_SIGMA)
+    level = float(energy_pixel[clean].mean()) if clean.any() else 0.0
+    relative = np.where(weight > 1e-3, local / np.where(weight > 1e-3, weight, 1.0), level) / (level or 1.0)
+    return {'mean': mean, 'covariance': covariance, 'clean_pixels': int(clean.sum()),
+            'sigma_x': lag_sigma(lag_correlation(total, clean, 1)), 'sigma_y': lag_sigma(lag_correlation(total, clean, 0)),
+            'relative_energy': relative}
+
+
+def synthetic_grain(shape, model, seed):
+    """Grain field (float, shape + (3,)) with the statistics of `model` from noise seeded with `seed`.
+
+    White Gaussian noise (numpy's legacy RandomState stream, which numpy keeps stable across versions) is blurred by the
+    model's sigma along x and y, normalised to unit variance, coloured by the Cholesky factor of the residual covariance
+    (less the variance the final rounding adds), offset by the residual mean and scaled by the local energy.
+    """
+    height, width = shape
+    pad = int(math.ceil(3 * max(model['sigma_x'], model['sigma_y']))) + 1
+    noise = np.random.RandomState(seed).standard_normal((height + 2 * pad, width + 2 * pad, 3))
+    field = blur_axes(noise, model['sigma_y'], model['sigma_x'])[pad:pad + height, pad:pad + width]
+    field = (field - field.mean((0, 1))) / field.std((0, 1))
+    covariance = model['covariance']
+    spread = float(np.trace(covariance))
+    keep = max(0.0, (spread - 3 * QUANTIZATION) / spread) if spread > 0 else 0.0
+    factor = np.linalg.cholesky(covariance * keep + np.eye(3) * 1e-9)
+    scale = np.sqrt(np.clip(model['relative_energy'], 0.25, 2.0))
+    return (field @ factor.T) * scale[..., None] + model['mean']
+
+
+def inpaint(picture, unknown, sigma=3.0, grain=1.0, exclude=None, seed=0, within=None):
+    """(float picture with the `unknown` pixels rebuilt, grain facts); known pixels are returned unchanged.
+
+    Each unknown pixel = known_background (smooth part) + `grain` x synthetic_grain (from `seed`, with the statistics
+    of the clean neighbours, grain_model). `exclude` (bool mask) marks known pixels that must not feed the fill (another
+    surface next to the erased one, such as the chalk ledge under a blackboard). `within` (bool mask) limits the pixels
+    that set the grain statistics (grain_model). Deterministic in the inputs.
+    """
     barred = unknown if exclude is None else unknown | exclude
     background = known_background(picture, barred, sigma)
-    residual = np.where(barred[..., None], 0.0, picture - background)
+    model = grain_model(picture, unknown, barred, within)
+    field = synthetic_grain(unknown.shape, model, seed) * grain
     out = picture.astype(np.float64).copy()
+    out[unknown] = background[unknown] + field[unknown]
+    facts = {'seed': seed, 'grain': grain, 'clean_pixels': model['clean_pixels'],
+             'blur_sigma_px': [round(model['sigma_x'], 3), round(model['sigma_y'], 3)],
+             'residual_std_rgb555': [round(float(v), 3) for v in np.sqrt(np.diag(model['covariance']))]}
+    return out, facts
+
+
+def shift_correlation(filled, picture, unknown, barred, background, reach=12, minimum=100):
+    """Largest |correlation| between the fill residual (filled - background, channel sum) on the `unknown` pixels and the
+    source residual (picture - background) at any shift of up to `reach` px onto a clean (not `barred`) pixel.
+
+    A fill that copies the residual of a donor at a fixed step correlates near 1 at that step; independent grain stays
+    near 0 (chance level about 2 / sqrt(pairs) for these spatially correlated fields). Shifts with fewer than `minimum`
+    pixel pairs are skipped. Returns (value rounded to 3 places, [dx, dy]).
+    """
+    fill = (filled - background).sum(-1)
+    source = (picture.astype(np.float64) - background).sum(-1)
+    height, width = unknown.shape
     ys, xs = np.nonzero(unknown)
-    for y, x in zip(ys, xs):
-        add = np.zeros(3)
-        for dx, dy in DONOR_STEPS:
-            sx, sy = x + dx, y + dy
-            if 0 <= sx < width and 0 <= sy < height and not barred[sy, sx]:
-                add = residual[sy, sx] * grain
-                break
-        out[y, x] = background[y, x] + add
-    return out
+    best, where = 0.0, [0, 0]
+    for dy in range(-reach, reach + 1):
+        for dx in range(-reach, reach + 1):
+            if dx == 0 and dy == 0:
+                continue
+            sy, sx = ys + dy, xs + dx
+            ok = (sy >= 0) & (sy < height) & (sx >= 0) & (sx < width)
+            ok[ok] &= ~barred[sy[ok], sx[ok]]
+            if ok.sum() < minimum:
+                continue
+            a, b = fill[ys[ok], xs[ok]], source[sy[ok], sx[ok]]
+            if a.std() == 0 or b.std() == 0:
+                continue
+            value = abs(float(np.corrcoef(a, b)[0, 1]))
+            if value > best:
+                best, where = value, [dx, dy]
+    return round(best, 3), where
 
 
 def grow(mask, amount):
@@ -178,15 +297,14 @@ def brush_coverage(shape, lines, weight, offset=(0, 0), angle=0.0, entry=0.35, t
     vx, vy = -math.sin(a), math.cos(a)
     if nib is not None:
         # the nib edge in picture space: along the text turned towards the letter tops (-v)
-        n = math.radians(nib)
-        vx, vy = math.cos(n) * math.cos(a) - math.sin(n) * vx, math.cos(n) * math.sin(a) - math.sin(n) * vy
+        edge = math.radians(nib)
+        vx, vy = math.cos(edge) * math.cos(a) - math.sin(edge) * vx, math.cos(edge) * math.sin(a) - math.sin(edge) * vy
         vx, vy = -vy, vx  # thickest across the edge: weigh the component normal to it
     height, width = shape
     big = Image.new('L', (width * SUPERSAMPLE, height * SUPERSAMPLE), 0)
     draw = ImageDraw.Draw(big)
     for index, line in enumerate(lines):
         pts = resample(line)
-        n = len(pts)
         total = sum(math.hypot(b[0] - a[0], b[1] - a[1]) for a, b in zip(pts, pts[1:])) or 1.0
         run = 0.0
         for i, (x, y, dx, dy) in enumerate(pts):

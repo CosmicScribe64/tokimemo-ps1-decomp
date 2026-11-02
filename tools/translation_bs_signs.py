@@ -9,20 +9,24 @@ MDEC model, replaces only the declared rectangle, and writes:
   side-by-side at 2x, all under the output directory only (ignored, never
   committed: they contain the original image);
 * one crop PNG per plan, which is exactly the declared rectangle. Every pixel in
-  a crop is port-made: the face behind the lettering is rebuilt from a plane
-  fitted to the clean pixels around the rectangle, and the English is drawn on it
-  with the skeleton letters of tools/translation_bs_font.py (not a system font,
-  not an AI image, not a scaled raster font), stroked in the ink colour sampled
-  from the original lettering;
+  a crop is computed, none is copied: the face behind the lettering is rebuilt
+  either from a plane fitted (trimmed least squares) to the clean face pixels or,
+  for `fill: diffuse`, by a Laplace (diffusion) fill from the clean pixels around
+  the rectangle, and the English is drawn on it with the skeleton letters of
+  tools/translation_bs_font.py (not a system font, not an AI image, not a scaled
+  raster font), stroked in the ink colour sampled from the original lettering;
 * a manifest with source and decode identity, the proven picture size, the
-  rectangles, the 16x16 macroblocks they touch and the lettering description.
+  rectangles, the 16x16 macroblocks they touch, the lettering description, the
+  count of crop pixels that equal the source decode at their position (a smooth
+  face can reproduce a flat original colour) and the Pillow / numpy versions.
 
 Pixels outside the rectangles stay bit-identical to the source decode. No BS file
 is written here; the later patch step re-encodes the touched macroblocks.
 
 `geometry` prints the size proofs. Width and height of every still come from the
 calling code in src/ (and are cross-checked on the stream: a complete decode has
-exactly (w/16)*(h/16) macroblocks, an end marker and only zero bytes after it).
+exactly (w/16)*(h/16) macroblocks and an end marker). A citation names the C
+function that holds the call (tools/translation_bs_common.py).
 `publish` copies the crops, manifest and ledger into a new checkpoint folder.
 """
 import argparse
@@ -34,10 +38,12 @@ import numpy as np
 from PIL import Image
 
 from translation_assets import ROOT, MDEC_MODEL_ID, digest, encoded, new_output
+import translation_bs_common as common
+from translation_bs_common import decode_still
+from translation_bs_drafts import rgb8
 import translation_bs_font as font
 sys.path.insert(0, str(ROOT))
 from tools.assets import image_mdec_model as mdec_model  # noqa: E402
-from tools.assets import mdec_splice  # noqa: E402
 
 SCHEMA = 'tokimemo.bs-sign-drafts.v1'
 TICKET = 'T-39400'
@@ -60,28 +66,29 @@ DECODE_EVIDENCE = [
     'src/main/background_images.c:dec_bg_cd_read(lba, 1) calls cd_read_sectors_nowait(0xA, 0x80162000, lba): a ten-sector read, 20480 bytes',
 ]
 SCENE_READ = 'src/main/scene_library.c:bg_read_sub2 calls dec_bg_cd_read(arg0, 1); src/main/scene_library.c:dec_init calls dec_bg_decode_to_vram(1)'
-# (file, line, text that must occur on that line) of the code that reads and decodes each still.
+# (file, function, call text inside that function, line at the time of writing) of the code that reads and decodes each
+# still; the build checks the function body only (tools/translation_bs_common.py: check_citations).
 CALLERS = {
-    'D_01_47': {'read': ('src/ovl/sports_festival/festival_entry_and_competition_select.c', 47, 'dec_bg_cd_read(0x4020, 1)'),
-                'decode': ('src/ovl/sports_festival/festival_entry_and_competition_select.c', 54, 'dec_bg_decode_to_vram(1)')},
-    'D_01_48': {'read': ('src/ovl/culture_festival/festival_entry.c', 43, 'dec_bg_cd_read(0x4029, 1)'),
-                'decode': ('src/ovl/culture_festival/festival_entry.c', 49, 'dec_bg_decode_to_vram(1)')},
-    'D_01_69': {'read': ('src/ovl/culture_festival/yumi_visit.c', 450, 'dec_bg_cd_read(0x40FC, 1)'),
-                'decode': ('src/ovl/culture_festival/yumi_visit.c', 462, 'dec_bg_decode_to_vram(1)')},
-    'D_01_70': {'read': ('src/ovl/culture_festival/yumi_visit.c', 452, 'dec_bg_cd_read(0x4105, 1)'),
-                'decode': ('src/ovl/culture_festival/yumi_visit.c', 462, 'dec_bg_decode_to_vram(1)')},
-    'D_03_08': {'read': ('src/ovl/club_master/club_master_scene_and_tables.c', 99, 'dec_bg_cd_read(0x41BA, 1)'),
-                'decode': ('src/ovl/club_master/club_master_scene_and_tables.c', 161, 'dec_bg_decode_to_vram(1)')},
-    'D_11_11': {'read': ('src/ovl/date/rides.c', 273, 'cd_read_sectors_nowait(0xA, 0x80162000, 0x4359)'),
-                'decode': ('src/ovl/date/rides.c', 284, 'dec_bg_decode_to_vram(1)')},
-    'D_15_03': {'read': ('src/ovl/date/scene_ayako.c', 217, 'bg_read_sub2(0x44F1)'), 'decode': None},
-    'D_19_02': {'read': ('src/ovl/date/scene_yuko.c', 354, 'bg_read_sub2(0x456C)'), 'decode': None},
-    'D_24_03': {'read': ('src/ovl/date/place_scenes.c', 843, 'bg_read_sub2(0x45D3)'), 'decode': None},
-    'D_29_09': {'read': ('src/ovl/club_master/club_master_mode_stage_dispatch.c', 58, 'dec_bg_cd_read(0x4673, 1)'),
-                'decode': ('src/ovl/club_master/club_master_mode_stage_dispatch.c', 74, 'dec_bg_decode_to_vram(1)')},
-    'I_11_15': {'read': ('src/ovl/date/scene_mira.c', 215, 'bg_read_sub2(0x482A)'), 'decode': None},
-    'I_17_01': {'read': ('src/ovl/date/scene_mio.c', 192, 'bg_read_sub2(0x4876)'), 'decode': None},
-    'I_28_02': {'read': ('src/ovl/date/scene_nozomi.c', 202, 'bg_read_sub2(0x492F)'), 'decode': None},
+    'D_01_47': {'read': ('src/ovl/sports_festival/festival_entry_and_competition_select.c', 'sports_festival_entry_and_scene_select', 'dec_bg_cd_read(0x4020, 1)', 47),
+                'decode': ('src/ovl/sports_festival/festival_entry_and_competition_select.c', 'sports_festival_entry_and_scene_select', 'dec_bg_decode_to_vram(1)', 54)},
+    'D_01_48': {'read': ('src/ovl/culture_festival/festival_entry.c', 'culture_festival_mode_handler', 'dec_bg_cd_read(0x4029, 1)', 43),
+                'decode': ('src/ovl/culture_festival/festival_entry.c', 'culture_festival_mode_handler', 'dec_bg_decode_to_vram(1)', 49)},
+    'D_01_69': {'read': ('src/ovl/culture_festival/yumi_visit.c', 'culture_yumi_visit_experiment_show', 'dec_bg_cd_read(0x40FC, 1)', 450),
+                'decode': ('src/ovl/culture_festival/yumi_visit.c', 'culture_yumi_visit_experiment_show', 'dec_bg_decode_to_vram(1)', 462)},
+    'D_01_70': {'read': ('src/ovl/culture_festival/yumi_visit.c', 'culture_yumi_visit_experiment_show', 'dec_bg_cd_read(0x4105, 1)', 452),
+                'decode': ('src/ovl/culture_festival/yumi_visit.c', 'culture_yumi_visit_experiment_show', 'dec_bg_decode_to_vram(1)', 462)},
+    'D_03_08': {'read': ('src/ovl/club_master/club_master_scene_and_tables.c', 'master_companion_select', 'dec_bg_cd_read(0x41BA, 1)', 99),
+                'decode': ('src/ovl/club_master/club_master_scene_and_tables.c', 'master_companion_select', 'dec_bg_decode_to_vram(1)', 161)},
+    'D_11_11': {'read': ('src/ovl/date/rides.c', 'date_ride_scream_machine', 'cd_read_sectors_nowait(0xA, 0x80162000, 0x4359)', 273),
+                'decode': ('src/ovl/date/rides.c', 'date_ride_scream_machine', 'dec_bg_decode_to_vram(1)', 284)},
+    'D_15_03': {'read': ('src/ovl/date/scene_ayako.c', 'date_scene_ayako_autumn_background_2', 'bg_read_sub2(0x44F1)', 217), 'decode': None},
+    'D_19_02': {'read': ('src/ovl/date/scene_yuko.c', 'date_scene_yuko_winter_background_2', 'bg_read_sub2(0x456C)', 354), 'decode': None},
+    'D_24_03': {'read': ('src/ovl/date/place_scenes.c', 'date_place_setup_botanical_garden', 'bg_read_sub2(0x45D3)', 843), 'decode': None},
+    'D_29_09': {'read': ('src/ovl/club_master/club_master_mode_stage_dispatch.c', 'master_award_intro_step_run', 'dec_bg_cd_read(0x4673, 1)', 58),
+                'decode': ('src/ovl/club_master/club_master_mode_stage_dispatch.c', 'master_award_intro_step_run', 'dec_bg_decode_to_vram(1)', 74)},
+    'I_11_15': {'read': ('src/ovl/date/scene_mira.c', 'date_scene_mira_autumn_background_1', 'bg_read_sub2(0x482A)', 215), 'decode': None},
+    'I_17_01': {'read': ('src/ovl/date/scene_mio.c', 'date_scene_mio_autumn_background_1', 'bg_read_sub2(0x4876)', 192), 'decode': None},
+    'I_28_02': {'read': ('src/ovl/date/scene_nozomi.c', 'date_scene_nozomi_winter_background_1', 'bg_read_sub2(0x492F)', 202), 'decode': None},
 }
 SHARED_CHECKS = [('src/main/scene_library.c', 'dec_bg_cd_read(arg0, 1)'), ('src/main/scene_library.c', 'dec_bg_decode_to_vram(1)'),
                  ('src/main/background_images.c', 'bg_still_decode_to_vram(0x2C0, 0, 0x140, 0xA0)'),
@@ -89,8 +96,8 @@ SHARED_CHECKS = [('src/main/scene_library.c', 'dec_bg_cd_read(arg0, 1)'), ('src/
                  ('src/main/background_images.c', 'cd_read_sectors_nowait(0xA, 0x80162000, arg0)')]
 # P_01_02 is read and decoded by the prologue board, not by the shared still path.
 PROLOGUE = {'width': 640, 'height': 160, 'macroblocks': 400, 'read_sectors': 9,
-            'read': ('src/ovl/name_entry/prologue.c', 365, 'cd_read_sectors(9, 0x80162000, 0x4954)'),
-            'decode': ('src/ovl/name_entry/prologue.c', 373, 'bg_still_decode_to_vram(0x140, 0, 0x280, 0xA0)')}
+            'read': ('src/ovl/name_entry/prologue.c', 'prologue_board_load', 'cd_read_sectors(9, 0x80162000, 0x4954)', 365),
+            'decode': ('src/ovl/name_entry/prologue.c', 'prologue_board_load', 'bg_still_decode_to_vram(0x140, 0, 0x280, 0xA0)', 373)}
 STILL_SIZE = (320, 160)
 STILL_MACROBLOCKS = 200
 
@@ -155,6 +162,11 @@ SIGNS += [
      'runs': [{'text': 'SHOE RENTAL', 'box': [70, 34, 68, 9], 'cap': 8, 'aspect': 1.0, 'stroke': 1.6}]},
 ]
 DEFAULTS = {'rotation': 0, 'aspect': 1.0, 'gap': font.GAP}
+# How the face of each `fill` kind is made (recorded per crop).
+FILL_NOTES = {'plane': 'face: per-channel plane fitted by trimmed least squares to the clean face pixels; English strokes mixed '
+                       'over it in the sampled ink colour; no source pixel is copied',
+              'diffuse': 'face: Laplace (diffusion) fill from the clean pixels around the rectangle; English strokes mixed over it '
+                         'in the sampled ink colour; no source pixel is copied'}
 
 # Files decoded and proven although no sign in them gets a draft (catalog bindings and a sign too
 # cut off by the frame edge to read).
@@ -172,17 +184,8 @@ def contiguous_lbas(bs_dir):
     return lbas
 
 
-def decode_still(data, width, height):
-    return mdec_splice.decode_rgb5(data, width, height)[:height]
-
-
-def expand(rgb5):
-    """8-bit RGB by the T-39012 replicate rule ((v << 3) | (v >> 2))."""
-    return ((rgb5 << 3) | (rgb5 >> 2)).astype(np.uint8)
-
-
 def fit_plane(rgb5, rect, fit=None, ring=2, tolerance=2.0, rounds=6, init='median'):
-    """Per-channel plane for the clean face colour behind rect; returns (float array of rect size, pixels used).
+    """Per-channel plane for the clean face colour behind rect; returns (float array of rect size, samples of the final fit).
 
     The samples are the pixels of `fit` (a face rectangle with margin from the sign border) or, without
     one, a ring around rect. Lettering and borders are rejected by trimmed least squares: start from the
@@ -217,13 +220,14 @@ def fit_plane(rgb5, rect, fit=None, ring=2, tolerance=2.0, rounds=6, init='media
         use = np.ones(len(xs), bool)
     for _ in range(rounds):
         coefficients = np.stack([np.linalg.lstsq(design[use], sample[use, c], rcond=None)[0] for c in range(3)], 1)
+        fitted = int(use.sum())  # the samples these coefficients were fitted to
         new = np.abs(design @ coefficients - sample).max(1) <= tolerance
         if new.sum() < 6 or (new == use).all():
             break
         use = new
     gy, gx = np.mgrid[y:y + h, x:x + w]
     grid = np.stack([np.ones(w * h), gx.ravel(), gy.ravel()], 1).astype(float)
-    return (grid @ coefficients).reshape(h, w, 3), int(use.sum())
+    return (grid @ coefficients).reshape(h, w, 3), fitted
 
 
 def fill_diffuse(rgb5, rect, margin=3, bad=10, iterations=900):
@@ -304,45 +308,10 @@ def draw_plan(source, plan):
     return english, record
 
 
-def macroblocks(rect, padded_height):
-    x, y, w, h = rect
-    indices = sorted({mdec_splice.macroblock_index(px, py, padded_height)
-                      for px in range(x, x + w) for py in range(y, y + h)})
-    columns = padded_height // 16
-    xs = [i // columns * 16 for i in indices]
-    ys = [i % columns * 16 for i in indices]
-    return indices, [min(xs), min(ys), max(xs) + 16 - min(xs), max(ys) + 16 - min(ys)]
-
-
 def check_callers(root=ROOT):
-    """Problems (empty when every cited source line still holds its call text)."""
-    problems = []
-    cites = [(c['read'], c['decode']) for c in CALLERS.values()] + [(PROLOGUE['read'], PROLOGUE['decode'])]
-    for pair in cites:
-        for cite in pair:
-            if cite is None:
-                continue
-            path, line, text = cite
-            lines = (Path(root) / path).read_text().splitlines()
-            if line > len(lines) or text not in lines[line - 1]:
-                problems.append('%s:%d does not contain %s' % (path, line, text))
-    for path, text in SHARED_CHECKS:
-        if text not in (Path(root) / path).read_text():
-            problems.append('%s lacks %s' % (path, text))
-    return problems
-
-
-def stream_facts(data, width, height):
-    """Macroblock count, end marker and trailing bytes of a BS v1/v2 stream, checked against width x height."""
-    parsed = mdec_splice.parse(data)
-    count = len(parsed['macroblocks'])
-    expected = (width // 16) * ((height + 15) // 16)
-    if count != expected:
-        raise ValueError('stream has %d macroblocks, %dx%d needs %d' % (count, width, height, expected))
-    decode_still(data, width, height)  # the pinned model decodes it with every word STP-marked
-    trailing = parsed['trailing']
-    return {'macroblocks': count, 'expected_macroblocks': expected, 'consumed_bytes': parsed['consumed_bytes'],
-            'trailing_bytes': len(trailing), 'trailing_all_zero': not any(trailing), 'end_marker': True}
+    """Problems (empty when every cited call is still inside its function and every shared check holds)."""
+    cites = [c for pair in CALLERS.values() for c in pair.values() if c] + [PROLOGUE['read'], PROLOGUE['decode']]
+    return common.check_citations(cites, SHARED_CHECKS, root)
 
 
 def geometry_proof(name, data, lba, sectors):
@@ -356,35 +325,8 @@ def geometry_proof(name, data, lba, sectors):
         calls = [c for c in (CALLERS[name]['read'], CALLERS[name]['decode']) if c]
         read_sectors = 10
         evidence = list(DECODE_EVIDENCE) + ([] if CALLERS[name]['decode'] else [SCENE_READ])
-    stream = stream_facts(data, width, height)
-    return {'width': width, 'height': height, 'lba': lba, 'lba_hex': '0x%X' % lba, 'file_sectors': sectors,
-            'read_sectors': read_sectors, 'lba_basis': 'back-to-back layout from 0x3F03, pinned by %d game-code LBAs' % len(LAYOUT_ANCHORS),
-            'callers': [{'path': p, 'line': n, 'text': t} for p, n, t in calls], 'code_evidence': evidence, 'stream': stream}
-
-
-def side_by_side(source, english, rect):
-    """Original | English at 2x, pixelated, with the edited rectangle outlined on the English side."""
-    left = Image.fromarray(expand(source), 'RGB').resize((source.shape[1] * 2, source.shape[0] * 2), Image.NEAREST)
-    right = Image.fromarray(expand(english), 'RGB').resize((english.shape[1] * 2, english.shape[0] * 2), Image.NEAREST)
-    sheet = Image.new('RGB', (left.width * 2 + 8, left.height), (255, 0, 255))
-    sheet.paste(left, (0, 0))
-    sheet.paste(right, (left.width + 8, 0))
-    return sheet
-
-
-def zoom_pair(source, english, rect, margin=8):
-    """Original over English of one sign, pixelated, with a margin of surrounding picture."""
-    x, y, w, h = rect
-    x0, y0 = max(0, x - margin), max(0, y - margin)
-    x1, y1 = min(source.shape[1], x + w + margin), min(source.shape[0], y + h + margin)
-    scale = max(2, min(10, 900 // (x1 - x0)))
-    size = ((x1 - x0) * scale, (y1 - y0) * scale)
-    top = Image.fromarray(expand(source[y0:y1, x0:x1]), 'RGB').resize(size, Image.NEAREST)
-    bottom = Image.fromarray(expand(english[y0:y1, x0:x1]), 'RGB').resize(size, Image.NEAREST)
-    sheet = Image.new('RGB', (size[0], size[1] * 2 + 6), (255, 0, 255))
-    sheet.paste(top, (0, 0))
-    sheet.paste(bottom, (0, size[1] + 6))
-    return sheet
+    return common.geometry_proof(data, lba, sectors, width, height, read_sectors, calls, evidence,
+                                 'back-to-back layout from 0x3F03, pinned by %d game-code LBAs' % len(LAYOUT_ANCHORS))
 
 
 def build(output, disc=None):
@@ -392,7 +334,7 @@ def build(output, disc=None):
     output = new_output(output)
     problems = check_callers()
     if problems:
-        raise ValueError('cited source lines changed: ' + '; '.join(problems))
+        raise ValueError('cited calls changed: ' + '; '.join(problems))
     lbas = contiguous_lbas(disc)
     for name, lba in LAYOUT_ANCHORS.items():
         if lbas[name][0] != lba:
@@ -405,7 +347,7 @@ def build(output, disc=None):
         width, height = proofs[name]['width'], proofs[name]['height']
         decoded[name] = decode_still(data, width, height)
         hashes[name] = {'container': digest(data), 'words': digest(mdec_model.decode_padded_words(data, width, height)),
-                        'rgb8': digest(expand(decoded[name]).tobytes())}
+                        'rgb8': digest(rgb8(decoded[name]).tobytes())}
     output.mkdir(parents=True)
     (output / 'previews').mkdir()
     (output / 'crops').mkdir()
@@ -421,11 +363,11 @@ def build(output, disc=None):
         if (english[outside] != source[outside]).any():
             raise ValueError('draft changes pixels outside its rectangle: ' + plan['id'])
         englishes[name][y:y + h, x:x + w] = english[y:y + h, x:x + w]
-        crop = expand(english[y:y + h, x:x + w])
-        zoom_pair(source, english, plan['rect']).save(output / 'previews' / (plan['id'] + '.zoom.png'))
+        crop = rgb8(english[y:y + h, x:x + w])
+        common.zoom_pair(source, english, plan['rect']).save(output / 'previews' / (plan['id'] + '.zoom.png'))
         png = plan['id'] + '.en.png'
         Image.fromarray(crop, 'RGB').save(output / 'crops' / png, optimize=False)
-        indices, mb_rect = macroblocks(plan['rect'], proofs[name]['height'] + (-proofs[name]['height'] % 16))
+        indices, mb_rect = common.macroblocks(plan['rect'], proofs[name]['height'] + (-proofs[name]['height'] % 16))
         changed = int((english[y:y + h, x:x + w] != source[y:y + h, x:x + w]).any(-1).sum())
         assets.append({
             'id': plan['id'], 'catalog_item': plan['catalog_item'], 'sign': plan['sign'],
@@ -437,60 +379,33 @@ def build(output, disc=None):
             'edit_regions': [plan['rect']], 'edit_macroblocks': indices, 'edit_macroblock_bounds': mb_rect,
             'edit_region_policy': 'the declared rectangle is rebuilt (face fill + lettering); every pixel outside is bit-identical to the source decode',
             'crop': {'png': png, 'rect': plan['rect'], 'sha256': digest((output / 'crops' / png).read_bytes()),
-                     'original_pixels': 0},
+                     'source_equal_pixels': common.source_equal_pixels(crop, source[y:y + h, x:x + w]),
+                     'source_equal_pixels_basis': 'crop pixels whose RGB555 value equals the source decode at the same position',
+                     'fill': FILL_NOTES[plan.get('fill', 'plane')]},
             'changed_pixels': changed, 'lettering': record, 'port_made': True,
             'port_made_elements': [{'kind': 'lettering', 'face': 'port-skeleton-gothic', 'origin': 'port-made',
                                     'description': STROKE_NOTE + '; lines: ' + ', '.join(r['text'] for r in plan['runs']) if plan['runs']
-                                    else 'class mark removed; face refilled from a fitted plane, no lettering drawn'}],
+                                    else 'class mark removed; face refilled by a Laplace (diffusion) fill from the clean pixels around it, no lettering drawn'}],
             'style': 'unreviewed', 'human_approved': False, 'runtime_integrated': False, 'in_game_verified': False})
     for name in files:
         plans = [p for p in SIGNS if p['file'] == name]
         if not plans:
             continue
-        Image.fromarray(expand(englishes[name]), 'RGB').save(output / 'previews' / (name + '.en.png'))
-        side_by_side(decoded[name], englishes[name], None).save(output / 'previews' / (name + '.compare-2x.png'))
+        Image.fromarray(rgb8(englishes[name]), 'RGB').save(output / 'previews' / (name + '.en.png'))
+        common.side_by_side(decoded[name], englishes[name]).save(output / 'previews' / (name + '.compare-2x.png'))
     manifest = {'schema': SCHEMA, 'ticket': TICKET, 'human_approved': False, 'assets': assets,
                 'geometry_proofs': proofs, 'layout_anchors': {k: '0x%X' % v for k, v in LAYOUT_ANCHORS.items()},
-                'decoder_model': MDEC_MODEL_ID,
-                'committed_files': 'crop PNGs (rectangles that hold only port-made pixels) and this manifest; whole stills and comparisons stay local'}
+                'decoder_model': MDEC_MODEL_ID, 'environment': common.environment(),
+                'committed_files': 'crop PNGs (computed rectangles: face fill and lettering, no pixel copied from the source) and this manifest; whole stills and comparisons stay local'}
     (output / 'manifest.json').write_bytes(encoded(manifest) + b'\n')
     return {'output': str(output), 'assets': len(assets), 'files': files}
 
 
 def publish(built, destination):
     """Copy crops, manifest and ledger into a new checkpoint folder (no full images, no BS bytes)."""
-    manifest_bytes = (built / 'manifest.json').read_bytes()
-    manifest = json.loads(manifest_bytes)
-    destination = destination.absolute()
-    if destination.exists():
-        raise ValueError('destination must be new')
-    revision = destination / CHECKPOINT
-    staging = destination.with_name(destination.name + '.partial')
-    if staging.exists():
-        raise ValueError('stale staging directory: ' + str(staging))
-    (staging / CHECKPOINT).mkdir(parents=True)
-    ledger = []
-    for asset in manifest['assets']:
-        crop = built / 'crops' / asset['crop']['png']
-        if digest(crop.read_bytes()) != asset['crop']['sha256']:
-            raise ValueError('built crop changed: ' + asset['id'])
-        (staging / CHECKPOINT / asset['crop']['png']).write_bytes(crop.read_bytes())
-        ledger.append({'id': asset['id'], 'catalog_item': asset['catalog_item'], 'path': '%s/%s' % (CHECKPOINT, asset['crop']['png']),
-                       'crop_sha256': asset['crop']['sha256'], 'dimensions': asset['crop']['rect'][2:],
-                       'source_container_sha256': asset['source_container_sha256'], 'source_png_sha256': asset['source_png_sha256'],
-                       'decode_identity': {'decoder_model': asset['decoder_model'], 'source_words_sha256': asset['source_words_sha256'],
-                                           'width': asset['geometry']['width'], 'height': asset['geometry']['height']},
-                       'edit_regions': asset['edit_regions'], 'port_made': True, 'port_made_elements': asset['port_made_elements'],
-                       'manifest_sha256': digest(manifest_bytes), 'status': 'draft', 'human_approved': False})
-    (staging / CHECKPOINT / 'manifest.json').write_bytes(manifest_bytes)
-    (staging / 'ledger.json').write_bytes(encoded({
-        'schema': 'tokimemo.translation-checkpoint.v1', 'ticket': TICKET, 'assets': ledger,
-        'candidate_assets': len(ledger), 'original_images_included': False, 'port_made_assets': len(ledger),
+    return common.publish(built, destination, CHECKPOINT, TICKET, {
         'full_images_policy': 'only crops of rectangles that hold port-made pixels are committed; run build to rebuild whole stills into .asset-cache',
-        'publication_authorization': 'Owner allowed new in-style lettering, 2026-11-01 (T-39400).',
-        'complete_translation_inventory': False, 'separate_reviewed_revisions': 0}) + b'\n')
-    staging.rename(destination)
-    return {'destination': str(destination), 'assets': len(ledger)}
+        'publication_authorization': 'Owner allowed new in-style lettering, 2026-11-01 (T-39400).'})
 
 
 def geometry(disc=None):
