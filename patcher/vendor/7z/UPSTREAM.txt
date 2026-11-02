@@ -1,0 +1,13 @@
+7z-wasm 1.2.0, by use-strict, wrapping 7-Zip by Igor Pavlov.
+Unmodified 7zz.umd.js and 7zz.wasm from:
+https://registry.npmjs.org/7z-wasm/-/7z-wasm-1.2.0.tgz
+Package integrity (SHA-512, base64):
+AZjtWXFleAe5nQ27JYISs70cICjO0zZr4LU45I9pXKcrhG0qiEWgq3Vjwr9JHHihFLuqgc7uSHYVn/z3vXCjdw==
+Source and Docker build instructions:
+https://github.com/use-strict/7z-wasm/tree/v1.2.0
+License: GNU LGPL 2.1 or later with the unRAR restriction.
+See License.txt and unRarLicense.txt. The library is loaded as a separate worker dependency.
+Corresponding source is included alongside these binaries:
+7z2409-src.7z (7-Zip 24.09) and 7z-wasm-v1.2.0.tar.gz (wrapper/build files).
+7z2409-src.7z SHA-256:
+a33569eed0ce628fb9ceb9f46ac257d3f36b3966471667e65ba01878673c9faa

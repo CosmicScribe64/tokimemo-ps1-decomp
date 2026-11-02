@@ -11,3 +11,6 @@
 *.yaml text eol=lf
 *.patch text eol=lf
 Dockerfile text eol=lf
+# Preserve upstream decoder files and license texts byte-for-byte.
+patcher/vendor/7z/** -text whitespace=-blank-at-eol,-blank-at-eof
+patcher/vendor/chdman/** -text whitespace=-blank-at-eol,-blank-at-eof

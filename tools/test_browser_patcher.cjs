@@ -73,9 +73,40 @@ const sha1 = file => new Promise((resolve, reject) => {
         await page.locator('#apply').click();
         await page.waitForFunction(() => document.getElementById('status').textContent.includes('incomplete or damaged'), null, {timeout: 60000});
         assert(await page.locator('#result').isHidden());
+        await page.unroute('**/*.xdelta');
+        await page.locator('#disc-files').setInputFiles({name: 'broken.zip', mimeType: 'application/zip', buffer: Buffer.from('broken archive')});
+        await page.locator('#apply').click();
+        await page.waitForFunction(() => document.getElementById('status').textContent.includes('could not be unpacked'), null, {timeout: 60000});
+        assert(await page.locator('#result').isHidden());
+        const archive = process.env.PATCHER_ARCHIVE;
+        if (archive) {
+            await page.locator('#disc-files').setInputFiles(path.resolve(archive));
+            await page.locator('#apply').click(); await page.locator('#cancel').click();
+            await page.waitForFunction(() => document.getElementById('status').textContent.startsWith('Cancelled'));
+            assert(await page.locator('#result').isHidden());
+            await page.evaluate(() => {
+                const transfer = new DataTransfer();
+                for (const file of document.getElementById('disc-files').files) transfer.items.add(file);
+                document.getElementById('drop-zone').dispatchEvent(new DragEvent('drop', {bubbles: true, dataTransfer: transfer}));
+            });
+            await page.locator('#apply').click();
+            await page.waitForFunction(() => !document.getElementById('result').hidden || document.getElementById('status-area').classList.contains('error'), null, {timeout: 240000});
+            assert(await page.locator('#result').isVisible(), await page.locator('#status').textContent());
+            const audioEvent = page.waitForEvent('download'); await page.locator('#audio-download').click();
+            await (await audioEvent).saveAs(path.join(out, 'track2.bin'));
+            assert.equal(await sha1(path.join(out, 'track2.bin')), await sha1(path.join(original, 'track2.bin')));
+            const archiveCueEvent = page.waitForEvent('download'); await page.locator('#cue-download').click();
+            await (await archiveCueEvent).saveAs(path.join(out, 'archive.cue'));
+            assert(fs.readFileSync(path.join(out, 'archive.cue'), 'utf8').includes('FILE "tokimemo-en-track2.bin"'));
+            await page.screenshot({path: path.join(out, 'archive-complete.png'), fullPage: true});
+            await page.setViewportSize({width: 390, height: 844});
+            await page.screenshot({path: path.join(out, 'archive-mobile.png'), fullPage: true});
+            assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+            console.log('PASS: dropped archive, extraction cancellation, audio download hash, archive CUE and mobile result.');
+        }
         assert(requests.every(r => r.method === 'GET' && r.url.startsWith(url + '/')), 'Unexpected external request or upload');
         assert.deepEqual(errors, []);
-        fs.writeFileSync(path.join(out, 'result.json'), JSON.stringify({status: 'passed', target_sha1: await sha1(path.join(out, 'track1.bin')), checks: ['wrong size', 'wrong source hash', 'corrupted patch', 'cancel', 'full patch', 'download hash', 'cue', 'no upload', 'responsive layout'], requests}, null, 2));
+        fs.writeFileSync(path.join(out, 'result.json'), JSON.stringify({status: 'passed', target_sha1: await sha1(path.join(out, 'track1.bin')), checks: ['wrong size', 'wrong source hash', 'corrupted patch', 'cancel', 'full patch', 'download hash', 'cue', 'no upload', 'responsive layout', 'invalid archive', ...(archive ? ['archive drop', 'extraction cancel', 'audio download hash', 'archive cue', 'mobile result'] : [])], requests}, null, 2));
         console.log('PASS: browser download equals command-line build; CUE, cancellation, invalid source, local-only processing verified.');
     } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(() => server.close());

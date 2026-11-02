@@ -1,0 +1,24 @@
+chdman WebAssembly, built from MAME commit
+27a8d9e85b58058965907d1d8a7a92f8ed039348 with Emscripten 6.0.2.
+
+Binary provenance:
+https://github.com/Kelvao/RetroShrink/tree/11ae4215e47ee4f10197608e22e166016e814fb0/public
+Original chdman.js SHA-256:
+358e7b1c953f5960e44701775403debac40685bead91191c24a6b8d0374152db
+Original chdman.wasm SHA-256:
+da1d4a57af54c47e3069bb0af84144e465d98bfc2ea2c10f9e0fead3be081eda
+
+Local modification (2026-11-02): the WebAssembly memory section's initial
+and maximum sizes are both increased from 259 to 2048 pages (128 MiB).
+The original 16 MiB allocation fails during CD extraction. Code sections
+are unchanged. tools/resize_chd_memory.py reproduces this modification.
+
+chdman.cpp is copyright Aaron Giles, BSD-3-Clause. MAME's individual files
+and bundled libraries carry their own licenses; see licenses/ and the
+source headers. MAME as a whole is GPL-2.0. No RetroShrink frontend code
+is included. upstream-build.yml records the upstream build procedure.
+
+source.tar.gz includes the exact MAME tool, utility, platform, build and
+third-party source trees, excluding the unrelated BGFX graphics renderer.
+Original source:
+https://github.com/mamedev/mame/tree/27a8d9e85b58058965907d1d8a7a92f8ed039348

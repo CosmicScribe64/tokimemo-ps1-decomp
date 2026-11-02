@@ -27,7 +27,7 @@ def package(build: Path, original: Path, output: Path):
     if output.exists() and any(output.iterdir()):
         raise ValueError("Use an empty output directory to avoid stale release files")
     output.mkdir(parents=True, exist_ok=True)
-    for name in ("index.html", "style.css", "app.js", "worker.js"):
+    for name in ("index.html", "style.css", "app.js", "worker.js", "disc-inputs.js", "input-worker.js"):
         shutil.copyfile(ROOT / "patcher" / name, output / name)
     shutil.copytree(ROOT / "patcher/vendor", output / "vendor")
     (output / "assets").mkdir()

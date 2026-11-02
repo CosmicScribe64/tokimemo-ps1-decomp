@@ -3657,3 +3657,11 @@ Fresh boundary-candidate captures 032, 039, 041 and 100 retain complete names, c
 ## [2026-11-02] build | Publish the verified review patcher
 
 At the owner's request, pushed verified source and README updates to main and patch/english at `a916ad549`, and published the review package on gh-pages at `96a1a438`. GitHub Pages deployment succeeded; all 14 served files match the tested package. Browser smoke, desktop/mobile review and acceptance tests pass. Updated and read back the GitHub description and website URL. T-39526 moves to Done. The later boundary code remains local. The owner then requested drag-and-drop support matching the extractor; opened T-39527 and added the initial raw/CUE resolver with passing smoke checks. [[tickets/T-39526-publish-review-patcher]], [[tickets/T-39527-patcher-disc-inputs]], [[tickets/T-39512-browser-patcher]].
+
+## [2026-11-02] build | Browser archive and CHD track reconstruction
+
+[[tickets/T-39527-patcher-disc-inputs]] now has a local input worker and drag/drop UI candidate. Actual ZIP, 7z and CHD fixtures reconstructed both original track hashes in Chromium. Existing patch/download/cancellation checks passed. The CHD decoder needed a larger fixed WASM heap; the change is reproducible and its code sections are unchanged. Public deployment remains on the previously verified BIN-only page while complete flow and visual checks continue.
+
+## [2026-11-02] ticket | Disc-input candidate in review
+
+Moved [[tickets/T-39527-patcher-disc-inputs]] to In Review. Full dropped-archive flow, malformed ZIP handling, extraction cancellation and download checks pass. Real CHD, archived CHD, 7z and combined raw ISO inputs recover both original track hashes. Desktop and mobile screenshots were opened and inspected. Code review found no unresolved issues; publication and final prose review remain.

@@ -21,7 +21,6 @@ kanban-plugin: board
 
 
 ## In Progress
-- [ ] [[tickets/T-39527-patcher-disc-inputs|T-39527 Accept dropped disc images and archives in the browser patcher]]
 - [ ] [[tickets/T-39525-english-break-boundaries|T-39525 Check English boundaries before retaining source line breaks]]
 
 
@@ -78,6 +77,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-39527-patcher-disc-inputs|T-39527 Accept dropped disc images and archives in the browser patcher]]
 
 
 

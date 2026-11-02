@@ -1,7 +1,7 @@
 /* T-39512: static, browser-local patcher. No disc bytes enter a network request. */
 'use strict';
 const byId = id => document.getElementById(id);
-let release, worker, request, urls = [];
+let release, worker, request, selected = [], urls = [];
 function status(message, error = false) {
     byId('status').textContent = message;
     byId('status-area').classList.toggle('error', error);
@@ -12,10 +12,12 @@ function clearResult() {
     byId('result').hidden = true;
     byId('track-download').removeAttribute('href');
     byId('cue-download').removeAttribute('href');
+    byId('audio-download').removeAttribute('href');
+    byId('audio-download').hidden = true;
 }
 function busy(active) {
     byId('apply').disabled = active || !release;
-    byId('source').disabled = byId('audio').disabled = active;
+    byId('source').disabled = byId('audio').disabled = byId('disc-files').disabled = active;
     byId('cancel').hidden = !active;
     byId('progress').hidden = !active;
     byId('patch-form').setAttribute('aria-busy', String(active));
@@ -32,20 +34,55 @@ function download(id, blob) {
 byId('cancel').addEventListener('click', () => {
     stop(); clearResult(); status('Cancelled. Your original tracks have not changed.');
 });
-for (const id of ['source', 'audio']) byId(id).addEventListener('change', clearResult);
+for (const id of ['source', 'audio']) byId(id).addEventListener('change', () => {
+    selected = []; byId('disc-files').value = ''; byId('selection').textContent = 'Using separate BIN tracks'; clearResult();
+});
+function selectFiles(files) {
+    if (worker || request) return;
+    selected = Array.from(files); byId('source').value = byId('audio').value = '';
+    byId('selection').textContent = selected.length ? selected.map(file => file.name).join(', ') : 'No files selected';
+    clearResult();
+}
+byId('disc-files').addEventListener('change', event => selectFiles(event.target.files));
+for (const type of ['dragenter', 'dragover']) byId('drop-zone').addEventListener(type, event => {
+    event.preventDefault(); if (!worker && !request) byId('drop-zone').classList.add('dragging');
+});
+byId('drop-zone').addEventListener('dragleave', () => byId('drop-zone').classList.remove('dragging'));
+byId('drop-zone').addEventListener('drop', event => {
+    event.preventDefault(); byId('drop-zone').classList.remove('dragging'); selectFiles(event.dataTransfer.files);
+});
+function prepareFiles(files) {
+    return new Promise((resolve, reject) => {
+        worker = new Worker('input-worker.js');
+        worker.onerror = () => reject(new Error('The disc reader stopped. Try a desktop browser with more free memory.'));
+        worker.onmessage = ({data}) => {
+            if (data.type === 'progress') { status(data.message); byId('progress').value = data.progress; }
+            else if (data.type === 'error') reject(new Error(data.message));
+            else if (data.type === 'complete') { worker.terminate(); worker = null; resolve(data); }
+        };
+        worker.postMessage({files, release});
+    });
+}
 byId('patch-form').addEventListener('submit', async event => {
     event.preventDefault();
     if (!release || worker || request) return;
     clearResult();
-    const source = byId('source').files[0], audio = byId('audio').files[0];
-    if (!source || !audio) return;
-    if (/["\r\n]/.test(audio.name) || audio.name.toLowerCase() === 'tokimemo-en-track1.bin') {
-        status('Rename the audio track to track2.bin, then select it again.', true); return;
-    }
+    const separate = !selected.length;
+    const files = separate ? [byId('source').files[0], byId('audio').files[0]].filter(Boolean) : selected;
+    if (!files.length) { status('Choose or drop your disc files first.', true); return; }
     busy(true); byId('progress').value = 2;
-    status('Loading the English patch…');
+    status('Reading your disc files…');
     const controller = new AbortController(); request = controller;
     try {
+        const tracks = separate && files.length === 2
+            ? {source: files[0], audio: files[1], audioName: files[1].name, extractedAudio: false}
+            : await prepareFiles(files);
+        if (controller.signal.aborted) return;
+        const {source, audio} = tracks;
+        const audioName = tracks.extractedAudio ? 'tokimemo-en-track2.bin' : tracks.audioName.split(/[\\/]/).pop();
+        if (/["\r\n]/.test(audioName) || audioName.toLowerCase() === 'tokimemo-en-track1.bin')
+            throw new Error('Rename the audio track to track2.bin, then select it again.');
+        status('Loading the English patch…');
         const response = await fetch(release.patch.file, {signal: controller.signal});
         if (!response.ok) throw new Error('The English patch could not be downloaded. Please try again.');
         const patch = await response.arrayBuffer();
@@ -58,9 +95,14 @@ byId('patch-form').addEventListener('submit', async event => {
             else if (data.type === 'error') { stop(); status(data.message, true); }
             else if (data.type === 'complete') {
                 download('track-download', new Blob([data.bytes], {type: 'application/octet-stream'}));
-                const cue = `FILE "tokimemo-en-track1.bin" BINARY\n  TRACK 01 MODE2/2352\n    FLAGS DCP\n    INDEX 01 00:00:00\nFILE "${audio.name}" BINARY\n  TRACK 02 AUDIO\n    FLAGS DCP\n    INDEX 00 00:00:00\n    INDEX 01 00:02:00\n`;
+                const cue = `FILE "tokimemo-en-track1.bin" BINARY\n  TRACK 01 MODE2/2352\n    FLAGS DCP\n    INDEX 01 00:00:00\nFILE "${audioName}" BINARY\n  TRACK 02 AUDIO\n    FLAGS DCP\n    INDEX 00 00:00:00\n    INDEX 01 00:02:00\n`;
                 download('cue-download', new Blob([cue], {type: 'text/plain'}));
-                byId('audio-name').textContent = audio.name;
+                if (tracks.extractedAudio) {
+                    download('audio-download', audio); byId('audio-download').hidden = false;
+                    byId('save-instructions').textContent = 'Save all three downloads in the same folder. Open tokimemo-en.cue in your emulator.';
+                } else {
+                    byId('save-instructions').textContent = `Save both downloads in the same folder as ${audioName}, your unchanged audio track. Open tokimemo-en.cue in your emulator.`;
+                }
                 byId('output-hash').textContent = data.sha1;
                 stop(); status('Finished. All verification checks passed.');
                 byId('result').hidden = false; byId('result-title').focus();
@@ -78,5 +120,5 @@ fetch('release.json', {cache: 'no-cache'}).then(async response => {
         throw new Error('Build information is invalid. Reload this page.');
     if (!/^assets\/[a-zA-Z0-9._-]+\.xdelta$/.test(data.patch.file)) throw new Error('Invalid patch location.');
     release = data; byId('build-label').textContent = data.label;
-    busy(false); status('Choose both original tracks to begin.');
+    busy(false); status('Choose or drop your original disc to begin.');
 }).catch(error => status(error.message, true));
