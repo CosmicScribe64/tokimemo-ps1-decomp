@@ -21,6 +21,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39515-exam-ranking-name-layout|T-39515 Fit full English names and scores in exam rankings]]
+
 
 - [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
 
