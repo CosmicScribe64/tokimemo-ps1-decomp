@@ -258,3 +258,13 @@ The step "opening movie" (70-80 s) rewrites 2,678 video sectors of `OPENXA.STR` 
 - Windows for menus, tables and C strings: add rows to `WINDOWS` as screens are checked in the route.
 - Art: the deferred items of the Art section (NAME_ENT panels and the second name-entry page, the exam header, two stills, the movie pills).
 - Dialogue display needs the parser work of [[tickets/T-39506-english-script-runtime]]. Until then the control bytes 0x0A-0x1A are skipped by the renderer and the old parsers misread English.
+
+## Compact talk storage (T-39506)
+
+The English build uses `Image.write(..., compact=True)` for talk and supplemental talk containers. Strings are placed longest first in the smallest free region that fits, retaining unused regions for shorter strings. Each record owns distinct bytes, including identical strings, because the game can modify script text at runtime. Structure and pointer locations do not move. Default identity checks retain the original-order writer. The DATE probe fits all eleven files inside 24 sectors without relocating their RAM buffer; the complete build and route must confirm the wrapped payloads.
+
+## Name-entry art extension (T-39506 / T-39508)
+
+`tools/patch/art/name_entry.py` appends seven 4bpp actor pages to NAME_ENT.NBN, leaving the six original background pages and sequence table untouched. Eight actor pages total allow all four panels, selector fallbacks and both ABC states to fit. A marker at file offset 0x1AFF8 selects the extended texture and frame tables in the English overlay; a no-art build still uses the originals. The extended file (including grown frames) is 172,032 bytes in the placement test. The source load begins at 0x80190000 and the next live name-entry data begins at 0x801E0000, giving 0x50000 bytes; the art planner applies this bound to this container only. Runtime validation must check the extra VRAM pages and actor 125 used by ABC. Current sidebar labels remain the 32-pixel fallback art.
+
+The first GPU run of the extended name-entry art exposed direct birthday-digit UVs into the original actor sheet, outside the frame table. The extended profile now protects all of page zero and limits English relocations to the seven added pages; a game-data regression requires the original 0x2000 texture bytes to remain identical. Full-file placement/readback and another emulator run are the gates for this correction.

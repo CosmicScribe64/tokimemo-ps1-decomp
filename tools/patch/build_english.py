@@ -54,7 +54,7 @@ from tools.patch import disc as disc_mod
 from tools.patch import make_patch
 from tools.patch.art import hook as art_hook
 from tools.patch.movie import build as movie
-from tools.patch.text import c_literals, retarget
+from tools.patch.text import c_literals, profile, retarget
 from tools.patch.text.containers import EXE_PATH, build_containers, load_units
 from tools.patch.text.image import SECTOR
 from tools.patch.text.inplace import patch_built
@@ -270,7 +270,9 @@ def place_data_files(disc, containers, text, files_root: Path, sites, checksum_s
         if container.kind not in DATA_KINDS or container.image is None:
             continue
         payloads = text.payloads.get(path, {})
-        result = container.image.write(payloads)
+        result = container.image.write(payloads, compact=container.kind in ("talk_script", "talk_script_supplemental"))
+        if path == profile.PATH:
+            profile.write_labels(container.image.data, result, payloads)
         if result.overflows:
             out["overflows"][path] = result.overflows
         if result.data == container.image.data:

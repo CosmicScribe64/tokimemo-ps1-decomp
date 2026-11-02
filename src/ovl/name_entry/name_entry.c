@@ -30,6 +30,9 @@
 #include "main/text.h"
 #include "main/tpage.h"
 #include "main/vram.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/name_art.h"
+#endif
 
 s32 strncpy();
 
@@ -389,6 +392,14 @@ void name_entry_background_setup(void) {
     prim_bg_slot_setup(buf, 0, 6, 3, 2, 0x1F8, -0xA0, -0x78, 8, 0xD);
     bg_layers |= 0x40000000;
     game_state.tpage_buf[search_tpage_multi(*(s32 *)game_state.ovl_tpage_table, 2)] = *(s32 *)game_state.ovl_tpage_table;
+#ifdef TOKIMEMO_ENGLISH
+    if (ENGLISH_NAME_ART_PRESENT) {
+        for (i = 1; i < ENGLISH_NAME_ART_PAGE_COUNT; i++) {
+            game_state.tpage_buf[search_tpage_multi(((s32 *)game_state.ovl_tpage_table)[i], 2)] =
+                ((s32 *)game_state.ovl_tpage_table)[i];
+        }
+    }
+#endif
     load_palette(game_state.ovl_palette_b, 0x18, 1, 2, 0);
     load_palette(game_state.ovl_palette_a, 0x10, 1, 2, 0);
 }
@@ -2470,6 +2481,12 @@ s32 name_entry_profile_store(void) {
 void name_entry_overlay_tables_set(void) {
     game_state.ovl_tpage_table = 0x801AAF58;
     game_state.ovl_frame_table = 0x801AAF5C;
+#ifdef TOKIMEMO_ENGLISH
+    if (ENGLISH_NAME_ART_PRESENT) {
+        game_state.ovl_tpage_table = ENGLISH_NAME_ART_TPAGES;
+        game_state.ovl_frame_table = ENGLISH_NAME_ART_FRAMES;
+    }
+#endif
     game_state.ovl_sequence_table = 0x801AAFD0;
     game_state.ovl_palette_a = 0x80190000;
     game_state.ovl_palette_b = 0x801AA200;
@@ -2622,8 +2639,7 @@ s32 name_entry_exit_to_prologue(void) {
  * original bodies above stay as they are and never run in the English build.
  *   - a sixth tab, the English letter page (A-Z, a-z, hyphen, apostrophe, period, space), placed first and
  *     selected when the screen opens; the five original tabs move down to make room (0x1A apart instead of
- *     0x20). Its selector is a text label until the label art (name-label-abc) is wired:
- *     NAME_ENTRY_ENGLISH_TAB_LABEL_DRAW is the integration point;
+ *     0x20). Its selector uses the extended ABC frames, with text as the no-art fallback;
  *   - names are NUL-terminated strings of single-byte letters, with kana from the original pages appended as
  *     two-byte characters: at most ENGLISH_NAME_LETTERS bytes for the family and given names,
  *     ENGLISH_NICKNAME_LETTERS for the nickname. The original fills unused slots with full-width spaces and
@@ -2703,9 +2719,17 @@ static u8 *name_entry_english_prompt_text(s32 name_part) {
     return name_entry_nickname_prompt_text;
 }
 
-/* Selector label of the letter page tab. Integration point for the name-label-abc art: once merged,
- * draw it with a label actor like actors 109-113 and drop this text entry. */
+/* The added letter-page selector uses actor 125; no-art builds retain the text label. */
 static void NAME_ENTRY_ENGLISH_TAB_LABEL_DRAW(void) {
+    Actor *label;
+
+    if (ENGLISH_NAME_ART_PRESENT) {
+        label = (Actor *)actor_pool + 125;
+        *label = ((Actor *)actor_pool)[109];
+        label->unk_18 = name_entry_tab == NAME_ENTRY_TAB_LATIN ? 30 : 29;
+        label->y = name_entry_english_tab_y(NAME_ENTRY_TAB_LATIN) + 8;
+        return;
+    }
     set_kanji_string(NAME_ENTRY_ENGLISH_TAB_LEFT
                          + (NAME_ENTRY_ENGLISH_TAB_WIDTH - english_text_width(NAME_ENTRY_ENGLISH_TAB_LABEL)) / 2,
                      name_entry_english_tab_y(NAME_ENTRY_TAB_LATIN) + 2,
@@ -2898,6 +2922,9 @@ static void name_entry_english_tab_highlight_update(void) {
     s32 i;
 
     highlight = (Actor *)actor_pool + 114;
+    if (ENGLISH_NAME_ART_PRESENT) {
+        ((Actor *)actor_pool)[125].unk_18 = name_entry_tab == NAME_ENTRY_TAB_LATIN ? 30 : 29;
+    }
     for (i = 0; i < 5; i++) {
         highlight[i].draw_flags &= 0x7F;
     }

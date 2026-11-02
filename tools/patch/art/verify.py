@@ -90,6 +90,10 @@ def _stp_changes(original, view0: View, data, view1: View, width: int) -> int:
 def verify_sprites(path: str, original: bytes, written: bytes, exe: bytes, exe_written: bytes, planned,
                    grown: dict) -> dict:
     """Images of one indexed container: id -> "verified" or the failure."""
+    original_file = original
+    if path.endswith("NAME_ENT.NBN"):
+        from tools.patch.art import name_entry
+        original = name_entry.prepare(original)
     before = sprites.PROFILES[path](original, exe, path)
     after = sprites.PROFILES[path](written, exe_written, path)
     out = {}
@@ -135,9 +139,9 @@ def verify_sprites(path: str, original: bytes, written: bytes, exe: bytes, exe_w
         if compose(written, after.views[key]) != compose(original, view):
             raise ArtBuildError("%s %s: a view without English art changed on the disc" % (path, key))
         unchanged += 1
-    stray = [i for i, (a, b) in enumerate(zip(original[:-4], written)) if a != b and i not in planned.touched]
-    grown = len(written) != len(original)
-    if stray or (grown and (written[-4:] != original[-4:] or len(written) % 2048)):
+    stray = [i for i, (a, b) in enumerate(zip(original_file[:-4], written)) if a != b and i not in planned.touched]
+    grown = len(written) != len(original_file)
+    if stray or (grown and (written[-4:] != original_file[-4:] or len(written) % 2048)):
         raise ArtBuildError("%s: %d bytes changed outside the planned texels and records" % (path, len(stray)))
     return {"images": out, "other_views_unchanged": unchanged}
 

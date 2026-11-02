@@ -662,7 +662,9 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
             for sub_key, sub in sorted(subgroups.items()):
                 for t in sub:
                     t.group = sub_key
-                single, why_single = _prepare(data, sub, records, palettes)  # shared texels: none exclusive
+                single, why_single = _prepare(data, sub, records, palettes,
+                                             prefer_rebuild=getattr(profile, "prefer_rebuild", False),
+                                             grow=getattr(profile, "grow", 0))
                 if single is None:
                     singles = None
                     why = "%s; alone: %s" % (why, why_single)
@@ -696,12 +698,14 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
     written: dict = {}
     pack = profile.pack or _record
     users: dict = {}        # record offset -> groups whose views draw through it (aliased frames, shared tiles)
+    prepared_group = {t.view.key: made.key for made in prepared for t in made.group}
     for view in list(protect_views) + [t.view for g in groups.values() for t in g]:
+        owner = prepared_group.get(view.key, group_of(view))
         if view.record is not None:
-            users.setdefault(view.record, set()).add(group_of(view))
+            users.setdefault(view.record, set()).add(owner)
         for part in view.parts:
             if part.record is not None:
-                users.setdefault(part.record, set()).add(group_of(view))
+                users.setdefault(part.record, set()).add(owner)
     for made in prepared:
         if made.key not in placed:
             continue
@@ -716,15 +720,20 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
         try:
             for t in made.group:
                 own = t.view.parts
-                if made.mode == "relocated" and made.grown:
-                    tiles: dict = {}
-                    for piece, part in zip(made.pieces, parts):
-                        tiles.setdefault(piece.number, []).append(
-                            part if single or piece.fixed else replace(part, palette=own[piece.number].palette,
-                                                                       clut=own[piece.number].clut))
+                if made.grown:
                     new = []
-                    for n, p in enumerate(own):
-                        new.extend(tiles.get(n, [p]))
+                    if made.mode == "relocated":
+                        tiles: dict = {}
+                        for piece, part in zip(made.pieces, parts):
+                            tiles.setdefault(piece.number, []).append(
+                                part if single or piece.fixed else replace(part, palette=own[piece.number].palette,
+                                                                           clut=own[piece.number].clut))
+                        for n, p in enumerate(own):
+                            new.extend(tiles.get(n, [p]))
+                    else:
+                        new = [part if single else replace(part, palette=own[piece.home].palette,
+                                                           clut=own[piece.home].clut)
+                               for piece, part in zip(made.pieces, parts)]
                     header = struct.unpack_from("<4h", records, t.view.record)
                     blob = struct.pack("<4h", len(new), *header[1:]) + b"".join(
                         pack(p, profile.encode(p.page_index, p.u, p.v)) for p in new)
@@ -783,8 +792,11 @@ def _prepare(data, group, records, palettes, exclusive=lambda number: False, pre
     relocated, why = _relocate(data, group, palettes, exclusive)
     tiled = _relocate(data, group, palettes, exclusive, grow)[0] if grow else None
     rebuilt, why_rebuild = _rebuild(data, group, _record_count(records, group[0].view), palettes)
+    expanded = _rebuild(data, group, 128, palettes)[0] if grow else None
+    if expanded is not None:
+        expanded.grown = True
     # a relocated frame keeps its unchanged parts' texels; a rebuilt one frees them all
-    options = sorted((m for m in (relocated, tiled, rebuilt) if m is not None),
+    options = sorted((m for m in (relocated, tiled, rebuilt, expanded) if m is not None),
                      key=lambda m: (not (prefer_rebuild and m.mode == "rebuilt"), m.grown,
                                     m.area + sum(p.width * p.height for p in m.kept), m.mode))
     if not options:

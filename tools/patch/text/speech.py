@@ -98,6 +98,25 @@ def _close(page: bytes) -> bytes:
     return body.rstrip(b" ") + QUOTE + tail
 
 
+def separate_aside(payload: bytes) -> bytes:
+    """Keep a trailing parenthetical thought on its own row after a completed sentence."""
+    body = payload.rstrip()
+    if not body.endswith(b")"):
+        return payload
+    depth = 0
+    for pos in range(len(body) - 1, -1, -1):
+        if body[pos] == ord(")"):
+            depth += 1
+        elif body[pos] == ord("("):
+            depth -= 1
+            if depth == 0:
+                before = body[:pos].rstrip(b" \n")
+                if before.endswith((b".", b"!", b"?", b"\xa5")) and pos and body[pos - 1] in b" \n":
+                    return before + b"\n" + body[pos:]
+                break
+    return payload
+
+
 def close_speech(payload: bytes, command, next_command) -> tuple[bytes, int]:
     """The payload with matched quotes, and how many were added."""
     label = _label(payload)

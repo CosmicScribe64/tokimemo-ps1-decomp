@@ -186,6 +186,22 @@ class PlacerTest(unittest.TestCase):
         self.assertIn("en-a", out.deferred)
         self.assertEqual(out.data, data)
 
+    def test_shared_geometry_can_split_into_independent_frames(self):
+        data, a, _ = self.frames()
+        write_frame(data, RECORDS + 0x40, [part()])
+        b = View.of("frame-001.base", read_frame(data, RECORDS + 0x40), frame=1, record=RECORDS + 0x40)
+        first, second = compose(data, a), compose(data, b)
+        first[0], second[0] = rgba(BLUE), rgba(GREEN)
+        out = placer.place(bytes(data), FakeProfile(),
+                           [placer.Target("first", "a", a, first, a.width),
+                            placer.Target("second", "b", b, second, b.width)], [a, b])
+        self.assertFalse(out.deferred)
+        rebuilt = bytearray(out.data)
+        for offset, record in out.records.items():
+            rebuilt[offset:offset + len(record)] = record
+        self.assertEqual(compose(rebuilt, placer._shift(View.of("a", read_frame(rebuilt, RECORDS)), a)), first)
+        self.assertEqual(compose(rebuilt, placer._shift(View.of("b", read_frame(rebuilt, RECORDS + 0x40)), b)), second)
+
     def test_part_image_is_folded_into_its_frame(self):
         data, a, b = self.frames()
         local = compose(data, View.of("p", [a.parts[0]]))
@@ -278,6 +294,24 @@ class ExecutableTest(unittest.TestCase):
 
 @unittest.skipUnless((FILES / "SLPM_86.053").is_file(), "needs the original files in disc/files")
 class GameDataTest(unittest.TestCase):
+    def test_extended_name_entry_places_and_verifies_every_panel(self):
+        from tools.patch.art import items, name_entry, verify
+        path = "CDROM/NAME_ENT/NAME_ENT.NBN"
+        data = (FILES / path).read_bytes()
+        exe = (FILES / "SLPM_86.053").read_bytes()
+        expanded = name_entry.prepare(data)
+        before, after = sheets.name_profile(data), sheets.name_profile(expanded)
+        for key, view in before.views.items():
+            self.assertEqual(compose(data, view), compose(expanded, after.views[key]))
+        group = [item for item in items.load(REPOSITORY) if item.container == path]
+        result = sprites.place_container(path, data, exe, group, items.fallbacks(REPOSITORY))
+        self.assertFalse(result.reasons)
+        self.assertLessEqual(len(result.data), 0x50000)
+        self.assertEqual(result.data[0x200:0x2200], data[0x200:0x2200])
+        checked = verify.verify_sprites(path, data, result.data, exe, exe, result, {})
+        self.assertTrue(checked["images"])
+        self.assertEqual(set(checked["images"].values()), {"verified"})
+
     def test_profiles_compose_the_reader_exports(self):
         inventory = json.loads(INVENTORY.read_text())
         exe = (FILES / "SLPM_86.053").read_bytes()

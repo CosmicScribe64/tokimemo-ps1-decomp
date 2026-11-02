@@ -38,7 +38,7 @@ glyph 0x21 !
 .
 .
 
-glyph 0x22 "
+glyph 0x22 " advance=5
 ...
 #.#
 #.#

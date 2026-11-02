@@ -26,3 +26,5 @@ Ship an English translation patch for the original disc (PlayStation the Best, S
 Parts: [[tickets/T-39501-disc-rebuild-and-xdelta]], [[tickets/T-39502-english-text-runtime]], [[tickets/T-39503-text-container-writers]], [[tickets/T-39504-emulator-screen-route]]. Out of scope for the first release: voice, the opening movie credits, `SPEAKTST`. The normal build must still match 27/27; English changes sit behind a build flag.
 
 ## Comments
+
+2026-11-01 (Codex): resumed after the Claude access error. Integrated recovered script and art branches (5074abaf2 plus the following art merge). Combined build, visual verification, remaining name-entry/text/art work and final audits are still pending. Original script worktree notes are preserved.

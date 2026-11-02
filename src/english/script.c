@@ -788,13 +788,76 @@ void english_gnsx(u8 *speaker_name) {
     english_phone_mark_x = ENGLISH_LABEL_LEFT + english_text_width(speaker_name) + ENGLISH_LABEL_GAP;
 }
 
+/* Dynamic telephone sentences concatenate dates and place names after the build-time
+ * layout pass. Wrap those completed rows too, keeping explicit paragraph breaks. T-39511. */
+static void english_phone_wrap(u8 *text, s32 speaker_style) {
+    u8 one[3];
+    s32 i;
+    s32 last_space;
+    s32 width;
+    s32 limit;
+    s32 count;
+    s32 k;
+
+    limit = 0x7C - ENGLISH_TEXT_X - english_text_width(english_quote);
+    if (english_phone_mark_x != 0) {
+        limit = 0x7C - english_phone_mark_x - 2 * english_text_width(english_quote);
+    }
+    if (speaker_style == 0xFF) {
+        limit = 0x7C + 0x80;
+    }
+    last_space = -1;
+    width = 0;
+    count = 1;
+    for (i = 0; text[i] != 0; i += english_char_bytes(&text[i])) {
+        if (text[i] == ENGLISH_LINE_END) {
+            count++;
+        }
+    }
+    for (i = 0; text[i] != 0;) {
+        if (text[i] == ENGLISH_LINE_END) {
+            width = 0;
+            last_space = -1;
+            i++;
+            continue;
+        }
+        if (text[i] == ' ') {
+            last_space = i;
+        }
+        k = english_char_bytes(&text[i]);
+        one[0] = text[i];
+        one[1] = k == 2 ? text[i + 1] : 0;
+        one[2] = 0;
+        /* Name codes expand later in sndi; allow the longest player full name. */
+        if (text[i] == ENGLISH_CODE_PLAYER_FORM || text[i] == ENGLISH_CODE_GIRL) {
+            width += 88;
+        } else {
+            width += english_text_width(one);
+        }
+        if (width > limit && last_space >= 0 && count < 6) {
+            text[last_space] = ENGLISH_LINE_END;
+            i = last_space + 1;
+            width = 0;
+            last_space = -1;
+            count++;
+        } else {
+            i += k;
+        }
+    }
+}
+
 void english_sndisp(u8 *text, s32 first_row, s32 speaker_style) {
-    u8 block_text[256];
+    u8 block_text[ENGLISH_SCRIPT_BYTES];
+    u8 closed_line[ENGLISH_LINE_BYTES];
     s32 line_starts[6];
     s32 line_count;
     s32 i;
+    s32 close_row;
+    s32 length;
+    u8 *closing;
 
     english_script_from_original(block_text, text, sizeof(block_text));
+    english_phone_wrap(block_text, speaker_style);
     line_starts[0] = 0;
     line_count = 1;
     for (i = 0; block_text[i] != 0; i++) {
@@ -804,8 +867,30 @@ void english_sndisp(u8 *text, s32 first_row, s32 speaker_style) {
         }
     }
     game_state.text_first_line = check_set_k();
+    close_row = line_count - 1;
+    closing = english_quote;
+    if (speaker_style == 0x1F) {
+        closing = english_close_paren;
+    } else if (speaker_style == 0x2F || speaker_style == 0xFF || first_row != 0) {
+        closing = "";
+    } else {
+        /* Close the spoken part before a separate parenthetical thought. T-39511. */
+        for (i = 1; i < line_count; i++) {
+            if (block_text[line_starts[i]] == '(') {
+                close_row = i - 1;
+                break;
+            }
+        }
+    }
     for (i = 0; i < line_count; i++) {
-        english_sndi(&block_text[line_starts[i]], first_row + i, speaker_style);
+        english_copy(closed_line, &block_text[line_starts[i]], sizeof(closed_line));
+        length = strlen(closed_line);
+        if (i == close_row && length > 0 && *closing != 0
+            && closed_line[length - 1] != *closing
+            && closed_line[length - 1] != 0xA1 && closed_line[length - 1] != 0xA3) {
+            english_append(closed_line, closing, sizeof(closed_line));
+        }
+        english_sndi(closed_line, first_row + i, speaker_style);
     }
     game_state.text_lines_total = check_set_k();
     game_state.text_scroll_state = 0x80;

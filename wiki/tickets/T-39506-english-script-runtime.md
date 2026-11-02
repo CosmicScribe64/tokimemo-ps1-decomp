@@ -35,3 +35,5 @@ Verification: default `ninja` 27/27 OK; `ninja english` links. Emulator: the rou
 Remaining: the draw sites listed in [[english-text-runtime]] that need overlay changes; the island imports must become NAME_ENT code once T-39505's free relink is in; the ABC label art (`name-label-abc`) at `english_tab_label_draw`; T-39507 must emit the control bytes (including labels and `nn`).
 
 ## Comments
+
+2026-11-01 (Codex): integrated branch build with compact, independently allocated talk strings places all 134 data files and keeps zero whole files original. DATE dialogue fits its existing RAM buffer; no RAM relocation is needed. The eight JOHO label overflows still need the fixed-stride layout update. Visual checks and remaining NAME_ENT work are in progress.

@@ -32,7 +32,13 @@ def place_files(disc, root: Path, files_root: Path, sites, checksum_sites, data:
             raise ArtBuildError("%s is written by both the text and the art step" % path)
         entry = disc.iso.find(path)
         lba, size = entry.lba, entry.size
-        plan = cd_layout.plan_file(path, lba, size, len(new), sites, limits, checksum_sites, files_by_lba)
+        file_limits = limits
+        if path == "CDROM/NAME_ENT/NAME_ENT.NBN":
+            # name_entry_load_init loads the next resource at 0x801E0000.
+            # Background decoding finishes before this file is read at 0x80190000.
+            file_limits = dict(limits)
+            file_limits[0x80190000] = (0x50000 // 2048, "NAME_ENT: space before the kanji data at 0x801E0000")
+        plan = cd_layout.plan_file(path, lba, size, len(new), sites, file_limits, checksum_sites, files_by_lba)
         if not plan.accept:
             kept.append({"path": path, "reason": plan.reason})
             if path == "CDROM/FUKUTEST/MAINROM.NBN":

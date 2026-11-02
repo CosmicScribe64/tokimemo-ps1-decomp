@@ -204,6 +204,14 @@ class SpeechTest(unittest.TestCase):
         self.assertEqual(speech.close_speech(b"\x1dMe\x1fhmm", 0x7, None), (b"\x1dMe\x1fhmm", 0))
         self.assertEqual(speech.close_speech(b"\x1cMe\x1fhi", 0x7, None), (b'\x1cMe\x1fhi"', 1))
 
+    def test_trailing_thought_keeps_its_own_line(self):
+        self.assertEqual(speech.separate_aside(b"All right... (That was odd.)"),
+                         b"All right...\n(That was odd.)")
+        self.assertEqual(speech.separate_aside(b"All right...\n(That was odd.)"),
+                         b"All right...\n(That was odd.)")
+        for text in (b"Meet at the park (east gate)", b"(Just a thought.)", b"A (small) detail."):
+            self.assertEqual(speech.separate_aside(text), text)
+
     def test_unclose_removes_only_the_added_quotes(self):
         before = b'a b\x0bsaid "x"\x0b\x0cz'
         closed, n = speech.close_speech(before, 0x2, None)
@@ -342,6 +350,30 @@ class CdLayoutTest(unittest.TestCase):
             out = Path(tmp) / "gen" / "remap.s"
             self.assertEqual(cd_layout.main(["x", "remap-asm", str(Path(tmp) / "none.json"), str(out)]), 0)
             self.assertIn("    .word 0", out.read_text())
+
+
+class ProfileLabelsTest(unittest.TestCase):
+    def test_labels_fit_without_touching_other_fields(self):
+        from tools.patch.text import profile
+        from tools.patch.text.image import WriteResult, has_cd_trailer, write_cd_trailer
+        original = bytearray(0x13000)
+        original[0x1229C:0x12F00] = b"\x55" * (0x12F00 - 0x1229C)
+        write_cd_trailer(original)
+        payloads = {}
+        for table, count in (("club_labels", 13), ("zodiac_labels", 12)):
+            for i in range(count):
+                payloads[f"dictionary:{profile.PATH}:{table}:{i:02d}"] = f"Example {i}".encode()
+        result = WriteResult(bytes(original), {}, [{"id": next(iter(payloads))}])
+        profile.write_labels(bytes(original), result, payloads)
+        self.assertEqual(len(result.data), len(original))
+        self.assertEqual(result.data[0x1229C:0x12F00], original[0x1229C:0x12F00])
+        self.assertTrue(has_cd_trailer(result.data))
+        self.assertFalse(result.overflows)
+        self.assertEqual(result.data[0x12F00:0x12F0A], b"Example 0\0")
+        self.assertEqual(result.data[0x12200:0x1220A], b"Example 0\0")
+        payloads[next(iter(payloads))] = b"x" * 18
+        with self.assertRaises(ValueError):
+            profile.write_labels(bytes(original), result, payloads)
 
 
 class ReportTest(unittest.TestCase):

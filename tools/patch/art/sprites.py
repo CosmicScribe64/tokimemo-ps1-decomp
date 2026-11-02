@@ -83,6 +83,8 @@ def mainrom_variant_drawn(path: str, image, item) -> bool:
 def view_for(profile, item, image):
     """(view, part number or None) of an English image, or (None, reason)."""
     meta = image.meta
+    if profile.container.endswith("NAME_ENT.NBN") and image.id.startswith("name-label-abc."):
+        return profile.frame(30 if image.id.endswith(".lit") else 29), None
     if "/BATTLE/" in profile.container:
         return sheets.page_region(profile, 0, meta["region"]), None
     if profile.container.endswith("ALL_C.NBN"):
@@ -133,6 +135,10 @@ def place_container(path: str, data: bytes, exe: bytes, items: list, fallbacks: 
 
 
 def _place_once(path: str, data: bytes, exe: bytes, items: list, chosen: dict) -> ContainerResult:
+    original_data = data
+    if path.endswith("NAME_ENT.NBN"):
+        from tools.patch.art import name_entry
+        data = name_entry.prepare(data)
     profile = PROFILES[path](data, exe, path)
     result = ContainerResult(path, data)
     targets = []
@@ -178,6 +184,8 @@ def _place_once(path: str, data: bytes, exe: bytes, items: list, chosen: dict) -
         else:
             container[offset:offset + len(record)] = record
     result.touched = set(placed.touched)
+    if path.endswith("NAME_ENT.NBN"):
+        result.touched.update(range(name_entry.MARKER, name_entry.MARKER + 4))
     if profile.exe is None and placed.frames:
         container = _append_frames(container, profile, placed.frames, result.touched)
     result.data = bytes(container)
@@ -191,7 +199,7 @@ def _place_once(path: str, data: bytes, exe: bytes, items: list, chosen: dict) -
     result.stats = {"texels_written": placed.texels, "new_part_records": placed.new_parts,
                     "ambiguous_texels": placed.ambiguous,
                     "bytes_changed": sum(a != b for a, b in zip(data, result.data))}
-    _reread(path, data, exe, result, targets, placed)
+    _reread(path, original_data, exe, result, targets, placed)
     return result
 
 

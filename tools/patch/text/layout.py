@@ -12,7 +12,7 @@ SPEAKTST files are out of scope for the first release (T-39500) and get no paylo
 from __future__ import annotations
 
 from collections import Counter
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 from .containers import Container
 from .english import EnglishEncoder, end_inline_label, untokenized_name_codes
@@ -124,6 +124,10 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                     # measured with the closing quote that the runtime draws (speech.py)
                     unclosed = payload
                     payload, closed = speech.close_speech(payload, speech.command_of(record), following.get(record.id))
+                if window.name == "telephone_narration":
+                    payload = speech.separate_aside(payload)
+                    # sndisp appends the closing mark at runtime; reserve its advance.
+                    window = replace(window, right=window.right - metrics.width(b'"'))
                 result = wrap(payload, window, metrics, joined=joined)
                 payload = speech.unclose(result.payload, unclosed, speech.command_of(record)) if closed else result.payload
                 note.update(window=window.name, basis=basis, rows=result.rows,

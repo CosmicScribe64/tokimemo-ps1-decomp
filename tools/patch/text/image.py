@@ -177,7 +177,7 @@ class Image:
             return regions[:-1], regions[-1][0]
         return regions, tail
 
-    def write(self, payloads: dict[str, bytes] | None = None) -> WriteResult:
+    def write(self, payloads: dict[str, bytes] | None = None, *, compact: bool = False) -> WriteResult:
         """Rebuild the file; ``payloads`` maps slot ids to new payloads (others keep theirs)."""
         payloads = payloads or {}
         unknown = set(payloads) - set(self.slots)
@@ -195,9 +195,34 @@ class Image:
         index, cursor, closed_left = 0, None, 0
         relocatable = sorted((s for s in self.slots.values() if s.mode == "relocatable"),
                              key=lambda s: s.offset)
+        # T-39506: place long translated strings first, retaining every unused gap.
+        # Each slot owns separate bytes: scripts may modify strings at run time.
+        available = [list(region) for region in regions]
+        tail_cursor = open_start
+        if compact:
+            relocatable.sort(key=lambda s: (-len(payloads.get(s.id, s.payload) + s.terminator), s.offset))
         for slot in relocatable:
             body = payloads.get(slot.id, slot.payload) + slot.terminator
             pos = None
+            if compact:
+                fits = []
+                for region_index, (start, end) in enumerate(available):
+                    candidate = align_up(start, self.alignment, self.base)
+                    if candidate + len(body) <= end:
+                        fits.append((end - candidate - len(body), region_index, candidate))
+                if fits:
+                    _, region_index, pos = min(fits)
+                    available[region_index][0] = pos + len(body)
+                elif tail_cursor is not None:
+                    pos = align_up(tail_cursor, self.alignment, self.base)
+                    tail_cursor = pos + len(body)
+                else:
+                    raise ImageError(f"{self.path}: compact layout has no room for {slot.id}")
+                if len(buf) < pos + len(body):
+                    buf.extend(bytes(pos + len(body) - len(buf)))
+                buf[pos:pos + len(body)] = body
+                placements[slot.id] = Placement(slot.id, pos, len(body), pos != slot.offset)
+                continue
             while index < len(regions):
                 start = regions[index][0] if cursor is None else cursor
                 candidate = align_up(start, self.alignment, self.base)
@@ -220,6 +245,9 @@ class Image:
         if index < len(regions):
             closed_left = (regions[index][1] - (cursor or regions[index][0])) + sum(
                 end - start for start, end in regions[index + 1:])
+        if compact:
+            closed_left = sum(end - start for start, end in available)
+            cursor = tail_cursor
         for slot in self.slots.values():
             if slot.mode != "in_place":
                 continue

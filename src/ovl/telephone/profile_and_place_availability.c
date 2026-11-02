@@ -19,6 +19,9 @@
 #include "main/state.h"
 #include "main/text.h"
 #include "main/vram.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/profile.h"
+#endif
 
 /* Display record n of the actor_pool pool. */
 #define REC(n) (((Actor *)actor_pool)[n])
@@ -205,7 +208,11 @@ void phone_profile_details_draw(s32 girl_index, s32 arg1) {
     if (days.w[v] < (*(GameState **)&q)->girls[0].birthday.date.day) {
         v++;
     }
+#ifdef TOKIMEMO_ENGLISH
+    set_kanji_string(-0x58, -0x3E, 3, ENGLISH_PROFILE_SIGNS + (v % 12) * ENGLISH_PROFILE_SIGN_STRIDE, 0);
+#else
     set_kanji_string(-0x58, -0x3E, 3, (u8 *)0x801B22BC + (v % 12) * 10, 0);
+#endif
     set_kanji_string(-0x8A, -0x2E, 4, "血液型", 0);
     if (girl_index == 0xB) {
         set_kanji_string(-0x58, -0x2E, 3, (u8 *)0x801B229C + (((u32)(game_state.girls[12].birthday.w << 0x15)) >> 0x1E) * 8, 0);
@@ -216,7 +223,11 @@ void phone_profile_details_draw(s32 girl_index, s32 arg1) {
     if (girl_index == 0xB) {
         set_kanji_string(-0x58, -0xE, 3, "私設部", 0);
     } else {
+#ifdef TOKIMEMO_ENGLISH
+        set_kanji_string(-0x58, -0xE, 3, ENGLISH_PROFILE_CLUBS + (q->girls[0].flags.b[2] >> 4) * ENGLISH_PROFILE_CLUB_STRIDE, 0);
+#else
         set_kanji_string(-0x58, -0xE, 3, (u8 *)0x801B2200 + (q->girls[0].flags.b[2] >> 4) * 12, 0);
+#endif
     }
     set_kanji_string(-0x8A, 2, 4, "備考", 0);
     notes = (u8 *)0x801B25F4 + ((girl_index * 6 + j * 2) << 5);

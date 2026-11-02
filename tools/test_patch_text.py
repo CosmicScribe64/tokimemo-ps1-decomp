@@ -136,6 +136,39 @@ class ImageTests(unittest.TestCase):
         self.assertEqual(bytes.fromhex(parse_script(result.data, PATH, profile)["records"][0]["text"]["raw_hex"]),
                          b"x" * 5000)
 
+    def test_compact_reuses_gaps_without_aliasing_mutable_strings(self):
+        data = bytearray(b"\xff" * 128)
+        slots = [Slot("small", 32, b"a" * 7, "relocatable"),
+                 Slot("large", 48, b"b" * 31, "relocatable"),
+                 Slot("same", 96, b"c" * 7, "relocatable")]
+        pointers = []
+        for index, slot in enumerate(slots):
+            data[slot.offset:slot.offset + slot.size] = slot.payload + b"\0"
+            struct.pack_into("<I", data, index * 4, BASE + slot.offset)
+            pointers.append(Pointer(index * 4, slot.id))
+        image = Image("fragmented", data, BASE, slots, pointers, growable=False)
+        payloads = {"small": b"L" * 31, "large": b"same", "same": b"same"}
+        result = image.write(payloads, compact=True)
+        self.assertEqual(len(result.data), len(data))
+        self.assertFalse(result.overflows)
+        for index, slot in enumerate(slots):
+            pos = struct.unpack_from("<I", result.data, index * 4)[0] - BASE
+            self.assertEqual(result.data[pos:pos + len(payloads[slot.id]) + 1], payloads[slot.id] + b"\0")
+            self.assertEqual(pos % 4, 0)
+        self.assertNotEqual(result.placements["large"].offset, result.placements["same"].offset)
+        self.assertEqual(result.data[80:96], data[80:96])
+
+    def test_compact_growth_preserves_script_and_trailer(self):
+        data, profile = synthetic_script()
+        container = _script_container(PATH, data, profile, units_for(data, profile))
+        first = sorted(container.image.slots)[0]
+        result = container.image.write({first: b"x" * 5000}, compact=True)
+        self.assertTrue(has_cd_trailer(result.data))
+        self.assertEqual(len(result.data) % 2048, 0)
+        records = parse_script(result.data, PATH, profile)["records"]
+        self.assertEqual(bytes.fromhex(records[0]["text"]["raw_hex"]), b"x" * 5000)
+        self.assertEqual(bytes.fromhex(records[1]["text"]["raw_hex"]), LINE1)
+
     def test_in_place_capacity(self):
         data = bytearray(16)
         data[0:3] = b"abc"

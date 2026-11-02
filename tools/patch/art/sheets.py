@@ -186,8 +186,23 @@ def filesel_profile(data: bytes) -> Profile:
 
 def name_profile(data: bytes) -> Profile:
     """NAME_ENT.NBN: one 4bpp actor page, palette row 0x1F0 by column (mode 2)."""
-    page, frames = name_ent._parse(data)
+    from tools.patch.art import name_entry
     _raw, actor = name_ent._mode2_palette(data, 0)
+    if name_entry.extended(data):
+        profile = Profile("CDROM/NAME_ENT/NAME_ENT.NBN", align=8, grow=8,
+                          pages={0: (0x200, 4), **{i: (name_entry.PAGE + (i - 1) * 0x2000, 4)
+                                                  for i in range(1, name_entry.PAGE_COUNT)}},
+                          encode=lambda index, u, v: (index << 8) | ((v // 8) << 4) | (u // 8))
+        profile.frame_table = (name_entry.FRAMES, name_entry.LOAD)
+        for view in name_entry.views(data, tuple(actor)):
+            profile.add(view)
+            profile.page_sets[view.key] = set(range(1, name_entry.PAGE_COUNT))
+        # Birthday digits use direct SPRT UVs into page zero, outside the frame
+        # table. Preserve that sheet in full rather than inferring unused cells.
+        profile.add(View.of("page-direct-0", [Part(0, 0, 128, 128, 0, 0x200, 4, 0, 0,
+                                                        tuple(actor[:16]), None, 0, 0)]))
+        return profile
+    page, frames = name_ent._parse(data)
     profile = Profile("CDROM/NAME_ENT/NAME_ENT.NBN", align=8, pages={0: (page, 4)},
                       encode=lambda index, u, v: ((v // 8) << 4) | (u // 8))
 
