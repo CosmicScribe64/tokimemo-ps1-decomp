@@ -15,7 +15,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see boundary-festival-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0125:l0004",
@@ -27,7 +27,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see boundary-festival-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0131:l0004",
@@ -39,7 +39,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see boundary-festival-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0083:l0003",

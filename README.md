@@ -1,19 +1,23 @@
-# Tokimeki Memorial decompilation
+# Tokimeki Memorial: PS1 decompilation and English patch
 
 [![Build](https://github.com/CosmicScribe64/tokimemo-ps1-decomp/actions/workflows/progress.yml/badge.svg)](https://github.com/CosmicScribe64/tokimemo-ps1-decomp/actions/workflows/progress.yml)
 [![Code](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp.svg?mode=shield&measure=code&label=Code)](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp)
 [![Functions](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp.svg?mode=shield&measure=functions&label=Functions)](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp)
 
-This project is a matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`).
+This repository contains a completed, byte-matching C decompilation of *Tokimeki Memorial: Forever with You*
+for PlayStation, an English translation patch in review, and a browser patcher. It targets the Japanese
+PlayStation the Best release (`SLPM-86053`).
 
-The decompilation is complete. The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) rebuild byte for byte, every
+[Patch your disc in your browser](https://cosmicscribe64.github.io/tokimemo-ps1-decomp/), or use the source,
+English text and artwork, disc-extraction tools, and Docker build tools to work on the game yourself.
+
+The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) rebuild byte for byte, every
 game function is written in C, and the matched code has readable names and comments. The PsyQ SDK libraries stay in
 assembly. [wiki/status.md](wiki/status.md) has the final numbers and how they were verified.
 
 **You need your own copy of the disc.** Original disc images, executables, extracted originals, and generated
 disassembly are not included. `translations/` keeps English text records and translated artwork with their review
-history ([translations/en/graphics/artwork](translations/en/graphics/artwork/README.md)). An English patch is available
-as a review build.
+history ([translations/en/graphics/artwork](translations/en/graphics/artwork/README.md)).
 
 This project is independent. It is not affiliated with or endorsed by Konami.
 

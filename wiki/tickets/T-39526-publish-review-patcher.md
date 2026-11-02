@@ -33,3 +33,7 @@ The page is live at https://cosmicscribe64.github.io/tokimemo-ps1-decomp/ with H
 The repackaged page passes the browser acceptance suite. Inspected desktop and 390-pixel layouts. The README explains the current two-track input and review status. The GitHub description and website field both link the public patcher; read-back confirms both settings.
 
 Deslop and Humanizer review covered the exact staged README and page copy, source comments, ticket prose and metadata assessments. Removed stale pending status from the phone-fix ticket. Protected historical log entries and license text were retained. Standards review checked the package contents, source/target hashes, local-only processing and exclusion of game discs. No unresolved publication issue remains. T-39527 tracks the owner's subsequent drag-and-drop and format-support request.
+
+2026-11-02 follow-up: reopened for the owner's request to make the README title and opening describe the full repository, including the decompilation, English patch and browser patcher.
+
+README follow-up complete: the title and opening now identify the matching C decompilation, English review patch, browser patcher, translation assets, extraction tools and Docker build tools. The opening links directly to the live patcher. Checked against the repository contents and coding standards; Deslop/Humanizer review removed a repeated completion statement. No code behavior changed.

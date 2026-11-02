@@ -3681,3 +3681,15 @@ Closed [[tickets/T-39527-patcher-disc-inputs]] after code review, 15 browser che
 ## [2026-11-02] ticket | English boundary fix in review
 
 Moved [[tickets/T-39525-english-break-boundaries]] to In Review after complete-disc audits, full route inspection, controlled festival scrolling checks and standards review. Publication verification remains.
+
+## [2026-11-02] query | Long-page review scope updated
+
+[[tickets/T-39511-english-text-quality]] now marks the three FU_S6O long-page records as runtime-verified, leaving 64 pending records. Updated [[tickets/T-39500-english-translation-patch]] to distinguish the published review build and completed fixes from the remaining whole-game coverage and final quality requirements.
+
+## [2026-11-02] ticket | Clarify the README opening
+
+Reopened [[tickets/T-39526-publish-review-patcher]] for the owner's request to describe everything the repository contains in its title and opening section.
+
+## [2026-11-02] ticket | Boundary fix published and README introduction clarified
+
+Closed [[tickets/T-39525-english-break-boundaries]] after the current browser patcher passed 15 checks and all 36 public package files matched the tested candidate. Pages workflow `41526884160` succeeded. Closed the README follow-up in [[tickets/T-39526-publish-review-patcher]] after reviewing its new title and opening against the repository contents. The introduction now states the decompilation, English review patch, browser patcher and included tooling, with a direct patcher link.

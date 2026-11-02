@@ -1,7 +1,7 @@
 ---
 id: T-39525
 title: Check English boundaries before retaining source line breaks
-status: In Review
+status: Done
 assignee: codex
 created: 2026-11-02
 updated: 2026-11-02
@@ -46,3 +46,7 @@ The earlier festival bootstrap selected `0x70` (BUNKASAI), but the target functi
 All three newly scrolling FU_S6O passages (groups 119, 125 and 131, line 4) were rendered from the corrected controlled state. Each run's first 128 container bytes match the built disc's FU_S6O file. Native captures show the passage beginning and its final three rows after scrolling, including the closing quote. No original-font, unknown or overflow calls were recorded. Receipt: `translations/en/reviews/boundary-festival-2026-11-02.json`. These are controlled line-selection checks, not claims of naturally reaching every festival branch.
 
 Reviewed the changes against `CODING_STANDARDS.md`: source boundaries are validated before reuse; unmatched boundaries remain reported; page controls and translated wording are preserved; only layout-added quotes are removed. The synthetic tests cover sentence boundaries, abbreviations, asides, separate reply pages and trimmed whitespace. Existing complete-disc audits and the completed route cover the built candidate. No unresolved code findings. The current browser patcher is being tested with this candidate before publication.
+
+## Publication
+
+The current browser patcher passed all 15 checks with this candidate, including real archive input and exact downloaded-disc equality. Pages commit `81097d06555afdb858cb99a2e93318640168429c` is live; workflow `41526884160` succeeded. All 36 served files match the tested package. The published target is `ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439`. Broader quality review remains in T-39511.
