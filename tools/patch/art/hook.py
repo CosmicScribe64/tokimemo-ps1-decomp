@@ -11,11 +11,38 @@ patch_exe: after `ninja english`, write the MAINROM part records into the built 
 from __future__ import annotations
 
 from pathlib import Path
+from collections import Counter
 
 from tools.patch import cd_layout
 from tools.patch.art import ArtBuildError
 
 NOT_DRAWN = "not_drawn"     # tools/patch/art/build.py; the art modules need numpy and Pillow, so they load late
+
+
+def record_movie(report: dict, movie: dict) -> None:
+    """Reconcile the separately written movie only after its final-disc read-back gate."""
+    if not movie.get("readback_verified"):
+        raise ArtBuildError("movie art cannot be marked verified without disc read-back")
+    verified = set(movie["image_ids"])
+    matched = False
+    for entry in report["items"]:
+        if entry["container"].removeprefix("CDROM/") != movie["path"].removeprefix("CDROM/"):
+            continue
+        matched = True
+        images = entry.get("images", {})
+        if not images or set(images) - verified:
+            raise ArtBuildError("movie cue table does not cover every registered movie image")
+        entry["images"] = {key: "movie_verified" for key in images}
+        entry["status"] = "placed_verified"
+        entry["route"] = "opening movie (not on the main route)"
+        entry.pop("reasons", None)
+        report["verified_images"] += len(images)
+        report["not_on_route"] = sorted(set(report["not_on_route"]) | {entry["id"]})
+        report["verify_facts"][entry["container"]] = {"raw_sha256": movie["raw_sha256"], "readback_verified": True}
+    if not matched:
+        raise ArtBuildError("verified movie is absent from the art inventory")
+    report["totals"] = dict(Counter(entry["status"] for entry in report["items"]))
+    report["images"] = dict(Counter(state for entry in report["items"] for state in entry.get("images", {}).values()))
 
 
 def place_files(disc, root: Path, files_root: Path, sites, checksum_sites, data: dict, exe_path: str) -> dict:

@@ -32,4 +32,6 @@ Part of [[tickets/T-39500-english-translation-patch]]. Method and results: [[mov
 
 ## Comments
 
+- 2026-11-01 Codex: added SHA-256 verification of the entire encoded movie extent after the final disc write, including audio sectors. The report only promotes movie artwork after this check and complete registered-image coverage; container matching accepts the inventory's `CDROM/` prefix and fails if no item matches. Real build readback passed; mutation regression fails as expected. Existing movie playback evidence above remains applicable to the unchanged encoded movie bytes.
+
 - 2026-11-01 claude: implemented and verified; waiting for code review against `CODING_STANDARDS.md`.

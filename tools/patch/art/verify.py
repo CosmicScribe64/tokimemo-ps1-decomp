@@ -30,13 +30,14 @@ import numpy as np
 
 from tools.assets import mdec_splice
 from tools.patch import disc as disc_mod
-from tools.patch.art import ArtBuildError, sheets, sprites, stills
+from tools.patch.art import ArtBuildError, sheets, sprites, stills, prologue
 from tools.patch.art.build import MAINROM_RECORDS
 from tools.patch.art.indexed import TRANSPARENT, View, compose, read_index
 from tools.patch.art.placer import frame_image
 
 # Where tools/emu/routes/main.route shows each container (checkpoint names of the route).
 ROUTE = {
+    prologue.PATH: "prologue_18",
     "CDROM/FUKUTEST/TITLE.NBN": "title_menu",
     "CDROM/FUKUTEST/OPTION.NBN": "options_*",
     "CDROM/FUKUTEST/FILESEL.NBN": "file_select_*, save_*, load_*",
@@ -207,7 +208,10 @@ def verify(root: Path, track1: Path, files_root: Path, art: dict) -> dict:
         if written[:len(planned["files"][path])] != planned["files"][path]:
             raise ArtBuildError("%s on the disc is not the planned container" % path)
         written = planned["files"][path]
-        if path.endswith(".BS"):
+        if path == prologue.PATH:
+            checked = prologue.verify(original, written)
+            facts[path] = checked["facts"]
+        elif path.endswith(".BS"):
             checked = verify_still(path, original, written, planned["stills"][path])
             facts[path] = checked["facts"]
         else:

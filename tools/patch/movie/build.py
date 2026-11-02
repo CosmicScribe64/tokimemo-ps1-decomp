@@ -19,6 +19,7 @@ writes `OPENXA.raw` (the new raw extent), `report.json` and, with --frames, befo
 the changed frames into --out, which is game data and stays out of git.
 """
 import argparse
+import hashlib
 import json
 import math
 import os
@@ -171,6 +172,8 @@ def english_stream(track1, lba, sectors, root=REPOSITORY, workers=None, keep_fra
     if any(new_raw[i * cs.SIZE:(i + 1) * cs.SIZE] != raw[i * cs.SIZE:(i + 1) * cs.SIZE] for i in audio):
         raise MovieError('a non-video sector changed')
     report = {
+        'raw_sha256': hashlib.sha256(new_raw).hexdigest(),
+        'image_ids': sorted({'openxa-pill-' + p['id'] for cue in table['cues'] for p in cue['pills']}),
         'path': PATH, 'lba': lba, 'sectors': sectors, 'frames': len(numbers),
         'frames_changed': len(report_frames), 'sectors_rewritten': len(changed),
         'sectors_unchanged': sectors - len(changed), 'audio_and_other_sectors': len(audio),
@@ -200,6 +203,17 @@ def place(disc, root=REPOSITORY):
         raise MovieError(str(exc)) from exc
     report['sectors_written_on_disc'] = disc.replace_stream(PATH, raw)
     return report
+
+
+def verify_written(track1, report):
+    """Verify the encoded stream survived the final disc write, including audio sectors."""
+    size = report['sectors'] * cs.SIZE
+    with open(track1, 'rb') as source:
+        source.seek(report['lba'] * cs.SIZE)
+        raw = source.read(size)
+    if len(raw) != size or hashlib.sha256(raw).hexdigest() != report['raw_sha256']:
+        raise MovieError('opening movie differs from the verified stream on the final disc')
+    report['readback_verified'] = True
 
 
 def summary(report):

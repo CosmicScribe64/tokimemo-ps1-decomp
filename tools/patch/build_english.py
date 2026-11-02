@@ -524,6 +524,10 @@ def build(args) -> dict:
         sha1 = steps.run("write track 1", disc.write, str(track1), str(cue), str(track2))
     if art:
         steps.run("verify art", art_hook.verify, REPOSITORY, track1, files_root, art)
+    if movie_report:
+        steps.run("verify movie on disc", movie.verify_written, track1, movie_report)
+        if art:
+            art_hook.record_movie(art["report"], movie_report)
     report = {"command": "IMG=tokimemo-patch tools/docker.sh python3 -m tools.patch.build_english",
               "disc": {"track1": str(args.out + "/track1.bin"), "track1_sha1": sha1, "sectors_added": added,
                        "cue": str(args.out + "/tokimemo-en.cue")}}

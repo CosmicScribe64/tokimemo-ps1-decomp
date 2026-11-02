@@ -185,8 +185,8 @@
    "notes": [
     "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval"
    ],
-   "reason": "Binding corrected from D_15_03 (the museum) to D_11_11, the only still with a ride sign (a starburst sign on the swing ride). The sign runs off the right edge of the frame and only a few katakana are inside it; they do not match the catalog wording, so neither the sign nor its text is proven. No draft. Size of D_11_11 is proved (320x160, rides.c read 0x4359 and dec_bg_decode_to_vram(1)).",
-   "status": "missing"
+   "reason": "Binding corrected from D_15_03 (the museum) to D_11_11, the only still with a ride sign (a starburst sign on the swing ride). The sign runs off the right edge of the frame and only a few katakana are inside it; they do not match the catalog wording, so neither the sign nor its text is proven. No draft. Size of D_11_11 is proved (320x160, rides.c read 0x4359 and dec_bg_decode_to_vram(1)). Explicit owner-approved exception recorded in wiki/tickets/T-39500-english-translation-patch.md: the off-frame ride sign (catalog-142) remains unchanged.",
+   "status": "deliberately-untranslated"
   },
   "catalog-143": {
    "notes": [

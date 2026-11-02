@@ -31,11 +31,10 @@ from tools.assets import mdec_splice
 from tools.patch.art import ArtBuildError
 from tools.patch.art import items as art_items
 from tools.patch.art.items import Item
-from tools.patch.art import sprites, stills
+from tools.patch.art import sprites, stills, prologue
 
 UNSUPPORTED = {
-    "CDROM/OPENXA.STR": "movie overlay pills: drawing them over the opening movie needs a runtime cue "
-                        "player (the STR stream itself is not re-encoded)",
+    "CDROM/OPENXA.STR": "handled by the separate movie build step; final disc verification pending",
 }
 NOT_DRAWN = "not_drawn"
 STILL_CACHE = Path(".asset-cache/art/stills")   # gitignored; holds re-encoded game data
@@ -88,6 +87,13 @@ def plan_art(root: Path, files_root: Path, exe: bytes) -> dict:
                                 original_sha256=hashlib.sha256(data).hexdigest(),
                                 bytes=len(data), new_bytes=len(result.data))
     report = item_report(items, images, reasons, set(fallback_used))
+    original_banner = (files_root / prologue.PATH).read_bytes()
+    files[prologue.PATH], banner_facts = prologue.place(original_banner)
+    containers[prologue.PATH] = dict(banner_facts, bytes=len(original_banner), new_bytes=len(files[prologue.PATH]))
+    report["items"].append({"id": prologue.IMAGE_ID, "container": prologue.PATH, "status": "placed",
+                            "images": {prologue.IMAGE_ID: "generated"}, "generator": "tools/patch/art/prologue.py"})
+    report["totals"]["placed"] = report["totals"].get("placed", 0) + 1
+    report["images"]["generated"] = 1
     report["containers"] = containers
     report["exe_records"] = len(exe_records)
     report["seconds"] = round(time.monotonic() - started, 1)

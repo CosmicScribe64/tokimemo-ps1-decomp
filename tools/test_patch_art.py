@@ -215,6 +215,26 @@ def replace_x(p, x):
     return replace(p, x=x)
 
 
+class MovieReportTest(unittest.TestCase):
+    def test_requires_readback_and_all_registered_images(self):
+        from tools.patch.art.hook import record_movie
+        report = {"items": [{"id": "movie", "container": "CDROM/movie.STR", "status": "deferred",
+                             "images": {"pill": "deferred"}, "reasons": {"pill": "pending"}}],
+                  "verified_images": 0, "not_on_route": [], "verify_facts": {}}
+        movie = {"path": "movie.STR", "image_ids": ["pill"], "raw_sha256": "hash"}
+        with self.assertRaises(ArtBuildError):
+            record_movie(report, movie)
+        movie["readback_verified"] = True
+        movie["image_ids"] = []
+        with self.assertRaises(ArtBuildError):
+            record_movie(report, movie)
+        movie["image_ids"] = ["pill"]
+        record_movie(report, movie)
+        self.assertEqual(report["totals"], {"placed_verified": 1})
+        self.assertNotIn("reasons", report["items"][0])
+        self.assertEqual(report["verified_images"], 1)
+
+
 class StillTest(unittest.TestCase):
     def test_goal_takes_only_written_pixels(self):
         import numpy as np
@@ -294,6 +314,23 @@ class ExecutableTest(unittest.TestCase):
 
 @unittest.skipUnless((FILES / "SLPM_86.053").is_file(), "needs the original files in disc/files")
 class GameDataTest(unittest.TestCase):
+    def test_prologue_banner_preserves_palette_extent_and_other_pixels(self):
+        from tools.patch.art import prologue
+        import numpy as np
+        data = (FILES / prologue.PATH).read_bytes()
+        written, facts = prologue.place(data)
+        self.assertEqual(len(written), len(data))
+        self.assertEqual(written[0x18000:-4], data[0x18000:-4])
+        source, _ = prologue.decode(data)
+        target, _ = prologue.decode(written)
+        allowed = np.zeros((240, 384), dtype=bool)
+        for x, y, width, height in facts["regions"]:
+            allowed[y:y + height, x:x + width] = True
+        self.assertTrue(np.array_equal(source[~allowed], target[~allowed]))
+        self.assertEqual(prologue.verify(data, written)["images"], {prologue.IMAGE_ID: "verified"})
+        with self.assertRaises(ArtBuildError):
+            prologue.verify(data, data)
+
     def test_extended_name_entry_places_and_verifies_every_panel(self):
         from tools.patch.art import items, name_entry, verify
         path = "CDROM/NAME_ENT/NAME_ENT.NBN"

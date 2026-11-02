@@ -9,6 +9,8 @@ TOKIMEMO_MOVIE=1 (about 70 s).
   IMG=tokimemo-patch tools/docker.sh env TOKIMEMO_MOVIE=1 python3 -m unittest tools.test_patch_movie -v
 """
 import os
+import hashlib
+import tempfile
 import random
 import struct
 import unittest
@@ -320,6 +322,20 @@ class DiscTest(unittest.TestCase):
             other.replace_stream(build.PATH, self.raw[:-cs.SIZE])
         with self.assertRaises(disc_mod.DiscError):
             other.replace_stream('SLPM_86.053', b'')
+
+
+class MovieReadbackTest(unittest.TestCase):
+    def test_final_disc_extent_must_match_encoded_stream(self):
+        raw = bytes(range(256)) * 9 + bytes(48)
+        report = {'lba': 2, 'sectors': 1, 'raw_sha256': hashlib.sha256(raw).hexdigest()}
+        with tempfile.TemporaryDirectory() as folder:
+            track = Path(folder) / 'track.bin'
+            track.write_bytes(bytes(2 * cs.SIZE) + raw)
+            build.verify_written(track, report)
+            self.assertTrue(report['readback_verified'])
+            track.write_bytes(bytes(2 * cs.SIZE) + raw[:-1] + b'\x01')
+            with self.assertRaises(build.MovieError):
+                build.verify_written(track, report)
 
 
 @unittest.skipUnless(HAVE_DISC and os.environ.get('TOKIMEMO_MOVIE') == '1', 'set TOKIMEMO_MOVIE=1 with the original track')
