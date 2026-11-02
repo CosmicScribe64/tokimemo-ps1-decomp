@@ -1,0 +1,82 @@
+{
+  "target_sha1": "c3706ff4c86b9237ff3342ba332b58f08c0eb077",
+  "changed_records": [
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-0:g0029:l0009",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-1:g0029:l0002",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-2:g0029:l0002",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-3:g0029:l0002",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-4:g0029:l0002",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-5:g0029:l0002",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-6:g0029:l0001",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-7:g0029:l0002",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-8:g0029:l0002",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-9:g0029:l0002",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-10:g0029:l0002",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-11:g0026:l0002",
+      "before_sha256": "fbf39e935deb13c832aceb1c588384487a3815eed3847561aa94e9edb12eff96",
+      "after_sha256": "eaddd01da5cd9327916cc30b54ce85fad2148e0f4e5e79f8ac2a63bbd6b7068f"
+    }
+  ],
+  "ticket": "T-39532",
+  "scope": "An isolated disc changes the twelve invitation separators only. A fresh scene-entry replay loads the script from disc; all later progression uses controller input.",
+  "run": "build/emu/trip-phrase-review",
+  "inspected_frames": [
+    8100,
+    8400,
+    8700,
+    9000
+  ],
+  "screenshot_sha256": "c993638581dcf5357da6f57448199e46342fed6fd329302a4c8c4061a7998b1b",
+  "result": "The date phrase stays together on the second row, with its closing quote. Wording is unchanged.",
+  "static_tests": {
+    "run": 42,
+    "passed": 41,
+    "skipped": 1
+  },
+  "full_release": "build and audits pending"
+}

@@ -474,6 +474,26 @@ class ProfileLabelsTest(unittest.TestCase):
 
 
 class ReportTest(unittest.TestCase):
+    def test_reviewed_trip_rows_preserve_wording_and_scope(self):
+        sentence = "Wanna go out again the day after tomorrow?"
+        for path, target, applied in (
+                ("CDROM/SERIFU/SHUGAKU.BIN", sentence, True),
+                ("CDROM/SERIFU/T.BIN", sentence, False),
+                ("CDROM/SERIFU/SHUGAKU.BIN", sentence.replace("again", "together"), False)):
+            with self.subTest(path=path, target=target):
+                talk = Container(path, "talk_script", None)
+                unit = {"context": {"command": {"name": "player", "value": 0}}}
+                talk.records["t1"] = Record("t1", "script_record", path, 0, b"",
+                                            [Text("x")], unit=unit)
+                result = english_payloads({path: talk},
+                    {"t1": {"target_text": target, "protected_tokens": []}}, METRICS)
+                payload = result.payloads[path]["t1"]
+                self.assertEqual(payload.replace(b"\n", b" "), target.encode())
+                self.assertEqual("reviewed_rows" in result.notes["t1"], applied)
+                self.assertEqual(result.notes["t1"]["status"], "placed")
+                if applied:
+                    self.assertIn(b"\nthe day after tomorrow?", payload)
+
     def test_payloads_statuses_and_report(self):
         talk = Container("CDROM/SERIFU/T.BIN", "talk_script", None)
         unit = {"context": {"command": {"name": "girl", "value": 1}}}

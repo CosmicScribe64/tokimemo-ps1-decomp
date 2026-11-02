@@ -7,10 +7,11 @@
     {
       "run": "school-trip-sightseeing-review",
       "frame": 2700,
-      "finding": "The invitation splits the phrase day after tomorrow across rows. Check source and available width before changing layout."
+      "finding": "The invitation splits the phrase day after tomorrow across rows. Check source and available width before changing layout.",
+      "follow_up": "T-39532: corrected and visually verified on an isolated disc; full build and publication pending."
     }
   ],
-  "pending_long_page_records": 59,
+  "pending_long_page_records": 58,
   "runs": [
     {
       "run": "build/emu/school-trip-review",
@@ -127,6 +128,42 @@
         "entries": {},
         "overflow_calls": 0
       }
+    }
+  ],
+  "long_page_checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-10:g0037:l0000",
+      "run": "build/emu/trip-long-g0037",
+      "controlled_line_selection": true,
+      "table_pointer_proof": "build/emu/trip-table-proof/result.json",
+      "text_table": "801a94e0",
+      "command_table": "801a9684",
+      "voice_table": "801aa1a4",
+      "loaded_header_sha256": "e55d1a17b369de6b755ca192888b55829e148d6c4e86e6f6c54340bb3b96290f",
+      "loaded_header_matches_disc": true,
+      "inspected_frames": [
+        150,
+        300,
+        450,
+        600
+      ],
+      "screenshots": {
+        "150": "f648412c57e2e4340dffd78057366bc843c7222f18cbcffade2227bcadb2966a",
+        "300": "71ddb3a895000c6410c6de9992efa8b6f8bcff938d35fe0e0af48d9f9bc0ce01",
+        "450": "b617a95b33d8dbccc394e85a3e823bc1027452a51fb7169a666c9d4c6b8b6e39",
+        "600": "563ffb5e40856fe7b7301c361e9538c584d9c925b797f83b4223cfadc0565e11"
+      },
+      "font_trace": {
+        "load_address": 2147808100,
+        "entries": {},
+        "calls": 0,
+        "unknown_calls": 0,
+        "overflow_calls": 0,
+        "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+        "ranges_address": 2148237164,
+        "frame_origin": "start of this emulator run"
+      },
+      "result": "The five-row passage scrolls through its final sentence and closing quote without clipping. This is a line-rendering check in the hotel fixture, not proof of the Hokkaido scene background."
     }
   ]
 }

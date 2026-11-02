@@ -3809,3 +3809,15 @@ Pushed source commit ab7dbb67d to main and patch/english, then published the tes
 ## [2026-11-02] query | Inspect the school-trip scene sequence
 
 Inspected all 39 captures from two 6,000-frame school-trip runs for [[tickets/T-39511-english-text-quality]]. Dialogue and destination labels show no clipping or overlap in the sampled scenes. Recorded one phrase-break follow-up at sightseeing frame 2700: "day / after tomorrow". Saved screenshot hashes, font diagnostics and the controlled-entry scope in `translations/en/reviews/school-trip-visual-2026-11-02.json`. The 59 pending long-page branches remain unverified.
+
+## [2026-11-02] ticket | Keep the invitation date phrase together
+
+Opened [[tickets/T-39532-school-trip-phrase-wrap]] after tracing the school-trip invitation in the translation source. All twelve variants retain the same wording and inherited row markers. Check the reflowed payload and speaker-width limit before adding a reviewed layout boundary.
+
+## [2026-11-02] query | Verify a five-row school-trip passage
+
+For [[tickets/T-39511-english-text-quality]], inspected SHUGAKU table 10/group 37/line 0 through its final sentence and closing quote. Confirmed the loaded table pointers and exact script header against the published disc. Updated the visual receipt and long-page queue; 58 records remain pending. The separate T-39532 invitation replay is still running.
+
+## [2026-11-02] build | Verify the invitation layout in-game
+
+For [[tickets/T-39532-school-trip-phrase-wrap]], inspected the revised invitation at frame 8400 of a fresh scene-entry replay. The date phrase and closing quote fit together on row two. All twelve encoded changes preserve wording, and 41 tests pass with one optional skip. Standards review found no unresolved issue. Started the full build at `build/trip-phrase-release/disc`; final-disc checks and publication remain pending.

@@ -29,6 +29,13 @@ from . import names
 # Other containers retain conservative widths until their speaker binding is proven.
 FIXED_GIRL_LABELS = {"CDROM/BUNKA/NI_S6W.BIN": b"Nijino"}
 
+# T-39532: retain the invitation's date phrase on one row. Exact matching leaves
+# revised translations alone; normal wrapping still checks both rows for fit.
+REVIEWED_ROWS = {
+    ("CDROM/SERIFU/SHUGAKU.BIN", b"Wanna go out again the day after tomorrow?"):
+        b"Wanna go out again\nthe day after tomorrow?",
+}
+
 SKIPPED_KINDS = ("speaktst", "reference_only")
 # Tables that must stay Japanese: the kana pages and the kanji reading labels of the name entry, where a
 # player still picks kana (T-39506). The translators gave romaji there.
@@ -132,6 +139,10 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                     note["reflow"] = {"breaks": flow.breaks_seen, "forced": flow.forced, "kept_rule": flow.kept_rule,
                                       "kept_category": flow.kept_category, "ambiguous": flow.ambiguous,
                                       "kept": flow.kept, "rows_before": rows_before}
+                    reviewed = REVIEWED_ROWS.get((path, payload))
+                    if reviewed is not None:
+                        payload = reviewed
+                        note["reviewed_rows"] = "T-39532"
                 if container.kind in ("talk_script", "talk_script_supplemental"):
                     # measured with the closing quote that the runtime draws (speech.py)
                     unclosed = payload

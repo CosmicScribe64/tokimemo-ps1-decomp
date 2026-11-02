@@ -690,7 +690,8 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "verified: five rows scroll through the final sentence and closing quote",
+      "visual_evidence": "translations/en/reviews/school-trip-visual-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-11:g0034:l0000",

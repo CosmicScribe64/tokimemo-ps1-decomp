@@ -22,6 +22,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39532-school-trip-phrase-wrap|T-39532 Keep the school-trip invitation phrase together]]
+
 
 
 
