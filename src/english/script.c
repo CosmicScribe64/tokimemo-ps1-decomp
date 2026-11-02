@@ -1,6 +1,7 @@
 /* script.c: English dialogue parsers (T-39506). Not part of the original executable: only the English
- * build compiles it, into the code appended to the main executable (see src/english/text.c). Each function replaces the original of
- * the same name without the english_ prefix through config/english_hooks.txt:
+ * build compiles it, into the code appended to the main executable (see src/english/text.c). Each
+ * function replaces the original of the same name without the english_ prefix through
+ * config/english_hooks.txt:
  *   talk_render, talk_speak_part, make_three_select, talk_names_set (src/main/scene_library.c),
  *   gnsx, sndisp, sndi, get_g_name, get_p_name (src/main/menu_speaker_girl.c).
  * They keep the originals' control flow, text entries and voice handling, and change what the English
@@ -49,8 +50,9 @@
 #define ENGLISH_STRING_POOL_BYTES 2048
 
 /* x of the dialogue text column, and the right edge of the speaker label column */
-#define ENGLISH_TEXT_X (-0x48)
-#define ENGLISH_LABEL_RIGHT (-0x58)
+#define ENGLISH_TEXT_X (-0x48)      /* text column when no speaker label is drawn (narration rows) */
+#define ENGLISH_LABEL_LEFT (-0x80)  /* speaker labels start here, where the Japanese three-glyph names start */
+#define ENGLISH_LABEL_GAP 6         /* between the speaker label and the opening mark */
 #define ENGLISH_SCREEN_LEFT (-0x9E)
 
 /* Translations of the original's literals: c:main:80051438 (get_g_name), c:main:8007ef48
@@ -329,13 +331,24 @@ static s32 english_right_aligned(u8 *text, s32 right) {
 }
 
 s32 english_speaker_label_x(u8 *name) {
-    return english_right_aligned(name, ENGLISH_LABEL_RIGHT);
+    return ENGLISH_LABEL_LEFT;
 }
 
-/* Speaker label, right-aligned in the label column, and the quote mark before the text column. */
-static void english_speaker_draw(u8 *name, u8 *mark, s32 y, s32 text_color) {
-    set_kanji_string(english_right_aligned(name, ENGLISH_LABEL_RIGHT), y, text_color, name, 0);
-    set_kanji_string(english_right_aligned(mark, ENGLISH_TEXT_X - 1), y, text_color, mark, 0);
+/* Text column of the last speaker label: continuation records (commands 0xD, 0x12, 0x11) hang under it. */
+static s32 english_text_x = ENGLISH_TEXT_X;
+/* x of the opening mark after the last gnsx label, for sndisp/sndi; 0: no label drawn */
+static s32 english_phone_mark_x = 0;
+
+/* Speaker label at the fixed left margin, the opening mark after it; returns the text column, where every
+ * row of the speech starts (T-39506, owner decision: names start at one margin, rows hang under the text). */
+static s32 english_speaker_draw(u8 *name, u8 *mark, s32 y, s32 text_color) {
+    s32 mark_x;
+
+    set_kanji_string(ENGLISH_LABEL_LEFT, y, text_color, name, 0);
+    mark_x = ENGLISH_LABEL_LEFT + english_text_width(name) + ENGLISH_LABEL_GAP;
+    set_kanji_string(mark_x, y, text_color, mark, 0);
+    english_text_x = mark_x + english_text_width(mark);
+    return english_text_x;
 }
 
 s32 english_talk_render(s32 x, s32 y, s32 text_color, u8 *input_text, s32 ordering_slot, u8 *line_suffix,
@@ -418,6 +431,33 @@ static s32 english_voice_wait(TalkWork *dialogue, s32 clip_start, s32 clip_end, 
     return 0;
 }
 
+/* Closing quote of a speech record (T-39506, owner decision: matched quotes): none when the next record
+ * of the group continues the speech on the next row (commands 0xD, 0x12, 0x11) or when the text already
+ * ends with a closing quote. The wrapper measured every page with it (tools/patch/text/speech.py). */
+static u8 *english_speech_close(u8 *text, s32 group_index, s32 line_index) {
+    TalkTables *tables;
+    u32 next;
+    u32 last;
+    s32 n;
+
+    tables = (TalkTables *)&talk_tables;
+    next = tables->command[group_index][line_index + 1];
+    if (next == 0xD || next == 0x12 || next == 0x11) {
+        return "";
+    }
+    n = strlen(text);
+    while (n > 0 && (text[n - 1] == ENGLISH_OPTION_EMPTY || text[n - 1] == ' ')) {
+        n--;
+    }
+    if (n > 0) {
+        last = text[n - 1];
+        if (last == '"' || last == 0xA1 || last == 0xA3) {
+            return "";
+        }
+    }
+    return english_quote;
+}
+
 /* True when the line ends in the branch-zero tail (original `nn`); removes it when strip is set. */
 static s32 english_branch_zero_tail(u8 *line, s32 strip) {
     s32 n;
@@ -487,7 +527,8 @@ s32 english_talk_speak_part(u8 *line_text, s32 speak_code, s32 choice, void *voi
             }
             english_copy(label, &line[1], sizeof(label));
             english_speaker_draw(label, thought ? english_open_paren : english_quote, y, text_color);
-            english_talk_render(ENGLISH_TEXT_X, y, text_color, p, 0, thought ? english_close_paren : (u8 *)"",
+            english_talk_render(english_text_x, y, text_color, p, 0,
+                                thought ? english_close_paren : english_speech_close(p, group_index, line_index),
                                 "", 0);
         } else if (strcmp(line, "And then...") == 0) {
             english_talk_render(-40, y + 0x10, text_color, line, 0, "", "", 0);
@@ -508,7 +549,8 @@ s32 english_talk_speak_part(u8 *line_text, s32 speak_code, s32 choice, void *voi
         dialogue->line_auto = 1;
         break;
     case 0x11:
-        english_talk_render(ENGLISH_TEXT_X, talk_next_row_y, text_color, line, 0, "", "", 0);
+        english_talk_render(english_text_x, talk_next_row_y, text_color, line, 0,
+                            english_speech_close(line, group_index, line_index), "", 0);
         dialogue->line_auto = 1;
         break;
     case 0x9:
@@ -525,12 +567,13 @@ s32 english_talk_speak_part(u8 *line_text, s32 speak_code, s32 choice, void *voi
         }
         english_branch_zero_tail(line, 1);
         english_speaker_draw(name_code_family, english_quote, y, text_color);
-        english_talk_render(ENGLISH_TEXT_X, y, text_color, line, 0, "", "", 0);
+        english_talk_render(english_text_x, y, text_color, line, 0,
+                            english_speech_close(line, group_index, line_index), "", 0);
         dialogue->line_wait = 1;
         break;
     case 0xE:
         english_speaker_draw(name_code_family, english_open_paren, y, text_color);
-        english_talk_render(ENGLISH_TEXT_X, y, text_color, line, 0, english_close_paren, "", 0);
+        english_talk_render(english_text_x, y, text_color, line, 0, english_close_paren, "", 0);
         break;
     case 0x1:
         if (has_voice && (!english_branch_zero_tail(line, 0) || dialogue->choice == 0)) {
@@ -545,7 +588,8 @@ s32 english_talk_speak_part(u8 *line_text, s32 speak_code, s32 choice, void *voi
         }
         english_branch_zero_tail(line, 1);
         english_speaker_draw(english_girl_short(), english_quote, y, text_color);
-        english_talk_render(ENGLISH_TEXT_X, y, text_color, line, 0, "", "", 0);
+        english_talk_render(english_text_x, y, text_color, line, 0,
+                            english_speech_close(line, group_index, line_index), "", 0);
         dialogue->line_wait = 1;
         break;
     case 0xF:
@@ -557,7 +601,8 @@ s32 english_talk_speak_part(u8 *line_text, s32 speak_code, s32 choice, void *voi
             }
         }
         english_speaker_draw(english_girl_short(), english_quote, y, text_color);
-        english_talk_render(ENGLISH_TEXT_X, y, text_color, line, 0, "", "", 0);
+        english_talk_render(english_text_x, y, text_color, line, 0,
+                            english_speech_close(line, group_index, line_index), "", 0);
         dialogue->line_clear = 1;
         break;
     case 0xC:
@@ -574,7 +619,8 @@ s32 english_talk_speak_part(u8 *line_text, s32 speak_code, s32 choice, void *voi
         }
         english_branch_zero_tail(line, 1);
         english_speaker_draw(english_girl_short(), english_quote, y, text_color);
-        english_talk_render(ENGLISH_TEXT_X, y, text_color, line, 0, "", "", 0);
+        english_talk_render(english_text_x, y, text_color, line, 0,
+                            english_speech_close(line, group_index, line_index), "", 0);
         dialogue->line_auto = 1;
         break;
     case 0xD:
@@ -593,7 +639,8 @@ s32 english_talk_speak_part(u8 *line_text, s32 speak_code, s32 choice, void *voi
         if (speak_code == 0xD) {
             english_branch_zero_tail(line, 1);
         }
-        english_talk_render(ENGLISH_TEXT_X, talk_next_row_y, text_color, line, 0, "", "", 0);
+        english_talk_render(english_text_x, talk_next_row_y, text_color, line, 0,
+                            english_speech_close(line, group_index, line_index), "", 0);
         if (speak_code == 0xD) {
             dialogue->line_wait = 1;
         } else {
@@ -616,13 +663,14 @@ s32 english_talk_speak_part(u8 *line_text, s32 speak_code, s32 choice, void *voi
         english_branch_zero_tail(line, 1);
         english_speaker_draw(speak_code == 0xB ? english_name_fujisaki : english_name_yoshio, english_quote, y,
                              text_color);
-        english_talk_render(ENGLISH_TEXT_X, y, text_color, line, 0, "", "", 0);
+        english_talk_render(english_text_x, y, text_color, line, 0,
+                            english_speech_close(line, group_index, line_index), "", 0);
         dialogue->line_wait = 1;
         break;
     case 0x4:
     case 0x6:
         english_speaker_draw(name_code_family, english_open_paren, y, text_color);
-        english_talk_render(ENGLISH_TEXT_X, y, text_color, line, 0, english_close_paren, "", 0);
+        english_talk_render(english_text_x, y, text_color, line, 0, english_close_paren, "", 0);
         dialogue->line_wait = 1;
         break;
     case 0x3:
@@ -671,7 +719,8 @@ s32 english_talk_speak_part(u8 *line_text, s32 speak_code, s32 choice, void *voi
         }
         if (*variant != ENGLISH_OPTION_EMPTY) {
             english_speaker_draw(english_girl_short(), english_quote, y, text_color);
-            english_talk_render(ENGLISH_TEXT_X, y, text_color, variant, 0, "", "", 0);
+            english_talk_render(english_text_x, y, text_color, variant, 0,
+                                english_speech_close(variant, group_index, line_index), "", 0);
             dialogue->line_wait = 1;
         }
         break;
@@ -735,7 +784,8 @@ void english_talk_names_set(s32 girl_id) {
 }
 
 void english_gnsx(u8 *speaker_name) {
-    set_kanji_string(english_right_aligned(speaker_name, ENGLISH_LABEL_RIGHT), 0x32, 0, speaker_name, 0);
+    set_kanji_string(ENGLISH_LABEL_LEFT, 0x32, 0, speaker_name, 0);
+    english_phone_mark_x = ENGLISH_LABEL_LEFT + english_text_width(speaker_name) + ENGLISH_LABEL_GAP;
 }
 
 void english_sndisp(u8 *text, s32 first_row, s32 speaker_style) {
@@ -759,6 +809,7 @@ void english_sndisp(u8 *text, s32 first_row, s32 speaker_style) {
     }
     game_state.text_lines_total = check_set_k();
     game_state.text_scroll_state = 0x80;
+    english_phone_mark_x = 0;
 }
 
 void english_sndi(u8 *text, s32 row, s32 speaker_style) {
@@ -770,6 +821,8 @@ void english_sndi(u8 *text, s32 row, s32 speaker_style) {
     u8 *mark;
     u8 *piece;
     s32 k;
+    s32 mark_x;
+    s32 text_x;
 
     game_state.text_scroll_state = 0;
     english_script_from_original(original, text, sizeof(original));
@@ -796,29 +849,36 @@ void english_sndi(u8 *text, s32 row, s32 speaker_style) {
         }
         english_append(expanded, piece, sizeof(expanded));
     }
+    if (speaker_style == 0x1F) {
+        mark = english_open_paren;
+    } else if (speaker_style == 0x2F) {
+        mark = "";
+    } else {
+        mark = english_quote;
+    }
+    /* after a gnsx label the mark follows the name and the rows hang under the text after the mark;
+     * without one the mark hangs left of the usual text column */
+    if (english_phone_mark_x != 0) {
+        mark_x = english_phone_mark_x;
+    } else {
+        mark_x = ENGLISH_TEXT_X - english_text_width(mark);
+    }
+    text_x = mark_x + english_text_width(mark);
+    if (speaker_style == 0xFF) {
+        mark_x = text_x = -0x80;
+    }
     switch (row) {
     case 0:
-        if (speaker_style == 0x1F) {
-            mark = english_open_paren;
-        } else if (speaker_style == 0x2F) {
-            mark = "";
-        } else {
-            mark = english_quote;
-        }
+        /* one entry, as the original: the mark and the first row */
         english_copy(decorated, mark, sizeof(decorated));
         english_append(decorated, expanded, sizeof(decorated));
-        if (speaker_style == 0xFF) {
-            set_kanji_string(-0x80, 0x32, 0, decorated, 0);
-            return;
-        }
-        /* one entry, as the original: the mark hangs left of the text column */
-        set_kanji_string(english_right_aligned(mark, ENGLISH_TEXT_X - (*mark != 0 ? 1 : 0)), 0x32, 0, decorated, 0);
+        set_kanji_string(mark_x, 0x32, 0, decorated, 0);
         return;
     case 1:
-        set_kanji_string(speaker_style == 0xFF ? -0x80 : ENGLISH_TEXT_X, 0x42, 0, expanded, 0);
+        set_kanji_string(text_x, 0x42, 0, expanded, 0);
         return;
     default:
-        set_kanji_string(speaker_style == 0xFF ? -0x80 : ENGLISH_TEXT_X, 0x52, 0, expanded, 0);
+        set_kanji_string(text_x, 0x52, 0, expanded, 0);
         return;
     }
 }

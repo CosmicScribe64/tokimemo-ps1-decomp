@@ -21,6 +21,7 @@ from .translations import target_of
 from .windows import window_for
 from .wrap import FontMetrics, label_end, wrap
 from . import reflow as source_reflow
+from . import speech
 
 SKIPPED_KINDS = ("speaktst", "reference_only")
 # Tables that must stay Japanese: the kana pages and the kanji reading labels of the name entry, where a
@@ -70,6 +71,7 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
     for path, container in sorted(containers.items()):
         if container.kind in SKIPPED_KINDS:
             continue
+        following = speech.next_commands(container.records.values()) if container.kind == "talk_script" else {}
         for record in container.records.values():
             if record.role not in ("owner", "source_only"):
                 continue
@@ -106,7 +108,9 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                     and not any(isinstance(s, Control) and s.kind == "substitution" for s in segments):
                 payload = untokenized_name_codes(payload, bytes.fromhex((record.unit or {}).get("raw_hex") or ""))
             note["status"] = "placed"
+            closed = 0
             if window is not None:
+                window = speech.speech_window(window, speech.command_of(record), payload, metrics)
                 joined = False
                 if window.reflow:
                     rows_before = payload.count(b"\n") + 1
@@ -116,8 +120,12 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                     note["reflow"] = {"breaks": flow.breaks_seen, "forced": flow.forced, "kept_rule": flow.kept_rule,
                                       "kept_category": flow.kept_category, "ambiguous": flow.ambiguous,
                                       "kept": flow.kept, "rows_before": rows_before}
+                if container.kind in ("talk_script", "talk_script_supplemental"):
+                    # measured with the closing quote that the runtime draws (speech.py)
+                    unclosed = payload
+                    payload, closed = speech.close_speech(payload, speech.command_of(record), following.get(record.id))
                 result = wrap(payload, window, metrics, joined=joined)
-                payload = result.payload
+                payload = speech.unclose(result.payload, unclosed, speech.command_of(record)) if closed else result.payload
                 note.update(window=window.name, basis=basis, rows=result.rows,
                             breaks_added=result.breaks_added)
                 if window.reflow:

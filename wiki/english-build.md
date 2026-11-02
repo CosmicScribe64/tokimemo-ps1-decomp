@@ -88,7 +88,13 @@ Sources:
 - The right edge 0x7C is where the widest original rows end in every message-window context.
 
 Rules:
-- Reflow (T-39506; windows `message_speech`, `message_narration`, `telephone_narration`): the translators kept the Japanese row breaks, which left short English rows ("Oh, right! / It's Shiori's / birthday today!"). Each page (a record, or one reply variant between option ends) is joined into one paragraph and wrapped again at the window width. A break stays only where it is deliberate (`wrap.keep_break`): before a row that opens a parenthesis or a quotation, after a row that closes one, around an empty row, and between a row that ends a sentence and a row that starts with a dash or an ellipsis. Page breaks never change. Choices are not reflowed.
+- Reflow (T-39506; windows `message_speech`, `message_narration`, `telephone_narration`): the translators kept the Japanese row breaks, which left short English rows ("(What'll I do / this / week?)"). Each break is judged on the Japanese row before it (`text/reflow.py`; the record's source segments, glyph cells against the window's original row capacity: 14 for speech and the telephone, 18 for narration):
+  - forced (reflowed): the Japanese row had at least capacity - 2 cells, or ended short but not at a natural boundary;
+  - kept: the Japanese row ended short after 。！？, a closing 」』）, or an ellipsis, or the next row opens with 「『（. It maps to the English break of the same index when both pages have as many breaks, else to the English sentence end (or opening bracket) of the same rank; if there is none, the break is dropped and counted as ambiguous;
+  - categories that keep every break (`reflow.KEEP_ALL_BREAKS`): none of the windowed containers; song lines, letters and poems are C strings or table entries without a window and are not touched;
+  - pages (records, option ends) never change; choices are not reflowed.
+  - each speech page is measured with its closing quote (drawn by the runtime) and wrapped from its speaker's text column: x -0x80 + label + 6 + mark, for the widest speaker the record can have (inline labels measured, girls with "Tatebayashi", the player with seven wide letters; `text/speech.py`).
+  Then each row too wide for the window is set balanced (`wrap._balanced_row`): the fewest rows that fit, the most even fill, no lone short word on the last row. `report.json` `layout` has the totals and `layout.json` each record (rows before and after, kept breaks with reason and Japanese fill %, orphans, pages longer than the window). A page longer than the window scrolls, as long records do in the original; splitting it would need a new page control in the runtime (not done).
 - A row that fits is kept. A row that is too wide breaks at the last space that fits.
 - A word wider than the window is reported. Choices never wrap, because each option is one selectable row.
 - Name codes count at their English width: family and given names 7 letters at 6 px (42), F 88, P measured from a 7-letter name with "-kun", G from "Tatebayashi-san", Y from "Yoshio". An inline speaker label does not count: the encoder writes 0x1C (or 0x1D for a thought), the label, and 0x1F where the translation had `": "` (`english.end_inline_label`), and the runtime draws it left of the text.
@@ -141,7 +147,9 @@ The pinned link of T-39502 is gone: `tools/english_link.py` relinks every unit f
 | overflow | 8 | JOHO.NBN labels, open (see below) |
 | file_kept_original | 4,718 | the DATE files |
 
-The 340 `empty_target` records are all empty: 303 talk records whose source is empty or full-width spaces, and 37 table slots marked empty. None is a translation gap. Reflow added breaks in 8,451 speech, 135 narration and 218 telephone records. Main executable 686,080 bytes.
+Layout (source-judged reflow): 30,573 records, 34,029 line breaks: 21,130 reflowed, 12,907 kept (12,900 after a sentence end, 7 before an opening bracket), 0 ambiguous; rows 64,602 -> 48,999 (14,270 records got shorter); 576 pages still end in a lone short word; 79 pages are longer than their window and scroll.
+
+The 340 `empty_target` records are all empty: 303 talk records whose source is empty or full-width spaces, and 37 table slots marked empty. None is a translation gap. Main executable 686,080 bytes.
 
 ## Results with the free relink (T-39505, 2026-11-01)
 

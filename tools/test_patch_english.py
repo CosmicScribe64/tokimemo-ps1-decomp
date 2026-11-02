@@ -24,7 +24,7 @@ from tools.patch.text.inplace import patch_built
 from tools.patch.text.layout import english_payloads
 from tools.patch.text.segments import Control, Text, encode
 from tools.patch.text.windows import NAME_PX, WINDOWS, Window, window_for
-from tools.patch.text import reflow as source_reflow
+from tools.patch.text import reflow as source_reflow, speech
 from tools.patch.text.wrap import FontMetrics, label_end, wrap
 
 REPOSITORY = Path(__file__).resolve().parents[1]
@@ -187,6 +187,39 @@ class SourceReflowTest(unittest.TestCase):
         self.assertEqual(result.payload, b"aaaa bbbb\ncccc dd")
 
 
+class SpeechTest(unittest.TestCase):
+    """tools/patch/text/speech.py: matched quotes and the speaker's text column."""
+
+    def test_closing_quotes(self):
+        self.assertEqual(speech.close_speech(b"Hi there", 0x1, None), (b'Hi there"', 1))
+        self.assertEqual(speech.close_speech(b'Hi there"', 0x1, None), (b'Hi there"', 0))
+        # the speech continues on the next record: no quote yet; the continuation closes it
+        self.assertEqual(speech.close_speech(b"Hi", 0xC, 0xD), (b"Hi", 0))
+        self.assertEqual(speech.close_speech(b"there", 0xD, None), (b'there"', 1))
+        # the branch-zero tail stays last; skipped reply variants get nothing
+        self.assertEqual(speech.close_speech(b"Hi\x0c\x0c", 0x0, None), (b'Hi"\x0c\x0c', 1))
+        self.assertEqual(speech.close_speech(b"a\x0b\x0cb\x0bc", 0x2, None), (b'a"\x0b\x0cb\x0bc"', 2))
+        # thoughts and narration are left to the runtime
+        self.assertEqual(speech.close_speech(b"Hmm", 0xE, None), (b"Hmm", 0))
+        self.assertEqual(speech.close_speech(b"\x1dMe\x1fhmm", 0x7, None), (b"\x1dMe\x1fhmm", 0))
+        self.assertEqual(speech.close_speech(b"\x1cMe\x1fhi", 0x7, None), (b'\x1cMe\x1fhi"', 1))
+
+    def test_unclose_removes_only_the_added_quotes(self):
+        before = b'a b\x0bsaid "x"\x0b\x0cz'
+        closed, n = speech.close_speech(before, 0x2, None)
+        self.assertEqual(n, 1)
+        wrapped = closed.replace(b"a b", b"a\nb")
+        self.assertEqual(speech.unclose(wrapped, before, 0x2), b'a\nb\x0bsaid "x"\x0b\x0cz')
+
+    def test_text_column_follows_the_widest_speaker(self):
+        base = WINDOWS["message_speech"]
+        girl = speech.speech_window(base, 0x1, b"x", METRICS)
+        self.assertEqual(girl.left, -0x80 + METRICS.width(b"Tatebayashi") + 6 + METRICS.width(b'"'))
+        labelled = speech.speech_window(base, 0x7, b"\x1cMe\x1fhi", METRICS)
+        self.assertEqual(labelled.left, base.left)  # a short label leaves the usual column
+        self.assertIs(speech.speech_window(WINDOWS["choice"], 0x3, b"x", METRICS), WINDOWS["choice"])
+
+
 class WindowTest(unittest.TestCase):
     def record(self, kind, segments, command=None):
         unit = {"context": {"command": {"name": "c", "value": command}}} if command is not None else {}
@@ -323,6 +356,7 @@ class ReportTest(unittest.TestCase):
                    "t2": {"target_text": "W" * 40, "protected_tokens": []},
                    "t4": {"target_text": "alias", "protected_tokens": []}}
         text = english_payloads({talk.path: talk}, targets, METRICS)
+        # the closing quote is measured but drawn by the runtime (tools/patch/text/speech.py)
         self.assertEqual(text.payloads[talk.path], {"t1": b"Hello there", "t2": b"W" * 40})
         self.assertEqual(text.notes["t1"]["status"], "placed")
         self.assertEqual(text.notes["t2"]["status"], "unwrappable")
