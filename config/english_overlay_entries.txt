@@ -1,0 +1,50 @@
+# Overlay entry points that the main executable names (T-39505, wiki/relink.md).
+# One line per undefined slot symbol of the main link: <symbol> <overlay ...>, the overlays that the
+# game enters through it. Derived from ovl_load_start (game mode -> LBA -> file) and ovl_load_enter
+# (game mode -> entry), plus game_mode_tt_game_mode_handler (TT). tools/english_link.py checks that each
+# address is a function start in every listed overlay and takes the relinked address from those links;
+# the listed overlays must agree. D_80132000 is the slot base: the overlay's first function stays there.
+D_80132000 EN_NICHI KANGEI OLH OMIMAI TACO TEL
+D_80132040 RENSYU
+D_8013209C NAME_ENT
+D_80132140 MASTER
+D_80132214 DATE2
+D_80132244 GEKO
+D_80132274 VALEN
+D_801322D4 SHOUGATU
+D_80132334 ENDING
+D_80132FF8 KANGEI
+D_80133120 OMIMAI
+D_801335E8 OPTION
+D_80133A2C MASTER
+D_80134040 GEKO
+D_80134C90 GEKO
+D_80137144 SHOUGATU
+D_80137490 SHUGAKU
+D_80137890 BUNKA_SD
+D_80137F64 DATE2
+D_8013882C GEKO
+D_801389A0 OPTION
+D_80139150 MASTER
+D_801397D0 TEL
+D_8013B484 SHOUGATU
+D_8013B5B0 RPG_BAT
+D_8013C780 OPTION
+D_8013D180 SHOUGATU
+D_801407F0 ETC
+D_80141280 TAIIKU
+D_8014231C NAME_ENT
+D_801426D0 GEKO
+D_80142700 BUNKASAI
+D_80142974 ETC
+D_801448D4 DATE
+D_80144AD0 NAME_ENT
+D_80144F70 BUNKAKEN
+D_80145A6C ETC
+D_8014636C ETC
+D_801465F8 ETC
+D_801492C0 ETC
+D_8014ABD0 ETC
+D_8014AF28 NAME_ENT
+D_8014C08C DATE
+D_8013E850 TT

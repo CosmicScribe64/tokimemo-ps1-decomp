@@ -2,9 +2,9 @@
 #define ENGLISH_TEXT_H
 
 /* English text runtime (T-39502, wiki/english-text-runtime.md). Only the English build
- * (`ninja english`, -DTOKIMEMO_ENGLISH) compiles and links these symbols: they live in the
- * English island after the main bss (0x8012B540-0x80132000), which src/english/boot.s copies
- * into place before boot_start runs. */
+ * (`ninja english`, -DTOKIMEMO_ENGLISH) compiles and links these symbols: tools/english_link.py
+ * appends them to the main executable's code and data, which the free relink moves up (T-39505,
+ * wiki/relink.md). */
 
 #include "common.h"
 
