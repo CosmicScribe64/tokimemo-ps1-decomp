@@ -3099,3 +3099,37 @@ Wiki lint found no broken links and one stale status mismatch: [[tickets/T-39506
 ## [2026-11-02] build | Revised banner prologue replay completes
 
 `build/emu/route-en-banner-fit` completes at frame 23,116 in 383 s, reaching the first week. It resumed the compatible saved prologue state; its 77-capture output includes the earlier copied checkpoints. Final named banner capture is `046_prologue_18.png`. Banner/movie changes committed as 7d54bc082. Full campaign still needs the long-preset fix, two deferred compressed backgrounds, final-container/glyph audit, off-route checks, and owner review before publication.
+
+## [2026-11-02] ticket | Resume deferred still encoding
+
+Moved [[tickets/T-39508-english-art-on-disc]] to In Progress for P_01_02 and D_03_08. The encoder's least-squares basis probes level 40 through the saturating fixed-point decoder; at the original quantizers 12 and 6 this may distort the derivative. An ignored Docker probe tests an unclipped analytic DCT basis against both registered candidates, retaining all original decode/ring/size gates. Results will determine whether a production change is justified.
+
+## [2026-11-02] build | Unclipped basis fixes class-sign encoding
+
+The analytic basis probe for P_01_02 passes the original gates at its original quantizer and size: ring maximum 3, float disagreement 2, exact unedited blocks, 18,432 bytes. Decoded class headings are legible. Added the mathematical basis correction to `tools/assets/mdec_splice.py` and a regression against unsaturated small impulses at quantizers 6 and 12; 16 synthetic/preservation tests pass. D_03_08's first attempt has one failing outside pixel (237,71), error 6; further optimization is running. Details in [[tickets/T-39508-english-art-on-disc]].
+
+## [2026-11-02] build | Placard passes and magazine route verifies
+
+D_03_08 passes with the existing lambda-32 attempt and analytic basis: ring maximum 3, float disagreement 2, same sector allocation. Decoded English sign reviewed. Full disc rebuild is recomputing all stills with the corrected basis. Focused suite passes 58 tests (one opt-in full-movie skip). Added `tools/emu/routes/holiday-magazine.route`; page-aware input fixes the first probe's repeated reopening, and `build/emu/route-en-magazine-v2` finishes with the complete English first issue and normal return. Added an ignored, explicitly controlled sports-entry fixture to inspect its background and menus; it is not an input-only playthrough. Work tracked in [[tickets/T-39508-english-art-on-disc]].
+
+## [2026-11-02] query | Resolve placard caller and controlled scene setup
+
+D_03_08 is at LBA 0x41BA, loaded by `master_companion_select` for club IDs 8/9/10 in mode 0x75; it is not the sports-day entry background. Controlled fixture `build/probe_sports_scene.py` waits 120 frames after the holiday checkpoint, then reproduces the scheduler's scratch reset and loader request with logged RAM writes. The early-frame attempt collided with the still-loading holiday state; the settled fixture succeeds. `build/emu/sports-baseline-stable` reaches sports entry and the race; `build/emu/club-placard-baseline/shot_800.png` shows the original Japanese placard in the correct tournament scene, ready for an exact-context comparison. These are controlled scene tests, not normal career playthroughs. Updated stale English-route acceptance evidence in [[tickets/T-39504-emulator-screen-route]].
+
+## [2026-11-02] build | Runtime font trace passes Japanese control
+
+Added shared `tools/emu/font_trace.lua` and optional route/generic-probe flags for [[tickets/T-39510-no-japanese-left-check]]. It records font-upload codes/counts by scene without game strings or binary changes, including hidden/preloaded text. `build/emu/route-jp-magazine-font` logs 179 two-byte uploads with no unknown mapping or overflow; the equivalent English scene logs zero. The route suite passes its original 20 tests; a relink-address regression is added next. Usage and limitations are documented in [[emulator]]. Full art rebuild remains live in Docker; no restart or completion inferred from its long compute phase.
+
+## [2026-11-02] build | Still fallback restores museum without relaxing gates
+
+The first corrected-basis full build completed in 1,909.4 seconds (`build/still-basis-proof`, target SHA-1 prefix e18ee1fa273c): both previously deferred class/tournament signs pass, but museum D_19_02 regressed to four bytes over its eight-sector allocation. Added the old nonlinear search seed only after every analytic attempt fails, under identical gates. A fresh museum run passes at 16,370 bytes (16,384 allocated), ring maximum 3 and float disagreement 1. Revalidated and reused 14 successful original-quantizer analytic outputs whose execution path is unchanged; `build/still-cache-migration.json` records source hashes, cache keys and pixel checks. The fresh museum result uses the normal content-derived cache key. Full disc assembly/readback is running again. The 58-test focused suite passes with one opt-in movie skip. No C or default-build changes.
+
+Controlled tournament capture `build/emu/club-placard-english/shot_800.png` visibly shows the English school placard, with no original-font uploads, unknown mappings or trace overflow. This fixture uses logged RAM writes and is not a normal career playthrough. Fresh full route `route-en-still-font` continues with original-font instrumentation. Work remains in [[tickets/T-39508-english-art-on-disc]] and [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] build | All registered English artwork passes disc readback
+
+`build/still-fallback-proof` completes assembly, disc readback and xdelta validation in 161.7 seconds: SHA-1 e00ffdf0b44b94ad97168b425c1ce564dad04b9f, patch 6,533,072 bytes, 245 verified art items, 28 approved exceptions, zero deferred or missing. Museum candidate decode inspected at its proven 320x160 geometry (an initial 320x240 preview request correctly failed the dimension check). English lettering is legible; a decode is not a GPU scene proof. Updated [[english-build]] current results. [[tickets/T-39508-english-art-on-disc]] remains In Progress for outstanding visual coverage.
+
+## [2026-11-02] build | Full English route completes with zero original-font uploads
+
+`build/emu/route-en-still-font` reaches done at 33,649 frames in 750 seconds, with 146 screenshots through save/load. Trace reports zero original-font uploads, zero unknown mappings and zero overflow. Reviewed class-board capture 031 (English class heading, approved Japanese roster), neighboring prologue art, and corrected dialogue capture 037. This route used `build/still-basis-proof`; direct final-disc comparisons of all 32 art containers against `build/still-fallback-proof` find only D_19_02 changed, which is outside this route. The museum still requires GPU scene coverage. A final focused rerun passes 69 tests with four skips (unavailable original-draft fixtures and opt-in full-movie test); an initial invocation used a missing module name/import path and was corrected. Updated [[tickets/T-39510-no-japanese-left-check]].

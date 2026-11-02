@@ -1,7 +1,7 @@
 ---
 id: T-39508
 title: Put the English art on the disc
-status: In Review
+status: In Progress
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-02
@@ -35,8 +35,18 @@ Round 2 (2026-11-01): merged `patch/english` (free relink, T-39505); the art ste
 
 ## Comments
 
+- 2026-11-02 Codex: D_03_08 also passes the unchanged production gates with the analytic basis (lambda 32, ring weight 50): ring maximum 3, float disagreement 2, English mean absolute error 1.0286, 16,734 bytes within its original nine sectors. The alternative chroma-weight experiment reduced letter fidelity and was not adopted. Full rebuild is recomputing all stills. A new `tools/emu/routes/holiday-magazine.route` opens the magazine normally from `holiday_1`; `build/emu/route-en-magazine-v2` completes with a full-page capture and clean return (11 s). The first issue's English labels and dialogue are legible; the Japanese masthead is an approved exception. This proves the first issue only, not every later magazine issue.
+
+- 2026-11-02 Codex: corrected the MDEC least-squares basis to the unclipped orthonormal response; the previous level-40 hardware-model probe saturates at coarse quantizers. Synthetic small-impulse regression passes at quantizers 6 and 12; 16 related tests pass. P_01_02 probe now fits 18,432 bytes with exact unedited macroblocks, maximum ring change 3 RGB555 steps and float/fixed disagreement 2, inside unchanged existing gates. Its English 1-A/B/C headings look legible in the decoded candidate. D_03_08's first new attempt misses the ring gate at only pixel (237,71), six steps versus the allowed four; further settings and chroma-cell weighting are being tested. No gate relaxed.
+
 - 2026-11-02 Codex: narrowed-banner replay completed at frame 23,116 in 383 s through the end of the prologue. Output has 77 captures including copied pre-resume checkpoints; final banner proof is `build/emu/route-en-banner-fit/046_prologue_18.png`. Code saved in 7d54bc082.
 
 - 2026-11-02 Codex: GPU review caught the portrait covering the end of the first banner draft. Narrowed IJUIN to 124 pixels; `build/emu/route-en-banner-fit/preview-046.png` now shows all five letters clear of the hair. The original-width build completed the full 33,649-frame route through save/load (146 captures, 743 s). The revised banner build has byte-identical main and NAME_ENT binaries and is replaying from the compatible prologue checkpoint. Final target SHA-1 `a0098b5c0568ebfe46f67cb3324ebb236d08b047`; all readback and xdelta gates pass. Source review against CODING_STANDARDS found no C/default-build changes, committed game data, unchecked palette additions, or writes outside the declared banner regions. Ticket remains In Review with compressed stills and off-route coverage unresolved.
 
 - 2026-11-01 Codex: added a source-hash-bound, code-generated Ijuin Rei banner for `CDROM/PROLODIR/CUT_10.NBN`, omitted from the original inventory. The writer preserves file size, palette, and pixels outside two lettering regions, using original gold bands and port-made block capitals. Final-disc readback passed in `build/banner-proof` (track-one SHA-1 prefix `51ef02b48683`); fresh GPU review is running in `build/emu/route-en-banner`. The movie reconciles into the art report only after raw-extent readback. Catalog-142 now records the explicit off-frame-sign exception in T-39500 instead of calling it missing. Focused art/movie suite: 44 tests pass, one opt-in full-build skip. Two compressed stills and off-route screen coverage remain open.
+
+- 2026-11-02 Codex: first full analytic-basis build fixes both deferred signs but makes D_19_02 four bytes too large. Added a fallback search seed using the previous level-40 response only after all analytic attempts fail, with unchanged size/pixel/decode checks. Fresh museum result is 16,370 bytes in 16,384 allocated, ring 3, float disagreement 1. Fourteen unchanged successful analytic results were revalidated and reused with cache-key provenance in `build/still-cache-migration.json`; final disc assembly/readback is running. Focused suite: 58 tests pass, one opt-in movie skip. Controlled tournament capture `build/emu/club-placard-english/shot_800.png` shows the English placard clearly; zero original-font uploads (including zero unknown/overflow). Full main route with font instrumentation remains in progress. Source review against CODING_STANDARDS found no C/default-build changes, raw-source writes, gate relaxation or staged game data; final visual coverage remains open.
+
+- 2026-11-02 Codex: final `build/still-fallback-proof` passes disc readback and xdelta validation in 161.7 s. Target SHA-1 e00ffdf0b44b94ad97168b425c1ce564dad04b9f, patch 6,533,072 bytes: 245 verified items, 28 approved exceptions, zero deferred/missing. The museum decode at its manifest-proven 320x160 size is legible; GPU coverage remains outstanding. Historical deferred counts above are superseded by this result.
+
+- 2026-11-02 Codex: fresh full route with font tracing completes through save/load (33,649 frames, 750 s, 146 captures). Reviewed `031_prologue_03.png`: English class heading visible, original tiny roster retained by approved exception. Tournament placard is separately GPU-verified. All 32 art containers compare identical between the route disc and final fallback disc except the off-route museum D_19_02. Museum and remaining off-route visual checks are still open. Final focused rerun: 69 tests, four skips (original-draft fixtures unavailable and full-movie opt-in).

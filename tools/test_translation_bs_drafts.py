@@ -87,6 +87,18 @@ class SyntheticSpliceTests(unittest.TestCase):
         self.assertLessEqual(int(np.abs(result - source[0:16, 0:16])[weights > 1].max()), 1)
         self.assertLess(float(np.abs(result - goal)[weights == 1].mean()), 2.0)
 
+    def test_coarse_quantizer_basis_predicts_unsaturated_decode(self):
+        # A small AC impulse remains below the hardware clipping thresholds.
+        # The old level-40 probe saturated and mispredicted these responses.
+        for quant in (6, 12):
+            basis = splice._linear_basis(quant)
+            for index in range(64):
+                levels = [0] * 64
+                levels[index] = 2
+                decoded = np.array(splice.block_output(levels, quant))
+                self.assertLessEqual(float(np.abs(decoded - 2 * basis[index]).max()), 1.5,
+                                     (quant, index))
+
     def test_float_decode_agrees_on_plain_blocks(self):
         data = synthetic(flat)
         parsed = splice.parse(data)

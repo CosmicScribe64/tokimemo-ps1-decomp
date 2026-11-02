@@ -228,13 +228,23 @@ def float_macroblock_rgb5(levels6, quant):
 
 
 def _linear_basis(quant):
-    """Approximate linear response of each zigzag level, for the least-squares start only."""
-    rows = np.zeros((64, 64))
-    for index in range(64):
-        levels = [0] * 64
-        levels[index] = 40
-        rows[index] = np.array(block_output(levels, quant), float) / 40.0
-    return rows
+    """Unclipped linear response for the least-squares start (T-39508).
+
+    Probing a large level through block_output includes coefficient saturation
+    and signed-pixel wrap, so it is not a derivative at coarse quantizers.
+    Use the orthonormal IDCT response before those nonlinear stages. Rounding
+    and the half-unit dequantization bias remain for the exact descent to fix;
+    all final candidates still pass the fixed-point decoder's pixel gates.
+    """
+    n = np.arange(8)
+    transform = np.cos((2 * n[:, None] + 1) * n[None, :] * np.pi / 16)
+    transform *= np.where(n == 0, np.sqrt(1 / 8), np.sqrt(2 / 8))[None, :]
+    rows = []
+    for index, position in enumerate(bs.ZIGZAG):
+        y, x = divmod(position, 8)
+        scale = bs.QUANT[index] * (quant / 8 if index else 1)
+        rows.append((np.outer(transform[:, y], transform[:, x]) * scale).ravel())
+    return np.array(rows)
 
 
 def _ycbcr(rgb5):

@@ -82,13 +82,14 @@ def goal_image(source: np.ndarray, crops) -> np.ndarray:
     return goal
 
 
-def splice(data: bytes, source: np.ndarray, goal: np.ndarray, width: int, height: int, lam: float, ring: float):
+def splice(data: bytes, source: np.ndarray, goal: np.ndarray, width: int, height: int, lam: float, ring: float,
+           basis=None):
     """Re-encode the macroblocks with a changed pixel; returns (bytes, facts)."""
     padded = source.shape[0]
     parsed = mdec_splice.parse(data)
     quant = parsed["quantization"]
     changed = (goal != source).any(-1)
-    basis = mdec_splice._linear_basis(quant)
+    basis = mdec_splice._linear_basis(quant) if basis is None else basis
     replacements = {}
     rows = padded // 16
     for mx in range(0, source.shape[1], 16):
@@ -261,21 +262,24 @@ def place_still(path: str, data: bytes, images: list) -> StillResult:
     crops = [(m["crop"]["rect"],) + crop_pixels(png, m["crop"]["rect"]) for _i, png, m in images]
     goal = goal_image(source, crops)
     tried, candidates = [], []
-    for lam, ring in ATTEMPTS:
-        out, facts = splice(data, source, goal, width, height, lam, ring)
-        problems = failures(facts)
-        tried.append({"lambda": lam, "ring_weight": ring, "failures": problems})
-        if not problems:
-            facts["ring_tolerance"] = RING_TOLERANCE
-            return _done(result, images, out, facts, tried)
-        if not failures(facts, CODEC_RING_TOLERANCE, CODEC_FLOAT_TOLERANCE):
-            candidates.append((facts["ring_max_abs_rgb555"], facts["english_mean_abs_rgb555"], len(tried), out, facts))
-    if candidates:
-        _ring, _mean, _n, out, facts = min(candidates, key=lambda c: c[:3])
-        facts["ring_tolerance"] = CODEC_RING_TOLERANCE
-        return _done(result, images, out, facts, tried)
-    # the file's quantizer is too coarse for the strokes: re-encode at a finer one that divides it
     quant = mdec_splice.parse(data)["quantization"]
+    for seed in ("unclipped_idct", "legacy_probe"):
+        basis = None if seed == "unclipped_idct" else legacy_probe_basis(quant)
+        for lam, ring in ATTEMPTS:
+            out, facts = splice(data, source, goal, width, height, lam, ring, basis=basis)
+            facts["start_basis"] = seed
+            problems = failures(facts)
+            tried.append({"start_basis": seed, "lambda": lam, "ring_weight": ring, "failures": problems})
+            if not problems:
+                facts["ring_tolerance"] = RING_TOLERANCE
+                return _done(result, images, out, facts, tried)
+            if not failures(facts, CODEC_RING_TOLERANCE, CODEC_FLOAT_TOLERANCE):
+                candidates.append((facts["ring_max_abs_rgb555"], facts["english_mean_abs_rgb555"], len(tried), out, facts))
+        if candidates:
+            _ring, _mean, _n, out, facts = min(candidates, key=lambda c: c[:3])
+            facts["ring_tolerance"] = CODEC_RING_TOLERANCE
+            return _done(result, images, out, facts, tried)
+    # the file's quantizer is too coarse for the strokes: re-encode at a finer one that divides it
     for finer in sorted((q for q in range(1, quant) if quant % q == 0), reverse=True):
         out, facts = requantized(data, source, goal, width, height, finer)
         problems = failures(facts) if out is not None else [facts]
@@ -288,3 +292,18 @@ def place_still(path: str, data: bytes, images: list) -> StillResult:
         result.reasons[image_id] = "re-encode gates fail: %s" % "; ".join(tried[-1]["failures"])
     result.facts = {"attempts": tried}
     return result
+
+
+def legacy_probe_basis(quant):
+    """Alternate search seed for quantized local minima, not a linear derivative.
+
+    The old saturated level-40 probe can reach a different valid integer-codec
+    solution (D_19_02). Try it only if the analytic start fails every attempt;
+    it gets exactly the same final size, preservation and decoder checks.
+    """
+    rows = np.zeros((64, 64))
+    for index in range(64):
+        levels = [0] * 64
+        levels[index] = 40
+        rows[index] = np.array(mdec_splice.block_output(levels, quant), float) / 40.0
+    return rows
