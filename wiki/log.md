@@ -3701,3 +3701,11 @@ Reopened [[tickets/T-39526-publish-review-patcher]] for the owner's clarificatio
 ## [2026-11-02] ticket | README explains translated artwork and faithful presentation
 
 Closed the follow-up in [[tickets/T-39526-publish-review-patcher]]. The README now describes English text and artwork, with fidelity to the original meaning, character voices and visual style stated as an aim. Review status remains clear. Deslop/Humanizer and standards review cover this prose-only change.
+
+## [2026-11-02] ticket | Simplify patcher copy for players
+
+Opened [[tickets/T-39528-patcher-player-copy]] for the owner's request to remove unnecessary development details and AI-sounding copy from the patcher page. Disc compatibility, local processing and download instructions remain necessary to use the tool.
+
+## [2026-11-02] build | Player-focused patcher copy verified
+
+[[tickets/T-39528-patcher-player-copy]] removes build/hash details and repetitive verification language while keeping the information needed to choose a disc and use the downloads. All 15 browser checks pass. Desktop and mobile screenshots were inspected; the updated local preview is served at port 8766. Standards and prose reviews found no unresolved issues.

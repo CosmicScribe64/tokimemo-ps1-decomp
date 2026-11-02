@@ -22,6 +22,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39528-patcher-player-copy|T-39528 Keep the patcher copy focused on players]]
 
 
 

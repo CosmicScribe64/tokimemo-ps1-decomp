@@ -9,7 +9,7 @@ self.onmessage = async ({data: {files, release}}) => {
         if (archives.length) {
             if (archives.length !== 1 || files.length !== 1)
                 throw new Error('Choose one archive at a time, without loose disc files.');
-            postMessage({type: 'progress', message: 'Unpacking your disc locally…', progress: 4});
+            postMessage({type: 'progress', message: 'Unpacking your disc…', progress: 4});
             importScripts('vendor/7z/7zz.umd.js');
             const zip = await SevenZip({locateFile: name => 'vendor/7z/' + name,
                 print: () => {}, printErr: () => {}});
@@ -38,7 +38,7 @@ self.onmessage = async ({data: {files, release}}) => {
         const chds = unpacked.filter(file => /\.chd$/i.test(file.name));
         if (chds.length) {
             if (chds.length !== 1 || unpacked.length !== 1) throw new Error('Choose one CHD at a time.');
-            postMessage({type: 'progress', message: 'Reading the CHD locally…', progress: 6});
+            postMessage({type: 'progress', message: 'Opening your CHD…', progress: 6});
             const module = await new Promise((resolve, reject) => {
                 self.Module = {noInitialRun: true, noExitRuntime: true,
                     locateFile: name => 'vendor/chdman/' + name,
