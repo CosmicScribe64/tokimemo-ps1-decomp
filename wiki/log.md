@@ -2882,3 +2882,11 @@ Added `tools/emu/route.py`, `tools/emu/route.lua` and `tools/emu/routes/main.rou
 
 Japanese baseline from the original disc: 144 screenshots, 27 922 frames, 539 s, all checkpoints reached and checked by eye. Details and the mode map found on the way in [[tickets/T-39504-emulator-screen-route]]; usage in [[emulator]] (Route). Ticket moved to In Review.
 
+
+## [2026-11-01] build | T-39505: RAM map, raw addresses and free relink
+
+New pages [[ram-map]] and [[relink]]. Free RAM for English: 0x8012B540-0x80132000 (27,328 bytes) and each overlay's zero tail while it is loaded (291 bytes in TACO to 187 KB); the slot end 0x80162000 is the background still buffer. Evidence: literal census of `src/`, 23 RAM dumps of 11 original-disc scenes, CPU-write watches in 8 scenes. `tools/raw_addrs.py` lists every address the linker does not write; `config/english_raw_addrs.txt` decides the ones that are not function pointers. `tools/english_link.py` now links every unit freely (anchors, translated side scripts, overlay entries through a second main link, `config/english_overlay_entries.txt`, raw-address patching); the English island and `src/english/boot.s` are gone. `ninja relink`: `build/j0` equals all 27 default binaries; the padded `build/jr` disc (`tools/patch/variant_disc.py`) plays the whole T-39504 route, 118 of 148 checkpoints identical to a same-timing control disc and the rest differ only in frame-counter animations. `route.py run --relink DIR` reads the scene bytes of a relinked disc; `route compare` gives a pixel verdict. Default build 27/27 OK.
+
+## [2026-11-01] ticket | T-39505 to In Review
+
+[[tickets/T-39505-english-memory-and-relink]] waits for code review against `CODING_STANDARDS.md`.

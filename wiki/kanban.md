@@ -24,7 +24,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
 - [ ] [[tickets/T-39506-english-script-runtime|T-39506 Make dialogue, choices, names and name entry work in English]]
 - [ ] [[tickets/T-39507-english-disc-build|T-39507 Build the English disc and patch in one command]]
-- [ ] [[tickets/T-39505-english-memory-and-relink|T-39505 Give the English build room to grow (memory map and free relink)]]
 - [ ] [[tickets/T-39400-finish-missing-english-art|T-39400 Finish the missing English art]]
 
 
@@ -61,6 +60,7 @@ kanban-plugin: board
 
 
 ## In Review
+- [ ] [[tickets/T-39505-english-memory-and-relink|T-39505 Give the English build room to grow (memory map and free relink)]]
 - [ ] [[tickets/T-39501-disc-rebuild-and-xdelta|T-39501 Rebuild the disc image with replaced files and make the xdelta patch]]
 
 - [ ] [[tickets/T-39502-english-text-runtime|T-39502 Add the English text runtime behind a build flag]]
