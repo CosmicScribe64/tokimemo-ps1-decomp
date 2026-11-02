@@ -3541,3 +3541,11 @@ Traced the short prologue rows to different build/runtime reservations for name 
 ## [2026-11-02] ticket | Review phone punctuation repair
 
 T-39520 moves to In Review after a 34,745-frame route with 146 captures and zero original-font calls/unknowns/overflows. Inspected every capture, including phone replies and full-name save/load. Closing marks fit and effects remain unquoted. Code review found no unresolved issue; original hashes and header/global/rename checks pass. An additional voice-enabled run will verify dialogue timing. [[tickets/T-39520-phone-row-closing-marks]].
+
+## [2026-11-02] build | Start voice-enabled layout verification
+
+Committed the reviewed phone closing-mark fix as 034a15138. The name-width build completed in 157.7 seconds and produced a 6,565,127-byte patch under `build/phone-width-proof/disc`. Saved its link inputs and started the full-name route with voice playback enabled. Actual-disc executable and script audits are running. [[tickets/T-39520-phone-row-closing-marks]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] query | Verify corrected prologue wrapping
+
+Both actual-disc audits pass on the name-width build. Fresh GPU captures 032 and 041 show the two previously awkward lines in two readable rows, with unchanged wording. Added the prior route's 146 capture hashes to the existing visual-review receipt. The voice-enabled route remains live. Started a controlled sports instruction-card fixture to cover a screen skipped by the earlier sports run. [[tickets/T-39511-english-text-quality]], [[tickets/T-39508-english-art-on-disc]].

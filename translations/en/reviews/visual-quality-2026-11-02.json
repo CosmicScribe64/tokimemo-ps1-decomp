@@ -668,5 +668,596 @@
       "finding": "Koshien plaques retained under catalog-138 approved authentic-sign exception"
     }
   ],
-  "assessment": "Most inspected screens are readable and stylistically consistent; no blanket quality sign-off while open findings and uncaptured scenes remain."
+  "assessment": "Most inspected screens are readable and stylistically consistent; no blanket quality sign-off while open findings and uncaptured scenes remain.",
+  "phone_row_review": {
+    "target_sha1": "251f1afab0f09aa4134cd916921b4ae68c5f7300",
+    "frames": 34745,
+    "captures": [
+      {
+        "path": "build/emu/route-en-phone-row-full/001_boot_01.png",
+        "sha256": "45f9d0f65e9df4124a7d6529ce016f808ba7d30664e4cf373a01367a40c44f42"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/002_boot_02.png",
+        "sha256": "c1ded1e6a189d8d208c5d270393e392a66aa932dbc47a1f6945c01d5a326b40f"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/003_title_intro_01.png",
+        "sha256": "1a3012995c9200a96e89cacf6a3e40d27546ac2f3f90f7327ea47cdf8872db5d"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/004_title_intro_02.png",
+        "sha256": "ae2c63a9ebdce2a97d3388d470378f222b6c2fe6e54749f31c122041e841c72b"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/005_title_intro_03.png",
+        "sha256": "dd6b1862f9088b3347de86e77aa8e18016f2813ca992988a3400aad4d9d39902"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/006_title_intro_04.png",
+        "sha256": "58bb27c5783964c94210d36eeb3a4f733146b3d358a4018ce0b57b78f2513c73"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/007_title_intro_05.png",
+        "sha256": "bada81eb9ba152f1253c814a941dcadb80f35ce45e838b593ce2bc416dc07e27"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/008_title_menu.png",
+        "sha256": "eb0ad2859e32e995af19e29a1fa66fa9f4a2d2f539e7a3a753e2e4ab6af7018a"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/009_options.png",
+        "sha256": "fd4f8cd4e2d8019779c3b336463cb927796202e9071f74bc3b1405768440adf0"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/010_options_text_speed.png",
+        "sha256": "c1e8e928ec2c870b83eedeb8779a5b4012659bd9f702cb8584261e3619feb090"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/011_options_voice.png",
+        "sha256": "7c3707646cd69ea5b72b92e0e9af8bbf439ca8961b9ca6a9060b55f9bb178e15"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/012_options_voice_off.png",
+        "sha256": "0d3d747e43636bb4368026830c90203c8ab73cbeeaaa7a372ae6fbab5f24b095"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/013_title_menu_again.png",
+        "sha256": "eb0ad2859e32e995af19e29a1fa66fa9f4a2d2f539e7a3a753e2e4ab6af7018a"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/014_file_select_new_album.png",
+        "sha256": "6b18e7cd9e35aa6655861b9965b9015876942cd73eb41bdddf80a73b55efe2a3"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/015_file_select_album_slot.png",
+        "sha256": "373c970a1bb28a6a16d37699aaa105110f59677f826d9b987bd359b973a0b5c0"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/016_file_select_slot_1.png",
+        "sha256": "9be1b78c0ea03113075591d9063c68638dcf99cd637906acd5af3f62e9be4d57"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/017_file_select_system_file_01.png",
+        "sha256": "f34b34c112c843ba08b0249d9225f5aa59d229c045c648436bf784b95d267351"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/018_file_select_system_file_02.png",
+        "sha256": "9c5c46b4c59fcb9a039eba7dd6705fe95daaedf79d9bcb39a178f20865ebcc72"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/019_file_select_system_file_03.png",
+        "sha256": "9c5c46b4c59fcb9a039eba7dd6705fe95daaedf79d9bcb39a178f20865ebcc72"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/020_name_entry_page.png",
+        "sha256": "bfaee56bbae650c9a5ac0d2d11dd1454b532621251af57993b9b476ba30b7ebd"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/021_family_after_delete.png",
+        "sha256": "06c592bea984b62722e83c0c0d186f6c291ab60cf884a3fb08430db4a6bc8804"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/022_family_after_retype.png",
+        "sha256": "2995f1c42d62050da15812f3f5ffd2397507892b01874ecd97c36a42c635fbe6"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/023_name_entry_family.png",
+        "sha256": "2995f1c42d62050da15812f3f5ffd2397507892b01874ecd97c36a42c635fbe6"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/024_name_entry_given.png",
+        "sha256": "4843385043b429a79df389c5bfe9f7d143eb618c8fd2ef7e92a50a3a9c6ec6e7"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/025_name_entry_nickname.png",
+        "sha256": "63eab84a192f422c2f7e4fe90707f53ed29f31a1517c22c9bbf51e88e393ecb8"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/026_name_entry_birthday.png",
+        "sha256": "08bf38f5b5afdec974ff1f63d6675c4f24814bfd4ac141b9c8de0e0a2410a83f"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/027_name_entry_confirm.png",
+        "sha256": "109b849e8fffadb434d542d9abbdba3c956eb0a79d8ed4c012fc30e7bde2d394"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/028_name_entry_shiori_01.png",
+        "sha256": "8b6d0ec6dc1266bb4d77f060b99ca350315bc9595efefc481fee0c9d341a915e"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/029_name_entry_shiori_02.png",
+        "sha256": "789c97b0d0d2ce5cd345e5b39979365ed88952165e1bf683a76d027ceace81f7"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/030_name_entry_shiori_03.png",
+        "sha256": "cf48f5e7e98e5a5c9c23024c68c121b63bd71d942153d798d71ffd5356c3fddc"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/031_prologue_01.png",
+        "sha256": "ee4b928e8d9f4b42a9c47b9b6335ed8daec47addded5f941c729fb8769107840"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/032_prologue_02.png",
+        "sha256": "6f6b6edc5c7da79ee07e987d56655f7b02af82fc06731b4f704be4cc71cf94eb"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/033_prologue_03.png",
+        "sha256": "bd03ca0869ad95a4f1cb494855417fadfa250f18f61b084595b4cfbdc1d4a87a"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/034_prologue_04.png",
+        "sha256": "3d9df0836b16716b6d189dfadda83570f01b700dc2a62cd5edb91344c5b77af8"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/035_prologue_05.png",
+        "sha256": "1e5a6054142512cf4b2aead806e3c19daff28dc7d89cd9f0e0bc59c2baec5f8b"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/036_prologue_06.png",
+        "sha256": "97fd203e90443e364ce6e0384004d5c227d73db6688e4f9db26f795972a70e9a"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/037_prologue_07.png",
+        "sha256": "53480b36247f273735d5bb9aa6b321d1bb88c903c71966aa014905680ba09dc6"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/038_prologue_08.png",
+        "sha256": "d3101505827f84cd031f8fb42af1a4b8812661bb186b3f69446f5cdf7f001d19"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/039_prologue_09.png",
+        "sha256": "9ce597aebf64dc22e59ec2331fcc03fcfb7ee9257e703568795758353e6d787b"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/040_prologue_10.png",
+        "sha256": "a1107040be44a919b4c4cfeb8701a1677afc1cbcac52153c99efe0ef51d92e76"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/041_prologue_11.png",
+        "sha256": "1e28ea70d9260827fbaafa9972245a3a6ff1bffa33655ffedbea1bc2188bb992"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/042_prologue_12.png",
+        "sha256": "cf09972e07c76cab7fced75a37a668eebcad0bdcfeaf60c41f20ef5d63420499"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/043_prologue_13.png",
+        "sha256": "63a2d9ee7f25db9ea1e00ad7b8d1602187e4f684c7da8d15e6b1d24f89e68d8c"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/044_prologue_14.png",
+        "sha256": "9df5029f4476450923c3b925a228d19e32b81ae4759a0eaea89775acf7fdee69"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/045_prologue_15.png",
+        "sha256": "aad34cc2198aeb268f4a3ec1aecbda290910877b9f4fd1239a5536e88120143f"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/046_prologue_16.png",
+        "sha256": "6323d54d97ad80e4e865cbb7b6d604858cdb2dea86be6eed46aac26a74491db8"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/047_prologue_17.png",
+        "sha256": "8a9bdcefc1ae84bf8a5fd6d2a54a8d090bc86a6397869a3906420329a66a886e"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/048_prologue_18.png",
+        "sha256": "bc7a76ddabf0354510636f8ce34f507a040b9b3421791b446832a104886c0da0"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/049_prologue_19.png",
+        "sha256": "86070ec5ccdd3db3b657290cfde023c1e5f6e369b843cbb8bb9faae0f4f7f56e"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/050_prologue_20.png",
+        "sha256": "6fb9bd33bc6e1d5aefbd3de37a5fdeb3eaceea2692ccc5d1b7658c36c028b617"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/051_prologue_21.png",
+        "sha256": "8facb459f3a30ecf7a307022538bbc12338287922d212f5ca46ba166df28df75"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/052_prologue_22.png",
+        "sha256": "3bed001275ff291d5e4ff92fbeed6cc9946c3357a5a6185d2960396bc9e7d652"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/053_prologue_23.png",
+        "sha256": "7a78d7f9f17c855bc1f55a5d5781d413dcca98b51dad65813f4623f7e069c8cd"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/054_prologue_24.png",
+        "sha256": "743ea8e5fbf726bc0f4c8452ebb3b27920c7f10ba52621dd379336fccdc07661"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/055_prologue_25.png",
+        "sha256": "b016892cde751e1203ecb0654aae69e96044e36afb9548867e9190374cd7bb97"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/056_prologue_26.png",
+        "sha256": "58a7a5bc2a8732a4dfa1dba8e478c14dc52f58253bc63a57f8031bab1ec29387"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/057_prologue_27.png",
+        "sha256": "4c2f50c643e8375c09ee2021b7a191c160e55708ccaec37413e12500605a5174"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/058_prologue_28.png",
+        "sha256": "1ba16f4a7584a0be989ec28dc1048131b3b9e46833b234183e23b684f6231125"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/059_prologue_29.png",
+        "sha256": "72f0ea353d50ee082a32d102be23f02cd348ab273f7947bf7cf756a8bf180195"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/060_prologue_30.png",
+        "sha256": "4017bc5cba4e58198ee1783a9303265cc7667edd3fa722b584b862adbfdea470"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/061_prologue_31.png",
+        "sha256": "8e6d35aacb760ee1a1e33eecee92cea1c35b13d6c77b98b27aa17121e6ade05e"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/062_prologue_32.png",
+        "sha256": "3082e4f6e9e30527def08c857f8c4fa498741ba926c52ff58c9af9ae55423bd9"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/063_prologue_33.png",
+        "sha256": "f967622b0243b05b2d60432ad5b109595dad9cd967d3c22b4a89bac07db4895e"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/064_prologue_34.png",
+        "sha256": "e9bcb72fbf79ce20dec97ea9e27d6bcfd23eb97a717577f2ec5025287bda0aea"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/065_prologue_35.png",
+        "sha256": "1031a5930976e80efcb57f649a2ca9fb69ad63bca1eb09ba01b769178b6df73d"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/066_prologue_36.png",
+        "sha256": "4f11b4a25c8d57c4fa652d600d9c5340e6e60ac78588d38b25c23a138916850f"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/067_prologue_37.png",
+        "sha256": "1b733a1faa27800016e03a4b2db73c1703b6e97b20a92f738304da885915547b"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/068_prologue_38.png",
+        "sha256": "d8682f7bfe66de9efe32b8097d745dbca750b4ac711d32bb28fad220452cf9a2"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/069_prologue_39.png",
+        "sha256": "20f3741609fe0d3b46b277e70ac6ce05f3f345bc330e49ce14401f4a3fee84fd"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/070_prologue_40.png",
+        "sha256": "7782574a1dbcb9f0c9f917a0521c3a52f106cd82a9338ed883caacf6a7cce24a"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/071_prologue_41.png",
+        "sha256": "9dbdcff27fcb029f98e8aa067974b6673c74e0ebc29f259139891fff7af8ea67"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/072_prologue_42.png",
+        "sha256": "15d889e4418fa1a2ab88f0387a95545a659c6b1fdd1a33b261581edccc05c6e2"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/073_prologue_43.png",
+        "sha256": "c858d4b59c282f01ac57e5fed4b38f604865526c91bb7c5768b521b912a369cc"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/074_prologue_44.png",
+        "sha256": "92004c90b07a232abec5cd2ee47cdf9a9d246c955b1a30c22990a086ae89ba3a"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/075_prologue_45.png",
+        "sha256": "a003f17d9ea2eaff24c2a2050983f4ca026ad24d028aeedd8a74b031b81e88c3"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/076_prologue_46.png",
+        "sha256": "d0fad1857361711b45f53ed66266060954230482bff6a050df7e0e68fd6f8021"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/077_prologue_47.png",
+        "sha256": "af4f8afe80cc362d4adad578db0e20422cded43cebb9f8b8068d2362c391dd7c"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/078_prologue_48.png",
+        "sha256": "880a0d9a4110cc10d9b6d5eab410312f741b31b04265df52bd89c00541d7e1d4"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/079_after_prologue.png",
+        "sha256": "1b798e57d29d1c7fd74916a91e3693976f4044f20abdca294797a3f7e2099720"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/080_command_screen.png",
+        "sha256": "8d3284151d7db5db4270e711980a15f07fcb1675b1f3e374282f516778cfb593"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/081_calendar.png",
+        "sha256": "6e5847fbe07893808dcf1c9380df941fff375391e4b0f6546181008264412708"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/082_system_settings.png",
+        "sha256": "a8224a3c63fb7002e07509f06925ea3947df819fb7d314838e7d242b981e7030"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/083_command_study.png",
+        "sha256": "3f75897b0268ab998dd0587f55038ae05ea8148b8df6c18e8107d18df8642e44"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/084_school_day.png",
+        "sha256": "d34fbdb5409f681bc0dc60f44bf5dcd06ff460e1c469d72ae25e8673fece4402"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/085_week_1_01.png",
+        "sha256": "d18b57962e67c48592fa49cf9ad7afb5bbbd12e40f13805450f0c525c86d3e90"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/086_week_1_02.png",
+        "sha256": "26ebc56f7f065434498932e723eb398b204e0feda604c0ff900b37da0847e307"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/087_week_1_03.png",
+        "sha256": "ebdcb98089296097a196faf11f6593ef1c8dff769a2a20073b06fd71826a8cbc"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/088_week_1_04.png",
+        "sha256": "1510a2b36a718c6c4e3ed49f3a8b1a89346bc9feaf7563d53ed75cfa7ab98339"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/089_week_1_05.png",
+        "sha256": "8cccb5de0534d4e92360206a307e41495ff35b248c905ceec4b4401edbaee129"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/090_week_1_06.png",
+        "sha256": "44b4d209884460bec4376f7cc3d9552dde96c3d68fa16cf83f0a5f137b739f71"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/091_week_1_07.png",
+        "sha256": "feca69143ffa6c661b3c1951b91e24c5f852fdda599d633c52b65680a6990613"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/092_week_1_08.png",
+        "sha256": "9c3c60adbde635dcbd3f4bd54ba21b10436595212a616487b3af58e27288b68c"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/093_week_1_09.png",
+        "sha256": "45b1c5de338a3678e67b108587f5029562dae70e08332116f6f77e6525970cc6"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/094_week_1_10.png",
+        "sha256": "e39079eb6b42f3a36e5aa5a9d19cfde6ca5b51c3c50876a8ade5455985b39d77"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/095_week_1_11.png",
+        "sha256": "e8606edd88992ffb23007ddb7e1be78bae50c78e98b39cce160261ea648aef41"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/096_week_1_12.png",
+        "sha256": "9f15f2b2848069fd41592b8cee8f5dd757e566cae6293b357c69a040809e9acf"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/097_week_1_13.png",
+        "sha256": "c2485bca3eb0e81a3b451c908809aa489b6c495b1f034e80c24db2e21070a3c9"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/098_week_1_14.png",
+        "sha256": "4b8c3f928bfc55d74564f7fbf8d237ddb05b9f08974af2ca7c304d30855e77d5"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/099_week_1_15.png",
+        "sha256": "e84574f004a9d79bd80050e250de3e37f61f1c9d171a38ced07951e46be48800"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/100_week_1_16.png",
+        "sha256": "8f0efeeca2649045495e0b15129e0ff3132dcea4b9fb9f9f063fdd975f8a3cbd"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/101_week_1_17.png",
+        "sha256": "3e65eb7f07a947690c5dfd2f11016e86c072a986dbdec403616140d54c5fb68a"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/102_holiday.png",
+        "sha256": "cae6e05d9f64e8253863bfcd17b77abcadb2c9f41637d7a289e295a8ccf0f44a"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/103_phone_book.png",
+        "sha256": "bfd4fc1f3e909ea61bce6910d17f1d6c0e00288f3bbfae1d8b91fd0ae43770fc"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/104_phone_call_01.png",
+        "sha256": "20dfa13678843097ee25351ae8e3b8e748233837b3b488f513c80865b6bcd82b"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/105_phone_call_02.png",
+        "sha256": "bc480c5460e94d33b5df5b9054ccef8153dee81962dc31378feb3078d35a207d"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/106_phone_call_03.png",
+        "sha256": "20e90d79552e0b3386e897ae163908f64736d35c8590b072b0e0a40dde2f3841"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/107_phone_call_04.png",
+        "sha256": "20e90d79552e0b3386e897ae163908f64736d35c8590b072b0e0a40dde2f3841"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/108_phone_call_05.png",
+        "sha256": "20e90d79552e0b3386e897ae163908f64736d35c8590b072b0e0a40dde2f3841"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/109_phone_call_06.png",
+        "sha256": "f6d6f1521e1f0774902992011d7ee50463c8759ea20950a9ec8c03ed945b99fd"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/110_phone_call_07.png",
+        "sha256": "116cb34024682e7cd04df45bcb2accb136c5a63909dfae1befdb7cf8f5ef285e"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/111_phone_call_08.png",
+        "sha256": "5586d584f289bc741e5e480265cbb2e23974cd7980aeb3b636c4424eca8e8d58"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/112_phone_call_09.png",
+        "sha256": "d81e4f8c6496b681094ebcfaa714d86f2e71a2a03970d342f6ec8d825a436b24"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/113_phone_date_spot.png",
+        "sha256": "b8d454d5a61a2fc90acac25d6db3aa69ba0ec0420a8be500a63afccc104e4101"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/114_phone_answer_01.png",
+        "sha256": "9aada84dc330ec1105cf5437d2da3ec590301c50796c8da2c9e2be11df1f4a0f"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/115_phone_answer_02.png",
+        "sha256": "9be3db82ce1446984008882105ded5f7ba8f92d6171fa94eb9a32f15febfa3f7"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/116_phone_answer_03.png",
+        "sha256": "a2357639a6a3f6b4209858c5de8f224143c642a67b1fef2a3507aa6dfc53248e"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/117_phone_answer_04.png",
+        "sha256": "19bc90bd2ce89edc21950fb2f0b460802ee0778b708d876354b04e1f10b89977"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/118_phone_answer_05.png",
+        "sha256": "35c24ee2cbdca9ba88d68805481dcc257f5a9b4e421ada1cecc9ea8256574fd8"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/119_phone_answer_06.png",
+        "sha256": "1af000f4f7992f4e010c7b3b08e094834f3bb6e6098bcf8ecbfbfdf28f28e947"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/120_phone_answer_07.png",
+        "sha256": "6195261e519b87db41a22123f37c5975fdf080e0551d9bb01d80999c33511ad5"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/121_phone_answer_08.png",
+        "sha256": "6e8e4d7760ec86af197a388a92d79a5760ce3307ce6710f169c467b8fccd25da"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/122_command_screen_evening.png",
+        "sha256": "6f6730559bb138e4827395f2e6498b156ef449e7617efd9986cfd3d56fa3728e"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/123_save_menu.png",
+        "sha256": "db6d5805856956e4b329bff200a6f980b5d1aead602309bb01788a8e26246278"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/124_save_slot.png",
+        "sha256": "e1054fedef36872ff5bf6646d44906b02d308104e875c03d171f487e9467364b"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/125_save_overwrite.png",
+        "sha256": "78256046e91179ada3fe3fb04c80dbe417a07294dc5ba65a8fde5ad4f62f72df"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/126_save_writing.png",
+        "sha256": "49cd3c92a9c9be91b781b6e07d606d1d35308942d46864b842a6769822425617"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/127_save_done.png",
+        "sha256": "2049695d1d1e017e49feeab95392f0499d5a383b8a9551e225b86a3d00df2604"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/128_holiday_date.png",
+        "sha256": "a1ed2a10dc4cd0ed7e8d576150a73aa98b2cd15d615adaf808e44dd2d898f404"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/129_date_01.png",
+        "sha256": "8b2abcbe2dc00b0f95a56d5ebeeeb140bdbcfe2102dfa441755b243cb84739f5"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/130_date_02.png",
+        "sha256": "f7944f336b5af44115461cf91ec36b340fbecf5bd67dcd3aae9fcd68686f196f"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/131_date_03.png",
+        "sha256": "f9678130ea2be0bc257a879ff121abfcc2e28b420b2f162c12225fc9ea7a56e3"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/132_date_04.png",
+        "sha256": "48bf902cc77b0fc7b8be17410bcf3c6d77d0ce07749885e14178dc5fe31aa0f5"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/133_date_05.png",
+        "sha256": "d3797145a23e1efedf687538064463b968a38bb673aff1c59b329fdc04877034"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/134_date_06.png",
+        "sha256": "2b29ab4147948d10ec8d90adffbdea6a37f87a19a633b328f03d0d5c6f03c37f"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/135_date_07.png",
+        "sha256": "6b838e91cc73bb5409caab8d658dbb72cd283edb12d3197f5872332c5e65a9f4"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/136_date_08.png",
+        "sha256": "af0813981b1e8ced1fbb66b597b9ae7516c8b446fd38a8325c0ce150d9098d4c"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/137_date_09.png",
+        "sha256": "00d69a5ad79b6c5e3174fdbac64b0838c21eaabf24f9372101eae143f63bf930"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/138_date_10.png",
+        "sha256": "06bc3c92ba9869268160a7b07e23f7bf54914aae287f17349beda9cfdd6d25c0"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/139_date_11.png",
+        "sha256": "4c77b9cd5feaf6652e3f3efe8a03298257b7ee4bf4d860f9778ed24d29e02c22"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/140_date_12.png",
+        "sha256": "192d360e8555526b33ebafd44d90b8ba2363331b1e3a22937aaffa5c24198087"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/141_after_date.png",
+        "sha256": "a3d88c033e5c191361c54fc3526a7a055e08670a9485f1c552d7e7ce7759b887"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/142_load_slot.png",
+        "sha256": "5064bb3150bfe9341e2a667e9c76401f03ee451aa4b3b520783548dd1c2e6007"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/143_load_01.png",
+        "sha256": "337bb2175facebc1140f0c2836f29d54d2acb9ace85d2515399a1f48e9c02c64"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/144_load_02.png",
+        "sha256": "9aa41736260cd7c5e69b529a397c9bba951adc859716d40fc3222c6be93e5d81"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/145_load_03.png",
+        "sha256": "99f4c44eaca08a5e1b5ef9d9a0e8b83e27cd63ed8ca9cf5af9fc23f2ba22917b"
+      },
+      {
+        "path": "build/emu/route-en-phone-row-full/146_loaded.png",
+        "sha256": "51145fa53b132faa089d824ec9b08efc228fbefbc2605500cc9ea4cf2f934dd3"
+      }
+    ],
+    "review": "All 146 captures inspected. Phone closing marks and full-name save/load pass. Short prologue rows remain under T-39511; voice-enabled timing verification remains under T-39520."
+  }
 }

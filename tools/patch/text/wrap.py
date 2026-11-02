@@ -34,7 +34,7 @@ the window:
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 from .english import LABEL_END, LABEL_MARKERS, LINE_END, NAME_CODE_BYTES, OPTION_END
@@ -53,6 +53,13 @@ class FontMetrics:
     advance: dict
     sjis_advance: int
     line_height: int
+    name_code_px: dict = field(default_factory=lambda: dict(NAME_CODE_PX))
+
+    def for_window(self, window: Window) -> "FontMetrics":
+        """Match sndisp's 116-pixel reservation for player and girl names."""
+        if window.name == "telephone_narration":
+            return replace(self, name_code_px={**self.name_code_px, 0x10: 116, 0x15: 116})
+        return self
 
     @classmethod
     def load(cls, path: str | Path) -> "FontMetrics":
@@ -66,7 +73,7 @@ class FontMetrics:
         while pos < len(row):
             byte = row[pos]
             if byte in NAME_CODE_BYTES:
-                px = NAME_CODE_PX[byte]
+                px = self.name_code_px[byte]
                 total += self.width(px) if isinstance(px, bytes) else px
             elif byte < 0x20:
                 pass
@@ -229,6 +236,7 @@ def wrap(payload: bytes, window: Window, metrics: FontMetrics, joined: bool = Fa
     """Wrap ``payload`` for ``window``; see the module docstring. ``joined``: the caller has already
     removed the row breaks that carry no meaning (tools/patch/text/reflow.py, from the Japanese
     source); otherwise a reflow window uses ``keep_break`` on the English alone."""
+    metrics = metrics.for_window(window)
     skip = label_end(payload)
     if window.reflow and not joined:
         payload = reflow(payload, skip)

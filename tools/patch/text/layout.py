@@ -142,7 +142,7 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                 if window.reflow:
                     note["reflow"]["rows_after"] = result.payload.count(b"\n") + 1
                     note["reflow"]["orphans"], note["reflow"]["pages_over_lines"] = \
-                        _orphans_and_long_pages(result.payload, window, metrics)
+                        _orphans_and_long_pages(result.payload, window, metrics.for_window(window))
                 if result.long_rows:
                     note["rows_over_row_buffer"] = result.long_rows
                 if result.overflow_rows or result.too_many_lines:

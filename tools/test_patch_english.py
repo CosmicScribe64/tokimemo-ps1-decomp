@@ -90,6 +90,21 @@ class EncoderTest(unittest.TestCase):
 
 
 class WrapTest(unittest.TestCase):
+    def test_phone_names_use_runtime_reservations_without_changing_talk_names(self):
+        window = WINDOWS['telephone_narration']
+        phone = METRICS.for_window(window)
+        self.assertEqual(phone.width(bytes([0x10])), 116)
+        self.assertEqual(phone.width(bytes([0x15])), 116)
+        self.assertEqual(METRICS.width(bytes([0x10])), 88)
+        for name in (0x10, 0x15):
+            payload = b"I'm " + bytes([name]) + b". Nice to meet you too."
+            result = wrap(payload, window, METRICS)
+            self.assertEqual(result.payload.replace(b'\n', b' '), payload)
+            self.assertTrue(all(phone.width(row) <= window.width
+                                for row in result.payload.split(b'\n')))
+        deliberate = b'Hello.\n(A thought.)'
+        self.assertEqual(wrap(deliberate, window, METRICS, joined=True).payload, deliberate)
+
     def test_fitting_rows_and_explicit_breaks_stay(self):
         result = wrap(b"ab cd\nef", window(100), METRICS)
         self.assertEqual(result.payload, b"ab cd\nef")
