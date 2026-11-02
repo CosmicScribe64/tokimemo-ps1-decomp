@@ -3733,3 +3733,7 @@ Closed [[tickets/T-39528-patcher-player-copy]] after the 15 browser checks, desk
 ## [2026-11-02] ticket | Untranslated ending credits found
 
 Opened [[tickets/T-39529-english-staff-credits]] after the corrected current-build ending probe showed Japanese staff-credit sprites. The English summary itself scrolls through its final paragraph. The credit texture load and table are identified in the ETC overlay; the credits are outside the approved exceptions and need translation and visual verification.
+
+## [2026-11-02] decision | Preserve original ending credits
+
+The owner approved leaving the credits unchanged. Updated [[tickets/T-39500-english-translation-patch]] and closed [[tickets/T-39529-english-staff-credits]] as an approved exception. The 167,936-byte STAFF_R.NBN asset on the published disc matches the original exactly; no credit translations or pixel edits were applied. Gameplay quality checks remain open.

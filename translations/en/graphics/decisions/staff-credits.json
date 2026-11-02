@@ -1,0 +1,19 @@
+{
+  "ticket": "T-39529",
+  "decision": "retain-original",
+  "human_approved": true,
+  "date": "2026-11-02",
+  "reason": "The owner approved leaving the original credits unchanged.",
+  "scope": "Ending staff-credit artwork shared by both staff-roll variants.",
+  "source_path": "CDROM/FUKUTEST/STAFF_R.NBN",
+  "source_sha256": "e4807da733518e2da6d2f4b3d2cacfcddbed60b161774b26615c88b40c1a08d0",
+  "size": 167936,
+  "published_target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+  "disc_bytes_match_original": true,
+  "frame_count": 164,
+  "evidence": [
+    "src/ovl/misc_scenes/staff_roll_asset_load.c",
+    "src/ovl/misc_scenes/staff_roll_and_clear_save.c",
+    "build/emu/ending-current-verified-entry/shot_5000.png"
+  ]
+}
