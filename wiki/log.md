@@ -3481,3 +3481,7 @@ All 286 BUNKA_SD derived records resolve to exact translated physical slots; all
 ## [2026-11-02] query | Classify final executable scan and preserve binding receipt
 
 All 91 referenced-byte candidates classified: 79 exact retained keyboard records, 11 named numeric tables and one MIPS jump target. Rechecked 321 source-only literals, all present. The obsolete honorific formatter has verified replacement helper calls/suffix. Saved metadata-only receipt with target/source/report hashes and helper evidence. Consolidated reusable verification remains next. [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] build | Make generated-source verification repeatable
+
+Added tools/patch/audit_generated_sources.py and seven synthetic regressions. Docker verifies all 1,964 active literal records in 171 live/frozen release sources; 23 combined source/name/script tests pass. Reports contain metadata only. Standards review passed; compiled machine-reference consolidation remains open. Reinspected full-name confirmation/load captures and the corrected dialogue capture; refreshed stale name-verification prose in [[english-text-runtime]]. User reconfirmed full longer presets. [[tickets/T-39510-no-japanese-left-check]], [[english-build]].
