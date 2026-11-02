@@ -21,7 +21,6 @@ kanban-plugin: board
 
 
 ## In Progress
-- [ ] [[tickets/T-39525-english-break-boundaries|T-39525 Check English boundaries before retaining source line breaks]]
 
 
 
@@ -77,6 +76,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-39525-english-break-boundaries|T-39525 Check English boundaries before retaining source line breaks]]
 
 
 

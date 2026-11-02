@@ -132,13 +132,12 @@ def close_speech(payload: bytes, command, next_command) -> tuple[bytes, int]:
 
 
 def unclose(payload: bytes, before: bytes, command) -> bytes:
-    """Removes the quotes ``close_speech`` added to ``before`` (the runtime draws them). Rows may have
-    been wrapped in between, which turns spaces into row ends and changes no byte count."""
+    """Remove only layout-added quotes; the runtime draws them. Wrapping can trim spaces."""
     split = (lambda p: p.split(bytes([OPTION_END]))) if command in (0x2, 0x5) else (lambda p: [p])
     out = []
     for page, original in zip(split(payload), split(before)):
         body = page.rstrip(EMPTY_OPTION)
-        if len(page) == len(original) + 1 and body.endswith(QUOTE):
+        if _close(original) != original and body.endswith(QUOTE):
             page = body[:-1] + page[len(body):]
         out.append(page)
     return bytes([OPTION_END]).join(out)

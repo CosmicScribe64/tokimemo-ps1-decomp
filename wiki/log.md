@@ -3669,3 +3669,15 @@ Moved [[tickets/T-39527-patcher-disc-inputs]] to In Review. Full dropped-archive
 ## [2026-11-02] ticket | Drag-and-drop patcher published
 
 Closed [[tickets/T-39527-patcher-disc-inputs]] after code review, 15 browser checks, real-disc format checks and desktop/mobile visual inspection. GitHub Pages workflow `41525374227` succeeded. All 36 served files match the tested package; the deployed CHD reader also reconstructs both original track hashes. README instructions now cover disc images and ZIP/7z archives. The source commit is `981fbce05`; the public package is `7cec4eb`. Preserved upstream decoder and license line endings byte-for-byte.
+
+## [2026-11-02] query | Boundary candidate route inspected
+
+[[tickets/T-39525-english-break-boundaries]]: inspected all 134 captures from the completed 33,572-frame route, including native-image checks where contact-sheet previews looked incomplete. No new clipping or overlap was observed. Corrected the controlled festival probe from BUNKASAI mode `0x70` to the target BUNKAKEN mode `0x71`; it now loads Shiori's literature-club scene. Exact scrolling-page verification continues.
+
+## [2026-11-02] build | Festival boundary scrolling verified
+
+[[tickets/T-39525-english-break-boundaries]]: all three affected FU_S6O variants scroll to their final line and closing quote. Memory headers match the actual patched container; the runs are explicitly recorded as controlled probes. Code review found no unresolved issues. A package combining this candidate with the current archive-capable browser patcher is undergoing final download checks.
+
+## [2026-11-02] ticket | English boundary fix in review
+
+Moved [[tickets/T-39525-english-break-boundaries]] to In Review after complete-disc audits, full route inspection, controlled festival scrolling checks and standards review. Publication verification remains.

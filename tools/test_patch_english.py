@@ -188,7 +188,7 @@ class SourceReflowTest(unittest.TestCase):
     def test_full_rows_reflow_and_short_sentences_keep_their_break(self):
         segments = self.segments("あ" * 13, "いう。", "えお")
         payload, notes = source_reflow.reflow(b"What'll I do\nthis\nweek? Fine", 0, segments, "message_speech", "X")
-        self.assertEqual(payload, b"What'll I do this\nweek? Fine")
+        self.assertEqual(payload, b"What'll I do this week?\nFine")
         self.assertEqual((notes.breaks_seen, notes.forced, notes.kept_rule), (2, 1, 1))
         # different break counts: the kept break goes to the same sentence end in the English
         payload, notes = source_reflow.reflow(b"One. Two three", 0, self.segments("あい。", "う"), "message_speech", "X")
@@ -197,6 +197,31 @@ class SourceReflowTest(unittest.TestCase):
         payload, notes = source_reflow.reflow(b"a b\nc", 0, self.segments("あい。", "う", "え。"),
                                               "message_speech", "X")
         self.assertEqual(notes.ambiguous, 1)
+
+    def test_equal_row_counts_require_an_english_boundary(self):
+        segments = self.segments("あい。", "う")
+        for text in (b"Found a quiet\nplace.", b"What's so\nfunny?", b"Good work,\nDr. Reed.",
+                     b"Hello, Mr.\nBrown."):
+            payload, notes = source_reflow.reflow(text, 0, segments, "message_speech", "X")
+            self.assertEqual(payload, text.replace(b"\n", b" "))
+            self.assertEqual((notes.kept_rule, notes.ambiguous), (0, 1))
+        for text in (b"Really?\nThanks.", b"Wait...\nOkay.", b'He said "yes."\nFine.'):
+            payload, notes = source_reflow.reflow(text, 0, segments, "message_speech", "X")
+            self.assertEqual(payload, text)
+            self.assertEqual(notes.kept_rule, 1)
+        payload, notes = source_reflow.reflow(b"Done.\n", 0, segments, "message_speech", "X")
+        self.assertNotIn(b"\n", payload)
+        self.assertEqual(notes.kept_rule, 0)
+
+    def test_openers_and_reply_pages_keep_their_boundaries(self):
+        segments = self.segments("あい", "（う）")
+        payload, _ = source_reflow.reflow(b"All right\n(I hope.)", 0, segments, "message_speech", "X")
+        self.assertEqual(payload, b"All right\n(I hope.)")
+        segments = self.segments("あ。", "い") + [Control("separator", "reply_variant", b"\x0b")] \
+            + self.segments("う。", "え")
+        payload, _ = source_reflow.reflow(b"First\nreply.\x0bReally?\nYes.", 0, segments,
+                                         "message_speech", "X")
+        self.assertEqual(payload, b"First reply.\x0bReally?\nYes.")
 
     def test_balanced_rows_avoid_a_lone_word(self):
         # greedy would leave "dd" alone; balanced fills two rows evenly
@@ -230,6 +255,9 @@ class SpeechTest(unittest.TestCase):
             self.assertEqual(speech.separate_aside(text), text)
 
     def test_unclose_removes_only_the_added_quotes(self):
+        self.assertEqual(speech.unclose(b'Complete."', b'Complete. ', 0x1), b'Complete.')
+        self.assertEqual(speech.unclose(b'Already closed."', b'Already closed." ', 0x1),
+                         b'Already closed."')
         before = b'a b\x0bsaid "x"\x0b\x0cz'
         closed, n = speech.close_speech(before, 0x2, None)
         self.assertEqual(n, 1)

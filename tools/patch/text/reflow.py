@@ -10,12 +10,12 @@ same record (its segments, with the row controls):
   after a closing 」』）, after an ellipsis …/‥, or before an opening 「『（.
 * any other short row: treated as forced (the text continues).
 
-Intentional breaks are mapped to the English: when the English page has as many breaks as the
-Japanese one, break k maps to break k; otherwise to the English boundary of the same kind and rank (the
-n-th sentence end, or the n-th opening parenthesis or quote), and when that is not there the break is
-dropped and logged as ambiguous. Every other break becomes a space and the page is wrapped again by
-``wrap.wrap``. Pages (option ends) never change, and windows without ``reflow`` (choices) keep their
-rows.
+Intentional breaks are mapped to English sentence ends or opening quotes and parentheses. Equal row
+counts allow a break to keep its position only when that English boundary has the expected kind.
+Otherwise, use the boundary of the same kind and rank (the n-th sentence end or opener). When no such
+boundary exists, drop the break and log it as ambiguous. Every other break becomes a space and the
+page is wrapped again by ``wrap.wrap``. Pages (option ends) never change, and windows without
+``reflow`` (choices) keep their rows.
 
 Category rule: records whose container is listed in ``KEEP_ALL_BREAKS`` (songs, letters, poems, lists)
 keep every break. None of the windowed containers is one today: the song lines (opening, ending,
@@ -39,7 +39,9 @@ SENTENCE_END_JP = "。！？!?"
 CLOSERS_JP = "」』）)"
 ELLIPSIS_JP = "…‥"
 OPENERS_JP = "「『（("
-EN_SENTENCE_END = re.compile(rb"[.!?\xa1\xa5](?:[\")'\xa1\xa3]*)(?= )")
+EN_SENTENCE_END = re.compile(
+    rb"(?<!\bDr)(?<!\bMr)(?<!\bMrs)(?<!\bMs)(?<!\bProf)(?<!\bSt)(?<!\bJr)(?<!\bSr)"
+    rb"[.!?\xa1\xa5](?:[\")'\xa1\xa3]*)(?= )", re.IGNORECASE)
 EN_OPENER = re.compile(rb"(?<= )[(\"\xa0\xa2]")
 
 
@@ -147,14 +149,15 @@ def reflow_page(page: bytes, source: list[SourceBreak] | None, notes: ReflowNote
     for k, brk in enumerate(source):
         if brk.kind != "intentional":
             continue
-        if len(source) == english_breaks:
+        pattern = EN_SENTENCE_END if brk.boundary == "sentence" else EN_OPENER
+        boundaries = {m.end() if pattern is EN_SENTENCE_END else m.start() - 1
+                      for m in pattern.finditer(text)}
+        if len(source) == english_breaks and starts[k] in boundaries:
             where = starts[k]
         else:
-            pattern = EN_SENTENCE_END if brk.boundary == "sentence" else EN_OPENER
             where = _nth(pattern, bytes(text), brk.rank)
-            if where is not None and where >= len(text):
-                where = None
-        if where is None or text[where] != 0x20:
+        if where is None or where >= len(text) or text[where] != 0x20 \
+                or not text[:where].strip() or not text[where + 1:].strip():
             notes.ambiguous += 1
             continue
         kept_at.add(where)

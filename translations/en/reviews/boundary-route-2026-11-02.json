@@ -1,0 +1,30 @@
+{
+  "ticket": "T-39525",
+  "target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+  "route_result": "build/emu/route-en-english-boundary/result.json",
+  "reason": "done",
+  "frames": 33572,
+  "font_trace": {
+    "frame_origin": "start of this emulator run",
+    "calls": 0,
+    "unknown_calls": 0,
+    "overflow_calls": 0,
+    "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+    "load_address": 2147808100,
+    "entries": {},
+    "ranges_address": 2148237164,
+    "frame_offset": 0
+  },
+  "captures_inspected": 134,
+  "contact_sheets": "build/visual-quality-review/boundary-route",
+  "native_rechecks": [
+    "080_command_screen.png",
+    "123_date_11.png"
+  ],
+  "findings": [
+    "No new clipping or overlap observed in this route.",
+    "Long player names fit dialogue and saved-game details.",
+    "The opening plaque, dialogue quotes and phone farewell remain correct."
+  ],
+  "scope": "Opening through first date and save/load; does not cover off-route festival scrolling."
+}
