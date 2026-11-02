@@ -1,5 +1,5 @@
 /* cd.c: English CD file remap (T-39507). Not part of the original executable: only the English build
- * (`ninja english`) compiles it, into the island after the main bss. The English disc moves the text
+ * (`ninja english`) compiles it into the main executable (T-39505). The English disc moves the text
  * files that grew to the end of the data track (tools/patch/disc.py), and the game reads files by
  * literal sector numbers and counts: 920 cd_read_sectors calls in src/, LBA tables in the data of main
  * and the overlays, and the 0x1012 end-word check of cd_read_sectors, which needs the read to end at the

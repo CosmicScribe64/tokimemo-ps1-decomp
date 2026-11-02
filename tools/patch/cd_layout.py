@@ -21,12 +21,12 @@ Before a file is moved, ``plan_file`` checks what the code is known to do with i
   covers another file, cannot be remapped exactly and is reported;
 * the load buffer: the new size must not exceed the largest read of the original into the same
   address, or the limit in ``BUFFER_LIMITS`` (the DATE buffer at 0x80198000 holds 24 sectors);
-  otherwise the original file stays and the RAM map work (T-39505) has to make room;
+  otherwise the original file stays (the RAM above the DATE buffer is in use, wiki/ram-map.md);
 * a literal ``cd_file_checksum_ok(blocks, address)`` with the file's original sector count
   would check the wrong end and is reported.
 
 CLI (in Docker): ``python3 tools/patch/cd_layout.py remap-asm LAYOUT.json OUT.s`` writes the
-island table; a missing LAYOUT.json gives an empty table, so ``ninja english`` works before the
+remap table (src/english/cd.c); a missing LAYOUT.json gives an empty table, so ``ninja english`` works before the
 first disc build.
 """
 from __future__ import annotations
@@ -45,8 +45,9 @@ CHECKSUM_CALL = re.compile(r"\bcd_file_checksum_ok\(\s*" + _ARG + r"\s*,\s*" + _
 
 # Load buffers whose size the code proves, beyond "the largest original read into the address".
 BUFFER_LIMITS = {
-    0x80198000: (24, "DATE talk buffer: the largest original read is 24 sectors and the RAM above it "
-                     "is not mapped yet (T-39505)"),
+    0x80198000: (24, "DATE talk buffer: 24 sectors at most; TAKU3.BIN (the date places' choice tables) "
+                     "is loaded at 0x801A4000 and another load fills 0x801A5800-0x801AE000 during a "
+                     "date (wiki/ram-map.md, T-39505)"),
 }
 # Read tables in overlay data: (overlay, sectors table, lba table, entries, buffer address, source).
 READ_TABLES = (

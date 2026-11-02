@@ -14,6 +14,7 @@ itself and every other byte as a three-digit octal escape, so
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -140,6 +141,18 @@ def _relocated(unit: dict, path: str, start: int | None, payload: bytes, groups:
     return candidates[0][1]
 
 
+_SIZED_ARRAY = re.compile(r"\[\s*(0x[0-9A-Fa-f]+|\d+)\s*\]\s*=\s*$")
+
+
+def _grow_array(before: str, need: int) -> str:
+    """A literal that initialises a sized array (`u8 name[27] = "..."`) gets an array large enough
+    for it; the free relink (T-39505) moves whatever follows."""
+    m = _SIZED_ARRAY.search(before)
+    if not m or int(m.group(1), 0) >= need:
+        return before
+    return before[:m.start(1)] + str(need) + before[m.end(1):]
+
+
 def rewrite_sources(repository: str | Path, sites: list[LiteralSite], payloads: dict[str, bytes],
                     *, keep_unchanged: bool = True) -> dict[str, str]:
     """New text of every source file with a written literal.
@@ -161,6 +174,7 @@ def rewrite_sources(repository: str | Path, sites: list[LiteralSite], payloads: 
             if keep_unchanged and payload == site.payload:
                 pieces.append(text[site.start:site.end])
             else:
+                pieces[-1] = _grow_array(pieces[-1], len(payload) + 1)
                 pieces.append(render_literal(payload))
                 changed = True
             cursor = site.end

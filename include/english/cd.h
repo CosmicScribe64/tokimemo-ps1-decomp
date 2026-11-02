@@ -2,7 +2,7 @@
 #define ENGLISH_CD_H
 
 /* English CD file remap (T-39507, wiki/english-build.md). Only the English build compiles and links
- * these symbols, in the island after the main bss. */
+ * these symbols, as part of the main executable (T-39505). */
 
 #include "common.h"
 

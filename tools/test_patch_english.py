@@ -304,28 +304,31 @@ class LiteralSiteTest(unittest.TestCase):
                 c_literals.locate_sites(tmp, [unit("u3", b"zz", 5)])
 
 
-class EnglishLinkLabelTest(unittest.TestCase):
-    def test_section_labels_are_pinned(self):
+class GrowArrayTest(unittest.TestCase):
+    def test_sized_array_grows_for_a_longer_literal(self):
+        from tools.patch.text.c_literals import _grow_array
+        self.assertEqual(_grow_array("    u8 name[27] = ", 30), "    u8 name[30] = ")
+        self.assertEqual(_grow_array("    u8 name[0x20] = ", 30), "    u8 name[0x20] = ")
+        self.assertEqual(_grow_array("    f(", 30), "    f(")
+
+
+class EnglishLinkFreeTest(unittest.TestCase):
+    def test_free_link_has_anchors_and_no_pins(self):
+        """T-39505: the English script names every input section and pins nothing, so the section
+        labels after a shrinking or growing object simply follow it."""
         import tools.english_link as english_link
         with tempfile.TemporaryDirectory() as tmp:
             ld, out, mapfile = Path(tmp) / "a.ld", Path(tmp) / "b.ld", Path(tmp) / "a.map"
             ld.write_text("SECTIONS\n{\n    X_START = .;\n    .X 0x80132000 : AT(0)\n    {\n"
                           "        build/a.o(.rodata);\n        X_RODATA_END = .;\n        X_DATA_START = .;\n"
                           "        build/b.o(.data);\n    }\n    X_VRAM_END = .;\n}\n")
-            mapfile.write_text(".X             0x0000000080132000      0x40\n"
-                               " build/a.o(.rodata)\n"
-                               " .rodata        0x0000000080132000       0x20 build/a.o\n"
-                               "                0x0000000080132020                X_RODATA_END = .\n"
-                               "                0x0000000080132020                X_DATA_START = .\n"
-                               " build/b.o(.data)\n"
-                               " .data          0x0000000080132020       0x20 build/b.o\n"
-                               "                0x0000000080132040                X_VRAM_END = .\n")
-            english_link.cmd_ld(["X", str(ld), str(mapfile), str(out), "--redirect", "build/a.o"])
+            mapfile.write_text("")
+            english_link.cmd_ld(["X", "build/en", str(ld), str(mapfile), str(out), "--redirect", "build/a.o"])
             lines = [line.strip() for line in out.read_text().splitlines()]
-            at = lines.index("X_RODATA_END = .;")
-            self.assertEqual(lines[at - 1], ". = 0x20; /* pin X_RODATA_END at 0x80132020 */")
             self.assertIn("build/en/a.o(.rodata);", lines)
-            self.assertFalse(any("pin X_VRAM_END" in line for line in lines))  # outside the output section
+            self.assertIn("__en_X_0 = ALIGN(., 2);", lines)
+            self.assertIn("__en_X_1 = ALIGN(., 2);", lines)
+            self.assertFalse(any(line.startswith(". = 0x") for line in lines))
 
 
 @unittest.skipUnless(os.environ.get("TOKIMEMO_ENGLISH_DISC") == "1" and ORIG_TRACK.is_file(),

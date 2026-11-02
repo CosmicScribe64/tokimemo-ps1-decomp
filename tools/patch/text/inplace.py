@@ -2,12 +2,12 @@
 
 The main executable and the overlays are built from the decomp, so their text containers
 (tools/patch/text/containers.py, ``growable=False``) are models of the original files. The
-English build keeps the original addresses of every object it does not rebuild, so a table or
-extent record that is not a C literal sits at the same file offset in the English binary.
-``patch_built`` writes each such record through the container's ``Image.write`` (on the
-original bytes) and copies the slot's bytes into the built binary, but only when the built
-binary still holds the original bytes there; otherwise the slot moved in the English link and
-the record is reported. C literals are compiled from build/en/src and are skipped here.
+English build relinks them freely (T-39505, wiki/relink.md): ``locate`` maps an original file
+offset to its offset in the English binary (None when the bytes sit in a rebuilt object).
+``patch_built`` writes each table or extent record through the container's ``Image.write`` (on
+the original bytes) and copies the slot's bytes to the located place, but only when the built
+binary still holds the original bytes there; otherwise the record is reported as moved in the
+build. C literals are compiled from build/en/src and are skipped here.
 """
 from __future__ import annotations
 
@@ -25,8 +25,10 @@ class InPlaceResult:
     moved_in_build: list = field(default_factory=list)
 
 
-def patch_built(container: Container, payloads: dict[str, bytes], built: bytes) -> InPlaceResult:
-    """Copy the English in-place records of ``container`` into ``built``."""
+def patch_built(container: Container, payloads: dict[str, bytes], built: bytes,
+                locate=lambda offset: offset) -> InPlaceResult:
+    """Copy the English in-place records of ``container`` into ``built``; ``locate`` maps an original
+    file offset to the built one (identity by default)."""
     image = container.image
     wanted = {rid: payload for rid, payload in payloads.items()
               if rid in image.slots and image.slots[rid].mode == "in_place"
@@ -41,10 +43,11 @@ def patch_built(container: Container, payloads: dict[str, bytes], built: bytes) 
         if rid in over:
             report.overflows.append({"id": rid, "needed": over[rid]["needed"], "capacity": slot.capacity})
             continue
-        if bytes(out[start:end]) != image.data[start:end]:
+        new = locate(start)
+        if new is None or bytes(out[new:new + end - start]) != image.data[start:end]:
             report.moved_in_build.append(rid)
             continue
-        out[start:end] = result.data[start:end]
+        out[new:new + end - start] = result.data[start:end]
         report.written.append(rid)
     if has_cd_trailer(built):
         total = sum(out[:-4]) & 0xFFFF

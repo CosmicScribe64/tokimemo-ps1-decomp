@@ -1,5 +1,5 @@
 /* text.c: English text runtime (T-39502). Not part of the original executable: only the English build
- * (`ninja english`) compiles it, into the island that src/english/boot.s copies after the main bss. The
+ * (`ninja english`) compiles it; tools/english_link.py appends it to the main executable (T-39505). The
  * functions replace load_string, set_kanji_string and disp_string through the jumps that
  * tools/english_link.py writes at their entry points (config/english_hooks.txt). Design and encoding:
  * wiki/english-text-runtime.md.
