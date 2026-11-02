@@ -3709,3 +3709,7 @@ Opened [[tickets/T-39528-patcher-player-copy]] for the owner's request to remove
 ## [2026-11-02] build | Player-focused patcher copy verified
 
 [[tickets/T-39528-patcher-player-copy]] removes build/hash details and repetitive verification language while keeping the information needed to choose a disc and use the downloads. All 15 browser checks pass. Desktop and mobile screenshots were inspected; the updated local preview is served at port 8766. Standards and prose reviews found no unresolved issues.
+
+## [2026-11-02] ticket | Simplified patcher page published
+
+Closed [[tickets/T-39528-patcher-player-copy]] after the 15 browser checks, desktop/mobile visual review and successful Pages deployment. All 36 public files match the tested package. The game patch is unchanged; this update simplifies the player-facing page and messages.
