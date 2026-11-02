@@ -3693,3 +3693,11 @@ Reopened [[tickets/T-39526-publish-review-patcher]] for the owner's request to d
 ## [2026-11-02] ticket | Boundary fix published and README introduction clarified
 
 Closed [[tickets/T-39525-english-break-boundaries]] after the current browser patcher passed 15 checks and all 36 public package files matched the tested candidate. Pages workflow `41526884160` succeeded. Closed the README follow-up in [[tickets/T-39526-publish-review-patcher]] after reviewing its new title and opening against the repository contents. The introduction now states the decompilation, English review patch, browser patcher and included tooling, with a direct patcher link.
+
+## [2026-11-02] ticket | Describe the patch's artwork and fidelity goals
+
+Reopened [[tickets/T-39526-publish-review-patcher]] for the owner's clarification that the patch includes translated artwork and aims to remain faithful to the original game.
+
+## [2026-11-02] ticket | README explains translated artwork and faithful presentation
+
+Closed the follow-up in [[tickets/T-39526-publish-review-patcher]]. The README now describes English text and artwork, with fidelity to the original meaning, character voices and visual style stated as an aim. Review status remains clear. Deslop/Humanizer and standards review cover this prose-only change.

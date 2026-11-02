@@ -37,3 +37,7 @@ Deslop and Humanizer review covered the exact staged README and page copy, sourc
 2026-11-02 follow-up: reopened for the owner's request to make the README title and opening describe the full repository, including the decompilation, English patch and browser patcher.
 
 README follow-up complete: the title and opening now identify the matching C decompilation, English review patch, browser patcher, translation assets, extraction tools and Docker build tools. The opening links directly to the live patcher. Checked against the repository contents and coding standards; Deslop/Humanizer review removed a repeated completion statement. No code behavior changed.
+
+2026-11-02 follow-up: the owner wants the introduction to emphasize translated artwork and the aim of remaining faithful to the original game.
+
+The opening and English-patch section now describe text and artwork, including signs and interface graphics. Fidelity to meaning, character voices and visual style is stated as the project's aim, with review status retained. Reviewed the wording against the implemented asset work and coding standards; no code or game text changed.
