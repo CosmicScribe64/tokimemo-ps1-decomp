@@ -135,8 +135,9 @@ def verify_sprites(path: str, original: bytes, written: bytes, exe: bytes, exe_w
         if compose(written, after.views[key]) != compose(original, view):
             raise ArtBuildError("%s %s: a view without English art changed on the disc" % (path, key))
         unchanged += 1
-    stray = [i for i, (a, b) in enumerate(zip(original, written)) if a != b and i not in planned.touched]
-    if len(original) != len(written) or stray:
+    stray = [i for i, (a, b) in enumerate(zip(original[:-4], written)) if a != b and i not in planned.touched]
+    grown = len(written) != len(original)
+    if stray or (grown and (written[-4:] != original[-4:] or len(written) % 2048)):
         raise ArtBuildError("%s: %d bytes changed outside the planned texels and records" % (path, len(stray)))
     return {"images": out, "other_views_unchanged": unchanged}
 
@@ -164,7 +165,9 @@ def verify_still(path: str, original: bytes, written: bytes, crops: list) -> dic
              "ring_max_abs_rgb555": int(ring.max()) if ring.size else 0,
              "english_max_abs_rgb555": int(english.max()) if english.size else 0,
              "english_psnr_db": round(10 * math.log10(31 ** 2 / mse), 2) if mse else None}
-    ok = facts["outside_identical"] and facts["ring_max_abs_rgb555"] <= stills.CODEC_RING_TOLERANCE
+    facts["sectors"] = {"original": -(-len(original) // 2048), "new": -(-len(written) // 2048)}
+    ok = (facts["outside_identical"] and facts["ring_max_abs_rgb555"] <= stills.CODEC_RING_TOLERANCE
+          and facts["sectors"]["new"] <= facts["sectors"]["original"])
     status = "verified" if ok else "re-encoded still fails its gates on the disc"
     return {"images": {i: status for i, _p, _m in crops}, "facts": facts}
 

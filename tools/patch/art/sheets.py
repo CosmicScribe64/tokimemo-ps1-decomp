@@ -41,6 +41,7 @@ class Profile:
     page_sets: dict = field(default_factory=dict)    # view key -> pages its new parts may use (default all)
     prefer_rebuild: bool = False                     # label sheets: new parts per word, the whole frame freed
     grow: int = 0                                    # tile size when a frame may get a new, longer record
+    frame_table: tuple | None = None                 # (file offset, load address): grown records go in the file
 
     def record_bytes(self, data: bytes) -> bytes:
         """The bytes that hold the frame and part records: the container, or the executable."""
@@ -198,18 +199,43 @@ def name_profile(data: bytes) -> Profile:
     return profile
 
 
+EXAM_LOAD = 0x801E0000
+EXAM_FRAME_TABLE = 0x64A0       # 32 frame pointers (tools/assets/image_packs_exam.py)
+EXAM_RECORDS_END = 0x6494
+
+
 def exam_profile(data: bytes, exe: bytes) -> Profile:
-    """EXAMINE.NBN: three 4bpp pages, frame records in the file, CLUTs from the executable."""
-    pages, frames = exam._parse(data, exe)
-    profile = Profile("CDROM/FUKUTEST/EXAMINE.NBN", align=8,
+    """EXAMINE.NBN: three 4bpp pages, frame records in the file, CLUTs from the executable.
+
+    A frame may get a longer record appended to the file (`grow`; the CD hook remaps the read of
+    the grown file): the reader only accepts records in the original record area, so such frames
+    are parsed here from their new record."""
+    read, _base = mainrom._reader(exe)
+    pointers = list(struct.unpack_from("<32I", data, EXAM_FRAME_TABLE))
+    moved = {i: p - EXAM_LOAD for i, p in enumerate(pointers) if not 0x6000 <= p - EXAM_LOAD <= EXAM_RECORDS_END - 8}
+    parse_data = bytearray(data[:0x6800])
+    for i in moved:
+        struct.pack_into("<I", parse_data, EXAM_FRAME_TABLE + 4 * i, pointers[0 if 0 not in moved else 1])
+    pages, frames = exam._parse(bytes(parse_data), exe)
+    profile = Profile("CDROM/FUKUTEST/EXAMINE.NBN", align=8, grow=8,
                       pages={i: (offset, 4) for i, offset in enumerate(pages)},
                       encode=lambda page, u, v: (page << 8) | ((v // 8) << 4) | (u // 8))
+    profile.frame_table = (EXAM_FRAME_TABLE, EXAM_LOAD)
 
     def make(p):
         return Part(p["x"], p["y"], p["width"], p["height"], p["flip_flags"], p["sheet_source_offset"], 4,
                     p["u"], p["v"], tuple(p["preview_palette_words"]), p["source_record_offset"], p["sheet_index"],
                     p["palette_info"])
-    _frame_views(profile, frames, "base", make)
+    _frame_views(profile, [f for f in frames if f["frame_index"] not in moved], "base", make)
+    for index, offset in moved.items():
+        parts = []
+        for number in range(struct.unpack_from("<h", data, offset)[0]):
+            record = offset + 8 + 14 * number
+            x, y, texture, info, flip, width, height = struct.unpack_from("<2h3H2h", data, record)
+            address = 0x800C6020 + ((info >> 8) & 15) * 512 + (info & 0xF0) * 2
+            parts.append(Part(x, y, width, height, flip, pages[texture >> 8], 4, (texture & 15) * 8,
+                              ((texture & 255) >> 4) * 8, _exe_palette(read, address), record, texture >> 8, info))
+        profile.add(View.of("frame-%03d.base" % index, parts, frame=index, record=offset))
     return profile
 
 
