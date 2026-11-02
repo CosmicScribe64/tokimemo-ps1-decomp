@@ -3071,3 +3071,7 @@ Created [[tickets/T-39512-browser-patcher]] for the remaining browser deliverabl
 ## [2026-11-01] ticket | Browser patcher ready for review
 
 Moved [[tickets/T-39512-browser-patcher]] to In Review after the final real-disc browser recheck passed all nine gates. Full output SHA-1 is `2af21422ced8d6dc0ea07a903991b58a38a14966`. Added the additional third-party license texts credited by the unchanged decoder. Fresh emulator frame 115 also verifies the assembled date-confirmation sentence now fits in two complete rows, including the closing quote (`build/emu/route-en-final-layout/preview-115.png`).
+
+## [2026-11-01] build | Final-layout route completes through save and load
+
+`build/emu/route-en-final-layout` completed 33,649 frames in 760 s, with 146 captures, reaching date, save, and load. Birthday capture 024 and telephone capture 115 were inspected and pass their fixes. Runtime/art fixes saved in c62c3a9ae; browser patcher and verification saved in adee6e171. Remaining release audit: compressed-sign deferrals, stale movie/off-frame-sign accounting, unregistered Ijuin banner in `CDROM/PROLODIR/CUT_09.NBN` or `CUT_10.NBN`, individual kept-original records, broader glyph logging/off-route coverage, and owner review. Goal remains active.
