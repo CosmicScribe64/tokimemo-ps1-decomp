@@ -3745,3 +3745,55 @@ Mapped the current-disc girl-12 summary to EPILOG table 3, entry 0 in `src/ovl/e
 ## [2026-11-02] query | Check Mira's scrolling festival dialogue
 
 Loaded the current patch's Mira drama return scene (BUNKAKEN stage 0x66) and inspected the flagged KG_S6W group 30/line 4 at frames 180 and 600. The four-row passage reaches its final line and closing quote; the portrait and auditorium render correctly. Verified the loaded script header against the disc. Saved the hashes and scope in `translations/en/reviews/mira-festival-long-page-2026-11-02.json` and updated [[tickets/T-39511-english-text-quality]]. Sixty flagged long-page records remain unverified at runtime.
+
+## [2026-11-02] ticket | Repair festival gate presentation
+
+Opened [[tickets/T-39530-festival-gate-quality]] after the owner rejected the standing banner, small school plaque and overlapping dialogue in the festival capture. Both festival backgrounds need an artwork revision. The first Saki fixture omitted the phase-7 scene write and is rejected; verify the corrected setup and normal dialogue clearing before attributing that overlap to game code.
+
+## [2026-11-02] build | Draft festival lettering revision
+
+For [[tickets/T-39530-festival-gate-quality]], compared original, published and clean-drawing backgrounds. Published plaque residue appears during encoding even though the old clean drawing erased the original strokes. Added build-time regeneration of lighter festival banners and drafted a replacement plaque in `tools/patch/art/festival.py`. Inspected the drawing preview; banner spacing improves, but the plaque still needs revision. Three existing geometry, erasure and source-identity tests pass with the antialiased-ink assertion. Compressed-output checking is running. No replacement has been approved or published.
+
+## [2026-11-02] query | Verify Saki's refusal and dialogue clearing
+
+The long NI_S6S record uses reply variant 1. Inspected the complete refusal and its closing quote, then advanced using Circle; the box clears with no stale letters. Recorded the tested scope and hashes in `translations/en/reviews/saki-festival-long-page-2026-11-02.json`. [[tickets/T-39511-english-text-quality]] now has 59 pending long-page records. [[tickets/T-39530-festival-gate-quality]] still requires repaired signs and broader scene progression. Restored simpler pixel plaque lettering with softer contrast after rejecting the cramped antialiased draft.
+
+## [2026-11-02] build | Compare compressed festival lettering
+
+Inspected the first compressed D_01_47 draft for [[tickets/T-39530-festival-gate-quality]]. The banner's lighter strokes remain separated, but the small antialiased plaque is still cramped despite low codec error. Rejected that plaque and started an isolated encoding pass for the clearer pixel-letter version at reduced contrast, beginning with D_01_48. Three plaque safeguards pass. The new artwork has not been approved or published.
+
+## [2026-11-02] query | Check ordinary festival dialogue progression
+
+Inspected all 14 captures from a 4,500-frame festival replay. After scene/date/relationship setup at frame 120, controller input alone advances the introduction, Saki invitation, answer choices, club menu and literature exhibit. No text overlap appears, and pages clear correctly. Recorded screenshot hashes in `translations/en/reviews/festival-dialogue-flow-2026-11-02.json` and closed the dialogue-progression criterion in [[tickets/T-39530-festival-gate-quality]]. Artwork remains under revision. Stopped the superseded antialiased-plaque encoder after its rejected sports-sign preview; the separate pixel-plaque encoding continues.
+
+## [2026-11-02] build | Replay the revised cultural-festival sign
+
+Inspected the compressed D_01_48 pixel-plaque candidate for [[tickets/T-39530-festival-gate-quality]]. Its lettering is readable and the earlier dark residue is absent. Built a local review disc with only this background replaced, verified exact file readback and unchanged placement, then started the controller-driven scene replay. The sports-festival version is still encoding. Neither revision is published.
+
+## [2026-11-02] ticket | Investigate the split Literature Club question
+
+Opened [[tickets/T-39531-literature-club-wrap]] after the owner flagged the line break between "Literature" and "Club" in the festival replay. Found inherited separators in NI_S6W groups 2 and 4, line 0. The full quoted sentence measures 192 pixels against a 196-pixel static window; tracing encoded bytes and runtime wrapping next. Preserve the approved wording.
+
+## [2026-11-02] build | Wrap known-speaker festival dialogue to its available width
+
+For [[tickets/T-39531-literature-club-wrap]], traced the unnecessary break to the widest-heroine reservation. NI_S6W binds Nijino through `tour_saki_script_begin`; its heroine speech now uses that proven label width. All five duplicate questions encode on one line. The complete container comparison finds 22 whitespace-only changes and no unplaceable records; wrapping tests pass (41 tests, one optional skip). Started an isolated visual replay of the exact question correction. The ongoing full build predates this width change and verifies artwork only; rebuild again before publishing the combined fix.
+
+## [2026-11-02] build | Verify the corrected club question on screen
+
+The isolated T-39531 replay completed 4,500 frames. Frame 3300 shows the entire Literature Club question and closing quote on one line. The revised cultural-festival signs also passed a 14-capture replay, and the compressed sports-festival candidate was inspected. All 28 artwork tests pass. The artwork-only full build finished; started the combined build at `build/festival-wrap-release/disc` for [[tickets/T-39530-festival-gate-quality]] and [[tickets/T-39531-literature-club-wrap]]. Full-disc audits and publication remain pending.
+
+## [2026-11-02] query | Verify both festival sign variants in-game
+
+Inspected all 14 sports-festival captures, covering the revised entrance signs and the start of the spoon race. The cultural-festival variant already has a separate 14-capture review. Recorded both runs in `translations/en/reviews/festival-gate-quality-2026-11-02.json` for [[tickets/T-39530-festival-gate-quality]], and the isolated club-question proof in `translations/en/reviews/literature-speaker-width-2026-11-02.json` for [[tickets/T-39531-literature-club-wrap]]. These receipts distinguish local visual fixtures from the pending combined-release audit.
+
+## [2026-11-02] build | Verify the combined festival release
+
+Target b8b5be606a64650203c4b6c452fb8f61cdadef83 passes 252 artwork checks, 105-container script auditing (31,471 strings and 31,334 pointers), executable auditing (2,827 exact slots among 2,940 accounted slots, 291 derived records, 286 pointers, 321 source-only literals), and all 15 browser checks. Inspected desktop and mobile result pages. A comparison of 1,371 raw file extents finds only the two festival backgrounds and NI_S6W changed; audio is identical. Recorded `translations/en/reviews/festival-wrap-release-2026-11-02.json` for [[tickets/T-39530-festival-gate-quality]] and [[tickets/T-39531-literature-club-wrap]]. Publication remains pending.
+
+## [2026-11-02] lint | Review festival fixes against coding standards
+
+Reviewed the source changes for [[tickets/T-39530-festival-gate-quality]] and [[tickets/T-39531-literature-club-wrap]]. Artwork source guards, registration checks, crop bounds and ignored generated output are intact. The known-speaker override is restricted to the proven heroine binding and commands; other speaker paths keep their existing limits. The runtime display-wrap regression test passes in addition to the 28 artwork tests and 41 static patch tests (one optional skip). No unresolved code-review findings. Staged prose review and publication remain pending.
+
+## [2026-11-02] ticket | Close verified festival presentation fixes
+
+Moved [[tickets/T-39530-festival-gate-quality]] and [[tickets/T-39531-literature-club-wrap]] to Done after implementation, visual verification, disc/browser checks and standards review. Their parent campaign remains open for broader visual coverage. The combined-release receipt tracks publication separately.

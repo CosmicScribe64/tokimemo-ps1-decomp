@@ -89,7 +89,8 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "verified: refusal variant scrolls completely and clears on controller input",
+      "visual_evidence": "translations/en/reviews/saki-festival-long-page-2026-11-02.json"
     },
     {
       "id": "c:TEL:8013ac0c:2",

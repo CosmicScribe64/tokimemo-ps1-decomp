@@ -4,8 +4,8 @@
   8 px. Every speech row starts after that mark, so the text column depends on the speaker
   (src/english/script.c, ``english_speaker_draw``, ``english_gnsx``/``english_sndi``).
   ``speech_window`` wraps each record using its widest possible speaker label. It measures inline
-  labels directly, uses the longest girl label for a girl's line, and allows seven wide letters
-  for the player's label.
+  labels directly and allows seven wide letters for the player. A proven fixed heroine label
+  can be supplied for commands that draw her name; other heroine lines reserve the longest label.
 * Matched quotes: the Japanese opens 「/『 after the name and never closes it. The runtime draws a
   closing straight quote at the end of each speech (``english_speech_close`` in src/english/script.c):
   at the end of each reply variant, and at the end of a speech record unless the next record of its
@@ -68,8 +68,8 @@ def _label(payload: bytes) -> tuple[bytes, bytes] | None:
     return label, OPEN_PAREN if payload[0] == LABEL_THOUGHT else QUOTE
 
 
-def speech_window(window: Window, command, payload: bytes, metrics) -> Window:
-    """The window from the text column of the record's widest speaker (see the module docstring)."""
+def speech_window(window: Window, command, payload: bytes, metrics, girl_label: bytes | None = None) -> Window:
+    """Reserve the known speaker width, or the widest possible label when unknown."""
     if window.name == "telephone_narration":
         label = max(WIDEST["player"], WIDEST["girl"], key=metrics.width)
         mark = QUOTE
@@ -81,6 +81,8 @@ def speech_window(window: Window, command, payload: bytes, metrics) -> Window:
         label, mark = WIDEST["player"], OPEN_PAREN if command in THOUGHT else QUOTE
     elif command in WIDEST:
         label, mark = WIDEST[command], QUOTE
+    elif girl_label is not None and command in (0x1, 0xC, 0xF):
+        label, mark = girl_label, QUOTE
     else:
         label, mark = WIDEST["girl"], QUOTE
     left = LABEL_LEFT + metrics.width(label) + LABEL_GAP + metrics.width(mark)

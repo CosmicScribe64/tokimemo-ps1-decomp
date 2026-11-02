@@ -1,0 +1,88 @@
+{
+  "tickets": [
+    "T-39530",
+    "T-39531"
+  ],
+  "target": {
+    "sha1": "b8b5be606a64650203c4b6c452fb8f61cdadef83",
+    "size": 703097472
+  },
+  "patch": {
+    "file": "assets/tokimemo-en.xdelta",
+    "size": 6564306,
+    "sha256": "a1decbd96547488fc9546307c7a457da2ef6dc8e8a8e647a1120e4c577f08159"
+  },
+  "script_audit": {
+    "containers": 105,
+    "strings": 31471,
+    "pointers": 31334
+  },
+  "executable_audit": {
+    "status": "pass",
+    "slots": 2940,
+    "exact_slots": 2827,
+    "derived_records": 291,
+    "derived_pointers": 286
+  },
+  "source_only_literals_checked": 321,
+  "browser": {
+    "status": "passed",
+    "checks": [
+      "wrong size",
+      "wrong source hash",
+      "corrupted patch",
+      "cancel",
+      "full patch",
+      "download hash",
+      "cue",
+      "no upload",
+      "responsive layout",
+      "invalid archive",
+      "archive drop",
+      "extraction cancel",
+      "audio download hash",
+      "archive cue",
+      "mobile result"
+    ],
+    "target_sha1": "b8b5be606a64650203c4b6c452fb8f61cdadef83",
+    "inspected_screenshots": {
+      "archive-complete.png": "ec7e4e450293e9aa57b3613ab907c7288fe53deb27ce4e6ff55c83d080b7b5a3",
+      "archive-mobile.png": "a8b6e850f37bbae76589a45744964d2b7199e8bb7149e952db33a780c793f9f9"
+    }
+  },
+  "disc_comparison": {
+    "baseline_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+    "target_sha1": "b8b5be606a64650203c4b6c452fb8f61cdadef83",
+    "file_extents_compared": 1371,
+    "scope": "Complete raw-sector extents, including XA/STR, at identical LBAs and sector counts. ISO file sizes change for the two revised stills.",
+    "external_audio_entries": [
+      "CDROM/DADIR/TR02.DA"
+    ],
+    "audio_sha1": "6cdd8500168ab4ecb18b78ef7589586d26bc4501",
+    "audio_unchanged": true,
+    "changed_files": [
+      {
+        "path": "CDROM/BS/D_01_47.BS",
+        "before_extent_sha256": "62eed6d9d2946de99b613b1c6cb3234140fa19e18a2dc422d08b559b64291fee",
+        "after_extent_sha256": "85ddd6ebb67963aa18b569f17cd31f8d3eaf3f9147c7f3c2d1725d1781afb8ab",
+        "before_file_size": 18216,
+        "after_file_size": 17672
+      },
+      {
+        "path": "CDROM/BS/D_01_48.BS",
+        "before_extent_sha256": "3b8c050d0b09ca4abb4d591cf71f05261d38746277ff5adb36b8841b263d2c20",
+        "after_extent_sha256": "8eb8874dfb2fe75497ad71e3e52e3f129c69a16b9192e81ac3c5702125911461",
+        "before_file_size": 18140,
+        "after_file_size": 17536
+      },
+      {
+        "path": "CDROM/BUNKA/NI_S6W.BIN",
+        "before_extent_sha256": "e10fff19c4104d8b87d06d0b4a56a4d3dd1b4a9e53652d852aa7b50e7111279a",
+        "after_extent_sha256": "241e21bd75d7d3fa3761b45a828517838f23ce389cdf99e4f4f861a9849cdbd4",
+        "before_file_size": 24576,
+        "after_file_size": 24576
+      }
+    ]
+  },
+  "publication": "pending"
+}

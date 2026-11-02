@@ -25,6 +25,10 @@ from . import reflow as source_reflow
 from . import speech
 from . import names
 
+# T-39531: tour_saki_script_begin binds NI_S6W and calls talk_names_set(4).
+# Other containers retain conservative widths until their speaker binding is proven.
+FIXED_GIRL_LABELS = {"CDROM/BUNKA/NI_S6W.BIN": b"Nijino"}
+
 SKIPPED_KINDS = ("speaktst", "reference_only")
 # Tables that must stay Japanese: the kana pages and the kanji reading labels of the name entry, where a
 # player still picks kana (T-39506). The translators gave romaji there.
@@ -117,7 +121,8 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
             note["status"] = "placed"
             closed = 0
             if window is not None:
-                window = speech.speech_window(window, speech.command_of(record), payload, metrics)
+                window = speech.speech_window(window, speech.command_of(record), payload, metrics,
+                                              girl_label=FIXED_GIRL_LABELS.get(path))
                 joined = False
                 if window.reflow:
                     rows_before = payload.count(b"\n") + 1

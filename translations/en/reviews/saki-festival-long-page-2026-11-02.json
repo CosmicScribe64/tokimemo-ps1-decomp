@@ -1,0 +1,35 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+  "record_id": "talk:CDROM/BUNKA/NI_S6S.BIN:main:g0001:l0000",
+  "run": "build/emu/festival-saki-decline-g0001",
+  "controlled_scene_and_line_selection": true,
+  "reply_variant": 1,
+  "frames": 1000,
+  "header_matches_disc": true,
+  "header_sha256": "b7fa1e59ce28883b197576f53e43ed9f791834e056bc1c748b65545790d96353",
+  "font_trace": {
+    "calls": 0,
+    "unknown_calls": 0,
+    "overflow_calls": 0,
+    "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+    "frame_origin": "start of this emulator run",
+    "entries": {},
+    "ranges_address": 2148237164,
+    "load_address": 2147808100
+  },
+  "inspected_frames": [
+    180,
+    600,
+    800,
+    1000
+  ],
+  "screenshots": {
+    "180": "a0b89e6e8622ab12288b62f136aadb12f1a88aba534984d52665fea232d1dd34",
+    "600": "15b245f5ca24644d04e2a18635bfbd2a45f22fbf2f3bd588997fd1d33d2bec01",
+    "800": "480ea254045d01a1d72745d35390f9d9b1bc33f9529c332c99ed769be05f731a",
+    "1000": "080d5217bdd86e4062531215a92f0a7389b1fba29626e6829256af178fcb8b61"
+  },
+  "result": "The four-row refusal variant scrolls to its final line and closing quote. A Circle press at frame 700 clears the dialogue with no stale letters at frames 800 and 1000.",
+  "scope": "Controlled line selection followed by normal controller input. Festival sign artwork remains rejected under T-39530; this receipt covers dialogue only."
+}

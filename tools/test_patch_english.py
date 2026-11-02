@@ -264,6 +264,19 @@ class SpeechTest(unittest.TestCase):
         wrapped = closed.replace(b"a b", b"a\nb")
         self.assertEqual(speech.unclose(wrapped, before, 0x2), b'a\nb\x0bsaid "x"\x0b\x0cz')
 
+    def test_fixed_girl_width_keeps_the_club_question_together(self):
+        base = WINDOWS["message_speech"]
+        metrics = FontMetrics({**{i: 5 for i in range(32, 127)}, ord("T"): 20}, 14, 16)
+        question = b"What's the Literature Club showing?\""
+        widest = speech.speech_window(base, 0x1, question, metrics)
+        self.assertEqual(wrap(question, widest, metrics, joined=True).rows, 2)
+        fixed = speech.speech_window(base, 0x1, question, metrics, girl_label=b"Nijino")
+        self.assertEqual(wrap(question, fixed, metrics, joined=True).rows, 1)
+        for command in (0x0, 0xD, 0xA):
+            self.assertEqual(speech.speech_window(base, command, question, metrics),
+                             speech.speech_window(base, command, question, metrics,
+                                                  girl_label=b"Nijino"))
+
     def test_text_column_follows_the_widest_speaker(self):
         base = WINDOWS["message_speech"]
         girl = speech.speech_window(base, 0x1, b"x", METRICS)

@@ -1,0 +1,125 @@
+{
+  "ticket": "T-39530",
+  "result": "Both festival banners have separated letters. School plaque lettering is legible without the earlier dark residue. Inspected all captures from both scene replays.",
+  "scope": "Controlled scene entry followed by controller input. Inspected background bytes match the combined release exactly; the linked release receipt covers disc audits and browser checks.",
+  "artwork_tests": {
+    "run": 28,
+    "passed": 28
+  },
+  "evidence": [
+    {
+      "container": "CDROM/BS/D_01_48.BS",
+      "encoded_sha256": "1edec1b4722ef90fe68f386104b6f41d3b80bf24eb84448db26ce75f012d81aa",
+      "target_sha1": "bdfbbbdb5fb68962e6ccc575aec33c618fd1a1bb",
+      "run": "build/emu/festival-normal-flow-revised",
+      "frames": 4500,
+      "inspected_frames": [
+        600,
+        900,
+        1200,
+        1500,
+        1800,
+        2100,
+        2400,
+        2700,
+        3000,
+        3300,
+        3600,
+        3900,
+        4200,
+        4500
+      ],
+      "screenshots": {
+        "600": "09a15fd5a6ea04f9a824f25b2c0364ec6716b30319fe419d420eab105fd1db26",
+        "900": "ef9e24b2c661fbd9235a7d091cdf3f46319823894cdbe3c6f9f3fe780d2ddfb3",
+        "1200": "ec2145a325ec8f3fb73cc15845168192822c79028d5937d362ca7e901d1ee146",
+        "1500": "c0d83de468ed3dcdc72666a756cf4a9bad7f68a313bdc15f02a7b7e48779a596",
+        "1800": "10676e21988cb7a2c8f2ffa6955bc487f09eaafc385023c4985e0c773a3a026f",
+        "2100": "2df04d2dffdf388f49eaa820468e03fc53182e7854a186b025859486c58445f8",
+        "2400": "08a3d2f6585cb732f440abbb3731b3ec0307e119d6f61f6348daca0a71f682bd",
+        "2700": "367ff1153dab0944579e9a4dd455e1d5a1d2082ca2d0af2d95809b00b47ce615",
+        "3000": "d754ac7fd4ba5427f6bb2fcf035edf904c64104869c7489c88621dd34f28f10f",
+        "3300": "a21756d29c902e845c4ef73468971ae069d846fbb187f39f47c27fc7755db050",
+        "3600": "7ba16cf23db3c6943b4807579758c61f7e4b6aeb65a2f4f7f65bc38fd832e652",
+        "3900": "a4a9efbefc38a70b5197dc149563608b829491ae8ef622e68988acd514a77559",
+        "4200": "c2436e4ffbe6afc5a25d47b2c58be5177fc8868bf0d1ba2a2f336bf34742366d",
+        "4500": "43ea529a554522c76d4f2a9ed4320972a698dc30af2149510648ed2f413e797f"
+      },
+      "codec": {
+        "english_max_abs_rgb555": 4,
+        "english_mean_abs_rgb555": 0.4656,
+        "ring_max_abs_rgb555": 2,
+        "float_idct_max_abs_rgb555": 1,
+        "outside_identical": true
+      },
+      "font_trace": {
+        "frame_origin": "start of this emulator run",
+        "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+        "load_address": 2147808100,
+        "calls": 0,
+        "unknown_calls": 0,
+        "overflow_calls": 0,
+        "ranges_address": 2148237164,
+        "entries": {}
+      }
+    },
+    {
+      "container": "CDROM/BS/D_01_47.BS",
+      "encoded_sha256": "8a4d9fff9a4339b730bfbbff13bddfe62b11c2efca1bdee67787fc7b46982393",
+      "target_sha1": "d3f82eb6af6d5d45d61a9e09fd891c6a912f8558",
+      "run": "build/emu/sports-signs-revised",
+      "frames": 4500,
+      "inspected_frames": [
+        600,
+        900,
+        1200,
+        1500,
+        1800,
+        2100,
+        2400,
+        2700,
+        3000,
+        3300,
+        3600,
+        3900,
+        4200,
+        4500
+      ],
+      "screenshots": {
+        "600": "41eba47d921464da290ff943446ed3a236ca6075aaef972850341dd696c5c95d",
+        "900": "815005e2d548b20bc0f5a52cdc648a99ae4d82d5ec0d0b766ee8f67a4caa654b",
+        "1200": "8df6d0cf0190423dc35d1bf7fb70f6c8dfee7ed0b5815be855cf948a66507468",
+        "1500": "f8919e417f3af6aa277c1c6f802130118bd9ca3f43a3fbe95f0378872be6df12",
+        "1800": "f36fa1770f529e5ab0c2c1126f0a634eacc1c93d807897604c5df0768c3c5059",
+        "2100": "c62bdc892cde0bbfc3723fa94464b0855cc181b069fc296f661e6ebc6f7545db",
+        "2400": "15881244bb19de4523537a6dc11aa37d29c8b057ed6c3512cc0e3ee039139dd2",
+        "2700": "5d5cc864486fb9e1393d375f100be597d5871ae11d30230601a74c1c73c17877",
+        "3000": "60f04c7dbf212fcc55faa69f769f1888a218ca0d35854bef45c201de214c52d5",
+        "3300": "10849f470a8ba7da9f577d3073a5ce18831a768b11e77f3ce2062a85e1562683",
+        "3600": "fb798ad5f1c8c39f178c700a42a60e5096e3b3ac485648f4f3a35d7096442d63",
+        "3900": "95923ae3c575620e514a456d21970947baf7fef1e766295430ace4529d3d865e",
+        "4200": "bde6bcf5278f6fa2400349169bb791763cc8554e9d7fcf96aeae4d70bc443b4e",
+        "4500": "d3cb6df00ee3117ef9581444fa9545f1d47ed6503f313dc289cafdbd0426e508"
+      },
+      "codec": {
+        "english_max_abs_rgb555": 4,
+        "english_mean_abs_rgb555": 0.4506,
+        "ring_max_abs_rgb555": 2,
+        "float_idct_max_abs_rgb555": 1,
+        "outside_identical": true
+      },
+      "font_trace": {
+        "frame_origin": "start of this emulator run",
+        "load_address": 2147808100,
+        "ranges_address": 2148237164,
+        "calls": 0,
+        "unknown_calls": 0,
+        "overflow_calls": 0,
+        "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+        "entries": {}
+      }
+    }
+  ],
+  "combined_release": "festival-wrap-release-2026-11-02.json",
+  "combined_target_sha1": "b8b5be606a64650203c4b6c452fb8f61cdadef83"
+}

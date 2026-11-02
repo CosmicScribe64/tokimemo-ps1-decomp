@@ -32,6 +32,8 @@ kanban-plugin: board
 
 
 
+
+
 - [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
 
 - [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
@@ -110,6 +112,10 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39531-literature-club-wrap|T-39531 Fix the split Literature Club question]]
+
+- [ ] [[tickets/T-39530-festival-gate-quality|T-39530 Fix festival gate lettering and verify dialogue clearing]]
 - [ ] [[tickets/T-39527-patcher-disc-inputs|T-39527 Accept dropped disc images and archives in the browser patcher]]
 - [ ] [[tickets/T-39529-english-staff-credits|T-39529 Preserve the original ending staff credits]]
 - [ ] [[tickets/T-39528-patcher-player-copy|T-39528 Keep the patcher copy focused on players]]

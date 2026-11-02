@@ -1,0 +1,171 @@
+{
+  "ticket": "T-39531",
+  "container": "CDROM/BUNKA/NI_S6W.BIN",
+  "wording_unchanged": true,
+  "changed_records": [
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0002:l0000",
+      "before_sha256": "27c0e03d5de4287b80a04bfa73b1abad6e43956cf819ad298fe32359f98a6814",
+      "after_sha256": "0ead5e601ad61d32eee45a93ad302443deb668e20287160b3b8377dcea848cb1",
+      "before_rows": 2,
+      "after_rows": 1
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0004:l0000",
+      "before_sha256": "27c0e03d5de4287b80a04bfa73b1abad6e43956cf819ad298fe32359f98a6814",
+      "after_sha256": "0ead5e601ad61d32eee45a93ad302443deb668e20287160b3b8377dcea848cb1",
+      "before_rows": 2,
+      "after_rows": 1
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0006:l0000",
+      "before_sha256": "27c0e03d5de4287b80a04bfa73b1abad6e43956cf819ad298fe32359f98a6814",
+      "after_sha256": "0ead5e601ad61d32eee45a93ad302443deb668e20287160b3b8377dcea848cb1",
+      "before_rows": 2,
+      "after_rows": 1
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0007:l0000",
+      "before_sha256": "27c0e03d5de4287b80a04bfa73b1abad6e43956cf819ad298fe32359f98a6814",
+      "after_sha256": "0ead5e601ad61d32eee45a93ad302443deb668e20287160b3b8377dcea848cb1",
+      "before_rows": 2,
+      "after_rows": 1
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0008:l0000",
+      "before_sha256": "27c0e03d5de4287b80a04bfa73b1abad6e43956cf819ad298fe32359f98a6814",
+      "after_sha256": "0ead5e601ad61d32eee45a93ad302443deb668e20287160b3b8377dcea848cb1",
+      "before_rows": 2,
+      "after_rows": 1
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0010:l0000",
+      "before_sha256": "b22c4bb889a33c636ec575992d28b3f3c980db3bbda8ffb7d172ed114ee5a849",
+      "after_sha256": "ef159d41304e2713e471f1aec840ff08759ac6462e68ba1b12c832966f0e59ec",
+      "before_rows": 2,
+      "after_rows": 1
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0015:l0002",
+      "before_sha256": "1b02a27e847a900fbe5c7d38a73daf9cc3c763df697b6d22036ff4bd3d4232fb",
+      "after_sha256": "b95d42c2e00a82c12ec426b2a8fea48f95338a9b5a2a9e132e10397854e7d0f1",
+      "before_rows": 2,
+      "after_rows": 2
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0020:l0002",
+      "before_sha256": "9034d20e4b5ac2fd6114a64b88be39216fcc7c6a02f58661369579d243284c6a",
+      "after_sha256": "a6e7c1a939cdf5fc2dd94301e785069e8abb6bfa4f479e9e4c84cec260514b5d",
+      "before_rows": 2,
+      "after_rows": 2
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0021:l0000",
+      "before_sha256": "ba8493dc2b532e2ae5bef66549c079998a9439c8db2e7beadb506689114d4226",
+      "after_sha256": "39b7714ce1574c720bb209d227612ef44efb7cefece33dd24f0bbcaf76688a37",
+      "before_rows": 3,
+      "after_rows": 2
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0023:l0004",
+      "before_sha256": "7f19208f5f1c1b3c203c5153099d130462900194bdfc47cae045c4efe5be4b20",
+      "after_sha256": "1c01a0e969438d9483d8069f58dd4e6c7e7c1442f0064f1d3848351ba400cee4",
+      "before_rows": 3,
+      "after_rows": 2
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0024:l0000",
+      "before_sha256": "94af9eac4cd11664a554041e70fc7a979c658782ce3939f7d9ea5a43d7a86dae",
+      "after_sha256": "7e18da1dfc8e1a39bc3677cb13ea6e86544646206c4312104dad0703bc7bcf82",
+      "before_rows": 2,
+      "after_rows": 2
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0025:l0000",
+      "before_sha256": "b132c5d9ed582becae82984b171aaac67cd8dc519c790a3405405da6c4533fd7",
+      "after_sha256": "e62478ed7b5b148974aaf062cbbbc6b1d808b175f63cbee2e9515b61b40cb32d",
+      "before_rows": 2,
+      "after_rows": 2
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0026:l0000",
+      "before_sha256": "c90b7cf800c1d6155311876fc0da0b13a28700ab0d59476792b2ab7c092c8cd5",
+      "after_sha256": "379ab9ac40ee15fbc83449252b8b57ba1fdb951c0337c997c28351233cef1821",
+      "before_rows": 2,
+      "after_rows": 1
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0035:l0002",
+      "before_sha256": "dc4c32c8e605a5df3e6d8c19de784138b34fad373f74dd7f520d48ab607e4548",
+      "after_sha256": "26929756b5e0905e04f60af695be733ffb4db70a73bfe75716212c17120935e6",
+      "before_rows": 2,
+      "after_rows": 2
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0035:l0004",
+      "before_sha256": "e21ca9aa96edc3949b493f6066e8cbf12dff66b3be3918649da270c4680a53cf",
+      "after_sha256": "92a7c016ccac160d1b8683ddc3d0a143df80cfc206a5ae847c409dcb92401f28",
+      "before_rows": 2,
+      "after_rows": 2
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0060:l0000",
+      "before_sha256": "46c7c602e6379b2a67fb5c0dcc9ae5e8b797b3e79e5b94f13e5bd0b58d3fc096",
+      "after_sha256": "b248a75c84b6a46e90dd6544fdb7822a42a41a3f8f83ec2aad123568864b12ed",
+      "before_rows": 2,
+      "after_rows": 1
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0061:l0000",
+      "before_sha256": "46c7c602e6379b2a67fb5c0dcc9ae5e8b797b3e79e5b94f13e5bd0b58d3fc096",
+      "after_sha256": "b248a75c84b6a46e90dd6544fdb7822a42a41a3f8f83ec2aad123568864b12ed",
+      "before_rows": 2,
+      "after_rows": 1
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0066:l0001",
+      "before_sha256": "1c09af4a2c9326c642be974c2a656beda29adbb3fe901798319312a8a79bae85",
+      "after_sha256": "57f9cdb60fb3b4e3bf1fb85d7bc24c0ef5e03d2022d1635fd445f61055e7078e",
+      "before_rows": 2,
+      "after_rows": 2
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0066:l0005",
+      "before_sha256": "26644678ea16535dd4028ea476e585c4000fa6c0fa74ac7318c0a9e14ff299e3",
+      "after_sha256": "e3c2145d9989f8b43e2ad7be6951b5fbbe3852bf121ec1e2972df85384bbf8d0",
+      "before_rows": 2,
+      "after_rows": 2
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0069:l0001",
+      "before_sha256": "1c09af4a2c9326c642be974c2a656beda29adbb3fe901798319312a8a79bae85",
+      "after_sha256": "57f9cdb60fb3b4e3bf1fb85d7bc24c0ef5e03d2022d1635fd445f61055e7078e",
+      "before_rows": 2,
+      "after_rows": 2
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0082:l0006",
+      "before_sha256": "a5bf935d937898959ec16687ff517f4f56557254792e6f4f46219ad60d38bede",
+      "after_sha256": "4fe2ea6f1390de2e7ccdc668fc0e3e891f4c650abc8c5a3816ad2ab98ee49760",
+      "before_rows": 2,
+      "after_rows": 1
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0086:l0000",
+      "before_sha256": "b9d55b8a827fbae5097ee9d2266419e575c154571cae5805d158ad02418e6fd0",
+      "after_sha256": "4987d94294ad8154733a25ff0b866ca84a4b9d1f0df9f8a2c659f1e13f56fa81",
+      "before_rows": 2,
+      "after_rows": 2
+    }
+  ],
+  "visual_run": "build/emu/festival-literature-wrap-revised",
+  "visual_target_sha1": "53853bcd1e1ba6bf217472fb8d6c1ce99f1145a4",
+  "inspected_frames": [
+    3300
+  ],
+  "screenshot_sha256": "990c18fd0d8df750a009be709eae72e23cdb051b07a7d088c432ad4f3243fb8a",
+  "result": "The complete question and closing quote fit on one line beside Nijino.",
+  "scope": "The isolated visual fixture changes the five duplicate question separators. The combined release passes exact script/pointer auditing for all 22 layout changes; see the linked release receipt.",
+  "combined_release": "festival-wrap-release-2026-11-02.json",
+  "combined_target_sha1": "b8b5be606a64650203c4b6c452fb8f61cdadef83"
+}

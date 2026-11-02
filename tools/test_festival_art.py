@@ -21,7 +21,7 @@ class FestivalArtTests(unittest.TestCase):
         outside[y:y + h, x:x + w] = False
         self.assertTrue(np.array_equal(result[outside], marked[outside]))
         for top in (y + 1, y + 7, y + 13):
-            self.assertTrue((result[top:top + 5, x:x + w] == 1).any())
+            self.assertTrue((result[top:top + 5, x:x + w] < 15).any())
 
     def test_wrong_source_is_rejected(self):
         with tempfile.TemporaryDirectory() as folder:

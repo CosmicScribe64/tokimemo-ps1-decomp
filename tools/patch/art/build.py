@@ -45,6 +45,7 @@ def plan_art(root: Path, files_root: Path, exe: bytes) -> dict:
     started = time.monotonic()
     items = art_items.load(root)
     school_gate.replace(items, root, files_root)
+    festival.replace_banners(items, root, files_root)
     items.append(skating.item(root, files_root))
     items.extend(sports_callouts.items(root, files_root))
     items.extend(festival.items(root, files_root))

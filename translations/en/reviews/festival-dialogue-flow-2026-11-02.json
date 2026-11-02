@@ -1,0 +1,52 @@
+{
+  "ticket": "T-39530",
+  "target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+  "run": "build/emu/festival-normal-flow-current",
+  "frames": 4500,
+  "setup": "Scene entry, date and Saki relationship values set at frame 120; all subsequent progression uses Circle input.",
+  "in_scene_step_injections": false,
+  "inspected_frames": [
+    600,
+    900,
+    1200,
+    1500,
+    1800,
+    2100,
+    2400,
+    2700,
+    3000,
+    3300,
+    3600,
+    3900,
+    4200,
+    4500
+  ],
+  "screenshots": {
+    "600": "704df2123bcb42cfc92074725d3448172bfe9b8c9f78f933d56b277d5b7a499a",
+    "900": "de4f9560f352358401b566475fb403e0571906daa657c886a2fc5036a56d5cca",
+    "1200": "45c465f53fb21eb9ae2a69391835989d74978423fe214549063ef0cfd84f1b96",
+    "1500": "b8d6a44ffa78413f8840083ed2a7ac25b50f7150a63e5f85f1c22450c62b914e",
+    "1800": "a8395e72f6a131a3023384717600d8cf98aeb3b15c92ee5cb7552b4436c50504",
+    "2100": "e33ec0f3a595526f795d6fe0fde4655eaedf6e96c2d92540315f8494c606ffd8",
+    "2400": "39c977fcca832f3600dadc53bfb7fa852a01d031de62a519c661921e919240ec",
+    "2700": "878e0628c261e454bed2ae39b262107df06784698952fca268ef9a0b8cc3a96e",
+    "3000": "d754ac7fd4ba5427f6bb2fcf035edf904c64104869c7489c88621dd34f28f10f",
+    "3300": "a21756d29c902e845c4ef73468971ae069d846fbb187f39f47c27fc7755db050",
+    "3600": "7ba16cf23db3c6943b4807579758c61f7e4b6aeb65a2f4f7f65bc38fd832e652",
+    "3900": "a4a9efbefc38a70b5197dc149563608b829491ae8ef622e68988acd514a77559",
+    "4200": "c2436e4ffbe6afc5a25d47b2c58be5177fc8868bf0d1ba2a2f336bf34742366d",
+    "4500": "43ea529a554522c76d4f2a9ed4320972a698dc30af2149510648ed2f413e797f"
+  },
+  "font_trace": {
+    "frame_origin": "start of this emulator run",
+    "entries": {},
+    "ranges_address": 2148237164,
+    "calls": 0,
+    "unknown_calls": 0,
+    "overflow_calls": 0,
+    "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+    "load_address": 2147808100
+  },
+  "result": "No overlapping dialogue observed through festival introduction, Saki invitation, answer choices, club selection and literature exhibit. Text clears between pages.",
+  "scope": "Dialogue progression only. Both festival signs remain rejected pending T-39530 artwork revision."
+}
