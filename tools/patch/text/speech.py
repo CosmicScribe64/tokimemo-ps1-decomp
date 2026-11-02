@@ -1,12 +1,11 @@
 """Speech layout of the English dialogue (T-39506, owner decisions of 2026-11-01).
 
-* Speaker labels start at one left margin (x -0x80); the opening mark (a quote, or a parenthesis for a
-  thought) follows the name after 6 px; every row of the speech hangs under the first character after
-  the mark (src/english/script.c, ``english_speaker_draw``, ``english_gnsx``/``english_sndi``). The text
-  column therefore depends on the speaker. ``speech_window`` gives the window a record is wrapped in: the
-  message window from that column, for the widest speaker the record can have (an inline label is
-  measured; a girl's line is measured with the longest girl label, the player's with seven wide
-  letters).
+* Speaker labels start at x -0x80. A quote, or a parenthesis for a thought, follows the name after
+  8 px. Every speech row starts after that mark, so the text column depends on the speaker
+  (src/english/script.c, ``english_speaker_draw``, ``english_gnsx``/``english_sndi``).
+  ``speech_window`` wraps each record using its widest possible speaker label. It measures inline
+  labels directly, uses the longest girl label for a girl's line, and allows seven wide letters
+  for the player's label.
 * Matched quotes: the Japanese opens 「/『 after the name and never closes it. The runtime draws a
   closing straight quote at the end of each speech (``english_speech_close`` in src/english/script.c):
   at the end of each reply variant, and at the end of a speech record unless the next record of its
@@ -27,7 +26,7 @@ from .english import LABEL_END, LABEL_SPEECH, LABEL_THOUGHT, OPTION_END
 from .windows import Window
 
 LABEL_LEFT = -0x80
-LABEL_GAP = 6
+LABEL_GAP = 8
 QUOTE = b'"'
 OPEN_PAREN = b"("
 CLOSING = (b'"', b"\xa1", b"\xa3")

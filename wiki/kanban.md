@@ -30,6 +30,8 @@ kanban-plugin: board
 
 
 
+
+
 - [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
 
 - [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
@@ -74,6 +76,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-39522-speaker-label-contrast|T-39522 Distinguish speaker names from dialogue]]
+
 
 
 - [ ] [[tickets/T-39513-skating-rink-advertisement|T-39513 Translate the omitted skating-rink advertisement]]
@@ -107,6 +111,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39523-school-gate-lettering|T-39523 Redraw the school gate plaque with clear lettering]]
 
 - [ ] [[tickets/T-39521-sports-instruction-flag|T-39521 Translate the three-legged-race speech bubbles]]
 

@@ -52,7 +52,8 @@
 /* x of the dialogue text column, and the right edge of the speaker label column */
 #define ENGLISH_TEXT_X (-0x48)      /* text column when no speaker label is drawn (narration rows) */
 #define ENGLISH_LABEL_LEFT (-0x80)  /* speaker labels start here, where the Japanese three-glyph names start */
-#define ENGLISH_LABEL_GAP 6         /* between the speaker label and the opening mark */
+#define ENGLISH_LABEL_GAP 8         /* between the speaker label and the opening mark */
+#define ENGLISH_SPEAKER_COLOR 1     /* existing pink font palette; T-39522 */
 #define ENGLISH_SCREEN_LEFT (-0x9E)
 
 /* Translations of the original's literals: c:main:80051438 (get_g_name), c:main:8007ef48
@@ -423,7 +424,7 @@ void english_k_sub_disp_start(s32 entry_offset) {
 static s32 english_speaker_draw(u8 *name, u8 *mark, s32 y, s32 text_color) {
     s32 mark_x;
 
-    set_kanji_string(ENGLISH_LABEL_LEFT, y, text_color, name, 0);
+    set_kanji_string(ENGLISH_LABEL_LEFT, y, ENGLISH_SPEAKER_COLOR, name, 0);
     mark_x = ENGLISH_LABEL_LEFT + english_text_width(name) + ENGLISH_LABEL_GAP;
     set_kanji_string(mark_x, y, text_color, mark, 0);
     english_text_x = mark_x + english_text_width(mark);
@@ -913,7 +914,7 @@ void english_talk_names_set(s32 girl_id) {
 
 void english_gnsx(u8 *speaker_name) {
     english_phone_rows_active = 0;
-    set_kanji_string(ENGLISH_LABEL_LEFT, 0x32, 0, speaker_name, 0);
+    set_kanji_string(ENGLISH_LABEL_LEFT, 0x32, ENGLISH_SPEAKER_COLOR, speaker_name, 0);
     english_phone_mark_x = ENGLISH_LABEL_LEFT + english_text_width(speaker_name) + ENGLISH_LABEL_GAP;
 }
 

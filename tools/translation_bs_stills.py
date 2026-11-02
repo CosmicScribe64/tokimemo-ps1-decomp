@@ -11,8 +11,8 @@ fill, every plan here keeps the picture as it is and changes only
 2. the pixels the English strokes cover.
 
 The stroke letters are the single-stroke skeletons of tools/translation_bs_font.py, drawn either with a
-constant stroke (monument, ticket plaque, chalk heading) or with the broad-nib brush stroker of
-tools/translation_bs_brush.py (gate plate, calligraphy close-ups). Signs with 5 to 6 px of lettering
+constant stroke (gate plate, monument, ticket plaque, chalk heading) or with the broad-nib brush stroker of
+tools/translation_bs_brush.py (calligraphy close-ups). Signs with 5 to 6 px of lettering
 (placard, library sign, shop line, chalk date) use the hand-set pixel glyphs of PIXEL_FONT instead, so that
 no two letters touch at 1x.
 
@@ -107,65 +107,35 @@ def rotated_runs(columns, cap=13, aspect=0.74, gap=4.0, weight=2.0, only=None):
     return runs
 
 
-# P_01_01 gate plate: a white plate seen at an angle, corners measured on the decode (white = every channel >= 26). The
-# text runs along the top and bottom edges (9.5 degrees) and leans like the sides. Both lines share one face, size and set
-# width; they sit one leading above and below the plate middle, and each is centred between the left and right plate
-# edges at its own height, measured at the top and bottom of its letters (the left edge leans much more than the right one).
+# Plaque corners measured on the native decode. Both lines are laid out on a flat
+# face, then projected together so their baselines and vertical strokes follow it.
 GATE_PLATE = [(114, 67), (236, 88), (221, 147), (73, 123)]  # top-left, top-right, bottom-right, bottom-left
-GATE_ANGLE = 9.5
-GATE_LEADING = 14.0
-GATE_FACE = {'cap': 13.5, 'aspect': 0.71, 'gap': 2.7, 'weight': 1.75, 'slant': 12}
+GATE_FACE = {'cap': 12.0, 'aspect': 0.9, 'gap': 3.0, 'weight': 1.15, 'slant': 0}
 GATE_LINES = ('KIRAMEKI  PRIVATE', 'HIGH  SCHOOL')
 
 
-def along(point, angle, du, dv):
-    """`point` moved du along a text at `angle` and dv down its letters."""
-    a = math.radians(angle)
-    return (point[0] + du * math.cos(a) - dv * math.sin(a), point[1] + du * math.sin(a) + dv * math.cos(a))
-
-
-def edge_span(point, angle, corners=GATE_PLATE):
-    """(t left, t right): where the line through `point` at `angle` crosses the plate's left and right edges, as
-    distances along the line from `point`."""
-    a = math.radians(angle)
-    ux, uy = math.cos(a), math.sin(a)
-    out = []
-    for (ax, ay), (bx, by) in ((corners[0], corners[3]), (corners[1], corners[2])):
-        ex, ey = bx - ax, by - ay
-        det = ux * -ey - uy * -ex
-        out.append(((ax - point[0]) * -ey - (ay - point[1]) * -ex) / det)
-    return tuple(out)
-
-
-def line_margins(center, length, angle, cap, slant, corners=GATE_PLATE):
-    """(left, right): the smallest gap in px, along the line, between a slanted text line and the plate's side edges,
-    taken at the top and at the bottom of the letters (the left edge leans more than the letters, the right one less)."""
-    t = math.tan(math.radians(slant))
-    lefts, rights = [], []
-    for dv in (-cap / 2.0, cap / 2.0):
-        left, right = edge_span(along(center, angle, 0, dv), angle, corners)
-        lefts.append((-length / 2.0 - dv * t) - left)
-        rights.append(right - (length / 2.0 - dv * t))
-    return min(lefts), min(rights)
-
-
-def gate_centres(lines=GATE_LINES, face=GATE_FACE, angle=GATE_ANGLE, leading=GATE_LEADING, corners=GATE_PLATE):
-    """Centre of each line: the plate middle moved one leading up / down, then moved along the line until the clearest
-    gap to the left edge equals the one to the right edge."""
-    middle = (sum(c[0] for c in corners) / 4.0, sum(c[1] for c in corners) / 4.0)
-    centres = []
-    for text, dv in zip(lines, (-leading, leading)):
-        point = along(middle, angle, 0, dv)
-        length = natural_length(text, face['cap'], face['aspect'], face['gap'], kern=True)
-        left, right = line_margins(point, length, angle, face['cap'], face['slant'], corners)
-        x, y = along(point, angle, (right - left) / 2.0, 0)
-        centres.append((round(x, 2), round(y, 2)))
-    return centres
-
-
 def gate_runs(lines=GATE_LINES, face=GATE_FACE):
-    return [brush_run(text, centre, GATE_ANGLE, face['cap'], face['aspect'], face['gap'], face['weight'], face['slant'], kern=True, **CALLIGRAPHY)
-            for text, centre in zip(lines, gate_centres(lines, face))]
+    """Even strokes and open spacing keep the small plaque readable (T-39523)."""
+    return [{'text': text, 'box': [10, top, 130, face['cap']],
+             'cap': face['cap'], 'aspect': face['aspect'], 'gap': face['gap'],
+             'stroke': face['weight'], 'perspective': {'size': [150, 70], 'corners': GATE_PLATE}}
+            for text, top in zip(lines, (13, 43))]
+
+
+def perspective_lines(lines, size, corners):
+    """Project flat lettering onto the four measured corners of a sign face."""
+    width, height = size
+    equations, values = [], []
+    for (u, v), (x, y) in zip(((0, 0), (width, 0), (width, height), (0, height)), corners):
+        equations.extend(([u, v, 1, 0, 0, 0, -x*u, -x*v],
+                          [0, 0, 0, u, v, 1, -y*u, -y*v]))
+        values.extend((x, y))
+    matrix = np.append(np.linalg.solve(equations, values), 1).reshape(3, 3)
+    projected = []
+    for line in lines:
+        points = np.array([(u, v, 1) for u, v in line]) @ matrix.T
+        projected.append([tuple(point[:2] / point[2]) for point in points])
+    return projected
 
 
 # Tiny signs (5 to 8 px of lettering): hand-set pixel glyphs, one ink colour, 1 px letter gaps, so that no two letters
@@ -286,8 +256,10 @@ def text_lines(run):
         origin = (spec['center'][0] - half * math.cos(a) + spec['cap'] / 2.0 * math.sin(a),
                   spec['center'][1] - half * math.sin(a) - spec['cap'] / 2.0 * math.cos(a))
     lines = brush.place(local, origin, angle, spec.get('slant', 0.0))
+    if spec.get('perspective'):
+        lines = perspective_lines(lines, **spec['perspective'])
     return lines, {'text': spec['text'], 'box': spec['box'], 'cap_px': spec['cap'], 'angle': angle, 'slant_deg': spec.get('slant', 0.0),
-                   'origin_px': [round(origin[0], 2), round(origin[1], 2)], 'stroke_px': spec['stroke'], 'letter_gap_units': spec['gap'], **facts}
+                   'origin_px': [round(origin[0], 2), round(origin[1], 2)], 'stroke_px': spec['stroke'], 'letter_gap_units': spec['gap'], 'perspective': spec.get('perspective'), **facts}
 
 
 def pixel_rows(text, height, gap=1, space=2):

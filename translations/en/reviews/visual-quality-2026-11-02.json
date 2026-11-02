@@ -1841,5 +1841,45 @@
       }
     ],
     "assessment": "Both partner variants and the readiness/direction animation fit cleanly. All four bubble views pass disc readback. The start-call bubble was inspected in the decoded sprite page; it did not appear in these instruction-animation captures."
+  },
+  "speaker_and_plaque_review": {
+    "target_sha1": "9935d1aacd904c6ed8c41c9c92d989c860158f08",
+    "captures": [
+      {
+        "path": "build/visual-quality-review/speaker-gate-perspective/encoded-sign.png",
+        "sha256": "45bdf0a4d7fda5490c66dab13330669925109371e346a5741ae23d3474946612"
+      },
+      {
+        "path": "build/visual-quality-review/speaker-gate-perspective/shot_032.png",
+        "sha256": "f6533b2665d9e91066f349e311bb6d731abe31807268c81ad81409f7bc34c945"
+      },
+      {
+        "path": "build/visual-quality-review/speaker-gate-perspective/shot_038.png",
+        "sha256": "903f4a8d29b1d57e2afc2e6d04b6779338d63a57eda991dae66c1bebd60c6a53"
+      },
+      {
+        "path": "build/visual-quality-review/speaker-gate-perspective/shot_039.png",
+        "sha256": "698e5b886db022e0e39fb290066942256c6175d4a498f922bf623225e7de7080"
+      }
+    ],
+    "plaque": {
+      "bytes": 18432,
+      "changed_pixels": 3175,
+      "edited_macroblocks": 33,
+      "english_max_abs_rgb555": 4,
+      "english_mean_abs_rgb555": 0.3805,
+      "file_bytes": {
+        "new": 18432,
+        "original": 18432
+      },
+      "lambda": 2.0,
+      "new_bytes": 18432,
+      "original_sha256": "280b440f4f005d53340afd5389cd755a5bbb574fa30c36013df484d039fd7aab",
+      "ring_max_abs_rgb555": 2,
+      "ring_tolerance": 4,
+      "ring_weight": 50.0,
+      "sha256": "720f53e5caeab1e9701de6c76064db65da39d3b2eadc420e51f1a99848e36794"
+    },
+    "assessment": "Inspected the encoded plaque and fresh opening/classroom captures. Lettering follows the plaque perspective and remains inside its edges. Pink speaker names are distinct; the eight-pixel gap preserves the two-row full-name introduction. Quote and thought closings are visible in the classroom reply. The complete voice-enabled route is still pending."
   }
 }

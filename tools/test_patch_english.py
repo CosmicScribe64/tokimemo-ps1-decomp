@@ -239,7 +239,7 @@ class SpeechTest(unittest.TestCase):
     def test_text_column_follows_the_widest_speaker(self):
         base = WINDOWS["message_speech"]
         girl = speech.speech_window(base, 0x1, b"x", METRICS)
-        self.assertEqual(girl.left, -0x80 + METRICS.width(b"Tatebayashi") + 6 + METRICS.width(b'"'))
+        self.assertEqual(girl.left, -0x80 + METRICS.width(b"Tatebayashi") + 8 + METRICS.width(b'"'))
         labelled = speech.speech_window(base, 0x7, b"\x1cMe\x1fhi", METRICS)
         self.assertEqual(labelled.left, base.left)  # a short label leaves the usual column
         self.assertIs(speech.speech_window(WINDOWS["choice"], 0x3, b"x", METRICS), WINDOWS["choice"])

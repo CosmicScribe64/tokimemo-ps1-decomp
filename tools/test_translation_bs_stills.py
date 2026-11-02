@@ -203,7 +203,7 @@ class DrawingTests(unittest.TestCase):
         a_right = max(x for line in lines[:2] for x, _ in line)
         t_left = min(x for line in lines[2:] for x, _ in line)
         self.assertLess(t_left - a_right, 3.0 - 2.0)  # closer than the plain letter gap
-        self.assertTrue(all(r.get('kern') for r in subject.gate_runs()))
+        self.assertTrue(all(not r.get('kern') and not r.get('brush') for r in subject.gate_runs()))
         self.assertEqual(font.strokes_for('PRIVATE', 60, 10, 1.0, 3.0), font.strokes_for('PRIVATE', 60, 10, 1.0, 3.0, kern={}))
 
     def test_a_centre_run_is_centred_on_its_point_at_any_angle(self):
@@ -310,16 +310,20 @@ class PlanTests(unittest.TestCase):
     def test_gate_lines_share_one_face_and_keep_a_margin_inside_the_plate(self):
         runs = subject.gate_runs()
         self.assertEqual([r['text'] for r in runs], list(subject.GATE_LINES))
-        for key in ('cap', 'aspect', 'gap', 'stroke', 'slant', 'angle'):
+        for key in ('cap', 'aspect', 'gap', 'stroke', 'perspective'):
             self.assertEqual(runs[0][key], runs[1][key], key)
+        corners = np.array(subject.GATE_PLATE, dtype=float)
+        mapped = subject.perspective_lines([[(0, 0), (150, 0), (150, 70), (0, 70)]],
+                                           [150, 70], subject.GATE_PLATE)
+        np.testing.assert_allclose(mapped[0], corners, atol=1e-10)
         for run in runs:
-            left, right = subject.line_margins(run['center'], run['length'], subject.GATE_ANGLE, run['cap'], run['slant'])
-            self.assertAlmostEqual(left, right, delta=0.05)  # as clear of the left edge as of the right one
-            self.assertGreaterEqual(left, 7.0, run['text'])
-
-    def test_edge_span_of_a_rectangle(self):
-        square = [(0, 0), (100, 0), (100, 40), (0, 40)]
-        self.assertEqual(tuple(round(v, 6) for v in subject.edge_span((30, 20), 0, square)), (-30.0, 70.0))
+            lines, _facts = subject.text_lines(run)
+            points = np.array([point for line in lines for point in line])
+            for index, start in enumerate(corners):
+                edge = corners[(index + 1) % 4] - start
+                offset = points - start
+                distances = (edge[0]*offset[:, 1] - edge[1]*offset[:, 0]) / np.linalg.norm(edge)
+                self.assertGreaterEqual(float(distances.min()), 5.0, run['text'])
 
     def test_cited_source_lines_still_hold_the_calls(self):
         self.assertEqual(subject.check_callers(), [])

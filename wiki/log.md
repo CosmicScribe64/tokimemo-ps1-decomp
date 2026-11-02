@@ -3569,3 +3569,27 @@ The sports build verifies 252 placed images and 28 approved exceptions. Both 1,8
 ## [2026-11-02] lint | Review sports repair prose and refresh the local preview
 
 Reviewed the staged code comments, ticket documentation and receipt assessments with deslop and Humanizer. The scanner reports zero hits; manual review removed stale build-status wording. Localhost:8769 now serves the verified sports-bubble package. No game wording was changed by prose review. [[tickets/T-39521-sports-instruction-flag]], [[tickets/T-39512-browser-patcher]].
+
+## [2026-11-02] ticket | Separate English speaker names from dialogue
+
+Compared original and English classroom captures after the owner flagged weak name/text separation. The owner chose a distinct name color and more spacing. Opened T-39522 In Progress. Script and phone labels now use the existing pink font palette, with a ten-pixel gap instead of six; build-time wrapping uses the same gap. Runtime/wrapping tests pass 41 cases with one opt-in build test skipped. Started a fresh disc build for visual verification. [[tickets/T-39522-speaker-label-contrast]].
+
+## [2026-11-02] build | Start speaker-contrast gameplay verification
+
+The candidate disc builds and passes both text audits. All 27 original binaries match. Started a fresh voice-enabled long-name route and browser acceptance run. Layout comparison identifies six newly long pages after widening the name gap; recorded them for follow-up in T-39522. [[tickets/T-39522-speaker-label-contrast]].
+
+## [2026-11-02] build | Refine speaker spacing and redraw the opening plaque
+
+Rejected the ten-pixel speaker gap after its fresh introduction capture showed an awkward three-row wrap. Eight pixels preserves the earlier two-row introduction. The owner also flagged the plaque font; opened T-39523 and replaced its brush treatment with even strokes and wider letter spacing. Inspected the native draft and source/candidate enlargement. Combined tests pass 83 cases with two opt-in skips. Started `build/speaker-gate-proof` for encoded-art and gameplay verification. [[tickets/T-39522-speaker-label-contrast]], [[tickets/T-39523-school-gate-lettering]].
+
+## [2026-11-02] build | Match plaque lettering to the sign perspective
+
+The eight-pixel-spacing build completed in 345.7 seconds with all 252 art checks passing. The owner then requested perspective on the cleaner plaque lettering. Added a four-corner projection and inspected the revised native draft; started `build/speaker-gate-perspective-proof`. The earlier ten-pixel route completed save/load, but its wrapping was rejected and is not release evidence for the corrected spacing. [[tickets/T-39522-speaker-label-contrast]], [[tickets/T-39523-school-gate-lettering]].
+
+## [2026-11-02] build | Verify plaque projection and text regressions
+
+The combined affected suite passes 109 tests with two opt-in skips. The plaque projection maps each measured corner exactly and keeps all glyphs inside the face with at least five pixels of edge clearance. Removed the superseded angle-only placement path. The perspective disc encode remains active. [[tickets/T-39523-school-gate-lettering]], [[tickets/T-39522-speaker-label-contrast]].
+
+## [2026-11-02] build | Verify the perspective plaque in the game
+
+The final candidate passes all 252 art checks, both disc text audits and nine browser checks. Inspected the encoded plaque and fresh opening capture: the lettering follows the sign face and the full-name introduction is back to two rows. The plaque remains 18,432 bytes; surrounding-pixel change is at most two RGB555 steps under the unchanged limit of four. Standards review found no unresolved issue. T-39523 moves to Done; T-39522 moves to In Review while its full route continues. [[tickets/T-39523-school-gate-lettering]], [[tickets/T-39522-speaker-label-contrast]].

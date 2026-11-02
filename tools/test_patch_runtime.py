@@ -15,35 +15,50 @@ class PhoneWrapTest(unittest.TestCase):
         source = (ROOT / 'src/english/script.c').read_text()
         start = source.index('static s32 english_speaker_draw(')
         function = source[start:source.index('\n}', start) + 2]
+        start = source.index('void english_gnsx(')
+        function += '\n' + source[start:source.index('\n}', start) + 2]
         fixture = r'''
 #include <assert.h>
 #include <string.h>
 typedef unsigned char u8;
 typedef int s32;
 #define ENGLISH_LABEL_LEFT (-128)
-#define ENGLISH_LABEL_GAP 6
+#define ENGLISH_LABEL_GAP 8
+#define ENGLISH_SPEAKER_COLOR 1
 static s32 english_text_x;
+static s32 english_phone_mark_x;
+static s32 english_phone_rows_active;
 static int count;
 static int positions[2];
+static int colors[2];
 static char text[2][64];
 static int english_text_width(u8 *value) { return strlen((char *)value) * 6; }
 static void set_kanji_string(int x, int y, int color, u8 *value, int slot) {
-    (void)y; (void)color; (void)slot;
+    (void)y; (void)slot;
     assert(count < 2);
     positions[count] = x;
+    colors[count] = color;
     strcpy(text[count++], (char *)value);
 }
 '''
         checks = r'''
 int main(void) {
     int next;
-    next = english_speaker_draw((u8 *)"Matsukawa", (u8 *)"\"", 0, 1);
+    next = english_speaker_draw((u8 *)"Matsukawa", (u8 *)"\"", 0, 0);
     assert(count == 2);
     assert(!strcmp(text[0], "Matsukawa"));
     assert(!strcmp(text[1], "\""));
-    assert(positions[0] + 54 + 6 == positions[1]);
+    assert(positions[0] + 54 + 8 == positions[1]);
+    assert(colors[0] == 1 && colors[1] == 0);
     assert(next == positions[1] + 6);
     assert(english_text_x == next);
+    count = 0;
+    english_phone_rows_active = 1;
+    english_gnsx((u8 *)"Matsukawa");
+    assert(count == 1 && colors[0] == 1);
+    assert(positions[0] == ENGLISH_LABEL_LEFT);
+    assert(english_phone_mark_x == positions[0] + 54 + 8);
+    assert(english_phone_rows_active == 0);
     return 0;
 }
 '''

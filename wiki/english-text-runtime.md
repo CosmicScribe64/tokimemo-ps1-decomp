@@ -60,6 +60,8 @@ Display strings need no control bytes. The constants are in `include/english/scr
 
 ## Rendering and layout
 
+Speaker names use the existing pink font palette and leave eight pixels before the opening mark in the English build (T-39522, owner request). Script and telephone paths share this spacing, and `tools/patch/text/speech.py` reserves it during wrapping. Dialogue and punctuation keep their existing colors.
+
 - **Glyph slots unchanged.** Each character still takes the next VRAM slot (`text_state.total`: 16 x 12 4bpp cells, 8 x 16 per page, pages at x 0x320/0x360/0x3A0, 384 slots). The typewriter (`k_disp_inc`, one glyph per tick), `get_now_k`, `k_reset` and every glyph count keep their meaning; a space is a glyph too.
 - **Pixel positions.** `english_load_string` records each slot's x offset from the start of its entry in `english_glyph_pen[384]`. An ASCII glyph adds its font advance and a Shift-JIS character adds `text_state.glyph_advance`. `english_disp_string` is `disp_string` with `x = entry.x + pen[i]` instead of `entry.x + k * advance`. The shadow sprite, CLUTs, texture page switching and OT order are unchanged.
 - **One-letter strings.** `english_set_kanji_string` drops the original's check that the second byte is nonzero. For an empty string it also sets the entry's glyph count to 0 (the original leaves the count of the slot's previous string), and `english_disp_string` skips any number of glyph-less entries before a glyph (the original moves one entry per glyph). Both were harmless while every name was padded with full-width spaces; with an empty English name the next entry's glyphs went to the inactive one (T-39506).
