@@ -2980,6 +2980,30 @@ Ticket back to In Progress for this round, now In Review again. Merged `patch/en
 
 [[tickets/T-39505-english-memory-and-relink]] waits for code review against `CODING_STANDARDS.md`.
 
+## [2026-11-01] decision | Ship the English name pills in the opening movie
+
+The owner chose to include the heroine name and voice-actress pills of `CDROM/OPENXA.STR` in the first release, by re-encoding only the frames that show them. Opened [[tickets/T-39509-opening-movie-pills]].
+
+## [2026-11-01] decision | English patch bar: no Japanese left
+
+The owner set the bar for the English patch: no Japanese on screen anywhere, apart from the title logo, the magazine masthead, tiny authentic signs, the illegible roster board and the off-frame ride sign. Added it to [[tickets/T-39500-english-translation-patch]] and opened [[tickets/T-39510-no-japanese-left-check]] (Ready) for the whole-game check.
+
+## [2026-11-01] decision | Name entry keeps its Japanese keyboards
+
+The kana and kanji keyboard pages of name entry stay available next to the default English letter page, so their Japanese characters are an approved exception to the no-Japanese bar in [[tickets/T-39500-english-translation-patch]].
+
+## [2026-11-01] build | English art on the disc (T-39508)
+
+Added `tools/patch/art/` and the art step of `tools/patch/build_english.py` ([[tickets/T-39508-english-art-on-disc]], [[english-build]] section Art). Every registered English image goes into its container: indexed sheets through views built from the asset readers (in place where no other view draws the texels, else relocated or rebuilt on free texels of uploaded sheets with rewritten part records; MAINROM records in the built executable), BS stills re-encoded per macroblock (`mdec_splice`, gates of T-39012 with a codec tier). `verify art` reads every written container back from the built track and fails the build if a placed image does not match. Report: 272 items, 230 placed and verified, 14 deferred (MAINROM Save labels, date captions and Monday: no free cell on the uploaded sheets; NAME_ENT panels and the exam header: no room; P_01_02 and D_03_08: float IDCT off by 31; the ABC label waits for [[tickets/T-39506-english-script-runtime]]; the movie pills need a runtime player), 27 untranslated by decision, 1 missing. Fallbacks shipped: the name-entry selector labels, the exam suffix, Kiyokawa and Tatebayashi. The first route run showed garbage on the stat bar: MAINROM sheets 4-6 are not uploaded, so new parts now go only to pages some frame draws. Route `build/emu/route-en-art/` shows the title, options, file select, name-entry labels, stat bar, weekdays and the prologue gate plate and roster in English. `tools/Dockerfile.patch` adds numpy and Pillow. Tests `tools/test_patch_art.py`; default build 27/27. Ticket to In Review.
+
+## [2026-11-01] build | English art round 2: free relink, grown HUD frames (T-39508)
+
+Merged `patch/english` (T-39505 free relink) into `patch/art`; the art step and `verify art` pass on the relinked executable (MAINROM records, pointer table and the new `english_hud_frames` found by their bytes). New `src/english/hud_frames.c` gives MAINROM frames longer records: a changed part becomes 8x8 tiles (stacked per palette when needed) in the free 8x8 cells of the uploaded sheets. Now placed: the Save labels, the date-panel captions YR / MO / DAY and Monday; the route on the relinked disc shows the calendar strip and the Save screen in English. Totals: 235 placed and verified, 9 deferred (NAME_ENT panels: no texels on the one page, need a second page in `name_entry.c`; exam header: needs EXAMINE.NBN and its read to grow; P_01_02 and D_03_08: IDCT overflow on 1-texel strokes; ABC label; movie pills). Facts for the T-39506 selector labels and ABC tab are in [[english-build]] section Art. Default build 27/27. [[tickets/T-39508-english-art-on-disc]] stays In Review.
+
+## [2026-11-01] decision | On-screen English quality
+
+The owner found much of the English rough on screen: Japanese line breaks kept in English ("(What'll I do / this / week?)" over three lines). Reflow rules sent to [[tickets/T-39506-english-script-runtime]] (drop in-page translator breaks, re-wrap to pixel width, balance lines, no orphans, fewest lines). Opened [[tickets/T-39511-english-text-quality]] (Ready) for automated layout checks over the whole script and a reading review with owner-approved rewrites.
+
 ## [2026-11-01] build | English dialogue parsers, names and name entry (T-39506)
 
 Under the English build, `src/english/script.c` replaces `talk_render`, `talk_speak_part`, `make_three_select`, `talk_names_set`, `gnsx`, `sndisp`, `sndi`, `get_g_name` and `get_p_name` through hooks: one-byte control bytes (`include/english/script.h`, now with inline labels 0x1C/0x1D ... 0x1F and `nn` as 0x0C 0x0C), pixel-width label and mark positions, 160-byte line buffers, honorifics from the translation records ("-kun", "-san", "-chan"), long girl names kept in island buffers, and strings still in the original format converted on entry (without that the prologue hung). `src/english/name_entry.c` adds the English letter page as the first, default tab of the name entry (A-Z, a-z, `-'.`, space; 7-letter names, 11-letter nickname, as the 8-byte fields and their strcpy readers need a NUL). `tools/english_imports.py` resolves the NAME_ENT symbols the island uses from the default overlay builds; this must become NAME_ENT code with T-39505's free relink. `text.c` fixes two latent text-list bugs that empty English names exposed. `tools/emu/route.py` types on the real grid. Default build 27/27 OK; the English route ran to the end (169 screenshots) with hand-encoded G_BIRTH records. Details and the list of name draw sites still to do in [[english-text-runtime]]; [[tickets/T-39506-english-script-runtime]] to In Review.
