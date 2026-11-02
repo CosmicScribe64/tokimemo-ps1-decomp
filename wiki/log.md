@@ -2983,3 +2983,11 @@ Ticket back to In Progress for this round, now In Review again. Merged `patch/en
 ## [2026-11-01] decision | Ship the English name pills in the opening movie
 
 The owner chose to include the heroine name and voice-actress pills of `CDROM/OPENXA.STR` in the first release, by re-encoding only the frames that show them. Opened [[tickets/T-39509-opening-movie-pills]].
+
+## [2026-11-01] build | T-39509: English cast pills in the opening movie
+
+New page [[movie-patch]]. `tools/patch/movie/` reads `OPENXA.STR` as raw sectors, decodes the frames with a numpy copy of the fixed-point MDEC model, measures each cue's dissolve opacity per frame (high-pass fit, neighbouring cues jointly; the pills do not move), composites the T-39004 English pills at that opacity and re-encodes only the touched macroblocks at the frame quantiser (`tools/assets/mdec_splice.py` keeps the other bits). `Disc.replace_stream` writes same-layout video sectors only. 204 frames, 14,179 macroblocks, 2,678 sectors rewritten; all audio sectors identical; pill PSNR median 23.9 dB, untouched texels in changed macroblocks 26.9 dB. `build_english.py` runs it as the step "opening movie". Emulator: same frames at the same offsets with English pills; movie end 4,901 vs 4,902 vsyncs after start. Default build 27/27 OK. Pages: [[english-build]], [[tooling]].
+
+## [2026-11-01] ticket | T-39509 to In Review
+
+[[tickets/T-39509-opening-movie-pills]] waits for code review against `CODING_STANDARDS.md`.

@@ -1,7 +1,7 @@
 ---
 type: tool
 updated: 2026-11-01
-sources: ["tools/patch/build_english.py", "tools/patch/cd_layout.py", "tools/patch/text/english.py", "tools/patch/text/windows.py", "tools/patch/text/wrap.py", "tools/patch/text/layout.py", "tools/patch/text/inplace.py", "src/english/cd.c", "include/english/cd.h", "tools/test_patch_english.py"]
+sources: ["tools/patch/build_english.py", "tools/patch/movie/build.py", "tools/patch/cd_layout.py", "tools/patch/text/english.py", "tools/patch/text/windows.py", "tools/patch/text/wrap.py", "tools/patch/text/layout.py", "tools/patch/text/inplace.py", "src/english/cd.c", "include/english/cd.h", "tools/test_patch_english.py"]
 ---
 
 # English build pipeline
@@ -44,6 +44,7 @@ Image: `tokimemo-patch` from `tools/Dockerfile.patch` (xdelta3). Outputs in `bui
    - EVENT and GYOZI keep their original files.
    - The overlay checksum trailer is recomputed.
    - Then the changed overlays go on the disc (in place), then the executable, which moves to the end because it gained sectors.
+   - Then the opening movie: `OPENXA.STR` with the English cast pills, same sectors and layout ([[movie-patch]], T-39509; `--no-movie` keeps the original).
    - Last: track 1, the cue and the xdelta patch.
 
 ## Encoder (`text/english.py`)
@@ -155,6 +156,10 @@ The pinned link of T-39502 is gone: `tools/english_link.py` relinks every unit f
   - no read-site problem and no warning for any moved file.
 - Disc: track 1 SHA-1 c140f667cc7c43855cc43eeef76d7caadc95e7df, the same in two runs (deterministic). xdelta 752,337 bytes.
 - Default build 27/27 OK after the change to `tools/cc.py` and `configure.py`.
+
+## Opening movie (T-39509, 2026-11-01)
+
+The step "opening movie" (70-80 s) rewrites 2,678 video sectors of `OPENXA.STR` in place (204 frames, 14,179 macroblocks); audio and every other sector stay identical, so the disc layout and the sector count do not change. The report has a `movie` section (frames, PSNR, per-cue opacity fits). The xdelta patch grows to about 6.0 MB. Details in [[movie-patch]].
 
 ## Open
 
