@@ -15,4 +15,10 @@ u8 english_hud_frames[0x800] = {
     'T', 'K', 'M', '-', 'E', 'N', '-', 'H', 'U', 'D', 'F', 'R', 'A', 'M', 'E', 'S'
 };
 
+/* Start of the frame records. Nothing calls it: tools/cc.py (trailing_pad.py) needs every object
+ * to have a .text section. */
+u8 *english_hud_frames_start(void) {
+    return english_hud_frames + 16;
+}
+
 #endif

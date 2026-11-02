@@ -33,6 +33,7 @@ from tools.patch import disc as disc_mod
 from tools.patch.art import ArtBuildError, sheets, sprites, stills
 from tools.patch.art.build import MAINROM_RECORDS
 from tools.patch.art.indexed import TRANSPARENT, View, compose, read_index
+from tools.patch.art.placer import frame_image
 
 # Where tools/emu/routes/main.route shows each container (checkpoint names of the route).
 ROUTE = {
@@ -112,10 +113,10 @@ def verify_sprites(path: str, original: bytes, written: bytes, exe: bytes, exe_w
             image_id, _part, png = frames[0]
             want, width, _h = sprites.pixels(png)
         else:
-            want, width = list(compose(original, view0)), view0.width
-            for image_id, part, png in parts:
-                local, w, _h = sprites.pixels(png)
-                want = _overlay(want, view0, part, local, w)
+            locals_ = {part: sprites.pixels(png)[:2] for _i, part, png in parts}
+            first = parts[0][1]
+            others = {k: v for k, v in locals_.items() if k != first}
+            want, width = frame_image(original, view0, first, *locals_[first], others), view0.width
         shifted = View(key, view1.parts, view0.left, view0.top, view0.width, view0.height, view1.frame, view1.record)
         got = compose(written, shifted, width)
         status = "verified"
@@ -138,15 +139,6 @@ def verify_sprites(path: str, original: bytes, written: bytes, exe: bytes, exe_w
     if len(original) != len(written) or stray:
         raise ArtBuildError("%s: %d bytes changed outside the planned texels and records" % (path, len(stray)))
     return {"images": out, "other_views_unchanged": unchanged}
-
-
-def _overlay(pixels: list, view: View, part: int, local: list, width: int) -> list:
-    p = view.parts[part]
-    out = list(pixels)
-    for ly in range(p.height):
-        for lx in range(p.width):
-            out[(p.y - view.top + ly) * view.width + p.x - view.left + lx] = local[ly * width + lx]
-    return out
 
 
 def verify_still(path: str, original: bytes, written: bytes, crops: list) -> dict:
