@@ -3255,3 +3255,15 @@ Actual-disc audit passes 105 text-data containers, 31,471 strings and 31,334 poi
 ## [2026-11-02] decision | Review date safety, linker and guarded text repairs
 
 Reviewed the change set against CODING_STANDARDS: C89 English-only date changes preserve original code paths; bounded names retain full text; actual alias definitions remain relocatable; selected-section reference scanning is tested with real synthetic MIPS objects; zero-shift link identity and 27 original hashes pass. Text repairs require both source and previous-target hashes, preserve raw data, and appear in build reports. Actual-disc script/profile coverage passes; negative tests cover corrupt and missing records. No raw game artifacts are staged. No unresolved implementation findings in this change set; festival/baseball wording captures, executable-text scanning, broader event/art coverage and owner sign-off remain open in their tickets. Wiki lint has zero broken links/status mismatches and the two existing large-page advisories. Localhost:8769 now serves `build/patcher-anomaly-review`.
+
+## [2026-11-02] query | Executable reference census classifies 91 candidates
+
+Exploratory `build/census_executable_text.py` reconstructs actual pointer and HI/LO targets from the final disc for main and every loaded overlay, with object/section provenance. It finds 91 strict Shift-JIS-looking NUL-terminated candidates: 79 approved NAME_ENT keyboard entries, and 12 coincidental decodes of numeric/code bytes. Symbol evidence identifies girl weights, CD-sector/command tables, sprite UVs/poses, and a jump into scene wipe code; these are not text. Candidate report is ignored `build/executable-text-census.json`. This heuristic does not cover all computed fixed-table elements or establish literal placement, so known-record cross-checking is next. [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] query | Initial compiled-literal presence check
+
+Exploratory literal census initially checked 1,403 loaded-overlay C literals and found one absent old target (`-san%s` in SHOUGATU), already superseded by the bounded family-name + honorific fix in `yumi_scene_handlers.c`. Correcting the diagnostic's main-container kind (`main_executable`, not `main_exe`) before extending its coverage. Presence alone does not prove correct call-site binding; this complements the actual-reference scan. [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] query | Main and loaded-overlay literal census complete
+
+Corrected exploratory census checks 1,643 literal records in main and 23 loaded overlays. Exactly one old payload is absent: SHOUGATU's superseded format string, confirmed against the bounded English branch in `src/ovl/new_year_christmas/yumi_scene_handlers.c`. Recorded coverage limits in [[tickets/T-39510-no-japanese-left-check]] and refreshed the stale retained-token claim in [[english-text-containers]]. Re-inspected the corrected classroom GPU screenshot: closing speech quote is present, opening quote and U have separate spacing, and the complete parenthetical occupies the next line. No new game-code change in this investigation.
