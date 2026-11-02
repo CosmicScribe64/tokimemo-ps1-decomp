@@ -2979,3 +2979,7 @@ Ticket back to In Progress for this round, now In Review again. Merged `patch/en
 ## [2026-11-01] ticket | T-39505 to In Review
 
 [[tickets/T-39505-english-memory-and-relink]] waits for code review against `CODING_STANDARDS.md`.
+
+## [2026-11-01] decision | Ship the English name pills in the opening movie
+
+The owner chose to include the heroine name and voice-actress pills of `CDROM/OPENXA.STR` in the first release, by re-encoding only the frames that show them. Opened [[tickets/T-39509-opening-movie-pills]].
