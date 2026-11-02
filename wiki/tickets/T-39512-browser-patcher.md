@@ -4,7 +4,7 @@ title: Build and verify the local browser patcher
 status: In Review
 assignee: codex
 created: 2026-11-01
-updated: 2026-11-01
+updated: 2026-11-02
 links: ["[[tickets/T-39500-english-translation-patch]]"]
 ---
 
@@ -27,3 +27,5 @@ Vendor the MIT-licensed RomPatcher.js VCDIFF reader at an immutable revision, re
 2026-11-01: `build/patcher-test/result.json` proves actual-disc Chromium patch/download SHA-1 equals the CLI output, exact CUE contents, wrong size, same-size wrong disc, corrupted patch and cancellation handling, and no upload/external requests. Desktop, 390-pixel and success screenshots reviewed. Keyboard traversal reaches both file controls and the submit button in order. `build/patcher-review` contains only static sources, vendored decoder/license, xdelta and hashes. Code reviewed against CODING_STANDARDS.md tooling/distribution rules: Docker-only dependencies, no raw game data, explicit integrity gates and bounded scope. Review caught stale-worker callbacks and case-insensitive output/audio filename collision; both corrected. Final browser recheck pending before moving to In Review.
 
 Final recheck passed after the review fixes; moved to In Review. Added the Apache-2.0 and Victor Alexiev MIT license texts credited within the vendored module, retaining all upstream notices. Local page is ready for owner review; no public deployment made.
+
+2026-11-02: repackaged the latest banner build at `build/patcher-banner-review`; all nine browser checks pass again against target `a0098b5c0568ebfe46f67cb3324ebb236d08b047`. The actual browser download matches the command-line disc and CUE. Desktop completion screenshot reviewed at `build/patcher-test/complete.png`; previous proof preserved in `build/patcher-layout-proof`. Local review server moved to localhost:8767; publication remains pending campaign completion and owner review.

@@ -3075,3 +3075,27 @@ Moved [[tickets/T-39512-browser-patcher]] to In Review after the final real-disc
 ## [2026-11-01] build | Final-layout route completes through save and load
 
 `build/emu/route-en-final-layout` completed 33,649 frames in 760 s, with 146 captures, reaching date, save, and load. Birthday capture 024 and telephone capture 115 were inspected and pass their fixes. Runtime/art fixes saved in c62c3a9ae; browser patcher and verification saved in adee6e171. Remaining release audit: compressed-sign deferrals, stale movie/off-frame-sign accounting, unregistered Ijuin banner in `CDROM/PROLODIR/CUT_09.NBN` or `CUT_10.NBN`, individual kept-original records, broader glyph logging/off-route coverage, and owner review. Goal remains active.
+
+## [2026-11-01] build | Prologue banner writer and movie read-back gate
+
+The source-bound background decode locates the Japanese Ijuin lettering in `CDROM/PROLODIR/CUT_10.NBN` (LBA 0xAAE7), outside the old artwork catalog. Added a code-generated English banner writer using the original palette/gold bands and explicit lettering regions; draft remains pending visual integration review. No extracted background is committed. Separately added a full raw-extent movie hash/read-back gate and art-report reconciliation that requires every registered movie image to be covered by the verified cue table. Two synthetic failure/success regressions pass. A real build is running to verify the new movie gate.
+
+## [2026-11-01] build | Banner disc and movie verification pass
+
+`build/en/banner-build.log` completes in 155.1 s, track-one SHA-1 prefix `51ef02b48683`, xdelta 6,509,663 bytes with apply/compare success. Movie raw-extent readback and banner byte/palette checks pass; art reports 243 verified items, two deferred, one stale missing exception. Snapshot `build/banner-proof` is running the fresh main emulator route. Corrected catalog-142 to the explicit exception in [[tickets/T-39500-english-translation-patch]] and regenerated/checked the inventory (no missing items). Art/movie suite passes 44 tests with one opt-in build skip. Updated [[english-build]], [[tickets/T-39508-english-art-on-disc]], and [[tickets/T-39509-opening-movie-pills]].
+
+## [2026-11-01] ticket | Start retained-text audit
+
+Moved [[tickets/T-39510-no-japanese-left-check]] from Ready to In Progress. All 340 empty-target records correspond to empty raw payloads in the extracted source units; none contains Japanese text. Nine name presets exceeding seven letters remain a real fallback issue. Documented the completed visual fixes in [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-01] lint | Reconcile runtime ticket status
+
+Wiki lint found no broken links and one stale status mismatch: [[tickets/T-39506-english-script-runtime]] said In Review while the board said In Progress. Retained In Progress in both because the preset-name fallback issue is unresolved. Existing large-page advisories remain for the historical case table and append-only log.
+
+## [2026-11-02] build | Banner GPU correction and latest browser proof
+
+`build/emu/route-en-banner` completed the fresh 33,649-frame route through save/load (146 captures, 743 s). GPU capture 046 exposed the portrait covering the last surname letter; narrowed the generated surname to 124 pixels. New build `build/banner-fit-proof` passes all gates, target SHA-1 `a0098b5c0568ebfe46f67cb3324ebb236d08b047`, xdelta 6,509,592 bytes. Main and NAME_ENT binaries compare identical with the prior final-layout build, permitting the prologue checkpoint replay. Revised capture `build/emu/route-en-banner-fit/preview-046.png` verifies the letters clear of the hair; replay continues. Browser package `build/patcher-banner-review` passes all nine checks, including a full-disc download hash match. Local preview moved to localhost:8767. Source review and results recorded in [[tickets/T-39508-english-art-on-disc]] and [[tickets/T-39512-browser-patcher]]. Repeated wiki lint: zero broken links or status mismatches, two pre-existing large-page advisories.
+
+## [2026-11-02] build | Revised banner prologue replay completes
+
+`build/emu/route-en-banner-fit` completes at frame 23,116 in 383 s, reaching the first week. It resumed the compatible saved prologue state; its 77-capture output includes the earlier copied checkpoints. Final named banner capture is `046_prologue_18.png`. Banner/movie changes committed as 7d54bc082. Full campaign still needs the long-preset fix, two deferred compressed backgrounds, final-container/glyph audit, off-route checks, and owner review before publication.

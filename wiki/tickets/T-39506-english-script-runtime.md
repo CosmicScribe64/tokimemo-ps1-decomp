@@ -1,7 +1,7 @@
 ---
 id: T-39506
 title: Make dialogue, choices, names and name entry work in English
-status: In Review
+status: In Progress
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-01
@@ -37,3 +37,5 @@ Remaining: the draw sites listed in [[english-text-runtime]] that need overlay c
 ## Comments
 
 2026-11-01 (Codex): integrated branch build with compact, independently allocated talk strings places all 134 data files and keeps zero whole files original. DATE dialogue fits its existing RAM buffer; no RAM relocation is needed. The eight JOHO label overflows still need the fixed-stride layout update. Visual checks and remaining NAME_ENT work are in progress.
+
+2026-11-01 (Codex): JOHO labels and NAME_ENT panels/ABC are now placed; the fresh final-layout route verifies birthday digits and dialogue fixes through save/load. Nine overlong romanized presets still retain Japanese, so this ticket remains In Progress. Corrected frontmatter to match the board after wiki lint caught stale In Review status.
