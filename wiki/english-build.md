@@ -1,7 +1,7 @@
 ---
 type: tool
 updated: 2026-11-01
-sources: ["tools/patch/build_english.py", "tools/patch/art/", "tools/test_patch_art.py", "tools/patch/cd_layout.py", "tools/patch/text/english.py", "tools/patch/text/windows.py", "tools/patch/text/wrap.py", "tools/patch/text/layout.py", "tools/patch/text/inplace.py", "src/english/cd.c", "include/english/cd.h", "tools/test_patch_english.py"]
+sources: ["tools/patch/build_english.py", "tools/patch/art/", "tools/test_patch_art.py", "tools/patch/cd_layout.py", "tools/patch/text/english.py", "tools/patch/text/windows.py", "tools/patch/text/wrap.py", "tools/patch/text/layout.py", "tools/patch/text/inplace.py", "src/english/cd.c", "include/english/cd.h", "tools/test_patch_english.py", "tools/patch/movie/build.py"]
 ---
 
 # English build pipeline
@@ -46,6 +46,7 @@ Image: `tokimemo-patch` from `tools/Dockerfile.patch` (xdelta3). Outputs in `bui
    - EVENT and GYOZI keep their original files.
    - The overlay checksum trailer is recomputed.
    - Then the changed overlays go on the disc (in place), then the executable, which moves to the end because it gained sectors.
+   - Then the opening movie: `OPENXA.STR` with the English cast pills, same sectors and layout ([[movie-patch]], T-39509; `--no-movie` keeps the original).
    - Last: track 1, the cue and the xdelta patch.
 
 ## Encoder (`text/english.py`)
@@ -208,6 +209,10 @@ For [[tickets/T-39506-english-script-runtime]] (name-entry selector labels and t
 - The 56-texel art (`T39410-menus-fixes-v1/menus-fixes-v1/name-label-00NN.png`, and `name-label-abc.unlit` / `.lit`, same face and palette columns as 15/16) needs 56x16 texels per state pair (unlit and lit can share) on a page the actors can use: there is none free on page 0, so it comes with the second page above. The selector actors' positions in `name_entry.c` then move 24 texels apart. The ABC tab needs a new frame pair (e.g. frames 29/30, appended to the pointer table) or two existing frames reused; the art step writes the texels and records once the frame ids exist (`sheets.name_profile`, `sprites.view_for` map an image to its frame).
 
 Other findings: the FILESEL System tab word is cut by the availability mark the code draws next to it (the Japanese draws 有 there; the English text step draws a letter at the same place).
+
+## Opening movie (T-39509, 2026-11-01)
+
+The step "opening movie" (70-80 s) rewrites 2,678 video sectors of `OPENXA.STR` in place (204 frames, 14,179 macroblocks); audio and every other sector stay identical, so the disc layout and the sector count do not change. The report has a `movie` section (frames, PSNR, per-cue opacity fits). The xdelta patch grows to about 6.0 MB. Details in [[movie-patch]].
 
 ## Open
 

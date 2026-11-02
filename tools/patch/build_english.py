@@ -32,6 +32,8 @@ Steps:
     executable last, moved to the end when it needs more sectors), write track 1 and the cue,
     then the xdelta patch against the original track. A route run on this disc needs
     `tools/emu/run.sh route run --relink build/en`.
+ 7. Before track 1 is written: the opening movie OPENXA.STR with the English cast pills
+    (tools/patch/movie/build.py, T-39509), same sectors and layout; --no-movie skips it.
 """
 from __future__ import annotations
 
@@ -51,6 +53,7 @@ from tools.patch import cd_layout
 from tools.patch import disc as disc_mod
 from tools.patch import make_patch
 from tools.patch.art import hook as art_hook
+from tools.patch.movie import build as movie
 from tools.patch.text import c_literals
 from tools.patch.text.containers import EXE_PATH, build_containers, load_units
 from tools.patch.text.image import SECTOR
@@ -418,6 +421,8 @@ def headline(report: dict) -> list[str]:
         lines.append("art: " + ", ".join("%s %d" % kv for kv in sorted(art["totals"].items()))
                      + "; %d containers written, %d MAINROM records" % (len(art["files_placed"]),
                                                                          art.get("exe_records_written", 0)))
+    if report.get("movie"):
+        lines.append(movie.summary(report["movie"]))
     lines.append("time: %s s total" % report["timings"]["total"])
     return lines
 
@@ -480,6 +485,7 @@ def build(args) -> dict:
         if art:
             art["report"]["exe_records_written"] = art_hook.patch_exe(REPOSITORY / EXE_OUT, files_root / EXE_PATH, art)
         binaries = steps.run("executable and overlays", place_binaries, disc, containers, text, files_root)
+        movie_report = None if args.no_movie else steps.run("opening movie", movie.place, disc)
         track1 = out_dir / "track1.bin"
         track2 = out_dir / "track2.bin"
         if not track2.exists():
@@ -512,6 +518,7 @@ def build(args) -> dict:
         "cd_remap": remap,
         "binaries": binaries,
         "art": art["report"] if art else None,
+        "movie": movie_report,
     })
     report["timings"] = dict(steps.timings, total=steps.total())
     (out_dir / "report.json").write_text(json.dumps(report, indent=1, sort_keys=True) + "\n")
@@ -528,11 +535,13 @@ def main(argv=None) -> int:
     parser.add_argument("--out", default="build/en/disc")
     parser.add_argument("--no-patch", action="store_true", help="skip the xdelta patch")
     parser.add_argument("--no-art", action="store_true", help="leave the images Japanese (T-39508)")
+    parser.add_argument("--no-movie", action="store_true", help="keep the original opening movie")
     args = parser.parse_args(argv)
     os.chdir(REPOSITORY)
     try:
         report = build(args)
-    except (BuildError, disc_mod.DiscError, make_patch.PatchError, art_hook.ArtBuildError) as exc:
+    except (BuildError, disc_mod.DiscError, make_patch.PatchError, art_hook.ArtBuildError,
+            movie.MovieError) as exc:
         print("build_english: %s" % exc, file=sys.stderr)
         return 1
     for line in headline(report):

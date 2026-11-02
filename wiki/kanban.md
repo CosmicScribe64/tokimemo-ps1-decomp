@@ -24,7 +24,6 @@ kanban-plugin: board
 ## In Progress
 
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
-- [ ] [[tickets/T-39509-opening-movie-pills|T-39509 Replace the heroine name pills in the opening movie]]
 - [ ] [[tickets/T-39506-english-script-runtime|T-39506 Make dialogue, choices, names and name entry work in English]]
 
 
@@ -62,6 +61,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-39509-opening-movie-pills|T-39509 Replace the heroine name pills in the opening movie]]
 - [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
 - [ ] [[tickets/T-39505-english-memory-and-relink|T-39505 Give the English build room to grow (memory map and free relink)]]
 - [ ] [[tickets/T-39507-english-disc-build|T-39507 Build the English disc and patch in one command]]
