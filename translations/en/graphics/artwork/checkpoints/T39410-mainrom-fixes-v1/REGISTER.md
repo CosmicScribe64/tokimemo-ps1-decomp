@@ -1,17 +1,17 @@
 # T39410 register note for the integrator
 
-This checkpoint redraws the MAINROM items the 2026-11-01 owner review sent back. It does not edit any shared
-registration file. Every PNG is an unreviewed draft (`human_approved: false`), one file per palette variant.
-Run `python3 tools/translation_mainrom_fixes.py --output .asset-cache/<new dir> [--publish <new dir>]` in the
-Pillow Docker image to rebuild it.
+Every PNG is an unreviewed draft (`human_approved: false`), one file per palette variant. This note holds the
+data the integrator needs; why each item is drawn as it is lives in `wiki/tickets/T-39410-mainrom-art-fixes.md`.
+To rebuild, run `python3 tools/translation_mainrom_fixes.py --output .asset-cache/<new dir> [--publish <new dir>]`
+in the Pillow Docker image.
 
-## 1. Supersedes (translation_inventory.py / inventory_decisions.json)
+## 1. Ledger and supersedes (translation_inventory.py / inventory_decisions.json)
 
 Register `translations/en/graphics/artwork/checkpoints/T39410-mainrom-fixes-v1/ledger.json` as a ledger and bind
-`mainrom-fix-NNNN.<variant>` to the item `mainrom-NNNN` (frame NNNN) for NNNN in 0057, 0058, 0059, 0061, 0122, 0123, 0124, 0125, 0126, 0127, 0128, 0129, 0130, 0131, 0132, 0133, 0134, 0135, 0136, 0137, 0138, 0139, 0140, 0141, 0142, 0143, 0144, 0145, 0151, 0152, 0153, 0154. Candidate ids
-follow `mainrom-fix-<frame>.<palette_id>` (`candidate_key` needs that pattern). The `supersedes` list of the
-ledger names the 165 earlier candidates they replace (each asset also lists the ones for its own variant);
-mark every one `superseded` with `superseded_by` this ledger:
+`mainrom-fix-NNNN.<variant>` to the item `mainrom-NNNN` (frame NNNN) for NNNN in 0057, 0058, 0059, 0061, 0122, 0123, 0124, 0125, 0126, 0127, 0128, 0129, 0130, 0131, 0132, 0133, 0134, 0135, 0136, 0137, 0138, 0139, 0140, 0141, 0142, 0143, 0144, 0145, 0151, 0152, 0153, 0154. `candidate_key` needs
+the id pattern `mainrom-fix-<frame>.<palette_id>`. The ledger's `supersedes` list names the 165 earlier
+candidates these files replace (each asset also lists the ones for its own variant). Mark each `superseded`
+with `superseded_by` this ledger:
 
 - mainrom-0057: mainrom-draft-0057.base, mainrom-draft-0057.hud-43, mainrom-draft-0057.hud-44, mainrom-draft-0057.icon-51, mainrom-draft-0057.icon-52, mainrom-draft-0057.icon-53
 - mainrom-0058: mainrom-draft-0058.base, mainrom-draft-0058.hud-43, mainrom-draft-0058.hud-44, mainrom-draft-0058.icon-51, mainrom-draft-0058.icon-52, mainrom-draft-0058.icon-53
@@ -46,16 +46,15 @@ mark every one `superseded` with `superseded_by` this ledger:
 - mainrom-0153: mainrom-draft-0153.base, mainrom-draft-0153.hud-43, mainrom-draft-0153.hud-44, mainrom-draft-0153.icon-51, mainrom-draft-0153.icon-52, mainrom-draft-0153.icon-53
 - mainrom-0154: mainrom-draft-0154.base, mainrom-draft-0154.hud-43, mainrom-draft-0154.hud-44, mainrom-draft-0154.icon-51, mainrom-draft-0154.icon-52, mainrom-draft-0154.icon-53
 
-Every variant of every frame is covered, so the variant groups of the inventory items can be one per palette
-(the previous `hud-43|hud-44|icon-52|icon-53` groups of frame 126 are now four files; the manifest's
-`identical_variant_outputs` names the variants whose files are byte-identical because their source image is).
+The manifest's `identical_variant_outputs` names the variants whose files are byte-identical because their
+source image is: 0057 (hud-43 = hud-44), 0058 (hud-43 = hud-44), 0059 (hud-43 = hud-44), 0122 (hud-43 = hud-44 = icon-52 = icon-53), 0124 (hud-43 = hud-44 = icon-52 = icon-53), 0126 (hud-43 = hud-44 = icon-52 = icon-53), 0128 (hud-43 = hud-44), 0129 (hud-43 = hud-44 = icon-52 = icon-53), 0131 (hud-43 = hud-44), 0132 (hud-43 = hud-44 = icon-52 = icon-53), 0134 (base = icon-53), 0135 (base = icon-53), 0136 (base = icon-53), 0137 (base = icon-53), 0138 (base = icon-53), 0139 (base = icon-53), 0140 (base = icon-53), 0141 (base = icon-53), 0142 (base = icon-53), 0143 (base = icon-53), 0152 (hud-43 = hud-44).
 
 ## 2. Weekday items 82-88 (mainrom-0082 .. 0088)
 
-`weekday-resolution.json` proves that every variant resolves to the approved two-letter file
-(T39004-date-panel-v1; base and icon-52 share one file). The stale three-letter drafts are the 12 batch-002
-historical assets still listed on the items (`english.historical_assets`). Mark each of them superseded by
-`T39004-date-panel-v1/ledger.json` and drop them from the items so no packer can choose them:
+`weekday-resolution.json` shows that every variant resolves to the approved two-letter file
+(T39004-date-panel-v1; base and icon-52 share one file). The 12 three-letter drafts below are batch-002
+historical assets listed on the items (`english.historical_assets`). Mark each superseded by
+`T39004-date-panel-v1/ledger.json` and drop it from the item:
 
 - mainrom-0082: draft:mainrom-weekday-mon-hud-44
 - mainrom-0083: draft:mainrom-weekday-tue-base
@@ -70,56 +69,90 @@ historical assets still listed on the items (`english.historical_assets`). Mark 
 - mainrom-0087: draft:mainrom-weekday-sat-hud-44
 - mainrom-0088: draft:mainrom-weekday-sun-hud-44
 
-## 3. Catalog wording (image_text_catalog.jsonl / .md)
+## 3. Drawn text
 
-"catalog now" is the catalog after rounds 2 and 3, which edited the rows of 0122-0125, 0132, 0144 and 0153 to match the art.
+The catalog row of each frame must describe the text drawn here.
 
-| frame | catalog now | drawn |
-| :--- | :--- | :--- |
-| 0126 | Central Park Guide | CENTRAL PARK GUIDE; 紹介 is a feature heading like the others, so it keeps "Guide" |
-| 0127 | Art Museum Opens | ART MUSEUM OPENS |
-| 0128 | Aquarium Special | AQUARIUM SPECIAL |
-| 0129 | Stadium Opens | STADIUM OPENS |
-| 0130 | Botanical Garden Special | GARDEN SPECIAL |
-| 0131 | Bowling Alley Special | BOWLING SPECIAL |
-| 0132 | Karaoke Box Opens | KARAOKE BOX OPENS |
-| 0133 | Planetarium Special | PLANETARIUM SPECIAL |
-| 0122-0125 | Spring Issue (3-4-5), Summer Issue (6-7-8), Autumn Issue (9-10-11), Winter Issue (12-1-2) | SPRING / ISSUE, SUMMER / ISSUE, AUTUMN / ISSUE, WINTER / ISSUE |
-| 0061 | Health, Humanities, Science, Art, Sports, Trivia, Looks, Guts, Stress | Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress |
-| 0140 | Classical | Classical (the T-39009 draft said Classic; the full word fits) |
-| 0144 | Pro Wrestling (suggestion: Wrestling) | Wrestling (one line; "Pro / Wrestling" cannot keep the tag's margins) |
-| 0151-0154 | Suikoden, Parodius, Power Pros, TwinBee Puzzle | SUIKODEN, PARODIUS, POWER / PROS, TWINBEE / PUZZLE |
+| frame | drawn |
+| :--- | :--- |
+| 0057 | Save |
+| 0058 | Save |
+| 0059 | Save |
+| 0061 | Health / Art / Looks / Hum. / Sports / Guts / Science / Trivia / Stress |
+| 0122 | SPRING ISSUE |
+| 0123 | SUMMER ISSUE |
+| 0124 | AUTUMN ISSUE |
+| 0125 | WINTER ISSUE |
+| 0126 | CENTRAL PARK GUIDE |
+| 0127 | ART MUSEUM OPENS |
+| 0128 | AQUARIUM SPECIAL |
+| 0129 | STADIUM OPENS |
+| 0130 | GARDEN SPECIAL |
+| 0131 | BOWLING SPECIAL |
+| 0132 | KARAOKE BOX OPENS |
+| 0133 | PLANETARIUM SPECIAL |
+| 0134 | Comedy |
+| 0135 | Romance |
+| 0136 | Action |
+| 0137 | Suspense |
+| 0138 | Horror |
+| 0139 | Anime |
+| 0140 | Classical |
+| 0141 | Idol |
+| 0142 | Rock |
+| 0143 | New Music |
+| 0144 | Wrestling |
+| 0145 | Baseball |
+| 0151 | SUIKODEN / Out in '95 |
+| 0152 | PARODIUS / Out Now! |
+| 0153 | POWER PROS / Out Now! |
+| 0154 | TWINBEE PUZZLE / Out Now! |
 
-Wording rule of the headline family: 完成 -> "Opens", 特集 -> "Special", 紹介 -> "Guide". "Hum." is used in
-frame 61 because "Humanities" does not fit the 26 px a label strip leaves before the arrow marker; the text
-dictionary has the full word.
+## 4. Settings
 
-## 4. Inventory decisions
+- Genre tags 0134-0145: alignment `center`, margin 1 px (`TAG_ALIGN` in the tool; set it to `left` and rebuild to
+  move them, only the tag files change).
+- Sheet scope of the files: `frame-composite-only`, `sheet-patch`. A frame-composite-only draft is integrated as a whole-frame replacement.
 
-- Frame 0057-0059: the earlier reading note (セーブ中, "Save" kept) still holds; "Save" is now in the Japanese band.
-- Tags 0134-0145 are centred with a 1 px margin on both sides (owner decision 2026-11-01). If the in-game check
-  prefers left alignment, set `TAG_ALIGN = 'left'` in the tool and rebuild; only the tag files change.
-- 0151-0154 title lettering (round 2): SUIKODEN and PARODIUS are 4 px semi-bold capitals (eight 2 px-stem letters of
-  5 px would need 47 px of the logo's 40); POWER / PROS and TWINBEE / PUZZLE are two lines of 2 px-stem capitals.
-  PARODIUS is yellow to orange with a white outline and a navy shadow. Every title keeps 1 px clear of the artwork
-  that stays (the 0153 baseball). The cover art outside the title rows and the bottom strip are as T-39009 drew them.
-- Headlines 0126-0133 (round 2) are flush left at the column where the Japanese starts (x 0 in all eight) and carry the
-  banner's edge tones (highlight = fill - 1, mid = fill + 1, soft = shadow + 1) on the cut corners; the manifest lists
-  the tone pixels per banner.
-- 0144 reads "Wrestling" in one line with a 5 px W, rows 4-11 like 0145 (round 2). Round 3: the t is the family's t
-  (centred crossbar, hooked foot), one row shorter than the l, and the s has a flat one-pixel top, so the t keeps 1 px
-  clear of the s; e, n, g and r take their narrow forms and r-e and s-t are kerned to 0 px. The ink is 30 px, so the
-  4 shadow pixels of the g's right edge are clipped to keep 1 px clear at the tag's right edge.
-- Icon-51 STP: the icon-51 variant's semi-transparency follows the colour. QA pass 3 (`tools/stp.py`) found that
-  every English colour maps to exactly one STP value in its source variant, with 0 ambiguous colours across the 32
-  frames, so the STP bits can be restored from the colour alone. This closes G1.
-- Sheet scope: every row records `sheet_scope`; frame-composite-only drafts must be integrated as whole-frame
-  replacements, as before.
-- The text dictionary change (item 8) is already in `translations/en/returned-v3.jsonl`: records
-  `dictionary:SLPM_86.053:parameter_names:00/01/04` and `SLPM_86.053:00072ad0/00072ad8/00072af0` now read Health,
-  Humanities, Sports (they read Condition, Liberal Arts, Athletics); the other stat names already matched. The SLPM
-  tables that `translation_tree.py` builds from are gitignored (`SLPM_*`), so the JSONL was edited directly.
-  `translations/en/manifest.json` was already out of date with the file and is unchanged.
-- Rebuild `translations/en/graphics/translation_inventory.json` (it pins the `returned-v3.jsonl` hash):
-  `test_translation_inventory.InventoryTests.test_committed_inventory_matches_inputs` fails until it is rebuilt,
-  because the JSONL hash changed (inventory `ed180f9f...`, now `7f3ed304...`).
+## 5. Original pixels in the committed files
+
+Edited English derivatives, not source exports: a whole frame keeps the original art outside its edit regions, and source_pixels counts the texels kept from the source. This is why the ledger says `original_images_included: true`. The owner asked for translated
+assets to be kept in the repository (`translations/en/graphics/artwork/checkpoints/T39004-2026-10-29/README.md`,
+T-39004); the whole-frame drafts these files supersede are committed the same way. No unmodified source export is
+committed. Counts are per frame over its palette variants: opaque texels, and those equal to the source texel at
+the same position.
+
+| frame | size | variants | opaque texels | kept from source |
+| :--- | :--- | ---: | ---: | ---: |
+| 0057 | 24x17 | 6 | 249 | 178-238 |
+| 0058 | 24x16 | 6 | 260 | 185-249 |
+| 0059 | 24x17 | 6 | 270 | 190-259 |
+| 0061 | 296x67 | 6 | 8414-8510 | 8100-8303 |
+| 0122 | 56x16 | 6 | 229 | 17-64 |
+| 0123 | 56x16 | 6 | 163-250 | 15-84 |
+| 0124 | 56x16 | 6 | 248 | 14-119 |
+| 0125 | 56x16 | 6 | 155-232 | 14-61 |
+| 0126 | 136x24 | 6 | 1460 | 427-777 |
+| 0127 | 120x24 | 6 | 1352-1354 | 379-796 |
+| 0128 | 112x24 | 6 | 1387 | 349-749 |
+| 0129 | 144x24 | 6 | 1120 | 208-401 |
+| 0130 | 112x24 | 6 | 1166 | 385-754 |
+| 0131 | 144x24 | 6 | 1242 | 179-351 |
+| 0132 | 152x24 | 6 | 1480 | 306-621 |
+| 0133 | 152x24 | 6 | 1564 | 316-626 |
+| 0134 | 40x8 | 6 | 75 | 14 |
+| 0135 | 48x8 | 6 | 83 | 21 |
+| 0136 | 40x8 | 6 | 61 | 17 |
+| 0137 | 40x8 | 6 | 82 | 19 |
+| 0138 | 24x8 | 6 | 50 | 12 |
+| 0139 | 24x8 | 6 | 60 | 14 |
+| 0140 | 40x8 | 6 | 82 | 19 |
+| 0141 | 32x8 | 6 | 42 | 7 |
+| 0142 | 24x8 | 6 | 45 | 13 |
+| 0143 | 64x8 | 6 | 93 | 28 |
+| 0144 | 32x16 | 6 | 80-141 | 17-50 |
+| 0145 | 32x16 | 6 | 80-142 | 23-70 |
+| 0151 | 56x66 | 6 | 1344-1352 | 1038-1223 |
+| 0152 | 56x66 | 6 | 1379 | 722-1281 |
+| 0153 | 56x66 | 6 | 1660-1686 | 1144-1580 |
+| 0154 | 56x66 | 6 | 1675-1734 | 1082-1580 |

@@ -2,7 +2,7 @@
 
 What the integrator (who owns `tools/translation_inventory.py`, `translation_inventory.json`, the image text catalog and
 `inventory_decisions.json`) must change to take this checkpoint. Nothing in those files was edited here.
-All PNGs are English-only (no original pixel), port-made, unreviewed (`human_approved: false`).
+All PNGs are port-made and unreviewed (`human_approved: false`). They are edited derivatives that keep original art outside the edit regions: see section 10.
 
 ## 1. Register the ledger
 
@@ -155,3 +155,60 @@ Checked for every PNG of both folders against the `.stp.png` mask exported besid
 - No source and no English output uses opaque black, so no `0x8000` word is needed; every opaque English colour has exactly one STP value in its source, so mapping colours back to the source CLUT gives every texel the source STP bit (clear everywhere except the KASETU card, where the source export sets it on every texel and so must the English card).
 - `catalog-127` (ALL_C): only indices the source strip already uses, palette unchanged; indices 6, 36, 37, 38, 39, 67, 69, 70, 71, 146, 148, none word 0, STP clear on all.
 - The build fails if an output breaks any of these (`stp_audit`); each manifest item records its counts under `stp`.
+
+## 10. Original pixels in the committed files
+
+The files are edited English derivatives, not source exports: a whole frame or cell keeps the original art outside its edit region, and source_pixels counts the texels kept from the source. This is why the ledgers say `original_images_included: true`. The owner asked for the translated assets to be kept in the repository (`translations/en/graphics/artwork/checkpoints/T39004-2026-10-29/README.md`, T-39004), and the whole-frame drafts this checkpoint supersedes are committed the same way. No unmodified source export is committed. The counts below are per file: opaque texels, and those equal to the source texel at the same position (a widened cell is compared over the overlap).
+
+| file | size | opaque texels | kept from source |
+|---|---|---|---|
+| `menus-fixes-v1/title-0001.png` | 144x16 | 1443 | 845 |
+| `menus-fixes-v1/title-0002.png` | 112x16 | 1170 | 258 |
+| `menus-fixes-v1/title-0003.png` | 144x16 | 1285 | 797 |
+| `menus-fixes-v1/title-0004.png` | 80x16 | 898 | 190 |
+| `menus-fixes-v1/exam-0001.png` | 32x16 | 67 | 8 |
+| `menus-fixes-v1/option-label-0063.png` | 122x16 | 513 | 93 |
+| `menus-fixes-v1/option-label-0064.png` | 122x16 | 513 | 128 |
+| `menus-fixes-v1/option-label-0079.png` | 136x16 | 518 | 119 |
+| `menus-fixes-v1/option-label-0080.png` | 136x16 | 518 | 169 |
+| `menus-fixes-v1/option-label-0103.png` | 72x16 | 343 | 37 |
+| `menus-fixes-v1/option-label-0104.png` | 72x16 | 343 | 52 |
+| `menus-fixes-v1/option-label-0113.png` | 83x16 | 408 | 77 |
+| `menus-fixes-v1/option-label-0114.png` | 83x16 | 408 | 102 |
+| `menus-fixes-v1/name-label-0015.png` | 56x16 | 317 | 97 |
+| `menus-fixes-v1/name-label-0016.png` | 56x16 | 317 | 97 |
+| `menus-fixes-v1/name-label-0017.png` | 56x16 | 316 | 79 |
+| `menus-fixes-v1/name-label-0018.png` | 56x16 | 316 | 79 |
+| `menus-fixes-v1/name-label-0019.png` | 56x16 | 308 | 93 |
+| `menus-fixes-v1/name-label-0020.png` | 56x16 | 308 | 93 |
+| `menus-fixes-v1/name-label-0021.png` | 56x16 | 239 | 80 |
+| `menus-fixes-v1/name-label-0022.png` | 56x16 | 239 | 80 |
+| `menus-fixes-v1/name-label-0023.png` | 56x16 | 245 | 80 |
+| `menus-fixes-v1/name-label-0024.png` | 56x16 | 245 | 80 |
+| `menus-fixes-v1/name-label-abc.unlit.png` | 56x16 | 243 | 94 |
+| `menus-fixes-v1/name-label-abc.lit.png` | 56x16 | 243 | 94 |
+| `menus-fixes-v1/filesel-frame-20.base.png` | 178x96 | 7383 | 5752 |
+| `menus-fixes-v1/filesel-frame-19.base.png` | 168x96 | 6636 | 5472 |
+| `menus-fixes-v1/filesel-page-information-0.png` | 128x128 | 10348 | 9017 |
+| `menus-fixes-v1/kasetu-0.png` | 320x240 | 76800 | 71928 |
+| `menus-fixes-v1/name-panel-0001.png` | 296x192 | 4395 | 3568 |
+| `fallback-v1/option-label-0103.png` | 56x16 | 188 | 18 |
+| `fallback-v1/option-label-0104.png` | 56x16 | 188 | 24 |
+| `fallback-v1/option-label-0113.png` | 70x16 | 257 | 47 |
+| `fallback-v1/option-label-0114.png` | 70x16 | 257 | 61 |
+| `fallback-v1/exam-0001.png` | 8x16 | 22 | 9 |
+| `fallback-v1/name-label-0015.png` | 32x16 | 177 | 99 |
+| `fallback-v1/name-label-0016.png` | 32x16 | 177 | 99 |
+| `fallback-v1/name-label-0017.png` | 32x16 | 174 | 100 |
+| `fallback-v1/name-label-0018.png` | 32x16 | 174 | 100 |
+| `fallback-v1/name-label-0019.png` | 32x16 | 169 | 104 |
+| `fallback-v1/name-label-0020.png` | 32x16 | 169 | 104 |
+| `fallback-v1/name-label-0021.png` | 32x16 | 191 | 114 |
+| `fallback-v1/name-label-0022.png` | 32x16 | 191 | 114 |
+| `fallback-v1/name-label-0023.png` | 32x16 | 197 | 106 |
+| `fallback-v1/name-label-0024.png` | 32x16 | 197 | 106 |
+| `fallback-v1/name-label-abc.unlit.png` | 32x16 | 195 | 119 |
+| `fallback-v1/name-label-abc.lit.png` | 32x16 | 195 | 119 |
+| `menus-fixes-v1/all-c.source-page-3.en.edit-region.png` | 128x38 | 4864 | 3774 |
+| `menus-fixes-v1/all-c.source-page-4.en.edit-region.png` | 128x38 | 4864 | 3361 |
+| `menus-fixes-v1/all-c.source-page-5.en.edit-region.png` | 64x38 | 2432 | 1967 |
