@@ -36,3 +36,12 @@ Make English drafts for the 21 art items the inventory lists as missing, so the 
 **Gates** (Docker, `tokimemo-recovery-splat`): `test_translation_*` discovery 254 run, same two errors as main (`test_translation_tree` `test_edit_propagation` and `test_lossless_roundtrip`, missing `slpm_86_053.md`); main runs 231 tests with the same two. New: 21 `test_translation_bs_signs` tests and 2 inventory tests, all pass. `translation_inventory.py check` passes; `wiki.py lint` 0 broken links, 0 mismatches (the 2 large pages exist on main).
 
 Drafts are unreviewed and port-made; nothing is approved or integrated. Code review against `CODING_STANDARDS.md` is still to do before Done.
+
+### 2026-11-01 code-review fixes (T-39412 pass)
+
+`tools/translation_bs_signs.py` shares its helpers with the stills tool through `tools/translation_bs_common.py`. Caller
+citations name the C function and the call text; line numbers stay in the manifest for a human reader only. The
+`original_pixels: 0` literal is replaced by the computed `crop.source_equal_pixels` (0 to 4126 per crop: a fitted plane
+or diffusion face reproduces flat original colours; nothing is copied) and a `crop.fill` statement; the class-mark
+removals now say "Laplace (diffusion) fill". `fit_plane` reports the sample count of its final coefficients. The 17
+crops kept their bytes; manifest and ledger of `T39400-bs-signs-v1` were republished (Pillow / numpy versions recorded).
