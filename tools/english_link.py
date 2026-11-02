@@ -45,6 +45,9 @@ INPUT_LINE = re.compile(r"^(\s+)(build/\S+\.o)\((\.\w+|COMMON)\);$")
 MAP_OUTPUT = re.compile(r"^(\.\w+)\s+0x([0-9a-f]+)\s+0x[0-9a-f]+")
 MAP_STATEMENT = re.compile(r"^ (build/\S+\.o)\((\.\w+)\)$")
 MAP_INPUT = re.compile(r"^ (\.\w+)?\s+0x([0-9a-f]+)\s+0x([0-9a-f]+) (build/\S+\.o)$")
+# Section labels of the splat script (`BUNKAKEN_RODATA_END = .;`) and their lines in the map (T-39507).
+LABEL_LINE = re.compile(r"^(\s+)(\w+) = \.;$")
+MAP_LABEL = re.compile(r"^\s+0x([0-9a-f]+)\s+(\w+) = \.$")
 
 
 def die(msg):
@@ -75,6 +78,26 @@ def read_map(path):
     return out
 
 
+def read_labels(path):
+    """{label: (address, output section start)} of the `label = .` assignments inside output sections.
+
+    A rebuilt object that shrinks is padded by the pin of the next input section, but nothing pins
+    the end of the last input of a section, so the section labels after it (`X_RODATA_END`, then
+    `X_DATA_START`) would move with it; pinning them too keeps every label where it was (T-39507)."""
+    out = {}
+    current_out = None
+    for line in open(path):
+        line = line.rstrip("\n")
+        m = MAP_OUTPUT.match(line)
+        if m:
+            current_out = int(m.group(2), 16)
+            continue
+        m = MAP_LABEL.match(line)
+        if m and current_out is not None and m.group(2) not in out:
+            out[m.group(2)] = (int(m.group(1), 16), current_out)
+    return out
+
+
 def english_path(obj):
     return "build/en/" + obj[len("build/"):]
 
@@ -92,10 +115,17 @@ def cmd_ld(argv):
             opts[key].append(a)
     redirect = set(opts["--redirect"])
     placed = read_map(default_map)
+    labels = read_labels(default_map)
     lines = open(default_ld).read().split("\n")
     out = []
     seen = set()
+    depth = 0
     for line in lines:
+        depth += line.count("{") - line.count("}")
+        label = LABEL_LINE.match(line)
+        if label and depth >= 2 and label.group(2) in labels:  # inside SECTIONS and an output section
+            addr, start = labels[label.group(2)]
+            out.append("%s. = 0x%X; /* pin %s at 0x%08X */" % (label.group(1), addr - start, label.group(2), addr))
         m = INPUT_LINE.match(line)
         if m:
             indent, obj, sec = m.groups()
