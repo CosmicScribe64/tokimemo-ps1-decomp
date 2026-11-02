@@ -3151,3 +3151,29 @@ Inspected the full D_19_03 decode and enlarged billboard region. Original stream
 ## [2026-11-02] build | Browser-download playable slice verified
 
 `build/emu/route-en-browser-slice` completes fresh boot through first school day at 24,063 frames in 555 s, 82 screenshots. Zero original-font uploads, unknown mappings or trace overflow. Actual downloaded track/CUE provenance is recorded, with unchanged audio; reviewed first-school-day capture 082. Checked the corresponding playable-slice and scripted-main-route/browser-test criteria in [[tickets/T-39500-english-translation-patch]]. Whole-game language coverage and publication remain unchecked. Wiki lint reports zero broken links or status mismatches and two existing large-page advisories.
+
+## [2026-11-02] decision | Preserve full presets with reversible letter-pair storage
+
+Nine overlong family/given presets are eight or nine letters. For [[tickets/T-39506-english-script-runtime]], explore stable pair codes in unused English-font single-byte slots, keeping GameState and save byte layouts unchanged. Rendering/width must expand pairs; editing must operate on decoded characters and repack, with full Shift-JIS pairs preserved atomically. No wording substitution or new save extension. The remaining rink encode process is still live (session 90254); no restart.
+
+## [2026-11-02] build | Rink draft passes production gates and name storage prototype round-trips
+
+The rink draft completes under unchanged gates: 17,952 bytes, nine sectors, 27 edited macroblocks, unchanged outer blocks, ring maximum 4, float disagreement 2, English mean absolute error 1.494. Decoded output is readable. Added `tools/patch/art/skating.py` with original SHA-256 and bounds guards, registering its generated crop through the standard still path and final-disc verifier. Generated crop equals the freshly encoded probe byte-for-byte; verified result is cached under normal content key 7fe9f877e25685ba12763ac16cbd0f2cc7306882c1ff5f84d142a027eb9add43. Full build is running. Rink, art and name-pair tests pass 32/32. [[tickets/T-39513-skating-rink-advertisement]].
+
+For [[tickets/T-39506-english-script-runtime]], added a shared immutable pair-assignment table and Python pack/unpack prototype. All 45 real presets round-trip exactly and fit original storage (family/given maximum seven encoded bytes). Synthetic coverage includes every printable ASCII pair, Shift-JIS trail-byte collisions, case/punctuation, idempotent packing and single-character deletion. Runtime writer/renderer/editor integration is not yet enabled.
+
+## [2026-11-02] build | Rink GPU replay passes and name runtime integration begins
+
+`build/skating-proof` completes final-disc readback/xdelta validation in 198.9 seconds: target SHA-1 prefix ab2a7b734d49, 246 verified art items, 28 approved exceptions, zero deferred/missing. Main executable equals the previous build byte-for-byte. Controlled `build/emu/skating-ad-english` replay completes in 141 seconds; capture 2000 shows the English billboard above the portrait, with the lower line partly hidden by normal portrait occlusion. Final wording review for the ambiguous cropped suffix remains open in [[tickets/T-39513-skating-rink-advertisement]].
+
+Implemented the name-pair C helpers, glyph/width expansion, character-aware edit/repack, full preset encoding and wider name-width reservations. Existing fields remain unchanged; editor pixel caps prevent compressed names exceeding their display regions. Eight name tests pass, including compiled production C helpers and renderer loops: ASCII/SJIS round trips, bounded-buffer sentinels, glyph count, pen positions and cell mode. The initial renderer fixture lacked a glyph-slot constant; corrected the fixture and reran successfully. A full English build is running; save/load and emulator evidence are not yet established. [[tickets/T-39506-english-script-runtime]].
+
+## [2026-11-02] build | Full names are written; fresh input route running
+
+`build/name-pairs-proof` completes in 205.8 s, target SHA-1 316970f72547b6f4fc6452d869cb21f414a6dc34. Retained-record count drops from 762 to 753, removing the nine overlong presets; 246 art items verify. Executable ends at 0x80130A80, below 0x80132000. A fresh main route types both nine-letter names by normal controller input and continues toward save/load (`route-en-name-pairs`); no old-link state is reused. Default-build checks are still running, with checksum and global checks already printing success. Reserved font-code guard and compiled renderer tests pass. Review measured honorific width at 22 pixels and increased player-form reservation to the 88-pixel nickname cap, which supersedes the first build's 76-pixel reservation and requires a new build before final acceptance. [[tickets/T-39506-english-script-runtime]].
+
+## [2026-11-02] ticket | Rink lettering ready for wording review; name layout correction
+
+Reviewed rink generator against CODING_STANDARDS: source/geometry guards, bounded text bands, original preservation, ignored generated pixels, unchanged codec/readback gates, Docker-only tools. Moved [[tickets/T-39513-skating-rink-advertisement]] to In Review; owner review of cropped fine-print treatment remains open. Code and GPU verification criteria are checked.
+
+Fresh long-name route capture revealed the family name overlapping the baked Name label after moving it left. Restored its original x, moved the given name six pixels right, and kept the nickname after its baked label with a 72-pixel cap. A new build is running with those layout changes and conservative player-form wrapping. The earlier route continues to exercise save/load, but its name-screen layout is not accepted. Default ninja completed: all 27 checksums, globals and 14,449 rename ledger rows pass; further English-only layout edits came afterward. [[tickets/T-39506-english-script-runtime]].

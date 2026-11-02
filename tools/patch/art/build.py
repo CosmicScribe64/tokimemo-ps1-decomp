@@ -31,7 +31,7 @@ from tools.assets import mdec_splice
 from tools.patch.art import ArtBuildError
 from tools.patch.art import items as art_items
 from tools.patch.art.items import Item
-from tools.patch.art import sprites, stills, prologue
+from tools.patch.art import sprites, stills, prologue, skating
 
 UNSUPPORTED = {
     "CDROM/OPENXA.STR": "handled by the separate movie build step; final disc verification pending",
@@ -44,6 +44,7 @@ def plan_art(root: Path, files_root: Path, exe: bytes) -> dict:
     """Place every English image; returns {"files": {path: bytes}, "exe_records": {...}, "report": {...}}."""
     started = time.monotonic()
     items = art_items.load(root)
+    items.append(skating.item(root, files_root))
     fallbacks = art_items.fallbacks(root)
     by_container = art_items.by_container(items)
     files, exe_records, images, reasons, containers = {}, {}, {}, {}, {}

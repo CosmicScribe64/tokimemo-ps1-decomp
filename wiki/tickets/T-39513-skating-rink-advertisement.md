@@ -1,7 +1,7 @@
 ---
 id: T-39513
 title: Translate the omitted skating-rink advertisement
-status: In Progress
+status: In Review
 assignee: codex
 created: 2026-11-02
 updated: 2026-11-02
@@ -14,11 +14,12 @@ Translate the visible advertisement in CDROM/BS/D_19_03.BS, absent from the exis
 
 ## Acceptance criteria
 
-- [ ] Record the source dimensions, text regions, translation and source identity.
-- [ ] Reproducible English lettering preserves unrelated artwork and passes the existing still size/decode gates.
-- [ ] Build report includes this item and final-disc readback verifies it.
-- [ ] Controlled skating-date GPU replay verifies all visible lettering without overlap.
-- [ ] Code reviewed against CODING_STANDARDS.md.
+- [x] Record the source dimensions, text regions, translation and source identity.
+- [x] Reproducible English lettering preserves unrelated artwork and passes the existing still size/decode gates.
+- [x] Build report includes this item and final-disc readback verifies it.
+- [x] Controlled skating-date GPU replay verifies all visible lettering without overlap.
+- [x] Code reviewed against CODING_STANDARDS.md.
+- [ ] Owner reviews the ambiguous cropped suffix and the resulting shortened bus label.
 
 ## Evidence
 
@@ -28,6 +29,13 @@ The preceding D_19_02 entrance is already translated; `shot_1000.png` shows its 
 
 ## Progress
 
+- Code review: generator changes only declared bands, rejects an unexpected original or geometry, stores generated game-derived pixels only in the ignored cache, and uses the existing codec/readback gates. No default-game C change. GPU capture confirms letter spacing; normal portrait occlusion of the bottom band remains. Moved to In Review for the unresolved wording decision, not Done.
+
 - Source SHA-256: 79a65609c52a2a38d674bb549da0f60a17383f54c5fa0734f659b4de5419c151; quantizer 5, 200 macroblocks, 320x160 decoded pixels.
 - `build/skating-ad/draft.py` produces a preview/crop using code-made text and local background-color fitting; no source file changed. English draft lettering is readable in `draft.png`. The tiny suffix at the right edge of the bus band is ambiguous and cropped; draft treatment requires owner review before acceptance.
 - `build/skating-ad/encode.py` is running the production encoder and unchanged verification gates. Integration, final readback, GPU replay and code review are still pending.
+
+- Production encoding passes: 17,952 bytes in the original nine sectors; 27 edited blocks, outer blocks identical, ring maximum 4, float disagreement 2, English mean error 1.494. Reviewed decoded `build/skating-ad/encoded.png`.
+- Added code generator `tools/patch/art/skating.py`, source-hash and lettering-bound checks, and registration through the standard still encoder/readback path. Its generated crop is byte-identical to the freshly verified probe; full build is running. Rink/art/name prototype suite passes 32 tests. Tiny cropped bus suffix still requires owner review; no claim of final translation approval.
+
+- Full `build/skating-proof` passes disc readback and xdelta checks (target prefix ab2a7b734d49): 246 verified art items, 28 exceptions, zero deferred/missing. Main executable equals the prior build. Controlled `build/emu/skating-ad-english` completes in 141 seconds; `shot_2000.png` shows the English billboard. The portrait naturally obscures part of the bottom line, as it obscured the original sign. Owner review of the tiny cropped suffix remains open.
