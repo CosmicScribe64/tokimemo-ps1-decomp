@@ -1,0 +1,5 @@
+# Browser patcher verification only (T-39512); no host dependencies.
+FROM mcr.microsoft.com/playwright:v1.64.1-noble
+RUN npm install --prefix /opt/patcher-test --no-audit --no-fund playwright@1.64.1
+ENV NODE_PATH=/opt/patcher-test/node_modules
+WORKDIR /work
