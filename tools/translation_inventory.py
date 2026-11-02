@@ -32,6 +32,7 @@ Only hashes, ids and reasons are committed; no original game pixels or text.
 import argparse
 import json
 from pathlib import Path
+import fnmatch
 import re
 
 from translation_assets import ROOT, audit, digest, encoded
@@ -113,14 +114,26 @@ def catalog_paths(sel, container=''):
     """All container paths a catalog row names; bare sibling names inherit the previous directory."""
     paths, directory = [], None
     for token in re.findall(r'`([^`]+)`', sel):
-        if re.fullmatch(r'CDROM/[A-Z0-9_]+/[A-Z0-9_]+\.[A-Z]{2,3}', token):
+        if re.fullmatch(r'CDROM/[A-Z0-9_]+/(?:[A-Z0-9_]+\.[A-Z]{2,3}|\*)', token):
             paths.append(token)
             directory = token.rsplit('/', 1)[0]
+        elif re.fullmatch(r'[A-Z0-9_]+/\*', token):
+            paths.append('CDROM/' + token)
+            directory = 'CDROM/' + token.split('/')[0]
         elif directory and re.fullmatch(r'[A-Z0-9_]+\.[A-Z]{2,3}', token):
             paths.append(directory + '/' + token)
     if not paths:
         paths = re.findall(r'CDROM/[A-Z0-9_]+/[A-Z0-9_]+\.[A-Z]{2,3}', container)
     return paths
+
+
+def expand_catalog_paths(paths, known):
+    """Resolve directory groups from captured identities; retain unmatched gaps."""
+    result = []
+    for path in paths:
+        matches = sorted(p for p in known if fnmatch.fnmatchcase(p, path)) if '*' in path else [path]
+        result.extend(matches or [path])
+    return list(dict.fromkeys(result))
 
 
 def catalog_atoms(rows):
@@ -455,6 +468,7 @@ def build(catalog=CATALOG, decisions_path=DECISIONS, sources_path=SOURCES, snaps
         all_paths = [path] if path else []
         if path is None and row is not None:
             all_paths = catalog_paths(selector(row), row['container']) or [row['container']]
+            all_paths = expand_catalog_paths(all_paths, sources['containers'])
             path = all_paths[0]
         corrected = sources.get('path_corrections', {}).get(path)
         known = sources['containers'].get(path) if path else None
@@ -654,6 +668,13 @@ def capture_containers(disc):
         paths.update(catalog_paths(selector(row), row['container']))
     containers, corrections, absent = {}, {}, []
     for path in sorted(paths):
+        if '*' in path:
+            matches = sorted(p for p in disc.glob(path) if p.is_file())
+            if not matches:
+                absent.append(str(disc / path))
+            for target in matches:
+                containers[target.relative_to(disc).as_posix()] = digest(target.read_bytes())
+            continue
         target = disc / path
         if not target.is_file() and '/PROLODIR/' in path and (disc / path.replace('/PROLODIR/', '/BS/')).is_file():
             corrections[path] = path.replace('/PROLODIR/', '/BS/')

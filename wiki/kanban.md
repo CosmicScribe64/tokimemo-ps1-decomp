@@ -25,6 +25,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
 
 - [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
@@ -101,6 +102,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39518-sd-art-inventory-coverage|T-39518 Bind and review the complete SD artwork group]]
 
 - [ ] [[tickets/T-39517-ending-summary-layout|T-39517 Fit the scrolling English ending summaries]]
 

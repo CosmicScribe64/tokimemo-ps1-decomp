@@ -3461,3 +3461,11 @@ Normal, long-career and Rei streaming probes finish 5,000 frames with zero overf
 ## [2026-11-02] ticket | Accept bounded ending summaries and refresh local patcher
 
 T-39517 In Progress -> In Review -> Done after standards review and resolution of all findings. All 27 original hashes, headers and rename audit pass. Thirteen candidate queues plus three full scroll fixtures fit every row/window: maximum 773 queue bytes and 361 live glyphs; final Rei sentence visually complete. Browser passes nine checks and exact CLI/download equality. Local port 8769 serves target cd882b6238075dd9d36fd7af7fe6b546e04ecfa2. User reconfirmed full longer presets, consistent with the existing packed-name implementation and prior save/load proof. Parent whole-game audits and release signoff remain open. [[tickets/T-39517-ending-summary-layout]], [[tickets/T-39512-browser-patcher]].
+
+## [2026-11-02] ticket | Audit retained artwork and correct SD wildcard coverage
+
+Previous turn completed T-39517 with GPU/browser verification and commit f90102fe9. T-39510 retained-art review now decodes 24 views of MAINROM 120/173, OPTION 119..121 and nine FILESEL pages, verifies exact current-disc pixel equality, and visually confirms English/graphic-only content. Review artifacts: `build/retained-art-review/manifest.json`, sheets 00..02. Found catalog-152 silently bound to BUSTUP/*.BIN because wildcard selectors were ignored. Opened T-39518 In Progress before implementing explicit SD-directory expansion from source identities; unmatched groups stay visible as gaps. Tests and enumeration running; SD no-text claim remains unproven. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39518-sd-art-inventory-coverage]].
+
+## [2026-11-02] ticket | Complete SD source binding and pixel audit
+
+T-39518 In Progress -> In Review -> Done after standards review. 69 SD files resolve to original hashes/caller-proven layouts and match the current disc; all 585 distinct frames reviewed on 25 sheets, no Japanese lettering. Added metadata-only hash receipt; no game pixels staged. Retained menu/still/portrait reviews recorded too. 37 tests and inventory check pass, prior source hashes preserved. [[tickets/T-39518-sd-art-inventory-coverage]], [[tickets/T-39510-no-japanese-left-check]].

@@ -115,6 +115,10 @@
    "reason": "Owner note 21: the P_01_03 / P_01_03B calligraphy names are drafted as port-made brush lettering. Owner chose layout A on 2026-11-01: bs-p-01-03-roster-a-rotated (each name runs down its slanted column as one brush line) and the identical bs-p-01-03b-name-a-rotated, so the crossfade keeps the name in place. The right-edge column at x >= 303 is cut off by the frame and not translated. The stacked and larger alternatives are rejected and unregistered. Unreviewed, human_approved false.",
    "status": "candidate-only"
   },
+  "catalog-132": {
+   "reason": "Both P_01_04B and P_01_07 are hallway backgrounds with notice-board strokes but no identifiable Japanese lettering. Pixel review receipt: translations/en/graphics/reviews/retained-pixel-review-2026-11-02.json; final-disc bytes identical.",
+   "status": "deliberately-untranslated"
+  },
   "catalog-133": {
    "notes": [
     "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval"
@@ -149,7 +153,7 @@
     "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval",
     "catalog binding corrected to D_01_72 under T-39400 (translations/en/graphics/decisions/bs-signs.json)"
    ],
-   "reason": "catalog binding corrected from D_01_70 to D_01_72 under T-39400: D_01_72 is the art-club easel scene (no legible text, confirmed on the decoded still); D_01_70 holds the computer-club banner, which catalog-136 tracks. Catalog states no change is required",
+   "reason": "D_01_72 is the art-club still; easels, sketches and classroom scene show no Japanese lettering. Pixel review receipt: translations/en/graphics/reviews/retained-pixel-review-2026-11-02.json; final-disc bytes identical.",
    "status": "deliberately-untranslated"
   },
   "catalog-138": {
@@ -243,8 +247,12 @@
    "reason": "Catalog recommends keeping the festival-fan kanji as an authentic cultural motif; optional replacement is a style decision, not required work.",
    "status": "deliberately-untranslated"
   },
+  "catalog-151": {
+   "reason": "AS34 shirt, HI05 diagram and KO15 hat are pictorial graphics, without identifiable Japanese lettering; all three decoded portraits inspected. Pixel review receipt: translations/en/graphics/reviews/retained-pixel-review-2026-11-02.json; final-disc bytes identical.",
+   "status": "deliberately-untranslated"
+  },
   "catalog-152": {
-   "reason": "Catalog: no Japanese text present; wildcard group of SD sprite files not enumerated, so no per-file hash. Catalog also notes comic marks and Latin K may need a decision.",
+   "reason": "All 69 source-hashed SD files (32 club, 12 holiday, 25 weekday) decoded successfully. All 585 distinct frames visually reviewed: no Japanese lettering; only characters/props, comic marks, Latin letters and numerals. Replaces the incorrect BUSTUP wildcard and historical 18-file count. Pixel review receipt: translations/en/graphics/reviews/retained-pixel-review-2026-11-02.json; final-disc bytes identical.",
    "status": "deliberately-untranslated"
   },
   "catalog-153": {
@@ -304,39 +312,39 @@
    "status": "candidate-only"
   },
   "filesel-page-information-3": {
-   "reason": "Rendered inspection shows the slot list grid and gauge only, no Japanese text. Not machine verified.",
+   "reason": "Decoded page contains empty slot-grid/gauge geometry with no lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
    "status": "deliberately-untranslated"
   },
   "filesel-page-information-4": {
-   "reason": "Rendered inspection shows the slot list grid only, no Japanese text. Not machine verified.",
+   "reason": "Decoded page contains empty slot-grid/gauge geometry with no lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
    "status": "deliberately-untranslated"
   },
   "filesel-page-information-5": {
-   "reason": "Rendered inspection shows the slot list grid only, no Japanese text. Not machine verified.",
+   "reason": "Decoded page contains empty slot-grid/gauge geometry with no lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
    "status": "deliberately-untranslated"
   },
   "filesel-page-primary-0": {
-   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "reason": "Decoded page is a textured panel background with no lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
    "status": "deliberately-untranslated"
   },
   "filesel-page-primary-1": {
-   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "reason": "Decoded page is a textured panel background with no lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
    "status": "deliberately-untranslated"
   },
   "filesel-page-primary-2": {
-   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "reason": "Decoded page is a textured panel background with no lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
    "status": "deliberately-untranslated"
   },
   "filesel-page-primary-3": {
-   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "reason": "Decoded page is a textured panel background with no lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
    "status": "deliberately-untranslated"
   },
   "filesel-page-primary-4": {
-   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "reason": "Decoded page is a textured panel background with no lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
    "status": "deliberately-untranslated"
   },
   "filesel-page-primary-5": {
-   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "reason": "Decoded page is a textured panel background with no lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
    "status": "deliberately-untranslated"
   },
   "mainrom-0057": {
@@ -456,6 +464,10 @@
     "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
    ],
    "reason": "Hand-drawn メモリアルスポット masthead kept; its Latin MEMORIAL SPOT subtitle and MOVIE/CONCERT/EVENT headers are already English; no established face can replace the logo without inventing art.",
+   "status": "deliberately-untranslated"
+  },
+  "mainrom-0120": {
+   "reason": "Decoded frame is the Latin STADIUM panel and a textured field; no Japanese lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
    "status": "deliberately-untranslated"
   },
   "mainrom-0121": {
@@ -682,6 +694,10 @@
    "reason": "lettering strip draft; logo kept; unreviewed, human_approved false",
    "status": "candidate-only"
   },
+  "mainrom-0173": {
+   "reason": "Decoded frame is a musical-note pictogram; no lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
+   "status": "deliberately-untranslated"
+  },
   "mainrom-sheet-02000": {
    "reason": "Catalog: unused prototype profile labels in VRAM, safe to leave. Not independently confirmed unused beyond the catalog statement.",
    "status": "deliberately-untranslated"
@@ -715,6 +731,18 @@
     "src/ovl/name_entry/name_entry.c (no INCLUDE_ASM) assigns tab actors 109..113 only frames 15,17,19,21,23; the overlay sequence table at NAME_ENT.NBN+0x1afd0 holds only sequence 0 (frames 10,11,12); hover uses frame 9. No source path selects this frame, so it is generated but not required."
    ],
    "required_by_source": "unreferenced-by-source"
+  },
+  "option-0119": {
+   "reason": "Decoded frame is a jukebox pictogram; no identifiable Japanese lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
+   "status": "deliberately-untranslated"
+  },
+  "option-0120": {
+   "reason": "Decoded frame is a jukebox pictogram; no identifiable Japanese lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
+   "status": "deliberately-untranslated"
+  },
+  "option-0121": {
+   "reason": "Decoded frame is a jukebox pictogram; no identifiable Japanese lettering. Pixel review 2026-11-02: build/retained-art-review/manifest.json and sheets 00..02; corresponding decoded current-disc pixels are identical.",
+   "status": "deliberately-untranslated"
   },
   "title-0000": {
    "reason": "Title logo art is retained per catalog guidance (keep the heart-emblem logo); optional ribbon lettering is a style decision, not required.",

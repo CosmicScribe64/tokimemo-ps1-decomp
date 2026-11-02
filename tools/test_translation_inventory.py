@@ -110,7 +110,7 @@ class PinnedCountTests(unittest.TestCase):
         summary = subject.build()['summary']
         self.assertEqual(summary['artwork_items']['total'], 272)    # + name_ent-abc (T-39411 ABC selector cell)
         self.assertEqual(summary['artwork_items']['by_status'], {
-            'english-reviewed': 52, 'candidate-only': 192, 'missing': 1, 'unmapped': 0, 'deliberately-untranslated': 27})
+            'english-reviewed': 52, 'candidate-only': 192, 'missing': 0, 'unmapped': 0, 'deliberately-untranslated': 28})
         self.assertEqual(summary['historical_assets']['by_status']['english-reviewed'], 44)
         self.assertEqual(summary['historical_assets']['by_status']['unmapped'], 3)
         self.assertEqual(summary['candidate_records'], {'total': 447, 'distinct_assets': 444, 'agent_reviewed_revisions': 3, 'human_approved': 53})
@@ -219,9 +219,9 @@ class PinnedCountTests(unittest.TestCase):
             self.assertTrue(items[item_id]['container'].endswith('/%s.BS' % name), item_id)
             self.assertEqual(len(items[item_id]['english']['candidates']), count, item_id)
             self.assertTrue(items[item_id]['container_sha256'], item_id)
-        self.assertEqual(items['catalog-142']['status'], 'missing')
+        self.assertEqual(items['catalog-142']['status'], 'deliberately-untranslated')
         self.assertTrue(items['catalog-142']['container'].endswith('/D_11_11.BS'))
-        self.assertEqual([i for i, v in items.items() if v['status'] == 'missing'], ['catalog-142'])
+        self.assertEqual([i for i, v in items.items() if v['status'] == 'missing'], [])
         self.assertTrue(items['catalog-135']['container'].endswith('/D_01_69.BS'))
 
     def test_registered_checkpoints_keep_their_drafts_unapproved(self):
@@ -421,6 +421,20 @@ class PinnedCountTests(unittest.TestCase):
         row = next(i for i in built['artwork_items'] if i['id'] == 'catalog-132')
         self.assertEqual([c['path'] for c in row['containers']], ['CDROM/PROLODIR/P_01_04B.BS', 'CDROM/PROLODIR/P_01_07.BS'])
         self.assertTrue(all(c['sha256'] for c in row['containers']))
+
+    def test_sd_directory_group_does_not_inherit_portrait_container(self):
+        paths = subject.catalog_paths('`CDROM/CLUB_SD/*`, `HOLI_SD/*`, `MAIN_SD/*` (18 files)',
+                                      'CDROM/BUSTUP/*.BIN')
+        self.assertEqual(paths, ['CDROM/CLUB_SD/*', 'CDROM/HOLI_SD/*', 'CDROM/MAIN_SD/*'])
+        known = {'CDROM/CLUB_SD/B.NBN': 'b', 'CDROM/CLUB_SD/A.NBN': 'a',
+                 'CDROM/BUSTUP/A.BIN': 'portrait'}
+        self.assertEqual(subject.expand_catalog_paths(paths, known),
+                         ['CDROM/CLUB_SD/A.NBN', 'CDROM/CLUB_SD/B.NBN',
+                          'CDROM/HOLI_SD/*', 'CDROM/MAIN_SD/*'])
+        item = next(i for i in subject.build()['artwork_items'] if i['id'] == 'catalog-152')
+        self.assertEqual(len(item['containers']), 69)
+        self.assertTrue(all(c['sha256'] and '_SD/' in c['path'] and '*' not in c['path']
+                            for c in item['containers']))
 
     def _without_approval(self):
         decisions = json.loads(subject.DECISIONS.read_text())
