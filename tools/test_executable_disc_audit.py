@@ -8,7 +8,7 @@ from types import SimpleNamespace
 
 from tools.patch.audit_executable_disc import (
     FunctionOwners, audit_derived, audit_slots, bind_extent, pair_target,
-    read_address, snapshot_translator,
+    payload_references, read_address, snapshot_translator, verify_hooks,
 )
 from tools.patch.text.image import Image, Slot
 
@@ -153,15 +153,46 @@ class ExecutableAuditTest(unittest.TestCase):
         result = bind_extent(record, container, {b'Hello'}, self.data, self.base,
                              self.base + 80, old, new)
         self.assertEqual(result['status'], 'function_bound')
+        new.syms = {**old.syms, 'replacement': (self.base + 16, True, True)}
+        struct.pack_into('<II', self.data, 0, 0x08000000 | ((self.base + 16) >> 2 & 0x3FFFFFF), 0)
         result = bind_extent(record, container, {b'Hello'}, self.data, self.base,
                              self.base + 80, old, new, {'consumer': 'replacement'})
         self.assertEqual(result['status'], 'pending')
         self.assertEqual(result['replacement_functions'], {'consumer': 'replacement'})
+        struct.pack_into('<II', self.data, 16, 0x3C088013, 0x25082030)
+        new.pairs = {self.base + 48: [([self.base + 16], self.base + 20)]}
+        result = bind_extent(record, container, {b'Hello'}, self.data, self.base,
+                             self.base + 80, old, new, {'consumer': 'replacement'})
+        self.assertEqual(result['status'], 'replacement_function_bound')
+        new.syms = old.syms
+        new.pairs = {self.base + 48: [([self.base], self.base + 4)]}
         struct.pack_into('<I', self.data, 0, 0x08000000)
         result = bind_extent(record, container, {b'Hello'}, self.data, self.base,
                              self.base + 80, old, new)
         self.assertEqual(result['status'], 'pending')
         self.assertEqual(len(result['rejected_pairs']), 1)
+
+    def test_hook_requires_actual_jump_target_and_nop_delay(self):
+        symbols = {'old': (self.base, True, True), 'new': (self.base + 32, True, True)}
+        jump = 0x08000000 | ((self.base + 32) >> 2 & 0x3FFFFFF)
+        struct.pack_into('<II', self.data, 0, jump, 0)
+        self.assertEqual(verify_hooks(self.data, self.base, symbols, {'old': 'new'})['old']['target'],
+                         self.base + 32)
+        for word, delay in ((jump + 1, 0), (jump, 1), (jump | 0x04000000, 0)):
+            struct.pack_into('<II', self.data, 0, word, delay)
+            with self.assertRaisesRegex(ValueError, 'hook differs'):
+                verify_hooks(self.data, self.base, symbols, {'old': 'new'})
+
+    def test_replacement_payloads_require_every_label_in_selected_region(self):
+        struct.pack_into('<II', self.data, 0, 0x3C088013, 0x25082030)
+        refs = SimpleNamespace(pairs={self.base + 48: [([self.base], self.base + 4)]})
+        result = payload_references(self.data, self.base, refs, {'greeting': b'Hello'},
+                                    lambda site: site == self.base + 4)
+        self.assertEqual(result['greeting'][0]['target'], self.base + 48)
+        for payloads, accepts in (({'greeting': b'Hello', 'other': b'Bye'}, lambda _: True),
+                                  ({'greeting': b'Hello'}, lambda _: False)):
+            with self.assertRaisesRegex(ValueError, 'Missing replacement'):
+                payload_references(self.data, self.base, refs, payloads, accepts)
 
 
 if __name__ == '__main__':

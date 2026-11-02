@@ -14,7 +14,7 @@ import json
 import struct
 from pathlib import Path
 
-from tools import english_link
+from tools import elf32, english_link
 from tools.patch.art.verify import read_back
 from tools.patch.audit_generated_sources import audit_sources
 from tools.patch.build_english import literal_payloads, unloaded_sources
@@ -98,6 +98,92 @@ class FunctionOwners:
         return name if any(begin <= start <= address < end for begin, end in self.sections) else None
 
 
+def verify_hooks(data, base, symbols, hooks):
+    """Require the actual disc's entry jump and delay slot, not just config."""
+    result = {}
+    for original, replacement in sorted(hooks.items()):
+        if original not in symbols or replacement not in symbols:
+            raise ValueError('Missing hook symbol: ' + original)
+        source, target = symbols[original][0], symbols[replacement][0]
+        jump, delay = struct.unpack('<II', read_address(data, base, source, 8))
+        actual = ((source + 4) & 0xF0000000) | ((jump & 0x03FFFFFF) << 2)
+        if jump >> 26 != 2 or actual != target or delay != 0:
+            raise ValueError('Disc entry hook differs: ' + original)
+        result[original] = {'replacement': replacement, 'site': source, 'target': target}
+    return result
+
+
+def payload_references(data, base, references, payloads, accepts):
+    """Require every specified English payload in the selected compiled region."""
+    found = {label: [] for label in payloads}
+    for pairs in references.pairs.values():
+        for highs, low in pairs:
+            if not accepts(low):
+                continue
+            target = pair_target(data, base, highs, low)
+            for label, payload in payloads.items():
+                if matching_payload(data, base, target, payload + b'\0'):
+                    found[label].append({'site': low, 'target': target})
+    missing = [label for label, hits in found.items() if not hits]
+    if missing:
+        raise ValueError('Missing replacement payload references: ' + ', '.join(missing))
+    return found
+
+
+def replacement_helpers(files, bases, link, references):
+    """Reviewed replacements of the six obsolete raw extents (T-39506)."""
+    main = references[EXE_PATH]
+    data, base = files[EXE_PATH], bases[EXE_PATH]
+    obj = str(link / 'src/main/hud_screens.o')
+    start, size = main.placed[(obj, '.text')]
+    end = main.syms['hud_day_bgm_load'][0]
+    # IDO omits the static helper's name. It is the prefix of this object,
+    # before its first exported function; calls use section-symbol relocations.
+    if not start < end <= start + size:
+        raise ValueError('Invalid save-helper prefix bounds')
+    owners = FunctionOwners(main)
+    elf = elf32.Elf(obj)
+    section = next(section for section in elf.sections if section.name == '.text')
+    calls = []
+    for offset, kind, symbol in elf.relocations(section):
+        if kind != elf32.R_MIPS_26 or symbol.type != 3:
+            continue
+        if elf.sections[symbol.shndx].name != '.text':
+            continue
+        original = struct.unpack_from('<I', elf.contents(section), offset)[0]
+        if original & 0x03FFFFFF:
+            continue
+        site = start + offset
+        word = struct.unpack('<I', read_address(data, base, site, 4))[0]
+        target = ((site + 4) & 0xF0000000) | ((word & 0x03FFFFFF) << 2)
+        if word >> 26 != 3 or target != start or owners.at(site) != 'hud_save_slot_info_show':
+            raise ValueError('Save helper call is not bound to expected caller/target')
+        calls.append(site)
+    if len(calls) != 2:
+        raise ValueError('Expected both save/album calls to name helper')
+    labels = payload_references(data, base, main, {'name': b'Name: ', 'nickname': b'Nickname: '},
+                                lambda site: start <= site < end)
+    name_path = 'CDROM/EXEDIR/NAME_ENT.EXN'
+    name = references[name_path]
+    owners = FunctionOwners(name)
+    prompts = payload_references(
+        files[name_path], bases[name_path], name,
+        {'checking': b'Checking the Memory Card.', 'wait': b'Please wait.'},
+        lambda site: owners.at(site) == 'file_select_memory_card_check_begin')
+    save = {'status': 'replacement_helper_bound', 'helper_start': start, 'helper_end': end,
+            'calls': calls, 'payload_references': labels}
+    memory = {'status': 'replacement_helper_bound',
+              'function': 'file_select_memory_card_check_begin', 'payload_references': prompts}
+    return {
+        'SLPM_86.053:000707c8:739d00f04fcf': save,
+        'SLPM_86.053:000707d0:8d933ffd7b5c': save,
+        'SLPM_86.053:00070824:739d00f04fcf': save,
+        'SLPM_86.053:0007082c:8d933ffd7b5c': save,
+        name_path + ':000197b4:5689431a4a51': memory,
+        name_path + ':000197c8:14eb1689205d': memory,
+    }
+
+
 def bind_extent(record, container, candidates, data, base, address, old, new, hooks=None):
     """Require matching references in every original owning function.
 
@@ -127,10 +213,10 @@ def bind_extent(record, container, candidates, data, base, address, old, new, ho
                 'original_references': references}
     wanted = {item['function'] for item in references}
     redirected = wanted & set(hooks or {})
+    replacements = {name: hooks[name] for name in sorted(redirected)}
     if redirected:
-        return {'status': 'pending', 'reason': 'original consumer replaced by entry hook',
-                'original_references': references,
-                'replacement_functions': {name: hooks[name] for name in sorted(redirected)}}
+        verify_hooks(data, base, new.syms, replacements)
+        wanted = {replacements.get(name, name) for name in wanted}
     matches, stale_pairs = [], []
     for pairs in new.pairs.values():
         for highs, low in pairs:
@@ -147,9 +233,11 @@ def bind_extent(record, container, candidates, data, base, address, old, new, ho
             if matching_payload(data, base, target, expected):
                 matches.append({'function': function, 'site': low, 'target': target})
     missing = sorted(wanted - {item['function'] for item in matches})
-    return {'status': 'pending' if missing else 'function_bound',
+    return {'status': ('pending' if missing else
+                       'replacement_function_bound' if redirected else 'function_bound'),
             'original_references': references, 'english_function_references': matches,
-            'unresolved_functions': missing, 'rejected_pairs': stale_pairs}
+            'unresolved_functions': missing, 'rejected_pairs': stale_pairs,
+            'replacement_functions': replacements}
 
 
 def audit_slots(container, data, base, translate, payloads, placements):
@@ -244,7 +332,7 @@ def audit(build, link):
                    bytes.fromhex(record.get('raw_hex') or '').rstrip(b'\0'))
             canonical.setdefault(key, []).append(record['id'])
     payloads = {rid: payload for rows in text.payloads.values() for rid, payload in rows.items()}
-    bindings, pending = {}, []
+    bindings, pending, hook_checks, linked_references = {}, [], {}, {}
     for path, rows in slots.items():
         unresolved = {rid: item for rid, item in rows.items() if not item['exact']}
         if not unresolved:
@@ -254,7 +342,9 @@ def audit(build, link):
         _, old_map, old_elf = english_link.default_paths(unit)
         old = References(old_map, old_elf)
         new = References(str(link / (stem + '.map')), str(link / (stem + '.elf')))
+        linked_references[path] = new
         hooks = dict(english_link.read_hooks('config/english_hooks.txt', unit))
+        hook_checks[unit] = verify_hooks(files[path], bases[path], new.syms, hooks)
         for rid, item in unresolved.items():
             record = by_id[rid]
             key = (unit, bytes.fromhex(record.get('raw_hex') or '').rstrip(b'\0'))
@@ -264,14 +354,20 @@ def audit(build, link):
             bindings[rid] = binding
             if binding['status'] == 'pending':
                 pending.append({'path': path, 'id': rid})
+    helpers = replacement_helpers(files, bases, link, linked_references)
+    for rid, evidence in helpers.items():
+        if rid not in bindings or bindings[rid]['status'] != 'pending':
+            raise ValueError('Replacement recipe does not match a pending extent: ' + rid)
+        bindings[rid] = evidence
+    pending = [item for item in pending if bindings[item['id']]['status'] == 'pending']
     return {'status': 'incomplete',
             'scope': 'source generation, mapped executable slots and derived consumer pointers',
-            'remaining_checks': ['entry-hook replacements', 'replacement helper references',
-                                 'referenced-byte language census'],
+            'remaining_checks': ['retired parser formatting', 'referenced-byte language census'],
             'excluded_units': list(english_link.UNLOADED), 'source_generation': source,
             'containers': len(files), 'slots': sum(len(rows) for rows in slots.values()),
             'exact_slots': sum(item['exact'] for rows in slots.values() for item in rows.values()),
-            'pending_slots': pending, 'extent_bindings': bindings, 'derived_records': len(derived),
+            'pending_slots': pending, 'extent_bindings': bindings, 'entry_hooks': hook_checks,
+            'derived_records': len(derived),
             'derived_pointers': sum(len(item['pointers']) for item in derived),
             'files': {path: {'sha256': hashlib.sha256(files[path]).hexdigest(), 'slots': slots[path]}
                       for path in paths}, 'derived': derived}
