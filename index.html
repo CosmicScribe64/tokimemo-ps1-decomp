@@ -11,33 +11,33 @@
 </head>
 <body>
 <main>
-<header><p class="eyebrow">FOREVER WITH YOU · PLAYSTATION</p><h1>Tokimeki Memorial</h1><p class="subtitle">English patch · review build</p><p class="intro">Translation and visual checks are still in progress.</p></header>
+<header><p class="eyebrow">FOREVER WITH YOU · PLAYSTATION</p><h1>Tokimeki Memorial</h1><p class="subtitle">English patch</p><p class="intro">English text and artwork for the original PS1 game. Still a work in progress.</p></header>
 <section class="panel" aria-labelledby="patch-title">
-<div class="section-heading"><span class="step">01</span><div><h2 id="patch-title">Choose your original disc</h2><p>Japan · PlayStation the Best · SLPM-86053</p></div></div>
-<p class="privacy">Your disc stays on your computer. Nothing is uploaded.</p>
+<div class="section-heading"><div><h2 id="patch-title">Choose your original disc</h2><p>Japan · PlayStation the Best · SLPM-86053</p></div></div>
+<p class="privacy">Your files stay on your computer.</p>
 <form id="patch-form">
 <div id="drop-zone">
 <label for="disc-files">Drop your disc files here, or choose files</label>
 <input id="disc-files" type="file" multiple accept=".bin,.cue,.img,.iso,.zip,.7z,.chd" aria-describedby="input-help">
-<p id="selection" aria-live="polite">No files selected</p>
+<p id="selection" aria-live="polite"></p>
 </div>
-<p id="input-help" class="hint">Choose a ZIP or 7z archive, a CHD, a combined BIN or IMG, or the CUE and all its tracks together. Raw ISO images also work; data-only ISOs are missing parts of the disc.</p>
+<p id="input-help" class="hint">BIN/CUE, CHD, IMG, ISO, ZIP or 7z. For BIN/CUE, include all the track files. Data-only ISO copies cannot be patched.</p>
 <details><summary>Select two BIN tracks separately</summary>
 <label for="source">Data track <span>Track 1 · BIN</span></label><input id="source" name="source" type="file" accept=".bin">
 <label for="audio">Audio track <span>Track 2 · BIN</span></label><input id="audio" name="audio" type="file" accept=".bin">
 </details>
-<p class="hint">Your files are checked before patching. A roughly 700 MB disc works best in a desktop browser with enough free memory.</p>
+<p class="hint">Works best on a desktop computer.</p>
 <div class="actions"><button id="apply" type="submit" disabled>Create English disc</button><button id="cancel" class="secondary" type="button" hidden>Cancel</button></div>
 </form>
-<div id="status-area"><p id="status" role="status" aria-live="polite">Loading build information…</p><progress id="progress" max="100" value="0" hidden aria-label="Patch progress"></progress></div>
+<div id="status-area"><p id="status" role="status" aria-live="polite">Loading…</p><progress id="progress" max="100" value="0" hidden aria-label="Patch progress"></progress></div>
 </section>
 <section id="result" class="panel" hidden aria-labelledby="result-title">
-<div class="section-heading"><span class="step">02</span><div><h2 id="result-title" tabindex="-1">Your English disc is ready</h2><p>The finished data track passed verification.</p></div></div>
+<div class="section-heading"><div><h2 id="result-title" tabindex="-1">Your English disc is ready</h2></div></div>
 <div class="downloads"><a id="track-download" class="button" download="tokimemo-en-track1.bin">Download data track</a><a id="audio-download" class="button secondary" download="tokimemo-en-track2.bin" hidden>Download audio track</a><a id="cue-download" class="button secondary" download="tokimemo-en.cue">Download CUE</a></div>
 <p id="save-instructions"></p>
-<details><summary>Verification details</summary><p>Patched track SHA-1</p><code id="output-hash"></code></details>
+
 </section>
-<footer><p id="build-label"></p><p>Community translation project. Game data is not included.</p><p>Patch decoding by <a href="https://github.com/marcrobledo/RomPatcher.js">RomPatcher.js</a> · <a href="vendor/THIRD-PARTY.txt">Third-party licenses</a></p></footer>
+<footer><p><a href="https://github.com/CosmicScribe64/tokimemo-ps1-decomp">About the project</a> · <a href="https://github.com/CosmicScribe64/tokimemo-ps1-decomp/issues">Report a problem</a> · <a href="vendor/THIRD-PARTY.txt">Credits and licenses</a></p></footer>
 </main>
 </body>
 </html>

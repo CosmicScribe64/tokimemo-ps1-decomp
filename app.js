@@ -32,7 +32,7 @@ function download(id, blob) {
     const url = URL.createObjectURL(blob); urls.push(url); byId(id).href = url;
 }
 byId('cancel').addEventListener('click', () => {
-    stop(); clearResult(); status('Cancelled. Your original tracks have not changed.');
+    stop(); clearResult(); status('Cancelled.');
 });
 for (const id of ['source', 'audio']) byId(id).addEventListener('change', () => {
     selected = []; byId('disc-files').value = ''; byId('selection').textContent = 'Using separate BIN tracks'; clearResult();
@@ -40,7 +40,7 @@ for (const id of ['source', 'audio']) byId(id).addEventListener('change', () => 
 function selectFiles(files) {
     if (worker || request) return;
     selected = Array.from(files); byId('source').value = byId('audio').value = '';
-    byId('selection').textContent = selected.length ? selected.map(file => file.name).join(', ') : 'No files selected';
+    byId('selection').textContent = selected.length ? selected.map(file => file.name).join(', ') : '';
     clearResult();
 }
 byId('disc-files').addEventListener('change', event => selectFiles(event.target.files));
@@ -54,7 +54,7 @@ byId('drop-zone').addEventListener('drop', event => {
 function prepareFiles(files) {
     return new Promise((resolve, reject) => {
         worker = new Worker('input-worker.js');
-        worker.onerror = () => reject(new Error('The disc reader stopped. Try a desktop browser with more free memory.'));
+        worker.onerror = () => reject(new Error('The disc could not be opened. Close other tabs and try again on a desktop computer.'));
         worker.onmessage = ({data}) => {
             if (data.type === 'progress') { status(data.message); byId('progress').value = data.progress; }
             else if (data.type === 'error') reject(new Error(data.message));
@@ -89,7 +89,7 @@ byId('patch-form').addEventListener('submit', async event => {
         if (controller.signal.aborted) return;
         request = null;
         worker = new Worker('worker.js');
-        worker.onerror = () => { stop(); status('The patch worker stopped. Try again in a desktop browser with enough free memory.', true); };
+        worker.onerror = () => { stop(); status('Patching stopped. Close other tabs and try again on a desktop computer.', true); };
         worker.onmessage = ({data}) => {
             if (data.type === 'progress') { status(data.message); byId('progress').value = data.progress; }
             else if (data.type === 'error') { stop(); status(data.message, true); }
@@ -103,8 +103,7 @@ byId('patch-form').addEventListener('submit', async event => {
                 } else {
                     byId('save-instructions').textContent = `Save both downloads in the same folder as ${audioName}, your unchanged audio track. Open tokimemo-en.cue in your emulator.`;
                 }
-                byId('output-hash').textContent = data.sha1;
-                stop(); status('Finished. All verification checks passed.');
+                stop(); status('Finished.');
                 byId('result').hidden = false; byId('result-title').focus();
             }
         };
@@ -114,11 +113,11 @@ byId('patch-form').addEventListener('submit', async event => {
     }
 });
 fetch('release.json', {cache: 'no-cache'}).then(async response => {
-    if (!response.ok) throw new Error('This preview has not been packaged with a patch yet.');
+    if (!response.ok) throw new Error('The English patch is unavailable. Please try again later.');
     const data = await response.json();
     if (data.format !== 1 || !data.source?.sha1 || !data.audio?.sha1 || !data.target?.sha1 || !data.patch?.sha256)
-        throw new Error('Build information is invalid. Reload this page.');
-    if (!/^assets\/[a-zA-Z0-9._-]+\.xdelta$/.test(data.patch.file)) throw new Error('Invalid patch location.');
-    release = data; byId('build-label').textContent = data.label;
-    busy(false); status('Choose or drop your original disc to begin.');
+        throw new Error('The patch could not be loaded. Reload this page.');
+    if (!/^assets\/[a-zA-Z0-9._-]+\.xdelta$/.test(data.patch.file)) throw new Error('The patch could not be loaded. Reload this page.');
+    release = data;
+    busy(false); status('');
 }).catch(error => status(error.message, true));
