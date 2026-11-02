@@ -3549,3 +3549,23 @@ Committed the reviewed phone closing-mark fix as 034a15138. The name-width build
 ## [2026-11-02] query | Verify corrected prologue wrapping
 
 Both actual-disc audits pass on the name-width build. Fresh GPU captures 032 and 041 show the two previously awkward lines in two readable rows, with unchanged wording. Added the prior route's 146 capture hashes to the existing visual-review receipt. The voice-enabled route remains live. Started a controlled sports instruction-card fixture to cover a screen skipped by the earlier sports run. [[tickets/T-39511-english-text-quality]], [[tickets/T-39508-english-art-on-disc]].
+
+## [2026-11-02] ticket | Find untranslated sports instruction flag
+
+Committed the visually verified name-width correction as be1ccb3c3. Inspected five sports-card fixtures, each 1,800 frames with zero original-font calls. English instructions fit, but both three-legged-race variants retain a Japanese flag beside the animated character. Created T-39521 In Progress to identify and repair the sprite. [[tickets/T-39521-sports-instruction-flag]], [[tickets/T-39508-english-art-on-disc]].
+
+## [2026-11-02] query | Identify sports instruction callouts
+
+The apparent flag is one of four speech-bubble sprites in NINSETU's first 8-bit page, outside the instruction-card writer's views. Source-defined page pointers and TAOPD frame tables identify the runtime consumer. Inspected all three sprite pages and identified the four callouts for English replacement; character art is on the other pages. Expanded T-39521 to cover all four bubbles. [[tickets/T-39521-sports-instruction-flag]].
+
+## [2026-11-02] build | Verify sports lettering and voice-enabled phone pages
+
+The four sports bubble views pass 27 art tests, including exact palette and surrounding-byte preservation. The first preview was too pale; inspected the corrected lettering in the original saturated colors. Started the full disc rebuild. The voice-enabled route completed 33,106 frames with 132 inspected captures and zero font-trace errors. A restored-state read confirms VOICE_ON. Phone marks and full-name save/load pass, closing T-39520 after its recorded standards review. [[tickets/T-39521-sports-instruction-flag]], [[tickets/T-39520-phone-row-closing-marks]].
+
+## [2026-11-02] build | Verify sports bubbles on disc and in both partner scenes
+
+The sports build verifies 252 placed images and 28 approved exceptions. Both 1,800-frame partner fixtures show clean direction bubbles; a 2,400-frame cycle also shows the readiness bubble. The fourth bubble passes decoded-page review and disc readback but was not shown by these animation fixtures. All 27 art tests and both disc text audits pass. The browser package passes nine checks. Standards review found no unresolved code issue; T-39521 moves to Done. [[tickets/T-39521-sports-instruction-flag]], [[tickets/T-39508-english-art-on-disc]], [[tickets/T-39512-browser-patcher]].
+
+## [2026-11-02] lint | Review sports repair prose and refresh the local preview
+
+Reviewed the staged code comments, ticket documentation and receipt assessments with deslop and Humanizer. The scanner reports zero hits; manual review removed stale build-status wording. Localhost:8769 now serves the verified sports-bubble package. No game wording was changed by prose review. [[tickets/T-39521-sports-instruction-flag]], [[tickets/T-39512-browser-patcher]].

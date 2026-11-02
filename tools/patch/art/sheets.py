@@ -25,6 +25,7 @@ from tools.assets import image_packs_option as option
 from tools.assets import image_packs_sports as sports
 from tools.assets import image_packs_title as title
 from tools.patch.art.indexed import Part, View
+from tools.patch.art.sports_callouts import BUBBLES, PAGE as CALLOUT_PAGE
 
 
 @dataclass
@@ -319,4 +320,13 @@ def sports_profile(data: bytes, path: str) -> Profile:
                  for p in card["parts"] if p["y"] < 240]
         view = View("card-%d" % card["branch"], parts, 0, 0, 320, 240, card["branch"])
         profile.add(view)
+    if path == 'CDROM/TAIIKU/NINSETU.BIN':
+        page_index = len(profile.pages)
+        profile.pages[page_index] = (CALLOUT_PAGE, 8)
+        for key, (rect, _interior, _label, _color) in BUBBLES.items():
+            x, y, w, h = rect
+            part = Part(0, 0, w, h, 0, CALLOUT_PAGE, 8, x, y, palette,
+                        page_index=page_index)
+            profile.add(View(key, [part], 0, 0, w, h))
+            profile.page_sets[key] = {page_index}
     return profile

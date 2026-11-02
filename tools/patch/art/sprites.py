@@ -92,6 +92,8 @@ def view_for(profile, item, image):
         width = 64 if page == 5 else 128
         return sheets.page_region(profile, page, (0, sheets.ALLC_BANNER[0], width, sheets.ALLC_BANNER[1])), None
     if "/TAIIKU/" in profile.container:
+        if image.meta.get('speech_bubble'):
+            return profile.views.get(image.meta['speech_bubble']), None
         return profile.views.get("card-%d" % meta.get("frame", 0)), None
     if profile.container.endswith("FILESEL.NBN"):
         page = re.match(r"filesel-page-(\w+)-(\d)$", image.id)

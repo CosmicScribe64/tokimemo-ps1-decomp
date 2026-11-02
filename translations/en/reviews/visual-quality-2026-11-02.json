@@ -1259,5 +1259,587 @@
       }
     ],
     "review": "All 146 captures inspected. Phone closing marks and full-name save/load pass. Short prologue rows remain under T-39511; voice-enabled timing verification remains under T-39520."
+  },
+  "voice_on_review": {
+    "target_sha1": "97daa18d5f2365200b3d0d59f2fea958c2142a97",
+    "frames": 33106,
+    "font_trace": {
+      "ranges_address": 2148236684,
+      "frame_origin": "start of this emulator run",
+      "calls": 0,
+      "entries": {},
+      "overflow_calls": 0,
+      "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+      "unknown_calls": 0,
+      "load_address": 2147808100,
+      "frame_offset": 0
+    },
+    "voice_mode_readback": [
+      {
+        "addr": 2148450300,
+        "data": "01"
+      }
+    ],
+    "captures": [
+      {
+        "path": "build/emu/route-en-phone-width-voice/001_boot_01.png",
+        "sha256": "45f9d0f65e9df4124a7d6529ce016f808ba7d30664e4cf373a01367a40c44f42"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/002_boot_02.png",
+        "sha256": "c1ded1e6a189d8d208c5d270393e392a66aa932dbc47a1f6945c01d5a326b40f"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/003_title_intro_01.png",
+        "sha256": "1a3012995c9200a96e89cacf6a3e40d27546ac2f3f90f7327ea47cdf8872db5d"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/004_title_intro_02.png",
+        "sha256": "ae2c63a9ebdce2a97d3388d470378f222b6c2fe6e54749f31c122041e841c72b"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/005_title_intro_03.png",
+        "sha256": "dd6b1862f9088b3347de86e77aa8e18016f2813ca992988a3400aad4d9d39902"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/006_title_intro_04.png",
+        "sha256": "58bb27c5783964c94210d36eeb3a4f733146b3d358a4018ce0b57b78f2513c73"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/007_title_intro_05.png",
+        "sha256": "bada81eb9ba152f1253c814a941dcadb80f35ce45e838b593ce2bc416dc07e27"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/008_title_menu.png",
+        "sha256": "eb0ad2859e32e995af19e29a1fa66fa9f4a2d2f539e7a3a753e2e4ab6af7018a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/009_options.png",
+        "sha256": "fd4f8cd4e2d8019779c3b336463cb927796202e9071f74bc3b1405768440adf0"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/010_options_text_speed.png",
+        "sha256": "c1e8e928ec2c870b83eedeb8779a5b4012659bd9f702cb8584261e3619feb090"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/011_options_voice.png",
+        "sha256": "7c3707646cd69ea5b72b92e0e9af8bbf439ca8961b9ca6a9060b55f9bb178e15"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/012_options_voice_on.png",
+        "sha256": "629c2de00d21acde6850b0d2855a792ec94e68e6bd8cbc189d612a74b95d0636"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/013_title_menu_again.png",
+        "sha256": "eb0ad2859e32e995af19e29a1fa66fa9f4a2d2f539e7a3a753e2e4ab6af7018a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/014_file_select_new_album.png",
+        "sha256": "c0427d5a14d5f97c3b4f7ca13b7540a8623b09ebc735ac10562c7e0633d5de5b"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/015_file_select_album_slot.png",
+        "sha256": "ce6db318bea045cd65e650e962504b9c242ddf9ff057881a57fa209ad27e724a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/016_file_select_slot_1.png",
+        "sha256": "9be1b78c0ea03113075591d9063c68638dcf99cd637906acd5af3f62e9be4d57"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/017_file_select_system_file_01.png",
+        "sha256": "f34b34c112c843ba08b0249d9225f5aa59d229c045c648436bf784b95d267351"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/018_file_select_system_file_02.png",
+        "sha256": "f34b34c112c843ba08b0249d9225f5aa59d229c045c648436bf784b95d267351"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/019_file_select_system_file_03.png",
+        "sha256": "9c5c46b4c59fcb9a039eba7dd6705fe95daaedf79d9bcb39a178f20865ebcc72"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/020_name_entry_page.png",
+        "sha256": "bfaee56bbae650c9a5ac0d2d11dd1454b532621251af57993b9b476ba30b7ebd"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/021_family_after_delete.png",
+        "sha256": "06c592bea984b62722e83c0c0d186f6c291ab60cf884a3fb08430db4a6bc8804"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/022_family_after_retype.png",
+        "sha256": "2995f1c42d62050da15812f3f5ffd2397507892b01874ecd97c36a42c635fbe6"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/023_name_entry_family.png",
+        "sha256": "2995f1c42d62050da15812f3f5ffd2397507892b01874ecd97c36a42c635fbe6"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/024_name_entry_given.png",
+        "sha256": "4843385043b429a79df389c5bfe9f7d143eb618c8fd2ef7e92a50a3a9c6ec6e7"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/025_name_entry_nickname.png",
+        "sha256": "63eab84a192f422c2f7e4fe90707f53ed29f31a1517c22c9bbf51e88e393ecb8"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/026_name_entry_birthday.png",
+        "sha256": "08bf38f5b5afdec974ff1f63d6675c4f24814bfd4ac141b9c8de0e0a2410a83f"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/027_name_entry_confirm.png",
+        "sha256": "4c06d1b576d312a1bbeb38507b0df674b0b0d1b3906be69835e266cc9eb25a57"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/028_name_entry_shiori_01.png",
+        "sha256": "458d7d475f6399cb6e44ec6f73c83a43eb467a30e3f61163eaeaf1e191812757"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/029_name_entry_shiori_02.png",
+        "sha256": "789c97b0d0d2ce5cd345e5b39979365ed88952165e1bf683a76d027ceace81f7"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/030_name_entry_shiori_03.png",
+        "sha256": "cf48f5e7e98e5a5c9c23024c68c121b63bd71d942153d798d71ffd5356c3fddc"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/031_prologue_01.png",
+        "sha256": "ee4b928e8d9f4b42a9c47b9b6335ed8daec47addded5f941c729fb8769107840"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/032_prologue_02.png",
+        "sha256": "1b5d28d859de3215eb3799c43f4805c055e5764a89484118da23ff15b55b224a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/033_prologue_03.png",
+        "sha256": "cf793d57b29c75e2c8286e13d9c59a0491a52af338faf2bc445ecf2ae4779067"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/034_prologue_04.png",
+        "sha256": "6daf367d6e4555c52628f903c2fea3e85ee6defa84b511037512eacdc54519d4"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/035_prologue_05.png",
+        "sha256": "04843f0d8875239c56f1009e8473ded61b23f94a8fe77fcf294c64bb205df883"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/036_prologue_06.png",
+        "sha256": "985c5e392d42c990e8f72d19cd3f42e0391c49ddb93f25249cfc13f9f2f639ce"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/037_prologue_07.png",
+        "sha256": "619f124de720962b443bfb9d6b3afef1c729e603a9cd7504f64f38eb6ffcbb0b"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/038_prologue_08.png",
+        "sha256": "cfed0cfc22e6e0784e0274b37a349a1290a7e8698526b0317af913948d62b3f8"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/039_prologue_09.png",
+        "sha256": "4ad6fcf96252f38b4eacc2bd9200b57a51b011f4aa7bbcf9517acb374ca1d4c5"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/040_prologue_10.png",
+        "sha256": "2615ccec10c6e6886010e8f4ae620b64c0754681fb7bcd67af1e232a6b043c0a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/041_prologue_11.png",
+        "sha256": "9e1db06a8b0e1dbfe5f397167c4fec8ab9cac7ee8b1a3e8141b442cd071148d4"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/042_prologue_12.png",
+        "sha256": "f0e03cd6b184caa8144962aa8188312420051ff71b09da23d4186a4b3fa2649c"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/043_prologue_13.png",
+        "sha256": "3e60a0388851d76e36f14b1120be36e62948e0efe021114923a9721b373bda19"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/044_prologue_14.png",
+        "sha256": "bc5faaf72d3e1e8d0513d944a9233d6ea7d84978b3fa35da9ae7e33d1253298f"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/045_prologue_15.png",
+        "sha256": "18dcaa69dd358c6d7ea10e90096e5d68c5bd0211ee5f2369a58a0a13bde2f11a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/046_prologue_16.png",
+        "sha256": "60edd677a808f0ea5a4761087bea15245fc918a89af891b8a3e8ded2552155d8"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/047_prologue_17.png",
+        "sha256": "76309a13c35a868714db73aadbb8e308579d735aa9163cbe62d8ed646060d815"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/048_prologue_18.png",
+        "sha256": "566162d5a81b169a8b5213abf33c093a895342797e7b6202c19527582edc76bf"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/049_prologue_19.png",
+        "sha256": "210929f9bb560b0ce92a5b8fcfa0e38e8b1a3e9d92bf7a1ad328d1382d25e851"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/050_prologue_20.png",
+        "sha256": "52f8f8d34508d06db8d11e586dcb84dedbbd6b944184ee9123879d174da1a712"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/051_prologue_21.png",
+        "sha256": "c88d75358f8b0ce8091ab8e4652b8e57fc0fbf0b9bce3d90ef2a668bf9bb088a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/052_prologue_22.png",
+        "sha256": "d8d73348bf0151d31291d0e36a9625f6223310d0add4263b93ac19b87d21efef"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/053_prologue_23.png",
+        "sha256": "95de399e5110bd7317844dbefac1ca31bc4d4c5379705dcd4bf6cf2b9091985f"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/054_prologue_24.png",
+        "sha256": "6b61423567fc1c9cb3f890870dabc4c1e3d3b86003eb9f7abc1d15a6115988a1"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/055_prologue_25.png",
+        "sha256": "5a0584bbe9717fa6dd5489b26efe2eb34953f15c4f50e6f1c78ddd9a6e2f04ea"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/056_prologue_26.png",
+        "sha256": "a02ed53f64862f80d4df4e0172ccebd0adca36057c360f34c741360a67504296"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/057_prologue_27.png",
+        "sha256": "f3f1f41bae259da80152e21156181a946228d2fbe95b32d089cb9b4ef78cd53d"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/058_prologue_28.png",
+        "sha256": "81433dbdffa0c859dea440955b3c38dd496e5a3025444391576a2d1ae649dc6d"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/059_prologue_29.png",
+        "sha256": "c18b06d225fb2a48eb764716a8a2d870b0195e668464a3285e4ce407c866df32"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/060_prologue_30.png",
+        "sha256": "33e4aa64a96b7321378cfce1c8c26686b8c1e80d5fd6be30f2127c22739ef0a2"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/061_prologue_31.png",
+        "sha256": "2404901bb10289451e5e6d457c680975466e4aa4179dac6f9cc033e92a5e0726"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/062_prologue_32.png",
+        "sha256": "9a80db5f12df648ee7b7086fa5fd8a230ba3459fc4cc21604cf8750f42891969"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/063_prologue_33.png",
+        "sha256": "006e6bd68a470e4a4164fcc07b63a7d9f31008dae039609e03667b09d5f8c711"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/064_prologue_34.png",
+        "sha256": "917610af5948b394f5e85908cedec1036e41fd87fadfc9a789968d7a7109b88a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/065_prologue_35.png",
+        "sha256": "cfc169ebd31b47af385825501e2d5fbd5c2344eee5ba720fd42bd86a32a3c172"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/066_prologue_36.png",
+        "sha256": "3eaa9efcb223cc83ed14db7b021e1262fbd0acfa636d77619a153198bf7408c0"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/067_prologue_37.png",
+        "sha256": "6d72f8638783b00887153a7779687a5c53916e9b8c3ed3f7046db7d8a406bd2c"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/068_prologue_38.png",
+        "sha256": "c46cfa348f1c949657cc373d35edcebdba70a495d9c5091879cdbb32b8065460"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/069_prologue_39.png",
+        "sha256": "9ba7dc53988b2027199f73832ffa0c32d3bc5d55dbbcb12772c61993d62aa29a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/070_prologue_40.png",
+        "sha256": "2b4bac4fda97e864cfc4f5b5a74a2b5cda88d650fbd162b0c27c8aff1f542518"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/071_prologue_41.png",
+        "sha256": "4191f385a54eb4f4e3d36682bb716cd133b7530e56f3759f00b8d0afd148c275"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/072_prologue_42.png",
+        "sha256": "b6600c29dd3d6c65964a303fb58d45bf670bf821c5a227786edbfb791787708b"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/073_prologue_43.png",
+        "sha256": "834da59bb97b5df8f89b7a33d1a16ea2129bedcb78eb617f979ff2ea67cccc99"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/074_prologue_44.png",
+        "sha256": "50c9512bf59d728cd08977f7c6dae37cf5beadf652b551db67e351beb5cc441c"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/075_prologue_45.png",
+        "sha256": "ef4b6c4dc9089f584ddc084b40d6a5155556320763ee271716efb24d9328dcf8"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/076_prologue_46.png",
+        "sha256": "aa44edb75ad38b87ecda6ee5678e8aadf69f04112727238f6e19a99f40d6e86a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/077_prologue_47.png",
+        "sha256": "4c5585a7de1cd684119681188a09ac740fc8a61c148397a314256a08e432dfd8"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/078_prologue_48.png",
+        "sha256": "12105cc4b6512a6143409a108eeebdaebceadc367ee7aee4876f5e8df5fb8893"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/079_after_prologue.png",
+        "sha256": "75e3a1e29f1e125d9ed3fba545973416d4b0f679b7a48e41b8eabb42437ca2b4"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/080_command_screen.png",
+        "sha256": "32e8709d2f2d8d330f199aa65640b80e54bb2cc1f2ced09bfba7729557ecca18"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/081_calendar.png",
+        "sha256": "5b5ebe2e204a557de5b91ca17297b84b4a2a7a46ef97e5e9ae150ad82cc1ff30"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/082_system_settings.png",
+        "sha256": "e393ac8fdca409770e5b3528f75da243494846daa249d52f62278df6eaf569ed"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/083_command_study.png",
+        "sha256": "479a813fe3e918436d7232c3d13b5dc7f6d35013e00f65164e71cdcd46630fd0"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/084_school_day.png",
+        "sha256": "d58351ef159165bcc7fb5555a01c2f1bd44cf9a3ec9b61903556c52a304390ac"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/085_holiday.png",
+        "sha256": "6703ebd10eaaafe4466ff916c175ed201032e86104abe3067ebba36a90af1306"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/086_phone_book.png",
+        "sha256": "50c436d6fd6bfe4c6e56fa30369f5d4335711dd2d34e1ae14729e44eecaf50d4"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/087_phone_call_01.png",
+        "sha256": "f5ae9ef2086ff9cbdd2ceb22cd8520d266c0c5b692cc2e8007fe471990f6ed5f"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/088_phone_call_02.png",
+        "sha256": "f0c2226f5e5f8bbfe5e21fc27e6cc4e7d5b5c5d2bf8ffbe1702b91c015518bde"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/089_phone_call_03.png",
+        "sha256": "0fc277c1968b25993adcab85e4ed6308cb3e90baf645aee1e0db2863daee054e"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/090_phone_call_04.png",
+        "sha256": "0fc277c1968b25993adcab85e4ed6308cb3e90baf645aee1e0db2863daee054e"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/091_phone_call_05.png",
+        "sha256": "0fc277c1968b25993adcab85e4ed6308cb3e90baf645aee1e0db2863daee054e"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/092_phone_call_06.png",
+        "sha256": "0fc277c1968b25993adcab85e4ed6308cb3e90baf645aee1e0db2863daee054e"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/093_phone_call_07.png",
+        "sha256": "ca0313c32001e006fc7c7886936b495db7035a4b34f501f921def5da63ac5c1e"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/094_phone_call_08.png",
+        "sha256": "3d9685b2cb4e8f118754f2d424c46028d4768f2d9e04067bce80a5fa422be60b"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/095_phone_call_09.png",
+        "sha256": "7196a9ab08c141c846c1784d1dbaa53a28a59dbead90bfb29dd304c7805314b1"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/096_phone_call_10.png",
+        "sha256": "32e161850c970a625f8d90eb1f2a1090224b6aed629cf0dcaccb7cd33d8740a4"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/097_phone_date_spot.png",
+        "sha256": "71a0400345d81f25df3feb5e43d0cac1b9c755712c6e6d013728f1cd7f41de27"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/098_phone_answer_01.png",
+        "sha256": "73744b4233e858be9e8a19e4d07a67cfedde42f7d2baad9b7cfc10c6cf216ded"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/099_phone_answer_02.png",
+        "sha256": "af1f42927b6b670b57fbfba802d069fc6d950f33f349aae0a68c0fcd53f5fb66"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/100_phone_answer_03.png",
+        "sha256": "c8a5b9e8a16420613c63379c974c6a3bd88bfc46926f73cd768328475b5af749"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/101_phone_answer_04.png",
+        "sha256": "0579ddc1286c91d08cc7725a5d34eb4023b6f65f1bc02ec8eec132de3453b9f4"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/102_phone_answer_05.png",
+        "sha256": "21e339a6d23755f7cd4891f5834a59d3e2aa5d76a10e4e8547f819ceaa255ad3"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/103_phone_answer_06.png",
+        "sha256": "19d6d5294921926d8b5d52cb283eaad0fe7fc3e073058aa770cb8829725d4ef2"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/104_phone_answer_07.png",
+        "sha256": "a4df646ab8a9c4ed84785760eca5c2db8b43b0d6ce14de0ef5b88d8a3563cbcc"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/105_phone_answer_08.png",
+        "sha256": "ae692ffbd78aa6c3f1cf31466e50e8616004fd4c2f09b821359757957cd6224c"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/106_command_screen_evening.png",
+        "sha256": "b1a75168ee00ca52164c08d18fa7a69ee37d7d2904ac33dd30f6b5825590ab85"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/107_save_menu.png",
+        "sha256": "9eeb1b84d49ab9dc5e8973cb54366fd01b18331253ebe3e121581bab3bc0135c"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/108_save_slot.png",
+        "sha256": "89974cd3116abf8fc35b2aeacca86435f3ebda64c8a0b592f4ee0085dc5d203b"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/109_save_overwrite.png",
+        "sha256": "cb00171eca313c38a8cf0e01ef271103c2393ff41e593bbaf78699272c052866"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/110_save_writing.png",
+        "sha256": "3e73d6472eef97a70fab6f8d04fb8975ae9c359f5832424aa3de244a191f8c1b"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/111_save_done.png",
+        "sha256": "65bd8622f1dc85191b5e955c1c3444ff834acc6108023966bb7fd985a8072e86"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/112_holiday_date.png",
+        "sha256": "48d5f95160c042368941bde279743cb35f082691c3ad7d8cc505373672aa5ca8"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/113_date_01.png",
+        "sha256": "b94c2269f6b40f54298cc9a990b8fc0abb25b396b373a8eda23aa4da264d5a16"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/114_date_02.png",
+        "sha256": "21917d7d1dd4e6fcf0d7a56c6b0f2e197d61a85164debd5672575cd833d833e4"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/115_date_03.png",
+        "sha256": "335388e16a9f5631073dd052bef652bbf3b8a182cbdb4507cd4cce801d6f0968"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/116_date_04.png",
+        "sha256": "8c90c6f18b9cc5ea7091997000a0316848fc6bb9b516b6d5c99273b3306bdd0d"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/117_date_05.png",
+        "sha256": "4403f9e6582b368719d6bb44d268b42625eb4830efe00985459893108a5c5741"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/118_date_06.png",
+        "sha256": "4810b725c92e9b39f1d44137aae0f8e218cafd9abc4e724575fe20ba089447f0"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/119_date_07.png",
+        "sha256": "70f441aa2413ae21723d494e4e5417c619b933ad98308dbf357c008ec1848b22"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/120_date_08.png",
+        "sha256": "0f6d3a5c14aceb628149aa28a02605a26b92307b69527a056cbbba9456a0a3b7"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/121_date_09.png",
+        "sha256": "5505f5356181607e0e8fa26ae1453e01442c685102118358fce1e131cba4d5de"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/122_date_10.png",
+        "sha256": "092d2b4ee1dc5af979829a4e5d46206a7573d853d9d399d22440ca7479c03a97"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/123_date_11.png",
+        "sha256": "564454fac956e0b49a9b52c096a896370a4123b2754a2306d2decc714231780c"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/124_date_12.png",
+        "sha256": "f98f674d3afec0e2a7c8f10ca84bd50225f3b1bc1cdede53a35a4720a88de08e"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/125_date_13.png",
+        "sha256": "dab23bbe691e66293ab4479082aa3cd41b919c8c14f0600cf03826fa6f1a2e9a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/126_date_14.png",
+        "sha256": "ee07d06ebee7476cfd60fefedfd395338295fc57bca3c1c40838dc71df381b90"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/127_after_date.png",
+        "sha256": "5dfca15e471499513641c24c47940db4ff5fc07d17654be0af2aced837d807b4"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/128_load_slot.png",
+        "sha256": "c0b40120f191cfc93645077cb230a67c214e8677b310286d93e7cc4c8f4647cf"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/129_load_01.png",
+        "sha256": "7d86f8e4c4076aa437e6b7e672f901724a975c68780de3b6cfa70a1186008954"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/130_load_02.png",
+        "sha256": "a195d6594ebcaf4ee3def7404e159f7a7d6d7dc03493a22142a74760834b9b8a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/131_load_03.png",
+        "sha256": "4e036bd1704ac786ac2bd743b0f015d4bc640ca158d207b433c57565aec5b43a"
+      },
+      {
+        "path": "build/emu/route-en-phone-width-voice/132_loaded.png",
+        "sha256": "cd58e7411e991c59e62f3812bca9a05e9874d96286cb3702b8bcac3b5b934fa8"
+      }
+    ],
+    "assessment": "All 132 captures inspected. Phone closing marks and full-name save/load fit. Native captures 051, 098 and 108 confirm complete left edges where the contact-sheet preview appeared clipped."
+  },
+  "sports_callout_review": {
+    "target_sha1": "28107c11bdbc8c17520df11b6092ee1bc8f55e86",
+    "captures": [
+      {
+        "path": "build/emu/sports-callout-pair-0/shot_1200.png",
+        "sha256": "94c710c5bb46c07631e2cc63e924b0063b4330f21005e16cffce4804d16121c0"
+      },
+      {
+        "path": "build/emu/sports-callout-pair-0/shot_1500.png",
+        "sha256": "2b7643138bae2547fc2c5322499b97f5a655f300c2789c08fdcbe560d2f384ea"
+      },
+      {
+        "path": "build/emu/sports-callout-pair-1/shot_1200.png",
+        "sha256": "80c3319ae70e4828ac408f6eb7fc240ac82e374a8ed7920e924f78e5a974a524"
+      },
+      {
+        "path": "build/emu/sports-callout-pair-1/shot_1500.png",
+        "sha256": "94117f4d05b068ef8df2a63c3495df64db97a919e587dd44b9e7d1d98e380994"
+      },
+      {
+        "path": "build/emu/sports-callout-cycle/shot_1080.png",
+        "sha256": "ae44f65b68c5af5199b2b21266be3aefb509870a46fa053b23c2569ebbca8df5"
+      },
+      {
+        "path": "build/sports-flag/english-page.png",
+        "sha256": "411a3fd59f894ce09ef07a48a8de89cec80210f6b2fb2eeccf6e61664676cb29"
+      }
+    ],
+    "assessment": "Both partner variants and the readiness/direction animation fit cleanly. All four bubble views pass disc readback. The start-call bubble was inspected in the decoded sprite page; it did not appear in these instruction-animation captures."
   }
 }

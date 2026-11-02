@@ -1,7 +1,7 @@
 ---
 id: T-39520
 title: Close direct-row telephone dialogue consistently
-status: In Review
+status: Done
 assignee: codex
 created: 2026-11-02
 updated: 2026-11-02
@@ -33,4 +33,6 @@ The build completed in 182.5 seconds and produced a 6,565,120-byte patch in `bui
 
 The fresh route completed 34,745 frames in 796 seconds with 146 captures and zero original-font calls, unknown glyphs or overflows. All captures were inspected. Phone pages 109–111 and 114–120 show complete closing marks, with no overlap or clipping. Sound effects remain unquoted. Full player names survive save/load in captures 142–146. The separate short-row issue is tracked in T-39511.
 
-All 27 original executable hashes, headers, globals and 14,449 rename records pass. Standards review checked C89 declarations, bounded row storage, reset/interleaving invalidation, block-renderer recursion suppression and English-only hooks. No unresolved code issue remains. The main executable is 692,224 bytes and ends at 0x80131280, below the 0x80132000 limit. The ticket remains In Review for an additional run with voice playback enabled.
+All 27 original executable hashes, headers, globals and 14,449 rename records pass. Standards review checked C89 declarations, bounded row storage, reset/interleaving invalidation, block-renderer recursion suppression and English-only hooks. No unresolved code issue remains. The main executable is 692,224 bytes and ends at 0x80131280, below the 0x80132000 limit. At that point, the ticket remained In Review for a run with voice playback enabled.
+
+The voice-enabled follow-up completed 33,106 frames and save/load with zero original-font calls, unknown glyphs or overflows. Inspected all 132 captures in `build/emu/route-en-phone-width-voice`, including phone pages 093–104 and saved names in 128–132. A separate state restore reads `01` at the relocated voice-mode field, confirming VOICE_ON. Native screenshots 051, 098 and 108 show complete left edges where the combined preview appeared clipped. The final review found no remaining phone-rendering defect; T-39520 is Done.
