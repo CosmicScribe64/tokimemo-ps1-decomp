@@ -3,6 +3,7 @@
  "date": "2026-11-02",
  "target_sha1": "cd882b6238075dd9d36fd7af7fe6b546e04ecfa2",
  "reviewer": "Codex",
+ "binding_claim_correction": "The historical 104 function-reference matches below include 57 records owned by talk_render/talk_speak_part, whose original bodies are bypassed by English entry hooks. Only 47 establish unhooked function-level bindings. The 57 require replacement-function verification; do not treat the historical count as active-consumer coverage. See tools/patch/audit_executable_disc.py and T-39510.",
  "scope": "Source-generation equality, mapped executable strings, compiled function-level references, derived pointers and referenced-byte scan. Not complete event playthrough coverage.",
  "counts": {
   "source_literal_replacements": 1964,

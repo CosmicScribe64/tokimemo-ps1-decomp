@@ -3485,3 +3485,7 @@ All 91 referenced-byte candidates classified: 79 exact retained keyboard records
 ## [2026-11-02] build | Make generated-source verification repeatable
 
 Added tools/patch/audit_generated_sources.py and seven synthetic regressions. Docker verifies all 1,964 active literal records in 171 live/frozen release sources; 23 combined source/name/script tests pass. Reports contain metadata only. Standards review passed; compiled machine-reference consolidation remains open. Reinspected full-name confirmation/load captures and the corrected dialogue capture; refreshed stale name-verification prose in [[english-text-runtime]]. User reconfirmed full longer presets. [[tickets/T-39510-no-japanese-left-check]], [[english-build]].
+
+## [2026-11-02] build | Verify executable consumers and reject bypassed-body evidence
+
+Previous turn made progress with committed source-generation verification (8c818f798). Added reusable actual-disc mapped-slot/derived-pointer/function-reference audit and 14 synthetic regressions; combined suite 27/27 passes. Release checks 2,827 direct slots, three canonical exact locations, 47 unhooked function bindings, 286 stage pointers and five initial buffers. Found the historical 104-binding claim included 57 strings in original talk-parser bodies bypassed by hooks. Corrected receipt/documentation; these now require replacement-function proof. Tool exits 2 with 63 pending records and incomplete language census, so it cannot certify a partial audit. No game binary changed. [[tickets/T-39510-no-japanese-left-check]], [[english-build]].
