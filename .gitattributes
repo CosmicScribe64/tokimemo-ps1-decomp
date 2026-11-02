@@ -1,16 +1,2 @@
-# Keep Unix line endings on every platform. On Windows, git would otherwise check
-# scripts out with CRLF, and bash inside the Docker container cannot run them.
-* text=auto eol=lf
-*.sh text eol=lf
-*.py text eol=lf
-*.c text eol=lf
-*.h text eol=lf
-*.s text eol=lf
-*.inc text eol=lf
-*.ld text eol=lf
-*.yaml text eol=lf
-*.patch text eol=lf
-Dockerfile text eol=lf
-# Preserve upstream decoder files and license texts byte-for-byte.
-patcher/vendor/7z/** -text whitespace=-blank-at-eol,-blank-at-eof
-patcher/vendor/chdman/** -text whitespace=-blank-at-eol,-blank-at-eof
+# Preserve bundled upstream files byte-for-byte.
+vendor/** -text whitespace=-blank-at-eol,-blank-at-eof
