@@ -6,10 +6,18 @@ takes an encoded payload (tools/patch/text/english.py) and the window it is draw
 (tools/patch/text/windows.py) and returns the payload with row ends where a row is wider than
 the window:
 
+* Reflow (windows with ``reflow``, the dialogue windows; T-39506): the translators kept the
+  Japanese row breaks, which leave short rows in English. Each page (the rows up to an option
+  end, so every reply variant is its own page) is joined into one paragraph and broken again at
+  the window's pixel width. A row break stays only where it is deliberate (``keep_break``): before
+  a row that opens a parenthesis or a quotation (a new thought or a quoted line), after a row that
+  closes one, around an empty row, and after a row that ends a sentence when the next row starts
+  with a dash or an ellipsis (a pause that the line break shows). Everywhere else the break becomes
+  a space. Page breaks (records, option ends) never change.
 * Rows are split at the row end 0x0A and the option end 0x0B. A row that fits is kept as it is,
-  so a translator's explicit line breaks stay; a row that does not fit is broken at the last
-  space that fits, repeatedly (the space becomes the row end). A word wider than the window
-  stays whole and is reported (``overflow_rows``).
+  so a kept break stays; a row that does not fit is broken at the last space that fits,
+  repeatedly (the space becomes the row end). A word wider than the window stays whole and is
+  reported (``overflow_rows``).
 * Choice windows (``wrap`` false) are never broken: each option is one selectable row.
 * Lines: a window that scrolls (the message window) takes any number of rows, as the original
   does, up to its ``max_rows`` when the renderer has one. A window that does not scroll reports
@@ -17,7 +25,7 @@ the window:
   more rows than the window. A page break would need a new script record or a runtime control
   code, so it is not inserted.
 * Width counts the name and value codes at their expanded English width (``NAME_CODE_PX``) and
-  skips an inline speaker label (marker byte, then the label up to ``": "``), which the
+  skips an inline speaker label (marker byte 0x1C or 0x1D, then the label up to 0x1F), which the
   renderer draws left of the text.
 """
 from __future__ import annotations
@@ -26,11 +34,14 @@ import json
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .english import LINE_END, NAME_CODE_BYTES, OPTION_END
-from .windows import NAME_CODE_PX, YOSHIO, Window
+from .english import LABEL_END, LABEL_MARKERS, LINE_END, NAME_CODE_BYTES, OPTION_END
+from .windows import NAME_CODE_PX, Window
 
-LABEL_MARKERS = b">-+<"
 SPACE = 0x20
+OPENERS = (b"(", b"\"", b"\xa0", b"\xa2", b"'")
+CLOSERS = (b")", b"\"", b"\xa1", b"\xa3", b"'")
+SENTENCE_ENDS = (b".", b"!", b"?", b"\xa5", b")", b"\"", b"\xa1")
+PAUSES = (b"-", b"\xa4", b"\xa5", b"...")
 
 
 @dataclass(frozen=True)
@@ -52,7 +63,7 @@ class FontMetrics:
             byte = row[pos]
             if byte in NAME_CODE_BYTES:
                 px = NAME_CODE_PX[byte]
-                total += self.width(YOSHIO) if px is None else px
+                total += self.width(px) if isinstance(px, bytes) else px
             elif byte < 0x20:
                 pass
             elif 0x81 <= byte <= 0x9F or 0xE0 <= byte <= 0xFC:
@@ -78,13 +89,39 @@ def label_end(payload: bytes) -> int:
     """Offset where the text of the first row starts (after an inline speaker label)."""
     if not payload or payload[0] not in LABEL_MARKERS:
         return 0
-    stop = len(payload)
-    for end_byte in (LINE_END, OPTION_END):
-        at = payload.find(bytes([end_byte]))
-        if at >= 0:
-            stop = min(stop, at)
-    colon = payload.find(b": ", 1, stop)
-    return colon + 2 if colon >= 0 else 1
+    end = payload.find(bytes([LABEL_END]))
+    return end + 1 if end >= 0 else 1
+
+
+def keep_break(before: bytes, after: bytes) -> bool:
+    """True when the row break between two rows of a page is deliberate (see the module docstring)."""
+    before, after = before.rstrip(b" "), after.lstrip(b" ")
+    if not before or not after:
+        return True
+    if after.startswith(OPENERS) or before.endswith(CLOSERS):
+        return True
+    return before.endswith(SENTENCE_ENDS) and after.startswith(PAUSES)
+
+
+def reflow(payload: bytes, skip: int = 0) -> bytes:
+    """Joins the rows of each page with spaces where the break is not deliberate."""
+    out = bytearray(payload[:skip])
+    pages = payload[skip:].split(bytes([OPTION_END]))
+    for index, page in enumerate(pages):
+        rows = page.split(bytes([LINE_END]))
+        text = bytearray(rows[0])
+        for previous, row in zip(rows, rows[1:]):
+            if keep_break(previous, row):
+                text.append(LINE_END)
+                text.extend(row)
+            else:
+                text = bytearray(bytes(text).rstrip(b" "))
+                text.append(SPACE)
+                text.extend(row.lstrip(b" "))
+        if index:
+            out.append(OPTION_END)
+        out.extend(text)
+    return bytes(out)
 
 
 def _split_rows(payload: bytes) -> list[tuple[bytes, int | None]]:
@@ -126,9 +163,11 @@ def _break_row(row: bytes, limit: int, metrics: FontMetrics, skip: int) -> tuple
 
 def wrap(payload: bytes, window: Window, metrics: FontMetrics) -> WrapResult:
     """Wrap ``payload`` for ``window``; see the module docstring."""
+    skip = label_end(payload)
+    if window.reflow:
+        payload = reflow(payload, skip)
     result = WrapResult(payload)
     out = bytearray()
-    skip = label_end(payload)
     block_rows, rows_total, max_block = 0, 0, 0
     for index, (row, separator) in enumerate(_split_rows(payload)):
         lead = skip if index == 0 else 0

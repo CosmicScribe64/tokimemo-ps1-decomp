@@ -17,7 +17,8 @@ from pathlib import Path
 
 from tools.patch import build_english, cd_layout
 from tools.patch.text.containers import Container, Record
-from tools.patch.text.english import EMPTY_OPTION, LINE_END, NAME_CODES, OPTION_END, EnglishEncoder
+from tools.patch.text.english import (EMPTY_OPTION, LABEL_SPEECH, LABEL_THOUGHT, LINE_END, NAME_CODES, OPTION_END,
+                                      EnglishEncoder, end_inline_label)
 from tools.patch.text.image import Image, Slot, has_cd_trailer, write_cd_trailer
 from tools.patch.text.inplace import patch_built
 from tools.patch.text.layout import english_payloads
@@ -32,8 +33,8 @@ ORIG_TRACK = REPOSITORY / "disc" / "orig" / "track1.bin"
 METRICS = FontMetrics({**{c: 6 for c in range(0x21, 0x7F)}, 0x20: 4, **{c: 8 for c in range(0xA0, 0xAA)}}, 14, 16)
 
 
-def window(width, *, lines=3, scroll=True, wrap_rows=True, max_rows=None):
-    return Window("test", 0, width, lines, scroll, wrap_rows, None, "test", max_rows)
+def window(width, *, lines=3, scroll=True, wrap_rows=True, max_rows=None, reflow=False):
+    return Window("test", 0, width, lines, scroll, wrap_rows, None, "test", max_rows, reflow)
 
 
 class EncoderTest(unittest.TestCase):
@@ -72,7 +73,10 @@ class EncoderTest(unittest.TestCase):
         self.assertEqual(enc(Control("conditional_choice_zero", "x", b"nn")), bytes([EMPTY_OPTION] * 2))
         self.assertEqual(enc(Control("reply_skip_marker", "x", b"n\x41")), bytes([EMPTY_OPTION, 0x41]))
         self.assertEqual(enc(Control("terminal_byte_before_nul", "x", b" ")), b"")
-        for kept in (Control("format_directive", "f", b"%d"), Control("inline_label", "l", b">"),
+        self.assertEqual(enc(Control("inline_label", "l", b">")), bytes([LABEL_SPEECH]))
+        self.assertEqual(enc(Control("inline_label", "l", b"-")), bytes([LABEL_SPEECH]))
+        self.assertEqual(enc(Control("inline_label", "l", b"<")), bytes([LABEL_THOUGHT]))
+        for kept in (Control("format_directive", "f", b"%d"),
                      Control("source_storage_control", "line_feed", b"\n"), Control("opaque", "o", b"\x82\xa0")):
             self.assertEqual(enc(kept), kept.raw)
 
@@ -113,15 +117,37 @@ class WrapTest(unittest.TestCase):
         self.assertTrue(wrap(b"a\nb\nc\nd", window(50, max_rows=3), METRICS).too_many_lines)
 
     def test_widths_of_names_shift_jis_and_labels(self):
-        self.assertEqual(METRICS.width(bytes([NAME_CODES["G"]])), NAME_PX)
+        self.assertEqual(METRICS.width(bytes([NAME_CODES["p"]])), NAME_PX)
+        self.assertEqual(METRICS.width(bytes([NAME_CODES["G"]])), METRICS.width(b"Tatebayashi-san"))
         self.assertEqual(METRICS.width(bytes([NAME_CODES["Y"]])), 6 * 6)
         self.assertEqual(METRICS.width("あ".encode("shift_jis") + b"a"), 14 + 6)
         self.assertEqual(METRICS.width(b"\x0a\x0b\x0c"), 0)
-        self.assertEqual(label_end(b">Teacher: Hi\nthere"), len(b">Teacher: "))
-        self.assertEqual(label_end(b">Hi"), 1)
-        self.assertEqual(label_end(b"Hi: there"), 0)
+        self.assertEqual(label_end(b"\x1cTeacher\x1fHi\nthere"), len(b"\x1cTeacher\x1f"))
+        self.assertEqual(label_end(b"\x1cHi"), 1)
+        self.assertEqual(label_end(b"Hi\x1fthere"), 0)
         # the label does not count against the row
-        self.assertEqual(wrap(b">Teacher: aaaa", window(30), METRICS).payload, b">Teacher: aaaa")
+        self.assertEqual(wrap(b"\x1cTeacher\x1faaaa", window(30), METRICS).payload, b"\x1cTeacher\x1faaaa")
+
+    def test_inline_label_end(self):
+        self.assertEqual(end_inline_label(b"\x1cTeacher: Ah, you\nthere"), b"\x1cTeacher\x1fAh, you\nthere")
+        self.assertEqual(end_inline_label(b"\x1dMe:hmm"), b"\x1dMe\x1fhmm")
+        self.assertEqual(end_inline_label(b"\x1cno colon"), b"\x1c\x1fno colon")
+        self.assertEqual(end_inline_label(b"plain: text"), b"plain: text")
+
+    def test_reflow_joins_rows_except_deliberate_breaks(self):
+        flow = window(1000, reflow=True)
+        self.assertEqual(wrap(b"Oh, right!\nIt's \x15's\nbirthday today!", flow, METRICS).payload,
+                         b"Oh, right! It's \x15's birthday today!")
+        # a parenthesis or a quotation opens a new row; a closing one ends a row
+        self.assertEqual(wrap(b"I'm \x13.\nNice to meet you.\n(Odd girl.)\nWell.", flow, METRICS).payload,
+                         b"I'm \x13. Nice to meet you.\n(Odd girl.)\nWell.")
+        # a pause after a finished sentence keeps its row, an empty row stays
+        self.assertEqual(wrap(b"No.\n...Fine.\n\nBye", flow, METRICS).payload, b"No.\n...Fine.\n\nBye")
+        # every reply variant is its own page; then the joined text wraps to the width
+        self.assertEqual(wrap(b"aa\nbb\x0bcc\ndd", flow, METRICS).payload, b"aa bb\x0bcc dd")
+        self.assertEqual(wrap(b"aaaa\nbbbb\ncccc", window(60, reflow=True), METRICS).payload, b"aaaa bbbb\ncccc")
+        # windows without reflow keep the rows
+        self.assertEqual(wrap(b"aa\nbb", window(1000), METRICS).payload, b"aa\nbb")
 
 
 class WindowTest(unittest.TestCase):
