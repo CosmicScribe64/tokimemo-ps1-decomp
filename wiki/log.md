@@ -3421,3 +3421,43 @@ T-39516 moves In Review -> Done after standards review: guarded original inputs,
 ## [2026-11-02] build | Refresh browser review with verified festival plates
 
 The festival-plate package passes all nine Chromium acceptance checks, including browser-download equality with the CLI-built disc. Updated the local server on port 8769 to `build/patcher-festival-plates-review`, retaining the same review URL. T-39517 remains the next concrete layout repair; no whole-game completion claim. [[tickets/T-39512-browser-patcher]], [[tickets/T-39516-festival-gate-plates]], [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] build | Correct ending geometry and wrap expanded display rows
+
+Previous goal turn made concrete progress with verified gate-plate fixes and full-route comparison. For T-39517, assigned EPILOG its actual 196-pixel summary width and added runtime wrapping after name/value expansion for non-choice talk rows. All 17 career labels were measured; maximum 126 pixels exceeds the old 56-pixel reservation. Production C89 renderer tests preserve wording, explicit breaks, suffixes, atomic characters, choice semantics and scroll y positions. Existing English patch tests pass. Full build and actual ending GPU/resource-limit proof are next. [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] query | Detect long-ending parser and glyph-capacity overflow
+
+Static EPILOG audit finds table-3 line-0 is 544 encoded bytes/528 glyphs, exceeding the parser's 512-byte buffer and the 384-glyph atlas by itself. Combined summary paragraphs can be larger still. Recorded this within T-39517's existing wording/resource criterion; the current width repair remains unaccepted. Added a controlled Rei summary entry after real overlay initialization to expose truncation/atlas reuse in GPU evidence. [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] build | Stream complete ending summaries through the existing atlas
+
+GPU probes confirm normal/career/Rei peaks of 370/415/670 glyphs; the Rei capture is visibly corrupted. The interim width-only fix is not accepted. Added an English text capture hook and an ending-owned bounded row/string queue in overlay RAM; only rows in the original scrolling viewport occupy the atlas, with uploads only on visible-range changes. Enlarged the script parser to 1,024 bytes for the complete 544-byte record. Production C89 renderer/queue regressions plus the English patch suite pass (39 tests, one opt-in skip). Full rebuilt-disc and GPU proof pending. [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] build | Resolve legacy relocation limitation for ending capture
+
+The first streaming build reached a terminal compiler/toolchain failure: trailing_pad.py rejects HI16 references against a .text section symbol, emitted for the file-local capture callback. Exported the same callback as a named ending symbol and declared it in the owning header, preserving its type and behavior; this avoids unsupported section-symbol adjustment without weakening the relinker. The intermediate width-only full route completed through save/load at 33,660 frames/145 captures, but is not acceptance for the newer streaming binary. [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] build | Rebuilt complete streaming-ending disc
+
+`build/ending-stream-proof` completes in 159.6 seconds after the callback-linkage fix: target prefix 879bf44149be, xdelta 6,557,044 bytes, 248 verified artwork placements and movie readback passed. Frozen linked outputs are saved. Fresh bootstrap, full main route and actual-disc script/default-build checks are running for this binary; the local review server still serves the last accepted festival-plate package. [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] build | Keep ending queue inside loaded overlay memory
+
+The pre-run probe failed on missing local symbols rather than reaching the emulator. Inspection found a more important layout defect: the new static queue occupied ENDING bss at 0x80162550, beyond the 0x80162000 overlay boundary and in the background-buffer region. Added explicit nonzero initializers so all queue storage belongs to loaded data, with normal scene initialization resetting live state. Rebuilding as `build/ending-stream-data-proof`; the previous streaming image is not accepted. [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] build | Preserve signed summary function and defensive streaming bounds
+
+Moved capture setup/cleanup into an English-only scene-table wrapper so the original summary function's token stream remains unchanged for signed rename validation. Added a regression for the atlas-limit fallback: subsequent scrolling updates only allocated text entries. The 39-test suite passes (one opt-in skip). `build/ending-stream-final-proof` is rebuilding these final source changes; the prior data-placement build completed but predates the wrapper. Main ELF and executable remain byte-identical to the fresh streaming bootstrap, permitting that command-screen state for ending probes once the new disc is ready. Default checks continue separately. [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] build | Run final ending streaming disc against bounded GPU probes
+
+Previous turn made concrete progress: fixed out-of-slot queue placement, preserved signed original function tokens, and added a defensive overflow regression. Final rebuilt disc `build/ending-stream-final-proof` passes art/movie verification (248 placements, 28 exceptions), target prefix cd882b623807, xdelta 6,557,359 bytes, 243.6 seconds. Frozen linked outputs saved. Queue data starts at 0x8013cfb0; its object has no bss allocation. Normal, long-career and Rei 5,000-frame probes are running with sampled queue/atlas counters. Main ELF/executable equality with the completed 33,660-frame main-route build is verified; that route produced 145 captures through save/load. Actual-disc script audit and default rename/header checks remain running. [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] build | Verify complete long ending on GPU
+
+Normal, long-career and Rei streaming probes finish 5,000 frames with zero overflow; peak live glyph counts 234/240/337 fit 384 slots. Inspected the long ending's frame-3,000 closing sentence and scrolling body captures. Script audit checks 31,471 strings/31,334 pointers; all 31,031 encoded talk records fit 1,024 bytes (maximum 544). Default ENDING checksum, 14,449 rename rows and headers pass. Twelve remaining candidate queues are being sampled with long names/career labels. Browser package preparation has begun; local review server remains unchanged pending these checks. [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] ticket | Accept bounded ending summaries and refresh local patcher
+
+T-39517 In Progress -> In Review -> Done after standards review and resolution of all findings. All 27 original hashes, headers and rename audit pass. Thirteen candidate queues plus three full scroll fixtures fit every row/window: maximum 773 queue bytes and 361 live glyphs; final Rei sentence visually complete. Browser passes nine checks and exact CLI/download equality. Local port 8769 serves target cd882b6238075dd9d36fd7af7fe6b546e04ecfa2. User reconfirmed full longer presets, consistent with the existing packed-name implementation and prior save/load proof. Parent whole-game audits and release signoff remain open. [[tickets/T-39517-ending-summary-layout]], [[tickets/T-39512-browser-patcher]].

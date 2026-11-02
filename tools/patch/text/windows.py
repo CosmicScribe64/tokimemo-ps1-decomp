@@ -58,6 +58,8 @@ class Window:
 ENGLISH_ROW_BYTES = 159
 
 WINDOWS = {window.name: window for window in (
+    Window("ending_summary", -0x48, MESSAGE_RIGHT, 10, True, True, ENGLISH_ROW_BYTES,
+           "ending_graduation_result_dialogue_select: x=-0x48; scrolling text y=-80..80", reflow=True),
     Window("message_speech", -0x48, MESSAGE_RIGHT, 3, True, True, ENGLISH_ROW_BYTES,
            "talk_speak_part: speech rows at x -0x48; message_window_show; check_k_scroll", reflow=True),
     Window("message_narration", -0x80, MESSAGE_RIGHT, 3, True, True, ENGLISH_ROW_BYTES,
@@ -117,6 +119,8 @@ def consumer_calls(unit: dict) -> set:
 def window_for(container_kind: str, record) -> tuple[Window | None, str]:
     """(window, basis) for a record; basis says why that window was chosen."""
     unit = record.unit or {}
+    if (unit.get("context") or {}).get("profile_id") == "serifu-epilog":
+        return WINDOWS["ending_summary"], "EPILOG summary renderer at x=-0x48 (T-39517)"
     controls = [s for s in record.segments if getattr(s, "kind", None)]
     if any(c.kind == "row_separator" for c in controls):
         return WINDOWS["telephone_narration"], "row_separator: sndisp renderer"

@@ -2,6 +2,9 @@
 #define MAIN_API_OVERRIDE_get_now_k /* matched with s32() (main_api.h: u8(void)) */
 #include "common.h"
 #include "ovl/ending.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/text.h"
+#endif
 #include "common.h"
 #include "game/game_state.h"
 #include "game/schedule_records.h"
@@ -27,6 +30,123 @@
 #include "main/sprite.h"
 
 s32 get_now_k();
+
+#ifdef TOKIMEMO_ENGLISH
+/* T-39517: keep the complete epilogue in overlay RAM and upload only visible
+ * rows. The longest summary exceeds the 384-glyph atlas by itself. */
+#define ENDING_ENGLISH_ROWS 128
+#define ENDING_ENGLISH_BYTES 4096
+typedef struct EndingEnglishRow {
+    s16 x;
+    s16 y;
+    u16 offset;
+    u8 color;
+    u8 slot;
+} EndingEnglishRow;
+/* Nonzero initializers keep this storage in the loaded overlay's data area.
+ * Its legacy bss follows the full padded image, outside the overlay slot.
+ * ending_english_begin resets all live state before capture. */
+static EndingEnglishRow ending_english_rows[ENDING_ENGLISH_ROWS] = {{1}};
+static u8 ending_english_text[ENDING_ENGLISH_BYTES] = {1};
+static s32 ending_english_count = -1;
+static s32 ending_english_used = -1;
+static s32 ending_english_scroll = -1;
+static s32 ending_english_first = -1;
+static s32 ending_english_last = -1;
+static s32 ending_english_overflow = -1;
+
+/* Named external callback keeps HI/LO references off the .text section symbol,
+ * which the legacy trailing-pad relocation pass cannot adjust. */
+s32 ending_english_capture(s16 x, s16 y, u8 color, u8 *text, s32 slot) {
+    EndingEnglishRow *row;
+    s32 length;
+    s32 i;
+
+    length = 0;
+    if (text != 0) {
+        while (text[length] != 0) {
+            length++;
+        }
+    }
+    if (ending_english_count >= ENDING_ENGLISH_ROWS ||
+        ending_english_used + length + 1 > ENDING_ENGLISH_BYTES) {
+        ending_english_overflow = 1;
+        return -1;
+    }
+    row = &ending_english_rows[ending_english_count];
+    row->x = x;
+    row->y = y;
+    row->color = color;
+    row->slot = slot;
+    row->offset = ending_english_used;
+    for (i = 0; i < length; i++) {
+        ending_english_text[ending_english_used++] = text[i];
+    }
+    ending_english_text[ending_english_used++] = 0;
+    return ++ending_english_count;
+}
+
+static void ending_english_begin(void) {
+    ending_english_count = 0;
+    ending_english_used = 0;
+    ending_english_scroll = 0;
+    ending_english_first = -1;
+    ending_english_last = -1;
+    ending_english_overflow = 0;
+    k_reset(0);
+    text_state.mark = 0;
+    english_text_capture = ending_english_capture;
+}
+
+static void ending_english_refresh(void) {
+    EndingEnglishRow *row;
+    u8 *text;
+    s32 first;
+    s32 last;
+    s32 i;
+    s32 glyphs;
+    s32 y;
+    u32 c;
+
+    first = 0;
+    while (first < ending_english_count && ending_english_rows[first].y - ending_english_scroll < -80) {
+        first++;
+    }
+    last = first;
+    while (last < ending_english_count && ending_english_rows[last].y - ending_english_scroll <= 80) {
+        last++;
+    }
+    if (first != ending_english_first || last != ending_english_last) {
+        k_reset(0);
+        for (i = first; i < last; i++) {
+            row = &ending_english_rows[i];
+            text = &ending_english_text[row->offset];
+            glyphs = 0;
+            while (*text != 0) {
+                c = *text++;
+                if (c >= 0x80 && (c < 0xA0 || c >= 0xE0) && *text != 0) {
+                    text++;
+                }
+                glyphs += c >= 0xB0 && c <= 0xDF ? 2 : 1;
+            }
+            if (text_state.total + glyphs > ENGLISH_GLYPH_SLOTS) {
+                ending_english_overflow = 2;
+                break;
+            }
+            set_kanji_string(row->x, row->y - ending_english_scroll, row->color,
+                &ending_english_text[row->offset], row->slot);
+        }
+        text_state.pos = text_state.total;
+        ending_english_first = first;
+        ending_english_last = last;
+    } else {
+        for (i = first; i < last && i - first < text_state.count; i++) {
+            y = ending_english_rows[i].y - ending_english_scroll;
+            ((TextEntry *)text_list)[i - first].y = y;
+        }
+    }
+}
+#endif
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/ENDING/data/ending/career_and_epilogue_summary.data", D_8013CAC0);
@@ -78,8 +198,21 @@ INCLUDE_RODATA("asm/ovl/ENDING/data/ending/career_and_epilogue_summary.data", D_
  * did: as1 treats every function named in this file's data as an address-taken label, so the
  * jump-table dispatch of ending_graduation_result_dialogue_select gets an edge back to that function's entry, and the loop
  * changes as1's block weights and candidate budget there (T-25150, T-25127). */
+#ifdef TOKIMEMO_ENGLISH
+static void ending_english_summary_select(void) {
+    ending_english_begin();
+    ending_graduation_result_dialogue_select();
+    english_text_capture = 0;
+}
+#endif
 EdFnTbl14 ending_graduation_scene_step_callbacks = { {
-    ending_graduation_scene_screen_init, ending_graduation_scene_data_load, scene_wait_cd_read, ending_graduation_result_dialogue_select, ending_candidate_scene_data_load,
+    ending_graduation_scene_screen_init, ending_graduation_scene_data_load, scene_wait_cd_read,
+#ifdef TOKIMEMO_ENGLISH
+    ending_english_summary_select,
+#else
+    ending_graduation_result_dialogue_select,
+#endif
+    ending_candidate_scene_data_load,
     scene_wait_cd_read, ending_validate_background_stream_header, ending_graduation_sprite_layout_init, ending_scene_fade_in_update, ending_result_text_render_wait,
     ending_scroll_result_text_entries, ending_scene_fade_out_update, ending_yoshio_mode_stage_select, game_mode_reset_to_title,
 } };
@@ -688,6 +821,17 @@ void ending_graduation_result_dialogue_select(void) {
 
 /* FAKE (T-9780): the s32 fall-through preserves the original timer result register. */
 s32 ending_scroll_result_text_entries(void) {
+#ifdef TOKIMEMO_ENGLISH
+    if (game_state.frame_count & 3) {
+        return 0;
+    }
+    ending_english_scroll++;
+    ending_english_refresh();
+    if (--talk_next_row_y < -64) {
+        mode_step_next();
+    }
+    return 0;
+#else
     s16 timer;
     s16 y;
     u32 max;
@@ -715,13 +859,18 @@ s32 ending_scroll_result_text_entries(void) {
     if (timer < -64) {
         mode_step_next();
     }
+#endif
 }
 
 s32 ending_result_text_render_wait(void) {
     if ((u32)game_state.mode_step_timer.w++ < 0x80U) {
         return 0;
     }
+#ifdef TOKIMEMO_ENGLISH
+    ending_english_refresh();
+#else
     k_disp_start(talk_work);
+#endif
     scene_work_selector = 1;
     mode_step_next();
 }

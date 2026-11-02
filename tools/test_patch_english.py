@@ -231,6 +231,15 @@ class SpeechTest(unittest.TestCase):
 
 
 class WindowTest(unittest.TestCase):
+    def test_ending_summary_uses_its_actual_text_column(self):
+        record = self.record("script_record", [Text("Summary")], 7)
+        record.unit["context"]["profile_id"] = "serifu-epilog"
+        window, _ = window_for("talk_script", record)
+        self.assertEqual(window.name, "ending_summary")
+        self.assertEqual(window.left, -0x48)
+        self.assertEqual(window.width, 196)
+        self.assertTrue(window.scroll)
+
     def record(self, kind, segments, command=None):
         unit = {"context": {"command": {"name": "c", "value": command}}} if command is not None else {}
         return Record("id", kind, "P", 0, b"", segments, unit=unit)

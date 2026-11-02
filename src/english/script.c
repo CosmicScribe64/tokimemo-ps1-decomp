@@ -38,7 +38,7 @@
 #ifdef TOKIMEMO_ENGLISH
 
 #define ENGLISH_LINE_BYTES 160   /* one display line after name expansion */
-#define ENGLISH_SCRIPT_BYTES 512 /* one script string (the original's copy size) */
+#define ENGLISH_SCRIPT_BYTES 1024 /* T-39517: complete long English epilogues exceed 512 bytes */
 #define ENGLISH_OPTION_BYTES 128 /* one choice option */
 #define ENGLISH_LONG_NAME_BYTES 24
 #define ENGLISH_GIRL_SHORT_BYTES 8 /* name_code_girl_short */
@@ -351,6 +351,38 @@ static s32 english_speaker_draw(u8 *name, u8 *mark, s32 y, s32 text_color) {
     return english_text_x;
 }
 
+/* T-39517: wrap expanded display text, not the shorter name/value codes.
+ * Return a word boundary, or an atomic character boundary for a long word. */
+static s32 english_display_line_end(u8 *text, s32 limit) {
+    u8 one[3];
+    s32 i;
+    s32 bytes;
+    s32 width;
+    s32 last_space;
+
+    i = 0;
+    width = 0;
+    last_space = -1;
+    while (text[i] != 0) {
+        if (text[i] == ' ') {
+            last_space = i;
+        }
+        bytes = english_char_bytes(&text[i]);
+        one[0] = text[i];
+        one[1] = bytes == 2 ? text[i + 1] : 0;
+        one[2] = 0;
+        width += english_text_width(one);
+        if (width > limit) {
+            if (last_space > 0) {
+                return last_space;
+            }
+            return i > 0 ? i : bytes;
+        }
+        i += bytes;
+    }
+    return i;
+}
+
 s32 english_talk_render(s32 x, s32 y, s32 text_color, u8 *input_text, s32 ordering_slot, u8 *line_suffix,
                         u8 *speaker_label, s32 label_enabled) {
     u8 text[ENGLISH_SCRIPT_BYTES];
@@ -360,6 +392,9 @@ s32 english_talk_render(s32 x, s32 y, s32 text_color, u8 *input_text, s32 orderi
     s32 row;
     s32 line_x;
     s32 result;
+    s32 line_start;
+    s32 line_end;
+    u8 saved;
     u32 c;
 
     x = (s16)x;
@@ -388,15 +423,29 @@ s32 english_talk_render(s32 x, s32 y, s32 text_color, u8 *input_text, s32 orderi
         if (c != 0 ? label_enabled != 0 : *line_suffix != 0) {
             english_append(line, line_suffix, sizeof(line));
         }
-        line_x = x;
-        if (line[0] == '(') {
-            /* hanging parenthesis, as the original does for a full-width one */
-            line_x = english_right_aligned(english_open_paren, x);
-        }
+        line_start = 0;
+        do {
+            /* Choice rows must remain one selectable row. Other text may gain
+             * rows after expanding full names and career labels. T-39517. */
+            line_end = line_start + english_display_line_end(&line[line_start],
+                label_enabled != 0 ? 0x7FFFFFFF : 0x7C - x);
+            saved = line[line_end];
+            line[line_end] = 0;
+            line_x = x;
+            if (line[line_start] == '(') {
+                /* hanging parenthesis, as the original does for a full-width one */
+                line_x = english_right_aligned(english_open_paren, x);
+            }
+            result = set_kanji_string(line_x, y + row, text_color, &line[line_start], ordering_slot);
+            line[line_end] = saved;
+            line_start = line_end + (saved == ' ');
+            if (saved != 0) {
+                row += 0x10;
+            }
+        } while (saved != 0);
         if (c == 0) {
             talk_next_row_y = y + row + 0x10;
         }
-        result = set_kanji_string(line_x, y + row, text_color, line, ordering_slot);
         if (c == 0) {
             return result;
         }

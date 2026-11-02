@@ -29,6 +29,7 @@
 
 s16 english_glyph_pen[ENGLISH_GLYPH_SLOTS];
 s32 english_text_cell = 0;
+EnglishTextCapture english_text_capture = 0;
 
 /* Expands one 18-byte 1bpp glyph to 16 x 12 4bpp in the upload ring and loads it into the next glyph
  * slot, as vload_font does for the game's font. */
@@ -195,6 +196,9 @@ s32 english_text_width(u8 *text) {
 s32 english_set_kanji_string(s16 x, s16 y, u8 color_index, u8 *text, s32 ordering_slot) {
     TextEntry *entry;
 
+    if (english_text_capture != 0) {
+        return english_text_capture(x, y, color_index, text, ordering_slot);
+    }
     if (text_state.count >= 0x34) {
         return -1;
     }

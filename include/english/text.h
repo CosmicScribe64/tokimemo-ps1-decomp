@@ -25,6 +25,11 @@ extern s16 english_glyph_pen[ENGLISH_GLYPH_SLOTS];
  * were recorded at load time. */
 extern s32 english_text_cell;
 
+/* Optional synchronous sink for scene-owned scrolling text. A scene clears it
+ * after capturing rows; normal dialogue continues to use the glyph atlas. */
+typedef s32 (*EnglishTextCapture)(s16 x, s16 y, u8 color, u8 *text, s32 slot);
+extern EnglishTextCapture english_text_capture;
+
 /* Width in pixels of a string as english_load_string lays it out (proportional mode). */
 s32 english_text_width(u8 *text);
 

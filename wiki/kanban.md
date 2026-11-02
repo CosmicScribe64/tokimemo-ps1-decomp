@@ -21,7 +21,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-39517-ending-summary-layout|T-39517 Fit the scrolling English ending summaries]]
 
 
 
@@ -102,6 +101,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39517-ending-summary-layout|T-39517 Fit the scrolling English ending summaries]]
 
 - [ ] [[tickets/T-39516-festival-gate-plates|T-39516 Translate the omitted festival gate plates]]
 

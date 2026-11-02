@@ -212,6 +212,8 @@ void ending_scene_fade_in_update(void);
 void ending_scene_fade_out_update(void);
 void ending_graduation_sprite_layout_init(void);
 void ending_graduation_result_dialogue_select(void);
+/* English-only scene-owned text capture; no callers in the matching build. */
+s32 ending_english_capture(s16 x, s16 y, u8 color, u8 *text, s32 slot);
 s32 ending_result_text_render_wait(void);
 s32 ending_result_text_entries_clear(void); /* FAKE (T-23002; prototype moved here from the guard by T-25127): s32, see its definition; ending_graduation_result_dialogue_select reads its $v0 */
 extern EdFnTbl14 ending_graduation_scene_step_callbacks; /* ending_career_summary_step_dispatch */
