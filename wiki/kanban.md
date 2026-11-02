@@ -15,6 +15,7 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-39511-english-text-quality|T-39511 Make the English read naturally on screen]]
 - [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
 
 
