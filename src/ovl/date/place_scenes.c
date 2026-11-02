@@ -4,6 +4,9 @@
 #define MAIN_API_OVERRIDE_tpage_buf_clear /* matched with void() (main_api.h: void(void)) */
 #include "common.h"
 #include "ovl/date.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/script.h"
+#endif
 
 void tpage_buf_clear();
 
@@ -3613,7 +3616,12 @@ void date_ambush_prepare_battle(void) {
     talk_voice_table = (s32)date_ambush_voice_table;
     D_80122D20 = 1;
     game_state.current_girl = GIRL_SOTOI;
+#ifdef TOKIMEMO_ENGLISH
+    /* T-39506: the translated speaker name exceeds the original eight-byte field. */
+    english_girl_short_set("Delinquents");
+#else
     strcpy(name_code_girl_short, "不良");
+#endif
     D_80122D4C = 1;
     mode_step_next();
 }
@@ -4325,7 +4333,13 @@ void date_load_shared_script(void) {
 
 void date_load_choice_tables(void) {
     cd_read_sectors(3, 0x801A4000, 0xAFA9);
+#ifdef TOKIMEMO_ENGLISH
+    /* T-39506: the original alternate entry only skips a NOP. Use the named
+     * function entry so the English linker can relocate the rebuilt object. */
+    date_choice_tables_init();
+#else
     date_choice_tables_init_body();
+#endif
     mode_step_next();
 }
 

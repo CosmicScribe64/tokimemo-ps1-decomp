@@ -3205,3 +3205,53 @@ Default ninja completes globals and 14,449 rename-ledger checks. Final NAME_ENT 
 ## [2026-11-02] build | Final name confirmation visually verified and code reviewed
 
 `route-en-name-confirm-final` completes 6,548 frames in 146 s, 27 captures, zero original-font calls/unknown/overflow. Capture 027 shows full Matsukawa and Tomoyoshi with visible separation; normal controller entry includes deletion/retyping. Reviewed name/storage/render/layout changes against CODING_STANDARDS: C89, English guards, original field sizes, bounded buffers and full Shift-JIS preservation, stable saved-byte assignments, no raw game data, appropriate Docker tests and 27 matching original binaries. No findings remain in this change set. [[tickets/T-39506-english-script-runtime]] stays In Progress because its previously documented `date_ambush_prepare_battle` short-name copy and wider runtime coverage still need completion; this is not a whole-ticket completion claim.
+
+## [2026-11-02] decision | Resolve date ambush name overflow through canonical initializer entry
+
+Revalidated the remaining [[tickets/T-39506-english-script-runtime]] finding: `date_ambush_prepare_battle` copies the translated 11-byte speaker name into an eight-byte buffer. Original DATE disassembly proves `date_choice_tables_init_body` at 0x80132004 only skips the NOP at the real `date_choice_tables_init` entry. Changed the English caller to that canonical function (original branch untouched), removing the anonymous interior-entry dependency that previously prevented relinking this object. English ambush setup now uses the existing bounded long-name setter, preserving the full label in its runtime backing buffer. Build and scene verification pending.
+
+## [2026-11-02] decision | Relinker counted references from discarded input sections
+
+The date rebuild still failed at the old interior entry after changing the actual caller. Object relocations prove the English code calls the canonical initializer; the obsolete reference exists only in the original object's discarded `.text`, while its `.data` remains linked. `referenced_names` incorrectly counted every symbol in every object, ignoring input-section selection. Updated it to retain definitions and relocation targets from selected sections, plus absolute/common definitions as applicable. The link script explicitly discards all unselected sections. This removes stale references without mapping unknown interior addresses or weakening the relocation guard. Regression tests and rebuild pending. [[tickets/T-39506-english-script-runtime]].
+
+## [2026-11-02] build | Add final-disc talk-string audit
+
+Added `tools/patch/audit_script_disc.py` under [[tickets/T-39510-no-japanese-left-check]]. It reads actual ISO files, follows their actual pointer words, verifies every modeled talk slot is reached and equals its encoded translation, and rejects original-font byte ranges. Explicit scope: normal and supplemental talk scripts; executable strings and artwork remain separate gates. Synthetic failure tests and the on-disc run are pending.
+
+## [2026-11-02] query | Date alias definition and first real on-disc language finding
+
+Further inspection refines the linker diagnosis: both original and English objects also define the initializer's interior label in `.text`, but the default final ELF hides it behind an absolute side-script assignment. Updated auxiliary-script generation to leave selected input-section definitions authoritative, rather than overriding them with stale absolute aliases. Selected-section filtering remains correct, but alone was insufficient. Synthetic test checks the distinction between defined labels and external relocation targets.
+
+The new actual-disc script audit fails on `talk:CDROM/BUNKA/AS_S6W.BIN:main:g0078:l0000`: its encoded target preserves opaque bytes from an unresolved original renderer anomaly, including original-font lead bytes. This is a genuine coverage finding, not an encoder character counter. Translation/source analysis and a full finding census are next; no clean scan claimed. [[tickets/T-39506-english-script-runtime]], [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] query | Complete script census isolates three malformed-tab records
+
+Diagnostic `build/script-disc-census.json` follows 31,334 on-disc pointers/strings in all 104 modeled talk/supplemental containers of `build/name-pairs-final-proof`. Exactly three language findings, no pointer/payload/coverage failures: AS_S6W groups 78/79 line 0 and HI_S6 group 176 line 10. Inspection of original raw bytes shows each contains a stray 0x09 tab inside otherwise decodable Shift-JIS prose. The original renderer-token extraction paired the tab with the next lead byte, leaving opaque protected tokens that the translations retained. Complete intended sentences can be recovered from the source bytes; no raw source has been changed. English target repair remains required. Profile data, executable strings and artwork are explicitly outside this scan. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Date overflow fix and alias-aware link produce verified disc
+
+Full build now passes with no untranslated-source fallback: `build/date-name-proof`, SHA-1 prefix c24fd36a5851, patch 6,563,383 bytes, 214.8 s, 246 verified artwork items and 28 approved exceptions. All English units link after preserving actual selected-section definitions instead of absolute side-script aliases. Compared linked outputs: only DATE and the main executable differ from the prior names build; the main carries moved overlay entry addresses, so old save states are not accepted as compatible. Preparing a fresh copied-card bootstrap for scene verification. Focused linker/script-audit/name/runtime suite passes 25 tests. Default DATE checksum matches. [[tickets/T-39506-english-script-runtime]].
+
+## [2026-11-02] build | Guarded festival anomaly translations implemented
+
+Added three explicit English repairs in `translations/en/anomaly-repairs.json`, with original-byte and previous-target SHA-256 guards. `tools/patch/text/anomaly_repairs.py` supplies the complete translated prose only when both match; layout records the repair and applies normal speech/wrapping rules. Original raw sources and exported translation rows are unchanged. Guards reject changed evidence; 41 focused tests pass with one opt-in full-build skip. Rebuilt-disc scan and visual checks remain pending. [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Ambush label and battle render in English; final opaque token identified
+
+Controlled `date-ambush-name` replay reaches the actual RPG battle (mode 0x81), with zero original-font uploads, unknown mappings or overflow. Captures show the full Delinquents speaker label and English battle messages/HUD. Memory samples change the bounded eight-byte field to Delinqu + NUL while retaining Delinquents in the 24-byte backing buffer; neighboring Shiori buffer remains intact. Bootstrap ran 7,326 frames/171 s from a fresh power-on card load. The controlled replay records all injected state bytes and is not a normal full-career playthrough.
+
+A wider protected-token census finds only four talk targets with unknown tokens: the three tab cases plus KOSIEN table-0 g0010 l0000. The fourth ends in a lone ASCII apostrophe after a complete sentence, producing a dangling English quote. Added a fourth hash-guarded repair that retains the existing translation without that extra byte. The current in-flight build contains the first three repairs only and will be superseded. [[tickets/T-39506-english-script-runtime]], [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Repaired disc passes all script and profile string checks
+
+`build/anomaly-repair-proof` completes in 213.5 s, target SHA-1 prefix 57ba9af24281, xdelta 6,563,337 bytes, 246 verified art items and 28 exceptions. All four repair IDs are recorded in its coverage report. Main executable equals the ambush GPU proof byte-for-byte. The final-disc language audit now also follows JOHO's relocated club/zodiac label layout, checked against `include/english/profile.h`; six audit tests pass after correcting the synthetic profile fixture's omitted capacity.
+
+Actual-disc audit passes 105 text-data containers, 31,471 strings and 31,334 pointers with zero original-font bytes and exact target equality. Report: `build/script-disc-audit-final.json`. This closes the talk/supplemental/profile portion of the static audit; executable literals/tables and broader scene/art coverage remain open. Latest browser acceptance test is running. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39511-english-text-quality]], [[tickets/T-39512-browser-patcher]].
+
+## [2026-11-02] build | Linker identity regression and latest browser package pass
+
+`ninja build/j0/identity.ok` completes all 157 steps, including byte-identity checks for the zero-shift main executable and overlays. All 27 ordinary original-binary hashes also pass. This verifies the generic alias/reference change beyond the English DATE case. Latest `build/patcher-anomaly-review` passes all nine browser acceptance checks; browser-downloaded image equals the 57ba9af24281 build. Updating the existing localhost:8769 preview to this package. Previous name-build browser screenshots/result are preserved in `build/patcher-names-test-evidence`.
+
+## [2026-11-02] decision | Review date safety, linker and guarded text repairs
+
+Reviewed the change set against CODING_STANDARDS: C89 English-only date changes preserve original code paths; bounded names retain full text; actual alias definitions remain relocatable; selected-section reference scanning is tested with real synthetic MIPS objects; zero-shift link identity and 27 original hashes pass. Text repairs require both source and previous-target hashes, preserve raw data, and appear in build reports. Actual-disc script/profile coverage passes; negative tests cover corrupt and missing records. No raw game artifacts are staged. No unresolved implementation findings in this change set; festival/baseball wording captures, executable-text scanning, broader event/art coverage and owner sign-off remain open in their tickets. Wiki lint has zero broken links/status mismatches and the two existing large-page advisories. Localhost:8769 now serves `build/patcher-anomaly-review`.

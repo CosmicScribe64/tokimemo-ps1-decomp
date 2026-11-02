@@ -16,7 +16,8 @@ from dataclasses import dataclass, field, replace
 
 from .containers import Container
 from .english import EnglishEncoder, end_inline_label, untokenized_name_codes
-from .segments import Control, encode
+from .segments import Control, Text, encode
+from .anomaly_repairs import repair_target
 from .translations import target_of
 from .windows import window_for
 from .wrap import FontMetrics, label_end, wrap
@@ -97,6 +98,10 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
             if segments is None:
                 note["status"], note["reason"] = "kept_original", problem
                 continue
+            repaired = repair_target(record.id, record.payload, row.get('target_text', ''))
+            if repaired is not None:
+                segments = [Text(repaired)]
+                note['source_repair'] = 'reviewed source anomaly (T-39511)'
             encoder.take_record_notes()
             payload = end_inline_label(encode(segments, encoder))
             if _preset_too_long(record.id, payload):

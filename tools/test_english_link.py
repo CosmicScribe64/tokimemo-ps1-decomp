@@ -7,10 +7,14 @@ import os
 import struct
 import sys
 import unittest
+import subprocess
+import tempfile
+from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import english_link  # noqa: E402
 import raw_addrs  # noqa: E402
+import elf32  # noqa: E402
 
 RANGES = [english_link.MAIN_RANGE, english_link.SLOT_RANGE]
 
@@ -25,6 +29,37 @@ def lui(rt, imm):
 
 def itype(op, rs, rt, imm):
     return (op << 26) | (rs << 21) | (rt << 16) | (imm & 0xFFFF)
+
+
+class SelectedReferencesTest(unittest.TestCase):
+    def test_discarded_code_cannot_keep_its_undefined_entry_alive(self):
+        source = """
+.text
+.globl code_entry
+code_entry:
+    jal obsolete_interior_entry
+    nop
+.data
+.globl data_entry
+data_entry:
+    .word live_data_target
+.comm common_entry,4,4
+.globl absolute_entry
+.set absolute_entry,0x1234
+"""
+        with tempfile.TemporaryDirectory() as folder:
+            asm, obj = Path(folder) / 'input.s', Path(folder) / 'input.o'
+            asm.write_text(source)
+            subprocess.run(['mips-linux-gnu-as', '-EL', '-o', str(obj), str(asm)], check=True)
+            elf = elf32.Elf(str(obj))
+            data = english_link.selected_names(elf, {'.data'})
+            self.assertTrue({'data_entry', 'live_data_target', 'absolute_entry'} <= data)
+            self.assertTrue({'code_entry', 'obsolete_interior_entry', 'common_entry'}.isdisjoint(data))
+            text = english_link.selected_names(elf, {'.text', 'COMMON'})
+            self.assertTrue({'code_entry', 'obsolete_interior_entry', 'common_entry'} <= text)
+            self.assertNotIn('live_data_target', text)
+            self.assertEqual(english_link.selected_names(elf, {'.data'}, definitions_only=True),
+                             {'data_entry'})
 
 
 class ScanTest(unittest.TestCase):

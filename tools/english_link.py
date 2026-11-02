@@ -412,20 +412,36 @@ def redirected_objects(out_dir, unit):
     return found
 
 
-def referenced_names(out_dir, unit):
-    """Names in the symbol tables of the unit's objects (as the variant links them): the only side-script
-    definitions that matter for its link. Defined names count too: a side-script assignment overrides
+def referenced_names(out_dir, unit, definitions_only=False):
+    """Names defined or referenced by the selected input sections of this link.
+    Discarded sections must not retain stale interior-entry references (T-39506).
+    Defined names count too: a side-script assignment overrides
     an object's own label (`D_800AA178` in libgte_patchgte, whose code copies itself up to it)."""
     path = "%s/%s.ld" % (out_dir, EXE) if unit == "main" else "%s/ovl/%s.ld" % (out_dir, unit)
-    objects = set()
+    objects = {}
     for line in open(path):
         m = INPUT_LINE.match(line.rstrip("\n"))
         if m:
-            objects.add(m.group(2))
+            objects.setdefault(m.group(2), set()).add(m.group(3))
     names = set()
     for obj in sorted(objects):
         if os.path.exists(obj):
-            names |= {sym.name for sym in elf32.Elf(obj).symbols if sym.name}
+            names |= selected_names(elf32.Elf(obj), objects[obj], definitions_only)
+    return names
+
+
+def selected_names(elf, selected, definitions_only=False):
+    """Side-script symbols needed by selected sections, including their relocations."""
+    sections = [sec for sec in elf.sections if sec.name in selected]
+    indices = {sec.index for sec in sections}
+    if definitions_only:
+        return {sym.name for sym in elf.symbols
+                if sym.name and sym.bind == 1 and sym.shndx in indices}
+    names = {sym.name for sym in elf.symbols if sym.name and
+             (sym.shndx in indices or sym.shndx == elf32.SHN_ABS or
+              (sym.shndx == elf32.SHN_COMMON and "COMMON" in selected))}
+    for sec in sections:
+        names.update(sym.name for _, _, sym in elf.relocations(sec) if sym.name)
     return names
 
 
@@ -451,6 +467,7 @@ def cmd_aux(argv):
         default_main_syms = main.default_syms
     entry_values = read_ld_numbers(entries) if entries else {}
     used = referenced_names(out_dir, unit)
+    defined = referenced_names(out_dir, unit, definitions_only=True)
     lines = ["/* free relink (T-39505): tools/english_link.py aux %s */" % unit]
     for path in side_scripts(unit):
         lines.append("/* from %s */" % path)
@@ -467,6 +484,11 @@ def cmd_aux(argv):
                 lines.append(line)
                 continue
             if in_range(v, own_range):
+                if name in defined:
+                    # The input's relocatable definition is authoritative. An
+                    # absolute side-script alias must not pin it to the old address.
+                    lines.append("/* %s is defined by a selected input section. */" % name)
+                    continue
                 new = own.expr(v)
             elif unit == "main" and in_range(v, SLOT_RANGE) and entries:
                 if name not in entry_values:

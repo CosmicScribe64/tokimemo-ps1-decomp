@@ -418,6 +418,7 @@ def record_report(text, containers, literals: dict, data: dict, binaries: dict) 
             lists[state].append(item)
     unwrapped_lines = Counter(note.get("window") for note in text.notes.values() if note.get("breaks_added"))
     return {"totals": dict(Counter(status.values())), "by_container_kind": {k: dict(v) for k, v in by_kind.items()},
+            "source_repairs": sorted(rid for rid, note in text.notes.items() if note.get("source_repair")),
             "by_container": {k: dict(v) for k, v in sorted(by_container.items())},
             "records": {k: sorted(v, key=lambda i: i["id"]) for k, v in lists.items()},
             "records_with_breaks_added_by_window": dict(unwrapped_lines),

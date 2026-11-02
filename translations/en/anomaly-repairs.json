@@ -1,0 +1,26 @@
+{
+  "talk:CDROM/BUNKA/AS_S6W.BIN:main:g0078:l0000": {
+    "source_sha256": "2707cf672ca8269a973793f5cac0ba30d8d415b87db6d487df49015d530463c8",
+    "previous_target_sha256": "12ed1ce13b9d7b17687f554d426254881084be2765197ad4042a63bf6c5dd5ce",
+    "reason": "Stray source tab disrupted two-byte renderer tokenization; translate the complete decoded prose.",
+    "target_text": "I'm not very good at shooting games... Hey, show me how it's done."
+  },
+  "talk:CDROM/BUNKA/AS_S6W.BIN:main:g0079:l0000": {
+    "source_sha256": "befe00fe32c2e41cf0e5b7b9e39de93a1f2d4836ff02c0bcc0336b0f43b6af1d",
+    "previous_target_sha256": "b8f395a8197b47a8376281f05300e2624da8bb931c0bf2ceb95bf58fa0ecc9ff",
+    "reason": "Stray source tab disrupted two-byte renderer tokenization; translate the complete decoded prose.",
+    "target_text": "I'm not very good at shooting games... Hey, show me how it's done, will you?"
+  },
+  "talk:CDROM/BUNKA/HI_S6.BIN:main:g0176:l0010": {
+    "source_sha256": "4749d0f9e843e5fa91fe0d04e8c718a3000de2a67afd2d2424264a40b930302a",
+    "previous_target_sha256": "594b2f4934ecd3566c0dbf02e7c74d87ae2e836a341c4e910c72fb3cf2720e9f",
+    "reason": "Stray source tab disrupted two-byte renderer tokenization; translate the complete decoded prose.",
+    "target_text": "A new ruler's castle deserves paintings by a new artist..."
+  },
+  "talk:CDROM/MASTER/KOSIEN.BIN:table-0:g0010:l0000": {
+    "source_sha256": "b4222054ed71f01a05201254dc190c52021f43a0b4730024eb2c84e0099b9860",
+    "previous_target_sha256": "57794e4eca3e2a58c46bbdcaa950e23821dd22f094af920d8a8e2a74acbd2d8c",
+    "reason": "Remove the lone trailing apostrophe byte retained as an unknown token after the complete source sentence.",
+    "target_text": "Our quarterfinal opponent is Juntento High from Kinki. They're tough!"
+  }
+}
