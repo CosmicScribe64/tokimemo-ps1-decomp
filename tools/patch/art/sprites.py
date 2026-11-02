@@ -45,6 +45,7 @@ class ContainerResult:
     stats: dict = field(default_factory=dict)
     fallback: list = field(default_factory=list)      # image ids shipped as their same-size fallback
     touched: set = field(default_factory=set)         # container byte offsets the writer may change
+    exe_frames: dict = field(default_factory=dict)    # frame index -> new frame record (MAINROM)
     targets: list = field(default_factory=list)       # (image id, view key, part, png path) placed
 
 
@@ -61,6 +62,20 @@ def drawn_at_runtime(meta: dict) -> bool:
         return False
     if "uses" in scope and not scope["uses"]:
         return False
+    return True
+
+
+def mainrom_variant_drawn(path: str, image, item) -> bool:
+    """MAINROM palette overrides: the HUD uses hud-43/44 only on frames 0x44-0x58 and icon-51/52/53
+    only on frame 2 (the rule the MAINROM manifests record as runtime_variant_scope)."""
+    if not path.endswith("MAINROM.NBN") or "." not in image.id:
+        return True
+    variant = image.meta.get("palette_id") or image.id.rsplit(".", 1)[1]
+    frame = image.meta.get("frame", item.frame)
+    if variant.startswith("hud-"):
+        return frame is not None and 0x44 <= frame <= 0x58
+    if variant.startswith("icon-"):
+        return frame == 2
     return True
 
 
@@ -123,7 +138,7 @@ def _place_once(path: str, data: bytes, exe: bytes, items: list, chosen: dict) -
     for item in items:
         for original in item.images:
             image = chosen[original.id]
-            if not drawn_at_runtime(image.meta):
+            if not drawn_at_runtime(image.meta) or not mainrom_variant_drawn(path, image, item):
                 result.images[image.id] = "not_drawn"
                 result.reasons[image.id] = "palette variant the game does not use for this frame"
                 continue
@@ -164,6 +179,7 @@ def _place_once(path: str, data: bytes, exe: bytes, items: list, chosen: dict) -
     result.data = bytes(container)
     result.exe_records = exe_records
     result.touched = set(placed.touched)
+    result.exe_frames = dict(placed.frames)
     placed_ids = {i for merged in placed.placed for i in merged.split("+")}
     result.targets = [t for t in result.targets if t[0] in placed_ids]
     if profile.exe is None:
@@ -193,7 +209,7 @@ def _reread(path, data, exe, result: ContainerResult, targets, placed) -> None:
         new = after.views.get(key)
         if new is None:
             raise ArtError("%s %s: view lost after writing" % (path, key))
-        if key in done:
+        if key in done or view.frame in placed.frames:
             continue
         group = key.split(".")[0]
         if any(k.split(".")[0] == group for k in done):
@@ -201,7 +217,7 @@ def _reread(path, data, exe, result: ContainerResult, targets, placed) -> None:
         if compose(result.data, new) != compose(data, view):
             raise ArtError("%s %s: changed after writing" % (path, key))
     for key, t in done.items():
-        if t.part is not None or key not in before.views:
+        if t.part is not None or key not in before.views or t.view.frame in placed.frames:
             continue    # merged part images and page regions are checked by the placer
         old = before.views[key]
         new = after.views[key]

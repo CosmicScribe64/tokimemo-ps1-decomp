@@ -40,6 +40,7 @@ class Profile:
     pack: Callable | None = None                     # (part, texture id) -> record bytes; None: 14-byte part
     page_sets: dict = field(default_factory=dict)    # view key -> pages its new parts may use (default all)
     prefer_rebuild: bool = False                     # label sheets: new parts per word, the whole frame freed
+    grow: int = 0                                    # tile size when a frame may get a new, longer record
 
     def record_bytes(self, data: bytes) -> bytes:
         """The bytes that hold the frame and part records: the container, or the executable."""
@@ -85,7 +86,9 @@ def mainrom_profile(pack: bytes, exe: bytes) -> Profile:
     # boot_hud_textures_load uploads sheets 0-3 and 7-10 only (4-6 are not in VRAM, so the
     # allocator never uses them: no frame draws them). The one direct sprite into these tpages
     # (hud_panels.c, the checker background) samples u 128-159, outside the sheets.
-    profile = Profile("CDROM/FUKUTEST/MAINROM.NBN", align=8, direct=False,
+    # A frame may get a longer record in english_hud_frames (src/english/hud_frames.c): the sheets
+    # have free 8x8 cells but no free 16x16 one, so a changed cell is redrawn from 8x8 tiles.
+    profile = Profile("CDROM/FUKUTEST/MAINROM.NBN", align=8, direct=False, grow=8,
                       pages={i: (offset, 4) for i, offset in enumerate(mainrom.TEXTURE_OFFSETS)},
                       encode=lambda page, u, v: (page << 8) | ((v // 8) << 4) | (u // 8), exe=exe)
     for variant in ("base",) + tuple(mainrom.OVERRIDES):
@@ -100,6 +103,23 @@ def mainrom_profile(pack: bytes, exe: bytes) -> Profile:
                         p["palette_info"])
         _frame_views(profile, frames, variant, make)
     return profile
+
+
+def mainrom_parts(record: bytes, exe: bytes, variant: str = "base") -> list:
+    """The parts of a MAINROM frame record (count, origin, flags, 14-byte parts), as mainrom_profile
+    builds them: for a frame moved to english_hud_frames."""
+    read, _base = mainrom._reader(exe)
+    parts = []
+    for i in range(struct.unpack_from("<h", record)[0]):
+        x, y, texture, info, flip, width, height = struct.unpack_from("<2h3H2h", record, 8 + 14 * i)
+        sheet = texture >> 8
+        if variant == "base":
+            address = 0x800C6020 + ((info >> 8) & 15) * 512 + (info & 0xF0) * 2
+        else:
+            address = mainrom.OVERRIDES[variant][0]
+        parts.append(Part(x, y, width, height, flip, mainrom.TEXTURE_OFFSETS[sheet], 4, (texture & 15) * 8,
+                          ((texture & 255) >> 4) * 8, _exe_palette(read, address), None, sheet, info))
+    return parts
 
 
 def option_profile(data: bytes) -> Profile:

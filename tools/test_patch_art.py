@@ -245,16 +245,35 @@ class ReportTest(unittest.TestCase):
 
 
 class ExecutableTest(unittest.TestCase):
-    def test_records_follow_the_moved_block(self):
+    def exes(self):
         start, end = art_build.MAINROM_RECORDS
-        original = bytearray(end + 64)
-        original[start:end] = hashlib.sha256(b"block").digest() * ((end - start) // 32) + bytes((end - start) % 32)
-        english = bytes(16) + bytes(original)
-        out, offset = art_build.patch_executable(english, bytes(original), {start + 8: b"\x01\x02"})
-        self.assertEqual(offset, 16 + start)
+        table, count = art_build.FRAME_TABLE
+        original = bytearray(table + 4 * count + 64)
+        original[start:end] = (hashlib.sha256(b"block").digest() * ((end - start) // 32 + 1))[:end - start]
+        pointers = [0x80080000 + 16 * i for i in range(count)]
+        struct.pack_into("<%dI" % count, original, table, *pointers)
+        english = bytearray(16) + bytearray(original)          # everything moved by 16 bytes
+        struct.pack_into("<%dI" % count, english, 16 + table, *(p + 16 for p in pointers))
+        english += art_build.HUD_FRAMES_MAGIC + bytes(art_build.HUD_FRAMES_SIZE - 16)
+        return bytes(original), bytes(english)
+
+    def test_records_follow_the_moved_block(self):
+        start, _end = art_build.MAINROM_RECORDS
+        original, english = self.exes()
+        out, where = art_build.patch_executable(english, original, {start + 8: b"\x01\x02"})
+        self.assertEqual(where["records"], 16 + start)
         self.assertEqual(out[16 + start + 8:16 + start + 10], b"\x01\x02")
         with self.assertRaises(ArtBuildError):
-            art_build.patch_executable(english[:16 + start], bytes(original), {start + 8: b"\x01\x02"})
+            art_build.patch_executable(english[:16 + start], original, {start + 8: b"\x01\x02"})
+
+    def test_grown_frame_is_written_and_pointed_at(self):
+        original, english = self.exes()
+        blob = struct.pack("<4h", 1, 0, 0, 0) + bytes(14)
+        out, where = art_build.patch_executable(english, original, {}, {5: blob})
+        hud = where["hud_frames"]
+        self.assertEqual(out[hud + 16:hud + 16 + len(blob)], blob)
+        pointer = struct.unpack_from("<I", out, where["table"] + 20)[0]
+        self.assertEqual(pointer - struct.unpack_from("<I", out, 0x18)[0] + 0x800, hud + 16)
 
 
 @unittest.skipUnless((FILES / "SLPM_86.053").is_file(), "needs the original files in disc/files")

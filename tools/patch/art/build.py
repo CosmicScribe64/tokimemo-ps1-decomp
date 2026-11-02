@@ -21,6 +21,7 @@ import hashlib
 import json
 import os
 import pickle
+import struct
 import time
 from collections import Counter
 from pathlib import Path
@@ -47,6 +48,7 @@ def plan_art(root: Path, files_root: Path, exe: bytes) -> dict:
     fallbacks = art_items.fallbacks(root)
     by_container = art_items.by_container(items)
     files, exe_records, images, reasons, containers = {}, {}, {}, {}, {}
+    exe_frames = {}
     # a still's crops name their own file (P_01_03B is listed under the P_01_03 item)
     stills_by_file: dict = {}
     for path, group in by_container.items():
@@ -76,6 +78,7 @@ def plan_art(root: Path, files_root: Path, exe: bytes) -> dict:
         else:
             fallback_used += result.fallback
             exe_records.update(result.exe_records)
+            exe_frames.update(result.exe_frames)
             stats = dict(result.stats, fallback=result.fallback)
         images.update(result.images)
         reasons.update(result.reasons)
@@ -91,7 +94,9 @@ def plan_art(root: Path, files_root: Path, exe: bytes) -> dict:
     sprite_results = {p: r for p, r in results.items() if not p.endswith(".BS")}
     still_crops = {p: [(image.id, image.path, image.meta) for item in by_container[p] for image in item.images]
                    for p in results if p.endswith(".BS")}
-    return {"files": files, "exe_records": exe_records, "report": report, "sprites": sprite_results,
+    report["exe_frames"] = len(exe_frames)
+    return {"files": files, "exe_records": exe_records, "exe_frames": exe_frames, "report": report,
+            "sprites": sprite_results,
             "stills": still_crops}
 
 
@@ -190,31 +195,82 @@ def item_report(items: list, images: dict, reasons: dict, fallback: set) -> dict
 MAINROM_RECORDS = (0x800C7420 - 0x80041000 + 0x800, 0x800C95E0 - 0x80041000 + 0x800)
 
 
-def patch_executable(english: bytes, original: bytes, records: dict) -> tuple[bytes, int | None]:
-    """Write the MAINROM part records (original-executable offsets) into the English executable.
+# MAINROM frame pointer table (sprite_frame_table, 174 words) in the original executable
+FRAME_TABLE = (0x800C975C - 0x80041000 + 0x800, 174)
+HUD_FRAMES_MAGIC = b"TKM-EN-HUDFRAMES"     # src/english/hud_frames.c
+HUD_FRAMES_SIZE = 0x800
 
-    The English link may move data (T-39505), so the frame-record block is found by its original
-    bytes (it holds no pointers); every record must still hold its original bytes there. Returns
-    the new executable and the block's file offset in it.
-    """
-    if not records:
-        return english, None
+
+def _exe_address(exe: bytes, offset: int) -> int:
+    """RAM address of a file offset of a PS-X EXE (t_addr at 0x18, text at 0x800)."""
+    return struct.unpack_from("<I", exe, 0x18)[0] + offset - 0x800
+
+
+def locate(english: bytes, original: bytes) -> dict:
+    """File offsets in the English executable of the MAINROM frame records, the frame pointer table
+    and english_hud_frames. The records hold no pointers, so they are found by their original
+    bytes; the table is found as the original pointers moved by the same distance."""
     start, end = MAINROM_RECORDS
     block = original[start:end]
     found = english.find(block)
     if found < 0 or english.find(block, found + 1) >= 0:
         raise ArtBuildError("MAINROM frame records are not exactly once in the English executable")
-    delta = found - start
+    moved = _exe_address(english, found) - _exe_address(original, start)
+    table, count = FRAME_TABLE
+    pointers = struct.unpack_from("<%dI" % count, original, table)
+    want = struct.pack("<%dI" % count, *(p + moved for p in pointers))
+    table_at = english.find(want)
+    if table_at < 0 or english.find(want, table_at + 1) >= 0:
+        raise ArtBuildError("the MAINROM frame pointer table is not exactly once in the English executable")
+    hud = english.find(HUD_FRAMES_MAGIC)
+    if hud >= 0 and english.find(HUD_FRAMES_MAGIC, hud + 1) >= 0:
+        raise ArtBuildError("english_hud_frames is not unique in the English executable")
+    return {"records": found, "delta": found - start, "table": table_at, "hud_frames": hud}
+
+
+def grown_layout(frames: dict) -> dict:
+    """frame index -> offset inside english_hud_frames of its new record (after the magic)."""
+    out, cursor = {}, len(HUD_FRAMES_MAGIC)
+    for frame, blob in sorted(frames.items()):
+        out[frame] = cursor
+        cursor = (cursor + len(blob) + 3) & ~3
+    if cursor > HUD_FRAMES_SIZE:
+        raise ArtBuildError("grown MAINROM frames need %d bytes, english_hud_frames has %d" % (cursor, HUD_FRAMES_SIZE))
+    return out
+
+
+def patch_executable(english: bytes, original: bytes, records: dict, frames: dict | None = None):
+    """Write the MAINROM part records and grown frames into the English executable.
+
+    records: original-executable offset -> 14-byte part record (each must still hold its original
+    bytes there). frames: frame index -> new frame record, written into english_hud_frames, with
+    the frame's pointer table entry set to it. Returns (executable, where) with the offsets of
+    `locate`, or (english, None) when there is nothing to write.
+    """
+    frames = frames or {}
+    if not records and not frames:
+        return english, None
+    where = locate(english, original)
+    start, end = MAINROM_RECORDS
     out = bytearray(english)
     for offset, record in sorted(records.items()):
         if not start <= offset < end:
             raise ArtBuildError("record at 0x%X is outside the MAINROM frame block" % offset)
-        where = offset + delta
-        if out[where:where + len(record)] != original[offset:offset + len(record)]:
+        at = offset + where["delta"]
+        if out[at:at + len(record)] != original[offset:offset + len(record)]:
             raise ArtBuildError("record at 0x%X differs from the original in the English executable" % offset)
-        out[where:where + len(record)] = record
-    return bytes(out), found
-
+        out[at:at + len(record)] = record
+    if frames:
+        if where["hud_frames"] < 0:
+            raise ArtBuildError("english_hud_frames (src/english/hud_frames.c) is not in the English executable")
+        layout = grown_layout(frames)
+        for frame, blob in frames.items():
+            at = where["hud_frames"] + layout[frame]
+            if _exe_address(english, at) & 3:
+                raise ArtBuildError("english_hud_frames is not word aligned")
+            out[at:at + len(blob)] = blob
+            struct.pack_into("<I", out, where["table"] + 4 * frame, _exe_address(english, at))
+    return bytes(out), where
 
 
 def main(argv=None) -> int:

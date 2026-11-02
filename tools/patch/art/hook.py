@@ -37,6 +37,7 @@ def place_files(disc, root: Path, files_root: Path, sites, checksum_sites, data:
             kept.append({"path": path, "reason": plan.reason})
             if path == "CDROM/FUKUTEST/MAINROM.NBN":
                 planned["exe_records"] = {}     # the records only fit the new sheets
+                planned["exe_frames"] = {}
             _defer_container(report, path, "container kept original: %s" % plan.reason)
             del planned["files"][path]
             continue
@@ -48,7 +49,8 @@ def place_files(disc, root: Path, files_root: Path, sites, checksum_sites, data:
         data["placed"].append(item)
     report["files_placed"] = placed
     report["files_kept_original"] = kept
-    return {"report": report, "exe_records": planned["exe_records"], "plan": planned}
+    return {"report": report, "exe_records": planned["exe_records"], "exe_frames": planned["exe_frames"],
+            "plan": planned}
 
 
 def _defer_container(report: dict, path: str, why: str) -> None:
@@ -66,14 +68,15 @@ def _defer_container(report: dict, path: str, why: str) -> None:
 
 
 def patch_exe(exe_out: Path, original_exe: Path, art: dict) -> int:
-    """Write the MAINROM records into the built English executable; returns how many."""
+    """Write the MAINROM records and grown frames into the built English executable; returns the
+    number of records and frames written."""
     from tools.patch.art import build as art_build
-    records = art["exe_records"]
-    if records:
-        built, offset = art_build.patch_executable(exe_out.read_bytes(), original_exe.read_bytes(), records)
+    records, frames = art["exe_records"], art["exe_frames"]
+    if records or frames:
+        built, where = art_build.patch_executable(exe_out.read_bytes(), original_exe.read_bytes(), records, frames)
         exe_out.write_bytes(built)
-        art["report"]["mainrom_block_offset"] = offset
-    return len(records)
+        art["report"]["mainrom_exe"] = where
+    return len(records) + len(frames)
 
 
 def verify(root: Path, track1: Path, files_root: Path, art: dict) -> dict:

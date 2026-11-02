@@ -51,21 +51,30 @@ class Result:
     new_parts: int = 0
     ambiguous: int = 0
     touched: set = field(default_factory=set)        # byte offsets of every texel written
+    frames: dict = field(default_factory=dict)       # frame index -> new frame record (profile.grow)
 
 
-def frame_image(data, view: View, part: int, image: list, width: int) -> list:
-    """The frame's composite with one part drawn from a part-local image instead of its texels."""
-    target = view.parts[part]
-    if width != target.width or len(image) != target.width * target.height:
-        raise ArtError("%s: part image is %dx%d, part %dx%d" % (view.key, width, len(image) // max(width, 1),
-                                                               target.width, target.height))
+def frame_image(data, view: View, part: int, image: list, width: int, others: dict | None = None) -> list:
+    """The frame's composite with parts drawn from part-local images instead of their texels.
+
+    `part`/`image` is one replaced part; `others` maps further part numbers to (image, width).
+    """
+    images = dict(others or {})
+    images[part] = (image, width)
+    for number, (local, local_width) in images.items():
+        target = view.parts[number]
+        if local_width != target.width or len(local) != target.width * target.height:
+            raise ArtError("%s: part image is %dx%d, part %dx%d" % (view.key, local_width,
+                                                                   len(local) // max(local_width, 1),
+                                                                   target.width, target.height))
     pixels = [TRANSPARENT] * (view.width * view.height)
     for number in reversed(range(len(view.parts))):
         p = view.parts[number]
         for ly in range(p.height):
             for lx in range(p.width):
-                if number == part:
-                    colour = image[ly * width + lx]
+                if number in images:
+                    local, local_width = images[number]
+                    colour = local[ly * local_width + lx]
                     colour = TRANSPARENT if colour[3] == 0 else colour
                 else:
                     word = p.palette[read_index(data, p.texel(lx, ly))]
@@ -82,37 +91,24 @@ def _texels(part: Part) -> set:
 def _merge_parts(data, targets: list[Target]) -> list[Target]:
     """One frame target per view key: part images folded into their frame's composite."""
     out: dict[str, Target] = {}
+    parts: dict[str, list[Target]] = {}
     for target in targets:
         if target.part is None:
             out[target.view.key] = target
-    for target in targets:
-        if target.part is None:
-            continue
-        key = target.view.key
-        if key in out:
-            base = out[key]
-            pixels = frame_image_from(base.pixels, target.view, target.part, target.pixels, target.width)
-            base.image_id += "+" + target.image_id
-            base.pixels = pixels
         else:
-            pixels = frame_image(data, target.view, target.part, target.pixels, target.width)
-            out[key] = Target(target.image_id, target.item_id, target.view, pixels, target.view.width)
-        p = target.view.parts[target.part]
-        for ly in range(p.height):
-            for lx in range(p.width):
-                out[key].prefer[(p.x - target.view.left + lx, p.y - target.view.top + ly)] = target.part
+            parts.setdefault(target.view.key, []).append(target)
+    for key, group in parts.items():
+        first = group[0]
+        others = {t.part: (t.pixels, t.width) for t in group[1:]}
+        pixels = frame_image(data, first.view, first.part, first.pixels, first.width, others)
+        merged = Target("+".join(t.image_id for t in group), first.item_id, first.view, pixels, first.view.width)
+        for t in group:
+            p = t.view.parts[t.part]
+            for ly in range(p.height):
+                for lx in range(p.width):
+                    merged.prefer[(p.x - t.view.left + lx, p.y - t.view.top + ly)] = t.part
+        out[key] = merged
     return list(out.values())
-
-
-def frame_image_from(frame_pixels: list, view: View, part: int, image: list, width: int) -> list:
-    """Overlay a further part image on an already merged frame image (parts do not overlap here)."""
-    p = view.parts[part]
-    pixels = list(frame_pixels)
-    for ly in range(p.height):
-        for lx in range(p.width):
-            colour = image[ly * width + lx]
-            pixels[(p.y - view.top + ly) * view.width + p.x - view.left + lx] = TRANSPARENT if colour[3] == 0 else colour
-    return pixels
 
 
 def _group_key(view: View) -> str:
@@ -209,13 +205,14 @@ class Repack:
     kept: list = field(default_factory=list)    # original parts the frame still draws
     max_parts: int = 0                          # part records the frame has room for (rebuild)
     alternative: "Repack | None" = None         # the other way to draw the group, tried when this finds no room
+    grown: bool = False                         # the frame gets a new, longer record (profile.grow)
 
     @property
     def area(self) -> int:
         return sum(p.width * p.height for p in self.pieces if not p.fixed)
 
 
-def _relocate(data, group: list[Target], palettes: list[Part], exclusive=lambda number: False):
+def _relocate(data, group: list[Target], palettes: list[Part], exclusive=lambda number: False, grow: int = 0):
     """Pieces for every part whose desired image differs, at the same place on screen.
 
     A part keeps its palette when it can draw the part's English pixels; a frame drawn with one
@@ -238,32 +235,80 @@ def _relocate(data, group: list[Target], palettes: list[Part], exclusive=lambda 
             continue
         options = [part] + ([p for p in palettes if p.bpp == part.bpp and (p.palette, p.clut) != (part.palette, part.clut)]
                             if len(group) == 1 else [])
-        for option in options:
-            variants = [t.view.parts[number] for t in group] if option is part else [option]
-            indices = []
-            for pixel in range(part.width * part.height):
-                allowed = _indices_for(variants, [desired[number][k][pixel] for k in range(len(group))])
-                if not allowed:
-                    break
-                indices.append(_pick(allowed, option.palette, stp))
-            else:
-                break
-        else:
-            return None, "part %d: no palette draws its colours" % number
-        if option is part and exclusive(number):
+        images = [desired[number][k] for k in range(len(group))]
+
+        def draw(pixels, options=options, number=number, part=part, images=images):
+            """(palette part, indices) of the first option that draws these part-local pixels."""
+            for option in options:
+                variants = [t.view.parts[number] for t in group] if option is part else [option]
+                out = []
+                for pixel in pixels:
+                    allowed = _indices_for(variants, [image[pixel] for image in images])
+                    if not allowed:
+                        break
+                    out.append(_pick(allowed, option.palette, stp))
+                else:
+                    return option, out
+            return None, None
+        option, indices = draw(range(part.width * part.height))
+        if option is not None and option is part and exclusive(number):
             pieces.append(Piece(part.bpp, part.width, part.height, tuple(indices), part, number, number, True))
             continue
-        moved = replace(part, flip=0, palette=option.palette, clut=option.clut)
-        box = _opaque_box([desired[number][k] for k in range(len(group))], part.width, part.height)
+        box = _opaque_box(images, part.width, part.height)
         if box is None:
             box = (0, 0, 1, 1)      # nothing left to draw: one transparent texel keeps the record valid
         bx, by, bw, bh = box
+        if grow:
+            # the frame gets a new record: the part becomes tiles of `grow` texels (blank ones left
+            # out), each with the first palette that draws it
+            for ty in range(by, by + bh, grow):
+                for tx in range(bx, bx + bw, grow):
+                    tw, th = min(grow, bx + bw - tx), min(grow, by + bh - ty)
+                    cells = [(ty + y) * part.width + tx + x for y in range(th) for x in range(tw)]
+                    if all(image[c] == TRANSPARENT for image in images for c in cells):
+                        continue
+                    layers = _layers(cells, draw, options, group, number, part, images, stp)
+                    if layers is None:
+                        return None, "part %d: no palettes draw a %dx%d tile" % (number, tw, th)
+                    for tile_option, tile in layers:
+                        moved = replace(part, flip=0, palette=tile_option.palette, clut=tile_option.clut,
+                                        x=part.x + tx, y=part.y + ty, width=tw, height=th)
+                        pieces.append(Piece(part.bpp, tw, th, tuple(tile), moved, number, number))
+            continue
+        if option is None:
+            return None, "part %d: no palette draws its colours" % number
+        moved = replace(part, flip=0, palette=option.palette, clut=option.clut)
         indices = [indices[(by + y) * part.width + bx + x] for y in range(bh) for x in range(bw)]
         moved = replace(moved, x=part.x + bx, y=part.y + by, width=bw, height=bh)
         pieces.append(Piece(part.bpp, bw, bh, tuple(indices), moved, number, number))
     if not pieces:
         return None, "nothing to change"
-    return Repack(group[0].group, group, "relocated", pieces, kept), None
+    return Repack(group[0].group, group, "relocated", pieces, kept, grown=bool(grow)), None
+
+
+def _layers(cells, draw, options, group, number, part, images, stp):
+    """[(palette part, indices)] drawing these pixels: one tile when a palette draws them all,
+    else stacked tiles of the same rectangle, each drawing the pixels its palette can (the others
+    transparent). None when some pixel has no palette."""
+    option, tile = draw(cells)
+    if option is not None:
+        return [(option, tile)]
+    left = [c for c in cells if any(image[c] != TRANSPARENT for image in images)]
+    layers = []
+    for option in options:
+        variants = [t.view.parts[number] for t in group] if option is part else [option]
+        zero = _indices_for(variants, [TRANSPARENT] * len(images))
+        if not zero:
+            continue
+        mine = {c for c in left if _indices_for(variants, [image[c] for image in images])}
+        if not mine:
+            continue
+        layers.append((option, [_pick(_indices_for(variants, [image[c] for image in images]) if c in mine else zero,
+                                      option.palette, stp) for c in cells]))
+        left = [c for c in left if c not in mine]
+        if not left:
+            return layers
+    return None
 
 
 def _opaque_box(images: list, width: int, height: int):
@@ -607,7 +652,7 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
         return check
     for key in sorted(repack):
         made, why = _prepare(data, groups[key], records, palettes, exclusive_to(key),
-                             getattr(profile, "prefer_rebuild", False))
+                             getattr(profile, "prefer_rebuild", False), getattr(profile, "grow", 0))
         if made is None and len({t.view.record for t in groups[key]}) > 1:
             # frames that cannot share texels in English: each frame on its own
             subgroups = {}
@@ -661,7 +706,7 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
         if made.key not in placed:
             continue
         parts = placed[made.key]
-        records_here, views_here = {}, {}
+        records_here, views_here, grown_here = {}, {}, {}
 
         def put(offset, record):
             if written.get(offset, records_here.get(offset, record)) != record or users.get(offset, set()) - {made.key}:
@@ -671,7 +716,24 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
         try:
             for t in made.group:
                 own = t.view.parts
-                if made.mode == "relocated":
+                if made.mode == "relocated" and made.grown:
+                    tiles: dict = {}
+                    for piece, part in zip(made.pieces, parts):
+                        tiles.setdefault(piece.number, []).append(
+                            part if single or piece.fixed else replace(part, palette=own[piece.number].palette,
+                                                                       clut=own[piece.number].clut))
+                    new = []
+                    for n, p in enumerate(own):
+                        new.extend(tiles.get(n, [p]))
+                    header = struct.unpack_from("<4h", records, t.view.record)
+                    blob = struct.pack("<4h", len(new), *header[1:]) + b"".join(
+                        pack(p, profile.encode(p.page_index, p.u, p.v)) for p in new)
+                    if grown_here.get(t.view.frame, blob) != blob:
+                        raise _SharedRecord(t.view.record)
+                    grown_here[t.view.frame] = blob
+                    views_here[t.view.key] = View(t.view.key, new, t.view.left, t.view.top, t.view.width,
+                                                  t.view.height, t.view.frame, t.view.record)
+                elif made.mode == "relocated":
                     moved = {piece.number: (part if single else replace(part, palette=own[piece.number].palette,
                                                                          clut=own[piece.number].clut))
                              for piece, part in zip(made.pieces, parts)}
@@ -705,6 +767,7 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
         out.new_parts += len(parts)
         written.update(records_here)
         new_views.update(views_here)
+        out.frames.update(grown_here)
         for t in made.group:
             out.placed[t.image_id] = made.mode
     out.records.update(written)
@@ -714,18 +777,20 @@ class _SharedRecord(Exception):
     pass
 
 
-def _prepare(data, group, records, palettes, exclusive=lambda number: False, prefer_rebuild=False):
-    """The cheaper of relocate and rebuild that can draw the group, or (None, why)."""
+def _prepare(data, group, records, palettes, exclusive=lambda number: False, prefer_rebuild=False, grow=0):
+    """The cheapest way to draw the group (relocate, rebuild, or with `grow` relocate in tiles under
+    a new longer frame record), with the others chained as alternatives; or (None, why)."""
     relocated, why = _relocate(data, group, palettes, exclusive)
+    tiled = _relocate(data, group, palettes, exclusive, grow)[0] if grow else None
     rebuilt, why_rebuild = _rebuild(data, group, _record_count(records, group[0].view), palettes)
     # a relocated frame keeps its unchanged parts' texels; a rebuilt one frees them all
-    options = sorted((m for m in (relocated, rebuilt) if m is not None),
-                     key=lambda m: (not (prefer_rebuild and m.mode == "rebuilt"),
+    options = sorted((m for m in (relocated, tiled, rebuilt) if m is not None),
+                     key=lambda m: (not (prefer_rebuild and m.mode == "rebuilt"), m.grown,
                                     m.area + sum(p.width * p.height for p in m.kept), m.mode))
     if not options:
         return None, "%s; %s" % (why, why_rebuild)
-    if len(options) == 2:
-        options[0].alternative = options[1]
+    for first, second in zip(options, options[1:]):
+        first.alternative = second
     return options[0], None
 
 

@@ -22,6 +22,7 @@ untranslated_by_decision or missing, and the route checkpoints that can show eac
 from __future__ import annotations
 
 import math
+import struct
 from collections import Counter
 from pathlib import Path
 
@@ -85,7 +86,8 @@ def _stp_changes(original, view0: View, data, view1: View, width: int) -> int:
     return bad
 
 
-def verify_sprites(path: str, original: bytes, written: bytes, exe: bytes, exe_written: bytes, planned) -> dict:
+def verify_sprites(path: str, original: bytes, written: bytes, exe: bytes, exe_written: bytes, planned,
+                   grown: dict) -> dict:
     """Images of one indexed container: id -> "verified" or the failure."""
     before = sprites.PROFILES[path](original, exe, path)
     after = sprites.PROFILES[path](written, exe_written, path)
@@ -101,6 +103,9 @@ def verify_sprites(path: str, original: bytes, written: bytes, exe: bytes, exe_w
             view0, view1 = sheets.page_region(before, page, (x, y, w, h)), sheets.page_region(after, page, (x, y, w, h))
         else:
             view0, view1 = before.views[key], after.views[key]
+            if view0.frame in grown:
+                view1 = View.of(key, sheets.mainrom_parts(grown[view0.frame], exe, key.split(".")[1]),
+                                frame=view0.frame)
         frames = [i for i in images if i[1] is None]
         parts = [i for i in images if i[1] is not None]
         if frames:
@@ -180,14 +185,22 @@ def verify(root: Path, track1: Path, files_root: Path, art: dict) -> dict:
     exe_path = "SLPM_86.053"
     on_disc = read_back(track1, paths + [exe_path])
     exe = (files_root / exe_path).read_bytes()
-    exe_written = exe
-    if planned["exe_records"]:
-        start, end = MAINROM_RECORDS
-        offset = report.get("mainrom_block_offset")
-        if offset is None:
+    exe_written, grown = exe, {}
+    if planned["exe_records"] or planned["exe_frames"]:
+        where = report.get("mainrom_exe")
+        if not where:
             raise ArtBuildError("the MAINROM records were not written")
-        block = on_disc[exe_path][offset:offset + end - start]
+        start, end = MAINROM_RECORDS
+        english = on_disc[exe_path]
+        block = english[where["records"]:where["records"] + end - start]
         exe_written = exe[:start] + block + exe[end:]
+        base = struct.unpack_from("<I", english, 0x18)[0]
+        for frame, blob in planned["exe_frames"].items():
+            pointer = struct.unpack_from("<I", english, where["table"] + 4 * frame)[0]
+            at = pointer - base + 0x800
+            if english[at:at + len(blob)] != blob:
+                raise ArtBuildError("MAINROM frame %d: its new record is not on the disc" % frame)
+            grown[frame] = english[at:at + len(blob)]
     results, facts = {}, {}
     for path in paths:
         original = (files_root / path).read_bytes()
@@ -199,7 +212,8 @@ def verify(root: Path, track1: Path, files_root: Path, art: dict) -> dict:
             checked = verify_still(path, original, written, planned["stills"][path])
             facts[path] = checked["facts"]
         else:
-            checked = verify_sprites(path, original, written, exe, exe_written, planned["sprites"][path])
+            checked = verify_sprites(path, original, written, exe, exe_written, planned["sprites"][path],
+                                     grown if path.endswith("MAINROM.NBN") else {})
             facts[path] = {"other_views_unchanged": checked["other_views_unchanged"]}
         results.update(checked["images"])
     failed = {k: v for k, v in results.items() if v != "verified"}
