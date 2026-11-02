@@ -1,0 +1,2 @@
+RomPatcher.js modules are unchanged. See UPSTREAM.txt and LICENSE.
+The VCDIFF module credits Victor Alexiev for address-cache code (MIT; LICENSE-Victor-Alexiev), and Joshua MacDonald for the xdelta3 DJW decoder (Apache-2.0; LICENSE-Apache-2.0). Both upstream attribution comments are retained. Our packaged patches disable secondary compression.
