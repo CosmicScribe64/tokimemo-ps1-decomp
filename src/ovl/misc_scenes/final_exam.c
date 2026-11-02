@@ -1,6 +1,10 @@
 /* final_exam.c: ; src/ovl/ETC/80146400.c:5-12 begins exam scoring and ranking logic. Original object 0x80146400-0x801492C0 (config/objects/ETC.txt). */
 #include "common.h"
 #include "ovl/misc_scenes.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "libc.h"
+#include "english/text.h"
+#endif
 
 /* FAKE: unused padding array preserves the frame layout. T-10850 */
 s32 exam_correction_bonus(void)
@@ -629,6 +633,29 @@ void exam_day_step_art(void) {
 void exam_ranking_build(void);
 void exam_digit_palette_upload(void); /* defined later in this file */
 
+#ifdef TOKIMEMO_ENGLISH
+/* T-39515: use proportional digits so a full 116-pixel name fits between
+ * rank and score. These persistent entries are created once, with the names. */
+static void exam_english_row(s32 row, u8 *name) {
+    u8 number[16];
+    s32 column;
+    s32 student;
+    s32 y;
+
+    column = row < 7 ? -160 : 0;
+    student = exam_ranking_order[row];
+    y = exam_row_y[row];
+    sprintf((char *)number, "%d", exam_ranking_rank[student]);
+    set_kanji_string(column + 20 - english_text_width(number), y, 3, number, 0);
+    set_kanji_string(column + 22, y, 3, name, 0);
+    sprintf((char *)number, "%d", exam_ranking_value[student]);
+    set_kanji_string(column + 158 - english_text_width(number), y, 3, number, 0);
+    if (student == 13) {
+        exam_player_in_lower_half = row >= 7;
+    }
+}
+#endif
+
 /* T-25054: results scene and the fourteen result display records.
  * FAKE: retain the legacy non-void fallthrough to keep the switch copy in v0;
  * the only caller ignores the result. A void definition removes that copy. */
@@ -710,13 +737,25 @@ s32 exam_results_show(void) {
                     strcat((char *) buf, " "); /* T-39506: English full name with a space */
 #endif
                     strncat((char *) buf, (char *) game_state.player_given_name, 8);
+#ifdef TOKIMEMO_ENGLISH
+                    exam_english_row(i, buf);
+#else
                     set_kanji_string(exam_row_x[i] + 0x18, exam_row_y[i], 3, buf, 0);
+#endif
                     printf("%s\n", game_state.player_full_name);
                 } else if (v == 0xA) {
+#ifdef TOKIMEMO_ENGLISH
+                    exam_english_row(i, girl_full_name_table[13]);
+#else
                     set_kanji_string(x + 0x18, y, 3, girl_full_name_table[13], 0);
+#endif
                 } else if (v == 0xB) {
                     if (game_state.girls[11].flags.f.story_stage != 0) {
+#ifdef TOKIMEMO_ENGLISH
+                        exam_english_row(i, girl_full_name_table[11]);
+#else
                         set_kanji_string(x + 0x18, y, 3, girl_full_name_table[11], 0);
+#endif
                     } else {
                         /* FAKE: T-25054, this late-folded zero prevents uopt
                          * from distributing 0x61 into the field displacement.
@@ -724,7 +763,11 @@ s32 exam_results_show(void) {
                         ((Actor *) actor_pool)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
                     }
                 } else if (game_state.girls[v].flags.f.met) {
+#ifdef TOKIMEMO_ENGLISH
+                    exam_english_row(i, girl_full_name_table[v]);
+#else
                     set_kanji_string(x + 0x18, y, 3, girl_full_name_table[v], 0);
+#endif
                 } else {
                     ((Actor *) actor_pool)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
                 }
@@ -995,6 +1038,10 @@ void exam_ranking_build(void) {
 
 /* Implicit int in the original (no return value): $v0 stays live at the exit, which orders the loop preheader. T-22029 */
 s32 exam_ranking_numbers_draw() {
+#ifdef TOKIMEMO_ENGLISH
+    /* T-39515: English numbers are persistent text, installed at setup. */
+    return 0;
+#else
     s16 *x;
     s16 *y;
     s32 i;
@@ -1033,6 +1080,7 @@ s32 exam_ranking_numbers_draw() {
             exam_number_draw(exam_ranking_rank[exam_ranking_order[i]], *x + 4, *y, 0, 1);
         }
     }
+#endif
 }
 
 void exam_panel_draw_big(void) {

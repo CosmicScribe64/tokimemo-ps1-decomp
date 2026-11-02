@@ -3329,3 +3329,51 @@ The follow-up `build/emu/exam-monday-proof` actually selects weekday byte 1 (Tue
 ## [2026-11-02] ticket | Exam rankings expose a full-name score collision
 
 Controlled `build/emu/exam-results-proof` completes 2,000 frames, zero original-font calls/unknown/overflow. `shot_1500.png` shows complete English ranking UI but the long player name overlaps its score. Created [[tickets/T-39515-exam-ranking-name-layout]] In Progress before implementation. The existing seven-row columns cannot accommodate two 12-pixel name lines; investigate proportional English rank/score digits to preserve full names in one row without changing the original-game path. The static canonical comparison additionally finds 3 exact compiled-variant addresses, 108 remaining candidate payload sets present, and 2 known replaced prompts. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | English exam rows preserve full names with proportional numbers
+
+Implemented T-39515's English-only ranking-row renderer: proportional rank and score digits are installed once with each visible name, using a 160-pixel column with a 116-pixel name budget and two-pixel gaps. The original visibility branches remain in place, and the player lower-half flag is set during setup; per-frame English sprite-number drawing becomes a no-op. Original Japanese code stays under the opposite build branch. A C89 native regression executes the production helper across all 14 positions with maximum-width names and three-digit ranks/scores; it passes. Original matching build is running before the full English rebuild. [[tickets/T-39515-exam-ranking-name-layout]].
+
+## [2026-11-02] build | Add required libc owner header for exam formatter
+
+The original-build header check correctly rejects the new English helper's sprintf call without its owner include. Added `libc.h` inside the English-only include guard and reran the check/build. Font-metric verification checks the actual digit advances against the layout test's six-pixel digit assumption. [[tickets/T-39515-exam-ranking-name-layout]].
+
+## [2026-11-02] query | Prepare maximum-width ranking GPU fixtures
+
+Actual font metrics confirm digit advances at most six pixels and a valid stored seven-W family plus seven-W given name totals exactly 116 pixels. Prepared both-column fixtures with every girl visibility flag enabled and separate high/low player scores; all injections are logged. The original ETC checksum passes after adding the libc header. The corrected original build's broad rename check remains live; stopped only the redundant earlier invocation already rejected by the header checker. Full English build has linked and is writing/verifying the disc. [[tickets/T-39515-exam-ranking-name-layout]].
+
+## [2026-11-02] build | Ranking-layout disc rebuilt; original hashes preserved
+
+`build/exam-layout-proof` completes in 255.4 seconds with artwork/movie readback and xdelta checks. Main ELF changed because linked overlay addresses moved, so a fresh power-on card-load bootstrap is running before GPU fixtures. All 27 original binary hashes pass. The first manual checksum command used overlay manifest filenames relative to the repository and therefore reported missing files; corrected it to hash `build/ovl/*.bin` against the manifest digests. No original checksum mismatch occurred. Browser packaging is running independently. [[tickets/T-39515-exam-ranking-name-layout]].
+
+## [2026-11-02] query | Bound ranking text-entry and glyph usage
+
+The English renderer permits 52 persistent text entries and 384 glyph slots. The new fully populated table uses 42 entries before title/reaction text, so the GPU fixtures now sample text_state counters as well as original-font uploads. This checks actual glyph occupancy during the reaction rather than assuming that fewer pixels implies sufficient storage. Latest browser package already passes all nine acceptance checks; fresh emulator bootstrap continues. [[tickets/T-39515-exam-ranking-name-layout]].
+
+## [2026-11-02] build | Fresh ranking-test checkpoint and original checks complete
+
+Fresh bootstrap `route-en-exam-bootstrap` completes 7,326 frames and 18 screenshots, loading only run-local copied cards. Both fully populated left/right ranking fixtures now run from its compatible state. The corrected default ninja build also completes, including headers/globals and 14,449-row rename audit; all 27 original binary hashes pass. Browser acceptance passes for target prefix cbbec1283f15. [[tickets/T-39515-exam-ranking-name-layout]].
+
+## [2026-11-02] query | Ranking stress probes stall before completing layout proof
+
+Both fully populated ranking fixtures terminate at their configured 240-second limits without result.json; screenshots stop after frame 300. They are failed verification, not accepted captures. The processes were allowed to reach authoritative timeout before a distinct bounded diagnostic replay was started. The diagnostic writes immediate function-entry milestones around ranking construction, the new row helper and sprintf, so a stalled vsync cannot hide the last reached function. No completion claim for T-39515. [[tickets/T-39515-exam-ranking-name-layout]].
+
+## [2026-11-02] query | All ranking-row helpers return before invalid read
+
+Immediate breakpoint evidence shows all 14 row-helper calls and all 28 sprintf calls complete at frames 422–424; the traced names are valid English strings. The emulator then reports a 16-bit read at 0x84333E34. This narrows the failure to work after row construction, rather than a particular name pointer. Added a bounded read-breakpoint diagnostic for that exact address to capture PC and stack. The ranking implementation remains unaccepted pending the runtime fix. [[tickets/T-39515-exam-ranking-name-layout]].
+
+## [2026-11-02] query | Identify ranking renderer arena overwrite
+
+Paused GDB evidence records 335 glyphs and 46 entries, within both text limits, but draw_buffer contains a GPU tag (0x021242B0). The original GetWorkBase increments used in aligned bytes and then multiplies used by four when computing each address. This exhausts the second primitive arena on the full ranking. The English-only allocator now uses the byte count directly; the original branch remains unchanged. Added a production-function regression for both buffers, full glyph capacity plus scene polygons, alignment and arena bounds. Runtime acceptance remains pending. [[tickets/T-39515-exam-ranking-name-layout]].
+
+## [2026-11-02] build | Build English arena correction and run regressions
+
+`build/exam-arena-proof` finishes in 165.7 seconds, target prefix 32fb03da865a and xdelta size 6,563,732 bytes, with 246 art placements and movie readback verified. All 38 English patch/layout tests pass (one opt-in test skipped); default main checksum passes. A fresh boot is running with run-local copied memory cards. Browser package generated; actual-disc script audit initially received the disc directory instead of its required frozen build root, and was rerun with the correct path. [[tickets/T-39515-exam-ranking-name-layout]].
+
+## [2026-11-02] ticket | Move exam ranking layout to review
+
+T-39515 moves In Progress -> In Review. Both maximum-name columns and the sparse visibility table complete 2,000 frames apiece and are visually checked; all report zero original-font calls/unknown/overflow. Peak sampled usage is 335 glyphs, 46 entries and 19,876 of 68,608 primitive bytes; draw_buffer remains 0/1. The zero-score right fixture was rejected because the original sorter uses zero as a consumed sentinel; positive score 10 correctly exercises the bottom-right player row. Full original build checks and all 27 hashes pass, as do 38 regression tests (one opt-in skip), actual-disc script audit and all nine browser checks. [[tickets/T-39515-exam-ranking-name-layout]].
+
+## [2026-11-02] ticket | Complete reviewed exam ranking and allocator repair
+
+T-39515 moves In Review -> Done after the CODING_STANDARDS.md checklist review: C89/headers, English guards, original checksums, preserved visibility/value semantics, byte-aligned allocator bounds, no renamed identifiers or generated/raw assets, production-function tests and real GPU/browser proof all pass. The final package is `build/patcher-exam-arena-review`; broader text/art/event audits remain open in their own tickets. [[tickets/T-39515-exam-ranking-name-layout]], [[english-text-runtime]].

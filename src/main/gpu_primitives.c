@@ -24,7 +24,13 @@ void SetWorkBase(s32 arg0, s32 arg1) {
 s32 GetWorkBase(s32 arg0, s32 arg1) {
     s32 ret;
 
+#ifdef TOKIMEMO_ENGLISH
+    /* T-39515: used already counts aligned bytes. The original fourfold
+     * stride exhausts the arena on fully populated English rankings. */
+    ret = game_state.prim_arena[arg1].base + game_state.prim_arena[arg1].used;
+#else
     ret = game_state.prim_arena[arg1].base + (game_state.prim_arena[arg1].used * 4);
+#endif
     game_state.prim_arena[arg1].used += ((arg0 + 3) / 4) * 4;
     return ret;
 }
