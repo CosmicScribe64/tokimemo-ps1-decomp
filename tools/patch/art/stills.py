@@ -17,11 +17,12 @@ the decoded still and whose other pixels keep it (tools/translation_bs_stills.py
    IDCT decode stays within FLOAT_TOLERANCE of the fixed-point one. The first (lambda, ring
    weight) that passes is used. When none does, the best attempt within CODEC_RING_TOLERANCE and
    CODEC_FLOAT_TOLERANCE is used and `ring_tolerance` in the facts says so; otherwise the still
-   is deferred. The file's sector count is checked by the build (tools/patch/cd_layout.py) like
-   any other grown file.
+   is deferred. A still may not gain a sector: the game reads every still with a fixed 10-sector
+   read into a buffer the MDEC run-length buffer follows, and the CD hook would lengthen it.
 5. When no attempt passes even the codec tier, the whole still is re-encoded at a finer quantizer
    that divides its own (`requantized`): the untouched macroblocks decode exactly as before, the
-   English ones get the finer step; the file grows and moves (the CD hook remaps its reads).
+   English ones get the finer step. It must still fit the file's sectors (point 4); on the stills
+   tried so far (P_01_02, D_03_08) it does not.
 """
 from __future__ import annotations
 
@@ -40,7 +41,7 @@ FLOAT_TOLERANCE = 2
 # taken and the report says so: the frame's quantizer cannot hold them closer.
 CODEC_RING_TOLERANCE = 4
 CODEC_FLOAT_TOLERANCE = 4
-ATTEMPTS = tuple((lam, ring) for lam in (2.0, 8.0) for ring in (50.0, 1000.0))
+ATTEMPTS = tuple((lam, ring) for lam in (2.0, 8.0, 32.0) for ring in (50.0, 1000.0))
 
 
 class StillError(ValueError):
@@ -169,6 +170,12 @@ def failures(facts: dict, ring_tolerance: int = RING_TOLERANCE, float_tolerance:
         out.append("pixels changed outside the edited macroblocks")
     if facts["ring_max_abs_rgb555"] > ring_tolerance:
         out.append("unchanged pixels of edited macroblocks moved by %d" % facts["ring_max_abs_rgb555"])
+    sizes = facts.get("file_bytes")
+    if sizes and -(-sizes["new"] // 2048) > -(-sizes["original"] // 2048):
+        # every still is read with a fixed 10-sector read into the still buffer, which the
+        # MDEC run-length buffer follows (0x80162000-0x80167000, wiki/ram-map.md); the CD hook
+        # adds the sectors a file gained to that read, so a still may not gain a sector
+        out.append("grows from %d to %d bytes, past its sectors" % (sizes["original"], sizes["new"]))
     if facts["float_idct_max_abs_rgb555"] > float_tolerance:
         out.append("float IDCT cross-check differs by %d" % facts["float_idct_max_abs_rgb555"])
     return out
