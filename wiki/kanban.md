@@ -15,11 +15,14 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-39520-phone-row-closing-marks|T-39520 Close direct-row telephone dialogue consistently]]
+
 
 
 
 
 ## In Progress
+
 
 
 
@@ -102,6 +105,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39519-album-prompt-visual-layout|T-39519 Separate new-album choices from their button symbols]]
 
 - [ ] [[tickets/T-39518-sd-art-inventory-coverage|T-39518 Bind and review the complete SD artwork group]]
 

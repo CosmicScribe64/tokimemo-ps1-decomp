@@ -3497,3 +3497,15 @@ Previous turn made progress by rejecting bypassed-body evidence (ef3c99516). Ver
 ## [2026-11-02] build | Close mapped executable record accounting
 
 Previous turn progressed with active hook/helper checks (775f63cb8). Actual static JAL traversal resolves two name substitutions; reviewed compiled replacement paths retire eighteen ASCII formats. All 2,940 mapped records now accounted for; 37 focused tests pass. Standards review passed. Language-census integration remains unfinished, so the command deliberately exits 2. [[tickets/T-39510-no-japanese-left-check]], [[english-build]].
+
+## [2026-11-02] ticket | Review visible quality and open album prompt repair
+
+Owner explicitly requested direct visual quality review across game screens and art. Inspected all 145 current main-route captures on 13 native-resolution sheets, plus eight event captures. New-album choice labels are bunched while button icons retain separate coordinates; opened T-39519 In Progress before repair. Roster pink flecks confirmed in original reference. Older club-font capture is superseded, not accepted final-art evidence. Phone quote timing and broader off-route/art review remain open. [[tickets/T-39519-album-prompt-visual-layout]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] ticket | Confirm direct-row phone punctuation gap
+
+Source confirms the visually missing phone closing marks bypass english_sndisp and call english_sndi directly. Opened T-39520 Ready; investigate the k_sub_disp_start boundary, preserve multirow pages and unquoted effects. Album prompt now rebuilt successfully: 248 art placements verified, target prefix e083e202eb3c, patch 6,557,713 bytes; fresh emulator visual replay running. Reinspected accepted tournament placard, magazine, long-name entry/load and rink entrance. Koshien plaques are catalog-138's already approved authentic-sign exception. [[tickets/T-39520-phone-row-closing-marks]], [[tickets/T-39519-album-prompt-visual-layout]].
+
+## [2026-11-02] ticket | Complete album-prompt visual repair
+
+T-39519 In Progress -> In Review -> Done after standards review. Fresh 4,850-frame/14-capture GPU route confirms separate Yes/No groups, zero font calls/unknown/overflow. All 27 original hashes, headers, globals and 14,449 rename rows pass. Saved metadata-only receipt for 160 inspected captures plus corrected prompt and a local before/after image. No whole-game visual pass: direct-row phone quotes and uncaptured scenes remain open. [[tickets/T-39519-album-prompt-visual-layout]], [[tickets/T-39511-english-text-quality]].

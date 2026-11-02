@@ -4,7 +4,7 @@ title: Make the English read naturally on screen
 status: In Progress
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-01
+updated: 2026-11-02
 links: ["[[tickets/T-39500-english-translation-patch]]", "[[tickets/T-39506-english-script-runtime]]"]
 ---
 
@@ -24,6 +24,10 @@ The owner found much of the on-screen English rough: lines broken where the Japa
 Part of [[tickets/T-39500-english-translation-patch]]. Runs after T-39506 lands, alongside [[tickets/T-39510-no-japanese-left-check]].
 
 ## Comments
+
+2026-11-02 follow-up: T-39519 album-choice spacing repaired and fresh GPU-verified. Metadata-only receipt `translations/en/reviews/visual-quality-2026-11-02.json` records all 145 main-route and 15 event/detail captures actually inspected, with image hashes and remaining findings. Before/after at `build/visual-quality-review/album-prompt-before-after.png`. Direct-row phone closing marks confirmed as a real gap and tracked in T-39520; whole-game visual-quality signoff remains open.
+
+2026-11-02: owner requests explicit visual quality review across gameplay and artwork. Reviewed every one of 145 current main-route captures at native resolution; most dialogue, menus, phone/date and save/load layouts fit cleanly. Found bunched new-album Yes/No labels, now T-39519. Roster-animation pink flecks also appear in the original. Some phone pages apparently lack closing quotes; verify timing/continuation rather than assuming a defect. Reinspected maximum-name exam columns, festival signs, Rei ending scroll and ambush battle; text fits, ending viewport clipping is intentional scrolling. Older tournament capture has superseded Japanese art and is not current-release evidence; inspect the accepted placard capture instead. Whole-game visual coverage is not yet complete.
 
 2026-11-01 (Codex): owner flagged the opening classroom reply: missing closing quote, crowded quote/first letter, and a split parenthetical thought. The original prologue table record separates the thought after the spoken sentence. `english_sndisp` lacked closing marks (the prior fix covered talk scripts only). Added closing marks with thought handling, a separate trailing-aside paragraph in the wrapper, and one extra pixel of quote advance. Fresh emulator verification pending; wording unchanged.
 

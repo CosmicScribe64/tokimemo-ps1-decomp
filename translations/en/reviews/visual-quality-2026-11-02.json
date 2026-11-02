@@ -1,0 +1,672 @@
+{
+  "schema": "tokimemo.visual-quality-review.v1",
+  "date": "2026-11-02",
+  "reviewer": "Codex",
+  "scope": "Direct visual inspection of 145 main-route captures and 15 event/detail captures; not whole-game certification. Event images come from accepted earlier builds; paths preserve provenance.",
+  "main_route": [
+    {
+      "path": "build/emu/route-en-ending-stream-full/001_boot_01.png",
+      "sha256": "45f9d0f65e9df4124a7d6529ce016f808ba7d30664e4cf373a01367a40c44f42"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/002_boot_02.png",
+      "sha256": "c1ded1e6a189d8d208c5d270393e392a66aa932dbc47a1f6945c01d5a326b40f"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/003_title_intro_01.png",
+      "sha256": "1a3012995c9200a96e89cacf6a3e40d27546ac2f3f90f7327ea47cdf8872db5d"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/004_title_intro_02.png",
+      "sha256": "1a14766f2f4b3f3db6002ba66a6dde7b40aea68b630bb693a34c9910b00232b3"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/005_title_intro_03.png",
+      "sha256": "2a5f8e519f60fb3aa42409f0bfe8516aa262ecc67204991a5065a4d31b89110b"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/006_title_intro_04.png",
+      "sha256": "58bb27c5783964c94210d36eeb3a4f733146b3d358a4018ce0b57b78f2513c73"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/007_title_intro_05.png",
+      "sha256": "bada81eb9ba152f1253c814a941dcadb80f35ce45e838b593ce2bc416dc07e27"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/008_title_menu.png",
+      "sha256": "eb0ad2859e32e995af19e29a1fa66fa9f4a2d2f539e7a3a753e2e4ab6af7018a"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/009_options.png",
+      "sha256": "0974bb9bc70a0d64a71dfe0ab59913dcb9463587b94fa0068050b3778a58fd47"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/010_options_text_speed.png",
+      "sha256": "7ac73a064d73403fccf8c22112140afe7a839c40cee6f61946b5f90bae264062"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/011_options_voice.png",
+      "sha256": "c6d3bc04ca3d0bc948ddfe8f245be2db835535a6ecbb8a8135e7899ecec3e019"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/012_options_voice_off.png",
+      "sha256": "5f831c45ef4b90681ffcda97a2d469a9958dde792abdd6fe810e281fbd6c0906"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/013_title_menu_again.png",
+      "sha256": "eb0ad2859e32e995af19e29a1fa66fa9f4a2d2f539e7a3a753e2e4ab6af7018a"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/014_file_select_new_album.png",
+      "sha256": "26aa87569f02064f66e117777d64d92899d8feec1c94816768aef13d4d5a7e8c"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/015_file_select_album_slot.png",
+      "sha256": "876c994920ac9902450877b39c7376498e606e624705d3b0271a0bab57a4acf3"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/016_file_select_slot_1.png",
+      "sha256": "bf795370a768b7780725c5c1e07d6de8aa6c9b83f7ca5aca7ca210d18524ccdb"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/017_file_select_system_file_01.png",
+      "sha256": "e7df97122e7a6f01fc4b18a7f322af25874d4176eb3a2e742a0060b09069bbc9"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/018_file_select_system_file_02.png",
+      "sha256": "7fa06048bc5cca440f4004613c724f31ac22a248d668e3e4242e370cb0cd33b4"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/019_file_select_system_file_03.png",
+      "sha256": "7fa06048bc5cca440f4004613c724f31ac22a248d668e3e4242e370cb0cd33b4"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/020_name_entry_page.png",
+      "sha256": "57ecfdd6bfc784ebf58f306656def327b570b9f2607d91addf9cee5369f06eb6"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/021_name_entry_family.png",
+      "sha256": "9c37df7b7f49e96658461221aa3657c2307d79cff28830212de2b9425c73164d"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/022_name_entry_given.png",
+      "sha256": "9dbfedc673357e2ca10f2d89189f05b29fb729055857e9a18559b0e23156cb6e"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/023_name_entry_nickname.png",
+      "sha256": "dcfd98ef885d9d6a613a17cc4ea7477154dca524f267c5a2f85145246d437817"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/024_name_entry_birthday.png",
+      "sha256": "b1d0daa73587422ffcaa96d561aa193da2a169b3e5413aeec81800ba5d639412"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/025_name_entry_confirm.png",
+      "sha256": "eb80cfcf01b83b68c6d88ca83cee787ba0e1ff40e53b0db35c15a62b1ee4e9d7"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/026_name_entry_shiori_01.png",
+      "sha256": "7cee801a29799a44ee3a49075809539e7ad7552a5ff176912066e419140b105e"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/027_name_entry_shiori_02.png",
+      "sha256": "c2866f30576469baf4eceda2f460a1cf3388f6d8aa4be68c5660ca4161130979"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/028_name_entry_shiori_03.png",
+      "sha256": "f3ea0abf5ca3378cededee5b2da740e0614da743da52cb3123fd4b49140c4cde"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/029_prologue_01.png",
+      "sha256": "ee4b928e8d9f4b42a9c47b9b6335ed8daec47addded5f941c729fb8769107840"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/030_prologue_02.png",
+      "sha256": "ef73ff352bc56f4a997ffdae4b89435fffab2d2cced7d608ef1c887d7c7361f6"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/031_prologue_03.png",
+      "sha256": "821e610295b495df1559e4b3962e5e47a55060ec361828520683315b8b7167f8"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/032_prologue_04.png",
+      "sha256": "ae711f1f0b88b100b7ba4bd9094739cd8207b46f6d239fe9e39859a65dc4e647"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/033_prologue_05.png",
+      "sha256": "ddf5481b3cf0450c4674bd9cff6e035e685cd94f720ce5f5dd70da7d87bfa3b2"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/034_prologue_06.png",
+      "sha256": "f3c55e5d1bfbe39da69e45dc56d1c31afb877ee2d15947a37d6bd0798ed09af0"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/035_prologue_07.png",
+      "sha256": "eaea23a7be1870171da5347443fe238934a686320147591c74318109eb5f1370"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/036_prologue_08.png",
+      "sha256": "504f4944e814c78cce19884d23b8fcb3c87ad7b74f67be2d5505dffc3a3979a8"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/037_prologue_09.png",
+      "sha256": "7200d4a74dd7f4822404e61a74a62fddb71504f9b856f85c041ee56367f82013"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/038_prologue_10.png",
+      "sha256": "894396cd5d990e0031b689c3dc96330528f6dd4f0ff3b81d8102ccda6ed4a9df"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/039_prologue_11.png",
+      "sha256": "0aab2520f6ad990e163164a0bdeb93b014a4bfca3fba3dbac8e5a832eb6e7bb8"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/040_prologue_12.png",
+      "sha256": "9d520842adac8c835ff630f7d75bf311e9b8c40457cf9174d52744db0dc23342"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/041_prologue_13.png",
+      "sha256": "a44853d4ceaa3d3d4a04cf0fe005e1b3a28709952884512d8198fc91953df783"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/042_prologue_14.png",
+      "sha256": "800988943b2ea1953e9467e7d07975dc64d248dd562cdab5114183491f7a3c4e"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/043_prologue_15.png",
+      "sha256": "7b33d46a71270590f1509507589b3d0971bcc042470a707d716d3ca40be61f91"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/044_prologue_16.png",
+      "sha256": "5aea5394e576836d9cfb5657556dda1d35503db7e1558e630a69de53270775dd"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/045_prologue_17.png",
+      "sha256": "97fc03aa2c79a78d9b3dd2c20f46bf5ac7a2aff0e5b87010dfbfca20407b0388"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/046_prologue_18.png",
+      "sha256": "abde96ddf5d82caafc1aea51964f1efc67960d7f209a8da8a6b77a54bb7930b0"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/047_prologue_19.png",
+      "sha256": "ff47cacbbcd48730c05d2ec2e66ec41b486e855eea202e4553d31f9851a52f8e"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/048_prologue_20.png",
+      "sha256": "093f8f6c86d9241aa3e263b3d2484eca5ef1ad1d6bee2751e31918bf7a5dd097"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/049_prologue_21.png",
+      "sha256": "562394b64c16e0e1c112d6f43ed43f3fc6ae3b3895d0dc2a8a47dbdaf56a04ea"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/050_prologue_22.png",
+      "sha256": "bb1b607ad3ffdd7778c44e5611ee9bf806a786b14ca75f1cb0c7a9f26fda8abe"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/051_prologue_23.png",
+      "sha256": "33149d57a8f7913103d489b049cedc1a203cb81d188e56738162a3c2b38b44aa"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/052_prologue_24.png",
+      "sha256": "51dd851eb3de95f9db7302f71468abc6a0fc6732a3f393cee1dde7b772c5d780"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/053_prologue_25.png",
+      "sha256": "bc77ae04dc2770b7d0ef90846558c6e3366a5ae2c62966c3d86aaa6d819878c7"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/054_prologue_26.png",
+      "sha256": "a8068941d6799ce6096ec7dea145cbfae9952759ca6b09165287688f9baba2e8"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/055_prologue_27.png",
+      "sha256": "b68b5246405a33b39e7f516de2a5d8f60182e036f737454d5c9b33b38f133be8"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/056_prologue_28.png",
+      "sha256": "d70ebabc211f1e7a632f6a4f4f36c874722e233faae9880e2157fa916ba6c8c4"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/057_prologue_29.png",
+      "sha256": "a6fc29e4c5eed6436410f27f1d2589518a4afc468c69a10a4aa0dae935ce077e"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/058_prologue_30.png",
+      "sha256": "15bf534a28d6d57e6e6bda1e872203ca7b249a8b3e4eff23e24c8ba44f573bb7"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/059_prologue_31.png",
+      "sha256": "fa60573c8d938ea7a61afbad1c16593c9afd7641fbef81d071aede5f91637aa0"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/060_prologue_32.png",
+      "sha256": "50e18719b691f7b5e22fa5e812aff94b27b16363498c7ef2d07515316c87875d"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/061_prologue_33.png",
+      "sha256": "afd4ecbdce7267ef5ccb4b0dbcd534c74fcd3a787e949ed6d0e28468f15a884b"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/062_prologue_34.png",
+      "sha256": "64e16e327970be8069d4a7305a1a6022482fafacff8816ccece2757b71e753dd"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/063_prologue_35.png",
+      "sha256": "ea6a0a3d31184fae76608fe6e6d0f6bb8831b36258332beb37e6099f1f933494"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/064_prologue_36.png",
+      "sha256": "6213537e9a964ec51465ebe1f4e18aa4cd7c50e2f2bea04bee734500037b3398"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/065_prologue_37.png",
+      "sha256": "dc62f1f36bd494dd9dabde35bbf8126b254e4d91eb35a5434f224c0271dac1ae"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/066_prologue_38.png",
+      "sha256": "e6e7edb57a72128d1fa580bd9008cd8d0be48cdd1c6188619f98517e5e75cd2a"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/067_prologue_39.png",
+      "sha256": "eddab47a90bc862ea97d79f3e540973da598e0a99a5b611d2eaab18cc21c9080"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/068_prologue_40.png",
+      "sha256": "c0be28e917de3e5ee07223270d0ebd79d8600a9bf21eea443480731af8e8b5f8"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/069_prologue_41.png",
+      "sha256": "2899a36ec8380ae432841c97140bad00d0fdb87e27edd020c3f2558c7d3b3a09"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/070_prologue_42.png",
+      "sha256": "f0f8440d9d109068315ce4a16148d1b90f3ec7fe2f4839b458c203328ed8e9f1"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/071_prologue_43.png",
+      "sha256": "0723fe15df09c4d0a1b5edd967426712c483cb730208d6efa639f784af1fbb11"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/072_prologue_44.png",
+      "sha256": "bec431128671dadff83ccdd03502fd8ea71ab762a2fa2401f40863a1a115c03c"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/073_prologue_45.png",
+      "sha256": "35d38c66ca698792a183a811a8ff024b0adc8dc7170f7d09193fba1d6905da2c"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/074_prologue_46.png",
+      "sha256": "b7d8798b869c33cc2eb69d37b40538ce60da81b02c0023131f0b96e5b308f27f"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/075_prologue_47.png",
+      "sha256": "7b5209856e1e35ff32e10e7f5b18ce76dffa7ff078bbddd956b410c5765bbcf1"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/076_prologue_48.png",
+      "sha256": "f984419c61963a06d8d276f9673d87bb885ca0b03b2e1f54d70b7be542b25e53"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/077_after_prologue.png",
+      "sha256": "1025e4ae6d8f97ff22c11391abb841945ab4f26bb7d8ff17e8a86f4820c69634"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/078_command_screen.png",
+      "sha256": "2b0496b82f582a140418bfb202798225d9ace2e1a7626645f35268d703eeb9df"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/079_calendar.png",
+      "sha256": "7f97706e0d776fad424a7c16f3e11cb3946eb4c2ed64bf34ed9d5d46f46e0e93"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/080_system_settings.png",
+      "sha256": "8a595e1387202ef3c9d7b2c00c44d0544127b326e6dd386ff785b190396e324f"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/081_command_study.png",
+      "sha256": "f5131f1fb8d18ee090b2c167f1176974951dcff482483c378436e51a2134b1d5"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/082_school_day.png",
+      "sha256": "c6bbbec2544bf49c9b033e25885ca890f19133684f7cc01869d0c7289e047f92"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/083_week_1_01.png",
+      "sha256": "a3ac0c1ecc1b6b51c79d102e436066b50decd08329ebfa4f6817fde7a3b2f5a8"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/084_week_1_02.png",
+      "sha256": "245af90712029c65856a9c57d7c5841d9f53e2f74710653c46e03d1b419cf76e"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/085_week_1_03.png",
+      "sha256": "3cbfb110fc92a832af9e95e5ab0bcf5ac02106d6b2862231834aba787a94ab8c"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/086_week_1_04.png",
+      "sha256": "74abb88b1dbd88586879230636888edcbb7f82d9cb97b15f4d2a98ede321aa59"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/087_week_1_05.png",
+      "sha256": "045eb6322efe9c7c6f114021559e4ee01ed98dbef4dfe310d0a1c4947d93562b"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/088_week_1_06.png",
+      "sha256": "5b7dd008f5143ad67ad7ae339e1fb204165a1228c02d238892429b91477a5492"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/089_week_1_07.png",
+      "sha256": "0ff5b3057be4397b586e5aea865af24466819bb75640e6353d65567b4938c5b1"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/090_week_1_08.png",
+      "sha256": "701116922a1976a595cae4eb78c68886029e3cf6cb28bcd83ccde7fdee2755cd"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/091_week_1_09.png",
+      "sha256": "9866e3508f2ebfb62da831a8d1f016380ddb4e18e46e98368f3280c1debce2e8"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/092_week_1_10.png",
+      "sha256": "a33e45048a16e75bea7755f29690f33dd0add10273ad633018a89c9c1abe0bad"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/093_week_1_11.png",
+      "sha256": "4d81d28b87cbc992fb7051229263ca22fc05852f7eaf51417011ba1a7915f699"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/094_week_1_12.png",
+      "sha256": "1a7eb94d6ab0b1bfb961f81a89695e3ca32aabc7ff2d2b563a73035a2ec40f7f"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/095_week_1_13.png",
+      "sha256": "19af461a04a22992f894d334c449a64bd014f1941ab6561af50bf03af2676d08"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/096_week_1_14.png",
+      "sha256": "076638add871f5d51d5d7c42bf047e34202e6c0b6987c8467db9a37d82884a04"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/097_week_1_15.png",
+      "sha256": "1f3b134a68cb7f7d0f6a10c9028c84f1ae0ef038b2d860bc8e424b52f5c357cb"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/098_week_1_16.png",
+      "sha256": "4da943e9eae1318c4f9c5eb1d1252ef94470a2b26662200e2c6427bac5c62e72"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/099_week_1_17.png",
+      "sha256": "6dc90c04b118da5cb1229296a247a2ba78e20a1d652c4e00e9f7c1fb1b3cc66a"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/100_week_1_18.png",
+      "sha256": "8b6fbbbb008096265e6c2b8d0fc97df4a3b9c6332bdb1050d4cf0fd50acd43cc"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/101_holiday.png",
+      "sha256": "849ee74a46b1991662ba59149b0b007a68c1134f3f4b7e38fe8b23938bad5256"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/102_phone_book.png",
+      "sha256": "b45501450de5d020651ab9991cfa939eabf6bb13fdcb96d81c5ddecc43fe8a31"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/103_phone_call_01.png",
+      "sha256": "ca20970ef8da90ede69b8bdd229ddf6aeb010cb8967787542d150cb08edec39e"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/104_phone_call_02.png",
+      "sha256": "bdf90f5f9f5e294cf8e0ea185ea71af10093783f72053f74f144ba5451be7dcd"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/105_phone_call_03.png",
+      "sha256": "debcff5e6f561236c56889b9de94f883c60588f236129ead26120abbb23535ff"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/106_phone_call_04.png",
+      "sha256": "debcff5e6f561236c56889b9de94f883c60588f236129ead26120abbb23535ff"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/107_phone_call_05.png",
+      "sha256": "debcff5e6f561236c56889b9de94f883c60588f236129ead26120abbb23535ff"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/108_phone_call_06.png",
+      "sha256": "acb73260d8487f467dd4d35a9bd9e97b7cc0d6e5c81b5035e306cff1518c5723"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/109_phone_call_07.png",
+      "sha256": "52f860fe093fa206deaf67943f183c6630e7abd7056631b0871001319a2d8642"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/110_phone_call_08.png",
+      "sha256": "d847030d6d86607c34ccb83fcfe67a6b0fd7e4051e9ebcb980229c2d64855e3b"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/111_phone_call_09.png",
+      "sha256": "1fdc4d93398d2e87eaa5f1a24cbd62b4a08d018f42c6222473f27b63c07d4b77"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/112_phone_date_spot.png",
+      "sha256": "f39c36fa784c0315ba49deca77a01e5ff9b08598f90a720facabcdd2becfe89a"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/113_phone_answer_01.png",
+      "sha256": "169a809c394710df70fd7cc9a065eb65b03864169145f5a236a16aa8eb82144a"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/114_phone_answer_02.png",
+      "sha256": "db9087d863c4cdfe34ddb6e63f5b48ef7e87c5b48c95e6c78341d79864a227c9"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/115_phone_answer_03.png",
+      "sha256": "1f5e74181c4fcc5f6da53e0b3a74e1f210269d548258b2cf85ae548a034d1e96"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/116_phone_answer_04.png",
+      "sha256": "154c80832671d24e5ef24987968b57c4c7a50882de6326327dfdca456f9b6b12"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/117_phone_answer_05.png",
+      "sha256": "b0eb97ebc63785fca282caf37ceea848b1be23e118ce8987e876694a8531516a"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/118_phone_answer_06.png",
+      "sha256": "313363dd5786c98b294088166e1964a5680008b4c0a5652e22cb4adf57ab257f"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/119_phone_answer_07.png",
+      "sha256": "fb8ee81655a59987c2cfee3448a86301c23ac9d143eee17463aa69114f8cfeb5"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/120_phone_answer_08.png",
+      "sha256": "7224582b000e813efcab445a68c810881bd1bed2a9eea531b65280a1c7ac2c3b"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/121_command_screen_evening.png",
+      "sha256": "3911aa5e95457ae3aa1240ed0481067f738300c510ae9f2d3cc17b49aace0c97"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/122_save_menu.png",
+      "sha256": "39898ebf3ddce4e1b70c2201e3be1685646b8e0ff320827c1f1202ead2cad6d5"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/123_save_slot.png",
+      "sha256": "21ebc4eb54d402e5b3a22524fb6ff36416fda04dc27e9a7172915dcc76bea8fb"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/124_save_overwrite.png",
+      "sha256": "ce59d1716755f1ce831bc28946df707d0807bea5546a2898253ac05befae91de"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/125_save_writing.png",
+      "sha256": "6b4bacbd46d04f1bf9a77b841aad00ed972726e843e93bfd8fb72d9f363bd349"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/126_save_done.png",
+      "sha256": "d10b79239e1905b48ca295f0bdc018fdf3ba1e8749ba94f77683b25d98e7e425"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/127_holiday_date.png",
+      "sha256": "db89669b1faa063d8038bf3eb92ebc2b72c1b6ce78ee639f6ee6e46e0fe55730"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/128_date_01.png",
+      "sha256": "8d2750f7363ff101cb27eee99bc7b1bf43d81ac1461fe6a4a4a8ec7e1ad4c94f"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/129_date_02.png",
+      "sha256": "4acbecff8764eed7ef282339b8d2786b78b7997a725eb2b869ecebcff965a100"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/130_date_03.png",
+      "sha256": "7155187ad3fa53071da29bba70cf62c41b282022501f6af4f9c329b206afcaab"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/131_date_04.png",
+      "sha256": "76ab5112a8b32b4a48ae7e78a75abc427b9fc09e1567d804a3c7fe9136d0ee9e"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/132_date_05.png",
+      "sha256": "dde4119701bfa23ee73b535cdb9690ce09a8647859188d74c0410ea40a2f257e"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/133_date_06.png",
+      "sha256": "86daa4fa67dfed7da55552d09aac90fe15ad136f75dd260a43b70bbeeda9ee8a"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/134_date_07.png",
+      "sha256": "3e18a3e733e61365d91044c34796fe239a7d7b3f8fc2f6bdc86a83d17c403588"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/135_date_08.png",
+      "sha256": "de3efea1097b31111fa5253f28da53497d1c086ede2b157426eb0b70fc1e50de"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/136_date_09.png",
+      "sha256": "51f39fdaaa02e40f5410d3be07d3384cfcb653e8b0ce5391de6885fea44263eb"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/137_date_10.png",
+      "sha256": "38ea4e9d3007a95576103ea0e11bd1acca14426870f3c8a15ad73ff7a25aff58"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/138_date_11.png",
+      "sha256": "dd7920b57ac6ceb94b79711c3fce2a1fdb132a0bbcb7d1bd9c6d9d140efee06d"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/139_date_12.png",
+      "sha256": "5f1c22187b04dc49fa09bd7da4bcfb5dead7335371c7170694d597bffd4434bd"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/140_after_date.png",
+      "sha256": "742d0033f802496662f4cb4c93b900723f8c6a1abeded4a8a29dfdea6ebd3d1b"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/141_load_slot.png",
+      "sha256": "1e7a5acfc4cd3b158bcaf7f32a20d4885eebb359de37e785099a2fe2834da3bf"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/142_load_01.png",
+      "sha256": "f0b2192b2fc5da1d9882dba769d3f838afa5955ec706908a2f1b3cac90490f8a"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/143_load_02.png",
+      "sha256": "97a0c26f184bd17c3429a754d31b6085f4adac8d025de1ca8e904d06abbaf2a0"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/144_load_03.png",
+      "sha256": "0bbddabd7e43990465fdd8f57dda7dfb41d6f5abef283a89ce805aa862a462e1"
+    },
+    {
+      "path": "build/emu/route-en-ending-stream-full/145_loaded.png",
+      "sha256": "654a97d9c66074a9e7e1f86e7b6dccbfd3008a62b041a30bea715deff4024d5e"
+    }
+  ],
+  "events": [
+    {
+      "path": "build/emu/exam-arena-left/shot_1500.png",
+      "sha256": "e4052b05fed07e43153fe7894627b291ceee040e0a2eb0057ab0db14648d12a2"
+    },
+    {
+      "path": "build/emu/exam-arena-right-positive/shot_1500.png",
+      "sha256": "31f133dbe2eee18e446fdfba4dc03477d24d42f05f76e80016d79f9f1a44c529"
+    },
+    {
+      "path": "build/emu/festival-plates-culture/shot_700.png",
+      "sha256": "bedc4511b5ac34b6df9a602b418a06ada313e84161fe11c7d60bad45468e7b2d"
+    },
+    {
+      "path": "build/emu/festival-plates-sports/shot_700.png",
+      "sha256": "3eb76aaae0e7c40e65177631a161489449b20300d2b799dab7863877a7a6c7e3"
+    },
+    {
+      "path": "build/emu/ending-stream-final-normal/shot_2500.png",
+      "sha256": "c29f56cd3fcc9ee0690280fdb5a99f98905e434430bf8d196237b6a238f3b8e3"
+    },
+    {
+      "path": "build/emu/ending-stream-final-career/shot_2500.png",
+      "sha256": "d55a5259678a74a90e954c4665f57eea1aec4c3b6a7284c4f82b55bd06a7f950"
+    },
+    {
+      "path": "build/emu/ending-stream-final-rei/shot_2500.png",
+      "sha256": "cbf88e8b05db1d8dffac0189b0d48b626fde3aca1aeea8e1c6c30d813f350264"
+    },
+    {
+      "path": "build/emu/ending-stream-final-rei/shot_3000.png",
+      "sha256": "0899c53e4b5bf349366fc1e4e947a191e1be756eb76d7214d7e81f2ed242b304"
+    },
+    {
+      "path": "build/emu/date-ambush-name/shot_final.png",
+      "sha256": "497bf7012c7eb37e3155a3f449218c0f297c3207db3f433fa13a33699ae03103"
+    },
+    {
+      "path": "build/emu/club-placard-english/shot_800.png",
+      "sha256": "b4ca0b134a2a4e8bd96b3a86aba985f90fa6cf3183fc362eeddebcecf6fece47"
+    },
+    {
+      "path": "build/emu/route-en-magazine-v2/002_magazine_page_01.png",
+      "sha256": "b93cf5779b102481d8198ccc704b5299d3e6b7fe277ff757e524f54210878141"
+    },
+    {
+      "path": "build/emu/route-en-name-confirm-final/027_name_entry_confirm.png",
+      "sha256": "214303b561e06a3e74d17d7ec8ac9f4ba0a4644d59415659b904fa9063a36f0e"
+    },
+    {
+      "path": "build/emu/route-en-name-save-card/019_full_name_load_summary.png",
+      "sha256": "25ea371d0a3717b0b48323feea7fb07a5181a0487ec7b6557582b6871bf53d93"
+    },
+    {
+      "path": "build/emu/skating-ad-english/shot_1500.png",
+      "sha256": "65fd69733d475ca864cac2f4b48dbabd0fb7f3ff207139f7a82cf686e053aa41"
+    },
+    {
+      "path": "build/emu/skating-ad-english/shot_2000.png",
+      "sha256": "fe2b52ff0e61eb13f8cbc51f00fe1e07678ab07117f02eabb584e4e7d713d3ca"
+    }
+  ],
+  "findings": [
+    {
+      "ticket": "T-39519",
+      "finding": "New-album choice labels bunched beside fixed controller icons",
+      "fresh_corrected_capture": {
+        "path": "build/emu/route-en-album-prompt/014_file_select_new_album.png",
+        "sha256": "55de5b0520a81d4c93fb1f9ed438c69b0af2eb2286c5511610149a8edde77dc3"
+      }
+    },
+    {
+      "ticket": "T-39520",
+      "finding": "Direct-row phone dialogue lacks final closing marks",
+      "status": "open"
+    },
+    {
+      "finding": "Pink roster-animation flecks also present in original reference; not a patch regression"
+    },
+    {
+      "finding": "Koshien plaques retained under catalog-138 approved authentic-sign exception"
+    }
+  ],
+  "assessment": "Most inspected screens are readable and stylistically consistent; no blanket quality sign-off while open findings and uncaptured scenes remain."
+}

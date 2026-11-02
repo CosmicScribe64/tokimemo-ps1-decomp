@@ -1460,6 +1460,22 @@ void file_select_no_data_answer(void) {
     }
 }
 
+#ifdef TOKIMEMO_ENGLISH
+/* T-39519: proportional labels need separate positions beside the button icons. */
+void file_select_english_no_data_prompt(void) {
+    text_system_reset();
+    set_kanji_string(-0x40, 0x20, 0xF, "No save data for this game.", 0);
+    set_kanji_string(-0x40, 0x30, 0xF, "Create a new album", 0);
+    set_kanji_string(-0x40, 0x40, 0xF, "and start playing?", 0);
+    set_kanji_string(-0x24, 0x50, 0xF, "Yes...", 0);
+    set_kanji_string(0x30, 0x50, 0xF, "No...", 0);
+    set_kanji_string(6, 0x50, 1, hud_confirm_button_label(), 0);
+    set_kanji_string(0x5A, 0x50, 2, hud_cancel_button_label(), 0);
+    k_disp_start(7);
+    mode_step_next();
+}
+#endif
+
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/name_entry/file_select.rodata", file_select_play_unsaved_text_1);
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/name_entry/file_select.rodata", file_select_play_unsaved_text_2);
