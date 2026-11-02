@@ -21,6 +21,7 @@ kanban-plugin: board
 
 ## In Progress
 
+
 - [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
 
 - [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
@@ -96,6 +97,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39514-reserve-text-table-padding|T-39514 Reserve complete text table slots before relocating strings]]
 
 - [x] [[tickets/T-39412-bs-stills-art-fixes|T-39412 Fix the BS still drafts after the owner art review]]
 - [x] [[tickets/T-39411-menus-art-fixes|T-39411 Fix the menu and screen English art after the owner and reviewer pass]]

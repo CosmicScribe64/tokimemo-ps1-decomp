@@ -21,6 +21,8 @@ stays reported as ``needs_relink``.
 Free areas: an overlay's zero tail (after its last nonzero byte and its last symbol, plus 16 bytes, up to
 the checksum trailer; wiki/ram-map.md says it is free while the overlay runs); the main executable's
 ``english_string_pool`` (src/english/script.c), which is part of the loaded file.
+Before allocation, inplace.patch_built reserves all mapped slot capacities so
+zero padding owned by a final table entry cannot become relocation space.
 """
 from __future__ import annotations
 
@@ -125,6 +127,11 @@ class Pool:
         at = self.cursor
         self.cursor = (self.cursor + size + 3) & ~3
         return at
+
+    def reserve(self, start: int, end: int) -> None:
+        """Exclude owned storage from this tail pool before allocating (T-39514)."""
+        if start < self.end and end > self.cursor:
+            self.cursor = (end + 3) & ~3
 
 
 def overlay_pool(built: bytes, elf_path: str, vram: int) -> Pool:

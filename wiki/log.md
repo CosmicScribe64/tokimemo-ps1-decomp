@@ -3289,3 +3289,25 @@ Initial HI_S6 g0176 l0010 replay reaches the repaired record and has zero origin
 ## [2026-11-02] build | Third festival anomaly repair visually verified
 
 Corrected HI_S6 replay `build/emu/festival-yuina-clear-g0176` completes 600 frames, zero original-font calls/unknown/overflow. Its final screenshot shows the complete repaired sentence on two lines, intact quotes and no old-text overlap after the normal clear. All three repaired festival records now have actual GPU evidence. No game-code change was needed for this probe correction. Wiki lint: zero broken links/status mismatches; two existing large-page advisories. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] query | Baseball repair and executable-table verification started
+
+Created ignored `build/probe_baseball_repair.py`, using the current-disc-compatible command baseline and the real mode-0x74 loader path to MASTER's Koshien initializer. Its actual script load is KOSIEN at LBA 0xA9BA; the repaired target is group 10 line 0. Started an independent table census to follow final executable table offsets and retargeting records beyond the completed C-literal presence checks. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] query | Koshien stadium signage is an approved exception
+
+The baseball bootstrap visibly contains the three original stadium plaques. Cross-checking `translations/en/graphics/image_text_catalog.jsonl` identifies D_03_06 as catalog-138, explicitly owner-approved in [[tickets/T-39500-english-translation-patch]]. It is not a newly missing translation. Preserve this exception; the runtime font trace correctly does not observe baked artwork. The repaired quarterfinal dialogue capture is visually clean, pending counter verification below.
+
+## [2026-11-02] build | Baseball repair visually verified and table-padding fix underway
+
+`build/emu/baseball-repair-bootstrap` completes 1,800 frames and exact-line replay `baseball-repair-g0010` completes 600 frames; both have zero original-font calls/unknown/overflow. The final GPU capture shows the repaired quarterfinal sentence on three clean lines with one closing quote. All four guarded anomaly repairs now have visual proof.
+
+Actual-disc table census checks 2,940 translated non-C slots, finding 2,550 exact addresses and 2,934 payloads present. The sole unresolved dictionary slot is a real KANGEI bug: relocation consumed padding inside its final gift-name slot. Created [[tickets/T-39514-reserve-text-table-padding]] and reserved every mapped in-place slot, including retained ones, before allocating overflow strings. Synthetic regression covers both translated and retained last slots; the first fixture omitted the reference object's interior-pointer method and was corrected before the full English patch test suite passed. Full rebuild is running. Other absent extents include superseded name-entry prompts and normalized quote literals; remaining extent binding checks are not yet complete. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] decision | Review table-padding reservation and classify stale extents
+
+Reviewed T-39514 against CODING_STANDARDS: Python tooling only, no original C/raw-data changes; reservations precede every allocation and include retained slots; allocator alignment and bounds remain enforced by Pool.take. Synthetic regression uses the real Retargeter and reconstructed references, proving both final-slot preservation and the updated pointer. All 36 English patch tests pass (one opt-in end-to-end skip); independent full build remains running. Five absent extent targets are explained by compiled English variants: quote whitespace normalization, the replaced memory-card prompt, and TEL's two source-literal prepositions. Remaining rebound-extent verification is not claimed complete. [[tickets/T-39514-reserve-text-table-padding]], [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] build | Padding-safe patch and browser package verified
+
+Full build `build/table-padding-proof` passes in 215.9 s, target SHA-1 72cd7ff7ef559bd7362c26c6ffba7ce9297110ee, xdelta 6,563,325 bytes, 246 verified artwork items. Actual-disc table audit now verifies all 816 translated dictionary slots at their mapped addresses. Only KANGEI changes among loaded executable containers; main ELF is byte-identical. The browser package passes all nine acceptance checks and produces the identical target disc; completion screenshot is clean. Reviewed scoped implementation and tests against CODING_STANDARDS; no unresolved findings. Moved [[tickets/T-39514-reserve-text-table-padding]] to Done and updated its board card. Broader campaign remains active. Refreshing localhost:8769 to the verified package; prior browser evidence is retained. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39512-browser-patcher]].

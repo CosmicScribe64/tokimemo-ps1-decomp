@@ -13,6 +13,7 @@ import os
 import struct
 import tempfile
 import unittest
+from collections import defaultdict
 from pathlib import Path
 
 from tools.patch import build_english, cd_layout
@@ -21,6 +22,7 @@ from tools.patch.text.english import (EMPTY_OPTION, LABEL_SPEECH, LABEL_THOUGHT,
                                       EnglishEncoder, end_inline_label)
 from tools.patch.text.image import Image, Slot, has_cd_trailer, write_cd_trailer
 from tools.patch.text.inplace import patch_built
+from tools.patch.text.retarget import Pool, References, Retargeter
 from tools.patch.text.layout import english_payloads
 from tools.patch.text.segments import Control, Text, encode
 from tools.patch.text.windows import NAME_PX, WINDOWS, Window, window_for
@@ -267,6 +269,36 @@ def in_place_container(data):
 
 
 class InPlaceTest(unittest.TestCase):
+    def test_overflow_respects_final_slot_padding(self):
+        """An earlier overflow must not make the last padded slot look rebuilt."""
+        base = 0x80132000
+        data = bytearray(256)
+        struct.pack_into('<I', data, 0, base + 0x10)
+        data[0x10:0x14] = b'abc\0'
+        data[0x30:0x33] = b'xy\0'
+        slots = [Slot('early', 0x10, b'abc', 'in_place', capacity=4),
+                 Slot('last', 0x30, b'xy', 'in_place', capacity=32)]
+        container = Container('T', 'overlay', Image('T', bytes(data), base, slots, [], growable=False))
+        for slot in slots:
+            container.records[slot.id] = Record(slot.id, 'source_extent', 'T', slot.offset, slot.payload, [])
+        for translate_last in (False, True):
+            with self.subTest(translate_last=translate_last):
+                refs = References.__new__(References)
+                refs.words = defaultdict(list, {base + 0x10: [base]})
+                refs.pairs = defaultdict(list)
+                refs.hi_targets = defaultdict(set)
+                mover = Retargeter(refs, Pool(0x40, 0xFC, base))
+                payloads = {'early': b'LONG ENGLISH'}
+                if translate_last:
+                    payloads['last'] = b'FINAL LABEL'
+                result = patch_built(container, payloads, bytes(data), retarget=mover)
+                self.assertEqual(result.moved_in_build, [])
+                self.assertEqual(result.overflows, [])
+                self.assertEqual(struct.unpack_from('<I', result.data)[0], base + 0x50)
+                self.assertEqual(result.data[0x50:0x5D], b'LONG ENGLISH\0')
+                expected = b'FINAL LABEL' if translate_last else b'xy'
+                self.assertEqual(result.data[0x30:0x50], expected.ljust(32, b'\0'))
+
     def test_writes_moves_and_overflows(self):
         data = bytearray(2048)
         data[0x10:0x13], data[0x20:0x22], data[0x30:0x32] = b"abc", b"de", b"fg"

@@ -40,6 +40,16 @@ def patch_built(container: Container, payloads: dict[str, bytes], built: bytes,
     out = bytearray(built)
     report = InPlaceResult(b"")
     over = {o["id"]: o for o in result.overflows if o.get("id")}
+    # T-39514: a zero tail can still belong to the final fixed-stride slot.
+    # Reserve every modeled slot, including retained ones, before any overflow
+    # allocation can alter its bytes and make the later identity check fail.
+    if retarget is not None and retarget.pool is not None:
+        for slot in image.slots.values():
+            if slot.mode != "in_place":
+                continue
+            start = locate(slot.offset)
+            if start is not None:
+                retarget.pool.reserve(start, start + slot.capacity)
     stride_tables = _stride_tables(wanted, image, locate, retarget) if retarget is not None else set()
     for rid in sorted(wanted, key=lambda r: image.slots[r].offset):
         slot = image.slots[rid]
