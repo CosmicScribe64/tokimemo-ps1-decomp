@@ -2882,3 +2882,17 @@ Added `tools/emu/route.py`, `tools/emu/route.lua` and `tools/emu/routes/main.rou
 
 Japanese baseline from the original disc: 144 screenshots, 27 922 frames, 539 s, all checkpoints reached and checked by eye. Details and the mode map found on the way in [[tickets/T-39504-emulator-screen-route]]; usage in [[emulator]] (Route). Ticket moved to In Review.
 
+
+## [2026-11-01] build | One-command English disc build (T-39507)
+
+Added `tools/patch/build_english.py`. It encodes and wraps the English records (`tools/patch/text/english.py`, `windows.py`, `wrap.py`, `layout.py`), compiles the English C literals from `build/en/src` (new `cctext` rule, `tools/cc.py --source-text`) with a fit loop for the pinned link, and places the talk files on the disc. A moved file is reached through the island CD remap (`src/english/cd.c`, hooks on `cd_read_sectors`/`_nowait`, table from `tools/patch/cd_layout.py`). The step then runs `ninja english`, writes the in-place records into the built binaries (`text/inplace.py`), and writes track 1, the cue, the xdelta patch and `report.json`.
+
+Results:
+- 222 s; 30,540 records placed.
+- The 10 DATE files stay original because of the 24-sector buffer (4,718 records).
+- 1,018 records need the relink (T-39505); 0 are unwrappable.
+- 22 files moved; xdelta 752,337 bytes.
+- `tools/english_link.py ld` now also pins section labels.
+- Default build 27/27.
+
+The English disc ran the whole emulator route (145 screenshots in `build/emu/route-en/`). Dialogue is garbled until [[tickets/T-39506-english-script-runtime]] lands. New page [[english-build]]. Moved [[tickets/T-39507-english-disc-build]] to In Review.
