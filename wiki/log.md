@@ -2945,3 +2945,17 @@ Code-review findings on the BS art tooling fixed on [[tickets/T-39412-bs-stills-
 ## [2026-11-01] ticket | Close the English art tickets
 
 The follow-up code review of the art tooling passed: the inpaint fill now uses seeded synthetic grain (shift correlation with the source 0.10 to 0.31, against 0.88 to 1.0 for the old donor fill), and the menus and MAINROM ledgers state which committed files are whole frames with original pixels, with per-file counts. Fixed two of its nits (menus docstring history, an unclosed image in a test). Left as nits: the `prologue.c:224` citation inside the stills `lba_basis` text (changing it would republish the manifest), a tautological `source_equal_pixels == 0` check on alpha crops, the signs ledger rows not naming the diffuse fill, and long comment lines in `tools/translation_mainrom_fixes.py`. Moved [[tickets/T-39400-finish-missing-english-art]], [[tickets/T-39410-mainrom-art-fixes]], [[tickets/T-39411-menus-art-fixes]] and [[tickets/T-39412-bs-stills-art-fixes]] to Done.
+
+## [2026-11-01] build | One-command English disc build (T-39507)
+
+Added `tools/patch/build_english.py`. It encodes and wraps the English records (`tools/patch/text/english.py`, `windows.py`, `wrap.py`, `layout.py`), compiles the English C literals from `build/en/src` (new `cctext` rule, `tools/cc.py --source-text`) with a fit loop for the pinned link, and places the talk files on the disc. A moved file is reached through the island CD remap (`src/english/cd.c`, hooks on `cd_read_sectors`/`_nowait`, table from `tools/patch/cd_layout.py`). The step then runs `ninja english`, writes the in-place records into the built binaries (`text/inplace.py`), and writes track 1, the cue, the xdelta patch and `report.json`.
+
+Results:
+- 222 s; 30,540 records placed.
+- The 10 DATE files stay original because of the 24-sector buffer (4,718 records).
+- 1,018 records need the relink (T-39505); 0 are unwrappable.
+- 22 files moved; xdelta 752,337 bytes.
+- `tools/english_link.py ld` now also pins section labels.
+- Default build 27/27.
+
+The English disc ran the whole emulator route (145 screenshots in `build/emu/route-en/`). Dialogue is garbled until [[tickets/T-39506-english-script-runtime]] lands. New page [[english-build]]. Moved [[tickets/T-39507-english-disc-build]] to In Review.
