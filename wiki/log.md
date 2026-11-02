@@ -3593,3 +3593,63 @@ The combined affected suite passes 109 tests with two opt-in skips. The plaque p
 ## [2026-11-02] build | Verify the perspective plaque in the game
 
 The final candidate passes all 252 art checks, both disc text audits and nine browser checks. Inspected the encoded plaque and fresh opening capture: the lettering follows the sign face and the full-name introduction is back to two rows. The plaque remains 18,432 bytes; surrounding-pixel change is at most two RGB555 steps under the unchanged limit of four. Standards review found no unresolved issue. T-39523 moves to Done; T-39522 moves to In Review while its full route continues. [[tickets/T-39523-school-gate-lettering]], [[tickets/T-39522-speaker-label-contrast]].
+
+## [2026-11-02] build | Finish speaker review and repair a phone orphan
+
+The voice-enabled perspective route completed 33,106 frames and 132 captures through save/load, with zero original-font, unknown or overflow calls. Inspected every capture; speaker labels pass, closing T-39522. The assembled date confirmation leaves a short final word alone in capture 100. Opened T-39524, added bounded rebalancing of runtime-inserted breaks, and passed four C89 runtime tests. Explicit paragraph breaks and the six-row cap are preserved. A fresh disc build is running. The static diagnostic contains 510 records with 511 orphan flags; sampled cases include intentional one-word replies after sentence breaks, so these flags still need individual classification. [[tickets/T-39522-speaker-label-contrast]], [[tickets/T-39524-phone-orphan-lines]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Build the phone wrapping candidate
+
+Built candidate `2f9fd663374c` in 168.4 seconds. All 252 art checks and both disc text audits pass; all 27 original binaries match. Started the voice-enabled route `build/emu/route-en-phone-orphan` and browser checks against `build/patcher-phone-orphan-review`. The new runtime wrap still needs its GPU capture; T-39524 remains In Progress. [[tickets/T-39524-phone-orphan-lines]].
+
+## [2026-11-02] build | Verify the phone candidate in the browser patcher
+
+Browser checks pass for target `2f9fd663374c`, including exact output equality, CUE output, cancellation, invalid source and local-only processing. The emulator route remains active; no new visual acceptance is claimed yet. [[tickets/T-39524-phone-orphan-lines]].
+
+## [2026-11-02] build | Validate retained English sentence boundaries
+
+Opened T-39525 and added boundary validation for equal source/translation row counts. Full-script comparison exposed a second defect: quote removal assumed wrapping preserved byte count, so a trimmed trailing space could leave a layout-only quote in the payload. Fixed removal based on whether the quote was added. Comparison also found abbreviation periods being treated as sentence ends; added title-abbreviation protection and tests. The affected C89/runtime/layout suites pass 43 tests with one opt-in skip. Full comparison is being rerun; gameplay verification remains pending. [[tickets/T-39525-english-break-boundaries]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Compare the full script after boundary validation
+
+Compared all encoded payloads against d71c39472. The 889 changed records preserve wording and control codes; four old layout-only quotes are removed. Orphan flags fall from 511 to 454 and scrolling-page flags from 77 to 67. Reviewed the eight new short-ending flags and three repeated new scrolling pages, including their source boundary. Wrote a metadata-only receipt and started `build/english-boundary-proof`; visual acceptance is still pending. [[tickets/T-39525-english-break-boundaries]].
+
+## [2026-11-02] build | Inspect the corrected phone farewell
+
+Fresh capture 100 on candidate `2f9fd663374c` keeps the final two words together with the closing quote intact. The date, destination and meeting sentence fit without overlap. Added the capture hash to the visual receipt. T-39524 moves to In Review while its route finishes. [[tickets/T-39524-phone-orphan-lines]].
+
+## [2026-11-02] build | Start fresh verification of English boundary fixes
+
+Built target `ca7ff1e93b03` in 172.8 seconds and froze its link inputs. All 252 art checks pass. Started the fresh voice-enabled route, actual-disc text audits and browser packaging. T-39525 remains In Progress pending those results and controlled off-route visual checks. [[tickets/T-39525-english-break-boundaries]].
+
+## [2026-11-02] build | Finish phone orphan verification
+
+The fresh route completed 33,572 frames and 134 captures through date and save/load with zero original-font, unknown or overflow calls. Targeted captures verify the repaired farewell and later date/save/load text. Standards and regression checks pass; T-39524 moves to Done. Both text audits and browser checks also pass on the newer `ca7ff1e93b03` boundary candidate; its route remains active. [[tickets/T-39524-phone-orphan-lines]], [[tickets/T-39525-english-break-boundaries]], [[english-text-runtime]].
+
+## [2026-11-02] query | Classify the remaining orphan warnings
+
+Read all 251 unique payload endings represented by 454 orphan warnings in 453 records. Each is a deliberate pause before a short reply, interjection, aside or hesitation. Added a metadata-only receipt with IDs, payload hashes and dispositions for `ca7ff1e93b03`. This does not close long-page, menu, prose or off-route visual review. [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Start controlled festival scrolling verification
+
+Reviewed the 49 unique payloads behind all 67 remaining long-page warnings. Started a festival bootstrap from the current candidate’s prologue state; logged injections select the literature-club stage, which loads FU_S6O from disc. The prepared line probe will exercise the newly scrolling group 119 line 4 through the normal clear/render path. This is controlled renderer evidence, not natural career traversal. [[tickets/T-39525-english-break-boundaries]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Reject the premature festival bootstrap
+
+The controlled transition from the prologue state did not load an overlay or exercise dialogue. Its empty-background capture is rejected. Revised the probe to use the current route’s first-week gameplay state once available; the normal route remains live. [[tickets/T-39525-english-break-boundaries]].
+
+## [2026-11-02] decision | Use a stable gameplay state for the festival probe
+
+Route inspection shows that first_week is saved before the stable command-screen wait. Selected holiday_1 instead; it follows the stable first-Sunday gameplay wait. This avoids repeating the initialization problem. [[tickets/T-39525-english-break-boundaries]].
+
+## [2026-11-02] decision | Verify the Sunday state before injection
+
+Correction to the preceding entry: holiday_1 is also saved just before its stable menu wait, although normal gameplay has already run for a week. Added a separate 300-frame, no-input settling run with a state dump and final screenshot. Only its verified command-menu state will feed the controlled festival probe. [[tickets/T-39525-english-break-boundaries]].
+
+## [2026-11-02] query | Classify long-page warnings without claiming visual completion
+
+Read all 49 unique payloads behind 67 long-page warnings. Checked each window's scrolling support and hard row limit; every record is placed without width overflow. Added a metadata receipt that keeps runtime verification pending. The settled Sunday-state probe is running now that the fresh route has reached gameplay. [[tickets/T-39511-english-text-quality]], [[tickets/T-39525-english-break-boundaries]].
+
+## [2026-11-02] build | Inspect current opening and telephone layouts
+
+Fresh boundary-candidate captures 032, 039, 041 and 100 retain complete names, closing marks and readable rows. Verified speaker-label pixels against the earlier accepted captures; apparent missing fragments in combined tool previews are absent from the actual images. Added hashes to the visual receipt. The settled Sunday state shows the expected menu and now feeds the festival retry. [[tickets/T-39525-english-break-boundaries]].

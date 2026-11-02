@@ -1,0 +1,2728 @@
+{
+  "schema": "tokimemo.layout-flag-review.v1",
+  "date": "2026-11-02",
+  "ticket": "T-39511",
+  "target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+  "scope": "All 454 orphan warnings in 453 records, covering 251 unique payloads. Read each unique final-row pair. This is a layout review, not whole-script prose approval or whole-game visual certification.",
+  "assessment": "The flagged short final rows are replies, interjections, parenthetical asides or hesitations after a sentence or ellipsis pause. Preserve these deliberate pauses. Mid-sentence and empty trailing-row cases were repaired by T-39525.",
+  "records": [
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6.BIN:main:g0011:l0001",
+      "payload_sha256": "74d0434753a1fff8586c1f0960adf317fc4ff348d0ad395398ddfb17552f17c8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6.BIN:main:g0012:l0001",
+      "payload_sha256": "74d0434753a1fff8586c1f0960adf317fc4ff348d0ad395398ddfb17552f17c8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6.BIN:main:g0016:l0001",
+      "payload_sha256": "74d0434753a1fff8586c1f0960adf317fc4ff348d0ad395398ddfb17552f17c8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6.BIN:main:g0017:l0001",
+      "payload_sha256": "74d0434753a1fff8586c1f0960adf317fc4ff348d0ad395398ddfb17552f17c8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6.BIN:main:g0049:l0001",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6.BIN:main:g0088:l0001",
+      "payload_sha256": "5d4bda3433d0d87c7be7193b27dc10de08b28e415c60b8a037f102d82490f4de",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6.BIN:main:g0091:l0001",
+      "payload_sha256": "5d4bda3433d0d87c7be7193b27dc10de08b28e415c60b8a037f102d82490f4de",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6.BIN:main:g0094:l0001",
+      "payload_sha256": "9dc0e73ebd915604e50cc351c02c809ddad6d49f39039e55bb4dea45d81ae20d",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6.BIN:main:g0110:l0001",
+      "payload_sha256": "74d0434753a1fff8586c1f0960adf317fc4ff348d0ad395398ddfb17552f17c8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6.BIN:main:g0111:l0001",
+      "payload_sha256": "74d0434753a1fff8586c1f0960adf317fc4ff348d0ad395398ddfb17552f17c8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6.BIN:main:g0113:l0001",
+      "payload_sha256": "74d0434753a1fff8586c1f0960adf317fc4ff348d0ad395398ddfb17552f17c8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6S.BIN:main:g0006:l0000",
+      "payload_sha256": "5986a79d60c958f3e80ee8fab81b3e0b67e2a2d52338fbdd14c0eda75da0312c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6W.BIN:main:g0010:l0001",
+      "payload_sha256": "8422a61b34ca0aeeadbe8759ca7e37454b49b37d8d889fe8c55d92a0141b7009",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6W.BIN:main:g0015:l0002",
+      "payload_sha256": "a9d6ed351182c5142b9b38864761da87ea630754478232d14f9f122c3623fcaf",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6W.BIN:main:g0017:l0002",
+      "payload_sha256": "a9d6ed351182c5142b9b38864761da87ea630754478232d14f9f122c3623fcaf",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6W.BIN:main:g0096:l0000",
+      "payload_sha256": "fd9dae23e70dd879b09abfac2503ff24070e6d07c9bbaff067d716cc03dbcb50",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6W.BIN:main:g0098:l0000",
+      "payload_sha256": "fd9dae23e70dd879b09abfac2503ff24070e6d07c9bbaff067d716cc03dbcb50",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/AS_S6W.BIN:main:g0100:l0000",
+      "payload_sha256": "fd9dae23e70dd879b09abfac2503ff24070e6d07c9bbaff067d716cc03dbcb50",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0002:l0001",
+      "payload_sha256": "260917bcf98db765624ce3a2663ede6e418609b2eb11043e8ff1a540017140d3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0003:l0001",
+      "payload_sha256": "619f16aa9ce4b72f5a435d01c13f7d037f5c6a3a209b4debbc266a1e4522be83",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0004:l0004",
+      "payload_sha256": "cd4c8de63eb2d4a62242b808f644968536ddebf50e5cf72163d136e8e446f8b4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0018:l0003",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0020:l0003",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0054:l0001",
+      "payload_sha256": "bd3193f0d55a9a04103284e38ddc4590d25d4b8210ea321dc7e6f7a3efaf1d76",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0055:l0001",
+      "payload_sha256": "bd3193f0d55a9a04103284e38ddc4590d25d4b8210ea321dc7e6f7a3efaf1d76",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0056:l0001",
+      "payload_sha256": "bd3193f0d55a9a04103284e38ddc4590d25d4b8210ea321dc7e6f7a3efaf1d76",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0098:l0001",
+      "payload_sha256": "bd3193f0d55a9a04103284e38ddc4590d25d4b8210ea321dc7e6f7a3efaf1d76",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0099:l0001",
+      "payload_sha256": "bd3193f0d55a9a04103284e38ddc4590d25d4b8210ea321dc7e6f7a3efaf1d76",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0100:l0001",
+      "payload_sha256": "bd3193f0d55a9a04103284e38ddc4590d25d4b8210ea321dc7e6f7a3efaf1d76",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0112:l0001",
+      "payload_sha256": "4df766a9679cea0fa5c4a96236c1d96d8f4e73fd04cf5199189d4a6ba0973825",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6.BIN:main:g0133:l0004",
+      "payload_sha256": "cd4c8de63eb2d4a62242b808f644968536ddebf50e5cf72163d136e8e446f8b4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6B.BIN:main:g0003:l0004",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6B.BIN:main:g0005:l0004",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6B.BIN:main:g0017:l0002",
+      "payload_sha256": "97cc99eb7d219646e6a8c12427c82b71dbc0bdcf07704cc6839e95903caa3dc2",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6B.BIN:main:g0019:l0002",
+      "payload_sha256": "97cc99eb7d219646e6a8c12427c82b71dbc0bdcf07704cc6839e95903caa3dc2",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6B.BIN:main:g0142:l0002",
+      "payload_sha256": "4fba448f2cc825bf927b6550528107ba32448e2f1d24ef4d6762b5750d89b485",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6B.BIN:main:g0147:l0003",
+      "payload_sha256": "8b0defc700c805d35474bf1a427c04060967c65a793abb68cb7bb9cb741c90d8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6I.BIN:main:g0025:l0000",
+      "payload_sha256": "57904b1629388defa1661b81bd9cdcb0795dbe9b337a179d9d15e156bb6d41ed",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0010:l0000",
+      "payload_sha256": "3bb225d85f3b6fb98c6c2d3d69370906b4b437ac22b2b5148563d8b4c71fc4e0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0012:l0001",
+      "payload_sha256": "be2521684a43465fa26343162bede2fe1bf7b1e880329b370168bf73db2673d0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0017:l0001",
+      "payload_sha256": "be2521684a43465fa26343162bede2fe1bf7b1e880329b370168bf73db2673d0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0019:l0000",
+      "payload_sha256": "3bb225d85f3b6fb98c6c2d3d69370906b4b437ac22b2b5148563d8b4c71fc4e0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0068:l0002",
+      "payload_sha256": "e1e3d467e58135a7d9adfb00310378661b09a3619308fc9d416b2ca3dfc38da7",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0074:l0002",
+      "payload_sha256": "e1e3d467e58135a7d9adfb00310378661b09a3619308fc9d416b2ca3dfc38da7",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0080:l0002",
+      "payload_sha256": "e1e3d467e58135a7d9adfb00310378661b09a3619308fc9d416b2ca3dfc38da7",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0150:l0001",
+      "payload_sha256": "be2521684a43465fa26343162bede2fe1bf7b1e880329b370168bf73db2673d0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0152:l0000",
+      "payload_sha256": "3bb225d85f3b6fb98c6c2d3d69370906b4b437ac22b2b5148563d8b4c71fc4e0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0154:l0001",
+      "payload_sha256": "be2521684a43465fa26343162bede2fe1bf7b1e880329b370168bf73db2673d0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6W.BIN:main:g0042:l0004",
+      "payload_sha256": "6063f3853a305ecde9646d7814780eb209197ea9a67a55a4a9f71a150e9aacce",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0031:l0001",
+      "payload_sha256": "6621870c7089ed1a6c8b56602c3491cb5764ca63a77e5a3121c3007b5146fb55",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0031:l0002",
+      "payload_sha256": "488d867730cdee1f571b69832d18aac8f613d3b394b9ec13b6ccf9132ee44e37",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0037:l0006",
+      "payload_sha256": "0891ad4edc1da3387ca78eea06cfc1537bf8cc5355d15bdc75f837ad5cbd9dfd",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0042:l0001",
+      "payload_sha256": "6621870c7089ed1a6c8b56602c3491cb5764ca63a77e5a3121c3007b5146fb55",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0042:l0002",
+      "payload_sha256": "488d867730cdee1f571b69832d18aac8f613d3b394b9ec13b6ccf9132ee44e37",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0050:l0008",
+      "payload_sha256": "607302bd828a748c79c14a30eef2831075a977bd9180470de934a79a3aaf2ea3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0052:l0010",
+      "payload_sha256": "9105fdb46ebe032703e41ea2b16d87590b54cb50ee42c86db08a70b8f4e00b59",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0083:l0007",
+      "payload_sha256": "41e34c214a2aaad7d2860d1afacf05ef9d46a104eefa77846820a12db9abfaf8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0085:l0005",
+      "payload_sha256": "ba25fb27c9c874d2f87cbb235ee7222e8e575b614b6a9e2bac9b0a465ba6da22",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0090:l0011",
+      "payload_sha256": "41e34c214a2aaad7d2860d1afacf05ef9d46a104eefa77846820a12db9abfaf8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0101:l0003",
+      "payload_sha256": "9111360ee5dff59a77423ca5c3b1baa5a2e79495d4facec360c64dcaf5c74767",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0106:l0006",
+      "payload_sha256": "f6a5e2c13726572a10266badcee76d2a2fa2152943b39a5cd7d0e710f4ca8291",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0125:l0004",
+      "payload_sha256": "2f0b15322c05cf4fe80f554eb6534aecdb6a00b216cdaa745d2923f3e9a21d55",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0127:l0006",
+      "payload_sha256": "2f0b15322c05cf4fe80f554eb6534aecdb6a00b216cdaa745d2923f3e9a21d55",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0136:l0007",
+      "payload_sha256": "34367d575af156ba98e7e41ead8d85f0b0a2a0192fd855afeb2930c8137329f5",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0146:l0003",
+      "payload_sha256": "9c08633d3a0b1823ed2dd78e3d231521537620994e2464e138954b173ccc961f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0148:l0006",
+      "payload_sha256": "9c08633d3a0b1823ed2dd78e3d231521537620994e2464e138954b173ccc961f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0150:l0005",
+      "payload_sha256": "9c08633d3a0b1823ed2dd78e3d231521537620994e2464e138954b173ccc961f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0153:l0004",
+      "payload_sha256": "0b6ae1b6d5933da66ca3bafba96f66d7ab9836c0958cec6076bc58916ea116c4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0158:l0002",
+      "payload_sha256": "49e077cf7fe0a91b3a3ed25a54460f0db7bc10c609e29d58656c50276252ad55",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0174:l0006",
+      "payload_sha256": "46acc7c417839492860ad831e5e86f2c070acc271c2c49315ffdb0717c465491",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0176:l0012",
+      "payload_sha256": "3389183909cf735947a37dafc5ffcc458e7f6136d94373f35a370ba629921515",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0189:l0006",
+      "payload_sha256": "bccc56333d5db8f80aef97dba4391c87127d6206b793cb717f99cdeb02b2b285",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0191:l0008",
+      "payload_sha256": "bccc56333d5db8f80aef97dba4391c87127d6206b793cb717f99cdeb02b2b285",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0193:l0008",
+      "payload_sha256": "bccc56333d5db8f80aef97dba4391c87127d6206b793cb717f99cdeb02b2b285",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0196:l0001",
+      "payload_sha256": "6621870c7089ed1a6c8b56602c3491cb5764ca63a77e5a3121c3007b5146fb55",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0196:l0002",
+      "payload_sha256": "488d867730cdee1f571b69832d18aac8f613d3b394b9ec13b6ccf9132ee44e37",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6B.BIN:main:g0007:l0010",
+      "payload_sha256": "e5af5afd26be13f0f90bfa74898c62ca275e0a28a1aab0006dcc54ae2e2203d2",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6B.BIN:main:g0026:l0003",
+      "payload_sha256": "a2cd1de3237c079dc83a1f0dc03cc32253e0b92c8759934bf8f8773764b8b060",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6B.BIN:main:g0027:l0003",
+      "payload_sha256": "a2cd1de3237c079dc83a1f0dc03cc32253e0b92c8759934bf8f8773764b8b060",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6B.BIN:main:g0028:l0003",
+      "payload_sha256": "a2cd1de3237c079dc83a1f0dc03cc32253e0b92c8759934bf8f8773764b8b060",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6B.BIN:main:g0034:l0002",
+      "payload_sha256": "5986a79d60c958f3e80ee8fab81b3e0b67e2a2d52338fbdd14c0eda75da0312c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KG_S6.BIN:main:g0040:l0001",
+      "payload_sha256": "cda79697374ba0b7522bf0de5cb7ab2f75abd583ad40a5211c711e931ebef9b2",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KG_S6.BIN:main:g0041:l0001",
+      "payload_sha256": "cda79697374ba0b7522bf0de5cb7ab2f75abd583ad40a5211c711e931ebef9b2",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KG_S6.BIN:main:g0042:l0001",
+      "payload_sha256": "cda79697374ba0b7522bf0de5cb7ab2f75abd583ad40a5211c711e931ebef9b2",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KG_S6.BIN:main:g0079:l0005",
+      "payload_sha256": "23dbd47eac67addbd2a28a14ceab9d1b96660fdaec65b604bfd4a604c6fc7d8e",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KG_S6.BIN:main:g0082:l0005",
+      "payload_sha256": "23dbd47eac67addbd2a28a14ceab9d1b96660fdaec65b604bfd4a604c6fc7d8e",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KG_S6.BIN:main:g0093:l0007",
+      "payload_sha256": "96f8ed4869a35cdcef3619f4ac85ad936b3607e2119d06bdc82a5b9f39f6d7f9",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KG_S6.BIN:main:g0103:l0003",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KG_S6.BIN:main:g0104:l0003",
+      "payload_sha256": "bd5a5c738e3baee291980beb0fed483372fb686892fe636028ed242c6346d160",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KG_S6W.BIN:main:g0062:l0003",
+      "payload_sha256": "cd443e20ac06e8f7d679bd6fc998933920fa6e4fb3d9962c9c85a6c56e2e7294",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KG_S6W.BIN:main:g0090:l0004",
+      "payload_sha256": "116128a1b085f6127b625319ffc97d8224b7b749cf76325d45eb2e89af56e147",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KO_S6.BIN:main:g0107:l0002",
+      "payload_sha256": "eaaec97a4e7d05236c2f21ce283714df2f22e19094ce8d5cbe85024fa98da53b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KO_S6W.BIN:main:g0010:l0003",
+      "payload_sha256": "e5dce0551cd4403ee93135c681eb0fc1b32cdf8614ae42ab3601a0ec1243d08e",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KO_S6W.BIN:main:g0047:l0002",
+      "payload_sha256": "6ad4bd1d326c51ce6ce7a6f989037ee12a7078ff060ccd417c1e28357005fdfd",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0037:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0038:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0050:l0000",
+      "payload_sha256": "6c3beb258799d06f0c0e482986801056f07ed38f368de7691d14d0ccc84f20be",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0051:l0000",
+      "payload_sha256": "1c88d7b40c79ff25fe963eb8a249b3eb4972fc4b37d69682ef37c391564a448c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0053:l0001",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0056:l0001",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0069:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0070:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0101:l0001",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0102:l0001",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0104:l0003",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0105:l0003",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0113:l0001",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0114:l0001",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0135:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0136:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0145:l0003",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0146:l0001",
+      "payload_sha256": "606371ab9b2ad06576858daec0df5aeae3b6b2bca562a973c18ec9cdf73ca190",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0148:l0005",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0149:l0003",
+      "payload_sha256": "606371ab9b2ad06576858daec0df5aeae3b6b2bca562a973c18ec9cdf73ca190",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0151:l0003",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0152:l0001",
+      "payload_sha256": "606371ab9b2ad06576858daec0df5aeae3b6b2bca562a973c18ec9cdf73ca190",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0154:l0005",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0155:l0003",
+      "payload_sha256": "606371ab9b2ad06576858daec0df5aeae3b6b2bca562a973c18ec9cdf73ca190",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0157:l0001",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S61.BIN:main:g0158:l0001",
+      "payload_sha256": "606371ab9b2ad06576858daec0df5aeae3b6b2bca562a973c18ec9cdf73ca190",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0014:l0003",
+      "payload_sha256": "2defb8b0076785a24655e8040ab8d58abdc20ff5d61567b36dc6a407703c6635",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0019:l0002",
+      "payload_sha256": "eadb795682c3d11665c174da72717522ea8117ce4a80592288fc40d5891e2832",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0047:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0048:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0049:l0002",
+      "payload_sha256": "a30e8b4d91e1496301607365f1bee50f2fd29b0e605f9d9f34915e2aa0a60ec9",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0064:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0072:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0104:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0105:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0139:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0140:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0164:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S62.BIN:main:g0165:l0004",
+      "payload_sha256": "3a0f8ebea2c81e348d43ab3a4f20db108a044c2de0ad1f35332b6f546f014e7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S6B.BIN:main:g0003:l0003",
+      "payload_sha256": "4691e1b9777175d401be168ca42549bcae7d7b6cf3ed3356dc361cd8b760c199",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S6B.BIN:main:g0005:l0004",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S6I.BIN:main:g0000:l0002",
+      "payload_sha256": "be7c8e3382777a6ad8797b72e878fc651a89b2a05e35fd08bcd1a83d981a7aee",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S6O.BIN:main:g0008:l0001",
+      "payload_sha256": "be2521684a43465fa26343162bede2fe1bf7b1e880329b370168bf73db2673d0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S6O.BIN:main:g0012:l0001",
+      "payload_sha256": "be2521684a43465fa26343162bede2fe1bf7b1e880329b370168bf73db2673d0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S6O.BIN:main:g0017:l0001",
+      "payload_sha256": "be2521684a43465fa26343162bede2fe1bf7b1e880329b370168bf73db2673d0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KS_S6O.BIN:main:g0021:l0001",
+      "payload_sha256": "be2521684a43465fa26343162bede2fe1bf7b1e880329b370168bf73db2673d0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S61.BIN:main:g0008:l0001",
+      "payload_sha256": "805e379f4f26d120f0e2b83a735659812a2685442a3fc9398c7f172aa566579b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S61.BIN:main:g0013:l0001",
+      "payload_sha256": "805e379f4f26d120f0e2b83a735659812a2685442a3fc9398c7f172aa566579b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S61.BIN:main:g0023:l0005",
+      "payload_sha256": "ab1f3856c32e9372f09e71f81ce9da37ed2ee386f33e07dfb5902d09469fbd64",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S61.BIN:main:g0035:l0005",
+      "payload_sha256": "ab1f3856c32e9372f09e71f81ce9da37ed2ee386f33e07dfb5902d09469fbd64",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S61.BIN:main:g0039:l0004",
+      "payload_sha256": "5a3afdfb06a1857516320688301f90dc5c7eb6d7aa204fe6c63ac6acd881d617",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S61.BIN:main:g0047:l0006",
+      "payload_sha256": "2718e1810db3389c3dab94b5b9bc8973aa7b4e078721733a5ad05ca74e9c8666",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S61.BIN:main:g0053:l0008",
+      "payload_sha256": "2718e1810db3389c3dab94b5b9bc8973aa7b4e078721733a5ad05ca74e9c8666",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S61.BIN:main:g0055:l0005",
+      "payload_sha256": "ab1f3856c32e9372f09e71f81ce9da37ed2ee386f33e07dfb5902d09469fbd64",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S61.BIN:main:g0076:l0005",
+      "payload_sha256": "ab1f3856c32e9372f09e71f81ce9da37ed2ee386f33e07dfb5902d09469fbd64",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S61.BIN:main:g0120:l0001",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0017:l0000",
+      "payload_sha256": "955519116a54ff81d32a1d82b954b31f0e99dd13065139f0175ffedb10daf4ae",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0018:l0000",
+      "payload_sha256": "955519116a54ff81d32a1d82b954b31f0e99dd13065139f0175ffedb10daf4ae",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0019:l0000",
+      "payload_sha256": "485765bc3ade4ba83685acf4e9740053d8348b38eb594c1b0531ba85934b4b04",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0022:l0001",
+      "payload_sha256": "dc02e411141e80e6a89b465058208d9d0685a95f35b690354ac4a2c3fcd6e5dd",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0023:l0004",
+      "payload_sha256": "5a3afdfb06a1857516320688301f90dc5c7eb6d7aa204fe6c63ac6acd881d617",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0053:l0001",
+      "payload_sha256": "1daab8cf95198d1dcbd12cc2335eff3a74d7899bca5e267e6d5aa9a252d5fd15",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0055:l0006",
+      "payload_sha256": "2718e1810db3389c3dab94b5b9bc8973aa7b4e078721733a5ad05ca74e9c8666",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0061:l0008",
+      "payload_sha256": "2718e1810db3389c3dab94b5b9bc8973aa7b4e078721733a5ad05ca74e9c8666",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0065:l0001",
+      "payload_sha256": "1daab8cf95198d1dcbd12cc2335eff3a74d7899bca5e267e6d5aa9a252d5fd15",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0156:l0006",
+      "payload_sha256": "2718e1810db3389c3dab94b5b9bc8973aa7b4e078721733a5ad05ca74e9c8666",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0162:l0008",
+      "payload_sha256": "2718e1810db3389c3dab94b5b9bc8973aa7b4e078721733a5ad05ca74e9c8666",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0180:l0001",
+      "payload_sha256": "6bca035e7c3b34cea11062a26a350ca8b305acfd06b053476a34efd250275575",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S62.BIN:main:g0181:l0004",
+      "payload_sha256": "5a3afdfb06a1857516320688301f90dc5c7eb6d7aa204fe6c63ac6acd881d617",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S63.BIN:main:g0005:l0000",
+      "payload_sha256": "13a1f65df0733d99eb23133e9534ee3d945a44cc051a5c731acb6386f6328b64",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S63.BIN:main:g0024:l0004",
+      "payload_sha256": "5a3afdfb06a1857516320688301f90dc5c7eb6d7aa204fe6c63ac6acd881d617",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S63.BIN:main:g0049:l0005",
+      "payload_sha256": "ab1f3856c32e9372f09e71f81ce9da37ed2ee386f33e07dfb5902d09469fbd64",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S63.BIN:main:g0058:l0002",
+      "payload_sha256": "ddd97100361bdf141b1bd49bda948df980ba7f4b3b905ef3d8d7f768d162e16e",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6B.BIN:main:g0005:l0008",
+      "payload_sha256": "7615dd1ca0a13babbf884abcf11faae0db57727fb79613fdc58c28a0e52454c3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6B.BIN:main:g0034:l0005",
+      "payload_sha256": "b5d4748374d07c5dabf3ba6bef3420850b575802ed6cef8f822b40b5b486b4b4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6B.BIN:main:g0035:l0005",
+      "payload_sha256": "b5d4748374d07c5dabf3ba6bef3420850b575802ed6cef8f822b40b5b486b4b4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6O.BIN:main:g0059:l0001",
+      "payload_sha256": "be2521684a43465fa26343162bede2fe1bf7b1e880329b370168bf73db2673d0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6O.BIN:main:g0065:l0001",
+      "payload_sha256": "d42e115d1f866f51d14b5eb3cb9f81a94434b66ad8534f3666d475fcb3aa78d5",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6O.BIN:main:g0066:l0001",
+      "payload_sha256": "fb7bc64db01e5881a1a804cbe8443e754af8695ca390b6c4c9f6ab22bb1cf46d",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6O.BIN:main:g0068:l0001",
+      "payload_sha256": "d42e115d1f866f51d14b5eb3cb9f81a94434b66ad8534f3666d475fcb3aa78d5",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6O.BIN:main:g0069:l0001",
+      "payload_sha256": "fb7bc64db01e5881a1a804cbe8443e754af8695ca390b6c4c9f6ab22bb1cf46d",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6O.BIN:main:g0071:l0001",
+      "payload_sha256": "d42e115d1f866f51d14b5eb3cb9f81a94434b66ad8534f3666d475fcb3aa78d5",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6O.BIN:main:g0072:l0001",
+      "payload_sha256": "fb7bc64db01e5881a1a804cbe8443e754af8695ca390b6c4c9f6ab22bb1cf46d",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KY_S6.BIN:main:g0087:l0000",
+      "payload_sha256": "803d66e1898a6bdfdfab2a34fedc8827ec14f686105a969048206e5940bbe7c4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KY_S6.BIN:main:g0102:l0001",
+      "payload_sha256": "5ed7933f6dfcbb838066bdf1e0f2724bcbc2a6c733eb95a2c00c51da7f63eff1",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KY_S6W.BIN:main:g0101:l0000",
+      "payload_sha256": "6ff40a108e35cf0e671e0e6b0b85a6bd10e6cfa7d91de0a76d63c671ed1d50de",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/MI_S6.BIN:main:g0022:l0003",
+      "payload_sha256": "0447bfd6a414b1e0afee4692a7eca19ee2d6eb9dae6d00edff618c35895db6eb",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/MI_S6.BIN:main:g0035:l0002",
+      "payload_sha256": "c98c280b9c2378ff341bec60361f559c7e569595783bddcbbfdf3aea02840b4b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/MI_S6.BIN:main:g0055:l0000",
+      "payload_sha256": "fb5cb52a6856f41279abe36183a083e6dfd650c08e54e902323bd90cb4d19e55",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/MI_S6S.BIN:main:g0005:l0002",
+      "payload_sha256": "c3615e9d4a5259f32f43835b1c0c9c1d6372ec16628493b24b338a2b7d524dee",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/MI_S6W.BIN:main:g0038:l0003",
+      "payload_sha256": "c98c280b9c2378ff341bec60361f559c7e569595783bddcbbfdf3aea02840b4b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6.BIN:main:g0002:l0001",
+      "payload_sha256": "0756567774147476bff7f9e53251de01c8afcce9f9fda505408c22e734cc5abf",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6.BIN:main:g0030:l0001",
+      "payload_sha256": "2ff9f56499fb40a62630def5f025ff058da4061f0292cc22ba104b829cc5e453",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6.BIN:main:g0031:l0001",
+      "payload_sha256": "2ff9f56499fb40a62630def5f025ff058da4061f0292cc22ba104b829cc5e453",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6.BIN:main:g0059:l0002",
+      "payload_sha256": "bb72cb59df4af422ff8c179d2d5fa3ba5c9a1307eab220e6021b9e8950864095",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6S.BIN:main:g0001:l0000",
+      "payload_sha256": "28fd6932593cf7fff0fd06f4813b144cd0d34bcc3baf081ac669d82f6209789d",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6S.BIN:main:g0005:l0000",
+      "payload_sha256": "dd70042ee375c5742825175fdd657eeab7aa042726804228e7091b0c95709a75",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6S.BIN:main:g0009:l0000",
+      "payload_sha256": "1fd3958166eb93b16abd93768b9bc22ead413c74943916a25b56a8e9427ca85e",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0004:l0003",
+      "payload_sha256": "929db7c5e07d674384f112c42fda354b8ac0cf3ad60e8ab9376ea58e62745a0b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0006:l0001",
+      "payload_sha256": "a072e03ab58279ca5f9e24e6f49aa2f43fa20ac063bd4573c40f06abf505dfee",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0008:l0008",
+      "payload_sha256": "9f3a56f2c33b74c05c2a8c26f141c0c64d64d44451de707ac4b10dc37f986680",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0017:l0005",
+      "payload_sha256": "39b27bf0376fc8a57a02bf8029a00aecf80a540a67296597cf8ef12c54d2baa7",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0018:l0005",
+      "payload_sha256": "00695a4ffe7534e5a9f6446b08a794ab7d102846837630369afcbeec456d6fe8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0019:l0006",
+      "payload_sha256": "fe6dc88a071e670df2e6a78f05f47b7e337312c49e6043106f12b78f73b1bd4b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0023:l0003",
+      "payload_sha256": "929db7c5e07d674384f112c42fda354b8ac0cf3ad60e8ab9376ea58e62745a0b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0072:l0000",
+      "payload_sha256": "0c2ecbe15e62e385879d9a2922e7894a08ff149a2ed006257d6a93baf5a3e6f2",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0086:l0000",
+      "payload_sha256": "0c2ecbe15e62e385879d9a2922e7894a08ff149a2ed006257d6a93baf5a3e6f2",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0098:l0000",
+      "payload_sha256": "0c2ecbe15e62e385879d9a2922e7894a08ff149a2ed006257d6a93baf5a3e6f2",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0106:l0008",
+      "payload_sha256": "92c532f4ee5084cda4489d29600e1365c306f39fd1521933f105060a61720888",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0108:l0005",
+      "payload_sha256": "2222f27095fec1cdbf7d780f0a5e3d4059d0563d0d051baf1360c84db4299d77",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0109:l0005",
+      "payload_sha256": "2222f27095fec1cdbf7d780f0a5e3d4059d0563d0d051baf1360c84db4299d77",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0110:l0005",
+      "payload_sha256": "2222f27095fec1cdbf7d780f0a5e3d4059d0563d0d051baf1360c84db4299d77",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6S.BIN:main:g0004:l0003",
+      "payload_sha256": "97e275a1baba69e678516e8e8524d8916ee909259abea93f58d6c5c554ce0a11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "c:TEL:80136724:21",
+      "payload_sha256": "219ba747788c99888aba3a9af32bfca0ba5ee97b53419922bf686de2fe0653ba",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/MASTER/EN_GP.BIN:table-0:g0030:l0003",
+      "payload_sha256": "6e474dbf2982c4d9ed2aaf4565de69673fcd6cca1449933ec6da5231d27a9ea4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/MASTER/G_CON.BIN:table-0:g0014:l0001",
+      "payload_sha256": "2d5395590c5668a659d3e225c555f0012677719cb2509bf33aaf3ec8921e60cf",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/MASTER/G_CON.BIN:table-0:g0028:l0003",
+      "payload_sha256": "6e474dbf2982c4d9ed2aaf4565de69673fcd6cca1449933ec6da5231d27a9ea4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/MASTER/MOKUTEN.BIN:table-0:g0028:l0003",
+      "payload_sha256": "6e474dbf2982c4d9ed2aaf4565de69673fcd6cca1449933ec6da5231d27a9ea4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/MASTER/NOBEL.BIN:table-0:g0019:l0003",
+      "payload_sha256": "27bfff2d9aac0be31cc42ca796263235f5fe23ada41f7cc2b0fa0f665446a4df",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/MASTER/NOBEL.BIN:table-0:g0029:l0003",
+      "payload_sha256": "6e474dbf2982c4d9ed2aaf4565de69673fcd6cca1449933ec6da5231d27a9ea4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/MASTER/SUI_CON.BIN:table-0:g0030:l0003",
+      "payload_sha256": "6e474dbf2982c4d9ed2aaf4565de69673fcd6cca1449933ec6da5231d27a9ea4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/MASTER/TAI_MAS.BIN:table-0:g0022:l0000",
+      "payload_sha256": "64296dd18b75f7d9d5c2a0a09911115d903770b2704feede7ea5a3634d3df63d",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/MASTER/UEKI.BIN:table-0:g0029:l0003",
+      "payload_sha256": "6e474dbf2982c4d9ed2aaf4565de69673fcd6cca1449933ec6da5231d27a9ea4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_AS.BIN:section-05:g0004:l0000",
+      "payload_sha256": "0b617885492389453e2d5f6f7e8cb7700ea80d79f33dad5654ea4d6281155bf4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_AS.BIN:section-05:g0006:l0000",
+      "payload_sha256": "0b617885492389453e2d5f6f7e8cb7700ea80d79f33dad5654ea4d6281155bf4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_AS.BIN:section-10:g0002:l0000",
+      "payload_sha256": "e36c2640174c61b957d3c78df02e980d1c47b855de30a434eb71a054712eea36",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_AS.BIN:section-10:g0005:l0000",
+      "payload_sha256": "e314f114a035e6bef34852742833710f590559f932c9016abc8d514d64b06ec5",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_AS.BIN:section-11:g0012:l0000",
+      "payload_sha256": "a7e13415755ccc10f1763abd5f2fe88c21f147f7f3fc740b6eb6057f93c7115e",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_AS.BIN:initializer-D_8015BE18:g0013:l0001",
+      "payload_sha256": "7bfa625b1cfee0b17591d3c413806447b968d1d79065d34c72ebe580592ea99f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_AS.BIN:initializer-D_8015BE18:g0016:l0001",
+      "payload_sha256": "7bfa625b1cfee0b17591d3c413806447b968d1d79065d34c72ebe580592ea99f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_FU.BIN:section-11:g0017:l0000",
+      "payload_sha256": "4a53ffa7397edf8fa438ae97dd5bf880acbd311e7fd98aa66c469989907c5faf",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_FU.BIN:section-11:g0019:l0000",
+      "payload_sha256": "e163a496cf105c91822586e36ab2ccfaed6f1936dd1f20c1eeb8b337e459ca7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_FU.BIN:section-11:g0033:l0000",
+      "payload_sha256": "4a53ffa7397edf8fa438ae97dd5bf880acbd311e7fd98aa66c469989907c5faf",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_FU.BIN:section-11:g0035:l0000",
+      "payload_sha256": "e163a496cf105c91822586e36ab2ccfaed6f1936dd1f20c1eeb8b337e459ca7f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_FU.BIN:section-11:g0049:l0000",
+      "payload_sha256": "4360210a9309d40af714d6baff2b6d34517f5360d237dd145513042be5f14511",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_HI.BIN:section-05:g0011:l0000",
+      "payload_sha256": "f3212653b237590a0a1d1f9afd74667d4b9ac8c1b2a4e3e7e052c84e17469f46",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_HI.BIN:section-11:g0051:l0000",
+      "payload_sha256": "aad3b5d61939f8a1046146b8b416fbf14209bc1c9e29f538af8df7cb515f3b7c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_HI.BIN:section-12:g0005:l0000",
+      "payload_sha256": "44712caa3c16be95b933a64e5988bc8fb708cc6ff23f77754ad06ed38689af01",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_HI.BIN:initializer-D_8015BE18:g0002:l0001",
+      "payload_sha256": "bcb57ea49386306c6f83f471bed4a7e38a9bd1255c41be73811d6f7361a6fd53",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_HI.BIN:initializer-D_8015BE18:g0004:l0001",
+      "payload_sha256": "bcb57ea49386306c6f83f471bed4a7e38a9bd1255c41be73811d6f7361a6fd53",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_HI.BIN:initializer-D_8015BE18:g0007:l0001",
+      "payload_sha256": "bcb57ea49386306c6f83f471bed4a7e38a9bd1255c41be73811d6f7361a6fd53",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KA.BIN:initializer-D_8015BE18:g0012:l0001",
+      "payload_sha256": "606706a710c078d7fe1a8222f547f8cbdfaacd01f0a2ad1d2380e2135d2d3112",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KA.BIN:initializer-D_8015BE18:g0013:l0001",
+      "payload_sha256": "7bfa625b1cfee0b17591d3c413806447b968d1d79065d34c72ebe580592ea99f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KA.BIN:initializer-D_8015BE18:g0014:l0001",
+      "payload_sha256": "7bfa625b1cfee0b17591d3c413806447b968d1d79065d34c72ebe580592ea99f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-01:g0008:l0000",
+      "payload_sha256": "c4fb970b783a74eabb8851f6aa2811c5f067ffb75192758f65dc75a40eda4d41",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-04:g0004:l0000",
+      "payload_sha256": "55df4e3ec739b17ffe4448a22cd81efd08521d38d295d2b6188ac2c4b0d26749",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-06:g0007:l0000",
+      "payload_sha256": "4c81448f807ff196d7b89ba687ffa337d0c2d692165824597849a69a1faca5a8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-10:g0002:l0000",
+      "payload_sha256": "43f7ffedd78641818e37e884c230506916cac1c5206590bd600b97c7a3ea0d0f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0009:l0000",
+      "payload_sha256": "ebca830d059f6b534f944b900b2365fb482fb7999a02eacf03971902f4cc7cb1",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0013:l0000",
+      "payload_sha256": "cbb31bb7f000258cc847008e750dba43e63db89ed27deb0d77cdd1bf2a5f38c3",
+      "orphan_flags": 2,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0023:l0000",
+      "payload_sha256": "e6361afbac2c9189120c83ed8e3237bbc4ce15a437b0421d79cb9aa2a550b450",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0025:l0000",
+      "payload_sha256": "8b1034a1aa179d53526267dceb586e4dcda14a545ab786f17812435d02f7a2b6",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0039:l0000",
+      "payload_sha256": "e6361afbac2c9189120c83ed8e3237bbc4ce15a437b0421d79cb9aa2a550b450",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0041:l0000",
+      "payload_sha256": "8b1034a1aa179d53526267dceb586e4dcda14a545ab786f17812435d02f7a2b6",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0050:l0000",
+      "payload_sha256": "82be580a5ab82ddc1610879f1f1a6509c00e90aa297618da3704315876854eb5",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0055:l0000",
+      "payload_sha256": "e6361afbac2c9189120c83ed8e3237bbc4ce15a437b0421d79cb9aa2a550b450",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0057:l0000",
+      "payload_sha256": "8b1034a1aa179d53526267dceb586e4dcda14a545ab786f17812435d02f7a2b6",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-12:g0015:l0000",
+      "payload_sha256": "ec8a9f30172ddc51dc0a6639b3444742aba2255b998e526c9daae2951b493e3f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-13:g0002:l0000",
+      "payload_sha256": "692b2605977400ad82dd92bd337c8c2c960fc262ac58ac7bb965337cf0adfccb",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-13:g0008:l0000",
+      "payload_sha256": "9387f7169f2d5ed972bc4a981cb6828aac621b85e54f4fc26c991b0507b4529a",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-14:g0006:l0000",
+      "payload_sha256": "9b5d3f5b44251a8daa6f6d262b5d8270d874142239bb8aecf4ad9c92dc2f159c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KO.BIN:section-14:g0001:l0000",
+      "payload_sha256": "7391f370dd4d6ce968cc3dbc275ac8ae962a1a793dff95ab2ac788f3d873c3b4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KY.BIN:section-01:g0000:l0002",
+      "payload_sha256": "9f8575c8c93861e0a361c757b6d0781b1bf98ba3619e9003150063273ffe198d",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KY.BIN:section-01:g0003:l0002",
+      "payload_sha256": "9f8575c8c93861e0a361c757b6d0781b1bf98ba3619e9003150063273ffe198d",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KY.BIN:section-14:g0006:l0000",
+      "payload_sha256": "bacf62897623e87fc7d0be5c79d29783d6d4e070cc1a54ac8041ba8b45423e77",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KY.BIN:initializer-D_8015BE18:g0014:l0001",
+      "payload_sha256": "7bfa625b1cfee0b17591d3c413806447b968d1d79065d34c72ebe580592ea99f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_MI.BIN:section-01:g0002:l0000",
+      "payload_sha256": "2c729f128dd811c17f24712fecb9ffae6fd22283cfc73a1251942b4ae0a2d9e8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_MI.BIN:section-02:g0000:l0001",
+      "payload_sha256": "b9dae279990c15c984a8116901807fd408fb661ba3cbd4f6eb21a2487e249829",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_MI.BIN:section-02:g0003:l0001",
+      "payload_sha256": "b9dae279990c15c984a8116901807fd408fb661ba3cbd4f6eb21a2487e249829",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_MI.BIN:section-02:g0006:l0001",
+      "payload_sha256": "b9dae279990c15c984a8116901807fd408fb661ba3cbd4f6eb21a2487e249829",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_MI.BIN:section-09:g0000:l0001",
+      "payload_sha256": "b9dae279990c15c984a8116901807fd408fb661ba3cbd4f6eb21a2487e249829",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_MI.BIN:section-09:g0003:l0001",
+      "payload_sha256": "b9dae279990c15c984a8116901807fd408fb661ba3cbd4f6eb21a2487e249829",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_MI.BIN:initializer-D_8015BE18:g0002:l0001",
+      "payload_sha256": "090bccc04a509cce406824c5886055c626aef06368d7613e76953d96aa044244",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_MI.BIN:initializer-D_8015BE18:g0008:l0001",
+      "payload_sha256": "090bccc04a509cce406824c5886055c626aef06368d7613e76953d96aa044244",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_MI.BIN:initializer-D_8015BE28:g0000:l0000",
+      "payload_sha256": "6e122d892c64e5bf586ced446190ec07f2d021e3123fc60ecfcaaf719a61328d",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_NI.BIN:section-06:g0011:l0000",
+      "payload_sha256": "5abfda5da9f9eb453e72cceac97ea725b221fcb799de86beb188b930d679f472",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_NI.BIN:section-11:g0002:l0001",
+      "payload_sha256": "78a1e9f7e8acf6b059de7b98d88ac35f53a6cd8c38e35666ce2bca94870cdd2a",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_NI.BIN:section-11:g0026:l0000",
+      "payload_sha256": "522949dd33b1b62bc6256bed8b13181b7297b82c1a412bcc7419dbcfc600a8da",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_NI.BIN:section-11:g0028:l0000",
+      "payload_sha256": "97da7bd2a7b107a2e2b0a856852a2b2620dacf07b0a19fadf14f8baf4c3d6b62",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_NI.BIN:section-11:g0042:l0000",
+      "payload_sha256": "522949dd33b1b62bc6256bed8b13181b7297b82c1a412bcc7419dbcfc600a8da",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_NI.BIN:section-11:g0044:l0000",
+      "payload_sha256": "97da7bd2a7b107a2e2b0a856852a2b2620dacf07b0a19fadf14f8baf4c3d6b62",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_NI.BIN:section-12:g0005:l0000",
+      "payload_sha256": "faf828c4f3eb207cd7a8af8c6daeff7b5ac3fa3102e968d9fbbe9b41f7a823a3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_NI.BIN:initializer-D_8015BE18:g0005:l0001",
+      "payload_sha256": "bb1976af29524c98c0ff072f1057e966dfea2bb5e839ab30f55297193d071a47",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0024:l0000",
+      "payload_sha256": "2ec19b7dd9e9a0427961bc738c581ecdafdf16d2cea8bab840b943138c4a9254",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0040:l0000",
+      "payload_sha256": "2ec19b7dd9e9a0427961bc738c581ecdafdf16d2cea8bab840b943138c4a9254",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-13:g0006:l0000",
+      "payload_sha256": "89de1bdc56ff4eaedc0d920d05f678f6d68054aa7e2245df7c53881a1bf90999",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-13:g0009:l0000",
+      "payload_sha256": "89de1bdc56ff4eaedc0d920d05f678f6d68054aa7e2245df7c53881a1bf90999",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-16:g0000:l0000",
+      "payload_sha256": "0fe5aa887582bb5ac71335d0ed353af6715b7aa55fa3a09c2c0d0e7672a078fd",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-16:g0003:l0000",
+      "payload_sha256": "0fe5aa887582bb5ac71335d0ed353af6715b7aa55fa3a09c2c0d0e7672a078fd",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-18:g0004:l0003",
+      "payload_sha256": "28a8ab64c0f1a4406a6897e42b65ec5ae37c518987128aa6d6289791e9cbc6f3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:initializer-D_8015BE18:g0011:l0000",
+      "payload_sha256": "cf2618d268f97dfe9d7b0581dd451446b1188b0b00391f2755be015f188aad65",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:initializer-D_8015BE18:g0015:l0001",
+      "payload_sha256": "64f501dc28d43d62fc702fbca72375ec18e9c7434653b50874ac5ea44ed3276e",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-4:g0000:l0004",
+      "payload_sha256": "b8b23c9df1dd172d9758e56ecc0bb2be5a89bd617127be660eb2bc1fbf80ee03",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-5:g0000:l0013",
+      "payload_sha256": "e4ce3e31e2bff1407c74dc403a5e18eb903d4db326da2ceecf913fdd7bccfcf1",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-6:g0000:l0020",
+      "payload_sha256": "b6aba387978e90217315e6cb97f832e21e1925b880f78a76e761a05f9adbe56d",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-11:g0000:l0003",
+      "payload_sha256": "e39e2fe411b3f56738807cfd4ddf013971ccc292bb781e67cb79fc121e7e87d0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-14:g0000:l0014",
+      "payload_sha256": "436479a1aaab30c02f9d986a0146bf35a29dc33bd2f49114fe41cbdccc8db28e",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_HI.BIN:scene-01:g0001:l0001",
+      "payload_sha256": "745950fd82f4f80c05a077b109386beac4603cca28fbcc27d0b0d483173b2ccc",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KG.BIN:scene-02:g0005:l0007",
+      "payload_sha256": "3bc59823c897f7fe46d2c10a9c8f6a111b121d7d266a1b97a95a848abeaa8cc1",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KG.BIN:scene-03:g0000:l0001",
+      "payload_sha256": "5ead33e8b167b5219ba8ca830667a2eedb5b508bfa1f0b1e1bdc7afd0a4395e3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KG.BIN:scene-04:g0002:l0000",
+      "payload_sha256": "c0624bd109df612b73a39a04356e5bbd906d4260bec690727aea0f25eb53ae4e",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KI.BIN:scene-01:g0001:l0004",
+      "payload_sha256": "72ecc30f914f444bcd05b321f79643308cf8502d50f5bbdb31f41872a76a6340",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KI.BIN:initializer-37:g0001:l0006",
+      "payload_sha256": "4f8ddc2984ec2deed2bf374e9ec6906b56c95255716580b801727f67cbeed0f8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KO.BIN:initializer-48:g0002:l0004",
+      "payload_sha256": "0b6fb243379bbf2283d813780141fc95cba6d1d9d7ccbc5f58aa3b512d57076a",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KY.BIN:scene-00:g0000:l0004",
+      "payload_sha256": "32d95b487419b0443dd9fca6eee47aeaa23c3b31aabeccc84a097b14659190fe",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KY.BIN:scene-00:g0001:l0003",
+      "payload_sha256": "1f5fe3a6ea52a38869a9ff1a942d6c7c7b92e0a0b2453e5ffa61b520475ef0aa",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KY.BIN:scene-00:g0006:l0003",
+      "payload_sha256": "1f5fe3a6ea52a38869a9ff1a942d6c7c7b92e0a0b2453e5ffa61b520475ef0aa",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KY.BIN:scene-03:g0000:l0001",
+      "payload_sha256": "bc8034b0767c5472dacef56f4afd4121423c4931a29dbef96506a9e50e5ab6c1",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KY.BIN:scene-03:g0003:l0001",
+      "payload_sha256": "bc8034b0767c5472dacef56f4afd4121423c4931a29dbef96506a9e50e5ab6c1",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KY.BIN:initializer-49:g0001:l0006",
+      "payload_sha256": "2f96b282042efab2fd2c958d12ff640a9b58653047e049be4c8f548b101f5dc1",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_MI.BIN:scene-00:g0001:l0002",
+      "payload_sha256": "d3181c5b1c66b33752c788e4f11fa90bc252e175eb0b230f554306ef08e03584",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_MI.BIN:scene-01:g0015:l0002",
+      "payload_sha256": "2720aab5a122b23ff10c4e4d7c12711faf033ef8fd97b7887d7e60bb93b10e6b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_MI.BIN:scene-03:g0002:l0000",
+      "payload_sha256": "d50da744c6c4a3d133a6487d6f764565a20dfc2137a68a353bf0a4cfcf59c122",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_MI.BIN:initializer-54:g0002:l0000",
+      "payload_sha256": "450e246511ef5ab329db02314266b0e3c5906b71d825838f551b7d649f6e0ce3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_MI.BIN:initializer-54:g0004:l0000",
+      "payload_sha256": "450e246511ef5ab329db02314266b0e3c5906b71d825838f551b7d649f6e0ce3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_NI.BIN:scene-03:g0006:l0003",
+      "payload_sha256": "ff55af7db6163bfa45425860a1f721bcda0f97ba32b28b7b5d2352c88b87fb2b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_OT.BIN:initializer-74:g0001:l0002",
+      "payload_sha256": "da8c5a57a5ffb69f869a2928f919dd015fac78842134d91b1b6b3cb7e3480a8b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_OT.BIN:initializer-74:g0003:l0002",
+      "payload_sha256": "b9d23c0387956683c211a2a9e448329a9fdd91c87f2a128c6f5a613806ace159",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_OT.BIN:initializer-74:g0005:l0002",
+      "payload_sha256": "da8c5a57a5ffb69f869a2928f919dd015fac78842134d91b1b6b3cb7e3480a8b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_OT.BIN:initializer-74:g0007:l0002",
+      "payload_sha256": "29dc71bb0edc583aeafc68b271735ce2539ef7b5299eb5bb8f8a079de2c37079",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_SA.BIN:scene-00:g0000:l0003",
+      "payload_sha256": "3905e722369ab650c37110441d5ade79086086b18db7d77a2c5e0cf04dfbd5ab",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-67:g0000:l0001",
+      "payload_sha256": "259c4a95345087a9e0bf392c4ffe38e06ac99e1d14676790c7aa6495eaa74b75",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-68:g0000:l0000",
+      "payload_sha256": "259c4a95345087a9e0bf392c4ffe38e06ac99e1d14676790c7aa6495eaa74b75",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-68:g0002:l0000",
+      "payload_sha256": "259c4a95345087a9e0bf392c4ffe38e06ac99e1d14676790c7aa6495eaa74b75",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-0:g0008:l0009",
+      "payload_sha256": "bac4c25b0bca6b70a0916c0510d0b654499955aa54ab047c8e203882d4d806bf",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-0:g0012:l0006",
+      "payload_sha256": "bd5a5c738e3baee291980beb0fed483372fb686892fe636028ed242c6346d160",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-0:g0023:l0002",
+      "payload_sha256": "874922270d71fa028b321eee75da9fa0942d68073c86595db51efa7a2d017700",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-0:g0030:l0003",
+      "payload_sha256": "f04ec87a50ab7926b3ad4d40c3a63c035be9a1070abb10c495b83c6ffd0466f1",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-0:g0043:l0001",
+      "payload_sha256": "e0682f2f3205d86b8e8c6e7d40473a2699b98248c1a2d8abcc4032d49750ab2f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-1:g0012:l0006",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-2:g0022:l0004",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-3:g0005:l0003",
+      "payload_sha256": "44686dad00f803600f1133e87c3577de42eb3e282bddbcfc0a98c8cdda2ad844",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-3:g0012:l0002",
+      "payload_sha256": "bbc268ee6cb78f41d68fadf07dfc67b59aa281cbf0c9601f24d15cf7588a896c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-4:g0011:l0004",
+      "payload_sha256": "ed6c7fe02676ceea1fe971f33f86bcc7e1cc100eda66747529e24688ad030a17",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-5:g0005:l0003",
+      "payload_sha256": "44686dad00f803600f1133e87c3577de42eb3e282bddbcfc0a98c8cdda2ad844",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-5:g0014:l0002",
+      "payload_sha256": "c38ad92c1d41ae10e058424a21e2e8fff6569b557c69b22281d208febe8ae4c5",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-5:g0015:l0004",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-5:g0016:l0004",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-5:g0038:l0002",
+      "payload_sha256": "c38ad92c1d41ae10e058424a21e2e8fff6569b557c69b22281d208febe8ae4c5",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-5:g0039:l0004",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-5:g0040:l0004",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSH_FU.BIN:table-0:g0058:l0002",
+      "payload_sha256": "874922270d71fa028b321eee75da9fa0942d68073c86595db51efa7a2d017700",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSH_FU.BIN:table-0:g0114:l0001",
+      "payload_sha256": "e0682f2f3205d86b8e8c6e7d40473a2699b98248c1a2d8abcc4032d49750ab2f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSH_FU.BIN:table-0:g0183:l0005",
+      "payload_sha256": "658f9b13e6c5190caac8718c2b4c2bbb6ffd42ef1d5f7b8c3af14d217474ff2c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-0:g0014:l0000",
+      "payload_sha256": "470ffb84dd4a1ffa76c3ca737323fd412f270353f54f6ba2b8553680bafdfaeb",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-1:g0014:l0002",
+      "payload_sha256": "a4d7fde98afc2164fbc2374090d286829e50bbc0ac0f74893ca40ab54245f438",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-2:g0004:l0000",
+      "payload_sha256": "607302bd828a748c79c14a30eef2831075a977bd9180470de934a79a3aaf2ea3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-2:g0014:l0000",
+      "payload_sha256": "382136474aa284543af52075a17d8b3295e3df26c1381803ddf96876ab262aed",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-4:g0010:l0000",
+      "payload_sha256": "f1dd0ae4760d496df33a22dd25fd3aeb39b223616d72716123a1a5bea0953c98",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-4:g0029:l0003",
+      "payload_sha256": "6cc0fac35c8cd123e1bf1201e8ea542168953497d48ea32b544c2789f03f5529",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-4:g0032:l0002",
+      "payload_sha256": "15f7fd8a240d909b9566cc1c581bdac0b22dcfdc55075c283c754d0b4205437a",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-4:g0034:l0003",
+      "payload_sha256": "5e8cfd6a0a5ee0d21270fff420fff36ceea8334ded4cffaad76f36fdd88968a7",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-5:g0014:l0002",
+      "payload_sha256": "e9a1dccd727803db915537b57b03c2cafdce4fad2c0e58fdea625da8eb9d99cb",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-7:g0023:l0000",
+      "payload_sha256": "ca6216ba7d2d28b66356230cd5c9801d70175f2db653983b04a2024298a2423f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-7:g0032:l0003",
+      "payload_sha256": "91eb617a4539e4fa55b07e941b30a5ebebe935bb30711782b2d9947e55f9c166",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-8:g0014:l0002",
+      "payload_sha256": "c06e8ae4dd175de647b80e6e4a2d818d28573dba2cf570a916723a2ebcbb05b5",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-8:g0029:l0001",
+      "payload_sha256": "5a5450e8466bb193dfd15efbbecafc7b292aa9a768054534fd3db8208f0acf6a",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-8:g0032:l0001",
+      "payload_sha256": "88cd2f873f0ffdb6f4a6470e590044a1983b7918678ae26fc7ef566f03c69dd4",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GEKO.BIN:table-9:g0004:l0000",
+      "payload_sha256": "1822464886aee284df586ab949aab237eba093747bde568a8c762828a4e67b81",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GROUP_D.BIN:table-8:g0039:l0000",
+      "payload_sha256": "7a049d6704ac84d3c25bc8396a1187b07e356a186176929757f2d313e6dc5792",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GROUP_D.BIN:table-9:g0039:l0000",
+      "payload_sha256": "5d64911866acc1366d156d567ec450857632d8e126af37c3145cf51d011e326f",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-0:g0010:l0004",
+      "payload_sha256": "70b24dd32368befbd7dd96c75ec89b78c5aec23d28c3c4c040a0e83c42ab970e",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-1:g0015:l0006",
+      "payload_sha256": "cd4e4ae402696dbe9c766b7e77c165c6e596884ada0f350d34513032d63a3500",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-1:g0024:l0001",
+      "payload_sha256": "882383fd68c9b9459f8b9c4b207080e8781ea91329fc820344ecff4010b596d5",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-1:g0024:l0003",
+      "payload_sha256": "a64cec906ee40ad865e7f8be95021f4bce36391577a016fa5a85d73be5cf5136",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-2:g0012:l0008",
+      "payload_sha256": "922f851100632a8a8efacbd5df913a46151e2b6be1fe804328e11299db88b30b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-6:g0004:l0000",
+      "payload_sha256": "d5afdd54564bccb572e4e7fae3746d074afa9ccaa0633bb844d93d2e29f1e2d6",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-7:g0004:l0004",
+      "payload_sha256": "233db18edb55cd06e17eb4f5bb226858e17a6dcff278c6e18548b1d9292293aa",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-8:g0004:l0000",
+      "payload_sha256": "93e83e9641eefb49b9de0231175b874cf4312b6266e4f08cef63f7f19a892edd",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_BIRTH.BIN:table-0:g0017:l0000",
+      "payload_sha256": "c0b9266cd8cc034d398081c98f428df677006762fe64488e03a1c96746841d12",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_BIRTH.BIN:table-2:g0011:l0000",
+      "payload_sha256": "5986a79d60c958f3e80ee8fab81b3e0b67e2a2d52338fbdd14c0eda75da0312c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_BIRTH.BIN:table-7:g0011:l0000",
+      "payload_sha256": "5986a79d60c958f3e80ee8fab81b3e0b67e2a2d52338fbdd14c0eda75da0312c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_BIRTH.BIN:table-8:g0011:l0000",
+      "payload_sha256": "5986a79d60c958f3e80ee8fab81b3e0b67e2a2d52338fbdd14c0eda75da0312c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_INVITE.BIN:table-2:g0023:l0000",
+      "payload_sha256": "607302bd828a748c79c14a30eef2831075a977bd9180470de934a79a3aaf2ea3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_INVITE.BIN:table-2:g0024:l0000",
+      "payload_sha256": "607302bd828a748c79c14a30eef2831075a977bd9180470de934a79a3aaf2ea3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_INVITE.BIN:table-9:g0021:l0002",
+      "payload_sha256": "3726517d772427472afe2b96bee1e8106c53d168d85bb5221d789872a556140c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_INVITE.BIN:table-9:g0023:l0000",
+      "payload_sha256": "cbe72725ac2cfaabc1cc94b2fc5ba6b4762b5f9ccd2f7a3955577013cbd7f398",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_INVITE.BIN:table-12:g0021:l0002",
+      "payload_sha256": "1f999d6cbf41685f260dd550f29dd155e6a225c5cde7bcdf06f93e518d211ca8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/HAGEMASI.BIN:table-1:g0001:l0001",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/HAGEMASI.BIN:table-1:g0005:l0001",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/HAGEMASI.BIN:table-2:g0001:l0001",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/HAGEMASI.BIN:table-2:g0003:l0000",
+      "payload_sha256": "f4ee28b8953c6c79039b633a74ec76a36b13fd93c0411afa4bdc5d51ba02fdef",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/HAGEMASI.BIN:table-8:g0001:l0001",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/HAGEMASI.BIN:table-8:g0003:l0001",
+      "payload_sha256": "580215a0644c27b0b97403d2c54431514b557abfb515191fa920c7af5cc32ae8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/OMIMAI.BIN:table-8:g0000:l0002",
+      "payload_sha256": "f26e3fdd64cf20fe33ffb99368ac61651f4a7a1bb75c3c5b0e3be6a425560cf8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/P_BIRTH.BIN:girl-12:g0001:l0004",
+      "payload_sha256": "b734b0f1b30832177f8684f381b91191864c6ac873c1e8d32a9122a683ab3386",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-1:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-1:g0012:l0006",
+      "payload_sha256": "55485a8ca9d6be0fa6b6ba6baf1b603321711a8b00a0ae3e7fb078520775ba5e",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-1:g0014:l0006",
+      "payload_sha256": "53befb242a4686a606b5594c80c6488b5174c96791aff264e0c07ca601533b22",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-2:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-3:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-3:g0012:l0004",
+      "payload_sha256": "8ef2ca6dff99f499584ba3377451e9c529495a565e074bcbb2f62e8ceec81a23",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-3:g0012:l0006",
+      "payload_sha256": "1e222fd30b83ece4e69231697da71c5d155253a3baa1bf697cad02ad4a2d7470",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-3:g0013:l0006",
+      "payload_sha256": "1e222fd30b83ece4e69231697da71c5d155253a3baa1bf697cad02ad4a2d7470",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-3:g0014:l0006",
+      "payload_sha256": "1e222fd30b83ece4e69231697da71c5d155253a3baa1bf697cad02ad4a2d7470",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-4:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-5:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-6:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-7:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-8:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-8:g0012:l0004",
+      "payload_sha256": "c4a696520d3836cd567d3011f206515294f62815c67d8920f2cfcee051e72080",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-8:g0017:l0001",
+      "payload_sha256": "9ae8d8a869a2faa6148977622a51d70df258465f64d60069cf60e445ccec012c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-8:g0036:l0008",
+      "payload_sha256": "28a8ab64c0f1a4406a6897e42b65ec5ae37c518987128aa6d6289791e9cbc6f3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-9:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-9:g0012:l0004",
+      "payload_sha256": "c4a696520d3836cd567d3011f206515294f62815c67d8920f2cfcee051e72080",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-9:g0017:l0001",
+      "payload_sha256": "9ae8d8a869a2faa6148977622a51d70df258465f64d60069cf60e445ccec012c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-9:g0036:l0008",
+      "payload_sha256": "28a8ab64c0f1a4406a6897e42b65ec5ae37c518987128aa6d6289791e9cbc6f3",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-10:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-10:g0013:l0006",
+      "payload_sha256": "21ed727d51b2c8d0d2427b4095b8917c1f72406119a90f11fb8368d0dd093b55",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-10:g0014:l0006",
+      "payload_sha256": "055ce383ca43c4fd587f644df1dd6787c753513625b1449b2b193ccc1e5cb62c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-10:g0024:l0000",
+      "payload_sha256": "f86eaad792c25b11c4fb60c764aef52c2c8447e2d75865f77504389cea250886",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-10:g0026:l0000",
+      "payload_sha256": "527c5310493169ebef1ab61138d6b9a0757ae9959394cb44c245c59dc79c9d1a",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-10:g0033:l0002",
+      "payload_sha256": "a858bf2350ce6d607c828779837a664d9c5c2b97e66836582cd17d79f3388ec7",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-10:g0034:l0002",
+      "payload_sha256": "a858bf2350ce6d607c828779837a664d9c5c2b97e66836582cd17d79f3388ec7",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-10:g0036:l0002",
+      "payload_sha256": "527c5310493169ebef1ab61138d6b9a0757ae9959394cb44c245c59dc79c9d1a",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-11:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-11:g0004:l0000",
+      "payload_sha256": "c8562d8b46cb26333c2de711bb2ad7b5f4efcad4235278b8d33b661c4e4faf0b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-11:g0013:l0006",
+      "payload_sha256": "771eb411cc86252fe73560b8d5ef2695039f9f5ce8cc72fa195fc09c885d4a7c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-11:g0017:l0001",
+      "payload_sha256": "9ae8d8a869a2faa6148977622a51d70df258465f64d60069cf60e445ccec012c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0001:l0000",
+      "payload_sha256": "15985d6a615de1f0b39a2c984d4951ca6c438fdcce8a95b80fbeb8af54647e11",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0004:l0000",
+      "payload_sha256": "e078d759d9ff7f09846dc154162f637782204f2bd7e74a9319d920cabc6f666b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0013:l0004",
+      "payload_sha256": "9f8575c8c93861e0a361c757b6d0781b1bf98ba3619e9003150063273ffe198d",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0014:l0007",
+      "payload_sha256": "822d946ae770362d3100466b515746e0e78480598aac5201038de80c1c4a1cf8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-0:g0024:l0000",
+      "payload_sha256": "5986a79d60c958f3e80ee8fab81b3e0b67e2a2d52338fbdd14c0eda75da0312c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-0:g0038:l0001",
+      "payload_sha256": "6979168e7034f7ae40577a837df0d543a63709437f88cf384c2b82a8d01103c7",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-5:g0008:l0000",
+      "payload_sha256": "be7c8e3382777a6ad8797b72e878fc651a89b2a05e35fd08bcd1a83d981a7aee",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-9:g0021:l0002",
+      "payload_sha256": "c3615e9d4a5259f32f43835b1c0c9c1d6372ec16628493b24b338a2b7d524dee",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-9:g0028:l0001",
+      "payload_sha256": "1ea5117bc154b6b4d4d83e996be8957a1c84944401ce90b714d4aea104a3ce04",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-10:g0021:l0000",
+      "payload_sha256": "dd70042ee375c5742825175fdd657eeab7aa042726804228e7091b0c95709a75",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-10:g0046:l0000",
+      "payload_sha256": "41b2302e30f00db4205d312d637972cfa73c7724cbd0ab4ef7770fccde63e535",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/VALEN.BIN:table-0:g0000:l0003",
+      "payload_sha256": "78fb2ccddea0735f95b489026ce742fb9bb84f2ccf275f9b770118aea55a05db",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/VALEN.BIN:table-12:g0001:l0004",
+      "payload_sha256": "a6888f7ee65d12ab55156705197a03a90f5f5a8da1a8e9990875068c7b44cc57",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/VALEN.BIN:table-12:g0001:l0005",
+      "payload_sha256": "e85148c129ee376428eb3f8a266a73f1b11a66906279b848164f5de8dfd7e5fa",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-0:g0003:l0003",
+      "payload_sha256": "fc1e99d5d462abaaa5f7e92d23a8edc67108213584009ac815f534067f79cff9",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-0:g0007:l0000",
+      "payload_sha256": "5986a79d60c958f3e80ee8fab81b3e0b67e2a2d52338fbdd14c0eda75da0312c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-1:g0007:l0000",
+      "payload_sha256": "5986a79d60c958f3e80ee8fab81b3e0b67e2a2d52338fbdd14c0eda75da0312c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-2:g0007:l0000",
+      "payload_sha256": "5986a79d60c958f3e80ee8fab81b3e0b67e2a2d52338fbdd14c0eda75da0312c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-2:g0007:l0002",
+      "payload_sha256": "8838ed68c42619f9da1a10fa11a0a12df02b1df05102238dafcd721660815b3c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-4:g0007:l0002",
+      "payload_sha256": "8838ed68c42619f9da1a10fa11a0a12df02b1df05102238dafcd721660815b3c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-8:g0001:l0002",
+      "payload_sha256": "7155ba597f356376184ecd52a879d6859e70416f3767f2a3c777cfd5004a8b6c",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-12:g0005:l0002",
+      "payload_sha256": "f6d6ea32cfb79d23337d80a9215f3efc8971548a5b0d1035a6a66a2500faea82",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-0:g0003:l0001",
+      "payload_sha256": "7094a858a378b14b0a45cbbbb40369cdbe8dd1d2fe432feb59b7aed50d23b640",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-3:g0003:l0010",
+      "payload_sha256": "81159dce059700a9c27f974f466d78ee7be28ad8593bf3adf628bfc18cd3ccd2",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-7:g0006:l0000",
+      "payload_sha256": "ad6b99e5c05c91a1d15fc0adc686c58db5b575f143b813a754998b5eb2715ce5",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-7:g0007:l0001",
+      "payload_sha256": "a2b11da8e35f7207fbb38b90814168ff516c1155ff5dbf0df4aa0cfde5f66f08",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-7:g0007:l0008",
+      "payload_sha256": "cfd7a799a05b571de9f47a215fee887015ca3f3b752a29348c6b91c8b8b038d0",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-9:g0004:l0008",
+      "payload_sha256": "0f0d6dc54bcaee73e56587bed7bd99ff8685d2f1671438f79bbcbc66619d4f2b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-9:g0007:l0008",
+      "payload_sha256": "0f0d6dc54bcaee73e56587bed7bd99ff8685d2f1671438f79bbcbc66619d4f2b",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-10:g0008:l0000",
+      "payload_sha256": "3b0c5691a4f93980695f118d7cfd6b37aa461b3f540230eeedfbd186e94ed889",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-10:g0017:l0000",
+      "payload_sha256": "00b6a228c6c4598254e1b42a9623d08de23b5be441a7b425425bd65988c432a8",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "supplemental:CDROM/TAIIKU/KIYOTAI.BIN:00d8",
+      "payload_sha256": "8f31edb312de2b0bf00c930491c83d7a9110cb44c77fae4e6830853d15ac3183",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0035:l0008",
+      "payload_sha256": "392aa179624b3528faec91770a85c21cc58f2b121674292d8160f799cba9482a",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0134:l0005",
+      "payload_sha256": "2294896daa14826731c5149d01cca3e999952a79c654d61713624de01509a845",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6B.BIN:main:g0022:l0001",
+      "payload_sha256": "d1155fe6f8a58abd085216851c975e2b715988ef3299fcbf198f182f400d0677",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6B.BIN:main:g0024:l0001",
+      "payload_sha256": "d1155fe6f8a58abd085216851c975e2b715988ef3299fcbf198f182f400d0677",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6B.BIN:main:g0026:l0001",
+      "payload_sha256": "d1155fe6f8a58abd085216851c975e2b715988ef3299fcbf198f182f400d0677",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6B.BIN:main:g0053:l0002",
+      "payload_sha256": "5b2b1dace06a343933e49a7ca08b74c0883c4191bf87eec620790e08475cf7ae",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6B.BIN:main:g0055:l0002",
+      "payload_sha256": "5b2b1dace06a343933e49a7ca08b74c0883c4191bf87eec620790e08475cf7ae",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KT_S6B.BIN:main:g0057:l0002",
+      "payload_sha256": "5b2b1dace06a343933e49a7ca08b74c0883c4191bf87eec620790e08475cf7ae",
+      "orphan_flags": 1,
+      "disposition": "preserve deliberate pause before short utterance, aside or hesitation"
+    }
+  ]
+}

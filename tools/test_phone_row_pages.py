@@ -73,6 +73,29 @@ static void fresh(void) {
 }
 int main(void) {
     int i;
+    u8 wrapped[1024];
+    fresh();
+    strcpy((char *)wrapped, "One two three four five six seven end");
+    english_phone_wrap(wrapped, 15);
+    assert(!strcmp((char *)wrapped, "One two three four five six\nseven end"));
+    strcpy((char *)wrapped, "One two three four five six seven\nend");
+    english_phone_wrap(wrapped, 15);
+    assert(!strcmp((char *)wrapped, "One two three four five six seven\nend"));
+    strcpy((char *)wrapped, "One two three four five six seven end\nNext paragraph");
+    english_phone_wrap(wrapped, 15);
+    assert(!strcmp((char *)wrapped, "One two three four five six\nseven end\nNext paragraph"));
+    strcpy((char *)wrapped, "One two three four five \020 end");
+    english_phone_wrap(wrapped, 15);
+    assert(strstr((char *)wrapped, "\020 end") != 0);
+    strcpy((char *)wrapped, "1\n2\n3\n4\n5\nOne two three four five six seven end");
+    english_phone_wrap(wrapped, 15);
+    assert(!strcmp((char *)wrapped, "1\n2\n3\n4\n5\nOne two three four five six seven end"));
+    strcpy((char *)wrapped, "abcdefghijklmnopqrstuvwxyzabcdef end");
+    english_phone_wrap(wrapped, 15);
+    assert(!strcmp((char *)wrapped, "abcdefghijklmnopqrstuvwxyzabcdef\nend"));
+    strcpy((char *)wrapped, "a abcdefghijklmnopqrstuvwxyzabcdef end");
+    english_phone_wrap(wrapped, 15);
+    assert(!strcmp((char *)wrapped, "a abcdefghijklmnopqrstuvwxyzabcdef\nend"));
     fresh();
     english_sndi((u8 *)"Hello,", 0, 15);
     english_sndi((u8 *)"friend.", 1, 15);

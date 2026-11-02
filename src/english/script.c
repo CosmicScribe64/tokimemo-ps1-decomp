@@ -928,6 +928,12 @@ static void english_phone_wrap(u8 *text, s32 speaker_style) {
     s32 limit;
     s32 count;
     s32 k;
+    s32 last_wrap;
+    s32 row_start;
+    s32 previous_start;
+    s32 word_start;
+    s32 moved_width;
+    s32 j;
 
     limit = 0x7C - ENGLISH_TEXT_X - english_text_width(english_quote);
     if (english_phone_mark_x != 0) {
@@ -937,6 +943,9 @@ static void english_phone_wrap(u8 *text, s32 speaker_style) {
         limit = 0x7C + 0x80;
     }
     last_space = -1;
+    last_wrap = -1;
+    row_start = 0;
+    previous_start = 0;
     width = 0;
     count = 1;
     for (i = 0; text[i] != 0; i += english_char_bytes(&text[i])) {
@@ -944,10 +953,38 @@ static void english_phone_wrap(u8 *text, s32 speaker_style) {
             count++;
         }
     }
-    for (i = 0; text[i] != 0;) {
-        if (text[i] == ENGLISH_LINE_END) {
+    for (i = 0;;) {
+        if (text[i] == ENGLISH_LINE_END || text[i] == 0) {
+            /* Only rebalance an inserted break; source paragraphs stay intact. */
+            if (last_wrap >= 0 && last_space < 0 && width > 0 && width < limit / 3) {
+                word_start = last_wrap;
+                while (word_start > previous_start && text[word_start - 1] != ' ') {
+                    word_start--;
+                }
+                moved_width = english_text_width((u8 *)" ");
+                for (j = word_start; j < last_wrap; j += k) {
+                    k = english_char_bytes(&text[j]);
+                    one[0] = text[j];
+                    one[1] = k == 2 ? text[j + 1] : 0;
+                    one[2] = 0;
+                    if (text[j] == ENGLISH_CODE_PLAYER_FORM || text[j] == ENGLISH_CODE_GIRL) {
+                        moved_width += 116;
+                    } else {
+                        moved_width += english_text_width(one);
+                    }
+                }
+                if (word_start > previous_start && width + moved_width <= limit) {
+                    text[word_start - 1] = ENGLISH_LINE_END;
+                    text[last_wrap] = ' ';
+                }
+            }
+            if (text[i] == 0) {
+                break;
+            }
             width = 0;
             last_space = -1;
+            last_wrap = -1;
+            row_start = i + 1;
             i++;
             continue;
         }
@@ -966,6 +1003,9 @@ static void english_phone_wrap(u8 *text, s32 speaker_style) {
         }
         if (width > limit && last_space >= 0 && count < 6) {
             text[last_space] = ENGLISH_LINE_END;
+            last_wrap = last_space;
+            previous_start = row_start;
+            row_start = last_space + 1;
             i = last_space + 1;
             width = 0;
             last_space = -1;

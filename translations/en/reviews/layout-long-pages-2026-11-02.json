@@ -1,0 +1,825 @@
+{
+  "schema": "tokimemo.layout-flag-review.v1",
+  "date": "2026-11-02",
+  "ticket": "T-39511",
+  "target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+  "scope": "Read all 49 unique payloads behind 67 long-page warnings. Static checks confirm scrolling windows, no unwrappable rows and no hard row-limit violations. This does not certify runtime scrolling or whole-game visuals.",
+  "records": [
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0119:l0004",
+      "payload_sha256": "905966ce10502fcccdbfdf8b3c70a52f8b1d8e328a5d8c870ea802a0acd2f7dc",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0125:l0004",
+      "payload_sha256": "905966ce10502fcccdbfdf8b3c70a52f8b1d8e328a5d8c870ea802a0acd2f7dc",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0131:l0004",
+      "payload_sha256": "905966ce10502fcccdbfdf8b3c70a52f8b1d8e328a5d8c870ea802a0acd2f7dc",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0083:l0003",
+      "payload_sha256": "dae3ca34cedd55afb760c146835dd575548347903dd57234dcdc2b3dd1b665e3",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0090:l0007",
+      "payload_sha256": "dae3ca34cedd55afb760c146835dd575548347903dd57234dcdc2b3dd1b665e3",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/KG_S6W.BIN:main:g0030:l0004",
+      "payload_sha256": "fcc80a86fc47cad3d799eb7bc5993396342307a723e535d6607c11401c674db0",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6S.BIN:main:g0001:l0000",
+      "payload_sha256": "28fd6932593cf7fff0fd06f4813b144cd0d34bcc3baf081ac669d82f6209789d",
+      "window": "message_speech",
+      "page_rows": [
+        2,
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "c:TEL:8013ac0c:2",
+      "payload_sha256": "0a42de3bb3480d412b0a3214a1e83f27ab5c769b36afdcc48ae7acdf95f5e755",
+      "window": "telephone_narration",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": 6,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "c:TEL:8013adc0:6",
+      "payload_sha256": "dabc96fb806ca9cb08487b02b858a280fa6564ade968a72cbe03353d2b259b24",
+      "window": "telephone_narration",
+      "page_rows": [
+        5
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": 6,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_AS.BIN:section-15:g0004:l0000",
+      "payload_sha256": "9f68b6bbc28053793d1b627417b11306762a13634dac9af874bf272a03c9779b",
+      "window": "message_speech",
+      "page_rows": [
+        4,
+        2,
+        2
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0025:l0000",
+      "payload_sha256": "8b1034a1aa179d53526267dceb586e4dcda14a545ab786f17812435d02f7a2b6",
+      "window": "message_speech",
+      "page_rows": [
+        4,
+        2,
+        2
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0041:l0000",
+      "payload_sha256": "8b1034a1aa179d53526267dceb586e4dcda14a545ab786f17812435d02f7a2b6",
+      "window": "message_speech",
+      "page_rows": [
+        4,
+        2,
+        2
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0050:l0000",
+      "payload_sha256": "82be580a5ab82ddc1610879f1f1a6509c00e90aa297618da3704315876854eb5",
+      "window": "message_speech",
+      "page_rows": [
+        4,
+        3,
+        1
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0057:l0000",
+      "payload_sha256": "8b1034a1aa179d53526267dceb586e4dcda14a545ab786f17812435d02f7a2b6",
+      "window": "message_speech",
+      "page_rows": [
+        4,
+        2,
+        2
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0008",
+      "payload_sha256": "7aa55cde0a4c98b4c3ef7ac847507ad39937bab96b8fdec70a5a447ab739143a",
+      "window": "message_speech",
+      "page_rows": [
+        7
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0010",
+      "payload_sha256": "86abf3ebfb7ba87697f7a319abd2637e6d47a588e1f5f58248d8e6bd66c43138",
+      "window": "message_speech",
+      "page_rows": [
+        5
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0014",
+      "payload_sha256": "185e82da885bdfed767bff75394cad06e0b27df5facef2f78e70aadd2f93b1a3",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-10:g0000:l0021",
+      "payload_sha256": "a38185d9b5c9db73eb875eea83a0ae4502a6ffa0c20098806fa27f85843d8c12",
+      "window": "message_speech",
+      "page_rows": [
+        5
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-13:g0000:l0001",
+      "payload_sha256": "fd42605923bbdb23b5b6afb82c6ba399b5205645da9ed1aa1cba333e138b7483",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EPILOG.BIN:table-3:g0000:l0000",
+      "payload_sha256": "92db70795883805010391012bed86ae87c83783f1a5e2f2a71080280148f59de",
+      "window": "ending_summary",
+      "page_rows": [
+        17
+      ],
+      "visible_rows": 10,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_AS.BIN:initializer-00:g0004:l0000",
+      "payload_sha256": "c4550417df1a8d074ef3d11cdf416d0be2c53b9c9440f9c61f8a0528a9a0d60f",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_FU.BIN:scene-01:g0001:l0009",
+      "payload_sha256": "7fd724b7bd2aeb18a305295924d9ec8d6377ff549cf460c0393635c29d6c58ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_FU.BIN:initializer-13:g0000:l0013",
+      "payload_sha256": "44da60d9977397623466f75f86ba617519df57aa44140439776c0b1858f6505b",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KI.BIN:scene-01:g0001:l0005",
+      "payload_sha256": "f680cb9edbdbb000f6c707bc8afdc7f985ccbb3654962d79aa9e995b9155501c",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_KO.BIN:scene-01:g0003:l0004",
+      "payload_sha256": "a7b47bdfe7f80291635ce27fb423ef152130a794a519fdd495f86cbca4a28a04",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_NI.BIN:scene-00:g0002:l0010",
+      "payload_sha256": "368c8754e3ba5ccd70bed8e21f5f7657015ff7f717bcb51b4702d70ed8ce272e",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_NI.BIN:scene-00:g0003:l0005",
+      "payload_sha256": "368c8754e3ba5ccd70bed8e21f5f7657015ff7f717bcb51b4702d70ed8ce272e",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_NI.BIN:scene-01:g0006:l0001",
+      "payload_sha256": "740dbe5c04aba0a28c286a90d54a22e670a5db3c17c353e70804ef007c5fe490",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_OT.BIN:initializer-21:g0006:l0000",
+      "payload_sha256": "c4927c94c75b2757993b14fa188db237bad8510b6e3703e96277d1f1d7e9ed8d",
+      "window": "message_speech",
+      "page_rows": [
+        5
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_OT.BIN:initializer-23:g0002:l0002",
+      "payload_sha256": "03e097077df68f250bf748c23464a477fc4bffdad2e6d26e85b50842635ed59a",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-67:g0006:l0003",
+      "payload_sha256": "630ce029bca60004c9c9ffa675f33612b8b5cce014d3aea0f9f7601383173f27",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-68:g0002:l0003",
+      "payload_sha256": "05922d337e4c63dac4f4d034dadf0f9b6e9146f14422dc7533181d82072a1375",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-4:g0005:l0006",
+      "payload_sha256": "bb4c4e0409f1b5102b73df2e108573a54796034364e9baeb7bebce0998949902",
+      "window": "message_speech",
+      "page_rows": [
+        5
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-4:g0006:l0001",
+      "payload_sha256": "e523e2bb115bee6b6b03cd443f199ad77cffa38e3254d554c3e40b20ab2cf09f",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-5:g0006:l0000",
+      "payload_sha256": "ec45608ac616b93027dae4fbb6664c53bd1be762a01a5a5a245f22bfee0d2ad7",
+      "window": "message_speech",
+      "page_rows": [
+        5
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/GROUP_D.BIN:table-10:g0007:l0001",
+      "payload_sha256": "69f83b3b0bf2eb27375f8e4a5c6d10461f840979853f07d2c1e8f16e272f9e33",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-1:g0016:l0000",
+      "payload_sha256": "212c6f0f460b51bcdf4394a7fe78f2893e6360cd1bd8d687c674fe7d15925402",
+      "window": "message_speech",
+      "page_rows": [
+        5
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-1:g0017:l0000",
+      "payload_sha256": "28758d96f16943e6055426d7eb89f28d3ccd779e2765a5b235213937e6970b97",
+      "window": "message_speech",
+      "page_rows": [
+        5
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-1:g0024:l0000",
+      "payload_sha256": "33dff797780515c1dde1f7969468eeb4b5f95d4957ef3848318a05173e859607",
+      "window": "message_speech",
+      "page_rows": [
+        5
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-2:g0009:l0005",
+      "payload_sha256": "df2e9748810fa0d6e07550eb851e967d3a585498d4a77bb438ba54e0ea4845c0",
+      "window": "message_speech",
+      "page_rows": [
+        5
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/G_APPEAR.BIN:table-2:g0012:l0005",
+      "payload_sha256": "df2e9748810fa0d6e07550eb851e967d3a585498d4a77bb438ba54e0ea4845c0",
+      "window": "message_speech",
+      "page_rows": [
+        5
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/OMIMAI.BIN:table-9:g0000:l0006",
+      "payload_sha256": "6d46d66f925ea4da246d388f03a3061b12da6b5e264ece01a380e8360ec4a5c6",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-11:g0004:l0000",
+      "payload_sha256": "c8562d8b46cb26333c2de711bb2ad7b5f4efcad4235278b8d33b661c4e4faf0b",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-0:g0037:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-1:g0037:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-2:g0037:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-3:g0037:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-4:g0009:l0000",
+      "payload_sha256": "e853971ec776d7cbea275be04fa684ca2f903b506957946bff2c280331dd0c18",
+      "window": "message_speech",
+      "page_rows": [
+        3,
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-4:g0037:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-4:g0038:l0001",
+      "payload_sha256": "a1e4e8ed1bd1f7e06b31004705f1c47c0b234f390ff817aa0db453b46d07f54f",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-5:g0037:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-6:g0037:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-7:g0037:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-8:g0037:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-9:g0037:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-10:g0037:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-11:g0034:l0000",
+      "payload_sha256": "bf04cecc3b037cf57db6e42718cc315f153eb4a68ed2c7fdb56e4bfe03fd18ea",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-12:g0014:l0000",
+      "payload_sha256": "01270172a7604edc371ef8f0b69a0be3214a718f0c6071c62797cf44426a8745",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/VALEN.BIN:table-4:g0002:l0002",
+      "payload_sha256": "24e3538ebb646ed63135eb5a391d50fe5463c27eb958123d88922f69fb65c4cb",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/VALEN.BIN:table-10:g0001:l0000",
+      "payload_sha256": "83c8982314ba7ef23b2e9436f9c12c5b9091a809a2268fc6ed6b4460379f8bb3",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-3:g0001:l0001",
+      "payload_sha256": "88ddcf443e9ec3dea02a32d7efb9cb0150deb4b93c68162b7123c8013a2f041e",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-3:g0002:l0003",
+      "payload_sha256": "d580b55d8674b219faa7ac4612507d3563224b4a9fb5791f91e5abcefac3c2b8",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-7:g0003:l0002",
+      "payload_sha256": "2093158973b0822b5f8ad8693f692d0220a925116329655befca58c9147402bf",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/WHITE.BIN:table-10:g0001:l0006",
+      "payload_sha256": "809408ad0ccdc6ed746a0932584579b3d3c70bffb1ed3e9ebfee6e3d5cc74377",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-6:g0003:l0000",
+      "payload_sha256": "0801c8da3872d6f66dec4525b4fe5e5bd520a7548bf5574783e16b49eb99d6b2",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-8:g0006:l0005",
+      "payload_sha256": "522a110430490267e1029dc48e6df4dcd606d024525b4ca010ec5aac71e89228",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/XMAS.BIN:table-11:g0011:l0002",
+      "payload_sha256": "14d4c421d04478e3f99914a52017936a673774db3d0feee69c2c7ff0a96bb56f",
+      "window": "message_speech",
+      "page_rows": [
+        4
+      ],
+      "visible_rows": 3,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "targeted runtime verification pending"
+    }
+  ]
+}

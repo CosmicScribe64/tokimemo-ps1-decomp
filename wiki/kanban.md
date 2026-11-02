@@ -21,6 +21,8 @@ kanban-plugin: board
 
 
 ## In Progress
+- [ ] [[tickets/T-39526-publish-review-patcher|T-39526 Publish the verified review patcher and update repository information]]
+- [ ] [[tickets/T-39525-english-break-boundaries|T-39525 Check English boundaries before retaining source line breaks]]
 
 
 
@@ -76,7 +78,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-39522-speaker-label-contrast|T-39522 Distinguish speaker names from dialogue]]
 
 
 
@@ -111,6 +112,8 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-39524-phone-orphan-lines|T-39524 Avoid orphaned words in assembled phone sentences]]
+- [ ] [[tickets/T-39522-speaker-label-contrast|T-39522 Distinguish speaker names from dialogue]]
 
 - [ ] [[tickets/T-39523-school-gate-lettering|T-39523 Redraw the school gate plaque with clear lettering]]
 

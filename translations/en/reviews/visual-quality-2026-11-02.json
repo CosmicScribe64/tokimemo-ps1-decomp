@@ -1881,5 +1881,600 @@
       "sha256": "720f53e5caeab1e9701de6c76064db65da39d3b2eadc420e51f1a99848e36794"
     },
     "assessment": "Inspected the encoded plaque and fresh opening/classroom captures. Lettering follows the plaque perspective and remains inside its edges. Pink speaker names are distinct; the eight-pixel gap preserves the two-row full-name introduction. Quote and thought closings are visible in the classroom reply. The complete voice-enabled route is still pending."
+  },
+  "speaker_perspective_full_route": {
+    "target_sha1": "9935d1aacd904c6ed8c41c9c92d989c860158f08",
+    "frames": 33106,
+    "reason": "done",
+    "font_trace": {
+      "calls": 0,
+      "unknown_calls": 0,
+      "overflow_calls": 0
+    },
+    "assessment": "Inspected all 132 captures on native-resolution contact sheets and checked individual opening, classroom and telephone images. Speaker labels, plaque perspective, date scene and save/load fit. Capture 100 leaves a short final word on its own row; T-39524 tracks the runtime wrapping repair. Whole-game review remains open.",
+    "captures": [
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/001_boot_01.png",
+        "sha256": "45f9d0f65e9df4124a7d6529ce016f808ba7d30664e4cf373a01367a40c44f42"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/002_boot_02.png",
+        "sha256": "c1ded1e6a189d8d208c5d270393e392a66aa932dbc47a1f6945c01d5a326b40f"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/003_title_intro_01.png",
+        "sha256": "1a3012995c9200a96e89cacf6a3e40d27546ac2f3f90f7327ea47cdf8872db5d"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/004_title_intro_02.png",
+        "sha256": "ae2c63a9ebdce2a97d3388d470378f222b6c2fe6e54749f31c122041e841c72b"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/005_title_intro_03.png",
+        "sha256": "dd6b1862f9088b3347de86e77aa8e18016f2813ca992988a3400aad4d9d39902"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/006_title_intro_04.png",
+        "sha256": "58bb27c5783964c94210d36eeb3a4f733146b3d358a4018ce0b57b78f2513c73"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/007_title_intro_05.png",
+        "sha256": "bada81eb9ba152f1253c814a941dcadb80f35ce45e838b593ce2bc416dc07e27"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/008_title_menu.png",
+        "sha256": "eb0ad2859e32e995af19e29a1fa66fa9f4a2d2f539e7a3a753e2e4ab6af7018a"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/009_options.png",
+        "sha256": "fd4f8cd4e2d8019779c3b336463cb927796202e9071f74bc3b1405768440adf0"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/010_options_text_speed.png",
+        "sha256": "c1e8e928ec2c870b83eedeb8779a5b4012659bd9f702cb8584261e3619feb090"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/011_options_voice.png",
+        "sha256": "7c3707646cd69ea5b72b92e0e9af8bbf439ca8961b9ca6a9060b55f9bb178e15"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/012_options_voice_on.png",
+        "sha256": "629c2de00d21acde6850b0d2855a792ec94e68e6bd8cbc189d612a74b95d0636"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/013_title_menu_again.png",
+        "sha256": "eb0ad2859e32e995af19e29a1fa66fa9f4a2d2f539e7a3a753e2e4ab6af7018a"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/014_file_select_new_album.png",
+        "sha256": "c0427d5a14d5f97c3b4f7ca13b7540a8623b09ebc735ac10562c7e0633d5de5b"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/015_file_select_album_slot.png",
+        "sha256": "ce6db318bea045cd65e650e962504b9c242ddf9ff057881a57fa209ad27e724a"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/016_file_select_slot_1.png",
+        "sha256": "9be1b78c0ea03113075591d9063c68638dcf99cd637906acd5af3f62e9be4d57"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/017_file_select_system_file_01.png",
+        "sha256": "f34b34c112c843ba08b0249d9225f5aa59d229c045c648436bf784b95d267351"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/018_file_select_system_file_02.png",
+        "sha256": "f34b34c112c843ba08b0249d9225f5aa59d229c045c648436bf784b95d267351"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/019_file_select_system_file_03.png",
+        "sha256": "9c5c46b4c59fcb9a039eba7dd6705fe95daaedf79d9bcb39a178f20865ebcc72"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/020_name_entry_page.png",
+        "sha256": "bfaee56bbae650c9a5ac0d2d11dd1454b532621251af57993b9b476ba30b7ebd"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/021_family_after_delete.png",
+        "sha256": "06c592bea984b62722e83c0c0d186f6c291ab60cf884a3fb08430db4a6bc8804"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/022_family_after_retype.png",
+        "sha256": "2995f1c42d62050da15812f3f5ffd2397507892b01874ecd97c36a42c635fbe6"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/023_name_entry_family.png",
+        "sha256": "2995f1c42d62050da15812f3f5ffd2397507892b01874ecd97c36a42c635fbe6"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/024_name_entry_given.png",
+        "sha256": "4843385043b429a79df389c5bfe9f7d143eb618c8fd2ef7e92a50a3a9c6ec6e7"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/025_name_entry_nickname.png",
+        "sha256": "63eab84a192f422c2f7e4fe90707f53ed29f31a1517c22c9bbf51e88e393ecb8"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/026_name_entry_birthday.png",
+        "sha256": "08bf38f5b5afdec974ff1f63d6675c4f24814bfd4ac141b9c8de0e0a2410a83f"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/027_name_entry_confirm.png",
+        "sha256": "4c06d1b576d312a1bbeb38507b0df674b0b0d1b3906be69835e266cc9eb25a57"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/028_name_entry_shiori_01.png",
+        "sha256": "458d7d475f6399cb6e44ec6f73c83a43eb467a30e3f61163eaeaf1e191812757"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/029_name_entry_shiori_02.png",
+        "sha256": "789c97b0d0d2ce5cd345e5b39979365ed88952165e1bf683a76d027ceace81f7"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/030_name_entry_shiori_03.png",
+        "sha256": "cf48f5e7e98e5a5c9c23024c68c121b63bd71d942153d798d71ffd5356c3fddc"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/031_prologue_01.png",
+        "sha256": "ee4b928e8d9f4b42a9c47b9b6335ed8daec47addded5f941c729fb8769107840"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/032_prologue_02.png",
+        "sha256": "f6533b2665d9e91066f349e311bb6d731abe31807268c81ad81409f7bc34c945"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/033_prologue_03.png",
+        "sha256": "6fed1971b788894930e3c19e668d3b329552046861618a275066f369682bb687"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/034_prologue_04.png",
+        "sha256": "ea6b1f8a28498176ba1447e38089c49a5fd05010fc7647b342e676789a4b1b97"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/035_prologue_05.png",
+        "sha256": "77268cdc69a04201552cfa30318fae3e27e193089b123965830c6c44b76c56a1"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/036_prologue_06.png",
+        "sha256": "273851501d1a3a4209d6a4a5c0bd437299f57b44c208564c672d3ec0d2993d19"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/037_prologue_07.png",
+        "sha256": "619f124de720962b443bfb9d6b3afef1c729e603a9cd7504f64f38eb6ffcbb0b"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/038_prologue_08.png",
+        "sha256": "903f4a8d29b1d57e2afc2e6d04b6779338d63a57eda991dae66c1bebd60c6a53"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/039_prologue_09.png",
+        "sha256": "698e5b886db022e0e39fb290066942256c6175d4a498f922bf623225e7de7080"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/040_prologue_10.png",
+        "sha256": "a3cb3a1d6bf923c7be558b019eedcd081ed487c6dc271ecb0d38a2ac609395e5"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/041_prologue_11.png",
+        "sha256": "9fc77a653c20359a7171f802a5266738ea644f856e8940860fff91a3bd9af559"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/042_prologue_12.png",
+        "sha256": "f7e4a4215eec12628acf69c3bb7fd27628036b38c076e729c18734203c455b11"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/043_prologue_13.png",
+        "sha256": "62c5387a278e959c8460049cf816d291ddbec35148e3df527dd22afa9d8d17c3"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/044_prologue_14.png",
+        "sha256": "b263bb1e3a109b2b1ee97c91722bd32bd1ec231210c267da7532e4c846ac38a6"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/045_prologue_15.png",
+        "sha256": "18dcaa69dd358c6d7ea10e90096e5d68c5bd0211ee5f2369a58a0a13bde2f11a"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/046_prologue_16.png",
+        "sha256": "6e7f2d819f8ec1d9b3691e3d602cea03e14f5ed1902537738bd765fd86af6436"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/047_prologue_17.png",
+        "sha256": "dc5e95e30faf013038a12b1e543f1727a1699a4132e6f62e090fe92ff1589e09"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/048_prologue_18.png",
+        "sha256": "1873a36e380de7adcb5b78bb560571ecafa1532e73d944d13de8a5f2e1018da1"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/049_prologue_19.png",
+        "sha256": "dffc4b38f7530ced5850de638e2fb8b52534f07c7c3cf120f5ba911e492b8a38"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/050_prologue_20.png",
+        "sha256": "09cfda0bd1e6a64563db28641ad2a6c1087b6d1dad95bf47f6f868d06b43922e"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/051_prologue_21.png",
+        "sha256": "04ab2dd9457a473144349a2a15e561b85b0fc9452bf04c4f72a9e4c924c454fa"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/052_prologue_22.png",
+        "sha256": "9938280806db48710d818979a82e2b13eecd59a72c0c9c2750418f1408f49abe"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/053_prologue_23.png",
+        "sha256": "d2720625203e9025a73e56ba1187b6854721127b0a0be5582de864d787fb6c6a"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/054_prologue_24.png",
+        "sha256": "9f2632cc517222724e783e46d42fba87797cdcf3e494ba95634923301c0bd18e"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/055_prologue_25.png",
+        "sha256": "1cccf8085b8a05a6a7685386790edfa5ce743e2e60a9702ab518bc6f6b6c14af"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/056_prologue_26.png",
+        "sha256": "8a5a14a469e3a3f9da7028e1dbf4ac7d89d70d32c3e9544c8931db3a80620a4c"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/057_prologue_27.png",
+        "sha256": "edb4c6669eb9b20f4b699a6c7cea94290e1c9b3b69c3bd38e6b3b80d9469e44f"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/058_prologue_28.png",
+        "sha256": "33b3f77f70d76f4df9cbb1cb8620fd160523780d16535fe87f55defb28a24f63"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/059_prologue_29.png",
+        "sha256": "855dfef2d103858df91df3af6af9f24de7db641f6421e017a1a6a05ebfa0017b"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/060_prologue_30.png",
+        "sha256": "18b0cf8e16718dfecbe525f839af91bb60e6ade90cabf022fe0e2c4113882f1b"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/061_prologue_31.png",
+        "sha256": "4f0d7f85ac7123a03b3da1e1fa11e56f0f77940516c5640033e682a21d5f1839"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/062_prologue_32.png",
+        "sha256": "141a4347582573d17163679c2c027017ccd88965a6b02afb7e6d946264ce0ae9"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/063_prologue_33.png",
+        "sha256": "5aa05a570c7c93fd03fe8d4be74418aebcc1732956b68ae59898c63da6c1c93b"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/064_prologue_34.png",
+        "sha256": "fa4dda7b90880c1735f0eb849ab2a37c8519363eb1b061678aa2b3d78992115a"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/065_prologue_35.png",
+        "sha256": "77831ff8df73a9c70224dcb240e93947a42e3c1b746048b3b62332ccf1820b08"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/066_prologue_36.png",
+        "sha256": "5df3081c9a99ad93e343f7bc97aa58987d7787f6cefed616ed110c300315c758"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/067_prologue_37.png",
+        "sha256": "0ca290f68f6fdb88b1b7260c60b44396eb59bd7381b599e02451ce31614c2334"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/068_prologue_38.png",
+        "sha256": "5288c2dc0385fe5033d4d3b6c9bca2b212537064346c52806d56a1de6f930587"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/069_prologue_39.png",
+        "sha256": "d70575f4f419589a630501f053bf68a62836a2c5f78ced605035631a6839ad81"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/070_prologue_40.png",
+        "sha256": "8508cd8916a301f5730203fb2714812531abdb6f370fedaa7f21d80f0654a804"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/071_prologue_41.png",
+        "sha256": "c92b94866c1dd5e91a7099d848590ef552781ec97285ab8a2fa7bbc87b8dfe20"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/072_prologue_42.png",
+        "sha256": "6dc5bee49c906de7c6bdcc87f92589ffb870b97d15dde7ec755fb471a172c039"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/073_prologue_43.png",
+        "sha256": "95f719cd9c009bf87919ebe357dd3ae8dba0e0facd5f990b0a81d23b2bdf56e4"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/074_prologue_44.png",
+        "sha256": "007a6b0e2c52dca482a6ea7fc92f1958d2dca28520c16f4c7ca3ebce430672b8"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/075_prologue_45.png",
+        "sha256": "f209ae886d2d030f266b166e2de70a2b2a3270ba578d6b14cd84a05f3cd82085"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/076_prologue_46.png",
+        "sha256": "eb457c821ac340d504b0ddf41f0a27eb4f9bc1609ecd0eee291b6baa2a049ced"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/077_prologue_47.png",
+        "sha256": "285f2e723cad614af4184070547b8beeb04725c3ea995289987410150f5d90ef"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/078_prologue_48.png",
+        "sha256": "bd0ee4903dc9eac07c60679f0cc7692ae5aa3200b9eba76a96c8a91cd93aa6b5"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/079_after_prologue.png",
+        "sha256": "26b92da7ebbbdd4f197c4a0e54e18004266e54070798ca91e2a5fab042523e98"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/080_command_screen.png",
+        "sha256": "f7a0afed846f37efedc0026d42ef43f39bd7afe744c3d84578302613c27b7337"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/081_calendar.png",
+        "sha256": "5b5ebe2e204a557de5b91ca17297b84b4a2a7a46ef97e5e9ae150ad82cc1ff30"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/082_system_settings.png",
+        "sha256": "e393ac8fdca409770e5b3528f75da243494846daa249d52f62278df6eaf569ed"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/083_command_study.png",
+        "sha256": "8c2c87a822a8c04abaa471040eb21810687316b4325642ec4858bc65bdcecb2e"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/084_school_day.png",
+        "sha256": "d58351ef159165bcc7fb5555a01c2f1bd44cf9a3ec9b61903556c52a304390ac"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/085_holiday.png",
+        "sha256": "27cdf999b74f7428c4deeb60bcb57989e48fb08116882f23c7c63ee95f55190f"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/086_phone_book.png",
+        "sha256": "518a81ff6356e3961e10e50d764c1c2cd790b3d83666699187ead95aa9627bf4"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/087_phone_call_01.png",
+        "sha256": "8f5d0255cf2433d7689256aefdac8f408892a5bf4e3fb18aa7370b21b3ccf68f"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/088_phone_call_02.png",
+        "sha256": "f0c2226f5e5f8bbfe5e21fc27e6cc4e7d5b5c5d2bf8ffbe1702b91c015518bde"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/089_phone_call_03.png",
+        "sha256": "0fc277c1968b25993adcab85e4ed6308cb3e90baf645aee1e0db2863daee054e"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/090_phone_call_04.png",
+        "sha256": "0fc277c1968b25993adcab85e4ed6308cb3e90baf645aee1e0db2863daee054e"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/091_phone_call_05.png",
+        "sha256": "0fc277c1968b25993adcab85e4ed6308cb3e90baf645aee1e0db2863daee054e"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/092_phone_call_06.png",
+        "sha256": "0fc277c1968b25993adcab85e4ed6308cb3e90baf645aee1e0db2863daee054e"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/093_phone_call_07.png",
+        "sha256": "2361a38c720bad33ef433a2496ac48bef06ceabc9ad1cdbeae29e2fd61c9d5b5"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/094_phone_call_08.png",
+        "sha256": "d49c1875b88f0e24918c40aaf07b2da27be5b2681bf63548fde2396065736363"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/095_phone_call_09.png",
+        "sha256": "23ab76ff939563468055ce62c9c95ba753cd1226776444d3017c87fa16f5138d"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/096_phone_call_10.png",
+        "sha256": "32e161850c970a625f8d90eb1f2a1090224b6aed629cf0dcaccb7cd33d8740a4"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/097_phone_date_spot.png",
+        "sha256": "71a0400345d81f25df3feb5e43d0cac1b9c755712c6e6d013728f1cd7f41de27"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/098_phone_answer_01.png",
+        "sha256": "661500dc9793ff7c7f8fec3b2225103d2247165726b82ecbfb8ec343342e6f05"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/099_phone_answer_02.png",
+        "sha256": "df1a79205f2d11c2e8c5e7d2f2713454fe45c475cbcfea9e5e04ef1f63ba2812"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/100_phone_answer_03.png",
+        "sha256": "ab1bee9a16aba0932ff88e644e3394b146b09ddabba8c8024d33d6ef0ae85379"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/101_phone_answer_04.png",
+        "sha256": "c520e01bae40d589cef612d6bebfbcca755e572da024ca4675c7d67ec138762b"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/102_phone_answer_05.png",
+        "sha256": "470896bc7fa539b616a90e64c154ded91c99f7d2338415df9ef957b2b3188a96"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/103_phone_answer_06.png",
+        "sha256": "a8a7b40b9bac49b18a1fa069017b2fdeaa2626b532a4dd5489dbfe0afbf1743b"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/104_phone_answer_07.png",
+        "sha256": "1938bb3428b7647245e263cffb2742ba1d1037bf06eacdc7b6a139a0dc830c06"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/105_phone_answer_08.png",
+        "sha256": "0e999e8d971c03e0c569e10ea3a551d5e55a444cda022624196b20ec23e1a9cf"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/106_command_screen_evening.png",
+        "sha256": "08b02cf272166dbcdc4d4cdcfa3f32d91cb3825232b0f39de95f4452b953afbc"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/107_save_menu.png",
+        "sha256": "9eeb1b84d49ab9dc5e8973cb54366fd01b18331253ebe3e121581bab3bc0135c"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/108_save_slot.png",
+        "sha256": "89974cd3116abf8fc35b2aeacca86435f3ebda64c8a0b592f4ee0085dc5d203b"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/109_save_overwrite.png",
+        "sha256": "cb00171eca313c38a8cf0e01ef271103c2393ff41e593bbaf78699272c052866"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/110_save_writing.png",
+        "sha256": "3e73d6472eef97a70fab6f8d04fb8975ae9c359f5832424aa3de244a191f8c1b"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/111_save_done.png",
+        "sha256": "63eca620795973cedbc3be7068e26b61aade07f51d612df60792f258eb4ef4fc"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/112_holiday_date.png",
+        "sha256": "36c278561c0a9fdb6f6a3828004e3357bd7c90178cf6326b9329220d86ea9fc5"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/113_date_01.png",
+        "sha256": "908d16e32188903c86108035cf8027fd389c3b13e326281d54481ed2f4394c38"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/114_date_02.png",
+        "sha256": "58f2d4f261f96b9054e2e93b6a833ee8911f0709c1735efa62c10833d1856e66"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/115_date_03.png",
+        "sha256": "0183253d454503d759fa68734331ae20da50c8b8ef667e3d5716f2f62fa4df0d"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/116_date_04.png",
+        "sha256": "8c90c6f18b9cc5ea7091997000a0316848fc6bb9b516b6d5c99273b3306bdd0d"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/117_date_05.png",
+        "sha256": "c06a8cdb09c759418c2392907b6f3784de5be1df70195b794b186e65c033e312"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/118_date_06.png",
+        "sha256": "4810b725c92e9b39f1d44137aae0f8e218cafd9abc4e724575fe20ba089447f0"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/119_date_07.png",
+        "sha256": "70f441aa2413ae21723d494e4e5417c619b933ad98308dbf357c008ec1848b22"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/120_date_08.png",
+        "sha256": "0f6d3a5c14aceb628149aa28a02605a26b92307b69527a056cbbba9456a0a3b7"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/121_date_09.png",
+        "sha256": "fde503742f357786944dcf8561fa2cc326e1cda9ad26c90298198eeafc4c20d2"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/122_date_10.png",
+        "sha256": "752da5ac95458f1ecc9f7878f1095982edad10f7ff0d47c432b9446e046f3973"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/123_date_11.png",
+        "sha256": "078db142ac5b99a04993d69cc57f8f219d82d7f0a832bb911d529cfeef7ce6c1"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/124_date_12.png",
+        "sha256": "f98f674d3afec0e2a7c8f10ca84bd50225f3b1bc1cdede53a35a4720a88de08e"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/125_date_13.png",
+        "sha256": "21c2eb63a9d0f23ed66377819d81c79e546c78d2b8bc707b9f98ae15d2067cc1"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/126_date_14.png",
+        "sha256": "ee07d06ebee7476cfd60fefedfd395338295fc57bca3c1c40838dc71df381b90"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/127_after_date.png",
+        "sha256": "a149401fca90915f703bb330a192035db397c6223964eb2535a1c6f9ef20741c"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/128_load_slot.png",
+        "sha256": "c0b40120f191cfc93645077cb230a67c214e8677b310286d93e7cc4c8f4647cf"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/129_load_01.png",
+        "sha256": "7d86f8e4c4076aa437e6b7e672f901724a975c68780de3b6cfa70a1186008954"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/130_load_02.png",
+        "sha256": "a195d6594ebcaf4ee3def7404e159f7a7d6d7dc03493a22142a74760834b9b8a"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/131_load_03.png",
+        "sha256": "4e036bd1704ac786ac2bd743b0f015d4bc640ca158d207b433c57565aec5b43a"
+      },
+      {
+        "path": "build/emu/route-en-speaker-gate-perspective/132_loaded.png",
+        "sha256": "d2c08d7df3aee11567548a08a0d72b0d5604455513c931af3cfecb8106c45c63"
+      }
+    ]
+  },
+  "phone_orphan_review": {
+    "target_sha1": "2f9fd663374c4e7aa55c4f46e3690be28624f806",
+    "path": "build/visual-quality-review/phone-orphan/shot_100.png",
+    "sha256": "518ab85d9230a6dc21329b378c9c1b9c05338ce517468524101e2566d1f56c32",
+    "assessment": "Fresh capture 100 keeps the final two-word farewell together with its closing quote. Later date farewell, save confirmation and loaded-state captures also pass targeted visual review. This is not an inspection claim for all 134 captures.",
+    "route": {
+      "reason": "done",
+      "frames": 33572,
+      "captures": 134,
+      "original_font_calls": 0,
+      "unknown_calls": 0,
+      "overflow_calls": 0
+    },
+    "additional_captures": [
+      {
+        "path": "build/emu/route-en-phone-orphan/125_date_13.png",
+        "sha256": "924686cf6de5032abb5c83fe2f037a4e04d4eb157b314e60cd6f9c23e53a21f1"
+      },
+      {
+        "path": "build/emu/route-en-phone-orphan/127_date_15.png",
+        "sha256": "a0fd3e7b3a4c36ddbd605c8e8d1dea5ce6368068cc12a1c3b94623f00f75279b"
+      },
+      {
+        "path": "build/emu/route-en-phone-orphan/132_load_02.png",
+        "sha256": "9fb99c86a1f0775a2ee00ef804968de202551c7e43ddc4213d0d9ac4ab7b0c88"
+      },
+      {
+        "path": "build/emu/route-en-phone-orphan/134_loaded.png",
+        "sha256": "c526db66133e06614bb28d10b0dfe3bce87726922e442df43e2a3de8e15be865"
+      }
+    ]
+  },
+  "boundary_opening_review": {
+    "target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+    "assessment": "Opening introduction, classroom reply, full-name greeting and assembled phone confirmation fit, with complete closing marks and the corrected final farewell. Speaker-label pixels in captures 032, 039 and 041 exactly match the previously inspected perspective candidate; apparent missing label fragments in combined tool previews are not in the files. Full route and off-route scrolling review remain pending.",
+    "captures": [
+      {
+        "path": "build/visual-quality-review/english-boundary/shot_032.png",
+        "sha256": "f6533b2665d9e91066f349e311bb6d731abe31807268c81ad81409f7bc34c945"
+      },
+      {
+        "path": "build/visual-quality-review/english-boundary/shot_039.png",
+        "sha256": "698e5b886db022e0e39fb290066942256c6175d4a498f922bf623225e7de7080"
+      },
+      {
+        "path": "build/visual-quality-review/english-boundary/shot_041.png",
+        "sha256": "9fc77a653c20359a7171f802a5266738ea644f856e8940860fff91a3bd9af559"
+      },
+      {
+        "path": "build/visual-quality-review/english-boundary/shot_100.png",
+        "sha256": "518ab85d9230a6dc21329b378c9c1b9c05338ce517468524101e2566d1f56c32"
+      }
+    ]
   }
 }
