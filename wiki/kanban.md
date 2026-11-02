@@ -23,6 +23,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
 - [ ] [[tickets/T-39506-english-script-runtime|T-39506 Make dialogue, choices, names and name entry work in English]]
+- [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
 - [ ] [[tickets/T-39505-english-memory-and-relink|T-39505 Give the English build room to grow (memory map and free relink)]]
 
 

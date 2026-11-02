@@ -2959,3 +2959,7 @@ Results:
 - Default build 27/27.
 
 The English disc ran the whole emulator route (145 screenshots in `build/emu/route-en/`). Dialogue is garbled until [[tickets/T-39506-english-script-runtime]] lands. New page [[english-build]]. Moved [[tickets/T-39507-english-disc-build]] to In Review.
+
+## [2026-11-01] ticket | Merge the English disc build; open T-39508 for the art
+
+Merged [[tickets/T-39507-english-disc-build]] into `patch/english`: one command builds the English disc (30,540 records placed; the DATE files, 1,018 records needing the relink and 8 JOHO overflows are reported) and the emulator route plays it through. No ticket covered writing the English images to the disc, so opened [[tickets/T-39508-english-art-on-disc]].
