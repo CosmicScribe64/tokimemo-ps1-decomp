@@ -4,6 +4,12 @@
 Usage (inside Docker, called by ninja):
     python3 tools/cc.py <src.c> <out.o> ido <ido_version> [<driver option> ...]
     python3 tools/cc.py <src.c> <out.o> gcc <gcc_version> <aspsx_version>
+    python3 tools/cc.py --source-text <text.c> <src.c> <out.o> ido ...
+
+--source-text (English build, T-39507): compile the text of <text.c> (a generated copy of <src.c>
+with English string literals, build/en/src/) as if it were <src.c>: every rule that derives
+something from the source path (the asm directories of tools/trailing_pad.py, the toolchain) still
+uses <src.c>.
 
 ido: SGI IDO (decompals/ido-static-recomp) run through asm-processor, which
      splices the INCLUDE_ASM functions in and assembles them with GNU as.
@@ -232,9 +238,11 @@ def toolchain_of_source(src, path="config/toolchains.txt"):
     return toolchain_of(rel[:-2] if rel.endswith(".c") else rel, path)
 
 
-def compile_ido(src, out, ido_ver, extra=()):
-    with open(src, encoding="utf-8") as f:
+def compile_ido(src, out, ido_ver, extra=(), text_path=None):
+    with open(text_path or src, encoding="utf-8") as f:
         text = f.read()
+    if text_path and not any(ord(c) >= 0x80 for c in text):
+        src = text_path
     if any(ord(c) >= 0x80 for c in text):
         # compile a re-encoded copy next to the object (asm-processor and cfe only see ASCII)
         text = sjis_literals(text)
@@ -320,16 +328,19 @@ def pad_text(obj):
 
 
 def main(argv):
+    text_path = None
+    if len(argv) > 2 and argv[1] == "--source-text":
+        text_path, argv = argv[2], argv[:1] + argv[3:]
     if len(argv) < 5:
         sys.exit(__doc__)
     src, out, kind = argv[1:4]
-    with open(src) as f:
+    with open(text_path or src) as f:
         text = f.read()
     includes = INCLUDE_ASM_RE.findall(text)
     deps = ["%s/%s.s" % m for m in includes]
     if kind == "ido" and len(argv) >= 5 and all(a.startswith("-") for a in argv[5:]):
-        deps += compile_ido(src, out, argv[4], argv[5:])
-    elif kind == "gcc" and len(argv) == 6:
+        deps += compile_ido(src, out, argv[4], argv[5:], text_path)
+    elif kind == "gcc" and len(argv) == 6 and text_path is None:
         deps += compile_gcc(src, out, argv[4], argv[5])
     else:
         sys.exit(__doc__)

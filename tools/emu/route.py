@@ -70,6 +70,25 @@ MENU_CURSOR = 0x800E7313  # GameState menu_cursor_0, menu_cursor_1 at +1 (s8)
 CURSOR_X, CURSOR_Y = 0x8011ECF6, 0x8011ECFA  # s16 cursor_x, cursor_y (include/main/cursor.h)
 TEXT_STATE = 0x800B3F60  # TextState text_state (include/main/text.h): total at +2, pos at +8
 BUTTONS = set(emu.BUTTONS)
+# RAM addresses above are those of the default (matching) link. A relinked build (`run --relink DIR`,
+# tools/english_link.py, wiki/relink.md) moves them; ram() gives the address in the build being played.
+_relinked = None
+
+
+def ram(addr):
+    """Address `addr` of the default link in the build being played (unchanged unless --relink)."""
+    return _relinked(addr) if _relinked else addr
+
+
+def use_relink(out_dir):
+    """Translate main-executable addresses through the relinked build in out_dir (build/en, build/jr)."""
+    global _relinked
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    import english_link  # noqa: E402
+    lay = english_link.Layout("main", out_dir, english_link.redirected_objects(out_dir, "main"))
+    syms = english_link.symbols(os.path.join(out_dir, english_link.EXE + ".elf"))
+    lo, hi = english_link.MAIN_RANGE
+    _relinked = lambda a: lay.value(a, syms) if lo <= a <= hi else a
 
 
 def read_text(path):
@@ -197,9 +216,9 @@ def parse_cond(token):
         raise RouteError("bad condition %r" % token)
     name, op, values = m.groups()
     if name in FIELDS:
-        addr = FIELDS[name]
+        addr = ram(FIELDS[name])
     elif name.startswith("0x"):
-        addr = int(name, 16)
+        addr = ram(int(name, 16))
     else:
         raise RouteError("unknown field %s" % name)
     vals = [parse_int(v) for v in values.split("|")]
@@ -270,7 +289,7 @@ def parse_step(tokens, lineno):
         if menu not in (0, 1):
             raise RouteError("%s: menu is 0 or 1" % where)
         n = parse_int(rest[0])
-        return {"op": "wait", "all": [{"addr": MENU_CURSOR + menu, "values": [n & 0xFF], "neg": False}],
+        return {"op": "wait", "all": [{"addr": ram(MENU_CURSOR + menu), "values": [n & 0xFF], "neg": False}],
                 "timeout": parse_int(opts.get("timeout", "600")), "stable": 4, "min": 0, "optional": False,
                 "label": "pick %d" % n, "mash": {"buttons": parse_buttons(opts.get("press", "DOWN")), "every": 12,
                                                  "hold": 4}, "mash_delay": 0}
@@ -281,13 +300,13 @@ def parse_step(tokens, lineno):
                 "buttons": parse_buttons(opts.get("press", "CIRCLE")), "settle": parse_int(opts.get("settle", "8")),
                 "max": parse_int(opts.get("max", "99")), "repress": parse_int(opts.get("repress", "240")),
                 "timeout": parse_int(opts.get("timeout", "36000")), "optional": bool(opts.get("optional")),
-                "text_addr": TEXT_STATE, "label": opts.get("label", "talk " + rest[0])}
+                "text_addr": ram(TEXT_STATE), "label": opts.get("label", "talk " + rest[0])}
     if op == "steer":
         if rest or "x" not in opts or "y" not in opts:
             raise RouteError("%s: steer x=N y=N" % where)
         return {"op": "steer", "x": parse_int(opts["x"]), "y": parse_int(opts["y"]),
                 "tol": parse_int(opts.get("tol", "3")), "boost": parse_buttons(opts.get("boost", "TRIANGLE")),
-                "timeout": parse_int(opts.get("timeout", "900")), "xaddr": CURSOR_X, "yaddr": CURSOR_Y,
+                "timeout": parse_int(opts.get("timeout", "900")), "xaddr": ram(CURSOR_X), "yaddr": ram(CURSOR_Y),
                 "label": "steer %s,%s" % (opts["x"], opts["y"])}
     if op == "label":
         if len(rest) != 1:
@@ -507,8 +526,22 @@ def key_text(key):
     return " ".join("%s %02X" % (f, v) for f, v in zip(KEY_FIELDS, key))
 
 
+def pixels_differing(path_a, path_b):
+    """Number of pixels that differ between two screenshots (-1 if their sizes differ)."""
+    wa, ha, ra = png_read(path_a)
+    wb, hb, rb = png_read(path_b)
+    if (wa, ha) != (wb, hb):
+        return -1
+    n = 0
+    for x, y in zip(ra, rb):
+        if x != y:
+            n += sum(1 for i in range(0, len(x), 3) if x[i:i + 3] != y[i:i + 3])
+    return n
+
+
 def compare(dir_a, dir_b, out):
-    """compare.html and compare.png: the checkpoints of two runs side by side, by name."""
+    """compare.html and compare.png: the checkpoints of two runs side by side, by name; the header of
+    each row says whether the two screenshots are identical pixel for pixel (T-39505)."""
     runs = []
     for d in (dir_a, dir_b):
         res = read_json(os.path.join(d, "result.json"))
@@ -520,8 +553,15 @@ def compare(dir_a, dir_b, out):
                 names.append(c["name"])
     os.makedirs(out, exist_ok=True)
     rows, cells = [], []
+    same = []
     for name in names:
         tds = []
+        a, b = runs[0][2].get(name), runs[1][2].get(name)
+        verdict = ""
+        if a and b and a.get("file") and b.get("file"):
+            n = pixels_differing(os.path.join(runs[0][0], a["file"]), os.path.join(runs[1][0], b["file"]))
+            verdict = "identical" if n == 0 else "%d px differ" % n if n > 0 else "sizes differ"
+            same.append(n == 0)
         for d, res, by in runs:
             c = by.get(name)
             if c and c.get("file"):
@@ -532,7 +572,9 @@ def compare(dir_a, dir_b, out):
             else:
                 tds.append('<td class=missing>not reached</td>')
                 cells.append(("%s %s" % (res["label"], name), None))
-        rows.append("<tr><th>%s</th>%s</tr>" % (html.escape(name), "".join(tds)))
+        rows.append("<tr><th>%s<br><span class=meta>%s</span></th>%s</tr>" % (
+            html.escape(name), verdict, "".join(tds)))
+    print("%d of %d shared checkpoints identical" % (sum(same), len(same)))
     head = "".join("<th>%s</th>" % html.escape(res["label"]) for _, res, _ in runs)
     page = ("<!doctype html><html><head><meta charset=utf-8><meta name=viewport "
             "content='width=device-width, initial-scale=1'><title>Route compare</title><style>%s</style>"
@@ -558,8 +600,8 @@ def build_job(steps, out, frames, load_state=None, probes=()):
                 raise RouteError("goto %s: the label lies before the resume point" % s["to"])
             s["target"] = where[s["to"]]
         lua_steps.append(s)
-    return {"out": out, "steps": lua_steps, "frames": frames, "key_addrs": [FIELDS[f] for f in KEY_FIELDS],
-            "cursor_addrs": [CURSOR_X, CURSOR_Y], "probes": [list(p) for p in probes],
+    return {"out": out, "steps": lua_steps, "frames": frames, "key_addrs": [ram(FIELDS[f]) for f in KEY_FIELDS],
+            "cursor_addrs": [ram(CURSOR_X), ram(CURSOR_Y)], "probes": [list(p) for p in probes],
             "load_state": load_state}
 
 
@@ -630,6 +672,8 @@ def play(job, cue, out, timeout):
 
 
 def run(args):
+    if args.relink:
+        use_relink(args.relink)
     steps = parse_route(read_text(args.route), args.build)
     out = os.path.abspath(args.out or os.path.join(ROOT, "build/emu", "route-" + args.label))
     if os.path.exists(out):
@@ -695,6 +739,9 @@ def main():
     r.add_argument("--frames", type=int, default=60 * 60 * 30, help="vsync limit (default 30 minutes)")
     r.add_argument("--timeout", type=int, default=3600, help="wall-clock limit in seconds (default 3600)")
     r.add_argument("--force", action="store_true", help="replace an existing output directory")
+    r.add_argument("--relink", metavar="DIR",
+                   help="the disc holds the relinked build in DIR (build/en, build/jr): read the scene bytes "
+                        "at their addresses there")
     r.add_argument("--probe", type=emu.parse_dump, action="append", default=[],
                    help="HEXADDR[:LEN] memory recorded with every screenshot (result.json probes)")
     c = sub.add_parser("compare", help="two runs side by side by checkpoint name")

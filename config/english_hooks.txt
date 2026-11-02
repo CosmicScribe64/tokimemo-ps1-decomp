@@ -6,6 +6,9 @@
 main load_string english_load_string
 main set_kanji_string english_set_kanji_string
 main disp_string english_disp_string
+# CD file remap for the English disc (T-39507, src/english/cd.c)
+main cd_read_sectors english_cd_read_sectors
+main cd_read_sectors_nowait english_cd_read_sectors_nowait
 # T-39506: script parsers and names (src/english/script.c)
 main talk_render english_talk_render
 main talk_speak_part english_talk_speak_part
@@ -16,13 +19,3 @@ main sndisp english_sndisp
 main sndi english_sndi
 main get_g_name english_get_g_name
 main get_p_name english_get_p_name
-# T-39506: name entry with the English letter page (src/english/name_entry.c)
-NAME_ENT name_entry_step_init english_name_entry_step_init
-NAME_ENT name_entry_family_name_input english_name_entry_family_name_input
-NAME_ENT name_entry_given_name_init english_name_entry_given_name_init
-NAME_ENT name_entry_given_name_input english_name_entry_given_name_input
-NAME_ENT name_entry_nickname_init english_name_entry_nickname_init
-NAME_ENT name_entry_nickname_input english_name_entry_nickname_input
-NAME_ENT name_entry_names_draw english_name_entry_names_draw
-NAME_ENT name_entry_frames_draw english_name_entry_frames_draw
-NAME_ENT name_entry_profile_store english_name_entry_profile_store

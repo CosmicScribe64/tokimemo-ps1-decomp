@@ -209,8 +209,11 @@ class TestTranslationTree(unittest.TestCase):
                 base_supplemental_path=os.path.join(tree_dir, "supplemental.jsonl"),
             )
 
-            expected_ret = "ed180f9fdaab5de80648a1d508ad795675c9e3fe2b1ada0dc99c1d179b9d837e"
-            expected_sup = "5ce2c6692cf66fde9b1378ec5514493c255035055e97ba668a8c6d3b64a84802"
+            # Pinned hashes of the built files. A deliberate edit to the corpus changes them:
+            # returned-v3.jsonl moved with the text dictionary stat names (Health, Humanities, Sports; T-39410),
+            # supplemental.jsonl with the Scavenger Race row of tai_tx.md (T-39411).
+            expected_ret = "7f3ed304ca62d994e91c588680ee12c65cae7f6b81de341e00aa03c7c58f86de"
+            expected_sup = "2614bec9d14a7e622af4b3b82ffb1af4af3c434be5fe60c72993f10c2ae20efa"
 
             self.assertEqual(ret_sha, expected_ret)
             self.assertEqual(sup_sha, expected_sup)

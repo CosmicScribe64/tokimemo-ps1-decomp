@@ -14,6 +14,7 @@ itself and every other byte as a three-digit octal escape, so
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -107,16 +108,49 @@ def locate_sites(repository: str | Path, units: list[dict]) -> list[LiteralSite]
                 end = tokens[i]["end"]
                 i += 1
             groups[start] = (end, b"".join(_string_bytes(lit) for lit in literals))
+        exact, moved = [], []
         for unit in items:
             start = unit["context"].get("source_character_offset")
-            if start not in groups:
-                raise LiteralError(f"{unit['id']}: no literal at {path} character {start}")
-            end, raw = groups[start]
             payload = bytes.fromhex(unit["raw_hex"] or "")
-            if raw != payload:
-                raise LiteralError(f"{unit['id']}: source literal bytes differ from the record")
-            sites.append(LiteralSite(unit["id"], path, start, end, payload))
+            (exact if start in groups and groups[start][1] == payload else moved).append((unit, start, payload))
+        taken = {start for _, start, _ in exact}
+        for unit, start, payload in moved:
+            start = _relocated(unit, path, start, payload, groups, taken)
+            taken.add(start)
+            exact.append((unit, start, payload))
+        for unit, start, payload in exact:
+            sites.append(LiteralSite(unit["id"], path, start, groups[start][0], payload))
     return sites
+
+
+def _relocated(unit: dict, path: str, start: int | None, payload: bytes, groups: dict, taken: set) -> int:
+    """The literal of ``unit`` after the file changed since the export (T-39507).
+
+    Code added after the units were exported (English-only blocks, for example) shifts the
+    recorded character offset. The site is then the nearest free literal with the same bytes;
+    two candidates at the same distance, or none, stop with an error.
+    """
+    if start is None:
+        raise LiteralError(f"{unit['id']}: no source character offset")
+    candidates = sorted((abs(at - start), at) for at, (_, raw) in groups.items()
+                        if raw == payload and at not in taken)
+    if not candidates:
+        raise LiteralError(f"{unit['id']}: no literal with the record's bytes in {path}")
+    if len(candidates) > 1 and candidates[0][0] == candidates[1][0]:
+        raise LiteralError(f"{unit['id']}: two literals with the record's bytes are equally near in {path}")
+    return candidates[0][1]
+
+
+_SIZED_ARRAY = re.compile(r"\[\s*(0x[0-9A-Fa-f]+|\d+)\s*\]\s*=\s*$")
+
+
+def _grow_array(before: str, need: int) -> str:
+    """A literal that initialises a sized array (`u8 name[27] = "..."`) gets an array large enough
+    for it; the free relink (T-39505) moves whatever follows."""
+    m = _SIZED_ARRAY.search(before)
+    if not m or int(m.group(1), 0) >= need:
+        return before
+    return before[:m.start(1)] + str(need) + before[m.end(1):]
 
 
 def rewrite_sources(repository: str | Path, sites: list[LiteralSite], payloads: dict[str, bytes],
@@ -140,6 +174,7 @@ def rewrite_sources(repository: str | Path, sites: list[LiteralSite], payloads: 
             if keep_unchanged and payload == site.payload:
                 pieces.append(text[site.start:site.end])
             else:
+                pieces[-1] = _grow_array(pieces[-1], len(payload) + 1)
                 pieces.append(render_literal(payload))
                 changed = True
             cursor = site.end

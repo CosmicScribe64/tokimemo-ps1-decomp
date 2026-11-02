@@ -5,7 +5,22 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+from PIL import Image
+
 import translation_assets as subject
+
+
+class SourcePixelTests(unittest.TestCase):
+    def test_counts_opaque_texels_equal_to_the_source(self):
+        clear = (0, 0, 0, 0)
+        original = Image.new('RGBA', (4, 2), (9, 9, 9, 255))
+        original.putpixel((3, 1), clear)
+        edited = original.copy()
+        edited.putpixel((0, 0), (1, 2, 3, 255))    # edited
+        edited.putpixel((1, 0), clear)             # cleared
+        self.assertEqual(subject.source_pixels(original, edited), {'opaque_texels': 6, 'kept_from_source': 5})
+        wide = Image.new('RGBA', (6, 2), (9, 9, 9, 255))    # a widened cell: only the overlap can be kept
+        self.assertEqual(subject.source_pixels(original, wide), {'opaque_texels': 12, 'kept_from_source': 7})
 
 
 class ArtworkTests(unittest.TestCase):

@@ -46,6 +46,9 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - `families/` - per-overlay type maps and results in [[families/bunka-family-results]], [[families/bunka-sd-family-results]], [[families/bunkasai-family-results]], [[families/date-family-results]], [[families/en-nichi-family-results]], [[families/ending-family-results]], [[families/etc-family-results]], [[families/event-family-results]], [[families/geko-family-results]], [[families/kangei-family-results]], and [[families/main-family-results]]. Additional overlay results live in [[families/master-family-results]], [[families/master-types-pilot]], [[families/name-ent-family-results]], [[families/option-family-results]], [[families/rpg-bat-family-results]], [[families/scenes-family-results]], [[families/shougatu-family-results]], [[families/shugaku-family-results]], [[families/taco-family-results]], and [[families/taiiku-family-results]]
 - [[ref-english-patch]] - facts-only address reference and independently checked dialogue-offset inventory
 - [[english-text-runtime]] - English build variant (`ninja english`), single-byte encoding, proportional font, pixel layout and the function list for full English
+- [[ram-map]] - who owns each RAM region and when; free room for the English build (main gap, overlay tails)
+- [[relink]] - free relink of the main executable and overlays, raw-address census and decisions, emulator validation
+- [[english-build]] - English build pipeline: one command from records to disc and xdelta (encoder, window widths and wrap, English C sources, CD remap, report)
 - Data tables: [[data/true-gaps]], [[data/t0018-cases]], [[data/shared-at-groups]], [[data/t13600-remaining-census]]
 
 ## Build and toolchain

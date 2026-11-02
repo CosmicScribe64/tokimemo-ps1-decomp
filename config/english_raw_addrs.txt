@@ -1,0 +1,27 @@
+# Raw addresses in the relinked units (T-39505, wiki/relink.md): words and lui/low pairs that hold an
+# address of the main executable (0x80041000-0x8012B540) or of the overlay slot interior without a
+# relocation (tools/raw_addrs.py). tools/english_link.py patches a word whose value is the start of a
+# function by itself (2348 words in overlay data: mode-step tables that call main functions). Every
+# other one must be listed here, by the site's address in the default build:
+#   <unit> <symbol | 0xADDR | 0xSTART-0xEND> <move | keep> <reason>
+# `move` rewrites the value to the address that the same byte has after the relink; `keep` leaves it.
+# A symbol covers the bytes up to the next symbol. An entry that matches nothing fails the build.
+
+main 0x0-0x800 keep PS-X EXE header (tools/english_link.py exe writes pc0 and t_size; the BIOS reads no other address field)
+main 0x800420FC move boot_start: start of the bss clear (bzero from 0x800E60A0; the length stays, the bss block does not change)
+main text_font_glyphs keep 12x12 font bitmap; 34 byte patterns that look like addresses
+main 0x800DC644-0x800DC6E4 move libcd (D_800DC644, 40 words): table of pointers to the CD command name strings in .rodata
+
+RPG_BAT 0x8013AD68 move player_attack_guard: lui/lw of rpg_player_action written as a number (FAKE in the C)
+RPG_BAT 0x8013D060 move player_commands_and_club_moves: lui/lw of rpg_player_action written as a number
+RPG_BAT 0x801440E0 keep battle_stats_and_action_delays: mask 0x800F0000 on rpg_encounter, not an address
+
+TACO shooter_digit_uv keep byte table of texture coordinates
+TACO D_8015F830 move pointer to 0x8015F718 inside the shooter data
+
+TT 0x8014F8F0 keep tile data
+TT 0x8014FBF0 keep tile data
+TT 0x8014FD10 keep tile data
+TT 0x80158A60-0x80158AB4 move tt_sys and the 20 pointers after it: TT's work areas in the main bss (0x80110000-0x8011FD00), which TT owns while it runs
+
+main english_font_glyphs keep English font bitmap (tools/english_font.py); byte patterns that look like addresses

@@ -11,7 +11,8 @@ Each overlay in config/overlays.txt (T-0008) is its own target: splat split
 config/overlays/<NAME>.yaml -> IDO C + asm -> ld -> objcopy -> sha1 check
 (build/ovl/<NAME>.ok, or `ninja overlays` for all). Also writes objdiff.json.
 `ninja english` (not a default target) builds the English variant into build/en/ (T-39502,
-wiki/english-text-runtime.md).
+wiki/english-text-runtime.md); `ninja relink` builds the relink check into build/jr/ (T-39505,
+wiki/relink.md).
 """
 import glob
 import json
@@ -224,18 +225,34 @@ def overlay_targets(n, overlays):
     return oks
 
 
-# English build variant (T-39502, wiki/english-text-runtime.md): `ninja english`, never part of the
-# default targets. Objects whose C source mentions the flag are rebuilt with -DTOKIMEMO_ENGLISH into
-# build/en/ and linked at their original addresses; all other objects are the default build's own.
+# Relinked variants (T-39502, T-39505; wiki/english-text-runtime.md, wiki/relink.md), never part of the
+# default targets. tools/english_link.py links every unit freely (no address is pinned):
+#   `ninja english`  build/en/: objects whose C source mentions the flag are rebuilt with -DTOKIMEMO_ENGLISH,
+#                    the English runtime (src/english/, the font) is added to the main executable, and the
+#                    entry hooks of config/english_hooks.txt are written;
+#   `ninja relink`   build/j0/: the default objects relinked as they are; every binary must equal the default
+#                    one (build/j0/identity.ok). build/jr/: the default objects with padding inserted in the
+#                    code and the data of every unit, so that almost every address moves; its disc
+#                    (tools/patch/variant_disc.py) must play like the original.
 EN_FLAG = "TOKIMEMO_ENGLISH"
 EN_DIR = "build/en"
+J0_DIR = "build/j0"
+JR_DIR = "build/jr"
+# bytes inserted before the second .text input and before the first .data input: the main executable has
+# the 27 KB below the overlay slot, TACO only 291 bytes of free tail (wiki/ram-map.md)
+JR_SHIFT_MAIN = "0x1110:0x2220"
+JR_SHIFT_OVERLAY = "0x50:0x70"
 EN_HOOKS = "config/english_hooks.txt"
 EN_FONT = "translations/en/font/latin12.txt"
-EN_FONT_S = EN_DIR + "/gen/english_font.s"
-EN_BOOT = "src/english/boot.s"
-EN_ISLAND_SYMS = EN_DIR + "/island_syms.ld"
-EN_ISLAND_IMPORTS = EN_DIR + "/island_imports.ld"  # overlay symbols the island uses (T-39506)
-EN_TOOLS = ["tools/english_link.py"]
+EN_TOOLS = ["tools/english_link.py", "tools/raw_addrs.py", "tools/elf32.py",
+            "config/english_overlay_entries.txt", "config/english_raw_addrs.txt"]
+UNLOADED_OVERLAYS = ("EVENT", "GYOZI")  # the game never loads them (wiki/overlays.md): copied unchanged
+# English disc build (T-39507, tools/patch/build_english.py, wiki/english-build.md): C files with English
+# string literals are generated into build/en/src/<path> and compiled in place of src/<path>; the CD
+# remap table of src/english/cd.c comes from the disc layout. Rerun configure.py after either changes.
+EN_SRC = EN_DIR + "/src"
+EN_CD_LAYOUT = EN_DIR + "/cd_layout.json"
+EN_CD_REMAP_S = EN_DIR + "/gen/english_cd_remap.s"
 
 
 def uses_english(path):
@@ -243,9 +260,20 @@ def uses_english(path):
         return EN_FLAG in f.read()
 
 
-def english_obj(obj):
-    """build/<path>.o of the default build -> build/en/<path>.o."""
-    return EN_DIR + "/" + obj[len("build/"):]
+def english_text(path):
+    """build/en/src/<path> when the disc build generated English literals for src/<path>, else None."""
+    text = EN_DIR + "/" + path
+    return text if path.startswith("src/") and os.path.exists(text) else None
+
+
+def english_variant(path):
+    """True when the English build compiles `path` itself: it tests the flag or has English literals."""
+    return path.endswith(".c") and (uses_english(path) or english_text(path) is not None)
+
+
+def variant_obj(obj, out_dir):
+    """build/<path>.o of the default build -> <out_dir>/<path>.o."""
+    return out_dir + "/" + obj[len("build/"):]
 
 
 def check_english_headers():
@@ -259,110 +287,168 @@ def check_english_headers():
 
 def english_cc(n, src, obj, toolchain, implicit, rule="cc"):
     """Compile with the flag: `cc` for an original object (same steps as the default build), `encc`
-    for island code, which has no original span for tools/object_layout.py."""
+    for new code, which has no original span for tools/object_layout.py."""
     if toolchain[0] != "ido":
         sys.exit("configure.py: %s uses %s but is built with %s; only IDO objects take the flag"
                  % (src, EN_FLAG, " ".join(toolchain)))
-    n.build(obj, rule, src, variables={"toolchain": " ".join(toolchain + ["-D" + EN_FLAG])},
-            implicit=implicit, order_only=[HEADERS_OK])
+    variables = {"toolchain": " ".join(toolchain + ["-D" + EN_FLAG])}
+    text = english_text(src)
+    if text is not None:
+        rule = "cctext" if rule == "cc" else rule
+        variables["text"] = text
+        implicit = implicit + [text]
+    n.build(obj, rule, src, variables=variables, implicit=implicit, order_only=[HEADERS_OK])
 
 
-def english_targets(n, overlays, objs, cc_implicit):
-    """Rules for build/en/: the main executable with its island, and every overlay."""
+def side_scripts(unit):
+    """The default link's scripts of absolute definitions (tools/english_link.py side_scripts)."""
+    if unit == "main":
+        return ["build/undefined_funcs_auto.txt", "build/undefined_syms_auto.txt", "build/%s_data_syms.ld" % EXE]
+    return ["build/ovl/%s_undefined_funcs_auto.txt" % unit, "build/ovl/%s_undefined_syms_auto.txt" % unit,
+            "build/ovl/%s_data_syms.ld" % unit, "build/main_names.ld"]
+
+
+def relink_rules(n):
     check_english_headers()
-    n.rule("enlink", command="python3 tools/english_link.py $args", description="ENGLISH $out")
+    n.rule("rlink", command="python3 tools/english_link.py $args", description="RELINK $out")
     n.rule("enfont", command="python3 tools/english_font.py $in $out", description="FONT $in")
     n.rule("encc", command="python3 tools/cc.py $in $out $toolchain", depfile="$out.d", deps="gcc",
            description="CC $in")
+    n.rule("cctext",
+           command=("python3 tools/cc.py --source-text $text $in $out $toolchain"
+                    " && python3 tools/object_layout.py $in $out"),
+           depfile="$out.d", deps="gcc", description="CC $text")
+    n.rule("encdmap", command="python3 tools/patch/cd_layout.py remap-asm %s $out" % EN_CD_LAYOUT,
+           description="CDMAP $out")
     n.rule("enas", command="mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 $in -o $out",
            description="AS $in")
-    n.rule("enld",
-           command=("mips-linux-gnu-ld -EL -T $script -T build/undefined_funcs_auto.txt "
-                    "-T build/undefined_syms_auto.txt -T build/%s_data_syms.ld -T %s "
-                    "-Map $map -o $out") % (EXE, EN_ISLAND_IMPORTS),
-           description="LD $out")
-    n.rule("enold",
-           command=("mips-linux-gnu-ld -EL -T $script "
-                    "-T build/ovl/${name}_undefined_funcs_auto.txt "
-                    "-T build/ovl/${name}_undefined_syms_auto.txt "
-                    "-T build/ovl/${name}_data_syms.ld "
-                    "-T build/main_names.ld -T %s "
-                    "-Map $map -o $out") % EN_ISLAND_SYMS,
-           description="LD $out")
+    n.rule("rld", command="mips-linux-gnu-ld -EL -T $script -T $aux -Map $map -o $out", description="LD $out")
+
+
+def relink_targets(n, overlays, objs, cc_implicit, out_dir, english, shifts=None):
+    """Rules for one relinked variant: the main executable (a first link for the overlays, then a second
+    with the overlay entry points), and every overlay. `shifts` (main, overlay) pads the code and data.
+    Returns the outputs."""
+    tools = EN_TOOLS
+    hooks = EN_HOOKS if english else "-"
+    hook_deps = [EN_HOOKS] if english else []
+    shift = ["--shift", shifts[0]] if shifts else []
+    ovl_shift = ["--shift", shifts[1]] if shifts else []
     outputs = []
 
-    # main executable: flagged objects, island objects, boot stub
-    redirect = [o for c, o in objs if c.endswith(".c") and uses_english(c)]
-    en_objs = []
+    # main executable
+    redirect = [o for c, o in objs if english and english_variant(c)]
+    main_objs = []
     for c, o in objs:
         if o in redirect:
-            english_cc(n, c, english_obj(o), C_FILES[c], cc_implicit)
-            en_objs.append(english_obj(o))
+            english_cc(n, c, variant_obj(o, out_dir), C_FILES[c], cc_implicit)
+            main_objs.append(variant_obj(o, out_dir))
         else:
-            en_objs.append(o)
-    font_json = EN_DIR + "/font_metrics.json"
-    n.build([EN_FONT_S, font_json], "enfont", EN_FONT, implicit=["tools/english_font.py"])
-    island = []
-    for c in sorted(glob.glob("src/english/*.c")):
-        o = english_obj("build/" + c[:-2] + ".o")
-        english_cc(n, c, o, C_TOOLCHAIN, cc_implicit, rule="encc")
-        island.append(o)
-    font_o = EN_FONT_S[:-2] + ".o"
-    n.build(font_o, "enas", EN_FONT_S)
-    island.append(font_o)
-    boot = english_obj("build/" + EN_BOOT[:-2] + ".o")
-    n.build(boot, "as", EN_BOOT, implicit=["include/macro.inc", "tools/asm.py"])
-    script = EN_DIR + "/%s.ld" % EXE
-    n.build(script, "enlink", ["build/%s.ld" % EXE],
-            implicit=["build/%s.elf" % EXE] + EN_TOOLS,
-            variables={"args": "ld main build/%s.ld build/%s.map %s --redirect %s --island %s --boot %s"
-                       % (EXE, EXE, script, " ".join(redirect), " ".join(island), boot)})
-    elf = EN_DIR + "/%s.elf" % EXE
-    n.rule("enimports", command="python3 tools/english_imports.py $out --overlays $overlays --island $in",
-           description="IMPORTS $out")
-    default_ovl_elfs = ["build/ovl/%s.elf" % name for name, _base, _text in overlays]
-    n.build(EN_ISLAND_IMPORTS, "enimports", island, implicit=default_ovl_elfs + ["tools/english_imports.py"],
-            variables={"overlays": " ".join(default_ovl_elfs)})
-    n.build(elf, "enld", en_objs + island + [boot], implicit=[script, EN_ISLAND_IMPORTS],
-            variables={"script": script, "map": EN_DIR + "/%s.map" % EXE})
-    raw = EN_DIR + "/%s.raw" % EXE
-    n.build(raw, "objcopy", elf)
-    exe = EN_DIR + "/%s.bin" % EXE
-    n.build(exe, "enlink", [elf, raw], implicit=["build/%s.elf" % EXE, EN_HOOKS] + EN_TOOLS,
-            variables={"args": "exe %s %s build/%s.elf %s %s" % (elf, raw, EXE, EN_HOOKS, exe)})
-    n.build(EN_ISLAND_SYMS, "enlink", elf, implicit=EN_TOOLS,
-            variables={"args": "syms %s %s" % (elf, EN_ISLAND_SYMS)})
-    outputs += [exe, font_json]
+            main_objs.append(o)
+    extra = []
+    if english:
+        font_s = out_dir + "/gen/english_font.s"
+        font_json = out_dir + "/font_metrics.json"
+        n.build([font_s, font_json], "enfont", EN_FONT, implicit=["tools/english_font.py"])
+        for c in sorted(glob.glob("src/english/*.c")):
+            o = variant_obj("build/" + c[:-2] + ".o", out_dir)
+            english_cc(n, c, o, C_TOOLCHAIN, cc_implicit, rule="encc")
+            extra.append(o)
+        font_o = font_s[:-2] + ".o"
+        n.build(font_o, "enas", font_s)
+        extra.append(font_o)
+        n.build(EN_CD_REMAP_S, "encdmap", [], implicit=["tools/patch/cd_layout.py"]
+                + ([EN_CD_LAYOUT] if os.path.exists(EN_CD_LAYOUT) else []))
+        cd_remap_o = EN_CD_REMAP_S[:-2] + ".o"
+        n.build(cd_remap_o, "enas", EN_CD_REMAP_S)
+        extra.append(cd_remap_o)
+        outputs.append(font_json)
+    default = ["build/%s.elf" % EXE, "build/%s.map" % EXE]
+    script = out_dir + "/%s.ld" % EXE
+    n.build(script, "rlink", ["build/%s.ld" % EXE], implicit=default + tools,
+            variables={"args": " ".join(["ld main", out_dir, "build/%s.ld" % EXE, "build/%s.map" % EXE, script]
+                                        + (["--redirect"] + redirect if redirect else [])
+                                        + (["--extra"] + extra if extra else []) + shift)})
+    aux_first = out_dir + "/main_aux_first.ld"
+    main_default = default
+    # aux compares rebuilt objects with the default ones (english_link.Layout.unchanged)
+    n.build(aux_first, "rlink", [script], implicit=default + side_scripts("main") + main_objs + tools,
+            variables={"args": "aux main %s %s" % (out_dir, aux_first)})
+    first = out_dir + "/main_first.elf"
+    n.build(first, "rld", main_objs + extra, implicit=[script, aux_first],
+            variables={"script": script, "aux": aux_first, "map": out_dir + "/main_first.map"})
 
-    # overlays: flagged objects relinked at their original addresses, then size and checksum fixup
+    # overlays, linked against the first main link
+    ovl_elfs = []
     for name, _base, _text in overlays:
-        default_elf = "build/ovl/%s.elf" % name
-        ovl_objs = [o for o in n_overlay_objects(name)]
+        out = out_dir + "/ovl/%s.bin" % name
+        flagged = [cf for cf in srcscan.unit_c_files(name) if english and english_variant(str(cf.src))]
+        if name in UNLOADED_OVERLAYS:
+            # generated English sources of these files are ignored: the overlay is copied unchanged
+            if any(english and uses_english(str(cf.src)) for cf in srcscan.unit_c_files(name)):
+                sys.exit("configure.py: %s is never loaded; do not flag its files" % name)
+            n.build(out, "rlink", ["build/ovl/%s.bin" % name], implicit=tools,
+                    variables={"args": "copy %s build/ovl/%s.bin %s" % (name, name, out)})
+            outputs.append(out)
+            continue
+        default = ["build/ovl/%s.elf" % name, "build/ovl/%s.map" % name, "build/ovl/%s.bin" % name]
         redirect = []
-        en_objs = []
-        for cf in srcscan.unit_c_files(name):
-            if uses_english(str(cf.src)):
-                tc = OBJECT_TOOLCHAINS.get(cf.name, OVL_C_TOOLCHAIN)
-                english_cc(n, str(cf.src), english_obj(cf.obj), tc,
-                           cc_implicit + ["build/ovl/%s.stamp" % name])
-                redirect.append(cf.obj)
-        for o in ovl_objs:
-            en_objs.append(english_obj(o) if o in redirect else o)
-        script = EN_DIR + "/ovl/%s.ld" % name
-        n.build(script, "enlink", ["build/ovl/%s.ld" % name], implicit=[default_elf] + EN_TOOLS,
-                variables={"args": "ld %s build/ovl/%s.ld build/ovl/%s.map %s%s"
-                           % (name, name, name, script,
-                              (" --redirect " + " ".join(redirect)) if redirect else "")})
-        elf = EN_DIR + "/ovl/%s.elf" % name
-        n.build(elf, "enold", en_objs, implicit=[script, EN_ISLAND_SYMS, "build/main_names.ld"],
-                variables={"name": name, "script": script, "map": EN_DIR + "/ovl/%s.map" % name})
-        raw = EN_DIR + "/ovl/%s.raw" % name
+        for cf in flagged:
+            tc = OBJECT_TOOLCHAINS.get(cf.name, OVL_C_TOOLCHAIN)
+            english_cc(n, str(cf.src), variant_obj(cf.obj, out_dir), tc, cc_implicit + ["build/ovl/%s.stamp" % name])
+            redirect.append(cf.obj)
+        ovl_objs = [variant_obj(o, out_dir) if o in redirect else o for o in n_overlay_objects(name)]
+        script = out_dir + "/ovl/%s.ld" % name
+        n.build(script, "rlink", ["build/ovl/%s.ld" % name], implicit=default + tools,
+                variables={"args": " ".join(["ld", name, out_dir, "build/ovl/%s.ld" % name,
+                                             "build/ovl/%s.map" % name, script]
+                                            + (["--redirect"] + redirect if redirect else []) + ovl_shift)})
+        aux = out_dir + "/ovl/%s_aux.ld" % name
+        n.build(aux, "rlink", [script], implicit=default + side_scripts(name) + ovl_objs + [first, out_dir + "/%s.ld" % EXE]
+                + tools, variables={"args": "aux %s %s %s --main-elf %s" % (name, out_dir, aux, first)})
+        elf = out_dir + "/ovl/%s.elf" % name
+        n.build(elf, "rld", ovl_objs, implicit=[script, aux],
+                variables={"script": script, "aux": aux, "map": out_dir + "/ovl/%s.map" % name})
+        raw = out_dir + "/ovl/%s.raw" % name
         n.build(raw, "objcopy", elf)
-        out = EN_DIR + "/ovl/%s.bin" % name
-        n.build(out, "enlink", [elf, raw], implicit=[default_elf, EN_HOOKS] + EN_TOOLS,
-                variables={"args": "ovl %s %s %s %s %s %s" % (name, elf, raw, default_elf, EN_HOOKS, out)})
+        n.build(out, "rlink", [elf, raw], implicit=default + [first] + ovl_objs + main_objs + hook_deps + tools,
+                variables={"args": "ovl %s %s %s %s %s %s %s" % (name, out_dir, elf, raw, first, hooks, out)})
+        ovl_elfs.append(elf)
         outputs.append(out)
-    n.build("english", "phony", outputs)
+
+    # second main link, with the overlay entry points
+    entries = out_dir + "/ovl_entries.ld"
+    n.build(entries, "rlink", ovl_elfs, implicit=tools + ["build/undefined_syms_auto.txt"],
+            variables={"args": "entries %s %s" % (out_dir, entries)})
+    aux = out_dir + "/main_aux.ld"
+    n.build(aux, "rlink", [script, entries], implicit=main_default + side_scripts("main") + main_objs + tools,
+            variables={"args": "aux main %s %s --entries %s" % (out_dir, aux, entries)})
+    elf = out_dir + "/%s.elf" % EXE
+    n.build(elf, "rld", main_objs + extra, implicit=[script, aux],
+            variables={"script": out_dir + "/%s.ld" % EXE, "aux": aux, "map": out_dir + "/%s.map" % EXE})
+    raw = out_dir + "/%s.raw" % EXE
+    n.build(raw, "objcopy", elf)
+    exe = out_dir + "/%s.bin" % EXE
+    n.build(exe, "rlink", [elf, raw], implicit=main_default + [first] + main_objs + hook_deps + tools,
+            variables={"args": "exe %s %s %s %s %s %s" % (out_dir, elf, raw, first, hooks, exe)})
+    outputs.append(exe)
+    return outputs
+
+
+def english_targets(n, overlays, objs, cc_implicit):
+    """`ninja english` and `ninja relink`."""
+    relink_rules(n)
+    n.build("english", "phony", relink_targets(n, overlays, objs, cc_implicit, EN_DIR, True))
+    same = relink_targets(n, overlays, objs, cc_implicit, J0_DIR, False)
+    n.rule("rsame", command="cmp $in && touch $out", description="SAME $in")
+    oks = []
+    for out in same:
+        default = "build/" + out[len(J0_DIR) + 1:]
+        oks.append(out[:-4] + ".same")
+        n.build(oks[-1], "rsame", [out, default])
+    n.build(J0_DIR + "/identity.ok", "phony", oks)
+    n.build("relink", "phony", [J0_DIR + "/identity.ok"]
+            + relink_targets(n, overlays, objs, cc_implicit, JR_DIR, False, (JR_SHIFT_MAIN, JR_SHIFT_OVERLAY)))
 
 
 def n_overlay_objects(name):
