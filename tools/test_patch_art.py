@@ -250,7 +250,8 @@ class ExecutableTest(unittest.TestCase):
         original = bytearray(end + 64)
         original[start:end] = hashlib.sha256(b"block").digest() * ((end - start) // 32) + bytes((end - start) % 32)
         english = bytes(16) + bytes(original)
-        out = art_build.patch_executable(english, bytes(original), {start + 8: b"\x01\x02"})
+        out, offset = art_build.patch_executable(english, bytes(original), {start + 8: b"\x01\x02"})
+        self.assertEqual(offset, 16 + start)
         self.assertEqual(out[16 + start + 8:16 + start + 10], b"\x01\x02")
         with self.assertRaises(ArtBuildError):
             art_build.patch_executable(english[:16 + start], bytes(original), {start + 8: b"\x01\x02"})

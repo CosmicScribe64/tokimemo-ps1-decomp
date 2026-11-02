@@ -23,7 +23,6 @@ import os
 import pickle
 import time
 from collections import Counter
-from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 from tools.assets import mdec_splice
@@ -72,7 +71,7 @@ def plan_art(root: Path, files_root: Path, exe: bytes) -> dict:
         if path.endswith(".BS"):
             stats = {key: result.facts.get(key) for key in ("edited_macroblocks", "changed_pixels",
                                                               "english_max_abs_rgb555", "english_mean_abs_rgb555",
-                                                              "ring_max_abs_rgb555", "lambda", "ring_weight",
+                                                              "ring_max_abs_rgb555", "ring_tolerance", "lambda", "ring_weight",
                                                               "file_bytes")}
         else:
             fallback_used += result.fallback
@@ -89,7 +88,11 @@ def plan_art(root: Path, files_root: Path, exe: bytes) -> dict:
     report["containers"] = containers
     report["exe_records"] = len(exe_records)
     report["seconds"] = round(time.monotonic() - started, 1)
-    return {"files": files, "exe_records": exe_records, "report": report}
+    sprite_results = {p: r for p, r in results.items() if not p.endswith(".BS")}
+    still_crops = {p: [(image.id, image.path, image.meta) for item in by_container[p] for image in item.images]
+                   for p in results if p.endswith(".BS")}
+    return {"files": files, "exe_records": exe_records, "report": report, "sprites": sprite_results,
+            "stills": still_crops}
 
 
 def _sprite_job(args):
@@ -100,6 +103,25 @@ def _sprite_job(args):
 def _still_job(args):
     path, data_path, crops = args
     return stills.place_still(path, Path(data_path).read_bytes(), [(i, Path(p), m) for i, p, m in crops])
+
+
+def _process_pool(workers: int):
+    """A ProcessPoolExecutor, imported with the standard library's own `queue`.
+
+    tools/patch/disc.py puts tools/ on sys.path, where tools/queue.py would shadow the `queue`
+    module that concurrent.futures.process needs.
+    """
+    import sys
+    tools = str(Path(__file__).resolve().parents[2])
+    saved_path, saved_queue = list(sys.path), sys.modules.get("queue")
+    if saved_queue is not None and str(getattr(saved_queue, "__file__", "")).startswith(tools):
+        del sys.modules["queue"]
+    sys.path[:] = [p for p in sys.path if str(Path(p or ".").resolve()) != tools]
+    try:
+        from concurrent.futures.process import ProcessPoolExecutor
+    finally:
+        sys.path[:] = saved_path
+    return ProcessPoolExecutor(workers)
 
 
 def run_jobs(root: Path, files_root: Path, exe: bytes, by_container: dict, fallbacks: dict) -> dict:
@@ -128,7 +150,7 @@ def run_jobs(root: Path, files_root: Path, exe: bytes, by_container: dict, fallb
     # stills first: they take longest
     jobs.sort(key=lambda job: (job[1] is None, job[0]))
     if jobs:
-        with ProcessPoolExecutor(max(1, min(len(jobs), os.cpu_count() or 1))) as pool:
+        with _process_pool(max(1, min(len(jobs), os.cpu_count() or 1))) as pool:
             futures = [(path, stored, pool.submit(function, args)) for path, stored, function, args in jobs]
             for path, stored, future in futures:
                 results[path] = future.result()
@@ -168,14 +190,15 @@ def item_report(items: list, images: dict, reasons: dict, fallback: set) -> dict
 MAINROM_RECORDS = (0x800C7420 - 0x80041000 + 0x800, 0x800C95E0 - 0x80041000 + 0x800)
 
 
-def patch_executable(english: bytes, original: bytes, records: dict) -> bytes:
+def patch_executable(english: bytes, original: bytes, records: dict) -> tuple[bytes, int | None]:
     """Write the MAINROM part records (original-executable offsets) into the English executable.
 
     The English link may move data (T-39505), so the frame-record block is found by its original
-    bytes (it holds no pointers); every record must still hold its original bytes there.
+    bytes (it holds no pointers); every record must still hold its original bytes there. Returns
+    the new executable and the block's file offset in it.
     """
     if not records:
-        return english
+        return english, None
     start, end = MAINROM_RECORDS
     block = original[start:end]
     found = english.find(block)
@@ -190,7 +213,7 @@ def patch_executable(english: bytes, original: bytes, records: dict) -> bytes:
         if out[where:where + len(record)] != original[offset:offset + len(record)]:
             raise ArtBuildError("record at 0x%X differs from the original in the English executable" % offset)
         out[where:where + len(record)] = record
-    return bytes(out)
+    return bytes(out), found
 
 
 

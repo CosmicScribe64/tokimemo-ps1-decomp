@@ -48,6 +48,7 @@ class Result:
     texels: int = 0                                   # texels written
     new_parts: int = 0
     ambiguous: int = 0
+    touched: set = field(default_factory=set)        # byte offsets of every texel written
 
 
 def frame_image(data, view: View, part: int, image: list, width: int) -> list:
@@ -499,6 +500,7 @@ def place(data: bytes, profile, targets: list[Target], protect_views: list[View]
     out.ambiguous = result.ambiguous
     for address, index in result.writes.items():
         write_index(out.data, address, index)
+        out.touched.add(address[0])
     out.texels += len(result.writes)
     new_views: dict[str, View] = {}
     if repack and profile.encode is None:
@@ -607,7 +609,9 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
         for piece, part in zip(made.pieces, parts):
             for ly in range(part.height):
                 for lx in range(part.width):
-                    write_index(out.data, part.texel(lx, ly), piece.indices[ly * part.width + lx])
+                    address = part.texel(lx, ly)
+                    write_index(out.data, address, piece.indices[ly * part.width + lx])
+                    out.touched.add(address[0])
             out.texels += part.width * part.height
         out.new_parts += len(parts)
         written.update(records_here)

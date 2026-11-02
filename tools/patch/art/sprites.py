@@ -44,6 +44,8 @@ class ContainerResult:
     reasons: dict = field(default_factory=dict)       # image id -> reason
     stats: dict = field(default_factory=dict)
     fallback: list = field(default_factory=list)      # image ids shipped as their same-size fallback
+    touched: set = field(default_factory=set)         # container byte offsets the writer may change
+    targets: list = field(default_factory=list)       # (image id, view key, part, png path) placed
 
 
 def pixels(path: Path) -> tuple[list, int, int]:
@@ -131,6 +133,10 @@ def _place_once(path: str, data: bytes, exe: bytes, items: list, chosen: dict) -
                 continue
             colours, width, _height = pixels(image.path)
             targets.append(Target(image.id, item.id, view, colours, width, part))
+            region = view.parts[0] if view.key.startswith("region-") else None
+            result.targets.append((image.id, view.key, part, str(image.path),
+                                   (region.page_index, region.x, region.y, region.width, region.height)
+                                   if region else None))
     protect = [v for v in profile.views.values() if v.key.endswith(".base") or v.key.startswith(("page-", "card-"))]
     if "/BATTLE/" in path or path.endswith("ALL_C.NBN"):
         protect = []    # the frames that draw the command labels are the point of the regions
@@ -156,6 +162,12 @@ def _place_once(path: str, data: bytes, exe: bytes, items: list, chosen: dict) -
             container[offset:offset + len(record)] = record
     result.data = bytes(container)
     result.exe_records = exe_records
+    result.touched = set(placed.touched)
+    placed_ids = {i for merged in placed.placed for i in merged.split("+")}
+    result.targets = [t for t in result.targets if t[0] in placed_ids]
+    if profile.exe is None:
+        for offset, record in placed.records.items():
+            result.touched.update(range(offset, offset + len(record)))
     result.stats = {"texels_written": placed.texels, "new_part_records": placed.new_parts,
                     "ambiguous_texels": placed.ambiguous,
                     "bytes_changed": sum(a != b for a, b in zip(data, result.data))}

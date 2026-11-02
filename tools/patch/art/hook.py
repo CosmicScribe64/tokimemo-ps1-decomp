@@ -38,6 +38,7 @@ def place_files(disc, root: Path, files_root: Path, sites, checksum_sites, data:
             if path == "CDROM/FUKUTEST/MAINROM.NBN":
                 planned["exe_records"] = {}     # the records only fit the new sheets
             _defer_container(report, path, "container kept original: %s" % plan.reason)
+            del planned["files"][path]
             continue
         new_lba = disc.replace(path, new)
         item = {"path": path, "lba": lba, "sectors": cd_layout.sectors_of(size), "new_lba": new_lba,
@@ -47,7 +48,7 @@ def place_files(disc, root: Path, files_root: Path, sites, checksum_sites, data:
         data["placed"].append(item)
     report["files_placed"] = placed
     report["files_kept_original"] = kept
-    return {"report": report, "exe_records": planned["exe_records"]}
+    return {"report": report, "exe_records": planned["exe_records"], "plan": planned}
 
 
 def _defer_container(report: dict, path: str, why: str) -> None:
@@ -69,6 +70,15 @@ def patch_exe(exe_out: Path, original_exe: Path, art: dict) -> int:
     from tools.patch.art import build as art_build
     records = art["exe_records"]
     if records:
-        built = exe_out.read_bytes()
-        exe_out.write_bytes(art_build.patch_executable(built, original_exe.read_bytes(), records))
+        built, offset = art_build.patch_executable(exe_out.read_bytes(), original_exe.read_bytes(), records)
+        exe_out.write_bytes(built)
+        art["report"]["mainrom_block_offset"] = offset
     return len(records)
+
+
+def verify(root: Path, track1: Path, files_root: Path, art: dict) -> dict:
+    """Read every art container back from the built track and check it (tools/patch/art/verify.py)."""
+    from tools.patch.art import verify as art_verify
+    report = art_verify.verify(root, track1, files_root, art)
+    art.pop("plan", None)
+    return report

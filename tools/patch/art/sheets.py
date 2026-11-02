@@ -204,7 +204,7 @@ def page_region(profile: Profile, page_index: int, region) -> View:
     """A rectangle of one 8bpp page drawn with the page palette (no frame)."""
     x, y, w, h = region
     page, _bpp = profile.pages[page_index]
-    part = Part(x, y, w, h, 0, page, 8, x, y, profile.page_palette)
+    part = Part(x, y, w, h, 0, page, 8, x, y, profile.page_palette, None, page_index)
     return View.of("region-%d-%d-%d" % (page_index, x, y), [part])
 
 
