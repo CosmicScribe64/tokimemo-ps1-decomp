@@ -1,2 +1,7 @@
 RomPatcher.js modules are unchanged. See UPSTREAM.txt and LICENSE.
 The VCDIFF module credits Victor Alexiev for address-cache code (MIT; LICENSE-Victor-Alexiev), and Joshua MacDonald for the xdelta3 DJW decoder (Apache-2.0; LICENSE-Apache-2.0). Both upstream attribution comments are retained. Our packaged patches disable secondary compression.
+
+Archive extraction uses 7z-wasm 1.2.0 (LGPL 2.1 or later with the unRAR restriction).
+See 7z/UPSTREAM.txt, 7z/License.txt and the corresponding source archives in 7z/.
+CHD extraction uses MAME's chdman tool. See chdman/UPSTREAM.txt, chdman/licenses/
+and chdman/source.tar.gz for provenance, licenses and corresponding source.
