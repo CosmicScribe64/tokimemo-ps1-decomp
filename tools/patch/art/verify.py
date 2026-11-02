@@ -135,8 +135,9 @@ def verify_sprites(path: str, original: bytes, written: bytes, exe: bytes, exe_w
         if compose(written, after.views[key]) != compose(original, view):
             raise ArtBuildError("%s %s: a view without English art changed on the disc" % (path, key))
         unchanged += 1
-    stray = [i for i, (a, b) in enumerate(zip(original, written)) if a != b and i not in planned.touched]
-    if len(original) != len(written) or stray:
+    stray = [i for i, (a, b) in enumerate(zip(original[:-4], written)) if a != b and i not in planned.touched]
+    grown = len(written) != len(original)
+    if stray or (grown and (written[-4:] != original[-4:] or len(written) % 2048)):
         raise ArtBuildError("%s: %d bytes changed outside the planned texels and records" % (path, len(stray)))
     return {"images": out, "other_views_unchanged": unchanged}
 

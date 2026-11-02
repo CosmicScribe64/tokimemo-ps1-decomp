@@ -10,6 +10,7 @@ change (the placer's own check, repeated here on the re-read records).
 from __future__ import annotations
 
 import re
+import struct
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -176,10 +177,12 @@ def _place_once(path: str, data: bytes, exe: bytes, items: list, chosen: dict) -
             exe_records[offset] = record
         else:
             container[offset:offset + len(record)] = record
+    result.touched = set(placed.touched)
+    if profile.exe is None and placed.frames:
+        container = _append_frames(container, profile, placed.frames, result.touched)
     result.data = bytes(container)
     result.exe_records = exe_records
-    result.touched = set(placed.touched)
-    result.exe_frames = dict(placed.frames)
+    result.exe_frames = dict(placed.frames) if profile.exe is not None else {}
     placed_ids = {i for merged in placed.placed for i in merged.split("+")}
     result.targets = [t for t in result.targets if t[0] in placed_ids]
     if profile.exe is None:
@@ -190,6 +193,22 @@ def _place_once(path: str, data: bytes, exe: bytes, items: list, chosen: dict) -
                     "bytes_changed": sum(a != b for a, b in zip(data, result.data))}
     _reread(path, data, exe, result, targets, placed)
     return result
+
+
+def _append_frames(container: bytearray, profile, frames: dict, touched: set) -> bytearray:
+    """Grown frame records appended to the container, before its last word (the 0x1012 end word a
+    checked read ends on), padded to whole sectors; the frame table entries point at them."""
+    if profile.frame_table is None:
+        raise ArtError("%s: grown frames but no frame table" % profile.container)
+    table, load = profile.frame_table
+    body, tail = container[:-4], container[-4:]
+    for frame, blob in sorted(frames.items()):
+        body += bytes(-len(body) % 4)
+        struct.pack_into("<I", body, table + 4 * frame, load + len(body))
+        touched.update(range(table + 4 * frame, table + 4 * frame + 4))
+        body += blob
+    body += bytes(-(len(body) + 4) % 2048)
+    return bytearray(body + tail)
 
 
 def patched_exe(exe: bytes, records: dict) -> bytes:

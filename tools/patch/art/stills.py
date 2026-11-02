@@ -19,9 +19,14 @@ the decoded still and whose other pixels keep it (tools/translation_bs_stills.py
    CODEC_FLOAT_TOLERANCE is used and `ring_tolerance` in the facts says so; otherwise the still
    is deferred. The file's sector count is checked by the build (tools/patch/cd_layout.py) like
    any other grown file.
+5. When no attempt passes even the codec tier, the whole still is re-encoded at a finer quantizer
+   that divides its own (`requantized`): the untouched macroblocks decode exactly as before, the
+   English ones get the finer step; the file grows and moves (the CD hook remaps its reads).
 """
 from __future__ import annotations
 
+import math
+import struct
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -169,6 +174,66 @@ def failures(facts: dict, ring_tolerance: int = RING_TOLERANCE, float_tolerance:
     return out
 
 
+def requantized(data: bytes, source: np.ndarray, goal: np.ndarray, width: int, height: int, quant: int,
+                lam: float = 2.0, ring: float = 1000.0):
+    """The still re-encoded at a finer quantizer that divides the file's own: every untouched
+    macroblock keeps its decode exactly (each AC level times the ratio dequantizes to the same
+    value), the macroblocks with English are encoded at the finer step. Returns (bytes, facts),
+    or (None, why) when a level leaves the coder's range. The trailing bytes after the stream keep
+    their place at the end of the file, which grows by whole sectors when it must."""
+    parsed = mdec_splice.parse(data)
+    original = parsed["quantization"]
+    ratio = original // quant
+    basis = mdec_splice._linear_basis(quant)
+    changed = (goal != source).any(-1)
+    rows = source.shape[0] // 16
+    bits, halfwords, new_levels = [], 0, {}
+    for index, macroblock in enumerate(parsed["macroblocks"]):
+        levels = [[level if i == 0 else level * ratio for i, level in enumerate(block)]
+                  for block in macroblock["levels"]]
+        if any(abs(level) > 511 for block in levels for level in block[1:]):
+            return None, "a level leaves the coder's range at quantizer %d" % quant
+        mx, my = index // rows * 16, index % rows * 16
+        if changed[my:my + 16, mx:mx + 16].any():
+            levels = _encode(levels, source[my:my + 16, mx:mx + 16], goal[my:my + 16, mx:mx + 16],
+                             changed[my:my + 16, mx:mx + 16], quant, lam, ring, basis)
+            new_levels[index] = levels
+        encoded = [mdec_splice.encode_block(block) for block in levels]
+        bits.append("".join(part for part, _ in encoded))
+        halfwords += sum(count for _, count in encoded)
+    declared = (halfwords * 2 + 127) // 128 * 128 // 4
+    if declared > 0xFFFF:
+        return None, "the declared MDEC extent overflows at quantizer %d" % quant
+    body = struct.pack("<4H", declared, parsed["magic"], quant, parsed["version"])
+    body += mdec_splice._pack("".join(bits) + mdec_splice.END_MARKER)
+    trailing = parsed["trailing"]
+    tail = trailing[next((i for i, value in enumerate(trailing) if value), len(trailing)):]
+    size = len(data) if len(body) + len(tail) <= len(data) else -(-(len(body) + len(tail)) // 2048) * 2048
+    result = body + bytes(size - len(body) - len(tail)) + tail
+    decoded = mdec_splice.decode_rgb5(result, width, height)
+    edited = np.zeros(changed.shape, bool)
+    float_error = 0
+    for index, levels in new_levels.items():
+        mx, my = index // rows * 16, index % rows * 16
+        edited[my:my + 16, mx:mx + 16] = True
+        second = mdec_splice.float_macroblock_rgb5(levels, quant)
+        float_error = max(float_error, int(np.abs(second - decoded[my:my + 16, mx:mx + 16]).max()))
+    ring_mask = edited & ~_chroma_cells(changed)
+    english_error = np.abs(decoded - goal)[changed]
+    untouched = ~changed
+    mse = float(((decoded - source)[untouched] ** 2).mean())
+    return result, {
+        "quantization": {"original": original, "new": quant}, "edited_macroblocks": len(new_levels),
+        "changed_pixels": int(changed.sum()),
+        "outside_identical": bool((decoded[~edited] == source[~edited]).all()),
+        "ring_max_abs_rgb555": int(np.abs(decoded - source)[ring_mask].max()) if ring_mask.any() else 0,
+        "english_max_abs_rgb555": int(english_error.max()) if changed.any() else 0,
+        "english_mean_abs_rgb555": round(float(english_error.mean()), 4) if changed.any() else 0.0,
+        "untouched_psnr_db": None if mse == 0 else round(10 * math.log10(31 ** 2 / mse), 2),
+        "float_idct_max_abs_rgb555": float_error,
+        "file_bytes": {"original": len(data), "new": len(result)}}
+
+
 def _done(result: StillResult, images: list, out: bytes, facts: dict, tried: list) -> StillResult:
     result.data = out
     facts["attempts"] = tried
@@ -202,6 +267,15 @@ def place_still(path: str, data: bytes, images: list) -> StillResult:
         _ring, _mean, _n, out, facts = min(candidates, key=lambda c: c[:3])
         facts["ring_tolerance"] = CODEC_RING_TOLERANCE
         return _done(result, images, out, facts, tried)
+    # the file's quantizer is too coarse for the strokes: re-encode at a finer one that divides it
+    quant = mdec_splice.parse(data)["quantization"]
+    for finer in sorted((q for q in range(1, quant) if quant % q == 0), reverse=True):
+        out, facts = requantized(data, source, goal, width, height, finer)
+        problems = failures(facts) if out is not None else [facts]
+        tried.append({"quantization": finer, "failures": problems})
+        if not problems:
+            facts["ring_tolerance"] = RING_TOLERANCE
+            return _done(result, images, out, facts, tried)
     for image_id, _p, _m in images:
         result.images[image_id] = "deferred"
         result.reasons[image_id] = "re-encode gates fail: %s" % "; ".join(tried[-1]["failures"])
