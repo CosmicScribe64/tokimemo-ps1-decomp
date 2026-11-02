@@ -39,6 +39,7 @@ class Profile:
     page_palette: tuple = ()                         # the page's palette (region views)
     pack: Callable | None = None                     # (part, texture id) -> record bytes; None: 14-byte part
     page_sets: dict = field(default_factory=dict)    # view key -> pages its new parts may use (default all)
+    prefer_rebuild: bool = False                     # label sheets: new parts per word, the whole frame freed
 
     def record_bytes(self, data: bytes) -> bytes:
         """The bytes that hold the frame and part records: the container, or the executable."""
@@ -106,7 +107,9 @@ def option_profile(data: bytes) -> Profile:
     pages, frames, _extents, _sequence = option._parse(data)
     palettes = {}
     # the options overlay draws its pages only through frames (no direct sprite UVs in src/ovl/options)
-    profile = Profile("CDROM/FUKUTEST/OPTION.NBN", align=8, direct=False,
+    # the Japanese labels share kanji tiles; English labels are cut per word (REGISTER.md section 6
+    # of T39410-menus-fixes-v1: the page has to be repacked)
+    profile = Profile("CDROM/FUKUTEST/OPTION.NBN", align=8, direct=False, prefer_rebuild=True,
                       pages={p["page_index"]: (p["source_offset"], 8) for p in pages},
                       encode=lambda page, u, v: (page << 8) | ((v // 8) << 4) | (u // 8))
 

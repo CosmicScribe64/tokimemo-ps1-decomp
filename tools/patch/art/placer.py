@@ -21,6 +21,7 @@ an image covers) form a group; a group is placed as a whole or not at all.
 """
 from __future__ import annotations
 
+import copy
 import struct
 from dataclasses import dataclass, field, replace
 
@@ -207,6 +208,7 @@ class Repack:
     pieces: list
     kept: list = field(default_factory=list)    # original parts the frame still draws
     max_parts: int = 0                          # part records the frame has room for (rebuild)
+    alternative: "Repack | None" = None         # the other way to draw the group, tried when this finds no room
 
     @property
     def area(self) -> int:
@@ -411,7 +413,7 @@ def _split(piece: Piece, align: int):
 
 
 def _allocate(data, repacks: list[Repack], pages: dict, align: int, reserved: list[Part], every_part: list[Part],
-              page_sets: dict, referenced: set):
+              page_sets: dict, referenced: set, policy: str = "split"):
     """Place every piece; returns ({group key: placed parts}, {group key: why it found no room}).
 
     Pieces go largest first. A piece may overlap texels that already hold the indices it needs
@@ -454,24 +456,46 @@ def _allocate(data, repacks: list[Repack], pages: dict, align: int, reserved: li
         if missing is None:
             return {k: [placed[k][i] for i in range(len(by_key[k].pieces))] for k in placed}, failed
         repack = by_key[missing[0]]
+        alone = Sheet(data, pages, align, held, every_part)
+        for r in live:
+            for piece in r.pieces:
+                if piece.fixed:
+                    alone.hold(piece.part, piece.indices)
+        allowed = page_sets.get(repack.group[0].view.key, referenced)
+        hopeless = any(not p.fixed and alone.take(p.width, p.height, p.bpp, p.indices, allowed) is None
+                       for p in repack.pieces)
+        if policy == "settle" and not hopeless:
+            failed[_drop(repacks, failed, reserved, pages, align)] = missing[1]
+            continue
+        if repack.alternative is not None:
+            other, repack.alternative = repack.alternative, None
+            repacks[repacks.index(repack)] = other
+            continue
         if repack.mode == "rebuilt" and len(repack.pieces) < repack.max_parts:
             biggest = max(range(len(repack.pieces)), key=lambda i: repack.pieces[i].width * repack.pieces[i].height)
             halves = _split(repack.pieces[biggest], align)
             if halves:
                 repack.pieces[biggest:biggest + 1] = halves
                 continue
-        # a piece that does not fit even with no other new piece placed: its own group goes
-        alone = Sheet(data, pages, align, held, every_part)
-        for r in live:
-            for piece in r.pieces:
-                if piece.fixed:
-                    alone.hold(piece.part, piece.indices)
-        lone = by_key[missing[0]].pieces
-        allowed = page_sets.get(by_key[missing[0]].group[0].view.key, referenced)
-        if any(not p.fixed and alone.take(p.width, p.height, p.bpp, p.indices, allowed) is None for p in lone):
+        if hopeless:
             failed[missing[0]] = missing[1]
         else:
             failed[_drop(repacks, failed, reserved, pages, align)] = missing[1]
+
+
+def _allocate_best(data, repacks: list[Repack], *args):
+    """Allocate with both failure policies and keep the one that places more groups.
+
+    "split": the failing group first tries its other way and smaller pieces; "settle": while
+    its pieces could fit alone, another group is dropped first. Returns the repacks used too.
+    """
+    best = None
+    for policy in ("split", "settle"):
+        trial = copy.deepcopy(repacks)
+        placed, failed = _allocate(data, trial, *args, policy=policy)
+        if best is None or len(failed) < len(best[1]):
+            best = (placed, failed, trial)
+    return best
 
 
 def _drop(repacks: list[Repack], failed: dict, reserved: list[Part], pages: dict, align: int) -> str:
@@ -582,7 +606,8 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
             return all(owners.get(a, set()) <= {(key, number)} for a in _texels(part))
         return check
     for key in sorted(repack):
-        made, why = _prepare(data, groups[key], records, palettes, exclusive_to(key))
+        made, why = _prepare(data, groups[key], records, palettes, exclusive_to(key),
+                             getattr(profile, "prefer_rebuild", False))
         if made is None and len({t.view.record for t in groups[key]}) > 1:
             # frames that cannot share texels in English: each frame on its own
             subgroups = {}
@@ -614,8 +639,8 @@ def _repack(data, profile, groups, repack, protect_views, out: Result, new_views
     # (MAINROM uploads 13 sheets, but slots of the unreferenced ones are reused at run time)
     referenced = {i for i, (offset, bpp) in profile.pages.items()
                   if any(p.page == offset and p.bpp == bpp for v in protect_views for p in v.parts)}
-    placed, failed = _allocate(out.data, prepared, profile.pages, profile.align, reserved, every_part,
-                               profile.page_sets, referenced)
+    placed, failed, prepared = _allocate_best(out.data, prepared, profile.pages, profile.align, reserved,
+                                              every_part, profile.page_sets, referenced)
     for key, why in reasons.items():
         for t in groups[key]:
             out.deferred[t.image_id] = "repack: " + why
@@ -689,14 +714,19 @@ class _SharedRecord(Exception):
     pass
 
 
-def _prepare(data, group, records, palettes, exclusive=lambda number: False):
+def _prepare(data, group, records, palettes, exclusive=lambda number: False, prefer_rebuild=False):
     """The cheaper of relocate and rebuild that can draw the group, or (None, why)."""
     relocated, why = _relocate(data, group, palettes, exclusive)
     rebuilt, why_rebuild = _rebuild(data, group, _record_count(records, group[0].view), palettes)
-    options = [m for m in (relocated, rebuilt) if m is not None]
+    # a relocated frame keeps its unchanged parts' texels; a rebuilt one frees them all
+    options = sorted((m for m in (relocated, rebuilt) if m is not None),
+                     key=lambda m: (not (prefer_rebuild and m.mode == "rebuilt"),
+                                    m.area + sum(p.width * p.height for p in m.kept), m.mode))
     if not options:
         return None, "%s; %s" % (why, why_rebuild)
-    return min(options, key=lambda m: (m.area, m.mode)), None
+    if len(options) == 2:
+        options[0].alternative = options[1]
+    return options[0], None
 
 
 def _record_count(records, view: View) -> int:
