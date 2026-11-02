@@ -160,7 +160,7 @@ The pinned link of T-39502 is gone: `tools/english_link.py` relinks every unit f
 
 ## Art (`tools/patch/art/`, T-39508)
 
-Step 4b of the build writes every registered English image into its container ([[tickets/T-39508-english-art-on-disc]]). `--no-art` leaves the images Japanese. To plan the art alone (no disc): `IMG=tokimemo-patch tools/docker.sh python3 -m tools.patch.art.build --report build/en/art-report.json`. Tests: `IMG=tokimemo-patch tools/docker.sh python3 -m unittest tools.test_patch_art -v` (synthetic, plus game-data checks when `disc/files` is there). The image `tokimemo-patch` now has numpy and Pillow (`tools/Dockerfile.patch`).
+Step 4b of the build writes every registered English image into its container ([[tickets/T-39508-english-art-on-disc]]). Code: `src/english/hud_frames.c` (room for grown HUD frames) in the English build. `--no-art` leaves the images Japanese. To plan the art alone (no disc): `IMG=tokimemo-patch tools/docker.sh python3 -m tools.patch.art.build --report build/en/art-report.json`. Tests: `IMG=tokimemo-patch tools/docker.sh python3 -m unittest tools.test_patch_art -v` (synthetic, plus game-data checks when `disc/files` is there). The image `tokimemo-patch` now has numpy and Pillow (`tools/Dockerfile.patch`).
 
 What ships (`items.py`): for every artwork item of `translations/en/graphics/translation_inventory.json`, its `candidates` (the newest non-superseded candidate per variant), or for an english-reviewed item without candidates its approved historical asset under `artwork/batches`. Each PNG must have its registered SHA-256; its manifest entry says what it covers. Same-size fallbacks come from `T39410-menus-fixes-v1/fallback-ledger.json`.
 
@@ -176,31 +176,36 @@ BS stills (`stills.py`): decode with the pinned MDEC model at the proven size, c
 
 Disc: art containers go through `cd_layout.plan_file` and `Disc.replace` like text data files (a grown still that may move is remapped; one that may not keeps its original bytes and its images are deferred). Then, after `write track 1`, `verify art` (`verify.py`) reads every written container and the executable back from the built track, decodes them again and checks each placed image (indexed: exact pixels, no avoidable STP change, other views unchanged, no byte changed outside the planned texels and records; stills: the gate above, plus max error and PSNR of the English pixels). A placed image that fails stops the build. `report.json` `art` lists all 272 items with `placed_verified`, `partly_placed`, `deferred` (reasons per image), `untranslated_by_decision` or `missing`, the images per mode, the containers with their facts, and `route` (the route checkpoints that show the container) with `not_on_route`.
 
-Results (2026-11-01, build 154 s with cached stills; a clean still cache adds about 12 minutes):
+Results (2026-11-01, round 2: on the free relink of [[tickets/T-39505-english-memory-and-relink]]; build 191 s with cached stills, about 28 minutes with an empty still cache):
 
 | Status | Items |
 |---|---|
-| placed_verified | 230 |
-| deferred | 14 |
+| placed_verified | 235 |
+| deferred | 9 |
 | untranslated_by_decision | 27 |
 | missing | 1 (D_11_11 ride sign) |
 
-Images: 111 in place, 16 relocated, 107 rebuilt, 14 stills re-encoded, 176 palette variants the game never draws, 67 deferred (29 of them movie pills). 29 containers written (one still, D_19_02, grew a sector and moved to the end of track 1), 30 MAINROM part records.
+Images: 111 in place, 19 relocated, 113 rebuilt, 14 stills re-encoded, 191 palette variants the game never draws, 43 deferred (29 of them movie pills). 29 containers written (one still, D_19_02, grew a sector and moved), 37 MAINROM part records and 2 grown MAINROM frames (60, 88) in the executable.
 
-- MAINROM: the stat bar (frame 61: Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress; the label blocks rewritten where they are, two shared arrow tiles moved), the magazine headlines, banners, tags and covers, the weekdays except Monday. Deferred: the Save labels (57-59), the date-panel captions (60) and Monday (82): the eight uploaded sheets have no free 16x16 cell (`boot_hud_textures_load` uploads sheets 0-3 and 7-10; sheets 4-6 are not in VRAM, which the first route run showed as garbage), the frame records cannot grow, and frame 60 and the Monday/Sunday weekdays share the 月 and 日 tiles.
-- OPTION: all 108 frames; 102 rebuilt per word (the Japanese labels share kanji tiles; normal and highlight frames keep sharing texels), 6 in place. Kiyokawa (0103/0104) and Tatebayashi (0113/0114) ship the family-name fallbacks: no room for the widened labels.
-- TITLE 4, FILESEL 13 frames and 3 information pages (all in place), the EXAMINE suffix (fallback `pt`), the ALL_C banner, the five battle files (command and MISS labels, in place), the five sports cards (tile words rewritten).
-- NAME_ENT: the ten selector labels ship as the 32-texel fallbacks: the cells sit at fixed positions in `name_entry.c` and the single 4bpp page has no room for 56-texel cells.
-- Stills re-encoded: P_01_01 (gate plate), P_01_03 and P_01_03B (roster close-ups), C_01_28 (chalkboard), D_01_47, D_01_48, D_01_70, D_15_03, D_19_02 (both signs), D_24_03, D_29_09, I_17_01, I_28_02. Unchanged pixels move at most 1 step on C_01_28, D_29_09 and P_01_03B and at most 3 on the others; the English pixels have PSNR 23 to 40 dB against the composited crops (max error 1 to 13 steps).
-- On the route: title, options, file select, name entry (fallback labels), the command-screen stat bar, calendar, save and load, the gate plate and the roster close-ups. Not on the route (57 items): the battle labels, sports cards, ALL_C banner, exam suffix, every D_/C_/I_ still and the MAINROM magazine frames (0121-0154); they are checked only by `verify art`.
+Grown MAINROM frames (round 2): the uploaded HUD sheets have free 8x8 cells but no free 16x16 one. A changed MAINROM part may become 8x8 tiles (blank tiles left out; when one palette cannot draw a tile, stacked tiles each draw the pixels of their palette) under a new, longer frame record. The English build has room for them: `english_hud_frames` (`src/english/hud_frames.c`, 2 KB, starts with the magic `TKM-EN-HUDFRAMES`). After the link `build.patch_executable` finds the frame-record block by its bytes, the 174-word frame pointer table as the original pointers moved by the same distance, and the array by its magic; it writes the records there and points the frames' table entries at them. `verify art` reads them back from the executable on the disc.
 
-Deferred:
-- MAINROM 57-59, 60, 82: see above. Needs room on an uploaded sheet: another sheet upload in the English build, or frame records with more parts after the relink ([[tickets/T-39505-english-memory-and-relink]]).
-- NAME_ENT panels 0000, 0001, 0002, 0014: no free 32x64 rectangle on the page (panel 0 repeats a tile with two English contents; 1, 2 and 14 draw where no part is).
-- EXAMINE results header (exam-0000): no free 32x64 rectangle once the score digits (direct sprites) are kept.
-- P_01_02 class signs (6 crops) and the D_03_08 placard: every attempt has a float IDCT 31 steps off the fixed decode (saturation).
-- `name-label-abc` (lit, unlit): needs the English letter page of [[tickets/T-39506-english-script-runtime]]; the 32-texel fallback is ready (same cell as frames 15/16) and needs a frame in NAME_ENT and a selector in `name_entry.c`.
-- OPENXA movie pills (29): need a runtime cue player that draws them over the movie.
+- MAINROM: everything. The stat bar (frame 61), the Save labels (57-59), the date-panel captions YR / MO / DAY (frame 60, grown: its caption cells are tiles, partly in a palette of another frame), all weekdays (Sunday 88 grown), the magazine headlines, banners, tags and covers. The HUD palette overrides count only where the HUD uses them (hud-43/44 on frames 0x44-0x58, icon-51/52/53 on frame 2).
+- OPTION: all 108 frames, 102 rebuilt per word, 6 in place. Kiyokawa (0103/0104) and Tatebayashi (0113/0114) ship the family-name fallbacks (no room for the widened labels).
+- TITLE 4, FILESEL 13 frames and 3 pages, the EXAMINE suffix (fallback `pt`), the ALL_C banner, the battle labels, the sports cards, the NAME_ENT selector labels (32-texel fallbacks).
+- Stills re-encoded (14): P_01_01, P_01_03, P_01_03B, C_01_28, D_01_47, D_01_48, D_01_70, D_15_03, D_19_02 (two signs), D_24_03, D_29_09, I_17_01, I_28_02. Unchanged pixels move at most 1 step on C_01_28, D_29_09 and P_01_03B, at most 3 on the others; English pixels PSNR 23-40 dB.
+- Route (`--relink build/en`): the calendar strip reads 95 YR / 4 MO / 4 DAY with English weekdays on the command screen; the Save screen, the stat bar, title, options, file select, name-entry labels, gate plate and roster show English. Not on the route: 86 placed items (40 battle labels, 5 sports cards, the ALL_C banner, the exam suffix, 10 D_/C_/I_ stills, 29 MAINROM magazine frames 0121-0154; the OPTION cast list is on the extras page the route does not open); `report.json` `art.not_on_route` lists them. Extra route stops were not added: the route file belongs to the emulator ticket and the menus to these screens are not mapped yet.
+
+Deferred (9 items) and what each needs:
+- NAME_ENT panels 0000, 0001, 0002, 0014 (the 名前 / あだ名 / birthday headers): the one 4bpp page of NAME_ENT.NBN has no free aligned 8x8 cell left (only 2,368 texels are not drawn by a frame, scattered; grown records do not help without texels). Needs a second texture page, which is code in `src/ovl/name_entry/name_entry.c` (owned by [[tickets/T-39506-english-script-runtime]]): the actors take `game_state.ovl_tpage_table = 0x801AAF58` (NAME_ENT.NBN 0x1AF58, one entry, 0x80190200), and a part's texture id selects the entry by its high byte, so a second page needs a two-entry table elsewhere, the page uploaded with the first, and frame records that name page 1. The art step can then place the panels with the same writers (NAME_ENT.NBN is read as 54 sectors to 0x80190000 at `name_entry.c:203`; a grown file needs that read to grow, which the CD remap does).
+- EXAMINE results header (exam-0000): fits as a grown frame (one 806-byte record), but its records are in EXAMINE.NBN, read as 13 sectors to 0x801E0000 (`final_exam.c:656`); placing it needs the file and that read to grow by a sector and the frame table entry (file 0x64A0 + 4 x frame) to point past the old end. Not done in this round.
+- P_01_02 class signs and the D_03_08 placard: their English is 1-texel black-on-white strokes; at the stills' quantizer (6) the re-encoded blocks overflow the fixed-point IDCT (a pixel meant black decodes white, 31 steps off). Softening the strokes where it overflows removes the overflow but moves the surrounding pixels 7-12 steps, past the codec tier. A finer quantizer is global to a BS file, so it would re-encode every macroblock and change every pixel of the still; left for an owner decision.
+- `name-label-abc` and the 56-texel selector labels: for T-39506, see below.
+- OPENXA movie pills (29): need a runtime cue player.
+
+For [[tickets/T-39506-english-script-runtime]] (name-entry selector labels and the ABC tab):
+- NAME_ENT frames 15-24 are the selector cells in pairs (unlit, lit): 15/16 Hiragana, 17/18 Katakana, 19/20 Symbols, 21/22 Kanji, 23/24 Done. Each is one 32x16 part, origin (17, 8), on page 0 (4bpp, NAME_ENT.NBN 0x200); unlit and lit share texels and differ in the palette column (info 0x5030 / 0x5040). Texels: 15/16 at (32, 32), 17/18 (32, 48), 19/20 (64, 32), 21/22 (64, 48), 23/24 (32, 16). Frame records at NAME_ENT.NBN 0x1ADF8 + 0x18 x (n - 15), pointer table 0x1AF5C (29 words, base 0x80190000).
+- Shipped now: the 32-texel fallbacks, written in place at those texels.
+- The 56-texel art (`T39410-menus-fixes-v1/menus-fixes-v1/name-label-00NN.png`, and `name-label-abc.unlit` / `.lit`, same face and palette columns as 15/16) needs 56x16 texels per state pair (unlit and lit can share) on a page the actors can use: there is none free on page 0, so it comes with the second page above. The selector actors' positions in `name_entry.c` then move 24 texels apart. The ABC tab needs a new frame pair (e.g. frames 29/30, appended to the pointer table) or two existing frames reused; the art step writes the texels and records once the frame ids exist (`sheets.name_profile`, `sprites.view_for` map an image to its frame).
 
 Other findings: the FILESEL System tab word is cut by the availability mark the code draws next to it (the Japanese draws 有 there; the English text step draws a letter at the same place).
 
@@ -210,5 +215,5 @@ Other findings: the FILESEL System tab word is cut by the availability mark the 
 - Relink records: the C literals now place (T-39505). The 266 fixed-size slots over capacity need code changes to their tables.
 - `moved_in_build`: the extents under rewritten C literals. Check after the relink whether any consumer reads them other than through the literal.
 - Windows for menus, tables and C strings: add rows to `WINDOWS` as screens are checked in the route.
-- Art: the deferred items of the Art section (MAINROM sheet room, NAME_ENT panels, two stills, the ABC label, the movie pills).
+- Art: the deferred items of the Art section (NAME_ENT panels and the second name-entry page, the exam header, two stills, the movie pills).
 - Dialogue display needs the parser work of [[tickets/T-39506-english-script-runtime]]. Until then the control bytes 0x0A-0x1A are skipped by the renderer and the old parsers misread English.

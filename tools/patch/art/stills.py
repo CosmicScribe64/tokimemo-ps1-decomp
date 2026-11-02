@@ -9,8 +9,8 @@ the decoded still and whose other pixels keep it (tools/translation_bs_stills.py
 2. composite every crop of that still; the goal differs from the source only at English pixels;
 3. re-encode only the 16x16 macroblocks that hold a changed pixel (mdec_splice.encode_macroblock,
    changed pixels weighted 1, the rest of those macroblocks `ring_weight`; a pixel that still
-   moves past the tolerance gets more weight and the macroblock is encoded again, up to four
-   times), every other macroblock keeps its bits;
+   moves past the tolerance gets more weight, and where the fixed-point IDCT overflows the
+   English is softened; up to four rounds), every other macroblock keeps its bits;
 4. gates, as tools/translation_bs_drafts.py: the stream parses, pixels outside the edited
    macroblocks are bit-identical, unchanged pixels inside them (outside the 2x2 chroma cells of
    the English pixels, which share their Cb/Cr) stay within RING_TOLERANCE RGB555 steps, a float
@@ -114,25 +114,38 @@ def splice(data: bytes, source: np.ndarray, goal: np.ndarray, width: int, height
     return result, facts
 
 
-def _encode(levels, source, goal, changed, quant, lam, ring, basis, rounds=2):
-    """Re-encode one macroblock; unchanged pixels that still move more than RING_TOLERANCE (or whose
-    float decode drifts) get a hundred times their weight and the macroblock is encoded again."""
+def _encode(levels, source, goal, changed, quant, lam, ring, basis, rounds=4):
+    """Re-encode one macroblock, fixing what the decode gets wrong, up to `rounds` times:
+    unchanged pixels that move more than RING_TOLERANCE get a hundred times their weight; when the
+    fixed-point decode drifts from the float one (the IDCT overflows on 1-texel black and white
+    strokes), the English pixels of the goal are softened (3x3 box over the changed pixels) and
+    lambda grows, which keeps the coefficients in range."""
     free = _chroma_cells(changed)
     weights = np.where(changed, 1.0, ring)
     best = None
+    target = goal
     for _round in range(rounds):
-        out = mdec_splice.encode_macroblock(levels, goal, weights, quant, lam, basis=basis)
+        out = mdec_splice.encode_macroblock(levels, target, weights, quant, lam, basis=basis)
         decoded = mdec_splice.macroblock_rgb5([mdec_splice.block_output(block, quant) for block in out])
-        drift = np.abs(mdec_splice.float_macroblock_rgb5(out, quant) - decoded).max(-1)
-        moved = np.abs(decoded - source).max(-1)
-        bad = (~free & (moved > RING_TOLERANCE)) | (drift > FLOAT_TOLERANCE)
-        score = int(bad.sum())
+        drift = np.abs(mdec_splice.float_macroblock_rgb5(out, quant) - decoded).max(-1) > FLOAT_TOLERANCE
+        moved = ~free & (np.abs(decoded - source).max(-1) > RING_TOLERANCE)
+        score = (int(drift.sum()), int(moved.sum()))
         if best is None or score < best[0]:
             best = (score, out)
-        if not score:
+        if not any(score):
             break
-        weights = np.where(bad, weights * 100.0, weights)
+        if drift.any():
+            target = np.where(changed[..., None], _soften(target), source)
+            lam *= 4
+        weights = np.where(moved, weights * 100.0, weights)
     return best[1]
+
+
+def _soften(image: np.ndarray) -> np.ndarray:
+    """3x3 box average of a 16x16x3 block (edges repeated), rounded."""
+    padded = np.pad(image.astype(float), ((1, 1), (1, 1), (0, 0)), mode="edge")
+    total = sum(padded[dy:dy + 16, dx:dx + 16] for dy in range(3) for dx in range(3))
+    return np.rint(total / 9.0).astype(image.dtype)
 
 
 def _chroma_cells(mask: np.ndarray) -> np.ndarray:

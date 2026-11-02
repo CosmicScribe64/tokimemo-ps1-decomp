@@ -31,4 +31,6 @@ Implementation and results: [[english-build]] section Art.
 - Verification: `verify art` reads every written container back from the built track; a placed image that does not match stops the build.
 - Route `build/emu/route-en-art/` (149 shots), compare `build/emu/compare-route-jp-route-en-art/compare.html`.
 
+Round 2 (2026-11-01): merged `patch/english` (free relink, T-39505); the art step and the disc read-back pass on the relinked executable. Grown MAINROM frames in `english_hud_frames` (`src/english/hud_frames.c`) place the Save labels, the date-panel captions and every weekday: 235 placed and verified, 9 deferred. The still encoder softens strokes where the fixed-point IDCT overflows (P_01_02 and D_03_08 still fail). NAME_ENT panels and the 56-texel selector labels need a second name-entry texture page in `name_entry.c` (T-39506); the facts are in [[english-build]] section Art.
+
 ## Comments
