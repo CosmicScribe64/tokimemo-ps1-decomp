@@ -4,7 +4,7 @@ title: Script an emulator route through the main screens with screenshots
 status: In Review
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-01
+updated: 2026-11-02
 links: ["[[tickets/T-39500-english-translation-patch]]"]
 ---
 
@@ -16,9 +16,11 @@ A repeatable emulator run that visits the main screens (title, options, name ent
 
 - [x] The route runs headless from a cue path and writes a contact sheet.
 - [x] Baseline screenshots from the original disc (kept out of git).
-- [ ] The route drives an English build with the English letter page as the default name entry page. (The `en` name-entry step exists; its letter-page layout is an assumption until [[tickets/T-39502-english-text-runtime]] draws the page, and no English disc exists yet to run it on.)
+- [x] The route drives an English build with the English letter page as the default name entry page. (`build/emu/route-en-banner`: fresh boot through save/load, 33,649 frames and 146 captures; name-entry, birthday and dialogue fixes visually checked.)
 
 ## Notes
+
+2026-11-02: `tools/emu/routes/holiday-magazine.route` adds a focused normal-input magazine visit from a compatible main-route `holiday_1` checkpoint. `build/emu/route-en-magazine-v2` passes in 11 s, captures the complete first issue and returns to the holiday menu. Page-aware `talk` input prevents reopening the magazine after exit. This supplements the main route; it does not establish coverage of later issues or all off-route events.
 
 Part of [[tickets/T-39500-english-translation-patch]]. Emulator: [[emulator]] (section Route).
 

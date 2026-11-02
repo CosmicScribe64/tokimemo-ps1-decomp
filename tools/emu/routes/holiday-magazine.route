@@ -1,0 +1,12 @@
+# T-39508: magazine art outside the main phone/date route.
+# Run with --resume RUN_DIR:holiday_1 from a compatible main.route build.
+# Holiday icon 10 opens stage 0x20; reading it returns to the holiday menu.
+state holiday_1
+wait mode=0x46 stage=1 stable=30 timeout=1200 label=holiday
+shot holiday_before_magazine
+pick 10
+press CIRCLE gap=20
+wait mode=0x46 stage=0x20 step=1 stable=30 timeout=900 label=magazine
+talk magazine_page mode=0x46 stage=1 max=8 timeout=2400
+wait mode=0x46 stage=1 stable=30 timeout=1200 label=magazine_exit
+shot holiday_after_magazine
