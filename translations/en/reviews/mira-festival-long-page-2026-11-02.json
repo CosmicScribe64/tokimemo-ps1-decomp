@@ -1,0 +1,33 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+  "record_id": "talk:CDROM/BUNKA/KG_S6W.BIN:main:g0030:l0004",
+  "controlled_scene_and_line_selection": true,
+  "run": "build/emu/festival-mira-current-g0030",
+  "bootstrap": "build/emu/festival-mira-current-bootstrap",
+  "scene": "BUNKAKEN mode 0x71, Mira drama stage 0x66, return step 8 loads background and portrait; step 12 binds script.",
+  "frames": 600,
+  "mode": 113,
+  "header_matches_disc": true,
+  "header_sha256": "e92a9df41d8b9b9dd59f838892231aea8b2b575f3ed10a37dca17a7d5e115d79",
+  "font_trace": {
+    "unknown_calls": 0,
+    "overflow_calls": 0,
+    "ranges_address": 2148237164,
+    "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+    "frame_origin": "start of this emulator run",
+    "load_address": 2147808100,
+    "entries": {},
+    "calls": 0
+  },
+  "inspected_frames": [
+    180,
+    600
+  ],
+  "screenshots": {
+    "180": "166ac417fd43da033ec98c060d0cfcb4408938d7323ea3589380421e59823221",
+    "600": "46df4b062b93cd6907e9df40ecc463895ffc9511d32d33f335a7de23f9859b89"
+  },
+  "result": "The four-line passage scrolls to its final line and closing quote without clipping. Portrait and auditorium background render correctly.",
+  "scope": "Layout check using an injected line selection; natural event progression and translation fidelity remain separate checks."
+}

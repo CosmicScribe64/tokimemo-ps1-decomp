@@ -75,7 +75,8 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "verified: controlled festival passage scrolls to the final line and closing quote",
+      "visual_evidence": "translations/en/reviews/mira-festival-long-page-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/BUNKA/NI_S6S.BIN:main:g0001:l0000",
@@ -254,7 +255,8 @@
       "visible_rows": 10,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "verified: controlled ending summary, 17 rows, complete final sentence",
+      "visual_evidence": "translations/en/reviews/ending-long-page-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_AS.BIN:initializer-00:g0004:l0000",

@@ -1,0 +1,50 @@
+{
+  "ticket": "T-39511",
+  "record_id": "talk:CDROM/SERIFU/EPILOG.BIN:table-3:g0000:l0000",
+  "target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+  "run": "build/emu/ending-current-verified-entry",
+  "controlled_scene_entry": true,
+  "mode": 99,
+  "girl_id": 12,
+  "selection_evidence": "ending_graduation_result_dialogue_select: case 12 selects D_8013CAC0[0][3], entry 0.",
+  "samples": [
+    {
+      "frame": 1500,
+      "row_count": 23,
+      "epilogue_row_count": 17,
+      "used_bytes": 726,
+      "scroll": 149,
+      "overflow": 0,
+      "epilogue_matches_translation": true,
+      "buffer_sha256": "ec47973c6f532423a28e75ef8469e192b399f6209628470a353223c07f880a7a"
+    },
+    {
+      "frame": 3000,
+      "row_count": 23,
+      "epilogue_row_count": 17,
+      "used_bytes": 726,
+      "scroll": 503,
+      "overflow": 0,
+      "epilogue_matches_translation": true,
+      "buffer_sha256": "ec47973c6f532423a28e75ef8469e192b399f6209628470a353223c07f880a7a"
+    }
+  ],
+  "inspected_frames": [
+    1000,
+    1500,
+    2000,
+    2500,
+    3000,
+    3500
+  ],
+  "screenshots": {
+    "1000": "d2521fc145931805e6f19af5c234174b0240012a616a3078fe57280306840ff5",
+    "1500": "5cdfcd62f257ad273efe7cd508f67755948322e2c2b4a70e668830892379ff13",
+    "2000": "24420fb2e1af4305633610ead79cb441f79234bccdf9699ef80ae039e411935e",
+    "2500": "cbf88e8b05db1d8dffac0189b0d48b626fde3aca1aeea8e1c6c30d813f350264",
+    "3000": "0899c53e4b5bf349366fc1e4e947a191e1be756eb76d7214d7e81f2ed242b304",
+    "3500": "f8919e417f3af6aa277c1c6f802130118bd9ca3f43a3fbe95f0378872be6df12"
+  },
+  "result": "All 17 epilogue rows are retained, scroll through the viewport and end with the complete final sentence. No missing text or horizontal clipping observed.",
+  "scope": "Controlled summary selection verifies layout and buffer contents, not natural ending eligibility or translation fidelity."
+}

@@ -3737,3 +3737,11 @@ Opened [[tickets/T-39529-english-staff-credits]] after the corrected current-bui
 ## [2026-11-02] decision | Preserve original ending credits
 
 The owner approved leaving the credits unchanged. Updated [[tickets/T-39500-english-translation-patch]] and closed [[tickets/T-39529-english-staff-credits]] as an approved exception. The 167,936-byte STAFF_R.NBN asset on the published disc matches the original exactly; no credit translations or pixel edits were applied. Gameplay quality checks remain open.
+
+## [2026-11-02] query | Verify the longest ending passage
+
+Mapped the current-disc girl-12 summary to EPILOG table 3, entry 0 in `src/ovl/ending/career_and_epilogue_summary.c`. Inspected six native emulator captures and compared the captured text buffer at two scrolling positions against the translation. All 17 epilogue rows are present; the composed summary uses 23 rows and 726 bytes with no overflow. Recorded screenshot and buffer hashes in `translations/en/reviews/ending-long-page-2026-11-02.json` and closed this record's runtime check in the long-page receipt. [[tickets/T-39511-english-text-quality]] remains open with 61 long-page records still awaiting runtime evidence. Original credits remain unchanged.
+
+## [2026-11-02] query | Check Mira's scrolling festival dialogue
+
+Loaded the current patch's Mira drama return scene (BUNKAKEN stage 0x66) and inspected the flagged KG_S6W group 30/line 4 at frames 180 and 600. The four-row passage reaches its final line and closing quote; the portrait and auditorium render correctly. Verified the loaded script header against the disc. Saved the hashes and scope in `translations/en/reviews/mira-festival-long-page-2026-11-02.json` and updated [[tickets/T-39511-english-text-quality]]. Sixty flagged long-page records remain unverified at runtime.
