@@ -1,6 +1,10 @@
 /* shiori_member.c: src/ovl/BUNKASAI/801511E0.c:4: Shiori member block, stages 1-13. Original object 0x801511E0-0x80154018 (config/objects/BUNKASAI.txt). */
 #include "common.h"
 #include "ovl/culture_festival.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/script.h"
+#include "english/text.h"
+#endif
 
 void culture_shiori_member_entry(void) {
     ((CultureFestivalDispatch *)&culture_exhibit_club)->girl = 0;
@@ -881,7 +885,13 @@ void culture_shiori_member_computer_game(void) {
             case 0:
                 sp36 = strlen(game_state.player_family_name);
                 k_reset(1);
+#ifdef TOKIMEMO_ENGLISH
+                /* T-39506: speaker label right-aligned by pixel width */
+                set_kanji_string(english_speaker_label_x(game_state.player_family_name), 0x32, 0,
+                                 (s32) game_state.player_family_name, 0);
+#else
                 set_kanji_string((s16) (-0x68 - (sp36 * 4)), 0x32, 0, (s32) game_state.player_family_name, 0);
+#endif
                 set_kanji_string(-0x56, 0x32, 0, (s32) "『それじゃ、やってみせるかな。", 0);
                 k_disp_start(2);
                 game_state.substep += 1;

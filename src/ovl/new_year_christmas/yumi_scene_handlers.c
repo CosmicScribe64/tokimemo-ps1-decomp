@@ -1,6 +1,9 @@
 /* yumi_scene_handlers.c: ; src/ovl/SHOUGATU/8013AF10.c:4-5 dispatches Yumi scene setup. Original object 0x8013AF10-0x8013B210 (config/objects/SHOUGATU.txt). */
 #include "common.h"
 #include "ovl/new_year_christmas.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/script.h"
+#endif
 
 void new_year_yumi_scene_mode_step_dispatch_call(void) {
     new_year_yumi_scene_mode_step_dispatch();
@@ -46,7 +49,13 @@ void new_year_yumi_scene_state_init(void) {
     /* Chain store through byte views keeps one li for both stores and the argument (T-9150 idiom). */
     *(u8 *)&game_state.date_girl = *(u8 *)&game_state.current_girl = 0xA;
     talk_names_set(*(u8 *)&game_state.current_girl);
+#ifdef TOKIMEMO_ENGLISH
+    /* T-39506: family name and the polite honorific ("-san", as get_p_name), bounded to the 12-byte buffer */
+    english_copy(name_code_player_form, game_state.player_family_name, 12);
+    english_append(name_code_player_form, "-san", 12);
+#else
     sprintf(name_code_player_form, "%sさん", game_state.player_family_name);
+#endif
     new_year_meeting_dialogue_addresses_init();
     new_year_meeting_dialogue_text_table = D_80144DB0;
     new_year_meeting_dialogue_command_table = D_80144DD4;

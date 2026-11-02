@@ -989,6 +989,19 @@ s32 arg1;
     }
 }
 
+#ifdef TOKIMEMO_ENGLISH
+/* T-39506: pointer views of the magazine's fixed-stride profile lines (13 issues of 17 bytes each), so the
+ * English build can move a longer line (tools/patch/text/retarget.py). */
+static u8 *hud_english_magazine_upper[13] = {
+    D_800B5D1C[0], D_800B5D1C[1], D_800B5D1C[2], D_800B5D1C[3], D_800B5D1C[4], D_800B5D1C[5], D_800B5D1C[6],
+    D_800B5D1C[7], D_800B5D1C[8], D_800B5D1C[9], D_800B5D1C[10], D_800B5D1C[11], D_800B5D1C[12],
+};
+static u8 *hud_english_magazine_lower[13] = {
+    D_800B5C2C[0], D_800B5C2C[1], D_800B5C2C[2], D_800B5C2C[3], D_800B5C2C[4], D_800B5C2C[5], D_800B5C2C[6],
+    D_800B5C2C[7], D_800B5C2C[8], D_800B5C2C[9], D_800B5C2C[10], D_800B5C2C[11], D_800B5C2C[12],
+};
+#endif
+
 /* FAKE: each record triple (unk_18/unk_26/unk_2A) after the loop is written on one line, as from a macro (none is known):
  * as1 schedules by source line and the grouping sets the store order in each branch. T-11690 */
 void hud_magazine_page_build(void) {
@@ -1206,12 +1219,20 @@ void hud_magazine_page_build(void) {
         actor_pool[calendar_actor_index].unk_18 = (s16) D_800B5DFC[magazine_issue_index]; actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
         calendar_actor_index++;
     }
+#ifdef TOKIMEMO_ENGLISH
+    set_kanji_string(0x20, -0x5E, 7U, hud_english_magazine_upper[magazine_issue_index], 0);
+#else
     set_kanji_string(0x20, -0x5E, 7U, D_800B5D1C[magazine_issue_index], 0);
+#endif
     if (D_800B5D0C[magazine_issue_index] != 0xFF) {
         actor_pool[calendar_actor_index].unk_18 = (s16) D_800B5D0C[magazine_issue_index]; actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
         calendar_actor_index++;
     }
+#ifdef TOKIMEMO_ENGLISH
+    set_kanji_string(0x20, -0x3E, 8U, hud_english_magazine_lower[magazine_issue_index], 0);
+#else
     set_kanji_string(0x20, -0x3E, 8U, D_800B5C2C[magazine_issue_index], 0);
+#endif
     if (magazine_issue_index < 4) {
         actor_pool[calendar_actor_index].unk_18 = (s16) ((magazine_issue_index & 3) + 0x97); actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
         calendar_actor_index++;

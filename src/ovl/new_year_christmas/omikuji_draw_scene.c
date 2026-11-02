@@ -1,6 +1,9 @@
 /* omikuji_draw_scene.c: ; src/ovl/SHOUGATU/80134890.c:176-196 begins the omikuji prompt, actor movement and result presentation. Original object 0x80134890-0x80135B90 (config/objects/SHOUGATU.txt). */
 #include "common.h"
 #include "ovl/new_year_christmas.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/script.h"
+#endif
 
 void new_year_omikuji_resource_addresses_init(void) {
     D_80143DB0 = 0x801DABE0;
@@ -174,12 +177,33 @@ void new_year_omikuji_actors_show(void) {
     mode_step_next();
 }
 
+#ifdef TOKIMEMO_ENGLISH
+/* T-39506: pointer views of the two fixed-stride fortune tables (7 strings of 5 bytes). Every entry is
+ * then reached through its own address, so the English build can move a string that does not fit its
+ * 5 bytes (tools/patch/text/retarget.py). */
+static u8 *new_year_omikuji_english_results[7] = {
+    D_80143E5C.s[0], D_80143E5C.s[1], D_80143E5C.s[2], D_80143E5C.s[3], D_80143E5C.s[4], D_80143E5C.s[5],
+    D_80143E5C.s[6],
+};
+static u8 *new_year_omikuji_english_labels[7] = {
+    D_80143E80.s[0], D_80143E80.s[1], D_80143E80.s[2], D_80143E80.s[3], D_80143E80.s[4], D_80143E80.s[5],
+    D_80143E80.s[6],
+};
+#define NEW_YEAR_OMIKUJI_RESULT(i) (new_year_omikuji_english_results[i])
+#else
+#define NEW_YEAR_OMIKUJI_RESULT(i) (sp38.s[i])
+#endif
+
 s32 new_year_omikuji_scene(void) {
     /* FAKE: T-25132: the timer byte is read through a local pointer, so uopt keeps one register for it instead of
      * a promoted global plus a widened copy (as in DATE func_8013AF1C, T-21520). */
     GameState *g = &game_state;
     u8 sp84[] = "おみくじを引きます。";
+#ifdef TOKIMEMO_ENGLISH
+    u8 sp6C[0x40] = "うおりゃあああ〜・・・"; /* T-39506: room for the English result line */
+#else
     u8 sp6C[] = "うおりゃあああ〜・・・";
+#endif
     u8 sp5C[] = "こ、これは！！";
     ShoStr7x5 sp38;
 
@@ -307,17 +331,17 @@ s32 new_year_omikuji_scene(void) {
         /* FAKE: T-25132: the (s32) index casts read the widened selector, the one register of the tests (a plain
          * u8 index gives uopt a second register for it). */
         if (new_year_omikuji_selector == 3 || new_year_omikuji_selector == 4) {
-            sprintf(sp6C, "%sだ・・・", sp38.s[(s32)new_year_omikuji_selector]);
+            sprintf(sp6C, "%sだ・・・", NEW_YEAR_OMIKUJI_RESULT((s32)new_year_omikuji_selector));
             ((Actor *)actor_pool)[99].draw_flags |= 0x80;
             ((Actor *)actor_pool)[99].flags = 0x40;
             ((Actor *)actor_pool)[99].unk_18 = 7;
         } else if (new_year_omikuji_selector != 0) {
-            sprintf(sp6C, "おっ、%sだ。", sp38.s[(s32)new_year_omikuji_selector]);
+            sprintf(sp6C, "おっ、%sだ。", NEW_YEAR_OMIKUJI_RESULT((s32)new_year_omikuji_selector));
             ((Actor *)actor_pool)[99].unk_18 = 6;
             D_80143DDC = 1;
             ((Actor *)actor_pool)[99].draw_flags &= 0x7F;
         } else {
-            sprintf(sp6C, "ラッキー！%sだ！！", sp38.s[(s32)new_year_omikuji_selector]);
+            sprintf(sp6C, "ラッキー！%sだ！！", NEW_YEAR_OMIKUJI_RESULT((s32)new_year_omikuji_selector));
             ((Actor *)actor_pool)[99].unk_18 = 6;
             D_80143DDC = 1;
             ((Actor *)actor_pool)[99].draw_flags &= 0x7F;
@@ -372,7 +396,11 @@ void new_year_omikuji_result_text(void) {
     if (game_state.current_girl == GIRL_AYAKO && new_year_omikuji_selector == 3) {
         new_year_omikuji_selector = 4;
     }
+#ifdef TOKIMEMO_ENGLISH
+    english_value_set(ENGLISH_CODE_O, new_year_omikuji_english_labels[new_year_omikuji_selector]);
+#else
     strcpy(name_code_o, labels.s[new_year_omikuji_selector]);
+#endif
     if (new_year_omikuji_selector == 0) {
         game_state.param_stress.value -= 5;
     }

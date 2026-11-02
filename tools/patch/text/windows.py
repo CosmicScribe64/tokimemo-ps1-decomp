@@ -47,21 +47,26 @@ class Window:
     row_bytes: int | None
     source: str
     max_rows: int | None = None
+    reflow: bool = False
 
     @property
     def width(self) -> int:
         return self.right - self.left
 
 
+# Row buffers of the English parsers (src/english/script.c, T-39506): 160 bytes after name expansion.
+ENGLISH_ROW_BYTES = 159
+
 WINDOWS = {window.name: window for window in (
-    Window("message_speech", -0x48, MESSAGE_RIGHT, 3, True, True, 63,
-           "talk_speak_part: speech rows at x -0x48; message_window_show; check_k_scroll"),
-    Window("message_narration", -0x80, MESSAGE_RIGHT, 3, True, True, 63,
-           "talk_speak_part: narration rows at x -0x80 (commands 7 without label, 9, 0x10)"),
-    Window("choice", -0x72, MESSAGE_RIGHT - BRACKET_PX, 3, False, False, 63,
+    Window("message_speech", -0x48, MESSAGE_RIGHT, 3, True, True, ENGLISH_ROW_BYTES,
+           "talk_speak_part: speech rows at x -0x48; message_window_show; check_k_scroll", reflow=True),
+    Window("message_narration", -0x80, MESSAGE_RIGHT, 3, True, True, ENGLISH_ROW_BYTES,
+           "talk_speak_part: narration rows at x -0x80 (commands 7 without label, 9, 0x10)", reflow=True),
+    Window("choice", -0x72, MESSAGE_RIGHT - BRACKET_PX, 3, False, False, ENGLISH_ROW_BYTES,
            "talk_speak_part commands 3, 8, 0x13: talk_render(-0x72, label_enabled) with brackets"),
-    Window("telephone_narration", -0x48, MESSAGE_RIGHT, 3, True, True, 39,
-           "sndisp/sndi: rows at x -0x48 that scroll, 40-byte row buffers, at most 6 rows", max_rows=6),
+    Window("telephone_narration", -0x48, MESSAGE_RIGHT, 3, True, True, ENGLISH_ROW_BYTES,
+           "sndisp/sndi: rows at x -0x48 that scroll, at most 6 rows (english_sndisp)", max_rows=6,
+           reflow=True),
 )}
 
 # Talk script commands (context.command.value) and the window their text goes to.
@@ -75,20 +80,38 @@ COMMAND_WINDOWS = {
 }
 LABEL_COMMAND = 0x7  # inline label: speech when the record starts with a label, else narration
 
-# Width of a name or value code once the runtime expands it. English names hold at most 8
-# single-byte letters (T-39506); 6 px is the advance of most lower-case letters.
-NAME_LETTERS = 8
+# Width of a name or value code once the runtime expands it (T-39506): player names hold at most
+# 7 single-byte letters, 6 px is the advance of most lower-case letters; the player form adds an
+# honorific ("-kun"), the girl name is a family name with "-san" (the longest is measured).
+NAME_LETTERS = 7
 NAME_PX = NAME_LETTERS * 6
 NAME_CODE_PX = {
-    0x10: NAME_PX,              # P player form
+    0x10: b"Aaaaaaa-kun",       # P player form: name and honorific
     0x11: NAME_PX,              # p family name
     0x12: NAME_PX,              # m given name
     0x13: 2 * NAME_PX + 4,      # F full name, family + space + given
-    0x14: None,                 # Y Yoshio: measured from the English name
-    0x15: NAME_PX,              # G girl name
+    0x14: b"Yoshio",            # Y Yoshio
+    0x15: b"Tatebayashi-san",   # G girl name with honorific, the longest
     0x16: NAME_PX, 0x17: NAME_PX, 0x18: NAME_PX, 0x19: NAME_PX, 0x1A: NAME_PX,  # S O W A M
 }
 YOSHIO = b"Yoshio"
+
+
+SNDISP_CALLS = frozenset(("sndisp", "sndi"))
+
+
+def consumer_calls(unit: dict) -> set:
+    """Functions the unit's proven consumers pass the string to (source and MIPS contexts)."""
+    context = unit.get("context") or {}
+    calls = set()
+    for item in context.get("source_contexts") or []:
+        site = item.get("source_site") or {}
+        if site.get("call"):
+            calls.add(site["call"])
+    for item in context.get("mips_contexts") or []:
+        if item.get("callee"):
+            calls.add(item["callee"])
+    return calls
 
 
 def window_for(container_kind: str, record) -> tuple[Window | None, str]:
@@ -97,6 +120,8 @@ def window_for(container_kind: str, record) -> tuple[Window | None, str]:
     controls = [s for s in record.segments if getattr(s, "kind", None)]
     if any(c.kind == "row_separator" for c in controls):
         return WINDOWS["telephone_narration"], "row_separator: sndisp renderer"
+    if consumer_calls(unit) & SNDISP_CALLS:
+        return WINDOWS["telephone_narration"], "consumer sndisp/sndi (T-39506)"
     if container_kind == "talk_script" and record.kind == "script_record":
         command = (unit.get("context") or {}).get("command") or {}
         value = command.get("value")

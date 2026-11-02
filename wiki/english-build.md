@@ -1,7 +1,7 @@
 ---
 type: tool
 updated: 2026-11-01
-sources: ["tools/patch/build_english.py", "tools/patch/art/", "tools/test_patch_art.py", "tools/patch/cd_layout.py", "tools/patch/text/english.py", "tools/patch/text/windows.py", "tools/patch/text/wrap.py", "tools/patch/text/layout.py", "tools/patch/text/inplace.py", "src/english/cd.c", "include/english/cd.h", "tools/test_patch_english.py", "tools/patch/movie/build.py"]
+sources: ["tools/patch/text/retarget.py", "tools/patch/text/reflow.py", "tools/patch/build_english.py", "tools/patch/art/", "tools/test_patch_art.py", "tools/patch/cd_layout.py", "tools/patch/text/english.py", "tools/patch/text/windows.py", "tools/patch/text/wrap.py", "tools/patch/text/layout.py", "tools/patch/text/inplace.py", "src/english/cd.c", "include/english/cd.h", "tools/test_patch_english.py", "tools/patch/movie/build.py"]
 ---
 
 # English build pipeline
@@ -89,11 +89,31 @@ Sources:
 - The right edge 0x7C is where the widest original rows end in every message-window context.
 
 Rules:
-- A row that fits is kept, so explicit breaks stay. A row that is too wide breaks at the last space that fits.
+- Reflow (T-39506; windows `message_speech`, `message_narration`, `telephone_narration`): the translators kept the Japanese row breaks, which left short English rows ("(What'll I do / this / week?)"). Each break is judged on the Japanese row before it (`text/reflow.py`; the record's source segments, glyph cells against the window's original row capacity: 14 for speech and the telephone, 18 for narration):
+  - forced (reflowed): the Japanese row had at least capacity - 2 cells, or ended short but not at a natural boundary;
+  - kept: the Japanese row ended short after 。！？, a closing 」』）, or an ellipsis, or the next row opens with 「『（. It maps to the English break of the same index when both pages have as many breaks, else to the English sentence end (or opening bracket) of the same rank; if there is none, the break is dropped and counted as ambiguous;
+  - categories that keep every break (`reflow.KEEP_ALL_BREAKS`): none of the windowed containers; song lines, letters and poems are C strings or table entries without a window and are not touched;
+  - pages (records, option ends) never change; choices are not reflowed.
+  - each speech page is measured with its closing quote (drawn by the runtime) and wrapped from its speaker's text column: x -0x80 + label + 6 + mark, for the widest speaker the record can have (inline labels measured, girls with "Tatebayashi", the player with seven wide letters; `text/speech.py`).
+  Then each row too wide for the window is set balanced (`wrap._balanced_row`): the fewest rows that fit, the most even fill, no lone short word on the last row. `report.json` `layout` has the totals and `layout.json` each record (rows before and after, kept breaks with reason and Japanese fill %, orphans, pages longer than the window). A page longer than the window scrolls, as long records do in the original; splitting it would need a new page control in the runtime (not done).
+- A row that fits is kept. A row that is too wide breaks at the last space that fits.
 - A word wider than the window is reported. Choices never wrap, because each option is one selectable row.
-- Name codes count at their English width: 8 letters at 6 px (48), F 100, Y measured from "Yoshio". An inline speaker label (marker, then text up to `": "`) does not count.
+- Name codes count at their English width: family and given names 7 letters at 6 px (42), F 88, P measured from a 7-letter name with "-kun", G from "Tatebayashi-san", Y from "Yoshio". An inline speaker label does not count: the encoder writes 0x1C (or 0x1D for a thought), the label, and 0x1F where the translation had `": "` (`english.end_inline_label`), and the runtime draws it left of the text.
+- Strings drawn by `sndisp`/`sndi` that the handoff could not tokenise (the NAME_ENT prologue lines) get the telephone window from their proven consumer (`windows.consumer_calls`), and their name letters become codes (`english.untokenized_name_codes`: a standalone `P` or `G` in the English, as often as the original has the code).
+- Row buffers are the English parsers' 160 bytes (`ENGLISH_ROW_BYTES`).
 - Pagination: the message window and the telephone box scroll, as in the original, which has single records of up to 9 rows. A non-scrolling window, or more rows than `max_rows`, is reported as `too_many_lines`. A page break would need a new script record or a new runtime control, so none is inserted.
 - Records outside these contexts (menus, tables, C strings) have no proven window yet. They are measured (`width_px` in the notes), not wrapped.
+
+## Text longer than its slot (`text/retarget.py`, T-39506)
+
+An in-place record whose English does not fit its slot is moved when the code reaches the slot only through relocations: the string goes to a free area of the same binary and every reference is re-pointed (`inplace.patch_built(..., retarget)`).
+- References come from the English link: each input section of `build/en/<unit>.map`, its object's relocations (R_MIPS_32 words, HI16/LO16 pairs), target addresses through the map (section symbols) or the English ELF (other symbols).
+- A slot moves only when a reference reaches its first byte and none reaches inside it, and when every `%lo` sharing a moved `%hi` targets the same slot (or the `%hi` does not change).
+- Free areas: an overlay's zero tail (after its last nonzero byte and its last non-segment symbol, plus 16 bytes; [[ram-map]]), and in the main executable `english_string_pool` (2048 bytes in `src/english/script.c`, sized by `english_string_pool_bytes`).
+- A typed table is moved entry by entry only when every translated entry has its own reference (a pointer table). A table that the code indexes by a fixed stride is left alone: moving its first entry would move the base the stride is added to.
+- Fixed-stride tables changed under `TOKIMEMO_ENGLISH` to pointer views, so their entries have references and move: the New Year fortune results and labels and the wish names (SHOUGATU `omikuji_draw_scene.c`, `shrine_actor_sequences.c`), the summer camp club names (KANGEI `scene_pictures_and_effects.c`), the ending song lines (ENDING `graduation_epilogue_handlers.c`, centred by pixel width), the magazine profile lines (main `hud_screens.c`).
+- A slot over capacity in an object the English build compiles again (its C literal is English already) counts as `moved_in_build`, not `needs_relink`.
+- Kept original on purpose: the NAME_ENT kana pages and kanji reading labels (`hiragana_grid`, `katakana_grid`, `reading_labels`: the translators gave romaji, which would replace the kana a player picks); ETC `album_background_lba_cat_00`..`_15` (0x8014E0C4-0x8014EA1C), tables of CD sectors that the handoff read as half-width katakana (49 records; writing them loaded wrong album backgrounds); name presets longer than the name limit (`layout.PRESET_LIMITS`).
 
 ## CD remap (`src/english/cd.c`, `tools/patch/cd_layout.py`)
 
@@ -116,6 +136,21 @@ Checks before a file moves (`plan_file`):
 ## Linker
 
 The pinned link of T-39502 is gone: `tools/english_link.py` relinks every unit freely ([[relink]]). The section-label pins that T-39507 added for a shrinking last object are not needed any more, because nothing is pinned.
+
+## Results after T-39506 round 2 (2026-11-01)
+
+| Status | Records | Change |
+|---|---|---|
+| placed | 31,049 | +98 |
+| needs_relink | 0 | was 266: 196 moved by `retarget` (TEL 76, main 43, NAME_ENT 24, SHOUGATU 17, ENDING 11, TAIIKU 8, KANGEI 4, RPG_BAT 4, BUNKAKEN 2, BUNKASAI 2, ETC 2, TT 2, MASTER 1); 27 are slots under English C literals (now `moved_in_build`); 30 kana-page entries and 9 long name presets kept on purpose |
+| moved_in_build | 288 | +27 |
+| kept_original | 762 | +137: 79 kana pages and reading labels, 49 ETC LBA-table bytes, 9 long presets |
+| overflow | 8 | JOHO.NBN labels, open (see below) |
+| file_kept_original | 4,718 | the DATE files |
+
+Layout (source-judged reflow): 30,573 records, 34,029 line breaks: 21,130 reflowed, 12,907 kept (12,900 after a sentence end, 7 before an opening bracket), 0 ambiguous; rows 64,602 -> 48,999 (14,270 records got shorter); 576 pages still end in a lone short word; 79 pages are longer than their window and scroll.
+
+The 340 `empty_target` records are all empty: 303 talk records whose source is empty or full-width spaces, and 37 table slots marked empty. None is a translation gap. Main executable 686,080 bytes.
 
 ## Results with the free relink (T-39505, 2026-11-01)
 
@@ -217,7 +252,8 @@ The step "opening movie" (70-80 s) rewrites 2,678 video sectors of `OPENXA.STR` 
 ## Open
 
 - DATE files: the RAM map shows the buffer cannot grow in place (TAKU3.BIN and another load follow it during a date; [[ram-map]]). They need a smaller encoding, a split, or DATE code that loads them elsewhere.
-- Relink records: the C literals now place (T-39505). The 266 fixed-size slots over capacity need code changes to their tables.
+- Relink records: done (T-39506, above).
+- JOHO.NBN: 7 club labels and Sagittarius do not fit their fixed slots (12 and 10 bytes). The file is data loaded at 0x801A0000 and TEL reads it at absolute addresses with fixed strides (`phone_profile_details_draw`), and its last 268 bytes are not free. Room needs a new layout of the label tables inside the file (for example packed strings behind a small offset table) and the TEL draw under the flag reading it, or a bigger read whose buffer end is proven free.
 - `moved_in_build`: the extents under rewritten C literals. Check after the relink whether any consumer reads them other than through the literal.
 - Windows for menus, tables and C strings: add rows to `WINDOWS` as screens are checked in the route.
 - Art: the deferred items of the Art section (NAME_ENT panels and the second name-entry page, the exam header, two stills, the movie pills).

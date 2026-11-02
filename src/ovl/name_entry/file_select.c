@@ -3,6 +3,9 @@
 #define MAIN_API_OVERRIDE_memory_card_start /* The original reads $v0 after the call in file_select_album_only_read. T-22023. */
 #include "common.h"
 #include "ovl/name_entry.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/text.h"
+#endif
 
 void prim_gradient_rect();
 s32 memory_card_start();
@@ -119,7 +122,13 @@ void file_select_slot_header_draw(void) {
         strcat(message_text, "番");
         set_kanji_string(-0x20, -0x5C, 0xF, (s32) message_text, 0);
         set_kanji_string(0x20, -0x4B, 0xF, (s32) system_data.family_name[D_800E7D36], 0);
+#ifdef TOKIMEMO_ENGLISH
+        /* T-39506: the given name follows the family name at its pixel width (7 letters do not fit 46 px) */
+        set_kanji_string(0x20 + english_text_width(system_data.family_name[D_800E7D36]) + 4, -0x4B, 0xF,
+                         (s32) system_data.given_name[D_800E7D36], 0);
+#else
         set_kanji_string(0x4E, -0x4B, 0xF, (s32) system_data.given_name[D_800E7D36], 0);
+#endif
         set_kanji_string(0x20, -0x3B, 0xF, (s32) system_data.nickname[D_800E7D36], 0);
         set_kanji_string(0x20, -0x2B, 0xF, (s32) club_name_table[system_data.club[D_800E7D36]], 0);
         return;
@@ -128,7 +137,12 @@ void file_select_slot_header_draw(void) {
     strcat(message_text, "番");
     set_kanji_string(-0x20, -0x5C, 0xF, (s32) message_text, 0);
     set_kanji_string(0x20, -0x4B, 0xF, (s32) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].family_name, 0);
+#ifdef TOKIMEMO_ENGLISH
+    set_kanji_string(0x20 + english_text_width(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].family_name) + 4,
+                     -0x4B, 0xF, (s32) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].given_name, 0);
+#else
     set_kanji_string(0x4E, -0x4B, 0xF, (s32) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].given_name, 0);
+#endif
     set_kanji_string(0x20, -0x3B, 0xF, (s32) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].nickname, 0);
     set_kanji_string(0x20, -0x2B, 0xF, (s32) club_name_table[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].club >> 0xC], 0);
 }
@@ -3306,6 +3320,12 @@ s32 file_select_slot_status_overlay_draw(void) {
             ((Actor *)actor_pool)[126].unk_43 = 0;
             ((Actor *)actor_pool)[127].unk_43 = 0x11;
         }
+#ifdef TOKIMEMO_ENGLISH
+        /* T-39506: the English "System" label runs into the first mark (actor 126, "Y"), so only the mark of
+         * the current state is shown, in the second mark's cell (actor 127, 16 px to the right) */
+        ((Actor *)actor_pool)[slot_info_from_system_data != 0 ? 127 : 126].draw_flags &= 0x7F;
+        ((Actor *)actor_pool)[126].x = slot_info_from_system_data != 0 ? -0xA0 + 0x10 : -0xA0;
+#endif
     }
 }
 

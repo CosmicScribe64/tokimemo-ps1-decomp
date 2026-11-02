@@ -1523,7 +1523,14 @@ void prologue_rei_lines_13_and_14_run(void) {
         prologue_line_run();
         dec_bg_draw(1);
         prologue_lip_synchronization_rei_lines_13_and_14();
+#ifdef TOKIMEMO_ENGLISH
+        /* T-39506: the title shows when the fourth row starts; an English page may have fewer rows,
+         * then it shows when the page is done */
+        if (get_now_k() == ((u8)game_state.text_first_line + 3)
+            || (game_state.text_lines_total < (u8)game_state.text_first_line + 4 && check_end_k() != 0)) {
+#else
         if (get_now_k() == ((u8)game_state.text_first_line + 3)) {
+#endif
             game_state.substep += 1;
             bg_layers = 0x41000000;
             prologue_actors99_100_set_rei();

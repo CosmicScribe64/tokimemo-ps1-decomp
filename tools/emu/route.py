@@ -128,18 +128,21 @@ def hiragana_cell(char):
     raise RouteError("no hiragana cell for %r" % char)
 
 
-# English letter page: the layout is not fixed yet (T-39502); this assumes A-Z then a-z filling
-# the 17-column grid row by row, 16 per row. Change LATIN_ROWS when the page is drawn.
-LATIN_ROWS = 16
+# English letter page (src/english/name_entry.c, T-39506): columns 1-13 of the grid, rows A-M,
+# N-Z, a-m, n-z; row 4 holds - ' . in columns 1-3 and the space key in columns 5-8.
+LATIN_ROWS = ["ABCDEFGHIJKLM", "NOPQRSTUVWXYZ", "abcdefghijklm", "nopqrstuvwxyz", "-'."]
+LATIN_FIRST_COLUMN = 1
+LATIN_SPACE_CELL = (5, 4)
 
 
 def latin_cell(char):
-    """(column, row) of a letter on the English name-entry page (see LATIN_ROWS)."""
-    letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-    if char not in letters:
-        raise RouteError("no letter cell for %r" % char)
-    i = letters.index(char)
-    return i % LATIN_ROWS, i // LATIN_ROWS
+    """(column, row) of a character on the English name-entry page (see LATIN_ROWS)."""
+    if char == " ":
+        return LATIN_SPACE_CELL
+    for row, letters in enumerate(LATIN_ROWS):
+        if char in letters:
+            return LATIN_FIRST_COLUMN + letters.index(char), row
+    raise RouteError("no letter cell for %r" % char)
 
 
 def cell_center(column, row):
