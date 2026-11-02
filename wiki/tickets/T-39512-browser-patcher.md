@@ -29,3 +29,9 @@ Vendor the MIT-licensed RomPatcher.js VCDIFF reader at an immutable revision, re
 Final recheck passed after the review fixes; moved to In Review. Added the Apache-2.0 and Victor Alexiev MIT license texts credited within the vendored module, retaining all upstream notices. Local page is ready for owner review; no public deployment made.
 
 2026-11-02: repackaged the latest banner build at `build/patcher-banner-review`; all nine browser checks pass again against target `a0098b5c0568ebfe46f67cb3324ebb236d08b047`. The actual browser download matches the command-line disc and CUE. Desktop completion screenshot reviewed at `build/patcher-test/complete.png`; previous proof preserved in `build/patcher-layout-proof`. Local review server moved to localhost:8767; publication remains pending campaign completion and owner review.
+
+2026-11-02: current `build/patcher-still-review` passes all nine acceptance checks against e00ffdf0b44b94ad97168b425c1ce564dad04b9f. Desktop completion and 390-pixel screenshots reviewed. Actual browser-downloaded disc and CUE are in `build/browser-still-disc`, with unchanged original audio; an input-only emulator slice through the first school day is running. The live localhost:8767 preview still serves the earlier banner review, not this newer package.
+
+The current local review package is now served at http://localhost:8768 (Docker server); localhost:8767 remains the historical banner package. No public publication.
+
+Browser-download emulator verification completed: `build/emu/route-en-browser-slice` boots through the first school day in 24,063 frames / 555 s with 82 screenshots and zero original-font uploads, unknown mappings or overflow. `cue-provenance.json` binds the run to the actual downloaded files. This closes the campaign's browser-built playable-slice evidence requirement, not remaining whole-game language coverage.

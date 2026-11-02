@@ -21,6 +21,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39513-skating-rink-advertisement|T-39513 Translate the omitted skating-rink advertisement]]
+
 - [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
 
 - [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]

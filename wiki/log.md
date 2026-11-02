@@ -3133,3 +3133,21 @@ Controlled tournament capture `build/emu/club-placard-english/shot_800.png` visi
 ## [2026-11-02] build | Full English route completes with zero original-font uploads
 
 `build/emu/route-en-still-font` reaches done at 33,649 frames in 750 seconds, with 146 screenshots through save/load. Trace reports zero original-font uploads, zero unknown mappings and zero overflow. Reviewed class-board capture 031 (English class heading, approved Japanese roster), neighboring prologue art, and corrected dialogue capture 037. This route used `build/still-basis-proof`; direct final-disc comparisons of all 32 art containers against `build/still-fallback-proof` find only D_19_02 changed, which is outside this route. The museum still requires GPU scene coverage. A final focused rerun passes 69 tests with four skips (unavailable original-draft fixtures and opt-in full-movie test); an initial invocation used a missing module name/import path and was corrected. Updated [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] build | Current browser patch passes and downloaded disc boots for slice test
+
+Packaged `build/patcher-still-review` from `build/still-fallback-proof`. All nine Chromium acceptance checks pass; browser download SHA-1 e00ffdf0b44b94ad97168b425c1ce564dad04b9f equals the CLI image. Reviewed desktop success and 390-pixel page captures, with readable controls and no horizontal overflow. Copied the actual downloaded track/CUE plus unchanged original audio to `build/browser-still-disc`; fresh input-only slice run `route-en-browser-slice` is live through the first school day. [[tickets/T-39512-browser-patcher]] remains In Review pending campaign sign-off.
+
+Source correction: earlier log entries called D_19_02 a museum background. Original disc LBA 17772 (0x456C) resolves to `date_place_setup_skating_rink` and two winter scenes in `src/ovl/date/`; this is the skating-rink entrance. Updated current [[english-build]] wording and started a controlled skating-date GPU fixture with logged RAM writes (place 19, winter date, girl 0). Historical log wording is retained, superseded here. [[tickets/T-39508-english-art-on-disc]].
+
+## [2026-11-02] ticket | Skating replay finds uncatalogued Japanese billboard
+
+Controlled `build/emu/skating-english` completes 6,000 frames in 135 s, entering mode 0x50 and then returning to the scheduler; trace has zero original-font uploads/unknown/overflow. Entrance capture 1000 shows the translated arrow; portrait covers part of the shop board. Capture 2000 exposes a large Japanese advertisement in the following rink background. Caller `date_skating_rink_enter_spot` loads LBA 0x4574, CDROM/BS/D_19_03.BS (17,952 bytes), absent from the catalog and build artwork list. Created [[tickets/T-39513-skating-rink-advertisement]] In Progress before implementation. The previous 245/245 result proves registered coverage only; this uncovered item blocks the complete no-Japanese criterion. Updated the board.
+
+## [2026-11-02] build | Draft omitted rink billboard lettering
+
+Inspected the full D_19_03 decode and enlarged billboard region. Original stream SHA-256 79a65609c52a2a38d674bb549da0f60a17383f54c5fa0734f659b4de5419c151, quantizer 5, 200 macroblocks at 320x160. An ignored code-generated draft in `build/skating-ad/draft.py` replaces the three text bands using local non-ink color fits and the pinned Pillow default bitmap font. Draft preview has readable English title, ski-area name and bus label; the tiny right-edge suffix is ambiguous/cropped and its treatment needs owner review. Production still encode/gates are running on this draft. It is not yet registered or on the disc. [[tickets/T-39513-skating-rink-advertisement]].
+
+## [2026-11-02] build | Browser-download playable slice verified
+
+`build/emu/route-en-browser-slice` completes fresh boot through first school day at 24,063 frames in 555 s, 82 screenshots. Zero original-font uploads, unknown mappings or trace overflow. Actual downloaded track/CUE provenance is recorded, with unchanged audio; reviewed first-school-day capture 082. Checked the corresponding playable-slice and scripted-main-route/browser-test criteria in [[tickets/T-39500-english-translation-patch]]. Whole-game language coverage and publication remain unchecked. Wiki lint reports zero broken links or status mismatches and two existing large-page advisories.
