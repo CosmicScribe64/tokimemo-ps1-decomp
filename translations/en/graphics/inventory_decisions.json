@@ -119,14 +119,14 @@
    "notes": [
     "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval"
    ],
-   "reason": "Standing sign draft: KIRAMEKI HIGH and SPORTS FESTIVAL run down the board with the letter tops to the right, in the two columns of the original. The gate pillar plate is left as it is (catalog-129 keeps it). Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "reason": "Standing sign draft: KIRAMEKI HIGH and SPORTS FESTIVAL run down the board with the letter tops to the right, in the two columns of the original. T-39516 adds the omitted gate pillar plate through tools/patch/art/festival.py: PRIVATE / KIRAMEKI / HIGH SCHOOL, source-hash guarded and combined with this banner by the standard still encoder. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Human approval remains separate from build/readback and GPU verification.",
    "status": "candidate-only"
   },
   "catalog-134": {
    "notes": [
     "decision record: translations/en/graphics/decisions/bs-signs.json (ticket T-39400); owner allowed port-made lettering 2026-11-01; revisable agent defaults, no human approval"
    ],
-   "reason": "Standing sign draft: KIRAMEKI HIGH and CULTURAL FESTIVAL run down the board with the letter tops to the right. The gate pillar plate is left as it is (catalog-129 keeps it). Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Drawn on the decoded still only; no BS file is written, the patch step re-encodes. Unreviewed, human_approved false.",
+   "reason": "Standing sign draft: KIRAMEKI HIGH and CULTURAL FESTIVAL run down the board with the letter tops to the right. T-39516 adds the omitted gate pillar plate through tools/patch/art/festival.py: PRIVATE / KIRAMEKI / HIGH SCHOOL, source-hash guarded and combined with this banner by the standard still encoder. Size proved from the calling code and the stream (320x160, 200 macroblocks, manifest geometry_proofs). Human approval remains separate from build/readback and GPU verification.",
    "status": "candidate-only"
   },
   "catalog-135": {

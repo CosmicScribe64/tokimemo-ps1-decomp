@@ -21,6 +21,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39517-ending-summary-layout|T-39517 Fit the scrolling English ending summaries]]
+
+
 
 
 - [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
@@ -67,6 +70,7 @@ kanban-plugin: board
 
 ## In Review
 
+
 - [ ] [[tickets/T-39513-skating-rink-advertisement|T-39513 Translate the omitted skating-rink advertisement]]
 
 - [ ] [[tickets/T-39512-browser-patcher|T-39512 Build and verify the local browser patcher]]
@@ -98,6 +102,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39516-festival-gate-plates|T-39516 Translate the omitted festival gate plates]]
 
 - [ ] [[tickets/T-39515-exam-ranking-name-layout|T-39515 Fit full English names and scores in exam rankings]]
 

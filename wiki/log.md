@@ -3381,3 +3381,39 @@ T-39515 moves In Review -> Done after the CODING_STANDARDS.md checklist review: 
 ## [2026-11-02] build | Serve reviewed ranking build and start full route regression
 
 Local review server http://localhost:8769 now serves `build/patcher-exam-arena-review`, verified via its release manifest: target SHA1 32fb03da865a9e54824f13270285d6c1abe038fb. Started fresh full main gameplay route `route-en-exam-arena-full` with original-font tracing, because the arena correction affects shared English rendering. Focused exam checks are complete; this broader regression is still running. [[tickets/T-39515-exam-ranking-name-layout]], [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] query | Extend current-build event coverage
+
+Previous goal turn made concrete progress: committed the verified ranking/allocator repair and updated the local patcher. The full route session is confirmed still running. Prepared controlled sports-festival and ending entry probes from the current build's fresh checkpoint, preserving scheduler scratch/loader initialization and logging every injected value. These extend T-39510 runtime coverage; scene reach and screenshots must be inspected before claiming either event passed. [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] ticket | Track omitted festival school-name plates
+
+Both current-build event probes complete 5,000 frames with zero original-font calls/unknown/overflow. Ending captures reach the Yoshio epilogue and song; sports reaches the ball-carrying minigame. However the sports gate capture visibly retains the Japanese school-name plaque beside its translated banner. Created In Progress T-39516 to inspect and repair both festival counterparts; sprite-art omissions are outside the font trace. Current executable audit remains 2,827/2,940 exact non-C slots, with 113 rebuilt source extents classified as three canonical exact addresses, 108 payload-presence candidates, and two deliberately replaced card prompts. Call-site proof remains incomplete. [[tickets/T-39516-festival-gate-plates]], [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] build | Generate both festival school-name plate replacements
+
+Decoded D_01_47 and D_01_48 confirm the omitted plates and identical face geometry. New source-hash-guarded generator draws PRIVATE / KIRAMEKI / HIGH SCHOOL inside the 46x20 face, emits only changed RGBA pixels into the ignored cache, and registers both with the existing still encoder. Thirty artwork tests pass; decoded previews are visually legible. Updated stale inventory decision prose that incorrectly retained the plates by reference to catalog-129. Full rebuild/readback is running; generated inventory refresh and GPU acceptance remain pending. [[tickets/T-39516-festival-gate-plates]].
+
+## [2026-11-02] ticket | Track clipped ending summary lines
+
+Detailed review of `ending-arena-proof/shot_2500.png` reveals right-edge clipping in the scrolling career summary, despite zero original-font calls. Created In Progress T-39517. The summary renderer starts at screen x=88 and its runtime line parser currently expands but does not rewrap rows. This requires a proven summary width, source-record mapping and expanded-name handling; the ending probe is reach/font evidence only, not a layout pass. [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] build | Full allocator regression and Japanese reference complete
+
+`route-en-exam-arena-full` completes through save/load: 33,660 frames, 736 seconds, 145 captures, zero original-font calls/unknown/overflow. The fresh original-disc reference `route-jp-review-reference` also completes through save/load (31,411 frames, 170 captures). Generating the full checkpoint comparison now. Current festival-plate rebuild remains authoritatively live in Docker; no restart. The ending clipping is traced to EPILOG.BIN: table-11 and table-12 command-7 records were assigned generic narration geometry, although the summary calls talk_render at x=-0x48. Dynamic M career labels are also wider than the generic name reservation and must be accounted for in T-39517. [[tickets/T-39515-exam-ranking-name-layout]], [[tickets/T-39516-festival-gate-plates]], [[tickets/T-39517-ending-summary-layout]].
+
+## [2026-11-02] query | Review Japanese and English main-screen comparison
+
+Generated `build/emu/compare-jp-english-review/compare.html` with 145 shared checkpoints plus two compact eight-screen PNG sheets. Inspected title, options, name entry, birthday, repaired prologue dialogue, save menu, slot selection and loaded command screen; English labels and dialogue fit in these captures. The title logo remains the approved exception. Marked only the comparison-sheet deliverable complete; owner signoff and the independent whole-game text/art criteria remain open. [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] build | Verify festival-plate disc scope
+
+`build/festival-plates-proof` finishes in 499.5 seconds, target prefix cfa3e93df1f4, 6,560,864-byte xdelta, 248 placed/readback-verified artwork items and 28 explicit exceptions. Frozen main bin/ELF/ld/map exactly match `exam-arena-proof`. Comparison of every original disc-file container finds only D_01_47.BS and D_01_48.BS changed; the completed main-route and script evidence remains applicable. Regenerated inventory passes its check. Both festival GPU probes are running from the proven-compatible current checkpoint. [[tickets/T-39516-festival-gate-plates]].
+
+## [2026-11-02] ticket | Review verified festival gate plates
+
+T-39516 moves In Progress -> In Review. Sports and culture festival captures at frame 800 visibly show the combined English banner and PRIVATE / KIRAMEKI / HIGH SCHOOL plate. Both complete 1,000 frames with zero original-font activity; all borders and surrounding artwork remain intact. Thirty tests, standard still readback, inventory checks and exact two-container disc scope are verified. [[tickets/T-39516-festival-gate-plates]].
+
+## [2026-11-02] ticket | Complete festival gate-plate repair
+
+T-39516 moves In Review -> Done after standards review: guarded original inputs, explicit geometry/lettering bounds, synthetic fill, changed-pixel RGBA output, standard encoder verification, no raw/generated media staged, tests and both actual GPU scenes checked. Inventory prose no longer incorrectly exempts either gate plate. Human release signoff remains separate. [[tickets/T-39516-festival-gate-plates]].

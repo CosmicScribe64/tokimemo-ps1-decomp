@@ -17,7 +17,7 @@ The owner's bar for the English patch: no Japanese on screen anywhere, apart fro
 - [ ] Text: every text container and C string in the English build is scanned for Shift-JIS glyph codes; each hit is either an approved exception, a control code, or a bug to fix.
 - [ ] Runtime: a debug option of the English build logs every 2-byte glyph the text renderer draws; the emulator route and extra save-state stops (dates, festival, exams, sports, battle, endings) run with it and report zero unexpected glyphs.
 - [ ] Art: every artwork item marked "no change required" or "no Japanese text" is checked against its decoded pixels, and every placed image is read back from the disc (T-39508's check).
-- [ ] A screenshot sheet of the main screens, Japanese beside English, for the owner's review.
+- [x] A screenshot sheet of the main screens, Japanese beside English, for the owner's review.
 
 ## Notes
 
@@ -56,3 +56,5 @@ Runs once [[tickets/T-39506-english-script-runtime]], [[tickets/T-39508-english-
 2026-11-02: controlled weekday exam replay runs mode 0x35 through completion (frames 178–488) with zero original-font calls over 3,600 total frames. Separate Saturday rankings fixture `build/emu/exam-results-proof` runs 2,000 frames with zero calls/unknown/overflow and a real rankings capture. It exposes full player-name/score overlap, tracked in T-39515; do not treat its layout as passed. The canonical extent comparison resolves three more exact addresses, confirms all 108 remaining compiled candidate payload sets are present, and retains the two replaced-prompt exceptions. This still distinguishes candidate/presence evidence from call-site proof.
 
 2026-11-02: current `build/exam-arena-proof` passes the actual-disc audit (105 containers, 31,471 strings, 31,334 pointers; zero original-font bytes). Three controlled real-ETC exam fixtures cover maximum-width names in both columns and sparse visibility, each 2,000 frames with zero original-font calls/unknown/overflow. These are focused exam proofs, not completion of every event/art/call-site criterion. See T-39515 for allocator and layout verification.
+
+2026-11-02: fresh full-route regression after the allocator fix passes through save/load: `route-en-exam-arena-full`, 33,660 frames, 145 captures, zero original-font calls/unknown/overflow. Original reference `route-jp-review-reference` completes 31,411 frames and 170 captures. `build/emu/compare-jp-english-review/compare.html` pairs 145 shared checkpoints; `main-screens-1.png` and `main-screens-2.png` provide compact title/options/name-entry/birthday/prologue/save/load sheets, visually inspected. These establish the requested comparison deliverable, not owner signoff. Controlled sports/ending probes also pass 5,000 frames of font tracing, but expose real plate/summary defects tracked in T-39516 and T-39517; their layout/art acceptance remains open.
