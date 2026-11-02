@@ -1,0 +1,1654 @@
+{
+  "ticket": "T-39510",
+  "target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+  "audit": "tools/patch/audit_executable_disc.py",
+  "status": "pass",
+  "source_only_literals": {
+    "scope": "payload presence in the owning executable; not call-site binding",
+    "checked": 321,
+    "records": {
+      "unresolved-c-locator:c:src/main/holiday.c:52:1": {
+        "path": "SLPM_86.053",
+        "offset": 499964,
+        "sha256": "a1971f4e2fc16911a388d93a947e154f0f86200ba6e04021ed3495b481412332"
+      },
+      "c:main:800755b4:6": {
+        "path": "SLPM_86.053",
+        "offset": 2093,
+        "sha256": "e4ab5012eff32a5171b3672b59d29950fe8b3dcb4d2dadf971ebbcbc2fbb0d41"
+      },
+      "c:main:800755b4:7": {
+        "path": "SLPM_86.053",
+        "offset": 478068,
+        "sha256": "0f250d842ae7cbc369a82a372b6964727f0db0c1519df90977218854541bbccf"
+      },
+      "c:main:800755b4:8": {
+        "path": "SLPM_86.053",
+        "offset": 478068,
+        "sha256": "0f250d842ae7cbc369a82a372b6964727f0db0c1519df90977218854541bbccf"
+      },
+      "c:main:800755b4:9": {
+        "path": "SLPM_86.053",
+        "offset": 2093,
+        "sha256": "e4ab5012eff32a5171b3672b59d29950fe8b3dcb4d2dadf971ebbcbc2fbb0d41"
+      },
+      "c:main:800755b4:10": {
+        "path": "SLPM_86.053",
+        "offset": 478128,
+        "sha256": "dc4a903a08ae986070a545239008b5ed5913abe7702d5c9380810d03d9fd9a42"
+      },
+      "c:main:800755b4:11": {
+        "path": "SLPM_86.053",
+        "offset": 478128,
+        "sha256": "dc4a903a08ae986070a545239008b5ed5913abe7702d5c9380810d03d9fd9a42"
+      },
+      "c:main:800767a4:1": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:800767a4:2": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:800767a4:3": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:800767a4:4": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:800767a4:5": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8005be8c:1": {
+        "path": "SLPM_86.053",
+        "offset": 473096,
+        "sha256": "751bb5741b2c7181fe75d407c1435c30a315c5c0b916fa5bd1413017690247f5"
+      },
+      "c:main:8005be8c:2": {
+        "path": "SLPM_86.053",
+        "offset": 473096,
+        "sha256": "751bb5741b2c7181fe75d407c1435c30a315c5c0b916fa5bd1413017690247f5"
+      },
+      "c:main:8005e5c8:1": {
+        "path": "SLPM_86.053",
+        "offset": 473828,
+        "sha256": "c2e4eff28015f9cbfd96cb87758e70cf49f935f416b956dc5304b7fa420f5482"
+      },
+      "c:main:8005e5c8:3": {
+        "path": "SLPM_86.053",
+        "offset": 473828,
+        "sha256": "c2e4eff28015f9cbfd96cb87758e70cf49f935f416b956dc5304b7fa420f5482"
+      },
+      "c:main:8005e5c8:5": {
+        "path": "SLPM_86.053",
+        "offset": 473828,
+        "sha256": "c2e4eff28015f9cbfd96cb87758e70cf49f935f416b956dc5304b7fa420f5482"
+      },
+      "c:main:8005f478:1": {
+        "path": "SLPM_86.053",
+        "offset": 474540,
+        "sha256": "b231fa8553a57d6e662f92ac60af566f70b6aa537d84e082fafa8a9145328162"
+      },
+      "c:main:8005f478:3": {
+        "path": "SLPM_86.053",
+        "offset": 474564,
+        "sha256": "a63acb1540d90c2e6eaa998a7eb8dc13a02f65e8c89becfb1417bd40534af779"
+      },
+      "c:main:8005f478:4": {
+        "path": "SLPM_86.053",
+        "offset": 474540,
+        "sha256": "b231fa8553a57d6e662f92ac60af566f70b6aa537d84e082fafa8a9145328162"
+      },
+      "c:main:8005f478:6": {
+        "path": "SLPM_86.053",
+        "offset": 474564,
+        "sha256": "a63acb1540d90c2e6eaa998a7eb8dc13a02f65e8c89becfb1417bd40534af779"
+      },
+      "c:main:8005f478:7": {
+        "path": "SLPM_86.053",
+        "offset": 474540,
+        "sha256": "b231fa8553a57d6e662f92ac60af566f70b6aa537d84e082fafa8a9145328162"
+      },
+      "c:main:8005f478:9": {
+        "path": "SLPM_86.053",
+        "offset": 474564,
+        "sha256": "a63acb1540d90c2e6eaa998a7eb8dc13a02f65e8c89becfb1417bd40534af779"
+      },
+      "c:main:8005f478:10": {
+        "path": "SLPM_86.053",
+        "offset": 474540,
+        "sha256": "b231fa8553a57d6e662f92ac60af566f70b6aa537d84e082fafa8a9145328162"
+      },
+      "c:main:8005f478:12": {
+        "path": "SLPM_86.053",
+        "offset": 474564,
+        "sha256": "a63acb1540d90c2e6eaa998a7eb8dc13a02f65e8c89becfb1417bd40534af779"
+      },
+      "c:main:8005f730:3": {
+        "path": "SLPM_86.053",
+        "offset": 473636,
+        "sha256": "405aa530dca59adf5484d96094656f7fcc4d51d0310107315db043d1bef1f611"
+      },
+      "c:main:8005f730:4": {
+        "path": "SLPM_86.053",
+        "offset": 473644,
+        "sha256": "a49681e12ac3bd32f0ed66784c396ef2900a39e18e04b8f7371d5847076a5562"
+      },
+      "c:main:8005f730:5": {
+        "path": "SLPM_86.053",
+        "offset": 473652,
+        "sha256": "86902e331850e9ae2c0eaf07db2fdb854063e092f6dedf3ab59c497cccf4180c"
+      },
+      "c:main:8005f730:7": {
+        "path": "SLPM_86.053",
+        "offset": 473636,
+        "sha256": "405aa530dca59adf5484d96094656f7fcc4d51d0310107315db043d1bef1f611"
+      },
+      "c:main:8005f730:9": {
+        "path": "SLPM_86.053",
+        "offset": 473644,
+        "sha256": "a49681e12ac3bd32f0ed66784c396ef2900a39e18e04b8f7371d5847076a5562"
+      },
+      "c:main:8005f730:11": {
+        "path": "SLPM_86.053",
+        "offset": 473652,
+        "sha256": "86902e331850e9ae2c0eaf07db2fdb854063e092f6dedf3ab59c497cccf4180c"
+      },
+      "c:main:8005fa20:1": {
+        "path": "SLPM_86.053",
+        "offset": 474828,
+        "sha256": "b715fd545228b326add42756b51d3f4ebf21d3d4da5e07f117268600f2bd0ac8"
+      },
+      "c:main:8005fa20:4": {
+        "path": "SLPM_86.053",
+        "offset": 474828,
+        "sha256": "b715fd545228b326add42756b51d3f4ebf21d3d4da5e07f117268600f2bd0ac8"
+      },
+      "c:main:8005fa20:7": {
+        "path": "SLPM_86.053",
+        "offset": 474828,
+        "sha256": "b715fd545228b326add42756b51d3f4ebf21d3d4da5e07f117268600f2bd0ac8"
+      },
+      "c:main:8005fa20:9": {
+        "path": "SLPM_86.053",
+        "offset": 474828,
+        "sha256": "b715fd545228b326add42756b51d3f4ebf21d3d4da5e07f117268600f2bd0ac8"
+      },
+      "c:main:8005fa20:12": {
+        "path": "SLPM_86.053",
+        "offset": 474828,
+        "sha256": "b715fd545228b326add42756b51d3f4ebf21d3d4da5e07f117268600f2bd0ac8"
+      },
+      "c:main:8005ff68:1": {
+        "path": "SLPM_86.053",
+        "offset": 475136,
+        "sha256": "f0d3c941619e75098afcaf51a91d11ead4c910dc4ffcf93868cfe197155d3cbb"
+      },
+      "c:main:8005ff68:3": {
+        "path": "SLPM_86.053",
+        "offset": 475136,
+        "sha256": "f0d3c941619e75098afcaf51a91d11ead4c910dc4ffcf93868cfe197155d3cbb"
+      },
+      "c:main:8005ff68:5": {
+        "path": "SLPM_86.053",
+        "offset": 475136,
+        "sha256": "f0d3c941619e75098afcaf51a91d11ead4c910dc4ffcf93868cfe197155d3cbb"
+      },
+      "c:main:800696dc:1": {
+        "path": "SLPM_86.053",
+        "offset": 476544,
+        "sha256": "009837f45c558b8c59e1d415d41e65141be5d51ca7bf56ef3eed489187825a88"
+      },
+      "c:main:800696dc:3": {
+        "path": "SLPM_86.053",
+        "offset": 476556,
+        "sha256": "f019701373eabe1e3c1f44e204705a843c59c9659f7e5d520a8e92399a99bc4f"
+      },
+      "c:main:800696dc:4": {
+        "path": "SLPM_86.053",
+        "offset": 476564,
+        "sha256": "e1723a364340048167a30a770ece90f8d1118b026c80301050f9b7ca0d5654d9"
+      },
+      "c:main:800696dc:5": {
+        "path": "SLPM_86.053",
+        "offset": 2536,
+        "sha256": "ade0274f84b828b0980112609bb51775d0a4e39bf4728f21dcdd04a627abb92a"
+      },
+      "c:main:800696dc:6": {
+        "path": "SLPM_86.053",
+        "offset": 2536,
+        "sha256": "ade0274f84b828b0980112609bb51775d0a4e39bf4728f21dcdd04a627abb92a"
+      },
+      "c:main:800696dc:7": {
+        "path": "SLPM_86.053",
+        "offset": 2089,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:main:800696dc:8": {
+        "path": "SLPM_86.053",
+        "offset": 683568,
+        "sha256": "3300f8ff138effbee1634ddbea264c19202332957ea5af9e6c10c79f45844d9c"
+      },
+      "c:main:800696dc:9": {
+        "path": "SLPM_86.053",
+        "offset": 683576,
+        "sha256": "e1e7f704fb475d2b6ec6b13329cdb31e2989efa4a2898c3f21b2d558fefcc386"
+      },
+      "c:main:800696dc:10": {
+        "path": "SLPM_86.053",
+        "offset": 476588,
+        "sha256": "391c181254fbdd369d58b823da059be3c48c95a1db35a9cc5ffdc3db97569289"
+      },
+      "c:main:800696dc:11": {
+        "path": "SLPM_86.053",
+        "offset": 476596,
+        "sha256": "5c7083df8f72565986d29ed95cc402ce76b46ba9880bc07d5b02064e53676131"
+      },
+      "c:main:800696dc:12": {
+        "path": "SLPM_86.053",
+        "offset": 476556,
+        "sha256": "f019701373eabe1e3c1f44e204705a843c59c9659f7e5d520a8e92399a99bc4f"
+      },
+      "c:main:800696dc:13": {
+        "path": "SLPM_86.053",
+        "offset": 476564,
+        "sha256": "e1723a364340048167a30a770ece90f8d1118b026c80301050f9b7ca0d5654d9"
+      },
+      "c:main:800696dc:14": {
+        "path": "SLPM_86.053",
+        "offset": 476544,
+        "sha256": "009837f45c558b8c59e1d415d41e65141be5d51ca7bf56ef3eed489187825a88"
+      },
+      "c:main:800696dc:15": {
+        "path": "SLPM_86.053",
+        "offset": 2536,
+        "sha256": "ade0274f84b828b0980112609bb51775d0a4e39bf4728f21dcdd04a627abb92a"
+      },
+      "c:main:800696dc:16": {
+        "path": "SLPM_86.053",
+        "offset": 2536,
+        "sha256": "ade0274f84b828b0980112609bb51775d0a4e39bf4728f21dcdd04a627abb92a"
+      },
+      "c:main:800696dc:17": {
+        "path": "SLPM_86.053",
+        "offset": 2089,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:main:800696dc:18": {
+        "path": "SLPM_86.053",
+        "offset": 683568,
+        "sha256": "3300f8ff138effbee1634ddbea264c19202332957ea5af9e6c10c79f45844d9c"
+      },
+      "c:main:800696dc:19": {
+        "path": "SLPM_86.053",
+        "offset": 683576,
+        "sha256": "e1e7f704fb475d2b6ec6b13329cdb31e2989efa4a2898c3f21b2d558fefcc386"
+      },
+      "c:main:800696dc:20": {
+        "path": "SLPM_86.053",
+        "offset": 476588,
+        "sha256": "391c181254fbdd369d58b823da059be3c48c95a1db35a9cc5ffdc3db97569289"
+      },
+      "c:main:800696dc:21": {
+        "path": "SLPM_86.053",
+        "offset": 476596,
+        "sha256": "5c7083df8f72565986d29ed95cc402ce76b46ba9880bc07d5b02064e53676131"
+      },
+      "c:main:8007ef48:1": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:2": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:5": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:6": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:9": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:10": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:13": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:14": {
+        "path": "SLPM_86.053",
+        "offset": 2093,
+        "sha256": "e4ab5012eff32a5171b3672b59d29950fe8b3dcb4d2dadf971ebbcbc2fbb0d41"
+      },
+      "c:main:8007ef48:15": {
+        "path": "SLPM_86.053",
+        "offset": 7532,
+        "sha256": "7c186033295a11388eb388a21e6e25ad05e9b6c45cd3c403dc3fae8a2d19516e"
+      },
+      "c:main:8007ef48:27": {
+        "path": "SLPM_86.053",
+        "offset": 480724,
+        "sha256": "43f2cd08506c6748972b9c4ef8e6802b1016ea36b600aa925fed801591f90d2f"
+      },
+      "c:main:8007ef48:39": {
+        "path": "SLPM_86.053",
+        "offset": 480724,
+        "sha256": "43f2cd08506c6748972b9c4ef8e6802b1016ea36b600aa925fed801591f90d2f"
+      },
+      "c:main:8007ef48:44": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:45": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:48": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:49": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:52": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:53": {
+        "path": "SLPM_86.053",
+        "offset": 2093,
+        "sha256": "e4ab5012eff32a5171b3672b59d29950fe8b3dcb4d2dadf971ebbcbc2fbb0d41"
+      },
+      "c:main:8007ef48:54": {
+        "path": "SLPM_86.053",
+        "offset": 7532,
+        "sha256": "7c186033295a11388eb388a21e6e25ad05e9b6c45cd3c403dc3fae8a2d19516e"
+      },
+      "c:main:8007ef48:56": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:57": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:60": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:61": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:64": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:65": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:68": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:69": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:72": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:73": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:78": {
+        "path": "SLPM_86.053",
+        "offset": 2089,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:main:8007ef48:81": {
+        "path": "SLPM_86.053",
+        "offset": 2089,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:main:8007ef48:84": {
+        "path": "SLPM_86.053",
+        "offset": 480968,
+        "sha256": "87fafa73ff2cea528409568b4d0dc532ed9457e9b6eb4600c5ce01d08c70c6ed"
+      },
+      "c:main:8007ef48:85": {
+        "path": "SLPM_86.053",
+        "offset": 480968,
+        "sha256": "87fafa73ff2cea528409568b4d0dc532ed9457e9b6eb4600c5ce01d08c70c6ed"
+      },
+      "c:main:8007ef48:86": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:89": {
+        "path": "SLPM_86.053",
+        "offset": 480968,
+        "sha256": "87fafa73ff2cea528409568b4d0dc532ed9457e9b6eb4600c5ce01d08c70c6ed"
+      },
+      "c:main:8007ef48:90": {
+        "path": "SLPM_86.053",
+        "offset": 480968,
+        "sha256": "87fafa73ff2cea528409568b4d0dc532ed9457e9b6eb4600c5ce01d08c70c6ed"
+      },
+      "c:main:8007ef48:91": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:94": {
+        "path": "SLPM_86.053",
+        "offset": 481040,
+        "sha256": "b43088fcfbb1ba27e53205106d615525101b75156c002918094d22f23c978737"
+      },
+      "c:main:8007ef48:95": {
+        "path": "SLPM_86.053",
+        "offset": 481040,
+        "sha256": "b43088fcfbb1ba27e53205106d615525101b75156c002918094d22f23c978737"
+      },
+      "c:main:8007ef48:96": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:99": {
+        "path": "SLPM_86.053",
+        "offset": 481040,
+        "sha256": "b43088fcfbb1ba27e53205106d615525101b75156c002918094d22f23c978737"
+      },
+      "c:main:8007ef48:100": {
+        "path": "SLPM_86.053",
+        "offset": 481040,
+        "sha256": "b43088fcfbb1ba27e53205106d615525101b75156c002918094d22f23c978737"
+      },
+      "c:main:8007ef48:101": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:104": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:105": {
+        "path": "SLPM_86.053",
+        "offset": 2093,
+        "sha256": "e4ab5012eff32a5171b3672b59d29950fe8b3dcb4d2dadf971ebbcbc2fbb0d41"
+      },
+      "c:main:8007ef48:106": {
+        "path": "SLPM_86.053",
+        "offset": 7532,
+        "sha256": "7c186033295a11388eb388a21e6e25ad05e9b6c45cd3c403dc3fae8a2d19516e"
+      },
+      "c:main:8007ef48:108": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:109": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:110": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:111": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:8007ef48:112": {
+        "path": "SLPM_86.053",
+        "offset": 7532,
+        "sha256": "7c186033295a11388eb388a21e6e25ad05e9b6c45cd3c403dc3fae8a2d19516e"
+      },
+      "c:main:8007ef48:113": {
+        "path": "SLPM_86.053",
+        "offset": 2093,
+        "sha256": "e4ab5012eff32a5171b3672b59d29950fe8b3dcb4d2dadf971ebbcbc2fbb0d41"
+      },
+      "c:main:8007ef48:114": {
+        "path": "SLPM_86.053",
+        "offset": 480576,
+        "sha256": "0784f7cc7fce7752d6c9855a5e3c89a639193ae1f181bf9ce85fa65ee4f3d1f3"
+      },
+      "c:main:8007ef48:115": {
+        "path": "SLPM_86.053",
+        "offset": 3512,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:main:80081190:7": {
+        "path": "SLPM_86.053",
+        "offset": 481040,
+        "sha256": "b43088fcfbb1ba27e53205106d615525101b75156c002918094d22f23c978737"
+      },
+      "c:main:80081190:8": {
+        "path": "SLPM_86.053",
+        "offset": 481184,
+        "sha256": "0c12582270939f383c07b5f8439aa0cbe33fb62008e8bc2f39fd5953e3e7b584"
+      },
+      "c:main:80081190:9": {
+        "path": "SLPM_86.053",
+        "offset": 481040,
+        "sha256": "b43088fcfbb1ba27e53205106d615525101b75156c002918094d22f23c978737"
+      },
+      "c:main:80081190:10": {
+        "path": "SLPM_86.053",
+        "offset": 481184,
+        "sha256": "0c12582270939f383c07b5f8439aa0cbe33fb62008e8bc2f39fd5953e3e7b584"
+      },
+      "c:main:800726f0:2": {
+        "path": "SLPM_86.053",
+        "offset": 476904,
+        "sha256": "f0e58a6a85c892bec6d1bf113a96b8db1174b40eb8f10c4c7e4a988037359577"
+      },
+      "c:main:800726f0:3": {
+        "path": "SLPM_86.053",
+        "offset": 476904,
+        "sha256": "f0e58a6a85c892bec6d1bf113a96b8db1174b40eb8f10c4c7e4a988037359577"
+      },
+      "c:DATE2:801348f0:1": {
+        "path": "CDROM/EXEDIR/DATE2.EXN",
+        "offset": 32924,
+        "sha256": "23e195ff97d388835f11af61772db6dc586c115712534ad100b4c71d3079e915"
+      },
+      "c:DATE2:801348f0:2": {
+        "path": "CDROM/EXEDIR/DATE2.EXN",
+        "offset": 32924,
+        "sha256": "23e195ff97d388835f11af61772db6dc586c115712534ad100b4c71d3079e915"
+      },
+      "c:MASTER:801391e4:3": {
+        "path": "CDROM/EXEDIR/MASTER.EXN",
+        "offset": 41084,
+        "sha256": "6ef4939ad10e273c9b4568e78ba2b2ca09e36bc07d6ed5de4938e6b8f0ea4f4f"
+      },
+      "c:MASTER:801391e4:4": {
+        "path": "CDROM/EXEDIR/MASTER.EXN",
+        "offset": 41084,
+        "sha256": "6ef4939ad10e273c9b4568e78ba2b2ca09e36bc07d6ed5de4938e6b8f0ea4f4f"
+      },
+      "c:MASTER:801391e4:5": {
+        "path": "CDROM/EXEDIR/MASTER.EXN",
+        "offset": 41084,
+        "sha256": "6ef4939ad10e273c9b4568e78ba2b2ca09e36bc07d6ed5de4938e6b8f0ea4f4f"
+      },
+      "c:BUNKASAI:801431d4:5": {
+        "path": "CDROM/EXEDIR/BUNKASAI.EXN",
+        "offset": 177948,
+        "sha256": "8fec01ce6ab6c76b6c13cfafe335f1b54f1faa97537e931b3632487a36dc4468"
+      },
+      "c:BUNKASAI:801431d4:8": {
+        "path": "CDROM/EXEDIR/BUNKASAI.EXN",
+        "offset": 177948,
+        "sha256": "8fec01ce6ab6c76b6c13cfafe335f1b54f1faa97537e931b3632487a36dc4468"
+      },
+      "c:BUNKASAI:8015af90:2": {
+        "path": "CDROM/EXEDIR/BUNKASAI.EXN",
+        "offset": 189512,
+        "sha256": "70716a4c44c123438d40799d162cee58c1054af601ec9e5040a3b71826ce6b0c"
+      },
+      "c:BUNKASAI:8015af90:3": {
+        "path": "CDROM/EXEDIR/BUNKASAI.EXN",
+        "offset": 189512,
+        "sha256": "70716a4c44c123438d40799d162cee58c1054af601ec9e5040a3b71826ce6b0c"
+      },
+      "c:BUNKAKEN:80149144:2": {
+        "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+        "offset": 143396,
+        "sha256": "70c22725d1bf0a4c6b8b5bf0febfda9f120ce48c9264b57cc219ebe803bf0aec"
+      },
+      "c:BUNKAKEN:80149144:4": {
+        "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+        "offset": 143396,
+        "sha256": "70c22725d1bf0a4c6b8b5bf0febfda9f120ce48c9264b57cc219ebe803bf0aec"
+      },
+      "c:BUNKAKEN:80152680:2": {
+        "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+        "offset": 146968,
+        "sha256": "70716a4c44c123438d40799d162cee58c1054af601ec9e5040a3b71826ce6b0c"
+      },
+      "c:BUNKAKEN:80152680:3": {
+        "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+        "offset": 146968,
+        "sha256": "70716a4c44c123438d40799d162cee58c1054af601ec9e5040a3b71826ce6b0c"
+      },
+      "c:BUNKAKEN:80145844:5": {
+        "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+        "offset": 142124,
+        "sha256": "8fec01ce6ab6c76b6c13cfafe335f1b54f1faa97537e931b3632487a36dc4468"
+      },
+      "c:BUNKAKEN:80145844:8": {
+        "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+        "offset": 142124,
+        "sha256": "8fec01ce6ab6c76b6c13cfafe335f1b54f1faa97537e931b3632487a36dc4468"
+      },
+      "c:DATE:80133ea0:4": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166768,
+        "sha256": "fdc0f25813924a72f3f22660628394e453beee5386c050e82b5586183545612c"
+      },
+      "c:DATE:80133ea0:5": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166768,
+        "sha256": "fdc0f25813924a72f3f22660628394e453beee5386c050e82b5586183545612c"
+      },
+      "c:DATE:8013426c:3": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166812,
+        "sha256": "ced9beba076f3747742e20488c4bcea8b76a3211bab05d171e50b48268531396"
+      },
+      "c:DATE:8013426c:4": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166812,
+        "sha256": "ced9beba076f3747742e20488c4bcea8b76a3211bab05d171e50b48268531396"
+      },
+      "c:DATE:801344c8:2": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166832,
+        "sha256": "45b634d8eba811ec4bb1167aa5098fdb5e7d8c8f97e8e52386229f5d7dbb2ae8"
+      },
+      "c:DATE:801344c8:3": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166832,
+        "sha256": "45b634d8eba811ec4bb1167aa5098fdb5e7d8c8f97e8e52386229f5d7dbb2ae8"
+      },
+      "c:DATE:801344c8:4": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166832,
+        "sha256": "45b634d8eba811ec4bb1167aa5098fdb5e7d8c8f97e8e52386229f5d7dbb2ae8"
+      },
+      "c:DATE:801344c8:5": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166832,
+        "sha256": "45b634d8eba811ec4bb1167aa5098fdb5e7d8c8f97e8e52386229f5d7dbb2ae8"
+      },
+      "c:DATE:801349a0:2": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166812,
+        "sha256": "ced9beba076f3747742e20488c4bcea8b76a3211bab05d171e50b48268531396"
+      },
+      "c:DATE:801349a0:3": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166812,
+        "sha256": "ced9beba076f3747742e20488c4bcea8b76a3211bab05d171e50b48268531396"
+      },
+      "c:DATE:80134c64:5": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166812,
+        "sha256": "ced9beba076f3747742e20488c4bcea8b76a3211bab05d171e50b48268531396"
+      },
+      "c:DATE:80134c64:6": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 166812,
+        "sha256": "ced9beba076f3747742e20488c4bcea8b76a3211bab05d171e50b48268531396"
+      },
+      "c:DATE:8013518c:2": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167036,
+        "sha256": "b86185873d658ceb09121aaa9a20012fae199c8181b39778c4c596bc48c297a9"
+      },
+      "c:DATE:8013518c:3": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167036,
+        "sha256": "b86185873d658ceb09121aaa9a20012fae199c8181b39778c4c596bc48c297a9"
+      },
+      "c:DATE:8013518c:4": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167036,
+        "sha256": "b86185873d658ceb09121aaa9a20012fae199c8181b39778c4c596bc48c297a9"
+      },
+      "c:DATE:801353f8:2": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167092,
+        "sha256": "932ba0f55c034d3d253cbc20bcfa895f629a5b6732018c0bdbe2b6ba71221a7c"
+      },
+      "c:DATE:801353f8:3": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167092,
+        "sha256": "932ba0f55c034d3d253cbc20bcfa895f629a5b6732018c0bdbe2b6ba71221a7c"
+      },
+      "c:DATE:80135620:1": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167132,
+        "sha256": "b3417e057d379cc41542934fdbdf013026196c6d84be08db43817c1434629d83"
+      },
+      "c:DATE:80135620:2": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167132,
+        "sha256": "b3417e057d379cc41542934fdbdf013026196c6d84be08db43817c1434629d83"
+      },
+      "c:DATE:80135620:3": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167132,
+        "sha256": "b3417e057d379cc41542934fdbdf013026196c6d84be08db43817c1434629d83"
+      },
+      "c:DATE:80135804:2": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167188,
+        "sha256": "94184a1e45674769f44c1f2e2151d7c70f339deb4346325b04aeb93df5e62017"
+      },
+      "c:DATE:80135804:3": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167188,
+        "sha256": "94184a1e45674769f44c1f2e2151d7c70f339deb4346325b04aeb93df5e62017"
+      },
+      "c:DATE:801393dc:1": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167652,
+        "sha256": "e0b614df5654ad6624a3f267bed1986a89acff9205e212a5a4424e2dca3ef513"
+      },
+      "c:DATE:801393dc:2": {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "offset": 167652,
+        "sha256": "e0b614df5654ad6624a3f267bed1986a89acff9205e212a5a4424e2dca3ef513"
+      },
+      "c:ENDING:80132420:7": {
+        "path": "CDROM/EXEDIR/ENDING.EXN",
+        "offset": 10460,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:ENDING:80132420:10": {
+        "path": "CDROM/EXEDIR/ENDING.EXN",
+        "offset": 10460,
+        "sha256": "37aa3970b6801c9d286464f7d86e50bf41c88e54c7b4d08f3ff61935b3f59c3c"
+      },
+      "c:GEKO:801367ec:8": {
+        "path": "CDROM/EXEDIR/GEKO.EXN",
+        "offset": 75808,
+        "sha256": "ca4d42ca6ce0aa76afb0ff94a3801d2f40fcd06ee1729ca48139ee3b8b51f2d4"
+      },
+      "c:GEKO:801367ec:9": {
+        "path": "CDROM/EXEDIR/GEKO.EXN",
+        "offset": 75808,
+        "sha256": "ca4d42ca6ce0aa76afb0ff94a3801d2f40fcd06ee1729ca48139ee3b8b51f2d4"
+      },
+      "c:GEKO:801367ec:10": {
+        "path": "CDROM/EXEDIR/GEKO.EXN",
+        "offset": 75808,
+        "sha256": "ca4d42ca6ce0aa76afb0ff94a3801d2f40fcd06ee1729ca48139ee3b8b51f2d4"
+      },
+      "c:GEKO:801367ec:13": {
+        "path": "CDROM/EXEDIR/GEKO.EXN",
+        "offset": 75708,
+        "sha256": "9d181c032a9edb719822fc536e3a462ea968652583b1978be9a984ee4cf1626d"
+      },
+      "c:GEKO:801367ec:14": {
+        "path": "CDROM/EXEDIR/GEKO.EXN",
+        "offset": 75532,
+        "sha256": "70c22725d1bf0a4c6b8b5bf0febfda9f120ce48c9264b57cc219ebe803bf0aec"
+      },
+      "c:GEKO:801367ec:15": {
+        "path": "CDROM/EXEDIR/GEKO.EXN",
+        "offset": 75708,
+        "sha256": "9d181c032a9edb719822fc536e3a462ea968652583b1978be9a984ee4cf1626d"
+      },
+      "c:GEKO:801367ec:16": {
+        "path": "CDROM/EXEDIR/GEKO.EXN",
+        "offset": 75532,
+        "sha256": "70c22725d1bf0a4c6b8b5bf0febfda9f120ce48c9264b57cc219ebe803bf0aec"
+      },
+      "c:ETC:80147d74:3": {
+        "path": "CDROM/EXEDIR/ETC.EXN",
+        "offset": 111524,
+        "sha256": "9b4be8097219b31165547a2ef27638e9081619dc2e4efb2d641790f501d2f52d"
+      },
+      "c:ETC:80147d74:4": {
+        "path": "CDROM/EXEDIR/ETC.EXN",
+        "offset": 111524,
+        "sha256": "9b4be8097219b31165547a2ef27638e9081619dc2e4efb2d641790f501d2f52d"
+      },
+      "c:ETC:801480d0:3": {
+        "path": "CDROM/EXEDIR/ETC.EXN",
+        "offset": 111596,
+        "sha256": "0d277e2f948b65f087838fb71d7e8ed54253770392e92edcec5ff530fa637bfb"
+      },
+      "c:ETC:801480d0:7": {
+        "path": "CDROM/EXEDIR/ETC.EXN",
+        "offset": 111596,
+        "sha256": "0d277e2f948b65f087838fb71d7e8ed54253770392e92edcec5ff530fa637bfb"
+      },
+      "c:ETC:801480d0:9": {
+        "path": "CDROM/EXEDIR/ETC.EXN",
+        "offset": 111596,
+        "sha256": "0d277e2f948b65f087838fb71d7e8ed54253770392e92edcec5ff530fa637bfb"
+      },
+      "c:ETC:801447b0:1": {
+        "path": "CDROM/EXEDIR/ETC.EXN",
+        "offset": 110452,
+        "sha256": "3cecc0c1bca6c7d48baa19eff590c697ce9019ca8a19604750343612fee6e665"
+      },
+      "c:ETC:801447b0:2": {
+        "path": "CDROM/EXEDIR/ETC.EXN",
+        "offset": 110452,
+        "sha256": "3cecc0c1bca6c7d48baa19eff590c697ce9019ca8a19604750343612fee6e665"
+      },
+      "c:NAME_ENT:80139cb4:1": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 110800,
+        "sha256": "2737cd4457c2faeaf521f97a1d695fc726d31cdbcdd7f157295cd87adeca04f0"
+      },
+      "c:NAME_ENT:80139cb4:2": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 110800,
+        "sha256": "2737cd4457c2faeaf521f97a1d695fc726d31cdbcdd7f157295cd87adeca04f0"
+      },
+      "c:NAME_ENT:801372a0:1": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 485,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:NAME_ENT:801372a0:2": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 485,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:NAME_ENT:801372a0:3": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 485,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:NAME_ENT:801372a0:4": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 485,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:NAME_ENT:801372a0:5": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 485,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:NAME_ENT:801372a0:6": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 485,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:NAME_ENT:801372a0:7": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 11246,
+        "sha256": "e61c21ca716b3b1aefb7d1198f83679c4ca4d596e5792275dd6203b49216237d"
+      },
+      "c:NAME_ENT:801372a0:8": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 485,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:NAME_ENT:801372a0:9": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 61968,
+        "sha256": "f6c6e57cc3dac1d6a2349701056ff5a3e48134efe4496a8c0f5cb9fc9e6dfc12"
+      },
+      "c:NAME_ENT:801372a0:10": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 11246,
+        "sha256": "e61c21ca716b3b1aefb7d1198f83679c4ca4d596e5792275dd6203b49216237d"
+      },
+      "c:NAME_ENT:801372a0:11": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 61968,
+        "sha256": "f6c6e57cc3dac1d6a2349701056ff5a3e48134efe4496a8c0f5cb9fc9e6dfc12"
+      },
+      "c:NAME_ENT:801372a0:12": {
+        "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+        "offset": 485,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:SHOUGATU:8013df14:1": {
+        "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+        "offset": 72192,
+        "sha256": "00cfce3ee8eec3bea30b7308e5482a0124dddc75ce408ff3d35bd3745c519cbb"
+      },
+      "c:SHOUGATU:8013df14:2": {
+        "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+        "offset": 72192,
+        "sha256": "00cfce3ee8eec3bea30b7308e5482a0124dddc75ce408ff3d35bd3745c519cbb"
+      },
+      "c:OPTION:8013554c:4": {
+        "path": "CDROM/EXEDIR/OPTION.EXN",
+        "offset": 43308,
+        "sha256": "340e71112b5c985b8aa0e775abb0646ec746766dc20b4bc69ea4016ba52a7e9e"
+      },
+      "c:OPTION:8013554c:6": {
+        "path": "CDROM/EXEDIR/OPTION.EXN",
+        "offset": 43384,
+        "sha256": "e539548525f9c1c0b49949c985cd25aad43c213204ce2869817175b195a860b8"
+      },
+      "c:OPTION:8013554c:7": {
+        "path": "CDROM/EXEDIR/OPTION.EXN",
+        "offset": 43308,
+        "sha256": "340e71112b5c985b8aa0e775abb0646ec746766dc20b4bc69ea4016ba52a7e9e"
+      },
+      "c:OPTION:8013554c:9": {
+        "path": "CDROM/EXEDIR/OPTION.EXN",
+        "offset": 43384,
+        "sha256": "e539548525f9c1c0b49949c985cd25aad43c213204ce2869817175b195a860b8"
+      },
+      "c:RPG_BAT:80138324:6": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 168900,
+        "sha256": "009837f45c558b8c59e1d415d41e65141be5d51ca7bf56ef3eed489187825a88"
+      },
+      "c:RPG_BAT:80138324:7": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 168904,
+        "sha256": "faecf364b0f57464459b6675910133ca0b791edc1ad2a159fbea5f079f83f3af"
+      },
+      "c:RPG_BAT:80138324:9": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 168900,
+        "sha256": "009837f45c558b8c59e1d415d41e65141be5d51ca7bf56ef3eed489187825a88"
+      },
+      "c:RPG_BAT:80138324:10": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 168904,
+        "sha256": "faecf364b0f57464459b6675910133ca0b791edc1ad2a159fbea5f079f83f3af"
+      },
+      "c:RPG_BAT:80138324:12": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 168900,
+        "sha256": "009837f45c558b8c59e1d415d41e65141be5d51ca7bf56ef3eed489187825a88"
+      },
+      "c:RPG_BAT:80138324:13": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 168904,
+        "sha256": "faecf364b0f57464459b6675910133ca0b791edc1ad2a159fbea5f079f83f3af"
+      },
+      "c:RPG_BAT:80138f6c:5": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 168900,
+        "sha256": "009837f45c558b8c59e1d415d41e65141be5d51ca7bf56ef3eed489187825a88"
+      },
+      "c:RPG_BAT:80138f6c:7": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 168900,
+        "sha256": "009837f45c558b8c59e1d415d41e65141be5d51ca7bf56ef3eed489187825a88"
+      },
+      "c:RPG_BAT:801568a4:1": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 178608,
+        "sha256": "f8e2c42e5af3c6ddab173cd406780ff1f293f44337e8eaff761ed69c28ebff87"
+      },
+      "c:RPG_BAT:801568a4:3": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 178608,
+        "sha256": "f8e2c42e5af3c6ddab173cd406780ff1f293f44337e8eaff761ed69c28ebff87"
+      },
+      "c:RPG_BAT:8014d11c:1": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 149,
+        "sha256": "e4f60d0aa6d7f3d3b6a6494b1c861b99f649c6f9ec51abaf201b20f297327c95"
+      },
+      "c:RPG_BAT:8014d11c:2": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 149,
+        "sha256": "e4f60d0aa6d7f3d3b6a6494b1c861b99f649c6f9ec51abaf201b20f297327c95"
+      },
+      "c:RPG_BAT:801454f0:1": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 172880,
+        "sha256": "2fe50fa29d5d7a5027fbb9f7b30465605e53415fdbfe0917950628e895ea37d8"
+      },
+      "c:RPG_BAT:801454f0:2": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 172900,
+        "sha256": "4e8f9caa7a77ed99d0fa06639f050d51fee48f726c52b0989ace8de379fa6a87"
+      },
+      "c:RPG_BAT:801454f0:3": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 172880,
+        "sha256": "2fe50fa29d5d7a5027fbb9f7b30465605e53415fdbfe0917950628e895ea37d8"
+      },
+      "c:RPG_BAT:801454f0:4": {
+        "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+        "offset": 172900,
+        "sha256": "4e8f9caa7a77ed99d0fa06639f050d51fee48f726c52b0989ace8de379fa6a87"
+      },
+      "c:SHUGAKU:801381bc:1": {
+        "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+        "offset": 36480,
+        "sha256": "2f3005b1b754d2a6170f240e1ba58cad198bf20632115822793a14a89944f0cc"
+      },
+      "c:SHUGAKU:801381bc:2": {
+        "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+        "offset": 36480,
+        "sha256": "2f3005b1b754d2a6170f240e1ba58cad198bf20632115822793a14a89944f0cc"
+      },
+      "c:SHUGAKU:801381bc:3": {
+        "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+        "offset": 36504,
+        "sha256": "5ce07e5285837e95178b2fc47b6227ec3b78d1214286deaf20671b5df2b9e02d"
+      },
+      "c:SHUGAKU:801381bc:4": {
+        "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+        "offset": 36504,
+        "sha256": "5ce07e5285837e95178b2fc47b6227ec3b78d1214286deaf20671b5df2b9e02d"
+      },
+      "c:SHUGAKU:801381bc:5": {
+        "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+        "offset": 36520,
+        "sha256": "07148cfc3a5ddc14d7a7c5e85680197f0dec63fcb9676e6763189dec0cd1bd1e"
+      },
+      "c:SHUGAKU:801381bc:6": {
+        "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+        "offset": 36520,
+        "sha256": "07148cfc3a5ddc14d7a7c5e85680197f0dec63fcb9676e6763189dec0cd1bd1e"
+      },
+      "c:TACO:801345d4:1": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177492,
+        "sha256": "be2a7d0f1fc7e0d16aee69756a110d92e76b07a1b9a634e0f8819dcfc415bf70"
+      },
+      "c:TACO:801345d4:2": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177496,
+        "sha256": "77f46466d224dd4d6dc336aaee4bb0f09eceb6925c1e424489cf870bed5ceb7f"
+      },
+      "c:TACO:801345d4:3": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177500,
+        "sha256": "cd7a898712c2a34ce5828889cc3481f718fb4845e87bebec2760279f053070a0"
+      },
+      "c:TACO:8013920c:1": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177783,
+        "sha256": "9de12177f15a83ecd57b70a80bcdca162487156c1a7634e5c35491f86425cb02"
+      },
+      "c:TACO:8013920c:2": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177783,
+        "sha256": "9de12177f15a83ecd57b70a80bcdca162487156c1a7634e5c35491f86425cb02"
+      },
+      "c:TACO:8013920c:3": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177783,
+        "sha256": "9de12177f15a83ecd57b70a80bcdca162487156c1a7634e5c35491f86425cb02"
+      },
+      "c:TACO:80137264:9": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 441,
+        "sha256": "e4f60d0aa6d7f3d3b6a6494b1c861b99f649c6f9ec51abaf201b20f297327c95"
+      },
+      "c:TACO:80137264:10": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 441,
+        "sha256": "e4f60d0aa6d7f3d3b6a6494b1c861b99f649c6f9ec51abaf201b20f297327c95"
+      },
+      "c:TACO:80135a04:12": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 1920,
+        "sha256": "eec4121f2a07b61aba16414812aa9afc39ab0a136360a5ace2240dc19b0464eb"
+      },
+      "c:TACO:80135a04:13": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 14684,
+        "sha256": "17d5f5a33ab5f6aed0395d2bc0a4e5df61d92441ea8d77b0952c01bc8aa8bde0"
+      },
+      "c:TACO:80135a04:14": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 240,
+        "sha256": "9def996cb1ea87e596b6cadccca3839a352e99d9ce07e635cdb239f38ca294f8"
+      },
+      "c:TACO:80135a04:15": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 14684,
+        "sha256": "17d5f5a33ab5f6aed0395d2bc0a4e5df61d92441ea8d77b0952c01bc8aa8bde0"
+      },
+      "c:TACO:80135a04:16": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 240,
+        "sha256": "9def996cb1ea87e596b6cadccca3839a352e99d9ce07e635cdb239f38ca294f8"
+      },
+      "c:TACO:80135a04:17": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 1920,
+        "sha256": "eec4121f2a07b61aba16414812aa9afc39ab0a136360a5ace2240dc19b0464eb"
+      },
+      "c:TACO:80136024:1": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177920,
+        "sha256": "ddf50895b4b4e1f2d8874fd73a7146deac78cd64ae337981901a26b9d38c1cf6"
+      },
+      "c:TACO:80136024:2": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177885,
+        "sha256": "311231c9e51d649db52eb8f6adadb3b7fccf55262985df7ae1657dacdc42a331"
+      },
+      "c:TACO:80136024:3": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177920,
+        "sha256": "ddf50895b4b4e1f2d8874fd73a7146deac78cd64ae337981901a26b9d38c1cf6"
+      },
+      "c:TACO:80136024:4": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177885,
+        "sha256": "311231c9e51d649db52eb8f6adadb3b7fccf55262985df7ae1657dacdc42a331"
+      },
+      "c:TACO:801361e8:1": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177928,
+        "sha256": "be763cd9e21ee2fc5c01e7f5e223f8e337699fe5f1b932d2fe200cc2d9c9b3cf"
+      },
+      "c:TACO:801361e8:2": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177936,
+        "sha256": "b87088959211cd83bc7617224b811d58375fbe2a1add383913b2a97676b99199"
+      },
+      "c:TACO:801361e8:3": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177944,
+        "sha256": "7e4e42008d42a2502d2f916a921bb940e2230ab990a8f9e7fd81ecf24f9c84cd"
+      },
+      "c:TACO:801361e8:4": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177928,
+        "sha256": "be763cd9e21ee2fc5c01e7f5e223f8e337699fe5f1b932d2fe200cc2d9c9b3cf"
+      },
+      "c:TACO:801361e8:5": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177936,
+        "sha256": "b87088959211cd83bc7617224b811d58375fbe2a1add383913b2a97676b99199"
+      },
+      "c:TACO:801361e8:6": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 177944,
+        "sha256": "7e4e42008d42a2502d2f916a921bb940e2230ab990a8f9e7fd81ecf24f9c84cd"
+      },
+      "c:TACO:80136438:1": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 1920,
+        "sha256": "eec4121f2a07b61aba16414812aa9afc39ab0a136360a5ace2240dc19b0464eb"
+      },
+      "c:TACO:80136438:2": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 14684,
+        "sha256": "17d5f5a33ab5f6aed0395d2bc0a4e5df61d92441ea8d77b0952c01bc8aa8bde0"
+      },
+      "c:TACO:80136438:3": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 240,
+        "sha256": "9def996cb1ea87e596b6cadccca3839a352e99d9ce07e635cdb239f38ca294f8"
+      },
+      "c:TACO:80136438:4": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 1920,
+        "sha256": "eec4121f2a07b61aba16414812aa9afc39ab0a136360a5ace2240dc19b0464eb"
+      },
+      "c:TACO:80136438:5": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 14684,
+        "sha256": "17d5f5a33ab5f6aed0395d2bc0a4e5df61d92441ea8d77b0952c01bc8aa8bde0"
+      },
+      "c:TACO:80136438:6": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 240,
+        "sha256": "9def996cb1ea87e596b6cadccca3839a352e99d9ce07e635cdb239f38ca294f8"
+      },
+      "c:TACO:80136688:1": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 14684,
+        "sha256": "17d5f5a33ab5f6aed0395d2bc0a4e5df61d92441ea8d77b0952c01bc8aa8bde0"
+      },
+      "c:TACO:80136688:2": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 240,
+        "sha256": "9def996cb1ea87e596b6cadccca3839a352e99d9ce07e635cdb239f38ca294f8"
+      },
+      "c:TACO:80136688:3": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 1920,
+        "sha256": "eec4121f2a07b61aba16414812aa9afc39ab0a136360a5ace2240dc19b0464eb"
+      },
+      "c:TACO:80136688:4": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 14684,
+        "sha256": "17d5f5a33ab5f6aed0395d2bc0a4e5df61d92441ea8d77b0952c01bc8aa8bde0"
+      },
+      "c:TACO:80136688:5": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 240,
+        "sha256": "9def996cb1ea87e596b6cadccca3839a352e99d9ce07e635cdb239f38ca294f8"
+      },
+      "c:TACO:80136688:6": {
+        "path": "CDROM/EXEDIR/TACO.EXN",
+        "offset": 1920,
+        "sha256": "eec4121f2a07b61aba16414812aa9afc39ab0a136360a5ace2240dc19b0464eb"
+      },
+      "c:OMIMAI:80134384:1": {
+        "path": "CDROM/EXEDIR/OMIMAI.EXN",
+        "offset": 10528,
+        "sha256": "3a66c432dfa0423b435614e8bb3fdc777e862d8110c825264bcb61637b3857d6"
+      },
+      "c:OMIMAI:80134384:5": {
+        "path": "CDROM/EXEDIR/OMIMAI.EXN",
+        "offset": 10528,
+        "sha256": "3a66c432dfa0423b435614e8bb3fdc777e862d8110c825264bcb61637b3857d6"
+      },
+      "c:KANGEI:80134bc4:7": {
+        "path": "CDROM/EXEDIR/KANGEI.EXN",
+        "offset": 30740,
+        "sha256": "ca4d42ca6ce0aa76afb0ff94a3801d2f40fcd06ee1729ca48139ee3b8b51f2d4"
+      },
+      "c:KANGEI:80134bc4:8": {
+        "path": "CDROM/EXEDIR/KANGEI.EXN",
+        "offset": 30740,
+        "sha256": "ca4d42ca6ce0aa76afb0ff94a3801d2f40fcd06ee1729ca48139ee3b8b51f2d4"
+      },
+      "c:KANGEI:80134bc4:9": {
+        "path": "CDROM/EXEDIR/KANGEI.EXN",
+        "offset": 30740,
+        "sha256": "ca4d42ca6ce0aa76afb0ff94a3801d2f40fcd06ee1729ca48139ee3b8b51f2d4"
+      },
+      "c:TEL:8013a88c:1": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 55520,
+        "sha256": "18e39cdbe43a80b3b6936cac60ff765a46a4d229b9abafad5b398dfc38049ce0"
+      },
+      "c:TEL:8013a88c:3": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 55520,
+        "sha256": "18e39cdbe43a80b3b6936cac60ff765a46a4d229b9abafad5b398dfc38049ce0"
+      },
+      "c:TEL:8013adc0:1": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 55652,
+        "sha256": "8fc3c210a87f15416b00bf9499c4eb0c3cb6763f8bfc55fa4c08bb05c832bbde"
+      },
+      "c:TEL:8013adc0:2": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 55652,
+        "sha256": "8fc3c210a87f15416b00bf9499c4eb0c3cb6763f8bfc55fa4c08bb05c832bbde"
+      },
+      "c:TEL:80132138:1": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50192,
+        "sha256": "3a110d5b7f17ca80b6ccbf263e8235781c6feb64406f44a528aa53816b28cec1"
+      },
+      "c:TEL:80132138:2": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50192,
+        "sha256": "3a110d5b7f17ca80b6ccbf263e8235781c6feb64406f44a528aa53816b28cec1"
+      },
+      "c:TEL:8013226c:1": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50224,
+        "sha256": "519966b925a20fba03d2100637a3923e0eb8495e7fcf8f6a9f642126f77959df"
+      },
+      "c:TEL:8013226c:2": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50244,
+        "sha256": "3ad88ae3b4c51b558e6fa091629b6e9a97212659ced19ad8dd65f4fe9dc6282e"
+      },
+      "c:TEL:8013226c:3": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 654,
+        "sha256": "075d3ddf5a3a826e13a92288e853bc4b2cb17fb05367ae865f401a4bb11f05ce"
+      },
+      "c:TEL:8013226c:5": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 654,
+        "sha256": "075d3ddf5a3a826e13a92288e853bc4b2cb17fb05367ae865f401a4bb11f05ce"
+      },
+      "c:TEL:8013226c:12": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50224,
+        "sha256": "519966b925a20fba03d2100637a3923e0eb8495e7fcf8f6a9f642126f77959df"
+      },
+      "c:TEL:8013226c:18": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50224,
+        "sha256": "519966b925a20fba03d2100637a3923e0eb8495e7fcf8f6a9f642126f77959df"
+      },
+      "c:TEL:8013226c:20": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 654,
+        "sha256": "075d3ddf5a3a826e13a92288e853bc4b2cb17fb05367ae865f401a4bb11f05ce"
+      },
+      "c:TEL:8013226c:21": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50548,
+        "sha256": "80c3294343267508ac3f026f8b0e669939c9d77719c342a7d7755aebf25c9977"
+      },
+      "c:TEL:8013226c:22": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 654,
+        "sha256": "075d3ddf5a3a826e13a92288e853bc4b2cb17fb05367ae865f401a4bb11f05ce"
+      },
+      "c:TEL:8013226c:23": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50564,
+        "sha256": "1f9764b1832bcc96728b1a43e8a8ac6859f4db41f58ec8d0fe6d861ddd512da7"
+      },
+      "c:TEL:8013226c:24": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50588,
+        "sha256": "8dd9b5153fa3942fbb3af3ba429c174a5194c0b48a68cc9793c5cc6ffd215a3e"
+      },
+      "c:TEL:8013226c:25": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50608,
+        "sha256": "90ca63d761087c6c0989642a96c338e8a985625b11d15087b29fee26db8b0607"
+      },
+      "c:TEL:8013226c:27": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50640,
+        "sha256": "b5dbf4e6775da9db1d730a7b5e032207f957d0833eef1c834d05f83e69a94485"
+      },
+      "c:TEL:8013226c:38": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50244,
+        "sha256": "3ad88ae3b4c51b558e6fa091629b6e9a97212659ced19ad8dd65f4fe9dc6282e"
+      },
+      "c:TEL:8013226c:39": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 654,
+        "sha256": "075d3ddf5a3a826e13a92288e853bc4b2cb17fb05367ae865f401a4bb11f05ce"
+      },
+      "c:TEL:8013226c:40": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50548,
+        "sha256": "80c3294343267508ac3f026f8b0e669939c9d77719c342a7d7755aebf25c9977"
+      },
+      "c:TEL:8013226c:41": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 654,
+        "sha256": "075d3ddf5a3a826e13a92288e853bc4b2cb17fb05367ae865f401a4bb11f05ce"
+      },
+      "c:TEL:8013226c:42": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50564,
+        "sha256": "1f9764b1832bcc96728b1a43e8a8ac6859f4db41f58ec8d0fe6d861ddd512da7"
+      },
+      "c:TEL:8013226c:43": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50588,
+        "sha256": "8dd9b5153fa3942fbb3af3ba429c174a5194c0b48a68cc9793c5cc6ffd215a3e"
+      },
+      "c:TEL:8013226c:44": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50608,
+        "sha256": "90ca63d761087c6c0989642a96c338e8a985625b11d15087b29fee26db8b0607"
+      },
+      "c:TEL:8013226c:46": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50640,
+        "sha256": "b5dbf4e6775da9db1d730a7b5e032207f957d0833eef1c834d05f83e69a94485"
+      },
+      "c:TEL:80132fc4:7": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50262,
+        "sha256": "3d757ff595408954cec727b0d878225712ce19aec0114f97f903407756702d14"
+      },
+      "c:TEL:80132fc4:8": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50262,
+        "sha256": "3d757ff595408954cec727b0d878225712ce19aec0114f97f903407756702d14"
+      },
+      "c:TEL:80133d54:9": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50262,
+        "sha256": "3d757ff595408954cec727b0d878225712ce19aec0114f97f903407756702d14"
+      },
+      "c:TEL:80133d54:10": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50262,
+        "sha256": "3d757ff595408954cec727b0d878225712ce19aec0114f97f903407756702d14"
+      },
+      "c:TEL:801345c4:1": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51832,
+        "sha256": "76ad5f0addbbd61752c334b3f4de444d3d05a2f77721115f1e4c162bdad3ef92"
+      },
+      "c:TEL:801345c4:2": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51468,
+        "sha256": "e6fbed04a8493d9e2c83e63ab15d5f9b4b4b85e0941cd684ffaa3797809a37f9"
+      },
+      "c:TEL:801345c4:7": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51936,
+        "sha256": "af41bc71977a639c7d2e2f65da4b01f6b4af9cb601079e0673d6f64822a1bfdc"
+      },
+      "c:TEL:801345c4:8": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51832,
+        "sha256": "76ad5f0addbbd61752c334b3f4de444d3d05a2f77721115f1e4c162bdad3ef92"
+      },
+      "c:TEL:801345c4:9": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51468,
+        "sha256": "e6fbed04a8493d9e2c83e63ab15d5f9b4b4b85e0941cd684ffaa3797809a37f9"
+      },
+      "c:TEL:801345c4:17": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51936,
+        "sha256": "af41bc71977a639c7d2e2f65da4b01f6b4af9cb601079e0673d6f64822a1bfdc"
+      },
+      "c:TEL:80134da0:1": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50192,
+        "sha256": "3a110d5b7f17ca80b6ccbf263e8235781c6feb64406f44a528aa53816b28cec1"
+      },
+      "c:TEL:80134da0:2": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 50192,
+        "sha256": "3a110d5b7f17ca80b6ccbf263e8235781c6feb64406f44a528aa53816b28cec1"
+      },
+      "c:TEL:80136724:1": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 52324,
+        "sha256": "0a554ecd44456f0e49e159ef897e27868400ec3a8f2de26558dc9dcab1e04f15"
+      },
+      "c:TEL:80136724:2": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 52324,
+        "sha256": "0a554ecd44456f0e49e159ef897e27868400ec3a8f2de26558dc9dcab1e04f15"
+      },
+      "c:TEL:80136724:3": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 348,
+        "sha256": "ade0274f84b828b0980112609bb51775d0a4e39bf4728f21dcdd04a627abb92a"
+      },
+      "c:TEL:80136724:4": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 365,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:TEL:80136724:5": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 52396,
+        "sha256": "bc4e23bb0108daf8ab162ec226d6b9a1a452c3bb20548e4381697ccb3d8935bb"
+      },
+      "c:TEL:80136724:8": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 348,
+        "sha256": "ade0274f84b828b0980112609bb51775d0a4e39bf4728f21dcdd04a627abb92a"
+      },
+      "c:TEL:80136724:9": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 365,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:TEL:80136724:10": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 52396,
+        "sha256": "bc4e23bb0108daf8ab162ec226d6b9a1a452c3bb20548e4381697ccb3d8935bb"
+      },
+      "c:TEL:80136724:12": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51936,
+        "sha256": "af41bc71977a639c7d2e2f65da4b01f6b4af9cb601079e0673d6f64822a1bfdc"
+      },
+      "c:TEL:80136724:14": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 348,
+        "sha256": "ade0274f84b828b0980112609bb51775d0a4e39bf4728f21dcdd04a627abb92a"
+      },
+      "c:TEL:80136724:15": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 365,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      "c:TEL:80136724:17": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51936,
+        "sha256": "af41bc71977a639c7d2e2f65da4b01f6b4af9cb601079e0673d6f64822a1bfdc"
+      },
+      "c:TEL:80136724:22": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51936,
+        "sha256": "af41bc71977a639c7d2e2f65da4b01f6b4af9cb601079e0673d6f64822a1bfdc"
+      },
+      "c:TEL:80136724:23": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51936,
+        "sha256": "af41bc71977a639c7d2e2f65da4b01f6b4af9cb601079e0673d6f64822a1bfdc"
+      },
+      "c:TEL:80136724:25": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51936,
+        "sha256": "af41bc71977a639c7d2e2f65da4b01f6b4af9cb601079e0673d6f64822a1bfdc"
+      },
+      "c:TEL:80136724:27": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 51936,
+        "sha256": "af41bc71977a639c7d2e2f65da4b01f6b4af9cb601079e0673d6f64822a1bfdc"
+      },
+      "c:TEL:8013ccd0:1": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 57856,
+        "sha256": "fb14b9fc898ac6899748551cb9dc00f3239bd3cd580b0e06fb4335c09f2b1ce5"
+      },
+      "c:TEL:8013ccd0:2": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 57856,
+        "sha256": "fb14b9fc898ac6899748551cb9dc00f3239bd3cd580b0e06fb4335c09f2b1ce5"
+      },
+      "c:TEL:8013d88c:1": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 57968,
+        "sha256": "6e908d0747d23dbb6a21a2127b03a2b10c39df84a351a61c219da4634a0f26ea"
+      },
+      "c:TEL:8013d88c:3": {
+        "path": "CDROM/EXEDIR/TEL.EXN",
+        "offset": 57968,
+        "sha256": "6e908d0747d23dbb6a21a2127b03a2b10c39df84a351a61c219da4634a0f26ea"
+      },
+      "c:VALEN:80133088:2": {
+        "path": "CDROM/EXEDIR/VALEN.EXN",
+        "offset": 9016,
+        "sha256": "127e40cb5c74a12bfbb07cee47c4406ce08d22885106e271c7c7023ef4b0a8a8"
+      },
+      "c:VALEN:80133088:5": {
+        "path": "CDROM/EXEDIR/VALEN.EXN",
+        "offset": 9052,
+        "sha256": "df230e3f1c6efab224fdf43fcda9eef6d8b1a5fa30ed4dad80197102a7bbfc61"
+      },
+      "c:VALEN:80133088:6": {
+        "path": "CDROM/EXEDIR/VALEN.EXN",
+        "offset": 9052,
+        "sha256": "df230e3f1c6efab224fdf43fcda9eef6d8b1a5fa30ed4dad80197102a7bbfc61"
+      },
+      "c:VALEN:80133088:8": {
+        "path": "CDROM/EXEDIR/VALEN.EXN",
+        "offset": 9016,
+        "sha256": "127e40cb5c74a12bfbb07cee47c4406ce08d22885106e271c7c7023ef4b0a8a8"
+      },
+      "c:VALEN:80133a4c:1": {
+        "path": "CDROM/EXEDIR/VALEN.EXN",
+        "offset": 9076,
+        "sha256": "9d181c032a9edb719822fc536e3a462ea968652583b1978be9a984ee4cf1626d"
+      },
+      "c:VALEN:80133a4c:2": {
+        "path": "CDROM/EXEDIR/VALEN.EXN",
+        "offset": 9076,
+        "sha256": "9d181c032a9edb719822fc536e3a462ea968652583b1978be9a984ee4cf1626d"
+      }
+    },
+    "excluded_unloaded": [
+      "c:GYOZI:80138c9c:1",
+      "c:GYOZI:80138c9c:2",
+      "c:GYOZI:80138c9c:3",
+      "c:GYOZI:80138c9c:4",
+      "c:GYOZI:801393c8:1",
+      "c:GYOZI:801393c8:2",
+      "c:GYOZI:801393c8:7",
+      "c:GYOZI:801393c8:8",
+      "c:EVENT:8011220c:3",
+      "c:EVENT:8011220c:4",
+      "c:EVENT:80112460:3",
+      "c:EVENT:80112460:4",
+      "c:EVENT:80112460:5",
+      "c:EVENT:80112930:2",
+      "c:EVENT:80112930:3",
+      "c:EVENT:80112bec:5",
+      "c:EVENT:80112bec:6",
+      "c:EVENT:801130f0:2",
+      "c:EVENT:801130f0:3",
+      "c:EVENT:80113300:2",
+      "c:EVENT:80113300:3",
+      "c:EVENT:80113520:1",
+      "c:EVENT:80113520:2",
+      "c:EVENT:80113520:3",
+      "c:EVENT:801136fc:2",
+      "c:EVENT:801136fc:3",
+      "c:EVENT:801166a8:1",
+      "c:EVENT:801166a8:2"
+    ]
+  },
+  "existing_checks": {
+    "exact_slots": 2827,
+    "slots": 2940,
+    "pending_slots": 0,
+    "derived_records": 291,
+    "derived_pointers": 286
+  }
+}

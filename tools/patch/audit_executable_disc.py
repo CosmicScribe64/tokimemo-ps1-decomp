@@ -1,9 +1,9 @@
 """Read back English executable text and derived table pointers (T-39510).
 
 Run from the repository root in Docker. Link metadata must match the frozen
-release before translating original addresses. Exact mapped slots and derived
-views are checked against actual disc bytes. Unresolved compiled extents or
-unclassified referenced text make the CLI exit 2. Invalid physical records or
+release before translating original addresses. Mapped slots, derived views and
+source-only literal payloads are checked against actual disc bytes. Unresolved
+compiled extents or unclassified referenced text make the CLI exit 2. Invalid physical records or
 pointers fail immediately. Reports contain metadata only, not extracted game text.
 """
 import argparse
@@ -450,6 +450,29 @@ def audit_language_census(files, bases, translations, units, report, link):
             'units': results, 'unexplained': unexplained}
 
 
+def audit_source_only(records, payloads, files):
+    """Check literal presence by link unit; this does not establish call-site binding."""
+    checked, excluded = {}, []
+    for rid, record in records.items():
+        unit = record.unit['context']['link_unit']
+        if unit in english_link.UNLOADED:
+            excluded.append(rid)
+            continue
+        path = EXE_PATH if unit == 'main' else 'CDROM/EXEDIR/' + unit + '.EXN'
+        if path not in files:
+            raise ValueError('Source-only literal has no audited executable: ' + rid)
+        if rid not in payloads:
+            raise ValueError('Missing source-only target: ' + rid)
+        expected = payloads[rid] + b'\0'
+        offset = files[path].find(expected)
+        if offset < 0:
+            raise ValueError('Source-only target absent from its executable: ' + rid)
+        checked[rid] = {'path': path, 'offset': offset,
+                        'sha256': hashlib.sha256(expected).hexdigest()}
+    return {'scope': 'payload presence in the owning executable; not call-site binding',
+            'checked': len(checked), 'records': checked, 'excluded_unloaded': excluded}
+
+
 def audit(build, link):
     units = load_units('.asset-cache/text/units/units.jsonl')
     supplemental = 'translations/en/supplemental.jsonl'
@@ -464,6 +487,8 @@ def audit(build, link):
     if not paths:
         raise ValueError('No executable containers to audit')
     files = read_back(build / 'disc/track1.bin', paths)
+    source_only = audit_source_only(containers['(source only)'].records,
+                                    text.payloads.get('(source only)', {}), files)
     report = json.loads((build / 'disc/report.json').read_text())
     translations, bases, slots = {}, {}, {}
     for path in paths:
@@ -532,9 +557,10 @@ def audit(build, link):
     if census['unexplained']:
         remaining.append('unclassified referenced bytes')
     return {'status': 'incomplete' if remaining else 'pass',
-            'scope': 'source generation, mapped executable slots, derived pointers and referenced-byte census',
+            'scope': 'source generation, source-only payload presence, mapped executable slots, derived pointers and referenced-byte census',
             'remaining_checks': remaining, 'language_census': census,
             'excluded_units': list(english_link.UNLOADED), 'source_generation': source,
+            'source_only_literals': source_only,
             'containers': len(files), 'slots': sum(len(rows) for rows in slots.values()),
             'exact_slots': sum(item['exact'] for rows in slots.values() for item in rows.values()),
             'pending_slots': pending, 'extent_bindings': bindings, 'entry_hooks': hook_checks,

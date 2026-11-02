@@ -51,7 +51,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see festival-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0090:l0007",
@@ -63,7 +63,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see festival-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/BUNKA/KG_S6W.BIN:main:g0030:l0004",

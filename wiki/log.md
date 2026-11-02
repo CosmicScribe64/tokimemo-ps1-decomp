@@ -3713,3 +3713,23 @@ Opened [[tickets/T-39528-patcher-player-copy]] for the owner's request to remove
 ## [2026-11-02] ticket | Simplified patcher page published
 
 Closed [[tickets/T-39528-patcher-player-copy]] after the 15 browser checks, desktop/mobile visual review and successful Pages deployment. All 36 public files match the tested package. The game patch is unchanged; this update simplifies the player-facing page and messages.
+
+## [2026-11-02] decision | Consolidate source-only literal checks
+
+[[tickets/T-39510-no-japanese-left-check]] will incorporate the existing 321-record source-only presence check into the reusable executable audit. The check supplements generated-source provenance and retains its narrower scope; it does not claim new call-site evidence.
+
+## [2026-11-02] query | Current-build visual review probes
+
+[[tickets/T-39511-english-text-quality]]: created and inspected `build/visual-quality-review/dialogue-before-after.png` for the opening sign and two dialogue wraps. The current Yuina festival bootstrap loads correctly. Rejected `ending-current-summary` as ending evidence because its supplied mode was sports festival (`0x72`); the corrected run uses the enum-confirmed ending mode `0x63`. Exact Yuina long-line captures and the corrected ending run are active.
+
+## [2026-11-02] build | Source-only literal audit consolidated
+
+[[tickets/T-39510-no-japanese-left-check]] now has a reusable per-executable presence check for all 321 active source-only literals, with 28 unloaded records excluded explicitly. Twenty synthetic tests pass and the published disc passes the expanded executable audit. Scope remains presence plus separate source-generation provenance; no additional call-site claim is made.
+
+## [2026-11-02] query | Two more festival long pages inspected
+
+[[tickets/T-39511-english-text-quality]]: verified HI_S6 groups 83 and 90 through the actual renderer on the published build. Both scroll to complete final text and closing quotes. Updated their metadata review status, leaving 62 pending long-page records. The corrected ending probe is still running.
+
+## [2026-11-02] ticket | Untranslated ending credits found
+
+Opened [[tickets/T-39529-english-staff-credits]] after the corrected current-build ending probe showed Japanese staff-credit sprites. The English summary itself scrolls through its final paragraph. The credit texture load and table are identified in the ETC overlay; the credits are outside the approved exceptions and need translation and visual verification.

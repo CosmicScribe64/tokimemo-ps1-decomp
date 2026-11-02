@@ -22,6 +22,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39529-english-staff-credits|T-39529 Translate the ending staff credits]]
 
 
 

@@ -1,0 +1,53 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
+  "controlled_line_selection": true,
+  "evidence": [
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0083:l0003",
+      "run": "build/emu/festival-yuina-current-g0083",
+      "frames": 600,
+      "mode": 112,
+      "header_matches_disc": true,
+      "header_sha256": "e61e88bc489d66297d9e807c80c8bd6cfc73cd6409e5898a7feb06e8b7d5e5d7",
+      "font_trace": {
+        "ranges_address": 2148237164,
+        "frame_origin": "start of this emulator run",
+        "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+        "calls": 0,
+        "unknown_calls": 0,
+        "overflow_calls": 0,
+        "entries": {},
+        "load_address": 2147808100
+      },
+      "inspected_frames": [
+        150,
+        600
+      ],
+      "result": "Four-line passage scrolls to its final line and closing quote without clipping."
+    },
+    {
+      "id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0090:l0007",
+      "run": "build/emu/festival-yuina-current-g0090",
+      "frames": 600,
+      "mode": 112,
+      "header_matches_disc": true,
+      "header_sha256": "e61e88bc489d66297d9e807c80c8bd6cfc73cd6409e5898a7feb06e8b7d5e5d7",
+      "font_trace": {
+        "load_address": 2147808100,
+        "ranges_address": 2148237164,
+        "frame_origin": "start of this emulator run",
+        "entries": {},
+        "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+        "calls": 0,
+        "unknown_calls": 0,
+        "overflow_calls": 0
+      },
+      "inspected_frames": [
+        150,
+        600
+      ],
+      "result": "Four-line passage scrolls to its final line and closing quote without clipping."
+    }
+  ]
+}

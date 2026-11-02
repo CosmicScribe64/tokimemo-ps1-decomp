@@ -7,13 +7,34 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from tools.patch.audit_executable_disc import (
-    FunctionOwners, audit_derived, audit_slots, bind_extent, pair_target,
+    FunctionOwners, audit_derived, audit_slots, audit_source_only, bind_extent, pair_target,
     payload_references, read_address, referenced_candidates, snapshot_translator, verify_hooks,
 )
 from tools.patch.text.image import Image, Slot
 
 
 class ExecutableAuditTest(unittest.TestCase):
+    def test_source_only_literal_must_be_in_its_own_executable_and_terminated(self):
+        records = {'line': SimpleNamespace(unit={'context': {'link_unit': 'TEL'}})}
+        payloads = {'line': b'Hello'}
+        path = 'CDROM/EXEDIR/TEL.EXN'
+        result = audit_source_only(records, payloads, {path: b'xxHello\0'})
+        self.assertEqual(result['checked'], 1)
+        self.assertEqual(result['records']['line']['offset'], 2)
+        for files in ({path: b'Hello!'}, {path: b'wrong', 'other': b'Hello\0'}):
+            with self.assertRaisesRegex(ValueError, 'absent'):
+                audit_source_only(records, payloads, files)
+        with self.assertRaisesRegex(ValueError, 'no audited executable'):
+            audit_source_only(records, payloads, {})
+        with self.assertRaisesRegex(ValueError, 'Missing source-only target'):
+            audit_source_only(records, {}, {path: b'Hello\0'})
+
+    def test_source_only_unloaded_unit_is_explicitly_excluded(self):
+        records = {'retired': SimpleNamespace(unit={'context': {'link_unit': 'EVENT'}})}
+        result = audit_source_only(records, {}, {})
+        self.assertEqual(result['checked'], 0)
+        self.assertEqual(result['excluded_unloaded'], ['retired'])
+
     def test_census_reads_actual_words_and_does_not_limit_text_to_512_bytes(self):
         data = bytearray(800)
         base = 0x80132000
