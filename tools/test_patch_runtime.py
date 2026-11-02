@@ -11,6 +11,49 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PhoneWrapTest(unittest.TestCase):
+    def test_speaker_positions_replace_padding_formats(self):
+        source = (ROOT / 'src/english/script.c').read_text()
+        start = source.index('static s32 english_speaker_draw(')
+        function = source[start:source.index('\n}', start) + 2]
+        fixture = r'''
+#include <assert.h>
+#include <string.h>
+typedef unsigned char u8;
+typedef int s32;
+#define ENGLISH_LABEL_LEFT (-128)
+#define ENGLISH_LABEL_GAP 6
+static s32 english_text_x;
+static int count;
+static int positions[2];
+static char text[2][64];
+static int english_text_width(u8 *value) { return strlen((char *)value) * 6; }
+static void set_kanji_string(int x, int y, int color, u8 *value, int slot) {
+    (void)y; (void)color; (void)slot;
+    assert(count < 2);
+    positions[count] = x;
+    strcpy(text[count++], (char *)value);
+}
+'''
+        checks = r'''
+int main(void) {
+    int next;
+    next = english_speaker_draw((u8 *)"Matsukawa", (u8 *)"\"", 0, 1);
+    assert(count == 2);
+    assert(!strcmp(text[0], "Matsukawa"));
+    assert(!strcmp(text[1], "\""));
+    assert(positions[0] + 54 + 6 == positions[1]);
+    assert(next == positions[1] + 6);
+    assert(english_text_x == next);
+    return 0;
+}
+'''
+        with tempfile.TemporaryDirectory() as directory:
+            code = Path(directory) / 'speaker.c'
+            binary = Path(directory) / 'speaker'
+            code.write_text(fixture + function + checks)
+            subprocess.run(['cc', '-std=c89', '-Wall', '-Werror', str(code), '-o', str(binary)], check=True)
+            subprocess.run([str(binary)], check=True)
+
     def test_save_summary_keeps_full_names_inside_column(self):
         source = (ROOT / 'src/main/hud_screens.c').read_text()
         start = source.index('static s32 hud_english_save_name_lines(')

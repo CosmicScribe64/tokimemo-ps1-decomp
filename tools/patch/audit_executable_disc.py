@@ -18,6 +18,7 @@ from tools import elf32, english_link
 from tools.patch.art.verify import read_back
 from tools.patch.audit_generated_sources import audit_sources
 from tools.patch.build_english import literal_payloads, unloaded_sources
+from tools.patch.executable_calls import local_regions, named_calls
 from tools.patch.text import c_literals
 from tools.patch.text.containers import EXE_PATH, build_containers, load_units
 from tools.patch.text.layout import english_payloads
@@ -184,7 +185,49 @@ def replacement_helpers(files, bases, link, references):
     }
 
 
-def bind_extent(record, container, candidates, data, base, address, old, new, hooks=None):
+def retired_parser_format(candidates, binding, data, base, references, regions):
+    """Reviewed ASCII formats replaced by positioning/append, not displayed text.
+
+    The old speaker format and blank glyph were replaced by separate label/mark
+    drawing. The old concatenation template became bounded english_append.
+    Require the actual hook and replacement call paths before retiring a record.
+    Runtime/GPU behavior is covered separately; this is a function-level proof.
+    """
+    if len(candidates) != 1 or not binding.get('replacement_functions'):
+        return None
+    payload = next(iter(candidates))
+    replacements = binding['replacement_functions']
+    if {item['function'] for item in binding.get('original_references', [])} != set(replacements):
+        return None
+    ranges, edges = regions
+    symbols = references.syms
+    if payload in (b'%s ', b' ') and replacements == {'talk_speak_part': 'english_talk_speak_part'}:
+        caller = symbols['english_talk_speak_part'][0]
+        helpers = []
+        for target in sorted({edge['target'] for edge in edges if edge['caller'] == caller}):
+            calls = named_calls(data, base, target, ranges[target], symbols,
+                                ('set_kanji_string', 'english_text_width'))
+            if len(calls['set_kanji_string']) == 2 and len(calls['english_text_width']) == 2:
+                helpers.append({'start': target, 'calls': calls,
+                                'incoming_calls': [edge for edge in edges
+                                                   if edge['caller'] == caller and edge['target'] == target]})
+        if len(helpers) != 1:
+            raise ValueError('Cannot identify compiled separate speaker/mark helper')
+        return {'status': 'retired_parser_format', 'replacement_functions': replacements,
+                'basis': 'separate speaker/mark drawing replaces format and blank glyph',
+                'helper': helpers[0]}
+    if payload == b'%s%s' and replacements == {'talk_render': 'english_talk_render'}:
+        start = symbols['english_talk_render'][0]
+        calls = named_calls(data, base, start, ranges[start], symbols, ('english_append',))
+        if not calls['english_append']:
+            raise ValueError('Renderer lacks compiled bounded suffix append')
+        return {'status': 'retired_parser_format', 'replacement_functions': replacements,
+                'basis': 'bounded append replaces concatenation format', 'calls': calls}
+    return None
+
+
+def bind_extent(record, container, candidates, data, base, address, old, new, hooks=None,
+                helper_regions=None):
     """Require matching references in every original owning function.
 
     This is function-level evidence combined with source-generation equality,
@@ -233,6 +276,23 @@ def bind_extent(record, container, candidates, data, base, address, old, new, ho
             if matching_payload(data, base, target, expected):
                 matches.append({'function': function, 'site': low, 'target': target})
     missing = sorted(wanted - {item['function'] for item in matches})
+    if missing and helper_regions:
+        ranges, edges = helper_regions
+        for function in list(missing):
+            start = new.syms[function][0]
+            calls = [edge for edge in edges if edge['caller'] == start]
+            for call in calls:
+                begin, end = call['target'], ranges[call['target']]
+                for pairs in new.pairs.values():
+                    for highs, low in pairs:
+                        if not begin <= low < end:
+                            continue
+                        target = pair_target(data, base, highs, low)
+                        if matching_payload(data, base, target, expected):
+                            matches.append({'function': function, 'site': low, 'target': target,
+                                            'helper_call': call})
+            if function in {item['function'] for item in matches}:
+                missing.remove(function)
     return {'status': ('pending' if missing else
                        'replacement_function_bound' if redirected else 'function_bound'),
             'original_references': references, 'english_function_references': matches,
@@ -345,12 +405,20 @@ def audit(build, link):
         linked_references[path] = new
         hooks = dict(english_link.read_hooks('config/english_hooks.txt', unit))
         hook_checks[unit] = verify_hooks(files[path], bases[path], new.syms, hooks)
+        helpers = None
+        if unit == 'main':
+            obj = str(link / 'src/english/script.o')
+            helpers = local_regions(obj, new.placed[(obj, '.text')][0], files[path], bases[path])
         for rid, item in unresolved.items():
             record = by_id[rid]
             key = (unit, bytes.fromhex(record.get('raw_hex') or '').rstrip(b'\0'))
             candidates = {payloads[cid] for cid in canonical.get(key, []) if cid in payloads}
             binding = bind_extent(record, containers[path], candidates, files[path], bases[path],
-                                  item['address'], old, new, hooks)
+                                  item['address'], old, new, hooks, helpers)
+            if binding['status'] == 'pending' and helpers:
+                retired = retired_parser_format(candidates, binding, files[path], bases[path], new, helpers)
+                if retired is not None:
+                    binding = retired
             bindings[rid] = binding
             if binding['status'] == 'pending':
                 pending.append({'path': path, 'id': rid})
@@ -362,7 +430,7 @@ def audit(build, link):
     pending = [item for item in pending if bindings[item['id']]['status'] == 'pending']
     return {'status': 'incomplete',
             'scope': 'source generation, mapped executable slots and derived consumer pointers',
-            'remaining_checks': ['retired parser formatting', 'referenced-byte language census'],
+            'remaining_checks': ['referenced-byte language census'],
             'excluded_units': list(english_link.UNLOADED), 'source_generation': source,
             'containers': len(files), 'slots': sum(len(rows) for rows in slots.values()),
             'exact_slots': sum(item['exact'] for rows in slots.values() for item in rows.values()),

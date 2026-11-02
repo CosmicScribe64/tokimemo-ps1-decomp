@@ -3493,3 +3493,7 @@ Previous turn made progress with committed source-generation verification (8c818
 ## [2026-11-02] build | Verify active hooks and replacement helpers
 
 Previous turn made progress by rejecting bypassed-body evidence (ef3c99516). Verified all 23 release entry jumps/delay slots and 37 canonical payload references in active parser replacements. Integrated both save/album helper calls, both labels and both replacement memory-card prompts. Actual-disc audit now leaves 20 parser extents pending, down from 63; 31 combined regressions pass. Located the remaining source behavior (separate speaker positioning, bounded suffix append, static name expansion) for the next compiled proof. Standards review passed for implemented layers; no whole-game completion claim. [[tickets/T-39510-no-japanese-left-check]], [[english-build]].
+
+## [2026-11-02] build | Close mapped executable record accounting
+
+Previous turn progressed with active hook/helper checks (775f63cb8). Actual static JAL traversal resolves two name substitutions; reviewed compiled replacement paths retire eighteen ASCII formats. All 2,940 mapped records now accounted for; 37 focused tests pass. Standards review passed. Language-census integration remains unfinished, so the command deliberately exits 2. [[tickets/T-39510-no-japanese-left-check]], [[english-build]].
