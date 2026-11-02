@@ -1,7 +1,7 @@
 ---
 type: tool
-updated: 2026-10-31
-sources: ["tools/emu/Dockerfile", "tools/emu/run.sh", "tools/emu/emu.py", "tools/emu/emu.lua"]
+updated: 2026-11-01
+sources: ["tools/emu/Dockerfile", "tools/emu/run.sh", "tools/emu/emu.py", "tools/emu/emu.lua", "tools/emu/route.py", "tools/emu/route.lua", "tools/emu/routes/main.route"]
 ---
 
 # Emulator runtime probe for naming (T-20500)
@@ -12,7 +12,7 @@ Use the headless emulator to inspect a function or global at runtime. It can sto
 
 - `tools/emu/Dockerfile` builds PCSX-Redux from commit `8288e927` (2026-09-25) plus upstream fix `3a24bbcc`, which fixes an SPU crash when loading a state into a new process. It also builds OpenBIOS from nugget `d9384092` under the MIT license. No Sony BIOS is used or needed.
 - The emulator runs natively on arm64 (Apple Silicon), with the interpreter CPU, no window (`-no-ui`), and a dummy audio driver. The `tokimemo-emu` image is 1.7 GB. Its first build takes about 40 minutes at `-j2` and leaves about 8 GB of build cache. `docker builder prune` frees that cache, but later patches then require a full rebuild.
-- Supply your disc through `disc/*.cue`. Symbols and call stacks also need the extracted `disc/files/SLPM_86.053` and `disc/files/CDROM/EXEDIR/*.EXN` ([[disc-layout]]). A normal build produces linker maps at `build/SLPM_86.053.map` and `build/ovl/*.map`, which give exact function names. Without maps, names marked `?` are guessed from the previous `jr $ra`.
+- Supply your disc through `disc/*.cue`, `--iso`/`--cue PATH` (a cue inside the repository), or `EMU_CUE=/any/path/disc.cue tools/emu/run.sh ...`, which mounts that cue's folder read-only at `/cue` (T-39504). Symbols and call stacks also need the extracted `disc/files/SLPM_86.053` and `disc/files/CDROM/EXEDIR/*.EXN` ([[disc-layout]]). A normal build produces linker maps at `build/SLPM_86.053.map` and `build/ovl/*.map`, which give exact function names. Without maps, names marked `?` are guessed from the previous `jr $ra`.
 - `tools/emu/run.sh <subcommand>` builds the image if `tools/emu/Dockerfile` changed, then runs `tools/emu/emu.py` inside it. Containers get 2 CPUs (`EMU_CPUS`), and the emulator runs under `nice`. Results, screenshots, save states and memory cards go to gitignored `build/emu/`. Save states and screenshots are game data. Never commit them.
 
 ## Usage
@@ -47,6 +47,28 @@ tools/emu/run.sh report build/emu/<run>/result.json            # print a report 
 - Each run also logs which overlay landed in the slot on which frame and every change of the loader's mode byte `D_800E738E`.
 
 GDB: `tools/emu/run.sh gdb --state ...` starts the emulator with the PCSX-Redux GDB server on `--port` (3333, published on localhost). `gdb-multiarch` is in the image; tested in one container: `python3 tools/emu/emu.py gdb --state S &`, then `gdb-multiarch -batch -ex 'set architecture mips:3000' -ex 'target remote localhost:3333' -ex 'break *0x8004E788' -ex continue -ex 'info registers' -ex 'x/s $a3'` (breakpoint, registers and memory work; `detach` is not supported). The REA GDB tools need a Linux host GDB, so they do not work from this macOS host.
+
+## Route (T-39504)
+
+`tools/emu/route.py` plays a scripted route through the main screens and takes screenshots, so two discs (Japanese, English) can be compared screen by screen. Ticket: [[tickets/T-39504-emulator-screen-route]].
+
+```sh
+EMU_CUE=/path/to/tokimemo.cue tools/emu/run.sh route run --label jp            # from power-on
+tools/emu/run.sh route run --label en --build en --cue build/disc/en.cue      # another disc
+tools/emu/run.sh route run --label jp2 --resume build/emu/route-jp:holiday_1  # from a saved point
+tools/emu/run.sh route compare build/emu/route-jp build/emu/route-en          # side by side
+tools/emu/run.sh route check                                                  # parse, list the steps
+```
+
+- Output `build/emu/route-<label>/`: numbered PNGs (`NNN_<checkpoint>.png`), `result.json` (checkpoints in order with name, frame, file, the scene key and the cursor; the step log; every change of the scene key; the `state` points), `sheet.html` and `sheet.png` (contact sheet), `states/*.sstate`, the run's own memory cards (`cards/`, new and empty at the start) and `emulator.log`. `compare` writes `build/emu/compare-<a>-<b>/compare.html` and `compare.png`, one row per checkpoint name, "not reached" where a run has no such shot. All of it is game data: never commit it.
+- The route is the text file `tools/emu/routes/main.route`; the step syntax is in the `route.py` docstring. Steps wait on the game's own bytes, not on frame counts: the scene key (GameState `game_mode`, `mode_stage`, `mode_step`, `substep` and the loader's `ovl_target_game_mode`), the menu selection `menu_cursor_0/1` (`pick N` steps it with the d-pad in the keyboard menu mode, the default), the free cursor `cursor_x/cursor_y` (`steer`), and the typewriter `text_state` (`talk`: one screenshot per whole page, then CIRCLE). Longer English pages only make a run longer.
+- `goto LABEL COND max=N` loops: Shiori's answer to a date is random, so a refused call is made again the next Sunday (up to three times), and the date is skipped when no call succeeds. A shot taken again in a loop gets `_r2`, `_r3`.
+- Name entry is per build (`call name_entry`, `BUILDS` in `route.py`): `jp` types on the hiragana page (cells from the gojuon table), `en` on the English letter page. The letter-page layout is an assumption (`LATIN_ROWS`, A-Z then a-z row by row) until [[tickets/T-39502-english-text-runtime]] fixes it.
+- `--resume RUN:STATE` loads a state of an earlier run and copies its earlier screenshots; cards start empty, so resume only from states before the save.
+- Settings the route makes: text speed fast, voice OFF (option 6; the default is "cut with CROSS"), album slot 1.
+- Tests: `tools/emu/test_route.py` (parsing, waits and jumps as jobs, resume, PNG and sheets; no game data).
+
+Checkpoints (Japanese baseline, 2026-11-01): Konami logo, title intro, title menu, options (text speed, voice), file select (new album, slot 1, system file), name entry (page, three parts, birthday, confirm, Shiori's profile), prologue (one shot per page), command screen with the status panel, calendar, system settings, first school day, week 1 (Shiori's birthday event with two choices), Sunday holiday menu, phone book, the call to Shiori and her answer, the evening command screen, save (menu, slot, overwrite, writing, done), week 2, the date in the park (with a topic choice), load (slot, read, loaded). See the T-39504 ticket for frames and run time.
 
 ## Spike results (2026-10-24)
 

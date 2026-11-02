@@ -2846,3 +2846,10 @@ The user asked for the 21 missing art items to be made before the English patch.
 ## [2026-11-01] ticket | Open the English translation patch tickets
 
 The owner asked for the patch and emulator testing to go ahead while the art fixes finish. Opened [[tickets/T-39500-english-translation-patch]] with [[tickets/T-39501-disc-rebuild-and-xdelta]], [[tickets/T-39502-english-text-runtime]], [[tickets/T-39503-text-container-writers]] and [[tickets/T-39504-emulator-screen-route]], all In Progress.
+
+## [2026-11-01] ticket | Emulator screen route and Japanese baseline (T-39504)
+
+Added `tools/emu/route.py`, `tools/emu/route.lua` and `tools/emu/routes/main.route`: a route from power-on through the Konami logo, title intro, title menu, options (fast text, voice off), file select (new album), name entry (typed on the hiragana page; per-build step, `en` uses the English letter page), the prologue (a shot per text page), the command screen and its status panel, calendar, system settings, the first school day, week 1, Sunday, a phone call to Shiori with a date request (retried on a refusal with `goto`), save, week 2, the date, and load. Steps wait on GameState scene bytes, the menu selection, the free cursor and the typewriter, not on frame counts. Outputs go to `build/emu/route-<label>/` (PNGs, `result.json`, `sheet.html`/`sheet.png`); `route compare` puts two runs side by side by checkpoint. `run.sh` takes `EMU_CUE=/path.cue` (read-only mount) and `run.sh route ...`. Tests: `tools/emu/test_route.py`.
+
+Japanese baseline from the original disc: 144 screenshots, 27 922 frames, 539 s, all checkpoints reached and checked by eye. Details and the mode map found on the way in [[tickets/T-39504-emulator-screen-route]]; usage in [[emulator]] (Route). Ticket moved to In Review.
+
