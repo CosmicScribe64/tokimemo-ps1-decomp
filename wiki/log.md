@@ -2971,3 +2971,11 @@ New pages [[ram-map]] and [[relink]]. Free RAM for English: 0x8012B540-0x8013200
 ## [2026-11-01] ticket | T-39505 to In Review
 
 [[tickets/T-39505-english-memory-and-relink]] waits for code review against `CODING_STANDARDS.md`.
+
+## [2026-11-01] build | T-39505: English disc build on the free relink
+
+Ticket back to In Progress for this round, now In Review again. Merged `patch/english` (T-39507) into `patch/mem`; the free relink replaces the pinned link and its section-label pins. `tools/patch/build_english.py` runs with `PINNED_LINK = False`: all 1,964 C literals of the loaded units are English (171 files), EVENT and GYOZI stay Japanese, sized arrays grow with their literal, and in-place records are written at their relinked place. `tools/english_link.py` carries addresses into rebuilt objects and translates only names the unit's objects use, defined labels included (`D_800AA178` in libgte_patchgte hung the boot when left as a number). Report: placed 30,951, file_kept_original 4,718, kept_original 625, needs_relink 266 (fixed-size table slots), moved_in_build 257, overflow 8. The DATE talk buffer cannot grow ([[ram-map]]). The route runs the English disc to the end with `--relink build/en` (`build/emu/route-en/`). Default build 27/27 OK. Pages: [[english-build]], [[relink]], [[ram-map]].
+
+## [2026-11-01] ticket | T-39505 to In Review
+
+[[tickets/T-39505-english-memory-and-relink]] waits for code review against `CODING_STANDARDS.md`.

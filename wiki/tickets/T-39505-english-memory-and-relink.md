@@ -1,7 +1,7 @@
 ---
 id: T-39505
 title: Give the English build room to grow (memory map and free relink)
-status: In Progress
+status: In Review
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-01
@@ -34,4 +34,10 @@ Results: [[ram-map]], [[relink]].
   - Validation: `build/j0` equals all 27 default binaries; the padded `build/jr` disc plays the whole T-39504 route (148 checkpoints, no fault); against a control disc with the same boot timing 118 of 148 checkpoints are identical pixel for pixel and the other 30 differ only in frame-counter animations, with identical text, dates and parameters (details and the timing note in [[relink]]). Against the original disc the relinked one starts 12 frames later, so most route shots differ by animation phase and RNG.
   - Tooling: `route.py run --relink DIR` (needed for every relinked disc, the English one included) and a pixel verdict in `route compare`; `tools/test_english_link.py`.
   - Default build: 27/27 OK.
-
+- 2026-11-01 (claude): second round, after merging `patch/english` (T-39507's one-command disc build) into `patch/mem`.
+  - Merge: the free relink replaces the pinned link; T-39507's section-label pins are dropped (nothing is pinned). `configure.py` keeps the `cctext` rule, `english_variant` and the CD remap table, now an extra object of the main executable; `src/english/cd.c` and its hooks work unchanged without the island.
+  - `build_english.py`: `PINNED_LINK = False`; all 1,964 C literals of the loaded units go English (the 734 the pinned link sent back now place); EVENT/GYOZI literals and in-place records stay Japanese (never loaded); a literal that initialises a sized array grows the array; in-place records are written where the free link moved their slot (`english_link.translator`).
+  - `english_link.py`: addresses inside rebuilt objects are carried over (same section size and symbol offsets, a global symbol, the section end, or the object's own relocation at the same site); only side-script names in the unit's symbol tables are translated, defined names included. Found on the emulator: `D_800AA178` (libgte_patchgte copies its handler up to that label) is an object label that the side script overrides with a number; left untranslated it hung the boot once `scene_library` shrank by 0x10.
+  - Report: placed 30,951, file_kept_original 4,718 (DATE talk files), kept_original 625, needs_relink 266 (fixed-size table slots, need code changes), moved_in_build 257, overflow 8. Executable ends at 0x8012CA60; overlays within the slot (TACO 291 bytes left).
+  - DATE buffer: not growable. TAKU3.BIN sits at 0x801A4000 and another load fills 0x801A5800-0x801AE000 during a date ([[ram-map]]); the files keep their original bytes.
+  - English disc route (`--relink build/en`): all checkpoints reached (144 screenshots, 30,149 frames), `build/emu/route-en/`. Default build 27/27 OK; `build/j0` still equals all default binaries and `build/jr` is unchanged.

@@ -30,7 +30,7 @@ The overlay slot ends at a hard wall: 0x80162000 is the background still buffer,
 | 0x800B3220-0x800E3800 | main `.data` (includes the 12x12 font `text_font_glyphs`) | always |
 | 0x800E3800-0x8012B540 | main bss: one splat object, `asm/data/bss.bss.s` | always. `boot_start` clears 0x800E60A0-0x8012B538; 0x800E3800-0x800E60A0 is not cleared. Large parts: `draw_work_buffers` 0x800E94A0 (0x901E), `D_800F24BE` (0xAFE2), `prim_arena_buffers` 0x800FD4A0, the two packet buffers `D_80100882` and `D_8010FE8F` (0xF60D and 0xEE11), `D_80126480` (0x2600). |
 | 0x80100000-0x80120000 (inside the bss) | packet buffers; TT's work areas while TT runs | TT's `tt_sys` and 20 more pointers name 0x80110000-0x8011FD00. The tails 0x80108000-0x8010E000 and 0x8011A000-0x8011E000 stayed zero in every dump, but they are the unused ends of the packet buffers: not free. |
-| 0x8012B540-0x80132000 | **nothing** | No code names an address here (only the unloaded EVENT overlay does, `D_8012B8C2`), every dump is zero, and write watches in 8 scenes saw no write (also T-39502). |
+| 0x8012B540-0x80132000 | **nothing** | No code names an address here (only GYOZI, which the game never loads, does: `D_8012B8C2`), every dump is zero, and write watches in 8 scenes saw no write (also T-39502). |
 | 0x80132000-0x80162000 | overlay slot: one `.EXN` at a time, 0x60 sectors | from `ovl_load_start` to the next overlay load. The file is always read whole (0x30000 bytes), checksummed by `cd_file_checksum_ok`. |
 | 0x80162000-0x80167000 | background still: BS bitstream (CD read of 0xA sectors in `background_images.c`), then the MDEC output strips | per screen. `bg_still_buffers_set(0x80167000, 0x80162000, 0x80162000)` |
 | 0x80167000-~0x80176000 | still image run-length buffer (`DecDCTvlc` writes it, `MDEC_vlc_brk`/`func_80086E80` at 0x80086FEC) | per screen. Highest byte written in the samples: 0x8017418A. The size depends on the picture; nothing bounds it. |
@@ -48,6 +48,19 @@ The overlay slot ends at a hard wall: 0x80162000 is the background still buffer,
 | 0x801FFFF0 | stack for `LoadExec("cdrom:PSX.EXE;1")` | at exit only |
 
 EVENT (0x800F6000) and GYOZI (0x80134000) are never loaded: no code names their LBAs ([[overlays]]).
+
+## During a date (DATE overlay)
+
+| Range | Owner |
+|---|---|
+| 0x80180000-0x80196800 | face data (0x2D sectors) |
+| 0x80197000-0x80198000 | SERIFU.BIN (2 sectors) |
+| 0x80198000-0x801A4000 | the date talk file, `SERIFU/DATE_*.BIN`, at most 24 sectors (`place_scenes.c`, `scene_common.c`) |
+| 0x801A4000-0x801A5800 | TAKU3.BIN (3 sectors): the choice and face tables of every date place (`date_class_table_*`, `date_face_table_*` point into it) |
+| 0x801A5800-0x801AE000 | filled by a CD load during the date (write watch from the holiday state into a date, frame 2016 of the run) |
+| 0x801AE000-0x801C6800 | KANRAN.BIN (0x31 sectors) in the amusement park rides (`rides.c`) |
+
+So the talk buffer cannot grow in place: the English `DATE_*.BIN` files need 26-31 sectors and keep their original bytes ([[english-build]]). Room for them would need DATE code that loads the talk file elsewhere, and no 62 KB region is known to be free during a date (the main gap is 27 KB, DATE's own tail 5 KB). Moving TAKU3.BIN to the main gap would give the talk buffer 3 more sectors (27), not enough for every file.
 
 ## Overlay tails
 

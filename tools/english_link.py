@@ -413,8 +413,9 @@ def redirected_objects(out_dir, unit):
 
 
 def referenced_names(out_dir, unit):
-    """Names the unit's objects (as the variant links them) leave undefined: the only side-script
-    definitions that matter for its link."""
+    """Names in the symbol tables of the unit's objects (as the variant links them): the only side-script
+    definitions that matter for its link. Defined names count too: a side-script assignment overrides
+    an object's own label (`D_800AA178` in libgte_patchgte, whose code copies itself up to it)."""
     path = "%s/%s.ld" % (out_dir, EXE) if unit == "main" else "%s/ovl/%s.ld" % (out_dir, unit)
     objects = set()
     for line in open(path):
@@ -424,7 +425,7 @@ def referenced_names(out_dir, unit):
     names = set()
     for obj in sorted(objects):
         if os.path.exists(obj):
-            names |= {sym.name for sym in elf32.Elf(obj).symbols if sym.name and sym.shndx == elf32.SHN_UNDEF}
+            names |= {sym.name for sym in elf32.Elf(obj).symbols if sym.name}
     return names
 
 

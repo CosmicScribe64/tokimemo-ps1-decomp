@@ -14,7 +14,7 @@ One command builds the English disc and its patch. Ticket [[tickets/T-39507-engl
 IMG=tokimemo-patch tools/docker.sh python3 -m tools.patch.build_english   # about 4 minutes
 tools/docker.sh python3 -m unittest tools.test_patch_english -v            # no game data
 IMG=tokimemo-patch tools/docker.sh env TOKIMEMO_ENGLISH_DISC=1 python3 -m unittest tools.test_patch_english -v
-tools/emu/run.sh route run --label en --build jp --cue build/en/disc/tokimemo-en.cue
+tools/emu/run.sh route run --label en --build jp --cue build/en/disc/tokimemo-en.cue --relink build/en
 ```
 
 Inputs:
@@ -31,14 +31,17 @@ Image: `tokimemo-patch` from `tools/Dockerfile.patch` (xdelta3). Outputs in `bui
 2. Encode and wrap every record (`text/layout.py`).
 3. C literals:
    - The English sources go to `build/en/src/<path>` (`c_literals.rewrite_sources`), and `configure.py` compiles every file found there in place of `src/<path>`, with the flag. The rule is `cctext`, which runs `tools/cc.py --source-text`; every rule that derives something from the path still sees `src/<path>`.
-   - While the English link pins objects to their original addresses, an object must not grow a section or move a symbol. The fit loop compares each English object with the default one. Round 1 sets a failing file's growing literals back to the original; round 2 does the same for the whole file. Those records are reported as `needs_relink`.
-   - `PINNED_LINK` in `build_english.py` turns the loop off once [[tickets/T-39505-english-memory-and-relink]] links freely.
+   - The English link relinks every unit freely ([[relink]], T-39505), so an English object may grow and move what follows it. `PINNED_LINK` is `False`; the old fit loop (round 1: a failing file's growing literals back to the original, round 2: the whole file, reported as `needs_relink`) only runs when it is set back to `True`.
+   - A literal that initialises a sized array (`u8 name[27] = "..."`) gets a larger array (`c_literals._grow_array`); otherwise IDO stops with "too many initial values".
+   - Literals in EVENT and GYOZI stay Japanese (`kept_original`, "overlay never loaded"): the game never loads those overlays, and the English link copies them unchanged.
+   - Addresses other code takes inside a rebuilt object are carried over by `english_link.py` when the object's section keeps its size and symbol offsets (English literals change `.rodata`, and in `.data` only the bytes of fixed arrays and pointer addends), or through the object's own relocation at the same site (an anonymous literal); otherwise the link stops and names the address.
 4. Data files:
    - Every talk script, supplemental script and `JOHO.NBN` is written with `Image.write` and checked by `cd_layout.plan_file`. It is then put on the disc with `Disc.replace`: in place when it keeps its sector count, otherwise at the end of the data track.
    - A file that may not grow keeps its original bytes.
-5. `build/en/cd_layout.json` (the moved files), then `configure.py` and `ninja english`. The island table `english_cd_remap` comes from that JSON (`cd_layout.py remap-asm`, `build/en/gen/english_cd_remap.s`). Without the JSON the table is empty, so `ninja english` alone still works.
+5. `build/en/cd_layout.json` (the moved files), then `configure.py` and `ninja english`. The table `english_cd_remap` (part of the main executable since the free relink) comes from that JSON (`cd_layout.py remap-asm`, `build/en/gen/english_cd_remap.s`). Without the JSON the table is empty, so `ninja english` alone still works.
 6. In-place records go into the built executable and overlays (`text/inplace.py`):
-   - A slot is written only where the English binary still holds the original bytes; otherwise it counts as `moved_in_build`.
+   - Each slot is looked up where the free link put it (`english_link.translator`: the anchor of its input section, or a symbol or relocation inside a rebuilt object) and written only where the English binary holds the original bytes; otherwise it counts as `moved_in_build`.
+   - EVENT and GYOZI keep their original files.
    - The overlay checksum trailer is recomputed.
    - Then the changed overlays go on the disc (in place), then the executable, which moves to the end because it gained sectors.
    - Last: track 1, the cue and the xdelta patch.
@@ -103,15 +106,33 @@ So instead of editing read sites, the English build hooks `cd_read_sectors` and 
 
 Checks before a file moves (`plan_file`):
 - The literal read sites (casts and `U` allowed) and the tour table entries, which are read from the original BUNKAKEN bytes: a read that starts inside the file or also covers the next file is a problem.
-- The load buffer: the new count must not exceed the largest original read into the same address. The DATE buffer at 0x80198000 is fixed at 24 sectors (`BUFFER_LIMITS`); a file that does not fit keeps its original bytes.
+- The load buffer: the new count must not exceed the largest original read into the same address. The DATE buffer at 0x80198000 is fixed at 24 sectors (`BUFFER_LIMITS`): TAKU3.BIN, the choice tables of every date place, is loaded right after it at 0x801A4000, and another load fills 0x801A5800-0x801AE000 during a date ([[ram-map]]). A file that does not fit keeps its original bytes.
 - A literal `cd_file_checksum_ok` with the file's original count is a problem.
 - At most 255 sectors (u8).
 
-## Linker change (`tools/english_link.py ld`)
+## Linker
 
-A rebuilt object that shrinks was already padded by the pin of the next input section. Nothing pinned the end of the last input of an output section, though, so `X_RODATA_END` and `X_DATA_START` moved with it, and the overlay check failed for BUNKAKEN. The section labels inside output sections are now pinned at their default addresses too (`read_labels`).
+The pinned link of T-39502 is gone: `tools/english_link.py` relinks every unit freely ([[relink]]). The section-label pins that T-39507 added for a shrinking last object are not needed any more, because nothing is pinned.
 
-## Results (2026-11-01)
+## Results with the free relink (T-39505, 2026-11-01)
+
+- Command run: 66 s (C literals 40 s in one round, `ninja english` 37 s with the literals compiled, xdelta 13 s).
+- Records:
+
+  | Status | Records | Change from the pinned link |
+  |---|---|---|
+  | placed | 30,951 | +411 |
+  | file_kept_original | 4,718 | the 10 DATE talk files (24-sector buffer, [[ram-map]]) |
+  | kept_original | 625 | 340 empty targets, 237 C literals and 48 in-place records of EVENT and GYOZI (never loaded) |
+  | needs_relink | 266 | 0 C literals (was 734); 266 in-place fixed-size slots over capacity (was 284) |
+  | moved_in_build | 257 | extents whose bytes now come from a rewritten C literal |
+  | overflow | 8 | JOHO.NBN fixed-stride labels |
+
+  All 1,964 C literals of the loaded units are English, in 171 files. The remaining `needs_relink` records are fixed-stride table entries and fields (TEL 78; dictionary slots 39 in NAME_ENT, among them the hiragana grid, and 38 in the main executable; NAME_ENT 24; overlay tables 20 such as the KANGEI club names; 10 supplemental; the rest in ones and twos): a relink cannot widen them, the code that indexes the table has to change (stride, or pointers to relocated strings), see [[tickets/T-39506-english-script-runtime]].
+- Sizes: the executable ends at 0x8012CA60 (21,920 bytes left below the overlay slot), 673,792 bytes, moved to LBA 298740. Overlay room after the English literals: TACO 291 bytes, DATE 4,956, BUNKASAI 5,279, RPG_BAT 13,164, TT 31,962, the rest 47 KB or more.
+- Disc: 719 sectors added; xdelta 1,391,556 bytes.
+
+## Results with the pinned link (T-39507, 2026-11-01)
 
 - Command run: 222 s. Steps: C literals 122 s (3 rounds), `ninja english` 41 s, track 1 24 s, xdelta 23 s, loading records 6 s.
 - Records (36,825 owners and source-only records, SPEAKTST excluded):
@@ -137,8 +158,8 @@ A rebuilt object that shrinks was already padded by the pin of the next input se
 
 ## Open
 
-- DATE files: they need the RAM map (T-39505) to show that the DATE buffer can grow, or a smaller encoding.
-- Relink records: C literals in pinned objects, plus main and overlay tables over capacity (T-39505).
+- DATE files: the RAM map shows the buffer cannot grow in place (TAKU3.BIN and another load follow it during a date; [[ram-map]]). They need a smaller encoding, a split, or DATE code that loads them elsewhere.
+- Relink records: the C literals now place (T-39505). The 266 fixed-size slots over capacity need code changes to their tables.
 - `moved_in_build`: the extents under rewritten C literals. Check after the relink whether any consumer reads them other than through the literal.
 - Windows for menus, tables and C strings: add rows to `WINDOWS` as screens are checked in the route.
 - Dialogue display needs the parser work of [[tickets/T-39506-english-script-runtime]]. Until then the control bytes 0x0A-0x1A are skipped by the renderer and the old parsers misread English.
