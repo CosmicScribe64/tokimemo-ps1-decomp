@@ -587,7 +587,7 @@ def compare(dir_a, dir_b, out):
 
 # ---------------------------------------------------------------- running
 
-def build_job(steps, out, frames, load_state=None, probes=()):
+def build_job(steps, out, frames, load_state=None, probes=(), trace_font=False):
     """Job for route.lua from the steps to play (all of them, or those after a resume point)."""
     where = {s["label"]: i + 1 for i, s in enumerate(steps) if s["op"] == "label"}  # Lua counts from 1
     lua_steps = []
@@ -600,9 +600,12 @@ def build_job(steps, out, frames, load_state=None, probes=()):
                 raise RouteError("goto %s: the label lies before the resume point" % s["to"])
             s["target"] = where[s["to"]]
         lua_steps.append(s)
-    return {"out": out, "steps": lua_steps, "frames": frames, "key_addrs": [ram(FIELDS[f]) for f in KEY_FIELDS],
+    job = {"out": out, "steps": lua_steps, "frames": frames, "key_addrs": [ram(FIELDS[f]) for f in KEY_FIELDS],
             "cursor_addrs": [ram(CURSOR_X), ram(CURSOR_Y)], "probes": [list(p) for p in probes],
             "load_state": load_state}
+    if trace_font:
+        job["font_trace"] = emu.font_trace_config(ram(0x8004F364), ram(0x800B402C))
+    return job
 
 
 def result_from_raw(raw, out, offset=0, earlier=(), first=0):
@@ -685,7 +688,7 @@ def run(args):
     load_state, offset, first, earlier, states = None, 0, 0, [], {}
     if args.resume:
         load_state, offset, first, earlier, states = resume_point(args.resume, steps, out)
-    job = build_job(steps[first:], out, args.frames, load_state, args.probe)
+    job = build_job(steps[first:], out, args.frames, load_state, args.probe, args.trace_font)
     cue = emu.find_iso(args)
     raw, rc, wall = play(job, cue, out, args.timeout)
     if raw is None:
@@ -706,6 +709,8 @@ def run(args):
            "steps": raw.get("steps", []),
            "mode_log": [dict(m, frame=m["frame"] + offset) for m in raw.get("mode_log", [])],
            "notes": raw.get("notes", [])}
+    if "font_trace" in raw:
+        res["font_trace"] = dict(raw["font_trace"], frame_offset=offset)
     write_text(os.path.join(out, "result.json"), json.dumps(res, indent=1))
     write_sheet(out)
     print_summary(res, out)
@@ -731,6 +736,7 @@ def main():
     r = sub.add_parser("run", help="play the route and write build/emu/route-<label>/")
     r.add_argument("--label", default="jp", help="output name: build/emu/route-<label> (default jp)")
     r.add_argument("--build", default="jp", choices=sorted(BUILDS), help="per-build steps (name entry)")
+    r.add_argument("--trace-font", action="store_true", help="record original-font glyph loads by scene")
     r.add_argument("--route", default=DEFAULT_ROUTE, help="route file")
     r.add_argument("--iso", "--cue", dest="iso", metavar="PATH",
                    help="disc cue inside the repository (default: $EMU_CUE, else the one disc/*.cue)")

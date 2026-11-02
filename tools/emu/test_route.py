@@ -8,6 +8,7 @@ import os
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import route  # noqa: E402
@@ -120,6 +121,16 @@ class NameEntryTest(unittest.TestCase):
 
 
 class JobTest(unittest.TestCase):
+    def test_font_trace_is_opt_in_and_follows_relink(self):
+        self.assertNotIn("font_trace", route.build_job([], "/out", 100))
+        # A stale original address can silently report zero loads in an English build.
+        with mock.patch.object(route, "_relinked", lambda address: address + 0x1000):
+            trace = route.build_job([], "/out", 100, trace_font=True)["font_trace"]
+        self.assertEqual(trace["load_address"], 0x80050364)
+        self.assertEqual(trace["ranges_address"], 0x800B502C)
+        with self.assertRaises(ValueError):
+            route.emu.font_trace_config(0x8004F364, 0x801FFFF0)
+
     TEXT = "idle 1\nlabel top\nstate s\nidle 2\ngoto top mode=0x46 max=3\nshot end"
 
     def test_goto_targets_count_from_one(self):

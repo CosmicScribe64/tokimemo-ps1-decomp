@@ -533,6 +533,15 @@ def parse_target(spec, syms, image, default_overlay):
     return spec, syms.resolve(spec, overlay), overlay
 
 
+def font_trace_config(load_address, ranges_address):
+    """Non-mutating original-font upload probe (T-39510); callers translate relinked addresses."""
+    for address, size in ((load_address, 4), (ranges_address, 46 * 4)):
+        if (address & ~0x1FFFFF) not in (0, 0x80000000, 0xA0000000) or (address & 0x1FFFFF) > 0x200000 - size:
+            raise ValueError("font-trace addresses must fit main RAM")
+    return {"module": os.path.join(os.path.dirname(__file__), "font_trace.lua"),
+            "load_address": load_address, "ranges_address": ranges_address}
+
+
 def build_job(args, out, image, syms):
     validate_sampling(args.sample_every, args.frames, args.dump, args.cmd)
     if args.save_state:
@@ -584,6 +593,8 @@ def build_job(args, out, image, syms):
         "ram_dump": os.path.join(out, "ram.bin") if args.ram_dump else None,
         "stack_bytes": 0x800, "arg_bytes": 32, "mode_addr": MODE_ADDR, "slot_probes": SLOT_PROBES,
     }
+    if getattr(args, "trace_font", None):
+        job["font_trace"] = font_trace_config(*args.trace_font)
     if args.until_overlay:
         if args.until_overlay not in image.overlays:
             die("unknown overlay %s" % args.until_overlay)
@@ -759,6 +770,8 @@ def main():
     p.add_argument("cmd", choices=["boot", "break", "watch", "trace", "report", "gdb"])
     p.add_argument("targets", nargs="*")
     p.add_argument("--frames", type=int, default=3600, help="stop after this many vsyncs (default 3600)")
+    p.add_argument("--trace-font", nargs=2, type=lambda s: int(s, 0), metavar=("LOAD_ADDR", "RANGES_ADDR"),
+                   help="trace original-font uploads at vload_font and text_font_range_table addresses")
     p.add_argument("--sample-every", type=int, default=0,
                    help="write requested --dump memory every N vsyncs (0 disables; bounded to 4096 records/64 MiB)")
     p.add_argument("--hits", type=int, default=1, help="hits to record; the run stops after them")

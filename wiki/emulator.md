@@ -50,6 +50,10 @@ GDB: `tools/emu/run.sh gdb --state ...` starts the emulator with the PCSX-Redux 
 
 ## Route (T-39504)
 
+Runtime font audit (T-39510): add `--trace-font` to `route.py run`; with `--relink DIR`, both hook addresses follow that build. `result.json.font_trace` aggregates Shift-JIS codes, scene keys, call sites and counts from every `vload_font` upload, including text loaded but not drawn. This deliberately overcounts visible text and does not detect Japanese baked into sprite artwork. It does not modify the game binary or RAM. Unknown mappings or `overflow_calls` make a clean-text claim invalid; records are bounded to 4,096 distinct code/caller/scene combinations. Frame values are relative to the current run, with `frame_offset` supplied when resuming. `emu.py --trace-font LOAD_ADDR RANGES_ADDR` exposes the same hook for controlled fixtures; its caller must supply the correct linked addresses.
+
+Control proof: `build/emu/route-jp-magazine-font` records 179 original-font uploads, zero unknown mappings and zero overflow. The same normal-input route on English (`build/emu/route-en-magazine-font`) records zero uploads. This validates the hook and first magazine issue only; the full route and remaining events still need trace coverage.
+
 `tools/emu/route.py` plays a scripted route through the main screens and takes screenshots, so two discs (Japanese, English) can be compared screen by screen. Ticket: [[tickets/T-39504-emulator-screen-route]].
 
 ```sh

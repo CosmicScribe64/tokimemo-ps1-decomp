@@ -282,5 +282,16 @@ local function onVsync()
     end
 end
 
+if JOB.font_trace then
+    local function sceneKey()
+        local address = JOB.mode_addr
+        return { readRaw(address, 1):byte(), readRaw(address + 1, 1):byte(),
+            readRaw(address + 2, 1):byte(), readRaw(address + 5, 1):byte(), readRaw(address + 6, 1):byte() }
+    end
+    result.font_trace, EmuFontBreakpoint = dofile(JOB.font_trace.module)(JOB.font_trace, sceneKey,
+        function() return frame end,
+        function() return finishing == nil and (not JOB.load_state or loadedState) end)
+end
+
 EmuVsyncListener = PCSX.Events.createEventListener('GPU::Vsync', onVsync)
 EmuBreakpoints = bps

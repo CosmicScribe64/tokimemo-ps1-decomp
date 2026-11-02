@@ -386,4 +386,9 @@ local function onVsync()
     end
 end
 
+if JOB.font_trace then
+    result.font_trace, RouteFontBreakpoint = dofile(JOB.font_trace.module)(JOB.font_trace, key,
+        function() return frame end, function() return started and finishing == nil end)
+end
+
 RouteVsync = PCSX.Events.createEventListener('GPU::Vsync', onVsync)
