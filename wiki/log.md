@@ -3267,3 +3267,25 @@ Exploratory literal census initially checked 1,403 loaded-overlay C literals and
 ## [2026-11-02] query | Main and loaded-overlay literal census complete
 
 Corrected exploratory census checks 1,643 literal records in main and 23 loaded overlays. Exactly one old payload is absent: SHOUGATU's superseded format string, confirmed against the bounded English branch in `src/ovl/new_year_christmas/yumi_scene_handlers.c`. Recorded coverage limits in [[tickets/T-39510-no-japanese-left-check]] and refreshed the stale retained-token claim in [[english-text-containers]]. Re-inspected the corrected classroom GPU screenshot: closing speech quote is present, opening quote and U have separate spacing, and the complete parenthetical occupies the next line. No new game-code change in this investigation.
+
+## [2026-11-02] query | Controlled festival visual verification started
+
+Created ignored `build/probe_festival_repair.py` for T-39510/T-39511. It boots the compatible command-baseline state against `build/anomaly-repair-proof`, loads BUNKAKEN through the main scheduler, then selects Yuko's self-contained computer-game return scene after initialization. All RAM injections and font-upload tracing are recorded. The initial invocation rejected a missing save-state filename before running; corrected it and launched the actual probe. The scene selection is controlled coverage, not a normal career-playthrough claim. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] query | Source-only literals and two festival repairs verified
+
+All 321 source-only C literal records from loaded units have exact encoded payloads on the final disc; 28 unloaded EVENT/GYOZI records are excluded. Combined census accounts for all 1,964 compiled-literal records (1,963 present plus one reviewed obsolete formatter). This remains a presence check, not proof of call-site binding or computed tables.
+
+Controlled festival bootstrap completes 3,000 frames. AS_S6W g0078/g0079 replays each complete 600 frames, zero original-font calls/unknown/overflow. Both final GPU captures show clean three-line dialogue with closing quotes and no overflow. Starting the analogous HI_S6 art-exhibition scene. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Art-exhibition festival bootstrap passes
+
+`build/emu/festival-yuina-bootstrap` completes 3,500 frames against the latest disc, reaches BUNKASAI stage 0x39 step 9 with actual HI_S6 group 0xB0 tables, and reports zero original-font calls/unknown/overflow. GPU capture shows the English art-exhibition opening line and correct portrait/background. A separate exact-line replay is now checking repaired group 176 line 10. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] query | Correct exact-line probe window reset
+
+Initial HI_S6 g0176 l0010 replay reaches the repaired record and has zero original-font uploads, but its screenshot overlays the previous line: the injected jump cleared runner gates without calling the game's window clear. This is invalid layout evidence. Updated the diagnostic to set the ordinary line-clear gate one frame before selecting the target, with voice state idle; the game executes its normal `k_reset(1)` path. Re-running into a separate output directory so the rejected capture remains traceable. [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Third festival anomaly repair visually verified
+
+Corrected HI_S6 replay `build/emu/festival-yuina-clear-g0176` completes 600 frames, zero original-font calls/unknown/overflow. Its final screenshot shows the complete repaired sentence on two lines, intact quotes and no old-text overlap after the normal clear. All three repaired festival records now have actual GPU evidence. No game-code change was needed for this probe correction. Wiki lint: zero broken links/status mismatches; two existing large-page advisories. [[tickets/T-39510-no-japanese-left-check]], [[tickets/T-39511-english-text-quality]].
