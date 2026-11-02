@@ -15,13 +15,13 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-39520-phone-row-closing-marks|T-39520 Close direct-row telephone dialogue consistently]]
 
 
 
 
 
 ## In Progress
+
 
 
 
@@ -72,6 +72,8 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-39520-phone-row-closing-marks|T-39520 Close direct-row telephone dialogue consistently]]
 
 
 - [ ] [[tickets/T-39513-skating-rink-advertisement|T-39513 Translate the omitted skating-rink advertisement]]

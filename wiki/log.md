@@ -3525,3 +3525,19 @@ The final phone-page build completed in 182.5 seconds with a 6,565,120-byte patc
 ## [2026-11-02] build | Consolidate executable byte census
 
 The reusable audit scans 33,522 actual reference targets on the phone-page build. All 91 Japanese-looking candidates match approved keyboard records or reviewed numeric/code hashes. Ten pairs overlap verified entry hooks and are reported as excluded. The scan validates instructions and removes the exploratory 512-byte read limit. Combined regression suites pass 37 tests. This verifies referenced executable bytes within the documented scan scope; whole-game visual coverage remains open. [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] build | Verify the phone-build browser package
+
+Committed the reviewed executable census as 002d6efc7. The phone-build browser package passes all nine Chromium checks, and its downloaded disc matches target 251f1afab0f09aa4134cd916921b4ae68c5f7300. Inspected desktop completion and 390-pixel page captures; no layout defects found. Reviewed patcher prose without changing it. The game route remains live and the local preview still serves the previous accepted package. [[tickets/T-39512-browser-patcher]], [[tickets/T-39520-phone-row-closing-marks]].
+
+## [2026-11-02] query | Inspect full-name game captures
+
+Viewed six contact sheets containing the first 72 captures of the new route. Album choices and full-name entry fit. The original classroom punctuation/overlap report is corrected. Two introductory pages leave short middle rows after expanded names wrap; recorded a layout-only follow-up in [[tickets/T-39511-english-text-quality]]. The first contact-sheet conversion rejected the opening movie's 24-bit images; corrected the conversion to use their actual pixel format, keeping all original captures untouched.
+
+## [2026-11-02] build | Align phone name-width measurements
+
+Traced the short prologue rows to different build/runtime reservations for name codes. Telephone windows now use the runtime's 116-pixel reservation for player and girl codes. General talk-name widths and intentional breaks are unchanged. Wrapper/phone suites pass 38 tests; the opt-in full-disc test is skipped. New disc build and visual comparison remain required. [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] ticket | Review phone punctuation repair
+
+T-39520 moves to In Review after a 34,745-frame route with 146 captures and zero original-font calls/unknowns/overflows. Inspected every capture, including phone replies and full-name save/load. Closing marks fit and effects remain unquoted. Code review found no unresolved issue; original hashes and header/global/rename checks pass. An additional voice-enabled run will verify dialogue timing. [[tickets/T-39520-phone-row-closing-marks]].

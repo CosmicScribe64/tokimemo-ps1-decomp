@@ -47,6 +47,8 @@ void english_talk_names_set(s32 girl_id);
 void english_gnsx(u8 *speaker_name);
 void english_sndisp(u8 *text, s32 first_row, s32 speaker_style);
 void english_sndi(u8 *text, s32 row, s32 speaker_style);
+void english_k_reset(s32 entry_count);
+void english_k_sub_disp_start(s32 entry_offset);
 s32 english_get_g_name(u8 *name_buf, s32 girl_id);
 void english_get_p_name(u8 *name_buf, s32 girl_form);
 

@@ -339,6 +339,85 @@ static s32 english_text_x = ENGLISH_TEXT_X;
 /* x of the opening mark after the last gnsx label, for sndisp/sndi; 0: no label drawn */
 static s32 english_phone_mark_x = 0;
 
+/* T-39520: direct sndi rows form a page at k_sub_disp_start. Keep the
+ * unexpanded control/name codes until that boundary, just as sndisp does. */
+static u8 english_phone_rows[ENGLISH_LINE_BYTES * 3];
+static s32 english_phone_rows_active;
+static s32 english_phone_rows_first;
+static s32 english_phone_rows_count;
+static s32 english_phone_rows_next;
+static s32 english_phone_rows_style;
+static s32 english_phone_rows_mark;
+static s32 english_phone_in_block;
+
+static void english_phone_row_remember(u8 *text, s32 row, s32 style) {
+    s32 need;
+
+    if (english_phone_in_block != 0) {
+        return;
+    }
+    if (row == 0) {
+        english_phone_rows_active = style != 0x2F && style != 0xFF;
+        english_phone_rows_first = check_set_k();
+        english_phone_rows_count = english_phone_rows_first;
+        english_phone_rows_next = 0;
+        english_phone_rows_style = style;
+        english_phone_rows_mark = english_phone_mark_x;
+        english_phone_rows[0] = 0;
+    }
+    if (english_phone_rows_active == 0) {
+        return;
+    }
+    need = strlen(english_phone_rows) + strlen(text) + (row != 0) + 1;
+    if (row != english_phone_rows_next || row > 2 || style != english_phone_rows_style
+        || check_set_k() != english_phone_rows_count || need > sizeof(english_phone_rows)) {
+        english_phone_rows_active = 0;
+        return;
+    }
+    if (row != 0) {
+        english_append(english_phone_rows, "\n", sizeof(english_phone_rows));
+    }
+    english_append(english_phone_rows, text, sizeof(english_phone_rows));
+    english_phone_rows_next++;
+}
+
+/* Preserve the original reset semantics while invalidating unfinished rows. */
+void english_k_reset(s32 entry_count) {
+    s16 glyph_total;
+    s32 i;
+
+    english_phone_rows_active = 0;
+    glyph_total = 0;
+    for (i = 0; i < entry_count; i++) {
+        glyph_total += text_list[i * 8 + 5];
+    }
+    text_state.count = entry_count;
+    text_state.total = glyph_total;
+    text_state.pos = glyph_total;
+}
+
+void english_k_sub_disp_start(s32 entry_offset) {
+    s32 first;
+    s32 style;
+    s32 mark;
+
+    if (english_phone_rows_active != 0 && check_set_k() == english_phone_rows_count) {
+        first = english_phone_rows_first;
+        style = english_phone_rows_style;
+        mark = english_phone_rows_mark;
+        english_k_reset(first);
+        english_phone_mark_x = mark;
+        english_sndisp(english_phone_rows, 0, style);
+        /* Keep direct-row voice/typewriter gating unless extra wrapped rows
+         * actually require the existing scrolling path. */
+        if (check_set_k() - first <= 3) {
+            game_state.text_scroll_state = 0;
+        }
+    }
+    english_phone_rows_active = 0;
+    k_disp_start(text_state.mark + entry_offset);
+}
+
 /* Speaker label at the fixed left margin, the opening mark after it; returns the text column, where every
  * row of the speech starts (T-39506, owner decision: names start at one margin, rows hang under the text). */
 static s32 english_speaker_draw(u8 *name, u8 *mark, s32 y, s32 text_color) {
@@ -833,6 +912,7 @@ void english_talk_names_set(s32 girl_id) {
 }
 
 void english_gnsx(u8 *speaker_name) {
+    english_phone_rows_active = 0;
     set_kanji_string(ENGLISH_LABEL_LEFT, 0x32, 0, speaker_name, 0);
     english_phone_mark_x = ENGLISH_LABEL_LEFT + english_text_width(speaker_name) + ENGLISH_LABEL_GAP;
 }
@@ -905,6 +985,8 @@ void english_sndisp(u8 *text, s32 first_row, s32 speaker_style) {
     s32 length;
     u8 *closing;
 
+    english_phone_rows_active = 0;
+    english_phone_in_block = 1;
     english_script_from_original(block_text, text, sizeof(block_text));
     english_phone_wrap(block_text, speaker_style);
     line_starts[0] = 0;
@@ -944,6 +1026,7 @@ void english_sndisp(u8 *text, s32 first_row, s32 speaker_style) {
     game_state.text_lines_total = check_set_k();
     game_state.text_scroll_state = 0x80;
     english_phone_mark_x = 0;
+    english_phone_in_block = 0;
 }
 
 void english_sndi(u8 *text, s32 row, s32 speaker_style) {
@@ -960,6 +1043,7 @@ void english_sndi(u8 *text, s32 row, s32 speaker_style) {
 
     game_state.text_scroll_state = 0;
     english_script_from_original(original, text, sizeof(original));
+    english_phone_row_remember(original, row, speaker_style);
     text = original;
     expanded[0] = 0;
     while (*text != 0) {
@@ -1007,12 +1091,15 @@ void english_sndi(u8 *text, s32 row, s32 speaker_style) {
         english_copy(decorated, mark, sizeof(decorated));
         english_append(decorated, expanded, sizeof(decorated));
         set_kanji_string(mark_x, 0x32, 0, decorated, 0);
+        english_phone_rows_count = check_set_k();
         return;
     case 1:
         set_kanji_string(text_x, 0x42, 0, expanded, 0);
+        english_phone_rows_count = check_set_k();
         return;
     default:
         set_kanji_string(text_x, 0x52, 0, expanded, 0);
+        english_phone_rows_count = check_set_k();
         return;
     }
 }
