@@ -2987,3 +2987,7 @@ The owner chose to include the heroine name and voice-actress pills of `CDROM/OP
 ## [2026-11-01] decision | English patch bar: no Japanese left
 
 The owner set the bar for the English patch: no Japanese on screen anywhere, apart from the title logo, the magazine masthead, tiny authentic signs, the illegible roster board and the off-frame ride sign. Added it to [[tickets/T-39500-english-translation-patch]] and opened [[tickets/T-39510-no-japanese-left-check]] (Ready) for the whole-game check.
+
+## [2026-11-01] decision | Name entry keeps its Japanese keyboards
+
+The kana and kanji keyboard pages of name entry stay available next to the default English letter page, so their Japanese characters are an approved exception to the no-Japanese bar in [[tickets/T-39500-english-translation-patch]].
