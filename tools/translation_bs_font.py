@@ -9,7 +9,12 @@ The strokes are rasterised at 8x and box-filtered, which gives the same soft
 edge the MDEC decode gives the original lettering.
 
 Only the capital letters, the digit one, and the hyphen, apostrophe, period are
-defined; `text_extent` and `render_coverage` refuse any other character.
+defined; `text_units` (and so `layout`, `text_extent` and `strokes_for`) refuses
+any other character. `render_coverage` strokes poly-lines and knows no characters.
+
+The layout functions take an optional `kern` mapping {(left, right): glyph units}
+that is added to the advance of each such pair (the skeleton face sets every pair
+the same, which leaves a hole between a slanted leg and a crossbar).
 """
 import math
 
@@ -67,48 +72,54 @@ GLYPHS = {
 }
 
 
-def text_units(text, gap=GAP):
+def advance(text, i, gap=GAP, kern=None):
+    """Advance in glyph units from character i of text to the next one (kern pair included)."""
+    ch = text[i]
+    step = SPACE if ch == ' ' else GLYPHS[ch][0] + gap
+    if kern and i + 1 < len(text):
+        step += kern.get((ch, text[i + 1]), 0.0)
+    return step
+
+
+def text_units(text, gap=GAP, kern=None):
     """Total advance of text in glyph units, without a trailing gap."""
     for ch in text:
         if ch != ' ' and ch not in GLYPHS:
             raise ValueError('no skeleton for character %r' % ch)
     total = 0.0
-    for ch in text:
-        total += (SPACE if ch == ' ' else GLYPHS[ch][0] + gap)
+    for i in range(len(text)):
+        total += advance(text, i, gap, kern)
     return total - gap
 
 
-def layout(text, length, cap, aspect, gap=GAP):
+def layout(text, length, cap, aspect, gap=GAP, kern=None):
     """(x scale px per unit, y scale, left offsets in units) for text fitted into length px.
 
     The horizontal scale is the largest one not above cap/10*aspect that keeps the
     text inside length; a text that is shorter than length is centred.
     """
-    units = text_units(text, gap)
+    units = text_units(text, gap, kern)
     sy = cap / CAP
     sx = min(sy * aspect, length / units) if units > 0 else sy * aspect
     start = (length - units * sx) / 2.0
     return sx, sy, start
 
 
-def text_extent(text, length, cap, aspect, gap=GAP):
-    sx, sy, start = layout(text, length, cap, aspect, gap)
-    return {'x_scale': round(sx, 4), 'y_scale': round(sy, 4), 'length_px': round(text_units(text, gap) * sx, 3), 'offset_px': round(start, 3)}
+def text_extent(text, length, cap, aspect, gap=GAP, kern=None):
+    sx, sy, start = layout(text, length, cap, aspect, gap, kern)
+    return {'x_scale': round(sx, 4), 'y_scale': round(sy, 4), 'length_px': round(text_units(text, gap, kern) * sx, 3), 'offset_px': round(start, 3)}
 
 
-def strokes_for(text, length, cap, aspect, gap=GAP):
+def strokes_for(text, length, cap, aspect, gap=GAP, kern=None):
     """Skeleton poly-lines of text in a local frame: u along the text (px), v down the cap (px)."""
-    sx, sy, start = layout(text, length, cap, aspect, gap)
+    sx, sy, start = layout(text, length, cap, aspect, gap, kern)
     cursor = start
     lines = []
-    for ch in text:
-        if ch == ' ':
-            cursor += SPACE * sx
-            continue
-        width, parts = GLYPHS[ch]
-        for part in parts:
-            lines.append([(cursor + px * sx, py * sy) for px, py in part])
-        cursor += (width + gap) * sx
+    for i, ch in enumerate(text):
+        if ch != ' ':
+            for part in GLYPHS[ch][1]:
+                lines.append([(cursor + px * sx, py * sy) for px, py in part])
+        cursor += advance(text, i, gap, kern) * sx
     return lines
 
 

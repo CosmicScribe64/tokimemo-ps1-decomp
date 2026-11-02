@@ -13,6 +13,7 @@ import numpy as np
 from PIL import Image
 
 import translation_bs_brush as brush
+import translation_bs_common as common
 import translation_bs_font as font
 import translation_bs_signs as signs
 import translation_bs_stills as subject
@@ -28,19 +29,64 @@ class BrushTests(unittest.TestCase):
         unknown = np.zeros((20, 48), bool)
         unknown[6:14, 18:30] = True
         picture[unknown] = 0
-        out = brush.inpaint(picture, unknown, sigma=3.0)
+        out, _ = brush.inpaint(picture, unknown, sigma=3.0)
         self.assertTrue((out[~unknown] == picture[~unknown]).all())
         self.assertLess(float(np.abs(out[unknown][:, 0] - np.broadcast_to(ramp[None, :], (20, 48))[unknown]).max()), 3.0)
 
-    def test_inpaint_carries_the_grain_of_nearby_clean_pixels(self):
-        rng = np.random.RandomState(1)
-        picture = 20 + rng.randint(-2, 3, size=(24, 24, 3)).astype(float)
-        unknown = np.zeros((24, 24), bool)
-        unknown[8:16, 8:16] = True
-        out = brush.inpaint(picture, unknown, sigma=3.0, grain=1.0)
-        flat = brush.inpaint(picture, unknown, sigma=3.0, grain=0.0)
-        self.assertGreater(float(out[unknown].std()), 0.5)
+    @staticmethod
+    def grainy(seed=1, shape=(48, 64), blur_x=0.0):
+        noise = np.random.RandomState(seed).standard_normal(shape + (1,)) * 1.5
+        noise = brush.blur_axes(noise, 0.0, blur_x)
+        noise *= 1.5 / noise.std()
+        return 20 + np.repeat(noise, 3, -1)
+
+    def test_inpaint_grain_has_the_strength_of_the_clean_neighbours(self):
+        picture = self.grainy()
+        unknown = np.zeros(picture.shape[:2], bool)
+        unknown[16:32, 20:44] = True
+        out, facts = brush.inpaint(picture, unknown, sigma=3.0, grain=1.0)
+        flat, _ = brush.inpaint(picture, unknown, sigma=3.0, grain=0.0)
+        clean = float((picture - brush.known_background(picture, unknown))[~unknown].std())
+        self.assertAlmostEqual(float((out - flat)[unknown].std()), clean, delta=0.35 * clean)
         self.assertLess(float(flat[unknown].std()), 0.5)
+        self.assertEqual(facts['seed'], 0)
+
+    def test_inpaint_grain_follows_the_spatial_correlation(self):
+        picture = self.grainy(blur_x=1.5)  # streaks along x: neighbours along x correlate, along y they do not
+        unknown = np.zeros(picture.shape[:2], bool)
+        unknown[16:32, 20:44] = True
+        _, facts = brush.inpaint(picture, unknown)
+        sigma_x, sigma_y = facts['blur_sigma_px']
+        self.assertGreater(sigma_x, 0.8)
+        self.assertLess(sigma_y, 0.3)
+
+    def test_inpaint_copies_no_source_grain(self):
+        picture = self.grainy(seed=4, shape=(64, 96))
+        unknown = np.zeros(picture.shape[:2], bool)
+        for left in (10, 30, 50, 70):
+            unknown[8:56, left:left + 4] = True  # stroke-like bars, 4 px wide
+        background = brush.known_background(picture, unknown)
+        out, _ = brush.inpaint(picture, unknown, seed=7)
+        value, _ = brush.shift_correlation(out, picture, unknown, unknown, background)
+        self.assertLess(value, 0.3)
+        # a donor fill (each pixel takes the residual of the clean pixel 3 px to the right, else 3 px to the left) is caught
+        donor = picture.copy()
+        for y, x in zip(*np.nonzero(unknown)):
+            step = 3 if not unknown[y, x + 3] else -3
+            donor[y, x] = background[y, x] + picture[y, x + step] - background[y, x + step]
+        value, shift = brush.shift_correlation(donor, picture, unknown, unknown, background)
+        self.assertGreater(value, 0.6)
+        self.assertEqual(shift, [3, 0])
+
+    def test_inpaint_is_deterministic_in_its_seed(self):
+        picture = self.grainy()
+        unknown = np.zeros(picture.shape[:2], bool)
+        unknown[16:32, 20:44] = True
+        a, _ = brush.inpaint(picture, unknown, seed=5)
+        b, _ = brush.inpaint(picture, unknown, seed=5)
+        c, _ = brush.inpaint(picture, unknown, seed=6)
+        self.assertTrue((a == b).all())
+        self.assertFalse((a == c).all())
 
     def test_stroke_mask_finds_dark_and_light_lettering_only_inside_the_region(self):
         picture = np.full((30, 40, 3), 28.0)
@@ -153,11 +199,12 @@ class DrawingTests(unittest.TestCase):
         plain = subject.natural_length('PRIVATE', 10, 1.0, 3.0)
         kerned = subject.natural_length('PRIVATE', 10, 1.0, 3.0, kern=True)
         self.assertAlmostEqual(plain - kerned, -(subject.KERN[('V', 'A')] + subject.KERN[('A', 'T')]), places=6)
-        lines, facts = subject.kerned_strokes('AT', 20, 10, 1.0, 3.0)
+        lines = font.strokes_for('AT', 20, 10, 1.0, 3.0, kern=subject.KERN)
         a_right = max(x for line in lines[:2] for x, _ in line)
         t_left = min(x for line in lines[2:] for x, _ in line)
         self.assertLess(t_left - a_right, 3.0 - 2.0)  # closer than the plain letter gap
         self.assertTrue(all(r.get('kern') for r in subject.gate_runs()))
+        self.assertEqual(font.strokes_for('PRIVATE', 60, 10, 1.0, 3.0), font.strokes_for('PRIVATE', 60, 10, 1.0, 3.0, kern={}))
 
     def test_a_centre_run_is_centred_on_its_point_at_any_angle(self):
         for angle in (0, 11, 90, 113.5):
@@ -212,7 +259,6 @@ class PlanTests(unittest.TestCase):
                 self.assertTrue(ax + aw <= bx or bx + bw <= ax or ay + ah <= by or by + bh <= ay, '%s overlaps %s' % (a['id'], b['id']))
 
     def test_only_the_chosen_roster_layout_is_drafted(self):
-        # owner decision 2026-11-01: layout A; the stacked and large alternatives were deleted
         ids = {p['id'] for p in subject.PLANS if p['file'] in ('P_01_03', 'P_01_03B')}
         self.assertEqual(ids, {'bs-p-01-03-roster-a-rotated', 'bs-p-01-03b-name-a-rotated'})
         self.assertFalse(any(p.get('group') for p in subject.PLANS))
@@ -279,7 +325,6 @@ class PlanTests(unittest.TestCase):
         self.assertEqual(subject.check_callers(), [])
 
 
-
 class PixelFontTests(unittest.TestCase):
     def test_glyphs_have_their_face_height_and_one_width(self):
         for height, glyphs in subject.PIXEL_FONT.items():
@@ -342,7 +387,7 @@ class OriginalDataTests(unittest.TestCase):
             self.assertLessEqual(stream['trailing_nonzero_bytes'], 4, name)  # zero padding, at most a 4-byte file trailer
             self.assertGreaterEqual(proof['read_sectors'] * 2048, stream['consumed_bytes'], name)
             for caller in proof['callers']:
-                self.assertIn(caller['text'], (subject.ROOT / caller['path']).read_text().splitlines()[caller['line'] - 1])
+                self.assertIn(caller['text'], common.function_body((subject.ROOT / caller['path']).read_text(), caller['function']))
         sizes = {name: (p['width'], p['height']) for name, p in subject.geometry().items()}
         self.assertEqual(sizes['C_01_28'], (320, 88))
         self.assertEqual(sizes['P_01_01'], (320, 160))
@@ -358,12 +403,27 @@ class OriginalDataTests(unittest.TestCase):
             manifest = json.loads(manifest_bytes)
             for asset in manifest['assets']:
                 self.assertFalse(asset['human_approved'])
-                self.assertEqual(asset['crop']['original_pixels'], 0)
                 self.assertGreater(asset['changed_pixels'], 0)
                 image = Image.open(first / 'crops' / asset['crop']['png'])
                 self.assertEqual(image.mode, 'RGBA')
                 self.assertEqual(int((np.asarray(image)[..., 3] == 255).sum()), asset['changed_pixels'])
+                # the recorded measures are computed: written pixels equal to the source, and the fill grain against the
+                # source grain at every shift up to 12 px (a copied-donor fill correlates near 1)
+                name = asset['source_container'].split('/')[-1][:-3]
+                geometry = manifest['geometry_proofs'][name]
+                source = common.decode_still((subject.ROOT / subject.BS_DIR / (name + '.BS')).read_bytes(), geometry['width'], geometry['height'])
+                x, y, w, h = asset['crop']['rect']
+                self.assertEqual(asset['crop']['source_equal_pixels'], common.source_equal_pixels(image, source[y:y + h, x:x + w]))
+                self.assertEqual(asset['crop']['source_equal_pixels'], 0)
+                fill = asset['crop']['fill']
+                self.assertIn('no source pixel', fill['method'])
+                if 'seed' in fill:
+                    self.assertEqual(fill['seed'], subject.plan_seed({'id': asset['id']}))
+                    self.assertLess(fill['shift_correlation']['max_abs'], 0.5, asset['id'])  # a copied-donor fill: 0.88 to 1.0
             if PUBLISHED.exists():
+                mismatch = common.environment_mismatch(json.loads((PUBLISHED / subject.CHECKPOINT / 'manifest.json').read_bytes()))
+                if mismatch:
+                    self.skipTest(mismatch)
                 self.assertEqual(signs.digest(manifest_bytes), signs.digest((PUBLISHED / (subject.CHECKPOINT + '/manifest.json')).read_bytes()))
                 for asset in manifest['assets']:
                     self.assertEqual((first / 'crops' / asset['crop']['png']).read_bytes(),
@@ -376,10 +436,10 @@ class OriginalDataTests(unittest.TestCase):
             plans = [p for p in subject.PLANS if p['id'] in ('bs-p-01-03-roster-a-rotated', 'bs-c-01-28-final-exams-v2')]
             subject.build(output, plans=plans)
             data = (subject.ROOT / subject.BS_DIR / 'P_01_03.BS').read_bytes()
-            source = signs.decode_still(data, 320, 160)
+            source = common.decode_still(data, 320, 160)
             english = np.asarray(Image.open(output / 'previews' / 'bs-p-01-03-roster-a-rotated.still.png').convert('RGB')).astype(int)
             # sky keeps its structure: the English still correlates with the source outside the lettering
-            diff = np.abs(signs.expand(source).astype(int) - english).sum(-1)
+            diff = np.abs(common.rgb8(source).astype(int) - english).sum(-1)
             unchanged = (diff == 0).mean()
             self.assertGreater(unchanged, 0.6)
             # the date column (x 305-311, above the ledge) holds no chalk but the English: 月, 日 and the brackets are gone

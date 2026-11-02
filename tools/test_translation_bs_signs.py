@@ -9,7 +9,9 @@ import tempfile
 import unittest
 
 import numpy as np
+from PIL import Image
 
+import translation_bs_common as common
 import translation_bs_font as font
 import translation_bs_signs as subject
 
@@ -114,7 +116,7 @@ class DrawingTests(unittest.TestCase):
         outside[6:22, 8:48] = False
         self.assertTrue((english[outside] == source[outside]).all())
         face = english[6:22, 8:48]
-        self.assertEqual(int((face == np.array([28, 29, 30])).all(-1).sum() > 0), 1)
+        self.assertTrue((face == np.array([28, 29, 30])).all(-1).any())
         self.assertGreater(int((face.sum(-1) < 40).sum()), 20)  # English ink is drawn
         self.assertEqual(record['lines'][0]['text'], 'ART')
 
@@ -126,6 +128,12 @@ class DrawingTests(unittest.TestCase):
         face, used = subject.fit_plane(source, [8, 6, 40, 16], [0, 0, 64, 32])
         self.assertLess(float(np.abs(face[..., 0] - ramp[None, 8:48]).max()), 1.2)
         self.assertGreater(used, 500)
+
+    def test_plane_fit_reports_the_samples_its_coefficients_came_from(self):
+        source = self.flat(value=(20, 20, 20))
+        source.reshape(-1, 3)[::10] = 23  # within the median start band (2 x tolerance), outside the fitted band
+        face, used = subject.fit_plane(source, [8, 6, 40, 16], [0, 0, 64, 32], rounds=1)
+        self.assertEqual(used, 64 * 32)  # the one round fitted every sample; the narrower refit set was never used
 
     def test_diffuse_fill_ignores_dark_neighbours_and_stays_smooth(self):
         source = self.flat(value=(26, 26, 28))
@@ -150,14 +158,11 @@ class DrawingTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             subject.sample_ink(np.full((20, 40, 3), 30, int), [0, 0, 20, 10], face)
 
-    def test_macroblocks_of_a_rectangle(self):
-        indices, bounds = subject.macroblocks([30, 10, 5, 8], 160)
-        self.assertEqual(indices, [10, 11, 20, 21])
-        self.assertEqual(bounds, [16, 0, 32, 32])
-
-    def test_expand_uses_the_replicate_rule(self):
-        self.assertEqual(int(subject.expand(np.array([31]))[0]), 255)
-        self.assertEqual(int(subject.expand(np.array([16]))[0]), 132)
+    def test_class_mark_removals_name_the_diffusion_fill(self):
+        for plan in subject.SIGNS:
+            self.assertIn(plan.get('fill', 'plane'), subject.FILL_NOTES, plan['id'])
+            if not plan['runs']:
+                self.assertEqual(plan.get('fill'), 'diffuse', plan['id'])
 
 
 class OriginalDataTests(unittest.TestCase):
@@ -178,7 +183,7 @@ class OriginalDataTests(unittest.TestCase):
             self.assertTrue(stream['end_marker'])
             self.assertGreaterEqual(proof['read_sectors'] * 2048, stream['consumed_bytes'], name)
             for caller in proof['callers']:
-                self.assertIn(caller['text'], (subject.ROOT / caller['path']).read_text().splitlines()[caller['line'] - 1])
+                self.assertIn(caller['text'], common.function_body((subject.ROOT / caller['path']).read_text(), caller['function']))
 
     def test_drafts_rebuild_deterministically_and_match_publication(self):
         with tempfile.TemporaryDirectory(dir=subject.ROOT / '.asset-cache') as directory:
@@ -188,12 +193,25 @@ class OriginalDataTests(unittest.TestCase):
             manifest_bytes = (first / 'manifest.json').read_bytes()
             self.assertEqual(manifest_bytes, (second / 'manifest.json').read_bytes())
             manifest = json.loads(manifest_bytes)
+            sources = {}
             for asset in manifest['assets']:
                 self.assertFalse(asset['human_approved'])
-                self.assertEqual(asset['crop']['original_pixels'], 0)
                 self.assertEqual(asset['edit_regions'], [asset['crop']['rect']])
                 self.assertGreater(asset['changed_pixels'], 0)
+                # the recorded measure is the count of crop pixels equal to the source decode at their position
+                name = asset['source_container'].split('/')[-1][:-3]
+                if name not in sources:
+                    geometry = manifest['geometry_proofs'][name]
+                    sources[name] = common.decode_still((subject.ROOT / subject.BS_DIR / (name + '.BS')).read_bytes(),
+                                                        geometry['width'], geometry['height'])
+                x, y, w, h = asset['crop']['rect']
+                crop = Image.open(first / 'crops' / asset['crop']['png'])
+                self.assertEqual(asset['crop']['source_equal_pixels'], common.source_equal_pixels(crop, sources[name][y:y + h, x:x + w]))
+                self.assertEqual(asset['crop']['fill'], subject.FILL_NOTES[next(p for p in subject.SIGNS if p['id'] == asset['id']).get('fill', 'plane')])
             if PUBLISHED.exists():
+                mismatch = common.environment_mismatch(json.loads((PUBLISHED / 'bs-signs-v1/manifest.json').read_bytes()))
+                if mismatch:
+                    self.skipTest(mismatch)
                 self.assertEqual(subject.digest(manifest_bytes),
                                  subject.digest((PUBLISHED / 'bs-signs-v1/manifest.json').read_bytes()))
                 for asset in manifest['assets']:
@@ -222,7 +240,6 @@ class PublishedCheckpointTests(unittest.TestCase):
             record = next(r for r in manifest['assets'] if r['id'] == asset['id'])
             self.assertEqual(record['crop']['sha256'], asset['crop_sha256'])
             self.assertEqual(record['source_container_sha256'], asset['source_container_sha256'])
-            from PIL import Image
             self.assertEqual(list(Image.open(PUBLISHED / asset['path']).size), asset['dimensions'])
         for path in PUBLISHED.rglob('*'):
             self.assertIn(path.suffix, ('.png', '.json', ''), str(path))

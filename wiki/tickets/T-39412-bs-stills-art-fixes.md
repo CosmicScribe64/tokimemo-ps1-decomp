@@ -56,3 +56,35 @@ Third pass (final reviewer nits): monument remnant left of CENTRAL (top of 市, 
 without grain; LOVELY SHOP narrowed (2 px L, 2 px word space) to 3 px clear at each end; gate plate letters enlarged
 (cap 13.5, leading 14; ink at least 6.7 px from every plate edge) with A-T and V-A kerning (PRIVATE); P_01_03 sky at the
 cut left-edge glyph refilled without grain (no streaks). New erase key `smooth` (rectangles filled without donor grain).
+
+## Code-review fix pass (2026-11-01)
+
+Findings of the `CODING_STANDARDS.md` review of the BS stills and signs tooling, fixed in place (same ids, same
+checkpoint folders):
+
+- Fill provenance (must-fix): `brush.inpaint` no longer adds the residual of a clean donor pixel 3 to 12 px away (the
+  P_01_03 crop had 15,862 such pixels). The grain is synthetic: seeded Gaussian noise (seed = first 32 bits of the SHA-256
+  of the plan id), blurred to the lag-1 correlation of the clean neighbours' fine-scale residual (below 1.5 px), coloured
+  by its covariance, scaled to its local strength; statistics from clean pixels inside the plan rectangle, outliers
+  dropped (`grain_model`, `synthetic_grain`). The hard-coded `original_pixels: 0` is gone from both tools; manifests
+  record the computed `crop.source_equal_pixels` (stills: 0 for all nine; signs: 0 to 4126, since a plane or diffusion
+  face equals a flat original colour in places) and `crop.fill` (method statement; for grain fills the seed, statistics
+  and `shift_correlation`, the largest correlation of fill grain and source grain at any shift up to 12 px: 0.10 to 0.31
+  now, 0.88 to 1.0 for the old donor fill). Tests recompute both from the crops and the source decode.
+- Previews checked at 1x and zoomed against the old crops (scratchpad `art-fix3/stills/round1..3`). Round 1 (statistics
+  from every clean neighbour) made the monument noisy; round 2 limited them to the plan rectangle and dropped outliers;
+  round 3 took the grain below 1.5 px only, so the stone sheen no longer counts as grain. Sky, stone, plate and chalkboard
+  now read as natural. Changed crops: gate plate, roster, monument, chalkboard; unchanged: the four plane fills and
+  P_01_03B (flat sky, zero grain). T-39400 sign crops unchanged; their manifest and ledger changed.
+- Citations are (file, function, call text, line); `tools/translation_bs_common.py` `check_citations` checks the call
+  inside the function body only, the line is kept in manifests for humans.
+- Shared code moved to `tools/translation_bs_common.py` (citations, geometry proof, stream facts, macroblocks via
+  `translation_bs_drafts.edited_macroblocks` / `bounding`, `rgb8`, previews, `publish`, environment);
+  `translation_bs_font` takes an optional `kern` mapping, the stills copies of the kerned layout are gone.
+  `translation_bs_drafts.gates` is not reused: it gates a re-encoded splice, and these tools write no BS file.
+- Manifests record Pillow 11.1.0 / numpy 2.2.4; the byte-exact publication comparisons skip with a message when the
+  running versions differ (the Dockerfile is not changed).
+- Nits: `fit_plane` returns the sample count of its final coefficients; the sign class-mark removals say Laplace fill;
+  unused `texture`, `STILL_SIZES['P_01_02']`, publish `revision`, side_by_side `rect`, brush `n` removed; font docstring
+  corrected; change-history comments and the REGISTER "(done in ...)" note removed; `translation_inventory.py`
+  `UNREGISTERED` holds exact ids and the orphan layout comment is gone.

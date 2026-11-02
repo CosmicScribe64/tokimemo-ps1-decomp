@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """T-39412: texture-keeping English drafts for BS background stills (signs, gate plate, roster boards, chalkboard).
 
-Follow-up to tools/translation_bs_signs.py (T-39400). That tool rebuilt each sign face from a fitted plane,
-which flattened stone and gradient. Here every plan keeps the picture as it is and changes only
+Unlike tools/translation_bs_signs.py (T-39400), which rebuilds each whole sign face from a fitted plane or a diffusion
+fill, every plan here keeps the picture as it is and changes only
 
 1. the pixels of the Japanese lettering (found as pixels of the lettering colour against the smooth local
-   background and grown by a margin for the soft MDEC edge), rebuilt from the clean pixels around them with
-   the grain of nearby clean pixels (tools/translation_bs_brush.py: `stroke_mask`, `inpaint`), and
+   background and grown by a margin for the soft MDEC edge), rebuilt as the smooth average of the clean pixels around
+   them plus synthetic grain with the statistics of those pixels (tools/translation_bs_brush.py: `stroke_mask`,
+   `inpaint`; the noise seed is fixed per plan id, no source pixel or residual is copied), and
 2. the pixels the English strokes cover.
 
 The stroke letters are the single-stroke skeletons of tools/translation_bs_font.py, drawn either with a
@@ -20,8 +21,10 @@ directory only (ignored, never committed: they hold the original picture), the w
 stills, original | English side-by-sides at 2x, zoomed pairs, and the per-plan crops. A crop is an RGBA
 PNG of the plan rectangle in which alpha 255 marks a port-made pixel (changed against the source decode) and
 alpha 0 marks "keep the source pixel": a committed crop therefore holds no original picture pixel. The manifest
-holds source and decode identity, the caller-proved size, the rectangles, the 16x16 macroblocks they touch and
-the lettering description. No BS file is written; the later patch step re-encodes the touched macroblocks.
+holds source and decode identity, the caller-proved size, the rectangles, the 16x16 macroblocks they touch, the
+lettering description, two computed checks of the crop (written pixels equal to the source at their position, and the
+largest correlation of the fill grain with the source grain at any shift up to 12 px) and the Pillow / numpy
+versions. No BS file is written; the later patch step re-encodes the touched macroblocks.
 
 `geometry` prints the size proofs; `publish` copies crops, manifest and ledger into a new checkpoint folder.
 """
@@ -35,8 +38,10 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 from translation_assets import ROOT, MDEC_MODEL_ID, digest, encoded, new_output
-import translation_bs_font as font
 import translation_bs_brush as brush
+import translation_bs_common as common
+from translation_bs_drafts import rgb8
+import translation_bs_font as font
 import translation_bs_signs as signs
 sys.path.insert(0, str(ROOT))
 from tools.assets import image_mdec_model as mdec_model  # noqa: E402
@@ -62,32 +67,9 @@ PLATE_ERASE = {'polarity': 'dark', 'threshold': 12, 'margin': 1}
 KERN = {('A', 'T'): -2.4, ('T', 'A'): -2.4, ('A', 'V'): -1.6, ('V', 'A'): -1.6}
 
 
-def text_units(text, gap, kern=False):
-    """font.text_units plus the KERN adjustments when `kern`."""
-    units = font.text_units(text, gap)
-    return units + (sum(KERN.get(pair, 0.0) for pair in zip(text, text[1:])) if kern else 0.0)
-
-
-def kerned_strokes(text, length, cap, aspect, gap):
-    """font.strokes_for with KERN applied: (local poly-lines, extent facts)."""
-    units = text_units(text, gap, True)
-    sy = cap / font.CAP
-    sx = min(sy * aspect, length / units)
-    start = (length - units * sx) / 2.0
-    cursor, lines = start, []
-    for i, ch in enumerate(text):
-        if ch == ' ':
-            cursor += font.SPACE * sx
-            continue
-        width, parts = font.GLYPHS[ch]
-        lines.extend([[(cursor + px * sx, py * sy) for px, py in part] for part in parts])
-        cursor += (width + gap + (KERN.get((ch, text[i + 1]), 0.0) if i + 1 < len(text) else 0.0)) * sx
-    return lines, {'x_scale': round(sx, 4), 'y_scale': round(sy, 4), 'length_px': round(units * sx, 3), 'offset_px': round(start, 3)}
-
-
 def natural_length(text, cap, aspect, gap, kern=False):
-    """Length in px of text at cap height with the given aspect and letter gap (no fitting)."""
-    return text_units(text, gap, kern) * cap / font.CAP * aspect
+    """Length in px of text at cap height with the given aspect and letter gap (no fitting), KERN applied when `kern`."""
+    return font.text_units(text, gap, KERN if kern else None) * cap / font.CAP * aspect
 
 
 def brush_run(text, center, angle, cap, aspect, gap, weight, slant=0.0, kern=False, **brush_options):
@@ -111,8 +93,7 @@ ROSTER_COLUMNS = [  # (family, given, axis point, slope dx/dy)
 ROSTER_INK = {'P_01_03': [5, 5, 6], 'P_01_03B': [6, 6, 6]}
 # broad-nib calligraphy: thick across the nib edge, thin along it, swelling entry, tapered exit
 CALLIGRAPHY = {'nib': 20, 'contrast': 1.2, 'entry': 0.25, 'taper': 0.7, 'wobble': 0.04}
-# `smooth`: erased pixels there take the smooth fill without donor grain (the cut glyph at the left edge, where the copied
-# grain showed as vertical streaks)
+# `smooth`: erased pixels there take the smooth fill without grain (the cut glyph at the left edge of the sky)
 SKY_ERASE = {'region': [0, 0, 303, 160], 'below': 48, 'margin': 2, 'smooth': [[0, 48, 14, 32]]}
 
 
@@ -213,13 +194,13 @@ PLANS = [
      'rect': [76, 68, 160, 82], 'ink_share': 0.1,
      'erase': {'polarity': 'dark', 'threshold': 7, 'margin': 2, 'polygon': [(118, 72), (231, 93), (217, 143), (86, 122)]},
      'runs': gate_runs()},
-    # --- catalog-131: roster close-up (owner chose the rotated layout, 2026-11-01) ---
+    # --- catalog-131: roster close-up, names rotated down their columns ---
     {'id': 'bs-p-01-03-roster-a-rotated', 'file': 'P_01_03', 'catalog_item': 'catalog-131', 'sign': 'brush roster, names run down their columns',
      'rect': FULL, 'erase': SKY_ERASE, 'ink': ROSTER_INK['P_01_03'], 'runs': rotated_runs(ROSTER_COLUMNS)},
     # P_01_03B: the game cross-fades P_01_03 to P_01_03B and the name keeps its place, so it repeats the P_01_03 line
     {'id': 'bs-p-01-03b-name-a-rotated', 'file': 'P_01_03B', 'catalog_item': 'catalog-131', 'sign': 'Fujisaki Shiori alone, name runs down (same line as the roster)',
      'rect': FULL, 'erase': {'region': FULL, 'below': 48, 'margin': 2}, 'ink': ROSTER_INK['P_01_03B'], 'runs': rotated_runs(ROSTER_COLUMNS, only='FUJISAKI')},
-    # --- catalog-143/139/145/144/149: small signs, texture kept (replace T-39400 flat-face crops) ---
+    # --- catalog-143/139/145/144/149: small signs, texture kept (each supersedes a T-39400 flat-face crop) ---
     {'id': 'bs-d-15-03-monument-v2', 'file': 'D_15_03', 'catalog_item': 'catalog-143', 'supersedes': 'bs-d-15-03-monument',
      'sign': 'stone monument plaque, three lines', 'rect': [229, 127, 55, 33],
      'erase': {'polarity': 'light', 'threshold': 14, 'margin': 1, 'also': [[229, 130, 6, 10]], 'smooth': [[229, 130, 6, 10]]},
@@ -236,8 +217,8 @@ PLANS = [
      'erase': {'polarity': 'dark', 'threshold': 8, 'margin': 1, 'plane': {'fit': [235, 62, 20, 11], 'init': 'light'}},
      'runs': [{'text': 'TICKET', 'box': [236, 62, 18, 10], 'cap': 6, 'aspect': 9, 'stroke': 0.8, 'gap': 2.2}]},
     # white band x 136-179, y 40-46 above MAIKO: 5 px pixel letters (a 2 px L and a 2 px word space keep 3 px clear at each
-    # end) in the strongest pink of the Japanese line. The Japanese is so
-    # faint that a relative rule misses its long-vowel bar, so every pixel of the band below a channel sum of 84 is erased.
+    # end) in the strongest pink of the Japanese line. The Japanese is so faint that a relative rule misses its long-vowel
+    # bar, so every pixel of the band below a channel sum of 84 is erased.
     {'id': 'bs-d-19-02-maiko-board-v2', 'file': 'D_19_02', 'catalog_item': 'catalog-144', 'supersedes': 'bs-d-19-02-maiko-board',
      'sign': 'rink dasher board, small shop line', 'rect': [136, 41, 44, 5], 'ink': [18, 12, 12],
      'erase': {'below': 84, 'margin': 1, 'plane': {'fit': [136, 40, 44, 7]}},
@@ -263,6 +244,19 @@ PLANS = [
 
 
 # --- drawing --------------------------------------------------------------------
+COVERED = 0.004  # coverage above which a pixel counts as drawn
+SHIFT_REACH = 12  # px; the largest shift shift_correlation tries
+GRAIN_NOTE = ('smooth part: normalised Gaussian average of the clean pixels around the erased ones; grain: synthetic, '
+              'seeded Gaussian noise blurred to the lag-1 correlation of the clean neighbours\' residual, coloured by its '
+              'covariance and scaled to its local energy (tools/translation_bs_brush.py inpaint); no source pixel or residual is copied')
+PLANE_NOTE = 'per-channel plane fitted by trimmed least squares to the clean face pixels; no source pixel is copied'
+
+
+def plan_seed(plan):
+    """Grain seed of a plan: the first 32 bits of the SHA-256 of its id (stable across runs and plan order)."""
+    return int(digest(plan.get('id', '').encode())[:8], 16)
+
+
 def text_lines(run):
     """(picture-space stroke lines, facts) of one English line; `run` has box, text, cap and optionally
     aspect, gap, angle (text rotation, 0 = left to right, 90 = down the picture, tops facing right), slant (degrees),
@@ -271,11 +265,9 @@ def text_lines(run):
     bx, by, bw, bh = spec['box']
     angle = spec.get('angle', spec.get('rotation', 0))
     length = spec.get('length', bh if angle == 90 else bw)
-    if spec.get('kern'):
-        local, facts = kerned_strokes(spec['text'], length, spec['cap'], spec['aspect'], spec['gap'])
-    else:
-        local = font.strokes_for(spec['text'], length, spec['cap'], spec['aspect'], spec['gap'])
-        facts = font.text_extent(spec['text'], length, spec['cap'], spec['aspect'], spec['gap'])
+    kern = KERN if spec.get('kern') else None
+    local = font.strokes_for(spec['text'], length, spec['cap'], spec['aspect'], spec['gap'], kern)
+    facts = font.text_extent(spec['text'], length, spec['cap'], spec['aspect'], spec['gap'], kern)
     if 'origin' in spec:
         origin = tuple(spec['origin'])
     elif angle == 0:
@@ -380,13 +372,17 @@ def draw_plan(source, plan):
         box[y:y + h, x:x + w] = True
         mask &= box
     base = source.astype(np.float64)
+    barred = mask
+    sigma = erase.get('fill_sigma', 3.0) if erase else 3.0
+    fill = {'method': 'none'}
     if mask.any() and erase.get('plane'):
         # a face that the lettering covers almost entirely: erased pixels take the plane fitted to the clean face pixels
         spec = erase['plane']
-        face, _ = signs.fit_plane(source, plan['rect'], spec.get('fit'), tolerance=spec.get('tolerance', 2.0), init=spec.get('init', 'median'))
+        face, used = signs.fit_plane(source, plan['rect'], spec.get('fit'), tolerance=spec.get('tolerance', 2.0), init=spec.get('init', 'median'))
         inside = mask[y:y + h, x:x + w]
         block = base[y:y + h, x:x + w]
         block[inside] = face[inside]
+        fill = {'method': PLANE_NOTE, 'plane_fit_pixels': used}
     elif mask.any():
         # only the surface the lettering is on feeds the fill: the erase polygon and / or the fill_from rectangle
         exclude = None
@@ -397,13 +393,18 @@ def draw_plan(source, plan):
             outside = np.ones((height, width), bool)
             outside[fy:fy + fh, fx:fx + fw] = False
             exclude = outside if exclude is None else exclude | outside
-        base = brush.inpaint(source, mask, erase.get('fill_sigma', 3.0), erase.get('grain', 1.0), exclude)
+        barred = mask if exclude is None else mask | exclude
+        surface = np.zeros((height, width), bool)
+        surface[y:y + h, x:x + w] = True  # the grain statistics come from the plan rectangle only
+        base, grain = brush.inpaint(source, mask, sigma, erase.get('grain', 1.0), exclude, plan_seed(plan), surface)
+        fill = {'method': GRAIN_NOTE, **grain}
         if erase.get('smooth'):
-            # these rectangles take the smooth part only (no donor grain)
-            flat = brush.known_background(source, mask if exclude is None else mask | exclude, erase.get('fill_sigma', 3.0))
+            # these rectangles take the smooth part only (no grain)
+            flat = brush.known_background(source, barred, sigma)
             for rx, ry, rw, rh in erase['smooth']:
                 inside = mask[ry:ry + rh, rx:rx + rw]
                 base[ry:ry + rh, rx:rx + rw][inside] = flat[ry:ry + rh, rx:rx + rw][inside]
+            fill['smooth_rects'] = erase['smooth']
     coverage = np.zeros((h, w))
     placed = []
     for run in plan['runs']:
@@ -420,18 +421,22 @@ def draw_plan(source, plan):
             ink, ink_count = signs.sample_ink(source, plan['rect'], reference, plan.get('ink_share', 0.06))
     block = base[y:y + h, x:x + w]
     if ink is not None:
-        tint = np.zeros_like(block) + ink
-        texture = plan.get('texture', 0.0)
-        if texture:
-            tint = tint + texture * (source[y:y + h, x:x + w] - block) * (~mask[y:y + h, x:x + w])[..., None]
-        block = block * (1 - coverage[..., None]) + tint * coverage[..., None]
+        block = block * (1 - coverage[..., None]) + ink * coverage[..., None]
     english = source.copy()
-    changed = mask[y:y + h, x:x + w] | (coverage > 0.004)
+    changed = mask[y:y + h, x:x + w] | (coverage > COVERED)
     new = np.clip(np.rint(block), 0, 31).astype(int)
     region = english[y:y + h, x:x + w]
     region[changed] = new[changed]
+    if 'seed' in fill:
+        # the grain of the erased pixels the English does not cover must not follow the source grain at any shift
+        bare = mask.copy()
+        bare[y:y + h, x:x + w] &= coverage <= COVERED
+        value, shift = brush.shift_correlation(base, source, bare, barred, brush.known_background(source, barred, sigma), SHIFT_REACH)
+        fill['shift_correlation'] = {'max_abs': value, 'at_dx_dy': shift, 'reach_px': SHIFT_REACH, 'pixels': int(bare.sum()),
+                                     'basis': 'fill before rounding minus the smooth part, against the source residual'}
     record = {'erased_pixels': int(mask.sum()), 'ink_rgb555': None if ink is None else [round(float(v), 2) for v in ink],
-              'ink_pixels_used': ink_count, 'lines': placed, 'erase': erase and {k: v for k, v in erase.items() if k in ('polarity', 'threshold', 'margin')}}
+              'ink_pixels_used': ink_count, 'lines': placed, 'erase': erase and {k: v for k, v in erase.items() if k in ('polarity', 'threshold', 'margin')},
+              'fill': fill}
     return english, record
 
 
@@ -443,14 +448,20 @@ CHECKPOINT_DIR = 'T39410-stills-fixes-v1'
 
 
 # --- build ----------------------------------------------------------------------
-STILL_SIZES = {'P_01_01': (320, 160), 'P_01_03': (320, 160), 'P_01_03B': (320, 160), 'C_01_28': (320, 88), 'P_01_02': (640, 160)}
+STILL_SIZES = {'P_01_01': (320, 160), 'P_01_03': (320, 160), 'P_01_03B': (320, 160), 'C_01_28': (320, 88)}
 STILL_ANCHORS = {**signs.LAYOUT_ANCHORS, 'P_01_01': 0x494B}
-# (file, line, text on that line) of the code that reads and decodes each still of this module.
+# (file, function, call text inside that function, line at the time of writing) of the code that reads and decodes each
+# still of this module; only the function body is checked (tools/translation_bs_common.py: check_citations).
+PROLOGUE_C = 'src/ovl/name_entry/prologue.c'
 STILL_CALLERS = {
-    'P_01_01': {'read': ('src/ovl/name_entry/prologue.c', 224, 'dec_bg_cd_read(0x494B, 1)'), 'decode': ('src/ovl/name_entry/prologue.c', 233, 'dec_bg_decode_to_vram(1)')},
-    'P_01_03': {'read': ('src/ovl/name_entry/prologue.c', 413, 'dec_bg_cd_read(0x495D, 1)'), 'decode': ('src/ovl/name_entry/prologue.c', 425, 'dec_bg_decode_to_vram(1)')},
-    'P_01_03B': {'read': ('src/ovl/name_entry/prologue.c', 463, 'dec_bg_cd_read(0x4966, 1)'), 'decode': ('src/ovl/name_entry/prologue.c', 472, 'dec_bg_decode_to_vram(1)')},
-    'C_01_28': {'read': ('src/main/school_day.c', 126, 'dec_bg_cd_read(D_800B5950[hud_season_index()], 0)'), 'decode': ('src/main/school_day.c', 178, 'dec_bg_decode_to_vram(0)')},
+    'P_01_01': {'read': (PROLOGUE_C, 'prologue_arrival_scene_init', 'dec_bg_cd_read(0x494B, 1)', 224),
+                'decode': (PROLOGUE_C, 'prologue_arrival_scene_init', 'dec_bg_decode_to_vram(1)', 233)},
+    'P_01_03': {'read': (PROLOGUE_C, 'prologue_board_scroll', 'dec_bg_cd_read(0x495D, 1)', 413),
+                'decode': (PROLOGUE_C, 'prologue_board_scroll', 'dec_bg_decode_to_vram(1)', 425)},
+    'P_01_03B': {'read': (PROLOGUE_C, 'prologue_names_crossfade', 'dec_bg_cd_read(0x4966, 1)', 463),
+                 'decode': (PROLOGUE_C, 'prologue_names_crossfade', 'dec_bg_decode_to_vram(1)', 472)},
+    'C_01_28': {'read': ('src/main/school_day.c', 'school_day_background_read', 'dec_bg_cd_read(D_800B5950[hud_season_index()], 0)', 126),
+                'decode': ('src/main/school_day.c', 'school_day_screen_init', 'dec_bg_decode_to_vram(0)', 178)},
 }
 CHALK_EVIDENCE = ['src/main/background_images.c:dec_bg_decode_to_vram(0) calls bg_still_decode_to_vram(0x2C0, 0xA0, 0x140, 0x58) or (0x140, 0x1A0, 0x140, 0x58): width 0x140 = 320, height 0x58 = 88',
                   'src/main/background_images.c:dec_bg_cd_read(lba, 0) reads the still with cd_read_sectors_nowait(0xA, 0x80162000, lba): a ten-sector read',
@@ -460,16 +471,9 @@ CHALK_CHECKS = [('src/main/background_images.c', 'bg_still_decode_to_vram(0x2C0,
 
 
 def check_callers(root=ROOT):
-    problems = signs.check_callers(root)
-    for pair in STILL_CALLERS.values():
-        for path, line, text in pair.values():
-            lines = (Path(root) / path).read_text().splitlines()
-            if line > len(lines) or text not in lines[line - 1]:
-                problems.append('%s:%d does not contain %s' % (path, line, text))
-    for path, text in CHALK_CHECKS + signs.SHARED_CHECKS:
-        if text not in (Path(root) / path).read_text():
-            problems.append('%s lacks %s' % (path, text))
-    return problems
+    """Problems of the T-39400 citations plus the ones of this module (empty when every cited call is in its function)."""
+    cites = [c for pair in STILL_CALLERS.values() for c in pair.values()]
+    return signs.check_callers(root) + common.check_citations(cites, CHALK_CHECKS, root)
 
 
 def trailer_facts(data):
@@ -480,49 +484,26 @@ def trailer_facts(data):
 
 
 def geometry_proof(name, data, lba, sectors):
-    proof = base_geometry_proof(name, data, lba, sectors)
+    if name == 'P_01_02' or name in signs.CALLERS:
+        proof = signs.geometry_proof(name, data, lba, sectors)
+    else:
+        width, height = STILL_SIZES[name]
+        evidence = CHALK_EVIDENCE if name == 'C_01_28' else signs.DECODE_EVIDENCE
+        proof = common.geometry_proof(data, lba, sectors, width, height, 10, list(STILL_CALLERS[name].values()), evidence,
+                                      'back-to-back layout from 0x3F03, pinned by %d game-code LBAs plus P_01_01 (prologue.c:224)' % len(signs.LAYOUT_ANCHORS))
     proof['stream'].update(trailer_facts(data))
     return proof
-
-
-def base_geometry_proof(name, data, lba, sectors):
-    if name == 'P_01_02' or name in signs.CALLERS:
-        return signs.geometry_proof(name, data, lba, sectors)
-    width, height = STILL_SIZES[name]
-    calls = list(STILL_CALLERS[name].values())
-    if name == 'C_01_28':
-        evidence, read_sectors = list(CHALK_EVIDENCE), 10
-    else:
-        evidence, read_sectors = list(signs.DECODE_EVIDENCE), 10
-    stream = signs.stream_facts(data, width, height)
-    return {'width': width, 'height': height, 'lba': lba, 'lba_hex': '0x%X' % lba, 'file_sectors': sectors, 'read_sectors': read_sectors,
-            'lba_basis': 'back-to-back layout from 0x3F03, pinned by %d game-code LBAs plus P_01_01 (prologue.c:224)' % len(signs.LAYOUT_ANCHORS),
-            'callers': [{'path': p, 'line': n, 'text': t} for p, n, t in calls], 'code_evidence': evidence, 'stream': stream}
 
 
 def png_rgba(source, english, rect):
     """RGBA of the plan rectangle: alpha 255 where the English pixel differs from the source, 0 elsewhere (no source pixel kept)."""
     x, y, w, h = rect
     changed = (english[y:y + h, x:x + w] != source[y:y + h, x:x + w]).any(-1)
-    rgb = signs.expand(english[y:y + h, x:x + w])
+    rgb = rgb8(english[y:y + h, x:x + w])
     out = np.zeros((h, w, 4), np.uint8)
     out[..., :3] = np.where(changed[..., None], rgb, 0)
     out[..., 3] = np.where(changed, 255, 0)
     return Image.fromarray(out, 'RGBA'), int(changed.sum())
-
-
-def zoom_pair(source, english, rect, margin=8, limit=900):
-    x, y, w, h = rect
-    x0, y0 = max(0, x - margin), max(0, y - margin)
-    x1, y1 = min(source.shape[1], x + w + margin), min(source.shape[0], y + h + margin)
-    scale = max(2, min(12, limit // (x1 - x0)))
-    size = ((x1 - x0) * scale, (y1 - y0) * scale)
-    top = Image.fromarray(signs.expand(source[y0:y1, x0:x1]), 'RGB').resize(size, Image.NEAREST)
-    bottom = Image.fromarray(signs.expand(english[y0:y1, x0:x1]), 'RGB').resize(size, Image.NEAREST)
-    sheet = Image.new('RGB', (size[0], size[1] * 2 + 6), (255, 0, 255))
-    sheet.paste(top, (0, 0))
-    sheet.paste(bottom, (0, size[1] + 6))
-    return sheet
 
 
 def build(output, disc=None, plans=None):
@@ -531,7 +512,7 @@ def build(output, disc=None, plans=None):
     plans = PLANS if plans is None else plans
     problems = check_callers()
     if problems:
-        raise ValueError('cited source lines changed: ' + '; '.join(problems))
+        raise ValueError('cited calls changed: ' + '; '.join(problems))
     lbas = signs.contiguous_lbas(disc)
     for name, lba in STILL_ANCHORS.items():
         if lbas[name][0] != lba:
@@ -542,9 +523,9 @@ def build(output, disc=None, plans=None):
         data = (disc / (name + '.BS')).read_bytes()
         proofs[name] = geometry_proof(name, data, *lbas[name])
         width, height = proofs[name]['width'], proofs[name]['height']
-        decoded[name] = signs.decode_still(data, width, height)
+        decoded[name] = common.decode_still(data, width, height)
         hashes[name] = {'container': digest(data), 'words': digest(mdec_model.decode_padded_words(data, width, height)),
-                        'rgb8': digest(signs.expand(decoded[name]).tobytes())}
+                        'rgb8': digest(rgb8(decoded[name]).tobytes())}
     output.mkdir(parents=True)
     for sub in ('previews', 'crops'):
         (output / sub).mkdir()
@@ -561,11 +542,11 @@ def build(output, disc=None, plans=None):
         crop, changed = png_rgba(source, english, plan['rect'])
         png = plan['id'] + '.en.png'
         crop.save(output / 'crops' / png, optimize=False)
-        zoom_pair(source, english, plan['rect']).save(output / 'previews' / (plan['id'] + '.zoom.png'))
-        Image.fromarray(signs.expand(english), 'RGB').save(output / 'previews' / (plan['id'] + '.still.png'))
-        signs.side_by_side(source, english, None).save(output / 'previews' / (plan['id'] + '.compare-2x.png'))
+        common.zoom_pair(source, english, plan['rect'], max_scale=12).save(output / 'previews' / (plan['id'] + '.zoom.png'))
+        Image.fromarray(rgb8(english), 'RGB').save(output / 'previews' / (plan['id'] + '.still.png'))
+        common.side_by_side(source, english).save(output / 'previews' / (plan['id'] + '.compare-2x.png'))
         padded = proofs[name]['height'] + (-proofs[name]['height'] % 16)
-        indices, mb_rect = signs.macroblocks(plan['rect'], padded)
+        indices, mb_rect = common.macroblocks(plan['rect'], padded)
         entry = {
             'id': plan['id'], 'catalog_item': plan['catalog_item'], 'sign': plan['sign'], 'group': plan.get('group'),
             'supersedes': plan.get('supersedes'),
@@ -577,60 +558,43 @@ def build(output, disc=None, plans=None):
             'edit_regions': [plan['rect']], 'edit_macroblocks': indices, 'edit_macroblock_bounds': mb_rect,
             'edit_region_policy': 'only the pixels listed by the crop alpha channel change (Japanese lettering erased, English drawn); every other pixel, including those inside the rectangle, is bit-identical to the source decode',
             'crop': {'png': png, 'rect': plan['rect'], 'format': 'rgba; alpha 255 = port-made pixel to write, alpha 0 = keep the source pixel',
-                     'sha256': digest((output / 'crops' / png).read_bytes()), 'original_pixels': 0, 'port_made_pixels': changed},
+                     'sha256': digest((output / 'crops' / png).read_bytes()), 'port_made_pixels': changed,
+                     'source_equal_pixels': common.source_equal_pixels(crop, source[y:y + h, x:x + w]),
+                     'source_equal_pixels_basis': 'alpha-255 crop pixels whose RGB555 value equals the source decode at the same position',
+                     'fill': record['fill']},
             'changed_pixels': changed, 'lettering': record, 'port_made': True,
             'port_made_elements': [{'kind': 'lettering', 'face': 'port-skeleton-brush' if any(r.get('brush') for r in plan['runs']) else 'port-skeleton-gothic',
                                     'origin': 'port-made',
                                     'description': ('brush-stroked' if any(r.get('brush') for r in plan['runs']) else 'constant-stroke')
                                     + ' skeleton letters; lines: ' + ', '.join(r['text'].strip() for r in plan['runs'])
-                                    + '; Japanese lettering erased and the picture under it rebuilt from the clean pixels around it, with their grain'}],
+                                    + '; Japanese lettering erased and the picture under it rebuilt as the smooth average of the clean pixels '
+                                    'around it plus synthetic grain of their strength and fineness (no source pixel copied)'}],
             'style': 'unreviewed', 'human_approved': False, 'runtime_integrated': False, 'in_game_verified': False}
         assets.append(entry)
     manifest = {'schema': SCHEMA, 'ticket': TICKET, 'human_approved': False, 'assets': assets, 'geometry_proofs': proofs,
                 'layout_anchors': {k: '0x%X' % v for k, v in STILL_ANCHORS.items()}, 'decoder_model': MDEC_MODEL_ID,
+                'environment': common.environment(),
                 'committed_files': 'RGBA crop PNGs (alpha 255 only on port-made pixels) and this manifest; whole stills and comparisons stay local'}
     (output / 'manifest.json').write_bytes(encoded(manifest) + b'\n')
     return {'output': str(output), 'assets': len(assets), 'files': files}
 
 
+def ledger_row_extra(asset):
+    """Ledger keys of a still asset beyond the shared ones: crop format, alternative group and the superseded draft."""
+    row = {'crop_format': asset['crop']['format']}
+    if asset.get('group'):
+        row['alternative_group'] = asset['group']
+    if asset.get('supersedes'):
+        row['supersedes'] = {'id': asset['supersedes'], 'checkpoint': SUPERSEDED_IN[asset['supersedes']]}
+    return row
+
+
 def publish(built, destination):
     """Copy crops, manifest and ledger into a new checkpoint folder (RGBA crops only: no full images, no BS bytes)."""
-    manifest_bytes = (built / 'manifest.json').read_bytes()
-    manifest = json.loads(manifest_bytes)
-    destination = destination.absolute()
-    if destination.exists():
-        raise ValueError('destination must be new')
-    staging = destination.with_name(destination.name + '.partial')
-    if staging.exists():
-        raise ValueError('stale staging directory: ' + str(staging))
-    (staging / CHECKPOINT).mkdir(parents=True)
-    ledger = []
-    for asset in manifest['assets']:
-        crop = built / 'crops' / asset['crop']['png']
-        if digest(crop.read_bytes()) != asset['crop']['sha256']:
-            raise ValueError('built crop changed: ' + asset['id'])
-        (staging / CHECKPOINT / asset['crop']['png']).write_bytes(crop.read_bytes())
-        row = {'id': asset['id'], 'catalog_item': asset['catalog_item'], 'path': '%s/%s' % (CHECKPOINT, asset['crop']['png']),
-               'crop_sha256': asset['crop']['sha256'], 'dimensions': asset['crop']['rect'][2:], 'crop_format': asset['crop']['format'],
-               'source_container_sha256': asset['source_container_sha256'], 'source_png_sha256': asset['source_png_sha256'],
-               'decode_identity': {'decoder_model': asset['decoder_model'], 'source_words_sha256': asset['source_words_sha256'],
-                                   'width': asset['geometry']['width'], 'height': asset['geometry']['height']},
-               'edit_regions': asset['edit_regions'], 'port_made': True, 'port_made_elements': asset['port_made_elements'],
-               'manifest_sha256': digest(manifest_bytes), 'status': 'draft', 'human_approved': False}
-        if asset.get('group'):
-            row['alternative_group'] = asset['group']
-        if asset.get('supersedes'):
-            row['supersedes'] = {'id': asset['supersedes'], 'checkpoint': SUPERSEDED_IN[asset['supersedes']]}
-        ledger.append(row)
-    (staging / CHECKPOINT / 'manifest.json').write_bytes(manifest_bytes)
-    (staging / 'ledger.json').write_bytes(encoded({
-        'schema': 'tokimemo.translation-checkpoint.v1', 'ticket': TICKET, 'assets': ledger,
-        'candidate_assets': len(ledger), 'original_images_included': False, 'port_made_assets': len(ledger),
+    return common.publish(built, destination, CHECKPOINT, TICKET, {
         'full_images_policy': 'only RGBA crops (alpha 255 on port-made pixels only) are committed; run build to rebuild whole stills into .asset-cache',
-        'publication_authorization': 'Owner allowed new in-style lettering, 2026-11-01 (T-39400); fixes requested by the owner art review (T-39412).',
-        'complete_translation_inventory': False, 'separate_reviewed_revisions': 0}) + b'\n')
-    staging.rename(destination)
-    return {'destination': str(destination), 'assets': len(ledger)}
+        'publication_authorization': 'Owner allowed new in-style lettering, 2026-11-01 (T-39400); fixes requested by the owner art review (T-39412).'},
+        ledger_row_extra)
 
 
 def geometry(disc=None):
