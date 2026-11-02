@@ -2862,3 +2862,23 @@ Script strings cannot use plain ASCII with the original control letters (0x20 li
 ## [2026-11-01] ticket | Open T-39505 for English memory room
 
 Merged [[tickets/T-39501-disc-rebuild-and-xdelta]] and [[tickets/T-39502-english-text-runtime]] into `patch/english`. The runtime pins every object to its original address, so overlays cannot grow; opened [[tickets/T-39505-english-memory-and-relink]] for a RAM map and a free relink of the English build.
+
+## [2026-11-01] build | Text-container writers for the English patch (T-39503)
+
+Added `tools/patch/text/`, `tools/patch_text.py` and `tools/test_patch_text.py`; page [[english-text-containers]]. Every file that holds a translated record rebuilds byte-exact from its original records: 143 files and 53,178 slots, with the talk scripts laid out again from scratch through 31,334 pointer words. All 2,201 C literals render back to their bytes, and a build with every literal rendered passed all SHA-1 checks. All 55,911 English ids map to one location. Text without records was found only in the unloaded EVENT and GYOZI overlays; the four magazine tables are fully covered. With a provisional one-byte ASCII encoding, talk files grow by 208,896 bytes and 32 of them gain sectors; ten DATE files exceed the largest original read into their buffer; overlays and the main executable fit after a relink. Findings for [[tickets/T-39502-english-text-runtime]]: control letters collide with ASCII, inline labels have a fixed length, and 557 overlay-table targets wrap the Japanese. The export ran against a source snapshot because three pinned files changed in 92f7cc070.
+
+## [2026-11-01] ticket | T-39503 to In Review
+
+[[tickets/T-39503-text-container-writers]] waits for code review against `CODING_STANDARDS.md`.
+
+
+## [2026-11-01] ticket | Open T-39506 and T-39507 for the playable English slice
+
+Merged [[tickets/T-39503-text-container-writers]] into `patch/english`. Opened [[tickets/T-39506-english-script-runtime]] (dialogue, choices, names and name entry in English) and [[tickets/T-39507-english-disc-build]] (one-command English disc and patch build).
+
+## [2026-11-01] ticket | Emulator screen route and Japanese baseline (T-39504)
+
+Added `tools/emu/route.py`, `tools/emu/route.lua` and `tools/emu/routes/main.route`: a route from power-on through the Konami logo, title intro, title menu, options (fast text, voice off), file select (new album), name entry (typed on the hiragana page; per-build step, `en` uses the English letter page), the prologue (a shot per text page), the command screen and its status panel, calendar, system settings, the first school day, week 1, Sunday, a phone call to Shiori with a date request (retried on a refusal with `goto`), save, week 2, the date, and load. Steps wait on GameState scene bytes, the menu selection, the free cursor and the typewriter, not on frame counts. Outputs go to `build/emu/route-<label>/` (PNGs, `result.json`, `sheet.html`/`sheet.png`); `route compare` puts two runs side by side by checkpoint. `run.sh` takes `EMU_CUE=/path.cue` (read-only mount) and `run.sh route ...`. Tests: `tools/emu/test_route.py`.
+
+Japanese baseline from the original disc: 144 screenshots, 27 922 frames, 539 s, all checkpoints reached and checked by eye. Details and the mode map found on the way in [[tickets/T-39504-emulator-screen-route]]; usage in [[emulator]] (Route). Ticket moved to In Review.
+

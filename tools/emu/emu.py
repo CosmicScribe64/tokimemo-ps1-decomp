@@ -508,6 +508,8 @@ def parse_inputs(args):
 def find_iso(args):
     if args.iso:
         return os.path.abspath(args.iso)
+    if os.environ.get("EMU_CUE"):  # set by run.sh from the host's EMU_CUE
+        return os.environ["EMU_CUE"]
     cues = sorted(glob.glob(os.path.join(ROOT, "disc", "*.cue")))
     usable = []
     for cue in cues:

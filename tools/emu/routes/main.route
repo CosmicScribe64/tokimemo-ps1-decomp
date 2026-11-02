@@ -1,0 +1,180 @@
+# Main-screen route (T-39504): power-on to save and load. tools/emu/route.py documents the
+# step syntax; waits use GameState game_mode (mode), mode_stage (stage) and mode_step (step).
+# Mode numbers: GameMode in include/game_enums.h. Buttons: CIRCLE confirms, CROSS cancels.
+
+# Boot: Konami logo, then the title intro (photos) until the title menu.
+wait mode=0x10 timeout=1200 label=boot
+wait mode=0x12 timeout=3000 shots=boot/240/4 label=konami_logo
+wait mode=0x12 stage=2 stable=20 timeout=3000 shots=title_intro/300/6 label=title_intro
+shot title_menu
+state title_menu
+
+# Options: main menu; text speed: fast (first entry); voice mode (sixth item): OFF, so that a
+# page does not wait for its voice clip; "end options" (CROSS jumps to it); back to the title.
+press DOWN
+press CIRCLE
+wait mode=0x20 step=2 stable=30 timeout=900 label=options_menu
+shot options
+press CIRCLE gap=40
+shot options_text_speed
+press CIRCLE gap=40
+press DOWN gap=8
+press DOWN gap=8
+press DOWN gap=8
+press DOWN gap=8
+press DOWN gap=8
+press CIRCLE gap=40
+shot options_voice
+# the cursor opens on the current mode (the third, cut with CROSS) and wraps: ON, then OFF
+press DOWN gap=20
+press DOWN gap=20
+press CIRCLE gap=40
+shot options_voice_off
+press CROSS gap=30
+press CIRCLE gap=30
+wait mode=0x12 timeout=900 label=options_exit
+wait mode=0x12 stage=2 stable=20 timeout=3000 mash=CROSS/20 label=title_again
+shot title_menu_again
+
+# Game Start: the file select checks the card and offers a new album on an empty card.
+press CIRCLE
+wait mode=0x13 stage=2 step=0x41 stable=20 timeout=1800 label=file_select_prompt
+shot file_select_new_album
+state file_select
+press CIRCLE gap=30
+wait mode=0x13 stage=2 step=0x45 stable=20 timeout=900 label=album_slot_prompt
+shot file_select_album_slot
+# album slot 1: file_select_create_slot_choose marks slot i at x = i / 7 * 0x1F - 0x82, y = i % 7 * 16 - 0xB
+steer x=-130 y=-11 tol=2
+shot file_select_slot_1
+press CIRCLE gap=30
+# then CIRCLE through "create the system file?" and its progress messages
+wait mode=0x14 timeout=1800 shots=file_select_system_file/90/4 mash=CIRCLE/40 delay=20 label=name_entry
+state name_entry
+
+# Name entry (NAME_ENT stage 1): family name, given name, nickname (per build), birthday, confirm.
+call name_entry
+wait mode=0x14 stage=1 step=7 stable=20 timeout=900 label=birthday
+shot name_entry_birthday
+press START gap=20
+wait mode=0x14 stage=1 step=9 stable=20 timeout=900 label=confirm
+shot name_entry_confirm
+press START gap=20
+# stage 2: the same questions about Shiori, then the prologue (mode 0x15)
+wait mode=0x14 stage=2 stable=20 timeout=900 label=shiori_profile
+wait mode=0x15 timeout=2400 shots=name_entry_shiori/60/8 mash=START/60 delay=30 label=prologue
+state prologue
+
+# Prologue (NAME_ENT mode 0x15): a screenshot of every page, CIRCLE for the next.
+talk prologue mode!=0x15
+shot after_prologue
+state first_week
+
+# First week (mode 0x34, the command screen; its top panel is the status: the six parameters
+# and stress). Menu selections use the keyboard menu mode (menu_mode 1, the default): the d-pad
+# steps GameState menu_cursor_0 (`pick`). Icons: 0 study ... 7 rest, 11 system settings,
+# 12 calendar, 13 save/load (home_screens.c settings_command_screen_icon_confirm).
+wait mode=0x34 stage=1 stable=30 timeout=1200 label=command_screen
+shot command_screen
+pick 12
+press CIRCLE gap=20
+wait mode=0x34 stage=2 stable=30 timeout=600 label=calendar
+shot calendar
+press CROSS gap=20
+wait mode=0x34 stage=1 stable=20 timeout=600 label=calendar_exit
+pick 11
+press CIRCLE gap=20
+wait mode=0x34 stage=4 stable=30 timeout=600 label=system_settings
+shot system_settings
+press CROSS gap=20
+wait mode=0x34 stage=1 stable=20 timeout=600 label=system_settings_exit
+# study all week; the week plays out (school days, Shiori's birthday event with its choices,
+# CIRCLE takes the first answer) until Sunday (mode 0x46, holiday)
+pick 0
+shot command_study
+press CIRCLE gap=20
+wait mode!=0x34 timeout=600 label=week_1_start
+# the first school day (mode 0x40, week_day): the day screen of each day after a command
+wait mode=0x40 stage=1 stable=10 timeout=900 label=school_day
+shot school_day
+talk week_1 mode=0x46 max=40 timeout=20000
+state holiday_1
+
+# Sunday: the telephone (holiday icon 8), the phone book (entry 1 is Shiori), a date on the
+# first day the calendar offers, at the first date spot (the park). Shiori may say no (the
+# answer is random); then the next Sunday has no date and the call is made again (`goto`).
+label phone
+wait mode=0x46 stage=1 stable=30 timeout=1200 label=holiday
+shot holiday
+pick 8
+press CIRCLE gap=20
+wait mode=0x46 stage=0x10 step=1 stable=30 timeout=600 label=phone_book
+shot phone_book
+pick 1
+press CIRCLE gap=20
+talk phone_call mode=0x45 step=0x30 max=20 timeout=6000
+wait mode=0x45 step=0x30 substep=1 stable=20 timeout=600 label=date_spot
+shot phone_date_spot
+pick 0
+press CIRCLE gap=20
+talk phone_answer mode=0x34 stage=1 max=20 timeout=6000
+
+# Sunday evening: save to album slot 1 of the card in slot 1 (icon 13, menu 1: save, load).
+wait mode=0x34 stage=1 stable=30 timeout=1200 label=command_screen_evening
+shot command_screen_evening
+pick 13
+press CIRCLE gap=20
+wait mode=0x34 stage=3 step=2 stable=20 timeout=900 label=save_menu
+shot save_menu
+pick 0 menu=1
+press CIRCLE gap=20
+wait mode=0x34 stage=3 step=4 stable=20 timeout=900 label=save_slots
+pick 0 menu=1
+shot save_slot
+press CIRCLE gap=20
+# slot 1 holds the album made at the file select: CIRCLE answers "overwrite?"
+wait mode=0x34 stage=3 step=5 substep=1 stable=20 timeout=300 label=save_overwrite
+shot save_overwrite
+press CIRCLE gap=4
+wait mode=0x34 stage=3 step=5 substep=3 timeout=300 label=save_write
+idle 10
+shot save_writing
+wait mode=0x34 stage=1 stable=20 timeout=1800 label=save_done
+shot save_done
+
+# The next week; on the date's Sunday the holiday menu opens on the date icon (holiday_open_init
+# sets menu_cursor_0 to 9 when an appointment is due), otherwise phone again (three tries).
+pick 0
+press CIRCLE gap=20
+wait mode!=0x34 timeout=600 label=week_start
+talk week mode=0x46 max=20 timeout=20000
+wait mode=0x46 stage=1 stable=30 timeout=1200 label=holiday_next
+goto phone 0x800E7313!=9 max=3
+goto no_date 0x800E7313!=9
+state holiday_date
+shot holiday_date
+wait mode=0x50 timeout=1200 mash=CIRCLE/30 label=date
+state date
+talk date mode!=0x50 max=60 timeout=30000
+goto after_date
+label no_date
+pick 7
+press CIRCLE gap=20
+talk rest mode=0x34 max=10 timeout=6000
+label after_date
+wait mode=0x34 stage=1 stable=30 timeout=3000 label=after_date
+shot after_date
+
+# Load the save (icon 13, load, slot 1): the game goes back to the evening of the first Sunday.
+pick 13
+press CIRCLE gap=20
+wait mode=0x34 stage=3 step=2 stable=20 timeout=900 label=load_menu
+pick 1 menu=1
+press CIRCLE gap=20
+wait mode=0x34 stage=3 step=7 stable=20 timeout=900 label=load_slots
+pick 0 menu=1
+shot load_slot
+press CIRCLE gap=20
+wait mode=0x34 stage=0xff timeout=1800 shots=load/60/6 mash=CIRCLE/60 label=load_read
+wait mode=0x34 stage=1 stable=30 timeout=1800 label=loaded
+shot loaded
