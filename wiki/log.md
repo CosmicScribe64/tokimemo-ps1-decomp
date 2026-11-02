@@ -3805,3 +3805,7 @@ For [[tickets/T-39511-english-text-quality]], prepared a controlled school-trip 
 ## [2026-11-02] build | Publish the festival fixes
 
 Pushed source commit ab7dbb67d to main and patch/english, then published the tested package at Pages commit eb2a1ec6b5181a59d2d14a2f11984e05e8b3e61c. Deployment 41538006279 succeeded. All 37 served files match the tested package, including target b8b5be606a64650203c4b6c452fb8f61cdadef83 and its patch. Updated the combined-release receipt and local preview on port 8766. [[tickets/T-39530-festival-gate-quality]] and [[tickets/T-39531-literature-club-wrap]] are published; broader visual review remains open.
+
+## [2026-11-02] query | Inspect the school-trip scene sequence
+
+Inspected all 39 captures from two 6,000-frame school-trip runs for [[tickets/T-39511-english-text-quality]]. Dialogue and destination labels show no clipping or overlap in the sampled scenes. Recorded one phrase-break follow-up at sightseeing frame 2700: "day / after tomorrow". Saved screenshot hashes, font diagnostics and the controlled-entry scope in `translations/en/reviews/school-trip-visual-2026-11-02.json`. The 59 pending long-page branches remain unverified.

@@ -1,0 +1,132 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "b8b5be606a64650203c4b6c452fb8f61cdadef83",
+  "scope": "Controlled school-trip entry followed by controller input. The second run resumes the first without further setup writes. These captures cover departure, the hotel, a temple visit and the following corridor conversation; they do not certify all script branches.",
+  "result": "No clipped or overlapping text observed. Completed quoted dialogue closes correctly. Destination labels and visible background artwork are legible. Partial typewriter frames are not complete-page evidence.",
+  "open_findings": [
+    {
+      "run": "school-trip-sightseeing-review",
+      "frame": 2700,
+      "finding": "The invitation splits the phrase day after tomorrow across rows. Check source and available width before changing layout."
+    }
+  ],
+  "pending_long_page_records": 59,
+  "runs": [
+    {
+      "run": "build/emu/school-trip-review",
+      "frames": 6000,
+      "setup_writes": 7,
+      "inspected_frames": [
+        600,
+        900,
+        1200,
+        1500,
+        1800,
+        2100,
+        2400,
+        2700,
+        3000,
+        3300,
+        3600,
+        3900,
+        4200,
+        4500,
+        4800,
+        5100,
+        5400,
+        5700,
+        6000
+      ],
+      "screenshots": {
+        "600": "893cf75c76450e40ee58cc41e9f631035afe06e8364ae7367ed237f6da9e007d",
+        "900": "f6cdded1b77b0f7dc0436a5a1a7bd044c04bc53c30d486818fcaa7f302628427",
+        "1200": "fc97f2126f1338c39213d7a1fe293bd1ab6072288a117cb4366451d914ca0ae0",
+        "1500": "442114494a97bb59ef45a6b0e42f5530453e61438ccf7497871c3882d10a3f3d",
+        "1800": "d1b59a42c787cb7fe406e821737ff78e6fa51e8326be4c34e3118ebf4d8ef218",
+        "2100": "48aaa92825730348e9a08ddce4f7b155feb289d8e9498b1ebbd664f0fdb8cb11",
+        "2400": "8059bbc100f6006b52e7813d8d079b7b94a9f53e725e0640801d255b4648b7bc",
+        "2700": "0741fe0c0629b3c632b418455ab172599561655f9b40d8905c1e3e93ef6ab9e7",
+        "3000": "0283821dfad6aa0969d748813cb0e12e8299265665675e459910d7002b5c0c9c",
+        "3300": "d56b7361649f3b2556a70a741f4dea461d7a09c95a7bf7c7beec411a5ac385c0",
+        "3600": "e6174c2fea4ff93f548dd7b4d27cc8eac93900ec5b1800e09a5dd7ae7343fbea",
+        "3900": "4425eec66f098f2f78a06faaa6c2251e7632768d0276491193a9d98c0c1d7813",
+        "4200": "499a3b16022a88866a744c0a669342a2c924b2018c4be4a1c3798e87b43666ff",
+        "4500": "8f5d28e5ad1e188edd510b319fa1e8f2edca44f36743abe4fe85264455b25725",
+        "4800": "2036a3e950518e481299f014b9e174fb46923e098be8cb0f36c1b615a0707138",
+        "5100": "c11dbb8f8f57b29a71863a546a8607699102b405d831ec2e165fe88079096565",
+        "5400": "478795478b1353f1355284ce6ebfefb9219a7638e519b9f95d8d9ab645c21d03",
+        "5700": "cbe9b59b25cbbabb8ea2a0ecf805c087a9de74f7cc851d44a08302e158259356",
+        "6000": "bc4c4c9f44560d44fd7900b60153ad3a92327c6a08f4029211ab175790904f63"
+      },
+      "font_trace": {
+        "entries": {},
+        "frame_origin": "start of this emulator run",
+        "load_address": 2147808100,
+        "ranges_address": 2148237164,
+        "calls": 0,
+        "unknown_calls": 0,
+        "overflow_calls": 0,
+        "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork"
+      }
+    },
+    {
+      "run": "build/emu/school-trip-sightseeing-review",
+      "frames": 6000,
+      "setup_writes": 0,
+      "inspected_frames": [
+        300,
+        600,
+        900,
+        1200,
+        1500,
+        1800,
+        2100,
+        2400,
+        2700,
+        3000,
+        3300,
+        3600,
+        3900,
+        4200,
+        4500,
+        4800,
+        5100,
+        5400,
+        5700,
+        6000
+      ],
+      "screenshots": {
+        "300": "c03f197147353b44f8f917db3a55b989844d627aed1f3a4ed45ef9318337b96b",
+        "600": "cc2ad28571774864fd84673d63e6c91b3289f15fed09b8ecece8b60cbc0afb81",
+        "900": "e0a4cb1278361fb0a06fb81e59e20a001c690491a2e65b79c9e781114f9714a0",
+        "1200": "af36e3bb860fb00e4bf5506a48d3598b3ff19946ca0c74e8da87252614a26d21",
+        "1500": "66d23ac834653164c595e1cda4ca38ee08c0e7e42a86d242a062781f820f527c",
+        "1800": "61f095e782acb2091c1a779c0f04490b4f25f262026225e61aadeb7aaa749e1a",
+        "2100": "0bd68d278af529ade25f7a59d1030f8b47f4316d5f84054904c0a89d10c18c53",
+        "2400": "afd5b1cc1175f39d5d9885e342253963a4da1d7e00f3b4cd1f49fd0be1dec9d0",
+        "2700": "47da8544c0e7d56cc9129d9f25fa7d83d9ed46d7686526db2cdab8f72b400325",
+        "3000": "914236fb8e1d964cde0cf7d7f0d15a5ec93eaf0e8e72b03117b2e308d249fe6f",
+        "3300": "a0df6fe211ceae7da8d25c2ddf8ba72a8436e24db98974659229294e95dbbebd",
+        "3600": "f803795067acb48b27bd756a990d841f8bb75d84a598613790a573bac24027d3",
+        "3900": "d8d0c3d815726e296e597c7b038d6741b643a1bc16025fa698a74717617475d0",
+        "4200": "139a962718e8b5421e66ce5daf54436272d2e0d01da7f1e3d6753ea3586f0dcd",
+        "4500": "f6a63bdfa1a0694087eb17ef354b5148e5f257f5e1d8680b6c4aa5fcba90bbeb",
+        "4800": "0679c0fcc2f358973cefddccfa389a25c98a42c8133c025e39525944756b8c0b",
+        "5100": "03bbf05052352bca1c1c779d8e6ca81810f4530e124e995ddcb2fb08ae6e118c",
+        "5400": "38b674b8e80bc42a87697a5ad92c6a0aeef8d4b77c717a2c528c77824e159a50",
+        "5700": "2c0e9a5e80fc4041e0b9fdd9ca6307e0b9668f042a6f295d0d2c1d0025fef94b",
+        "6000": "21f9536013ea7ccc1945840518e2052e59abbfb5c7b1e3e966186a7ee3d63541"
+      },
+      "font_trace": {
+        "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+        "unknown_calls": 0,
+        "frame_origin": "start of this emulator run",
+        "load_address": 2147808100,
+        "ranges_address": 2148237164,
+        "calls": 0,
+        "entries": {},
+        "overflow_calls": 0
+      }
+    }
+  ]
+}
