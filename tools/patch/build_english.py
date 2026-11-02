@@ -25,6 +25,8 @@ Steps:
     grow keeps its original bytes.
  5. Write build/en/cd_layout.json (the moved files) and run `ninja english`: the island table of
     src/english/cd.c sends reads of moved files to their new sectors.
+ 4b. The English art (tools/patch/art/): every registered image into its sprite sheet or BS still,
+    placed like a data file; the MAINROM part records go into the built executable before step 6.
  6. Write the in-place records into the built executable and overlays (text/inplace.py), put them
     on the disc (the executable last, moved to the end when it needs more sectors), write
     track 1 and the cue, then the xdelta patch against the original track.
@@ -45,6 +47,7 @@ from pathlib import Path
 from tools.patch import cd_layout
 from tools.patch import disc as disc_mod
 from tools.patch import make_patch
+from tools.patch.art import hook as art_hook
 from tools.patch.text import c_literals
 from tools.patch.text.containers import EXE_PATH, build_containers, load_units
 from tools.patch.text.image import SECTOR
@@ -363,6 +366,11 @@ def headline(report: dict) -> list[str]:
     disc = report["disc"]
     lines.append("disc: track1 %s (%d sectors added), patch %s bytes"
                  % (disc["track1_sha1"][:12], disc["sectors_added"], disc.get("xdelta_bytes")))
+    art = report.get("art")
+    if art:
+        lines.append("art: " + ", ".join("%s %d" % kv for kv in sorted(art["totals"].items()))
+                     + "; %d containers written, %d MAINROM records" % (len(art["files_placed"]),
+                                                                         art.get("exe_records_written", 0)))
     lines.append("time: %s s total" % report["timings"]["total"])
     return lines
 
@@ -399,6 +407,8 @@ def build(args) -> dict:
     with disc_mod.Disc(str(REPOSITORY / args.orig)) as disc:
         data = steps.run("data files", place_data_files, disc, containers, text, files_root, read_sites,
                          checksum_sites)
+        art = None if args.no_art else steps.run("art", art_hook.place_files, disc, REPOSITORY, files_root,
+                                                   read_sites, checksum_sites, data, EXE_PATH)
         remap = write_layout(data["placed"])
 
         def english_build():
@@ -420,6 +430,8 @@ def build(args) -> dict:
             literals["literals_reverted"].update({rid: "English link failed" for rid in literal_payloads(
                 containers, text) if rid not in literals["literals_reverted"]})
             literals["files"], literals["literals_written"] = [], 0
+        if art:
+            art["report"]["exe_records_written"] = art_hook.patch_exe(REPOSITORY / EXE_OUT, files_root / EXE_PATH, art)
         binaries = steps.run("executable and overlays", place_binaries, disc, containers, text, files_root)
         track1 = out_dir / "track1.bin"
         track2 = out_dir / "track2.bin"
@@ -450,6 +462,7 @@ def build(args) -> dict:
         "data_files": data,
         "cd_remap": remap,
         "binaries": binaries,
+        "art": art["report"] if art else None,
     })
     report["timings"] = dict(steps.timings, total=steps.total())
     (out_dir / "report.json").write_text(json.dumps(report, indent=1, sort_keys=True) + "\n")
@@ -465,11 +478,12 @@ def main(argv=None) -> int:
     parser.add_argument("--supplemental", default="translations/en/supplemental.jsonl")
     parser.add_argument("--out", default="build/en/disc")
     parser.add_argument("--no-patch", action="store_true", help="skip the xdelta patch")
+    parser.add_argument("--no-art", action="store_true", help="leave the images Japanese (T-39508)")
     args = parser.parse_args(argv)
     os.chdir(REPOSITORY)
     try:
         report = build(args)
-    except (BuildError, disc_mod.DiscError, make_patch.PatchError) as exc:
+    except (BuildError, disc_mod.DiscError, make_patch.PatchError, art_hook.ArtBuildError) as exc:
         print("build_english: %s" % exc, file=sys.stderr)
         return 1
     for line in headline(report):
