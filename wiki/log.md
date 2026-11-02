@@ -3797,3 +3797,11 @@ Reviewed the source changes for [[tickets/T-39530-festival-gate-quality]] and [[
 ## [2026-11-02] ticket | Close verified festival presentation fixes
 
 Moved [[tickets/T-39530-festival-gate-quality]] and [[tickets/T-39531-literature-club-wrap]] to Done after implementation, visual verification, disc/browser checks and standards review. Their parent campaign remains open for broader visual coverage. The combined-release receipt tracks publication separately.
+
+## [2026-11-02] query | Begin school-trip visual review
+
+For [[tickets/T-39511-english-text-quality]], prepared a controlled school-trip entry on the festival review build, followed by controller input. The fixture records all setup writes and captures dialogue and backgrounds every 300 frames. This starts coverage of a new scene family; it does not yet verify the pending long-page records.
+
+## [2026-11-02] build | Publish the festival fixes
+
+Pushed source commit ab7dbb67d to main and patch/english, then published the tested package at Pages commit eb2a1ec6b5181a59d2d14a2f11984e05e8b3e61c. Deployment 41538006279 succeeded. All 37 served files match the tested package, including target b8b5be606a64650203c4b6c452fb8f61cdadef83 and its patch. Updated the combined-release receipt and local preview on port 8766. [[tickets/T-39530-festival-gate-quality]] and [[tickets/T-39531-literature-club-wrap]] are published; broader visual review remains open.

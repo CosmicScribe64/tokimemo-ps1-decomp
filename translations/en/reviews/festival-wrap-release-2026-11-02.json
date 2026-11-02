@@ -84,5 +84,13 @@
       }
     ]
   },
-  "publication": "pending"
+  "publication": {
+    "status": "verified live",
+    "url": "https://cosmicscribe64.github.io/tokimemo-ps1-decomp/",
+    "source_commit": "ab7dbb67d",
+    "pages_commit": "eb2a1ec6b5181a59d2d14a2f11984e05e8b3e61c",
+    "workflow_run": 41538006279,
+    "workflow_conclusion": "success",
+    "served_files_matching_tested_package": 37
+  }
 }
