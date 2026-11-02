@@ -3377,3 +3377,7 @@ T-39515 moves In Progress -> In Review. Both maximum-name columns and the sparse
 ## [2026-11-02] ticket | Complete reviewed exam ranking and allocator repair
 
 T-39515 moves In Review -> Done after the CODING_STANDARDS.md checklist review: C89/headers, English guards, original checksums, preserved visibility/value semantics, byte-aligned allocator bounds, no renamed identifiers or generated/raw assets, production-function tests and real GPU/browser proof all pass. The final package is `build/patcher-exam-arena-review`; broader text/art/event audits remain open in their own tickets. [[tickets/T-39515-exam-ranking-name-layout]], [[english-text-runtime]].
+
+## [2026-11-02] build | Serve reviewed ranking build and start full route regression
+
+Local review server http://localhost:8769 now serves `build/patcher-exam-arena-review`, verified via its release manifest: target SHA1 32fb03da865a9e54824f13270285d6c1abe038fb. Started fresh full main gameplay route `route-en-exam-arena-full` with original-font tracing, because the arena correction affects shared English rendering. Focused exam checks are complete; this broader regression is still running. [[tickets/T-39515-exam-ranking-name-layout]], [[tickets/T-39510-no-japanese-left-check]].
