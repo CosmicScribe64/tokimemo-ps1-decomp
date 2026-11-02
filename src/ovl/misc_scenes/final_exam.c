@@ -706,6 +706,9 @@ s32 exam_results_show(void) {
                 ((Actor *)r)[0x61].y = y;
                 if (v == 0xD) {
                     strncpy((char *) buf, (char *) game_state.player_family_name, 8);
+#ifdef TOKIMEMO_ENGLISH
+                    strcat((char *) buf, " "); /* T-39506: English full name with a space */
+#endif
                     strncat((char *) buf, (char *) game_state.player_given_name, 8);
                     set_kanji_string(exam_row_x[i] + 0x18, exam_row_y[i], 3, buf, 0);
                     printf("%s\n", game_state.player_full_name);

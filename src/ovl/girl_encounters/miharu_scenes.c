@@ -2,6 +2,9 @@
 #define MAIN_API_OVERRIDE_talk_work /* switched as u32 (main_api.h: s32), T-6030 */
 #include "common.h"
 #include "ovl/girl_encounters.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/script.h"
+#endif
 
 extern u32 talk_work;
 
@@ -284,8 +287,14 @@ void encounter_miharu_scene_init_3(void) {
     parameter_show_init();
     bg_brightness = 0x80;
     strcpy(name_code_family, game_state.player_family_name);
+#ifdef TOKIMEMO_ENGLISH
+    /* T-39506: the English names exceed the buffers; the parsers read the full forms */
+    english_girl_short_set("館林");
+    english_girl_name_set("館林さん");
+#else
     strcpy(name_code_girl_short, "館林");
     strcpy(girl_name_buf, "館林さん");
+#endif
     talk_clear();
     D_80122D38 = 1;
     encounter_scene_scripts_bind();

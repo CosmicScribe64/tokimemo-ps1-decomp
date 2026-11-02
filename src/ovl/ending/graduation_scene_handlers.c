@@ -19,6 +19,9 @@
 #include "main/talk.h"
 #include "main/text.h"
 #include "main/vram.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/script.h"
+#endif
 
 void ending_companion_scene_step_dispatch(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
@@ -137,7 +140,11 @@ INCLUDE_RODATA("asm/ovl/ENDING/data/ending/graduation_scene_handlers.rodata", D_
 
 void ending_set_rei_name_for_dialogue(void) {
     game_state.date_girl = GIRL_REI;
+#ifdef TOKIMEMO_ENGLISH
+    english_girl_short_set(D_8013BFB8); /* T-39506: English names may exceed the 8-byte buffer */
+#else
     strcpy(name_code_girl_short, D_8013BFB8);
+#endif
     mode_step_next();
 }
 
@@ -145,7 +152,11 @@ INCLUDE_RODATA("asm/ovl/ENDING/data/ending/graduation_scene_handlers.rodata", D_
 
 void ending_set_sotoi_name_for_dialogue(void) {
     game_state.date_girl = GIRL_SOTOI;
+#ifdef TOKIMEMO_ENGLISH
+    english_girl_short_set(D_8013BFC0);
+#else
     strcpy(name_code_girl_short, D_8013BFC0);
+#endif
     mode_step_next();
 }
 

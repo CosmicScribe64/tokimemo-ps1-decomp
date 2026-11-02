@@ -19,6 +19,10 @@
 #include "main/tpage.h"
 #include "main/vram.h"
 #include "ovl/culture_stage_shows.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/script.h"
+#include "english/text.h"
+#endif
 
 s32 stage_show_audio_sector_load(void) {
     if (game_state.substep == 0) {
@@ -561,12 +565,20 @@ void stage_show_speaker_label_wait(void) {
     if (game_state.mode_step_timer.u == 1) {
         switch (festival_dispatch_variant) {
         case 0:
+#ifdef TOKIMEMO_ENGLISH
+            /* T-39506: "Family Given" with a plain space, right-aligned at 0x60 by pixel width */
+            english_copy(player_name, game_state.player_family_name, sizeof(player_name));
+            english_append(player_name, " ", sizeof(player_name));
+            english_append(player_name, game_state.player_given_name, sizeof(player_name));
+            set_kanji_string(0x60 - english_text_width(player_name), 0x40, 0, (s32) player_name, 0);
+#else
             player_name_length = strlen(game_state.player_family_name);
             player_name_length += strlen(game_state.player_given_name);
             strcpy(player_name, game_state.player_family_name);
             strcat(player_name, "　");
             strcat(player_name, game_state.player_given_name);
             set_kanji_string((s16) (0x60 - (player_name_length * 7)), 0x40, 0, (s32) player_name, 0);
+#endif
             break;
         case 1:
             if (!(game_state.pad_held & PAD_CIRCLE)) {
@@ -607,7 +619,12 @@ void stage_show_script_line_render(void) {
         k_reset(1);
         switch (festival_dispatch_variant) {
         case 0:
+#ifdef TOKIMEMO_ENGLISH
+            set_kanji_string(english_speaker_label_x(game_state.player_family_name), 0x30, 0,
+                             (s32) game_state.player_family_name, 0);
+#else
             set_kanji_string((s16) (-0x68 - (strlen(game_state.player_family_name) * 4)), 0x30, 0, (s32) game_state.player_family_name, 0);
+#endif
             break;
         case 1:
             set_kanji_string(-0x80, 0x30, 0, (s32) "弁論者", 0);

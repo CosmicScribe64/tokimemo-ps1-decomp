@@ -1,5 +1,5 @@
 /* script.c: English dialogue parsers (T-39506). Not part of the original executable: only the English
- * build compiles it into the island (see src/english/text.c). Each function replaces the original of
+ * build compiles it, into the code appended to the main executable (see src/english/text.c). Each function replaces the original of
  * the same name without the english_ prefix through config/english_hooks.txt:
  *   talk_render, talk_speak_part, make_three_select, talk_names_set (src/main/scene_library.c),
  *   gnsx, sndisp, sndi, get_g_name, get_p_name (src/main/menu_speaker_girl.c).
@@ -13,7 +13,7 @@
  *   - line buffers of ENGLISH_LINE_BYTES (the originals have 64), bounded copies everywhere;
  *   - English honorifics from the translation records (c:main:80051438, SLPM_86.053:00072e34/38).
  * Names longer than the original fixed buffers (girl family names, name + honorific) are kept in full
- * in island buffers; the original buffer gets the bounded copy, see english_long_name. */
+ * in buffers of this file; the original buffer gets the bounded copy, see english_long_name. */
 #include "common.h"
 #include "game/game_state.h"
 #include "game_enums.h"
@@ -42,8 +42,11 @@
 #define ENGLISH_LONG_NAME_BYTES 24
 #define ENGLISH_GIRL_SHORT_BYTES 8 /* name_code_girl_short */
 #define ENGLISH_GIRL_NAME_BYTES 12 /* girl_name_buf, up to scene_place_title */
+#define ENGLISH_VALUE_O_BYTES 8    /* name_code_o, up to name_code_w */
+#define ENGLISH_VALUE_W_BYTES 12   /* name_code_w, up to name_code_a */
 #define ENGLISH_PLAYER_FORM_BYTES 12 /* name_code_player_form */
 #define ENGLISH_FULL_NAME_BYTES 16 /* get_p_name form 15: family, space, given */
+#define ENGLISH_STRING_POOL_BYTES 2048
 
 /* x of the dialogue text column, and the right edge of the speaker label column */
 #define ENGLISH_TEXT_X (-0x48)
@@ -63,9 +66,17 @@ static u8 english_name_shiori[] = "Shiori";
 static u8 english_name_fujisaki[] = "Fujisaki";
 static u8 english_name_yoshio[] = "Yoshio";
 
+/* Room for main-executable strings that the English build moves out of slots that are too small
+ * (tools/patch/text/retarget.py writes them here and re-points their references). Initialised, so
+ * that it is part of the loaded file; the first byte is overwritten by the build or never read. */
+u8 english_string_pool[ENGLISH_STRING_POOL_BYTES] = { 0xFF };
+s32 english_string_pool_bytes = ENGLISH_STRING_POOL_BYTES;
+
 /* Full forms of the girl names whose original buffers are too small (see english_long_name). */
 static u8 english_girl_short_long[ENGLISH_LONG_NAME_BYTES];
 static u8 english_girl_name_long[ENGLISH_LONG_NAME_BYTES];
+static u8 english_value_o_long[ENGLISH_LONG_NAME_BYTES]; /* O value (New Year fortune): name_code_o has 8 bytes */
+static u8 english_value_w_long[ENGLISH_LONG_NAME_BYTES]; /* W value (New Year wish): name_code_w has 12 bytes */
 
 /* Bytes of the character at text: 2 for a Shift-JIS lead byte, else 1. */
 static s32 english_char_bytes(u8 *text) {
@@ -118,6 +129,26 @@ static u8 *english_long_name(u8 *buffer, u8 *long_copy, s32 size) {
     return buffer;
 }
 
+void english_value_set(s32 code, u8 *text) {
+    if (code == ENGLISH_CODE_O) {
+        english_copy(english_value_o_long, text, ENGLISH_LONG_NAME_BYTES);
+        english_copy(name_code_o, english_value_o_long, ENGLISH_VALUE_O_BYTES);
+    } else if (code == ENGLISH_CODE_W) {
+        english_copy(english_value_w_long, text, ENGLISH_LONG_NAME_BYTES);
+        english_copy(name_code_w, english_value_w_long, ENGLISH_VALUE_W_BYTES);
+    }
+}
+
+void english_girl_short_set(u8 *name) {
+    english_copy(english_girl_short_long, name, ENGLISH_LONG_NAME_BYTES);
+    english_copy(name_code_girl_short, english_girl_short_long, ENGLISH_GIRL_SHORT_BYTES);
+}
+
+void english_girl_name_set(u8 *name) {
+    english_copy(english_girl_name_long, name, ENGLISH_LONG_NAME_BYTES);
+    english_copy(girl_name_buf, english_girl_name_long, ENGLISH_GIRL_NAME_BYTES);
+}
+
 static u8 *english_girl_short(void) {
     return english_long_name(name_code_girl_short, english_girl_short_long, ENGLISH_GIRL_SHORT_BYTES);
 }
@@ -162,10 +193,10 @@ static void english_names_expand(u8 *dst, u8 *src) {
             text = name_code_s;
             break;
         case ENGLISH_CODE_O:
-            text = name_code_o;
+            text = english_long_name(name_code_o, english_value_o_long, ENGLISH_VALUE_O_BYTES);
             break;
         case ENGLISH_CODE_W:
-            text = name_code_w;
+            text = english_long_name(name_code_w, english_value_w_long, ENGLISH_VALUE_W_BYTES);
             break;
         case ENGLISH_CODE_A:
             text = name_code_a;
@@ -295,6 +326,10 @@ static s32 english_right_aligned(u8 *text, s32 right) {
         x = ENGLISH_SCREEN_LEFT;
     }
     return x;
+}
+
+s32 english_speaker_label_x(u8 *name) {
+    return english_right_aligned(name, ENGLISH_LABEL_RIGHT);
 }
 
 /* Speaker label, right-aligned in the label column, and the quote mark before the text column. */
@@ -705,7 +740,7 @@ void english_gnsx(u8 *speaker_name) {
 
 void english_sndisp(u8 *text, s32 first_row, s32 speaker_style) {
     u8 block_text[256];
-    s32 line_starts[5];
+    s32 line_starts[6];
     s32 line_count;
     s32 i;
 
@@ -713,7 +748,7 @@ void english_sndisp(u8 *text, s32 first_row, s32 speaker_style) {
     line_starts[0] = 0;
     line_count = 1;
     for (i = 0; block_text[i] != 0; i++) {
-        if (block_text[i] == ENGLISH_LINE_END && line_count < 5) {
+        if (block_text[i] == ENGLISH_LINE_END && line_count < 6) {
             block_text[i] = 0;
             line_starts[line_count++] = i + 1;
         }

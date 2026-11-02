@@ -2,6 +2,10 @@
 #define MAIN_API_OVERRIDE_talk_names_set /* Word argument at this call (new_year_target_dialogue_setup); T-17500. */
 #include "common.h"
 #include "ovl/new_year_christmas.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/script.h"
+#include "english/text.h"
+#endif
 void talk_names_set();
 
 void new_year_dialogue_mode_step_dispatch(void) {
@@ -284,7 +288,12 @@ void new_year_shrine_invitation_prompt(void) {
      * temporary slots needed by the original register sequence. T-24523 */
     if (game_state.current_girl != GIRL_SHIORI) {
         if (game_state.substep == 0) {
+#ifdef TOKIMEMO_ENGLISH
+            /* T-39506: speaker label right-aligned by pixel width */
+            set_kanji_string(english_speaker_label_x(name_code_family), 0x30, 0, (s32)name_code_family, 0);
+#else
             set_kanji_string((s16)(-0x68 - (s16)(strlen(name_code_family) * 4)), 0x30, 0, (s32)name_code_family, 0);
+#endif
             set_kanji_string(-0x56, 0x30, 0, (s32)"『 ", 0);
             talk_render(-0x48, 0x30, 0, (s32)"それじゃ、神社に行くか。", 0, "", "", 0);
             new_year_dialogue_group = 0;

@@ -50,8 +50,17 @@ void english_sndi(u8 *text, s32 row, s32 speaker_style);
 s32 english_get_g_name(u8 *name_buf, s32 girl_id);
 void english_get_p_name(u8 *name_buf, s32 girl_form);
 
-/* Helpers shared with the other island units. */
+/* Helpers shared with the other English code (NAME_ENT uses them too). */
 void english_copy(u8 *dst, u8 *src, s32 size);
 void english_append(u8 *dst, u8 *src, s32 size);
+/* Overlay replacements of strcpy into name_code_girl_short (8 bytes) and girl_name_buf (12 bytes): the
+ * full name is kept for the parsers, the buffer gets a bounded copy. */
+void english_girl_short_set(u8 *name);
+void english_girl_name_set(u8 *name);
+/* The same for the O and W values (name_code_o, 8 bytes; name_code_w, 12 bytes): New Year fortune and wish;
+ * code is ENGLISH_CODE_O or ENGLISH_CODE_W. */
+void english_value_set(s32 code, u8 *text);
+/* x of a speaker label right-aligned in the label column left of the quote mark (at least -0x9E) */
+s32 english_speaker_label_x(u8 *name);
 
 #endif
