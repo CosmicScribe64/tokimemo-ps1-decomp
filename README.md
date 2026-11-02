@@ -6,16 +6,31 @@
 
 This project is a matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`).
 
-The project is finished. The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) rebuild byte for byte, every
+The decompilation is complete. The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) rebuild byte for byte, every
 game function is written in C, and the matched code has readable names and comments. The PsyQ SDK libraries stay in
 assembly. [wiki/status.md](wiki/status.md) has the final numbers and how they were verified.
 
 **You need your own copy of the disc.** Original disc images, executables, extracted originals, and generated
 disassembly are not included. `translations/` keeps English text records and translated artwork with their review
-history ([translations/en/graphics/artwork](translations/en/graphics/artwork/README.md)). Nothing in the repository
-applies them to the game.
+history ([translations/en/graphics/artwork](translations/en/graphics/artwork/README.md)). An English patch is available
+as a review build.
 
 This project is independent. It is not affiliated with or endorsed by Konami.
+
+## English patch
+
+[Patch your disc in your browser](https://cosmicscribe64.github.io/tokimemo-ps1-decomp/).
+
+The patch translates dialogue, menus and selected artwork. Text and visual checks are still in progress, so expect
+some rough edges. [Report a problem](https://github.com/CosmicScribe64/tokimemo-ps1-decomp/issues) with a screenshot
+and where it happened.
+
+Use the two original BIN tracks from the Japanese PlayStation the Best release (`SLPM-86053`). The patcher checks
+your files, applies the patch on your computer and verifies the result. Your disc is never uploaded. It downloads
+a patched data track and a CUE file; keep those beside your unchanged audio track and open the CUE in your emulator.
+
+For the source build, see [the English build notes](wiki/english-build.md). The [patcher source](patcher/) and
+[packaging tool](tools/patch/package_patcher.py) are included here.
 
 ## Building
 
@@ -56,7 +71,7 @@ Many function names come from the symbol map in the game's own `O.BIN` developer
 
 ## AI assistance
 
-AI coding agents (Claude Code) wrote most of the code and documentation here, directed by the maintainer. The English
+AI coding agents (Claude Code and Codex) wrote most of the code and documentation here, directed by the maintainer. The English
 records in `translations/` were also produced with AI.
 
 ## Contributing
