@@ -7,15 +7,33 @@ in `ledger.json` and the crop hashes are reproduced by `tools/test_translation_b
 ## Crop format (new)
 
 Every crop is an RGBA PNG of the plan rectangle. Alpha 255 = port-made pixel, write it over the decoded still; alpha 0 =
-keep the source pixel (RGB is 0 there and carries no picture data). So the crops hold no original pixel and the stone,
-paper, sky and chalkboard texture comes from the source decode at patch time. The packer must composite, not replace the
-rectangle. The T-39400 crops were opaque RGB rectangles; the five replaced ones below are RGBA.
+keep the source pixel (RGB is 0 there and carries no picture data). The stone, paper, sky and chalkboard texture outside
+the erased lettering comes from the source decode at patch time. The packer must composite, not replace the rectangle.
+The T-39400 crops were opaque RGB rectangles; the five replaced ones below are RGBA.
+
+## Fill of the erased lettering
+
+An erased pixel is the smooth part (normalised Gaussian average, sigma 3 px, of the clean pixels around it) plus synthetic
+grain: Gaussian noise from a fixed seed per crop (first 32 bits of the SHA-256 of the id), blurred to the pixel-to-pixel
+correlation of the clean neighbours' fine-scale residual, coloured by its covariance and scaled to its local strength
+(`tools/translation_bs_brush.py`, `inpaint`). The statistics come from clean pixels inside the plan rectangle only, with
+outliers dropped. No source pixel or residual is copied. The plate, placard, plaque and band faces take a plane fitted to
+the clean face pixels instead. Per crop the manifest records `crop.source_equal_pixels` (alpha-255 pixels equal to the
+source decode at their position: 0 for every crop) and `crop.fill`, which holds the seed, the grain statistics and
+`shift_correlation`: the largest correlation of the fill grain with the source grain at any shift up to 12 px (0.10 to
+0.31 here; the earlier donor fill, which copied the residual of a clean pixel 3 to 12 px away, scored 0.88 to 1.0).
+`crop.fill.shift_correlation` is absent for plane fills, which have no grain. The manifest also records the Pillow and
+numpy versions the bytes were made with; the byte-exact rebuild test skips with a message under other versions.
+
+Hashes of this revision: `ledger.json` (crop and manifest hashes per asset) and `translations/en/graphics/translation_inventory.json`.
+The gate plate, roster, monument and chalkboard crops changed with the grain fill; the four plane-filled crops and
+P_01_03B (its sky is flat, so its grain is zero) kept their bytes. Ids are unchanged.
 
 ## 1. Ledger to add
 
-Add `translations/en/graphics/artwork/checkpoints/T39410-stills-fixes-v1/ledger.json` to `LEDGERS` in
-`tools/translation_inventory.py` (9 candidates since the second pass; done in d38555585). The four rejected roster
-alternatives are deleted from the checkpoint, so the ledger needs no `UNREGISTERED` skip any more (removed).
+`translations/en/graphics/artwork/checkpoints/T39410-stills-fixes-v1/ledger.json` is in `LEDGERS` in
+`tools/translation_inventory.py` (9 candidates). The checkpoint holds only the chosen roster layout, so the ledger needs no
+`UNREGISTERED` skip.
 
 ## 2. Supersedes (leave these ledger rows out, as the 3-wide-M and Clear drafts were)
 
@@ -28,8 +46,7 @@ alternatives are deleted from the checkpoint, so the ledger needs no `UNREGISTER
 | `bs-i-17-01-hanging-sign` | `T39400-bs-signs-v1` | `bs-i-17-01-hanging-sign-v2` |
 | `bs-c-01-28-final-exams` | `T39004-bs-v1` | `bs-c-01-28-final-exams-v2` |
 
-Add the five T-39400 ids to an `UNREGISTERED`-style skip for that ledger (prefix match is enough) and the T39004-bs-v1 id
-`bs-c-01-28-final-exams`. The other T-39400 crops (the 12 other sign crops incl. the six P_01_02 header marks) stay. The
+The five T-39400 ids and the T39004-bs-v1 id `bs-c-01-28-final-exams` are in `UNREGISTERED` (exact ids per ledger). The other T-39400 crops (the 12 other sign crops incl. the six P_01_02 header marks) stay. The
 T39004-bs-v1 `all-c-banner` row is unrelated and stays.
 
 ## 3. Catalog / inventory changes
@@ -68,7 +85,7 @@ the frame and not translated.
 Third pass (final reviewer nits): monument remnant left of CENTRAL (top of 市, x 229-234) force-erased and refilled
 without grain; LOVELY SHOP narrowed (2 px L, 2 px word space) to 3 px clear at each end; gate plate letters enlarged
 (cap 13.5, leading 14; ink at least 6.7 px from every plate edge) with A-T and V-A kerning (PRIVATE); P_01_03 sky at the
-cut left-edge glyph refilled without grain (no streaks). New erase key `smooth` (rectangles filled without donor grain).
+cut left-edge glyph refilled without grain. Erase key `smooth`: rectangles that take the smooth part only, without grain.
 
 ## 5. P_01_02 student names: not done, with evidence
 
@@ -82,9 +99,12 @@ resolution, left as picture texture` under catalog-130.
 
 ## 6. Geometry (new proofs in the manifest)
 
-P_01_01 (320x160): `prologue.c:224` reads LBA 0x494B (= 0x4954 - 9 sectors), `prologue.c:233` decodes with
-`dec_bg_decode_to_vram(1)`. P_01_03: `prologue.c:413` / `:425`. P_01_03B: `prologue.c:463` / `:472`. C_01_28 (320x88):
-`school_day.c:126` reads, `school_day.c:178` decodes with `dec_bg_decode_to_vram(0)` (`background_images.c`
+Each caller is cited by file, function and call text (the line numbers below are where the calls were at the time of
+writing; the build checks only that the call is in the function). P_01_01 (320x160): `prologue_arrival_scene_init`
+(`prologue.c:224`) reads LBA 0x494B (= 0x4954 - 9 sectors) and decodes with `dec_bg_decode_to_vram(1)` (`:233`).
+P_01_03: `prologue_board_scroll` (`:413` / `:425`). P_01_03B: `prologue_names_crossfade` (`:463` / `:472`). C_01_28
+(320x88): `school_day_background_read` (`school_day.c:126`) reads, `school_day_screen_init` (`school_day.c:178`) decodes
+with `dec_bg_decode_to_vram(0)` (`background_images.c`
 `bg_still_decode_to_vram(0x2C0, 0xA0, 0x140, 0x58)`), 120 macroblocks plus end marker. Every stream's macroblock count
 equals (width/16) x ceil(height/16) and the end marker follows. P_01_01 and P_01_03B carry zero padding and a 4-byte trailer after the end marker
 (1880 and 348 trailing bytes, 4 non-zero), recorded in the manifest as `trailing_nonzero_bytes`; the T-39400 claim that only
