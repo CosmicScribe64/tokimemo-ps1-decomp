@@ -130,6 +130,34 @@ def symbols(path):
     return out
 
 
+def section_symbols(elf, sec):
+    """{name: offset} of the symbols defined in a section of an object."""
+    return {sym.name: sym.value for sym in elf.symbols if sym.name and sym.shndx == sec.index}
+
+
+def section_references(elf):
+    """{(site section, site offset): (target section, target offset)} of the section-relative
+    relocations of an object: R_MIPS_32 words, and LO16 sites with the addend of their HI16."""
+    out = {}
+    for sec in elf.sections:
+        if sec.type == elf32.SHT_REL or not sec.flags & 2:
+            continue
+        data = elf.contents(sec)
+        last_hi = {}
+        for offset, kind, sym in sorted(elf.relocations(sec), key=lambda r: r[0]):
+            if sym.type != 3 or sym.shndx in (elf32.SHN_UNDEF, elf32.SHN_ABS):  # STT_SECTION only
+                continue
+            target = elf.sections[sym.shndx].name
+            if kind == elf32.R_MIPS_32:
+                out[(sec.name, offset)] = (target, struct.unpack_from("<I", data, offset)[0])
+            elif kind == elf32.R_MIPS_HI16:
+                last_hi[sym.shndx] = struct.unpack_from("<H", data, offset)[0]
+            elif kind == elf32.R_MIPS_LO16 and sym.shndx in last_hi:
+                lo = struct.unpack_from("<h", data, offset)[0]
+                out[(sec.name, offset)] = (target, ((last_hi[sym.shndx] << 16) + lo) & 0xFFFFFFFF)
+    return out
+
+
 class Layout:
     """A unit's default placement: anchors (script order of the input sections), where each input section
     was, and which objects the variant rebuilds."""
@@ -153,6 +181,38 @@ class Layout:
             if in_section and is_global and not SEGMENT_SYMBOL.search(name) and "." not in name:
                 self.names_at.setdefault(addr, []).append(name)
         self.functions = {a for a, f, s, _g in self.default_syms.values() if f and s}
+        self._same = {}
+
+    def referenced_offset(self, key, offset):
+        """Offset in the variant's section of the byte that the default object's own code or data
+        reaches at `offset` (an anonymous literal in a rebuilt object): the variant's relocation at
+        the same site gives it. None unless every such site agrees and the site sections kept their
+        size."""
+        old, new = elf32.Elf(key[0]), elf32.Elf(variant_path(key[0], self.out_dir))
+        refs_old, refs_new = section_references(old), section_references(new)
+        found = set()
+        for site, target in refs_old.items():
+            if target != (key[1], offset):
+                continue
+            a, b = old.section(site[0]), new.section(site[0])
+            if a is None or b is None or a.size != b.size or site not in refs_new \
+                    or refs_new[site][0] != key[1]:
+                return None
+            found.add(refs_new[site][1])
+        return found.pop() if len(found) == 1 else None
+
+    def unchanged(self, key):
+        """True when the variant's copy of a rebuilt object keeps this section's size and the offset of
+        every symbol in it, so an offset into it still names the same place. English literals change
+        .rodata; in .data they change bytes of fixed-size arrays and the addends of pointers."""
+        if key[0] not in self.redirect:
+            return True
+        if key not in self._same:
+            old, new = elf32.Elf(key[0]), elf32.Elf(variant_path(key[0], self.out_dir))
+            a, b = old.section(key[1]), new.section(key[1])
+            self._same[key] = a is not None and b is not None and a.size == b.size \
+                and section_symbols(old, a) == section_symbols(new, b)
+        return self._same[key]
 
     def anchor(self, key):
         return "__en_%s_%d" % (self.unit, self.index[key])
@@ -174,12 +234,18 @@ class Layout:
         key = self.containing(v)
         if key is None:
             return None
-        if key[0] not in self.redirect:
+        if self.unchanged(key):
             return ("anchor", key, v - self.placed[key][0])
         names = sorted(self.names_at.get(v, []))
+        if not names and v - self.placed[key][0] == self.placed[key][1]:  # the end of the section
+            sec = elf32.Elf(variant_path(key[0], self.out_dir)).section(key[1])
+            return ("anchor", key, sec.size)
         if not names:
-            die("%s: 0x%08X lies in %s, which this variant rebuilds, and no global symbol names it"
-                % (self.unit, v, key[0]))
+            moved = self.referenced_offset(key, v - self.placed[key][0])
+            if moved is not None:
+                return ("anchor", key, moved)
+            die("%s: 0x%08X lies in %s(%s), which this variant rebuilds with other bytes, and no global "
+                "symbol names it" % (self.unit, v, key[0], key[1]))
         return ("name", names[0])
 
     def expr(self, v):
@@ -189,6 +255,25 @@ class Layout:
         if w[0] == "name":
             return w[1]
         return "%s + 0x%X" % (self.anchor(w[1]), w[2]) if w[2] else self.anchor(w[1])
+
+    def moved_to(self, v, new_syms):
+        """New address of default address v, or None when it cannot be found: outside every input
+        section, or inside a rebuilt object's changed section with neither a global symbol there nor a
+        relocation of the object's own that reaches it. For tools that patch the relinked binaries
+        (T-39507); they must still check the bytes they find there."""
+        key = self.containing(v)
+        if key is None:
+            return None
+        offset = v - self.placed[key][0]
+        if not self.unchanged(key):
+            for name in sorted(self.names_at.get(v, [])):
+                if name in new_syms:
+                    return new_syms[name][0]
+            offset = self.referenced_offset(key, offset)
+            if offset is None:
+                return None
+        anchor = self.anchor(key)
+        return new_syms[anchor][0] + offset if anchor in new_syms else None
 
     def value(self, v, new_syms):
         """New address of default address v, from the relinked ELF's symbols."""
@@ -206,6 +291,15 @@ class Layout:
 
 
 # ---- ld ----
+
+def translator(unit, out_dir):
+    """Function default address -> address in the relinked unit (None if it has none), from the variant's
+    link in out_dir (build/en)."""
+    lay = Layout(unit, out_dir, redirected_objects(out_dir, unit))
+    elf = "%s/%s.elf" % (out_dir, EXE) if unit == "main" else "%s/ovl/%s.elf" % (out_dir, unit)
+    syms = symbols(elf)
+    return lambda v: lay.moved_to(v, syms)
+
 
 def cmd_ld(argv):
     unit, out_dir, default_ld, default_map, out_ld = argv[:5]
@@ -318,6 +412,22 @@ def redirected_objects(out_dir, unit):
     return found
 
 
+def referenced_names(out_dir, unit):
+    """Names the unit's objects (as the variant links them) leave undefined: the only side-script
+    definitions that matter for its link."""
+    path = "%s/%s.ld" % (out_dir, EXE) if unit == "main" else "%s/ovl/%s.ld" % (out_dir, unit)
+    objects = set()
+    for line in open(path):
+        m = INPUT_LINE.match(line.rstrip("\n"))
+        if m:
+            objects.add(m.group(2))
+    names = set()
+    for obj in sorted(objects):
+        if os.path.exists(obj):
+            names |= {sym.name for sym in elf32.Elf(obj).symbols if sym.name and sym.shndx == elf32.SHN_UNDEF}
+    return names
+
+
 def cmd_aux(argv):
     unit, out_dir, out = argv[:3]
     main_elf = entries = None
@@ -339,6 +449,7 @@ def cmd_aux(argv):
         main_syms = symbols(main_elf)
         default_main_syms = main.default_syms
     entry_values = read_ld_numbers(entries) if entries else {}
+    used = referenced_names(out_dir, unit)
     lines = ["/* free relink (T-39505): tools/english_link.py aux %s */" % unit]
     for path in side_scripts(unit):
         lines.append("/* from %s */" % path)
@@ -351,6 +462,9 @@ def cmd_aux(argv):
             indent, provide, name, number, _close, tail = m.groups()
             v = int(number, 16)
             new = None
+            if name not in used:  # no object of this link refers to it (main_names.ld is shared)
+                lines.append(line)
+                continue
             if in_range(v, own_range):
                 new = own.expr(v)
             elif unit == "main" and in_range(v, SLOT_RANGE) and entries:
@@ -440,6 +554,7 @@ def raw_sites(unit, out_dir, new_map, own, main_layout, main_syms_new, own_syms_
     decisions = read_decisions(unit, own.default_syms, own_syms_new)
     used = set()
     ranges = [MAIN_RANGE, SLOT_RANGE]
+    new_sizes = {}
     out = []
     for path in sorted({o for o, _s in placed_new}):
         default_obj = "build/" + path[len(out_dir) + 1:] if path.startswith(out_dir + "/") else path
@@ -449,9 +564,10 @@ def raw_sites(unit, out_dir, new_map, own, main_layout, main_syms_new, own_syms_
                 continue
             v = f["value"]
             site_default = None
-            if not rebuilt:
-                p = own.placed.get((default_obj, f["section"]))
-                site_default = p[0] + f["offset"] if p else None
+            p = own.placed.get((default_obj, f["section"]))
+            if p and (not rebuilt or p[1] == new_sizes.setdefault((path, f["section"]),
+                                                               elf32.Elf(path).section(f["section"]).size)):
+                site_default = p[0] + f["offset"]  # a rebuilt object whose section kept its size counts too
             target = main_layout if in_range(v, MAIN_RANGE) else own
             if unit == "main" and in_range(v, SLOT_RANGE):
                 die("main: raw overlay address 0x%08X at %s %s+0x%X" % (v, path, f["section"], f["offset"]))

@@ -370,7 +370,9 @@ def relink_targets(n, overlays, objs, cc_implicit, out_dir, english, shifts=None
                                         + (["--redirect"] + redirect if redirect else [])
                                         + (["--extra"] + extra if extra else []) + shift)})
     aux_first = out_dir + "/main_aux_first.ld"
-    n.build(aux_first, "rlink", [script], implicit=default + side_scripts("main") + tools,
+    main_default = default
+    # aux compares rebuilt objects with the default ones (english_link.Layout.unchanged)
+    n.build(aux_first, "rlink", [script], implicit=default + side_scripts("main") + main_objs + tools,
             variables={"args": "aux main %s %s" % (out_dir, aux_first)})
     first = out_dir + "/main_first.elf"
     n.build(first, "rld", main_objs + extra, implicit=[script, aux_first],
@@ -382,7 +384,8 @@ def relink_targets(n, overlays, objs, cc_implicit, out_dir, english, shifts=None
         out = out_dir + "/ovl/%s.bin" % name
         flagged = [cf for cf in srcscan.unit_c_files(name) if english and english_variant(str(cf.src))]
         if name in UNLOADED_OVERLAYS:
-            if flagged:
+            # generated English sources of these files are ignored: the overlay is copied unchanged
+            if any(english and uses_english(str(cf.src)) for cf in srcscan.unit_c_files(name)):
                 sys.exit("configure.py: %s is never loaded; do not flag its files" % name)
             n.build(out, "rlink", ["build/ovl/%s.bin" % name], implicit=tools,
                     variables={"args": "copy %s build/ovl/%s.bin %s" % (name, name, out)})
@@ -401,14 +404,14 @@ def relink_targets(n, overlays, objs, cc_implicit, out_dir, english, shifts=None
                                              "build/ovl/%s.map" % name, script]
                                             + (["--redirect"] + redirect if redirect else []) + ovl_shift)})
         aux = out_dir + "/ovl/%s_aux.ld" % name
-        n.build(aux, "rlink", [script], implicit=default + side_scripts(name) + [first, out_dir + "/%s.ld" % EXE]
+        n.build(aux, "rlink", [script], implicit=default + side_scripts(name) + ovl_objs + [first, out_dir + "/%s.ld" % EXE]
                 + tools, variables={"args": "aux %s %s %s --main-elf %s" % (name, out_dir, aux, first)})
         elf = out_dir + "/ovl/%s.elf" % name
         n.build(elf, "rld", ovl_objs, implicit=[script, aux],
                 variables={"script": script, "aux": aux, "map": out_dir + "/ovl/%s.map" % name})
         raw = out_dir + "/ovl/%s.raw" % name
         n.build(raw, "objcopy", elf)
-        n.build(out, "rlink", [elf, raw], implicit=default + [first] + hook_deps + tools,
+        n.build(out, "rlink", [elf, raw], implicit=default + [first] + ovl_objs + main_objs + hook_deps + tools,
                 variables={"args": "ovl %s %s %s %s %s %s %s" % (name, out_dir, elf, raw, first, hooks, out)})
         ovl_elfs.append(elf)
         outputs.append(out)
@@ -418,7 +421,7 @@ def relink_targets(n, overlays, objs, cc_implicit, out_dir, english, shifts=None
     n.build(entries, "rlink", ovl_elfs, implicit=tools + ["build/undefined_syms_auto.txt"],
             variables={"args": "entries %s %s" % (out_dir, entries)})
     aux = out_dir + "/main_aux.ld"
-    n.build(aux, "rlink", [script, entries], implicit=default + side_scripts("main") + tools,
+    n.build(aux, "rlink", [script, entries], implicit=main_default + side_scripts("main") + main_objs + tools,
             variables={"args": "aux main %s %s --entries %s" % (out_dir, aux, entries)})
     elf = out_dir + "/%s.elf" % EXE
     n.build(elf, "rld", main_objs + extra, implicit=[script, aux],
@@ -426,7 +429,7 @@ def relink_targets(n, overlays, objs, cc_implicit, out_dir, english, shifts=None
     raw = out_dir + "/%s.raw" % EXE
     n.build(raw, "objcopy", elf)
     exe = out_dir + "/%s.bin" % EXE
-    n.build(exe, "rlink", [elf, raw], implicit=default + [first] + hook_deps + tools,
+    n.build(exe, "rlink", [elf, raw], implicit=main_default + [first] + main_objs + hook_deps + tools,
             variables={"args": "exe %s %s %s %s %s %s" % (out_dir, elf, raw, first, hooks, exe)})
     outputs.append(exe)
     return outputs

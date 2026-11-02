@@ -15,19 +15,21 @@ Steps:
  1. configure and build the font metrics (build/en/font_metrics.json).
  2. Encode every English record (tools/patch/text/english.py) and wrap it for its window
     (windows.py, wrap.py).
- 3. C literals: write the English sources to build/en/src (c_literals.rewrite_sources) and compile
-    them. While the English link pins every object to its original address (T-39502), an object
-    that grows or moves a symbol cannot link: its growing literals go back to the original, then
-    the whole file; those records are reported for the relink (T-39505).
+ 3. C literals: write the English sources to build/en/src (c_literals.rewrite_sources; a sized array
+    grows with its literal) and compile them. The English link relinks every unit freely (T-39505,
+    wiki/relink.md), so objects may grow; the fit loop of the old pinned link only runs with
+    PINNED_LINK. Literals of EVENT and GYOZI, which the game never loads, stay Japanese.
  4. Write the talk scripts and tables (Image.write) and place them on the disc
     (tools/patch/disc.py): a file that needs more sectors moves to the end of the data track,
     after the checks of tools/patch/cd_layout.py (read sites, load buffers); a file that may not
     grow keeps its original bytes.
- 5. Write build/en/cd_layout.json (the moved files) and run `ninja english`: the island table of
+ 5. Write build/en/cd_layout.json (the moved files) and run `ninja english`: the remap table of
     src/english/cd.c sends reads of moved files to their new sectors.
- 6. Write the in-place records into the built executable and overlays (text/inplace.py), put them
-    on the disc (the executable last, moved to the end when it needs more sectors), write
-    track 1 and the cue, then the xdelta patch against the original track.
+ 6. Write the in-place records into the built executable and overlays (text/inplace.py), at the
+    place the free link moved each slot to (english_link.translator), put them on the disc (the
+    executable last, moved to the end when it needs more sectors), write track 1 and the cue,
+    then the xdelta patch against the original track. A route run on this disc needs
+    `tools/emu/run.sh route run --relink build/en`.
 """
 from __future__ import annotations
 
@@ -42,6 +44,7 @@ import time
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from tools import english_link
 from tools.patch import cd_layout
 from tools.patch import disc as disc_mod
 from tools.patch import make_patch
@@ -62,9 +65,9 @@ EXE_OUT = EN_DIR / "SLPM_86.053.bin"
 OVERLAY_DIR = EN_DIR / "ovl"
 DATA_KINDS = ("talk_script", "talk_script_supplemental", "binary_table")
 BINARY_KINDS = ("main_executable", "overlay")
-# The English link pins every object to its original address until T-39505 lets it relink freely;
-# then growing objects are fine and the literal fit loop is not needed.
-PINNED_LINK = True
+# The English link relinks every unit freely (T-39505, wiki/relink.md): objects may grow, so the literal
+# fit loop of the pinned link is off. Set it to True only to reproduce the pinned-link report.
+PINNED_LINK = False
 NINJA_OBJECT = re.compile(r"^build (build/en/\S+\.o): cctext (src/\S+\.c)", re.M)
 SECTIONS = (".text", ".rodata", ".data", ".sdata", ".bss", ".sbss")
 
@@ -186,12 +189,26 @@ def object_fit(english: Path, default: Path) -> str | None:
     return None
 
 
+def unloaded_sources() -> set[str]:
+    """C files of the overlays the game never loads (EVENT, GYOZI): their literals stay Japanese."""
+    sys.path.insert(0, str(REPOSITORY / "tools"))
+    import srcscan  # noqa: E402  (tools/srcscan.py)
+    old_dir = os.getcwd()
+    os.chdir(REPOSITORY)
+    try:
+        return {str(cf.src) for name in english_link.UNLOADED for cf in srcscan.unit_c_files(name)}
+    finally:
+        os.chdir(old_dir)
+
+
 def build_literals(sites, payloads: dict[str, bytes]) -> dict:
     """Generate and compile the English sources; with a pinned link keep only what fits."""
     by_file = defaultdict(list)
     for site in sites:
         by_file[site.path].append(site)
-    active = dict(payloads)
+    skipped = unloaded_sources()
+    unloaded = {s.id: "%s: overlay never loaded" % s.path for s in sites if s.path in skipped and s.id in payloads}
+    active = {rid: payload for rid, payload in payloads.items() if rid not in unloaded}
     reverted: dict[str, str] = {}
     failed_files: dict[str, str] = {}
     rounds = 0
@@ -232,6 +249,7 @@ def build_literals(sites, payloads: dict[str, bytes]) -> dict:
     files = write_sources(sites, active)
     configure()
     return {"files": files, "literals_written": len(active), "literals_reverted": reverted,
+            "literals_unloaded": unloaded,
             "files_reverted": failed_files, "rounds": rounds}
 
 
@@ -278,18 +296,41 @@ def write_layout(placed: list[dict]) -> list[dict]:
     return remap
 
 
+def relinked_offsets(disc_path: str, built_path: Path, base: int):
+    """Original file offset -> offset in the freely relinked English binary (None: no such place)."""
+    unit = "main" if disc_path == EXE_PATH else built_path.stem
+    if unit in english_link.UNLOADED:
+        return lambda offset: offset
+    old_dir = os.getcwd()
+    os.chdir(REPOSITORY)
+    try:
+        moved = english_link.translator(unit, str(EN_DIR))
+    finally:
+        os.chdir(old_dir)
+    new_base = base if unit != "main" else english_link.EXE_VRAM - english_link.EXE_HEADER
+
+    def locate(offset):
+        if unit == "main" and offset < english_link.EXE_HEADER:
+            return offset
+        address = moved(base + offset)
+        return None if address is None else address - new_base
+    return locate
+
+
 def place_binaries(disc, containers, text, files_root: Path) -> dict:
     """In-place records into the built overlays and executable, then onto the disc."""
     out = {"overlays_replaced": [], "in_place": {}}
     jobs = []
     for bin_path in sorted((REPOSITORY / OVERLAY_DIR).glob("*.bin")):
-        jobs.append(("CDROM/EXEDIR/%s.EXN" % bin_path.stem, bin_path))
+        if bin_path.stem not in english_link.UNLOADED:  # never loaded: the original file stays
+            jobs.append(("CDROM/EXEDIR/%s.EXN" % bin_path.stem, bin_path))
     jobs.append((EXE_PATH, REPOSITORY / EXE_OUT))
     for disc_path, built_path in jobs:
         built = built_path.read_bytes()
         container = containers.get(disc_path)
         if container is not None and container.kind in BINARY_KINDS:
-            result = patch_built(container, text.payloads.get(disc_path, {}), built)
+            result = patch_built(container, text.payloads.get(disc_path, {}), built,
+                                 relinked_offsets(disc_path, built_path, container.image.base))
             built = result.data
             out["in_place"][disc_path] = {"written": len(result.written), "overflows": result.overflows,
                                           "moved_in_build": result.moved_in_build}
@@ -311,6 +352,8 @@ def record_report(text, containers, literals: dict, data: dict, binaries: dict) 
     reasons = {rid: note.get("reason") for rid, note in text.notes.items() if note.get("reason")}
     for rid, why in literals["literals_reverted"].items():
         status[rid], reasons[rid] = "needs_relink", why
+    for rid, why in literals.get("literals_unloaded", {}).items():
+        status[rid], reasons[rid] = "kept_original", why
     for path, overflows in data["overflows"].items():
         for item in overflows:
             if item.get("id"):
@@ -325,6 +368,10 @@ def record_report(text, containers, literals: dict, data: dict, binaries: dict) 
             reasons[over["id"]] = "in place: %d bytes, capacity %d" % (over["needed"], over["capacity"])
         for rid in item["moved_in_build"]:
             status[rid], reasons[rid] = "moved_in_build", "slot bytes differ in the English binary"
+    unloaded = {"CDROM/EXEDIR/%s.EXN" % name for name in english_link.UNLOADED}
+    for rid, note in text.notes.items():
+        if note["path"] in unloaded and status[rid] != "kept_original":
+            status[rid], reasons[rid] = "kept_original", "overlay never loaded"
     by_container = defaultdict(Counter)
     by_kind = defaultdict(Counter)
     lists = defaultdict(list)
@@ -407,7 +454,7 @@ def build(args) -> dict:
                 ninja(["english"])
                 return None
             except BuildError as exc:
-                if not literals["files"]:
+                if not literals["files"] or os.environ.get("ENGLISH_NO_FALLBACK"):
                     raise
                 # keep the disc build going without the English sources and say why
                 shutil.rmtree(REPOSITORY / EN_SRC)
