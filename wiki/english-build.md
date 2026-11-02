@@ -1,7 +1,7 @@
 ---
 type: tool
 updated: 2026-11-01
-sources: ["tools/patch/build_english.py", "tools/patch/cd_layout.py", "tools/patch/text/english.py", "tools/patch/text/windows.py", "tools/patch/text/wrap.py", "tools/patch/text/layout.py", "tools/patch/text/inplace.py", "src/english/cd.c", "include/english/cd.h", "tools/test_patch_english.py"]
+sources: ["tools/patch/build_english.py", "tools/patch/art/", "tools/test_patch_art.py", "tools/patch/cd_layout.py", "tools/patch/text/english.py", "tools/patch/text/windows.py", "tools/patch/text/wrap.py", "tools/patch/text/layout.py", "tools/patch/text/inplace.py", "src/english/cd.c", "include/english/cd.h", "tools/test_patch_english.py"]
 ---
 
 # English build pipeline
@@ -13,6 +13,7 @@ One command builds the English disc and its patch. Ticket [[tickets/T-39507-engl
 ```
 IMG=tokimemo-patch tools/docker.sh python3 -m tools.patch.build_english   # about 4 minutes
 tools/docker.sh python3 -m unittest tools.test_patch_english -v            # no game data
+IMG=tokimemo-patch tools/docker.sh python3 -m unittest tools.test_patch_art -v  # art writers
 IMG=tokimemo-patch tools/docker.sh env TOKIMEMO_ENGLISH_DISC=1 python3 -m unittest tools.test_patch_english -v
 tools/emu/run.sh route run --label en --build jp --cue build/en/disc/tokimemo-en.cue
 ```
@@ -36,6 +37,7 @@ Image: `tokimemo-patch` from `tools/Dockerfile.patch` (xdelta3). Outputs in `bui
 4. Data files:
    - Every talk script, supplemental script and `JOHO.NBN` is written with `Image.write` and checked by `cd_layout.plan_file`. It is then put on the disc with `Disc.replace`: in place when it keeps its sector count, otherwise at the end of the data track.
    - A file that may not grow keeps its original bytes.
+4b. The English art (section Art below): every registered image into its container, placed like a data file; after step 5 the MAINROM part records go into the built executable, and after track 1 is written the art is read back and verified.
 5. `build/en/cd_layout.json` (the moved files), then `configure.py` and `ninja english`. The island table `english_cd_remap` comes from that JSON (`cd_layout.py remap-asm`, `build/en/gen/english_cd_remap.s`). Without the JSON the table is empty, so `ninja english` alone still works.
 6. In-place records go into the built executable and overlays (`text/inplace.py`):
    - A slot is written only where the English binary still holds the original bytes; otherwise it counts as `moved_in_build`.
@@ -135,10 +137,57 @@ A rebuilt object that shrinks was already padded by the pin of the next input se
 - Disc: track 1 SHA-1 c140f667cc7c43855cc43eeef76d7caadc95e7df, the same in two runs (deterministic). xdelta 752,337 bytes.
 - Default build 27/27 OK after the change to `tools/cc.py` and `configure.py`.
 
+## Art (`tools/patch/art/`, T-39508)
+
+Step 4b of the build writes every registered English image into its container ([[tickets/T-39508-english-art-on-disc]]). `--no-art` leaves the images Japanese. To plan the art alone (no disc): `IMG=tokimemo-patch tools/docker.sh python3 -m tools.patch.art.build --report build/en/art-report.json`. Tests: `IMG=tokimemo-patch tools/docker.sh python3 -m unittest tools.test_patch_art -v` (synthetic, plus game-data checks when `disc/files` is there). The image `tokimemo-patch` now has numpy and Pillow (`tools/Dockerfile.patch`).
+
+What ships (`items.py`): for every artwork item of `translations/en/graphics/translation_inventory.json`, its `candidates` (the newest non-superseded candidate per variant), or for an english-reviewed item without candidates its approved historical asset under `artwork/batches`. Each PNG must have its registered SHA-256; its manifest entry says what it covers. Same-size fallbacks come from `T39410-menus-fixes-v1/fallback-ledger.json`.
+
+Indexed sheets (`indexed.py`, `placer.py`, `sheets.py`, `sprites.py`):
+- Each container is modelled as views (a frame in one palette variant, one part, a page region, a sports card), built from the asset readers' own `_parse` (`tools/assets/image_packs*.py`). Composing a view from the original bytes gives exactly the reader's export: 400+ frames match the `source_png_sha256` hashes of the inventory (a test).
+- Only the palette variants the game draws are targets: a manifest `runtime_variant_scope` with `runtime_applicable: false` or empty `uses` is reported `not_drawn` (176 images, mostly the MAINROM hud/icon variants of frames that never use them).
+- In place: an English pixel needs an index whose palette word draws its colour, in every variant of its view; the original index is kept where it fits, else the one with the original texel's STP bit. A colour no palette entry draws is an error. A texel that another view still draws (a frame without English art, a deferred or repacked frame) is never written.
+- Repack, where in place cannot work (shared kanji tiles, a frame drawn in several places of one texel, a widened sprite, a colour outside the part's palette): relocate (a changed part whose texels nothing else draws is rewritten where it is; any other changed part gets fresh texels, cut to its opaque box, possibly with another palette of the container) or rebuild (new parts cut from the English image per palette and per word, at most the frame record's part count). The cheaper fits. Frames that draw the same texels with two palettes (OPTION normal and highlight) are one group and keep sharing texels. Free texels: not drawn by any kept part; where code draws pages without frames (MAINROM, FILESEL, NAME_ENT digits, EXAMINE score digits, sports, battle) unreferenced non-zero texels are kept too. A piece may overlap texels that already hold the indices it needs. When the pages are full the group whose dropping frees the most room is deferred and the allocation starts over.
+- Records: OPTION, TITLE, FILESEL, NAME_ENT, EXAMINE in the file; sports tile words in the file; MAINROM in the executable (`build.patch_executable` finds the frame-record block by its original bytes, so a relinked executable works, and checks every record still holds its original bytes). A record that another group also draws through is never rewritten.
+- Every view is composed again after writing, from the re-parsed container (and executable): targets equal their PNG, other views their original.
+
+BS stills (`stills.py`): decode with the pinned MDEC model at the proven size, composite the crops (RGB rectangles, or RGBA crops where alpha 255 marks the English pixels; crops go to the file their manifest names, so P_01_03B is its own still), re-encode only the macroblocks with a changed pixel (`mdec_splice.encode_macroblock`, from the original levels; a pixel that still moves gets more weight, two rounds), keep every other macroblock's bits. Gate: outside the edited macroblocks bit-identical; unchanged pixels (outside the 2x2 chroma cells of English pixels, which share their Cb/Cr) within 1 RGB555 step and the float IDCT within 2 (the T-39012 gate). When no attempt reaches that, the best attempt within 4 and 4 is taken and `ring_tolerance` 4 is reported. Results are cached in `.asset-cache/art/stills/` (key: source, crops, encoder code); a clean plan takes about 12 minutes, a cached one seconds. All containers run in parallel processes.
+
+Disc: art containers go through `cd_layout.plan_file` and `Disc.replace` like text data files (a grown still that may move is remapped; one that may not keeps its original bytes and its images are deferred). Then, after `write track 1`, `verify art` (`verify.py`) reads every written container and the executable back from the built track, decodes them again and checks each placed image (indexed: exact pixels, no avoidable STP change, other views unchanged, no byte changed outside the planned texels and records; stills: the gate above, plus max error and PSNR of the English pixels). A placed image that fails stops the build. `report.json` `art` lists all 272 items with `placed_verified`, `partly_placed`, `deferred` (reasons per image), `untranslated_by_decision` or `missing`, the images per mode, the containers with their facts, and `route` (the route checkpoints that show the container) with `not_on_route`.
+
+Results (2026-11-01, build 154 s with cached stills; a clean still cache adds about 12 minutes):
+
+| Status | Items |
+|---|---|
+| placed_verified | 230 |
+| deferred | 14 |
+| untranslated_by_decision | 27 |
+| missing | 1 (D_11_11 ride sign) |
+
+Images: 111 in place, 16 relocated, 107 rebuilt, 14 stills re-encoded, 176 palette variants the game never draws, 67 deferred (29 of them movie pills). 29 containers written (one still, D_19_02, grew a sector and moved to the end of track 1), 30 MAINROM part records.
+
+- MAINROM: the stat bar (frame 61: Health, Hum., Science, Art, Sports, Trivia, Looks, Guts, Stress; the label blocks rewritten where they are, two shared arrow tiles moved), the magazine headlines, banners, tags and covers, the weekdays except Monday. Deferred: the Save labels (57-59), the date-panel captions (60) and Monday (82): the eight uploaded sheets have no free 16x16 cell (`boot_hud_textures_load` uploads sheets 0-3 and 7-10; sheets 4-6 are not in VRAM, which the first route run showed as garbage), the frame records cannot grow, and frame 60 and the Monday/Sunday weekdays share the 月 and 日 tiles.
+- OPTION: all 108 frames; 102 rebuilt per word (the Japanese labels share kanji tiles; normal and highlight frames keep sharing texels), 6 in place. Kiyokawa (0103/0104) and Tatebayashi (0113/0114) ship the family-name fallbacks: no room for the widened labels.
+- TITLE 4, FILESEL 13 frames and 3 information pages (all in place), the EXAMINE suffix (fallback `pt`), the ALL_C banner, the five battle files (command and MISS labels, in place), the five sports cards (tile words rewritten).
+- NAME_ENT: the ten selector labels ship as the 32-texel fallbacks: the cells sit at fixed positions in `name_entry.c` and the single 4bpp page has no room for 56-texel cells.
+- Stills re-encoded: P_01_01 (gate plate), P_01_03 and P_01_03B (roster close-ups), C_01_28 (chalkboard), D_01_47, D_01_48, D_01_70, D_15_03, D_19_02 (both signs), D_24_03, D_29_09, I_17_01, I_28_02. Unchanged pixels move at most 1 step on C_01_28, D_29_09 and P_01_03B and at most 3 on the others; the English pixels have PSNR 23 to 40 dB against the composited crops (max error 1 to 13 steps).
+- On the route: title, options, file select, name entry (fallback labels), the command-screen stat bar, calendar, save and load, the gate plate and the roster close-ups. Not on the route (57 items): the battle labels, sports cards, ALL_C banner, exam suffix, every D_/C_/I_ still and the MAINROM magazine frames (0121-0154); they are checked only by `verify art`.
+
+Deferred:
+- MAINROM 57-59, 60, 82: see above. Needs room on an uploaded sheet: another sheet upload in the English build, or frame records with more parts after the relink ([[tickets/T-39505-english-memory-and-relink]]).
+- NAME_ENT panels 0000, 0001, 0002, 0014: no free 32x64 rectangle on the page (panel 0 repeats a tile with two English contents; 1, 2 and 14 draw where no part is).
+- EXAMINE results header (exam-0000): no free 32x64 rectangle once the score digits (direct sprites) are kept.
+- P_01_02 class signs (6 crops) and the D_03_08 placard: every attempt has a float IDCT 31 steps off the fixed decode (saturation).
+- `name-label-abc` (lit, unlit): needs the English letter page of [[tickets/T-39506-english-script-runtime]]; the 32-texel fallback is ready (same cell as frames 15/16) and needs a frame in NAME_ENT and a selector in `name_entry.c`.
+- OPENXA movie pills (29): need a runtime cue player that draws them over the movie.
+
+Other findings: the FILESEL System tab word is cut by the availability mark the code draws next to it (the Japanese draws 有 there; the English text step draws a letter at the same place).
+
 ## Open
 
 - DATE files: they need the RAM map (T-39505) to show that the DATE buffer can grow, or a smaller encoding.
 - Relink records: C literals in pinned objects, plus main and overlay tables over capacity (T-39505).
 - `moved_in_build`: the extents under rewritten C literals. Check after the relink whether any consumer reads them other than through the literal.
 - Windows for menus, tables and C strings: add rows to `WINDOWS` as screens are checked in the route.
+- Art: the deferred items of the Art section (MAINROM sheet room, NAME_ENT panels, two stills, the ABC label, the movie pills).
 - Dialogue display needs the parser work of [[tickets/T-39506-english-script-runtime]]. Until then the control bytes 0x0A-0x1A are skipped by the renderer and the old parsers misread English.

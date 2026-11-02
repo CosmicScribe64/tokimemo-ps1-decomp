@@ -39,8 +39,7 @@ ROUTE = {
     "CDROM/FUKUTEST/OPTION.NBN": "options_*",
     "CDROM/FUKUTEST/FILESEL.NBN": "file_select_*, save_*, load_*",
     "CDROM/NAME_ENT/NAME_ENT.NBN": "name_entry_*",
-    "CDROM/FUKUTEST/MAINROM.NBN": "command_screen, school_day, week_1_*, calendar (stat bar, date panel, Save); "
-                                  "the magazine frames (headlines, tags, covers) only on the information screen",
+    "CDROM/FUKUTEST/MAINROM.NBN": "command_screen, school_day, week_1_*, save_*, holiday",
     "CDROM/BS/P_01_01.BS": "prologue_*", "CDROM/BS/P_01_02.BS": "prologue_*", "CDROM/BS/P_01_03.BS": "prologue_*",
     "CDROM/BS/P_01_03B.BS": "prologue_*",
 }
@@ -209,6 +208,8 @@ def verify(root: Path, track1: Path, files_root: Path, art: dict) -> dict:
             "%s: %s" % kv for kv in sorted(failed.items())[:10]))
     for entry in report["items"]:
         entry["route"] = ROUTE.get(entry["container"], "not on the route")
+        if entry["container"].endswith("MAINROM.NBN") and entry["id"] >= "mainrom-0118":
+            entry["route"] = "not on the route"     # the magazine (information) screen
         if "images" not in entry:
             continue
         placed = [k for k, v in entry["images"].items() if not v.startswith(("deferred", "not_drawn"))]
