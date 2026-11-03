@@ -4407,3 +4407,7 @@ Closed [[tickets/T-39511-english-text-quality]] after reconciling the current me
 ## [2026-11-03] ticket | Keep the retained minigame logo decision open
 
 Reopened [[tickets/T-39510-no-japanese-left-check]] to In Review because the native TwinBee title logo is outside the recorded exceptions. [[tickets/T-39500-english-translation-patch]] now records completed text and registered-art placement checks, while the logo preference and final sign-off remain open. No new approval is inferred from the earlier completed ticket.
+
+## [2026-11-03] decision | Await the remaining logo disposition
+
+PR 71 now reflects completed [[tickets/T-39511-english-text-quality]] reconciliation. The worktree is otherwise clean, and the published build remains verified. The pending owner question is whether to preserve the original TwinBee Japanese logo or replace its lettering. This decision has remained unresolved across three goal turns; [[tickets/T-39510-no-japanese-left-check]] and [[tickets/T-39500-english-translation-patch]] remain open. No further rebuild or deployment is needed while that choice is pending.
