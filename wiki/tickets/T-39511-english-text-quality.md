@@ -146,3 +146,7 @@ The verified event and festival corrections are live. See [[tickets/T-39537-dial
 ## Event queue complete
 
 The final two flagged event passages, EVENT_AS initializer 00 and EVENT_FU scene 01, pass the same disc-header, payload-hash, pointer and completed-rendering checks. Their opening, scrolling and closing punctuation are visually inspected. `translations/en/reviews/event-remaining-long-pages-2026-11-02.json` records the evidence and the retained Yumi fixture's limits. All ten EVENT_* passages in this follow-up batch now have layout receipts. The overall long-passage queue is 60 reviewed and 27 pending.
+
+## Yuina ending subtitle
+
+One pending Yuina ending passage passes native-resolution scrolling review on the published build. `translations/en/reviews/yuina-ending-layout-2026-11-02.json` verifies the actual script payload, active tables and completed text position. The controlled fixture retains Yukari artwork, so the receipt covers subtitle layout only. A first probe retained old text and was discarded; clearing the saved fixture before selection removed that artifact. The queue is now 61 reviewed and 26 pending. No game bytes changed.

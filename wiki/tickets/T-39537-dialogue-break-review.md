@@ -80,3 +80,7 @@ The corpus comparison changes exactly the seven registered overrides, including 
 ## Event and festival build published
 
 Published `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4` after all 15 browser checks passed. Pages deployment 41584066787 succeeded, and all 36 public files match the tested package. `translations/en/reviews/published-event-festival-2026-11-02.json` records the release hashes and verification. The long-passage queue has 27 pending records.
+
+## Published-build audit refresh
+
+Reran the diagnostic across all 30,573 dialogue records using the published build's font metrics. Generated early-break candidates decrease to 39 and phrase-link candidates to 1,331 after the festival corrections. There are no generated short-single-word, punctuation-only or numbered-label candidates. Retained boundaries remain separate. `translations/en/reviews/published-break-audit-2026-11-02.json` records the counts and report hash; contextual phrase review remains open.

@@ -4229,3 +4229,7 @@ Verified the final EVENT_AS and EVENT_FU passages on the published build and sav
 ## [2026-11-02] query | Clarify the event batch count
 
 The ten EVENT_* records above are this follow-up batch; earlier Yumi event approvals remain separate. The overall count is still 60 reviewed and 27 pending. Consolidated repeated publication prose into [[tickets/T-39537-dialogue-break-review]] with a cross-reference from the visual-review ticket; the release receipt retains the complete verification record.
+
+## [2026-11-02] lint | Published dialogue audit and ending fixture check
+
+Refreshed the full dialogue break audit and verified one pending ending passage through the subtitle renderer. See [[tickets/T-39537-dialogue-break-review]] for corpus counts and [[tickets/T-39511-english-text-quality]] for the controlled fixture's scope. The first probe retained stale text and was excluded. The corrected run checks the on-disc payload, table pointers and full reveal; the visual queue is 61 reviewed and 26 pending. No game or patcher bytes changed.
