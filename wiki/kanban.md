@@ -23,6 +23,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39547-twinbee-sprite-attributes|T-39547 Preserve TwinBee sprite texture attributes]]
+
 
 
 

@@ -407,6 +407,8 @@ def referenced_candidates(data, base, references, hooks):
 def audit_language_census(files, bases, translations, units, report, link):
     reviewed = json.loads(Path('translations/en/reviews/executable-binding-2026-11-02.json')
                           .read_text())['candidate_classification']
+    reviewed += json.loads(Path('translations/en/reviews/twinbee-sprite-attributes-2026-11-03.json')
+                           .read_text())['candidate_classification']
     numeric = {(row['unit'], row['symbol']): row for row in reviewed
                if row['classification'] == 'numeric_data'}
     code = next(row for row in reviewed if row['classification'] == 'code_pointer')

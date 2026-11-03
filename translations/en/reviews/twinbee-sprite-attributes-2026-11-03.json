@@ -1,0 +1,115 @@
+{
+  "ticket": "T-39547",
+  "target_sha1": "39454a5b82bcc53f05daba81040e6622a85310e1",
+  "status": "verified; publication pending",
+  "candidate_classification": [
+    {
+      "unit": "TT",
+      "address": 2148851968,
+      "sites": [
+        2148851984
+      ],
+      "bytes_sha256": "803d96b8ee3e5de9b5280cfa6433895f30bc71a13491c76d6b3ec480e66d66f4",
+      "classification": "numeric_data",
+      "symbol": "D_8014E100",
+      "basis": "TtSpriteSet.attr: texture-page and UV bits consumed by tt_part_sprite_draw; original bytes independently checked for all twelve sets."
+    },
+    {
+      "unit": "TT",
+      "address": 2148899584,
+      "sites": [
+        2148899600
+      ],
+      "bytes_sha256": "6aaaeddec3968166f9d7276a954370b6e5559fc67ee0281f69dd2748d2a8020d",
+      "classification": "numeric_data",
+      "symbol": "D_80159B00",
+      "basis": "TtSpriteSet.attr: texture-page and UV bits consumed by tt_part_sprite_draw; original bytes independently checked for all twelve sets."
+    }
+  ],
+  "regression": {
+    "old_build_failed_sets": [
+      0,
+      6,
+      8
+    ],
+    "rebuilt_sets_verified": 12
+  },
+  "tests_passed": 29,
+  "browser_checks": [
+    "wrong size",
+    "wrong source hash",
+    "corrupted patch",
+    "cancel",
+    "full patch",
+    "download hash",
+    "cue",
+    "no upload",
+    "responsive layout",
+    "invalid archive",
+    "archive drop",
+    "extraction cancel",
+    "audio download hash",
+    "archive cue",
+    "mobile result"
+  ],
+  "visual_review": {
+    "directory": "build/emu/twinbee-attributes",
+    "scope": "Controlled entry into the normal TwinBee loader from a compatible saved state. Title and player inspected; the initial run pauses after the second Start press.",
+    "captures": [
+      {
+        "file": "shot_1200.png",
+        "sha256": "e4e530ee5b455a034cd2a397da94b89d7acd601d415b1f71b689a236e4706cf7"
+      },
+      {
+        "file": "shot_1800.png",
+        "sha256": "54602e8622977ec2f7683680eecb336bf297ebbaa30191a2ea38d21584b26085"
+      },
+      {
+        "file": "shot_2400.png",
+        "sha256": "f052d97236c1537beb82676049256e9a3ab472665a39802da82dd243ad20b0f2"
+      },
+      {
+        "file": "shot_600.png",
+        "sha256": "44674b8125da4a0fbe76c17c39c299523199f8876cd049c381c77bf32ab53b58"
+      }
+    ],
+    "finding": "Original Japanese TwinBee title logo remains visible; inventory disposition needs reconciliation."
+  },
+  "additional_visual_reviews": [
+    {
+      "directory": "build/emu/twinbee-boss-attributes",
+      "scope": "Stage scroll counter advanced to reach the first boss through its normal handler. Four captures show clean boss, player, projectile, HUD, game-over and ranking graphics.",
+      "frames": 2700,
+      "captures": [
+        {
+          "file": "shot_1400.png",
+          "sha256": "3d9a215699a5eb61792f08b6a99f1fd91a08bcb11efcdf25a52ff5753b8a23a8"
+        },
+        {
+          "file": "shot_1800.png",
+          "sha256": "7cbceac23584d8678efb1782cd8efb2cb82ce36079325dc177965f2f0657f63f"
+        },
+        {
+          "file": "shot_2200.png",
+          "sha256": "c11d1f74a3b06f903f6043f6003910be608823114c7cc5ae40ad19fbcccdb369"
+        },
+        {
+          "file": "shot_2700.png",
+          "sha256": "81a809435bd895aa1decf5a8fa5f32ff1cf3c6bf384d87771a15b71f760cf3df"
+        }
+      ]
+    },
+    {
+      "directory": "build/emu/twinbee-sprite-preview",
+      "scope": "Native drawer preview of sets 0, 6 and 8 at fixed positions with updates frozen. Set 8 has no identified gameplay caller; this preview does not prove natural reachability. All three render intact.",
+      "frames": 1300,
+      "captures": [
+        {
+          "file": "shot_1300.png",
+          "sha256": "a54619fecb87bb7e3dd34e80bc7e6dea6764b9fe79eec872e5df9c058e29e20f"
+        }
+      ]
+    }
+  ],
+  "standards_review": "No unresolved findings. Narrow non-text exclusions, exact-hash language classifications, independent original-pointer regression and metadata-only receipts. No game C or raw sources changed."
+}

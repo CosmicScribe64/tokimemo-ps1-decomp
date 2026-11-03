@@ -4375,3 +4375,19 @@ A controlled native capture with the widest presets shows the family and given n
 ## [2026-11-03] build | Publish verified fortune name spacing
 
 Closed [[tickets/T-39546-fortune-name-spacing]] after standards review, native maximum-width captures and release checks. Pages run 41606770799 succeeded; all 37 public files match the tested package. Target SHA1 is 45eac0efcc5981d60102a9de7e84e30757243b4c. Updated [[english-build]] and [[kanban]]; receipts are in translations/en/reviews/. The broader [[tickets/T-39511-english-text-quality]] review remains open.
+
+## [2026-11-03] query | Trace remaining menu consumers to sprite attributes
+
+Reviewed the remaining 100 distinct growth payloads in [[tickets/T-39511-english-text-quality]]. Scene titles, lyrics and substitutions have separate layout paths. Tracing TT offset 0x27B00 found sprite texture attributes misidentified as a surname, through tt_sprite_set_6 and TtSpriteSet.attr. Opened [[tickets/T-39547-twinbee-sprite-attributes]] to preserve the data and verify affected sprites. The draft metadata receipt is translations/en/reviews/menu-consumers-2026-11-03.json; remaining dispositions are not yet final.
+
+## [2026-11-03] build | Preserve all TwinBee texture attribute arrays
+
+[[tickets/T-39547-twinbee-sprite-attributes]] now excludes all twelve attribute arrays from translation. The new actual-disc regression rejects the prior build at sprite sets 0, 6 and 8. Started the corrected build; native minigame verification and publication remain pending. No raw sources changed.
+
+## [2026-11-03] build | Verify restored TwinBee data and first-stage rendering
+
+[[tickets/T-39547-twinbee-sprite-attributes]] passes all twelve actual-disc attribute comparisons, 29 focused tests, complete text audits, 27 original hashes and 15 browser checks. Inspected four native title/gameplay captures; player graphics are clean. Boss-specific captures remain pending. The first emulator invocation rejected an unused sampling option before running; removing it allowed the normal loader fixture to complete. The Japanese TwinBee title logo remains visible and requires artwork-disposition reconciliation. Corrected build is packaged locally but not yet published.
+
+## [2026-11-03] build | Complete TwinBee sprite visual review
+
+Inspected four first-boss captures and a native preview of all three corrected sprite sets for [[tickets/T-39547-twinbee-sprite-attributes]]. Graphics are intact. The preview of set 8 does not claim a natural gameplay caller. Standards review is complete; publication is next. Asked the owner whether to preserve the original TwinBee title logo or use English lettering.

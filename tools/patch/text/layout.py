@@ -90,7 +90,16 @@ KEPT_TABLES = ("dictionary:CDROM/EXEDIR/NAME_ENT.EXN:hiragana_grid:",
 # Data that the handoff read as text: ETC album_background_lba_cat_00 .. _15 (0x8014E0C4-0x8014EA1C) are
 # tables of CD sector numbers whose bytes decode as half-width katakana. Writing the "translations" there
 # would load the wrong album backgrounds (T-39506).
-NOT_TEXT_RANGES = {"CDROM/EXEDIR/ETC.EXN": ((0x1C0C4, 0x1CA1C),)}
+NOT_TEXT_RANGES = {
+    "CDROM/EXEDIR/ETC.EXN": ((0x1C0C4, 0x1CA1C),),
+    # T-39547: TtSpriteSet.attr contains texture-page/UV bits, not text.
+    "CDROM/EXEDIR/TT.EXN": (
+        (0x1BC30, 0x1BC34), (0x1C100, 0x1C104), (0x1CD3C, 0x1CD40),
+        (0x1E92C, 0x1E930), (0x20C28, 0x20C2C), (0x224FC, 0x22504),
+        (0x239D8, 0x239DC), (0x24C78, 0x24C7C), (0x259C0, 0x259C4),
+        (0x26A48, 0x26A4C), (0x27538, 0x2753C), (0x27B00, 0x27B04),
+    ),
+}
 
 
 # Name storage keeps its original byte limits; reversible letter pairs preserve full presets.
