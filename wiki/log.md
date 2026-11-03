@@ -4217,3 +4217,15 @@ Added the three new runtime receipts to `build/visual-review-pack/index.html`. T
 ## [2026-11-02] build | Pass browser acceptance for the event and festival build
 
 The package for `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4` passes all 15 browser checks. Actual downloads match the audited disc and audio. Inspected the desktop and mobile result screens; recorded their hashes and the checks in `translations/en/reviews/festival-ellipsis-verified-2026-11-02.json`. Reviewed the exact staged code, receipts and prose with the requested deslop skill. The edits preserve game wording; the notes state the remaining 29 long-passage checks and the limits of controlled scene fixtures. Publication is the remaining step for this build.
+
+## [2026-11-02] build | Publish the event and festival corrections
+
+Pushed source commit `4219eccc1` and published Pages commit `f1dc86c806078317797e3c1fb11d7c9b0003a320`. Deployment 41584066787 succeeded. All 36 public files match the package that passed all 15 browser checks. Saved `translations/en/reviews/published-event-festival-2026-11-02.json`. [[tickets/T-39511-english-text-quality]] and [[tickets/T-39537-dialogue-break-review]] remain open; 27 long passages still need runtime review.
+
+## [2026-11-02] query | Finish the flagged event passage batch
+
+Verified the final EVENT_AS and EVENT_FU passages on the published build and saved `translations/en/reviews/event-remaining-long-pages-2026-11-02.json`. All ten flagged EVENT_* records now have layout receipts; the overall queue is 60 reviewed and 27 pending. Added their captures to the gallery, bringing it to 1,318 captures across 155 sheets, including historical builds and repeated frames. [[tickets/T-39511-english-text-quality]] remains open for the remaining scenes.
+
+## [2026-11-02] query | Clarify the event batch count
+
+The ten EVENT_* records above are this follow-up batch; earlier Yumi event approvals remain separate. The overall count is still 60 reviewed and 27 pending. Consolidated repeated publication prose into [[tickets/T-39537-dialogue-break-review]] with a cross-reference from the visual-review ticket; the release receipt retains the complete verification record.

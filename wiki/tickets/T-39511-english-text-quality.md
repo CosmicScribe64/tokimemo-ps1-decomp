@@ -138,3 +138,11 @@ Three pending EVENT_NI passages pass controlled runtime layout review on the pub
 ## Five more event passages
 
 Verified five further passages against rebuilt target `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4`, including the corrected Shiori invitation. The receipt checks script headers, on-disc payload hashes, table pointers, line advancement and completed rendering: `translations/en/reviews/event-queue-retested-long-pages-2026-11-02.json`. The shared DATE fixture retains Yumi's portrait and name binding; these are layout checks. The queue now has 29 pending long passages. An earlier run used incorrect character mappings for KI, KO and OT and was discarded without approvals. The corrected mappings were checked against the loader's CD addresses and ISO entries.
+
+## Event and festival build published
+
+The verified event and festival corrections are live. See [[tickets/T-39537-dialogue-break-review]] for publication checks and `translations/en/reviews/published-event-festival-2026-11-02.json` for the release hashes. The long-passage queue has 27 pending records.
+
+## Event queue complete
+
+The final two flagged event passages, EVENT_AS initializer 00 and EVENT_FU scene 01, pass the same disc-header, payload-hash, pointer and completed-rendering checks. Their opening, scrolling and closing punctuation are visually inspected. `translations/en/reviews/event-remaining-long-pages-2026-11-02.json` records the evidence and the retained Yumi fixture's limits. All ten EVENT_* passages in this follow-up batch now have layout receipts. The overall long-passage queue is 60 reviewed and 27 pending.

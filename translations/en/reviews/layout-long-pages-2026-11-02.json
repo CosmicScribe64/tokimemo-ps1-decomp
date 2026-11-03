@@ -269,7 +269,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see event-remaining-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_FU.BIN:scene-01:g0001:l0009",
@@ -281,7 +281,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see event-remaining-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_FU.BIN:initializer-13:g0000:l0013",
