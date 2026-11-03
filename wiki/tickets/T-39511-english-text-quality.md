@@ -158,3 +158,11 @@ Five standalone subtitles and three connected-speech passages pass native-resolu
 ## Long-passage queue complete
 
 All 87 flagged long records now have runtime layout receipts. The last three ending continuations pass with every preceding speech segment fully revealed. The final 15 message-box records, including all three DATE_AS response variants, pass native-resolution review through the shared dialogue renderer. `translations/en/reviews/remaining-message-layout-2026-11-02.json` checks every copied script chunk against the published disc and verifies the active payload, table pointers, advanced line and full reveal. Its controlled fixture retains Yumi's backdrop and name binding; it does not prove natural scene triggering or each scene's artwork. No new layout correction was required. The art review and final scope reconciliation remain separate.
+
+## Published-build orphan recheck
+
+All 456 orphan flags across 455 records are classified on the published build. Of these records, 444 retain a previously reviewed payload hash. Read all 11 changed payloads in full: one ellipsis reaction, four laughter endings and six brief ending replies or hesitations. Keep their intentional pauses and closing marks. `translations/en/reviews/current-orphan-triage-2026-11-02.json` records the changed hashes and dispositions. No new layout edit is needed. Menu/table classification and broader editorial reading remain separate criteria.
+
+## Menu and table census
+
+Collected 4,655 non-dialogue records with 2,520 distinct encoded payloads in ignored `build/menu-text-context.json`. Seventeen exceed 252 pixels before runtime formatting: ten career-summary strings, five magazine thoughts and two SDK diagnostic formats. These are review candidates, not confirmed clipping. The magazine thoughts enter `sndisp`; the raw width is not their rendered row width. Case/punctuation grouping also identifies gift-name title case versus sentence case, sentence fragments, debug labels and presentation headings. Call-site classification remains open; do not treat a 252-pixel scan as proof of each menu's narrower geometry.

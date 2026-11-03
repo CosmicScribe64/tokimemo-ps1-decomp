@@ -4263,3 +4263,15 @@ T-39509 moves to Done after the standards review; its board card and ticket stat
 ## [2026-11-02] lint | Reconcile published-build verification
 
 Revalidated 24 retained menu views, 75 retained art containers, and the banner/movie extents against the published disc. Closed [[tickets/T-39510-no-japanese-left-check]] after reviewing the audit coverage and art verifier; all 25 art tests pass with the tools import path configured. Updated completed screenshot criteria in [[tickets/T-39508-english-art-on-disc]] and [[tickets/T-39511-english-text-quality]]. Corrected stale translation-tool claims in [[status]] and completed-break-triage status in [[english-text-runtime]]. Broader source-review and editorial criteria remain open rather than being inferred from layout tests.
+
+## [2026-11-02] lint | Complete disc writer, linker and build reviews
+
+Reviewed the disc/sector/xdelta writers, free linker, English build driver and CD remap code against CODING_STANDARDS. All 17 real-disc tests pass; linker/build suites pass 55 tests with one optional full-build skip. The published report has no data placement warnings/problems, kept data files or reverted literals. Closed [[tickets/T-39501-disc-rebuild-and-xdelta]], [[tickets/T-39505-english-memory-and-relink]] and [[tickets/T-39507-english-disc-build]], with scope and test details in each ticket. No production code or game bytes changed.
+
+## [2026-11-02] query | Recheck current orphan warnings
+
+Compared all current orphan-warning payloads with the prior review. Read all 11 changed payloads; their short final rows preserve deliberate laughter, brief replies and pauses. All 456 flags across 455 records now have dispositions. [[tickets/T-39511-english-text-quality]] links the current receipt. No game bytes changed.
+
+## [2026-11-02] lint | Complete artwork integration review
+
+Closed [[tickets/T-39508-english-art-on-disc]] after reviewing planning, sprite selection, frame relocation, still encoding and readback safeguards against CODING_STANDARDS. All 25 art tests and the published placement report pass; the existing visual receipts cover shipped images. The menu/table census for [[tickets/T-39511-english-text-quality]] now contains 4,655 records with 2,520 distinct payloads. Seventeen exceed 252 pixels before runtime formatting; their call sites and capitalization variants still need classification. No game bytes changed.

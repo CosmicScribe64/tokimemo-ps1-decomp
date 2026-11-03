@@ -1,7 +1,7 @@
 ---
 id: T-39508
 title: Put the English art on the disc
-status: In Progress
+status: Done
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-02
@@ -64,3 +64,7 @@ T-39521 repairs all four omitted sports bubbles. The latest disc verifies 252 pl
 Inspected all 254 shipped sprite target images, using the actual placement and fallback selections, and all 16 translated still containers decoded directly from the current disc. Container hashes match the published build report. No new clipping, overlap or damaged neighboring artwork was found. Texture-page fragments and highlight components were assessed with their assembled runtime examples; they are not standalone screens. `translations/en/reviews/shipped-art-quality-2026-11-02.json` records image hashes, current container identity and the 31 review sheets. Movie, generated prologue banner and retained-pixel evidence remain separate from this pass.
 
 2026-11-02 reconciliation: re-opened the first magazine page and prologue banner captures; the English remains legible, with the approved magazine masthead retained. Current-disc comparison preserves the banner and movie bytes. The 25 art tests pass. The published report records 252 verified items, 28 explicit exceptions and zero deferred or missing items, replacing the historical totals above. Source-review closeout remains separate from these completed visual checks.
+
+## Completed source review
+
+2026-11-02: reviewed art planning, sprite selection and fallback handling, executable frame relocation, still encoding and the final-disc verifier against CODING_STANDARDS. Grown frames stay within the reserved block and their on-disc pointers are checked. Still candidates must fit their original sectors and pass surrounding-pixel and decoder checks; sprite targets and unaffected views are compared after placement. Generated game-derived outputs remain ignored. The 25-test art suite passes, and the published report contains no deferred or missing item. Existing generator-specific reviews cover the later signs, banner and sports additions. No unresolved code finding remains for the registered assets. This technical/artwork sign-off does not claim every possible scene composition was played. Ticket and board move to Done.
