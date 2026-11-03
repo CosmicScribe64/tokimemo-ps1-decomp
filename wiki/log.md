@@ -4460,3 +4460,11 @@ Opened [[tickets/T-39601-local-cleanup]] after the owner authorized local cleanu
 ## [2026-11-03] setup | Finish local storage cleanup
 
 [[tickets/T-39601-local-cleanup]] is Done after scope review. Removed eight worktrees, ten merged local patch branches, disposable builds/caches, five preview containers, six project images and 863 MB of project Claude history. Docker build-cache pruning reported 9.73 GB. Repository usage fell from about 117 GB to 1.7 GB; original game inputs remain. Main contains the completed work and recovered notes.
+
+## [2026-11-03] setup | Correct public release wording
+
+[[tickets/T-39602-release-wording]] removes outdated review-build wording from the repository description, patcher introduction and manifest label. The packager default now says English patch. README already reflects the completed review. The page and manifest changes leave the verified payload and all hashes unchanged; Docker remains stopped.
+
+## [2026-11-03] setup | Verify updated public release wording
+
+[[tickets/T-39602-release-wording]] is Done after standards review and byte-exact readback of the public page and manifest. GitHub description, site introduction and release label now describe the English patch without obsolete review-build wording. The patch payload remains unchanged. Historical review records retain their original wording.

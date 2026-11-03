@@ -33,7 +33,7 @@ def package(build: Path, original: Path, output: Path):
     (output / "assets").mkdir()
     shutil.copyfile(patch, output / "assets/tokimemo-en.xdelta")
     manifest = {
-        "format": 1, "label": "Review build · " + target_sha1[:12],
+        "format": 1, "label": "English patch · " + target_sha1[:12],
         "source": {"sha1": SOURCE_SHA1, "size": original.stat().st_size},
         "audio": {"sha1": sha1_file(audio), "size": audio.stat().st_size},
         "target": {"sha1": target_sha1, "size": track.stat().st_size},
