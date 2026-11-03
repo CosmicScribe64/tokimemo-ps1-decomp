@@ -89,9 +89,7 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-39544-stage-control-prefixes|T-39544 Preserve stage dialogue control prefixes]]
 
-- [ ] [[tickets/T-39543-stage-speaker-spacing|T-39543 Separate stage-show speaker names from opening quotes]]
 
 
 
@@ -120,6 +118,10 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39544-stage-control-prefixes|T-39544 Preserve stage dialogue control prefixes]]
+
+- [ ] [[tickets/T-39543-stage-speaker-spacing|T-39543 Separate stage-show speaker names from opening quotes]]
 
 - [ ] [[tickets/T-39542-complete-dialogue-values|T-39542 Preserve complete long dialogue values]]
 

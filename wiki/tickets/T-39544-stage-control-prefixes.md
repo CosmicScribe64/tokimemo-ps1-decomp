@@ -1,10 +1,10 @@
 ---
 id: T-39544
 title: Preserve stage dialogue control prefixes
-status: In Review
+status: Done
 assignee: codex
 created: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-03
 links: ["[[tickets/T-39511-english-text-quality]]"]
 ---
 
@@ -17,7 +17,7 @@ Preserve the nonprinting command byte before each prefixed BUNKA_SD dialogue row
 - [x] Restore all 214 source-proven prefixes without changing approved prose.
 - [x] Reject missing or changed prefixes in the actual-disc audit, with regression coverage.
 - [x] Verify stage progression and speaker spacing in the emulator.
-- [ ] Build, review and publish the corrected disc.
+- [x] Build, review and publish the corrected disc.
 
 ## Evidence
 
@@ -29,4 +29,4 @@ The final candidate passes both actual-disc audits, all 27 default-binary hashes
 
 The command comparison proves that all 214 prefixed rows retain the same visible English. The independent audit rejects a missing or altered command even when writer output and pointer agree. The 39 actual-disc telephone, club and mascot labels pass their column bounds. Evidence is in `translations/en/reviews/stage-controls-and-menu-spacing-2026-11-02.json`.
 
-Reviewed the C89 guards, original-build equivalence, field bounds, menu selection geometry, source-prefix provenance and negative audit tests against CODING_STANDARDS.md. No unresolved findings remain. Publication is pending.
+Reviewed the C89 guards, original-build equivalence, field bounds, menu selection geometry, source-prefix provenance and negative audit tests against CODING_STANDARDS.md. No unresolved findings remain. Pages deployment 41600020995 succeeded. All 37 served files match the tested package. The publication receipt is `translations/en/reviews/published-stage-controls-2026-11-03.json`.
