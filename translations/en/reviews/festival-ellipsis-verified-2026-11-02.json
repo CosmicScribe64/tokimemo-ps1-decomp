@@ -1,0 +1,136 @@
+{
+  "ticket": "T-39537",
+  "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+  "run": "build/emu/festival-ellipsis-tour",
+  "scope": "Actual Yuina science-club script loaded through BUNKAKEN mode 0x71, stage 49. Controlled group 12 selection verifies the complete two-row reaction and closing quote. The other two script copies have identical on-disc payloads and the same player-speech command; their natural scene staging is not claimed.",
+  "records": [
+    {
+      "record_id": "talk:CDROM/BUNKA/BUN_PC.BIN:bun-pc:g0059:l0000",
+      "payload_sha256": "921fc717a0e6daa67432e96841dd1422a76ee865654f79e3eb654e962f6dd7e8",
+      "command": 0
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0051:l0000",
+      "payload_sha256": "921fc717a0e6daa67432e96841dd1422a76ee865654f79e3eb654e962f6dd7e8",
+      "command": 0
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/HI_S6O.BIN:main:g0012:l0000",
+      "payload_sha256": "921fc717a0e6daa67432e96841dd1422a76ee865654f79e3eb654e962f6dd7e8",
+      "command": 0,
+      "captures": [
+        {
+          "frame": 3300,
+          "sha256": "a5f8cc3019526c1caecb2e670c5a917103dc216b77031ccefc9388d85f5eee04"
+        },
+        {
+          "frame": 3360,
+          "sha256": "90df4393a05de432b80d7b6175713d89dc956fe793547d09d12f3360300344a0"
+        },
+        {
+          "frame": 3420,
+          "sha256": "c4ac29866b8e5a0f69a0bd6206a12ef4e38ee06aec4bef52f73b40e4cca58fb8"
+        },
+        {
+          "frame": 3600,
+          "sha256": "09a716f91ccc1e787e894bbf08eec5ef55119feb206fbff472dccca72ae7b561"
+        },
+        {
+          "frame": 4200,
+          "sha256": "4778d31033d8c05f0737a07e3043d26ca9257ea063830b40754669c7e5e5f933"
+        }
+      ]
+    }
+  ],
+  "completed_text_position": 54,
+  "captures": [
+    {
+      "frame": 3300,
+      "sha256": "a5f8cc3019526c1caecb2e670c5a917103dc216b77031ccefc9388d85f5eee04"
+    },
+    {
+      "frame": 3360,
+      "sha256": "90df4393a05de432b80d7b6175713d89dc956fe793547d09d12f3360300344a0"
+    },
+    {
+      "frame": 3420,
+      "sha256": "c4ac29866b8e5a0f69a0bd6206a12ef4e38ee06aec4bef52f73b40e4cca58fb8"
+    },
+    {
+      "frame": 3600,
+      "sha256": "09a716f91ccc1e787e894bbf08eec5ef55119feb206fbff472dccca72ae7b561"
+    },
+    {
+      "frame": 4200,
+      "sha256": "4778d31033d8c05f0737a07e3043d26ca9257ea063830b40754669c7e5e5f933"
+    }
+  ],
+  "disc_comparison": {
+    "scope": "All ISO file extents resident in track 1, including original raw sectors for streamed audio/video. Matching LBA and length required. Track 2 compared separately.",
+    "changed": [
+      {
+        "path": "CDROM/BUNKA/BUN_PC.BIN",
+        "old_raw_sha256": "237fd68c452ceab1bf92b141168fa9293f6f52c85897c2cc7e4f7c71ae7da8ae",
+        "new_raw_sha256": "372ef8d9052b9bd63a5b7aff5f034f6b4e487a6c7b9a5edfbb76b8088aa2c36e"
+      },
+      {
+        "path": "CDROM/BUNKA/FU_S6O.BIN",
+        "old_raw_sha256": "0844bc2f1be3386fcee1a004791b63b6ad9c47eec188d39fbeba10bec5ec0976",
+        "new_raw_sha256": "c9aaa835968db30ea53b7b905c5138c14620d911b98b9a6fde83de97c8cb5bb2"
+      },
+      {
+        "path": "CDROM/BUNKA/HI_S6O.BIN",
+        "old_raw_sha256": "3cae1e45141b2d732ca7673e6b79596cad99201d8738be3b9dc885f4c07ee7a5",
+        "new_raw_sha256": "53fb28cacdadb3a522f311de8733c71cbfcb609e38a85329bde23cc4e4565685"
+      },
+      {
+        "path": "CDROM/SERIFU/EVENT_FU.BIN",
+        "old_raw_sha256": "5093c34dbbc1de81e7272d002d71931c008c17b0b52ff9f2f44357b6b1914031",
+        "new_raw_sha256": "82aebee0f1ffad61ef4ad6cd310ebdefd3dec559aae39f237db5daee3db04b40"
+      }
+    ],
+    "unchanged_file_extents": 1367,
+    "external_audio_entries": [
+      "CDROM/DADIR/TR02.DA"
+    ],
+    "track2_identical": true
+  },
+  "checks": {
+    "corpus_wording_and_unrelated_payloads_unchanged": true,
+    "focused_tests_passed": 55,
+    "optional_tests_skipped": 1,
+    "script_audit": "105 containers; 31471 strings; 31334 pointers; zero original-font bytes",
+    "executable_audit": "2828/2940 exact slots; 291 derived records; 286 pointers; zero pending slots"
+  },
+  "browser_acceptance": {
+    "status": "passed",
+    "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+    "checks": [
+      "wrong size",
+      "wrong source hash",
+      "corrupted patch",
+      "cancel",
+      "full patch",
+      "download hash",
+      "cue",
+      "no upload",
+      "responsive layout",
+      "invalid archive",
+      "archive drop",
+      "extraction cancel",
+      "audio download hash",
+      "archive cue",
+      "mobile result"
+    ],
+    "screenshots": [
+      {
+        "file": "build/event-festival-browser-proof/complete.png",
+        "sha256": "baa11060999cac4a76253f8066a00418d33b34db746335aab14d39c39321d083"
+      },
+      {
+        "file": "build/event-festival-browser-proof/archive-mobile.png",
+        "sha256": "a8b6e850f37bbae76589a45744964d2b7199e8bb7149e952db33a780c793f9f9"
+      }
+    ]
+  }
+}

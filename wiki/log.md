@@ -4191,3 +4191,29 @@ Pushed `b7f25285b` to `patch/english` and published Pages commit `eaf375566dae0a
 ## [2026-11-02] query | Refresh the dialogue review sheets
 
 Added the verified New Year and White Day captures to `build/visual-review-pack/index.html`. The gallery now contains 1,252 captures across 146 sheets, including historical builds and repeated frames. These counts do not represent unique dialogue boxes or complete game coverage. Checked the current White Day grid visually; its completed rows preserve the corrected sentence and closing quote. [[tickets/T-39511-english-text-quality]] retains 37 pending long passages.
+
+## [2026-11-02] query | Check three Saki event passages
+
+For [[tickets/T-39511-english-text-quality]], inspected the actual DATE renderer's opening and scrolling rows for three EVENT_NI records on the published disc. Verified the loaded script header, table addresses, line indexes and completed text positions before recording approval. The repeated cooking reply exists in both selected records; the fixture's retained Yumi portrait does not establish a script-loading failure. Saved `translations/en/reviews/saki-event-long-pages-2026-11-02.json` and reduced the long-passage queue from 37 to 34. Natural event artwork is outside this fixture's scope.
+
+## [2026-11-02] query | Narrow the early-break follow-up
+
+For [[tickets/T-39537-dialogue-break-review]], reviewed the ten unresolved early-break candidates. Retain seven readable layouts and keep three copies of one festival reaction open for a runtime comparison at its ellipsis boundary. Saved `translations/en/reviews/early-phrase-triage-2026-11-02.json`. No payloads, intentional pauses or runtime approvals changed.
+
+## [2026-11-02] decision | Preserve four local sentence boundaries
+
+For [[tickets/T-39537-dialogue-break-review]], the event contact sheets exposed an avoidable question split in EVENT_FU initializer 13. Added an exact-ID/exact-payload override in `tools/patch/text/layout.py`, plus three copies of the festival reaction identified during early-break triage. These preserve wording and the source translation's pauses. Started the whole-corpus comparison; rebuilt-disc runtime verification remains pending.
+
+## [2026-11-02] build | Verify the event and festival wrap corrections
+
+Built and froze `build/event-festival-release` at `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4`. Verified the corrected invitation and four other event passages, reducing [[tickets/T-39511-english-text-quality]] to 29 pending long passages. Verified the festival reaction in the actual Yuina science-club renderer, with identical payload/command proof for its two other copies. Recorded receipts for both runs. Discarded the wrong-file event run and wrong-mode festival run; neither adds coverage. Source-confirmed mappings and actual loaded-script checks pass in the replacement runs.
+
+For [[tickets/T-39537-dialogue-break-review]], the exact-record overrides preserve wording and unrelated payloads. Focused tests pass 55 cases with one optional skip; the script and executable audits pass. Only four script containers change from the published build, with 1,367 other file extents and the audio unchanged. Standards review found no unresolved implementation issue. The science-room plaque visible in the festival run is the existing deliberately untranslated D_01_69 asset recorded in `translations/en/graphics/inventory_decisions.json`, rather than new clipping or corrupted lettering. Publication of this build remains pending.
+
+## [2026-11-02] query | Add the verified event and festival sheets
+
+Added the three new runtime receipts to `build/visual-review-pack/index.html`. The gallery has 1,304 captures across 153 sheets, including historical builds and repeated frames. The new groups label their build and fixture limits. No rejected fixture contributes approved captures. The current local build is `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4`; the public build remains the previous verified release pending browser acceptance.
+
+## [2026-11-02] build | Pass browser acceptance for the event and festival build
+
+The package for `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4` passes all 15 browser checks. Actual downloads match the audited disc and audio. Inspected the desktop and mobile result screens; recorded their hashes and the checks in `translations/en/reviews/festival-ellipsis-verified-2026-11-02.json`. Reviewed the exact staged code, receipts and prose with the requested deslop skill. The edits preserve game wording; the notes state the remaining 29 long-passage checks and the limits of controlled scene fixtures. Publication is the remaining step for this build.

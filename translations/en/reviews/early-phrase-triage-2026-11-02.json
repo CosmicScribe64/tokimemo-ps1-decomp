@@ -1,0 +1,221 @@
+{
+  "ticket": "T-39537",
+  "target_sha1": "fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f",
+  "scope": "Contextual review of the ten previously unresolved early-break candidates. Their containers are byte-identical to the preceding audited disc. This is a text-layout decision, not additional runtime coverage. No text or intentional breaks changed.",
+  "counts": {
+    "retain readable two-row phrase": 7,
+    "review ellipsis boundary in runtime": 3
+  },
+  "checks": [
+    {
+      "record_id": "talk:CDROM/BUNKA/BUN_PC.BIN:bun-pc:g0059:l0000",
+      "payload_sha256": "52971ffbde59046749a91dc95b025e41d9b5f6c7cba10dcae4ff9c713424b4dd",
+      "breaks": [
+        {
+          "page": 0,
+          "after_row": 0,
+          "origin": "wrapped",
+          "reasons": [
+            "phrase_link_at_row_end",
+            "early_break"
+          ],
+          "widths_px": [
+            91,
+            90
+          ]
+        }
+      ],
+      "disposition": "review ellipsis boundary in runtime",
+      "reason": "The same short reaction occurs in three festival scripts. An ellipsis offers a more natural boundary; compare it in the renderer before changing the layout."
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0051:l0000",
+      "payload_sha256": "52971ffbde59046749a91dc95b025e41d9b5f6c7cba10dcae4ff9c713424b4dd",
+      "breaks": [
+        {
+          "page": 0,
+          "after_row": 0,
+          "origin": "wrapped",
+          "reasons": [
+            "phrase_link_at_row_end",
+            "early_break"
+          ],
+          "widths_px": [
+            91,
+            90
+          ]
+        }
+      ],
+      "disposition": "review ellipsis boundary in runtime",
+      "reason": "The same short reaction occurs in three festival scripts. An ellipsis offers a more natural boundary; compare it in the renderer before changing the layout."
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/HI_S6O.BIN:main:g0012:l0000",
+      "payload_sha256": "52971ffbde59046749a91dc95b025e41d9b5f6c7cba10dcae4ff9c713424b4dd",
+      "breaks": [
+        {
+          "page": 0,
+          "after_row": 0,
+          "origin": "wrapped",
+          "reasons": [
+            "phrase_link_at_row_end",
+            "early_break"
+          ],
+          "widths_px": [
+            91,
+            90
+          ]
+        }
+      ],
+      "disposition": "review ellipsis boundary in runtime",
+      "reason": "The same short reaction occurs in three festival scripts. An ellipsis offers a more natural boundary; compare it in the renderer before changing the layout."
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/KG_S6W.BIN:main:g0047:l0002",
+      "payload_sha256": "c044e93cbd2e6984957347e305957d907c250b22e5a0dd7181934cb12f11abe9",
+      "breaks": [
+        {
+          "page": 0,
+          "after_row": 0,
+          "origin": "wrapped",
+          "reasons": [
+            "phrase_link_at_row_end",
+            "early_break"
+          ],
+          "widths_px": [
+            55,
+            124
+          ]
+        }
+      ],
+      "disposition": "retain readable two-row phrase",
+      "reason": "Both rows contain meaningful text, with no isolated word or punctuation. Retain the noun or action phrase and existing pauses; a phrase-link flag alone does not establish a layout defect."
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/EVENT_AS.BIN:initializer-00:g0005:l0003",
+      "payload_sha256": "ef76d0abd8b6f607fcef216be2ee566b2d81a1da54bbc4b372c6633aa9364378",
+      "breaks": [
+        {
+          "page": 0,
+          "after_row": 1,
+          "origin": "wrapped",
+          "reasons": [
+            "phrase_link_at_row_end",
+            "early_break"
+          ],
+          "widths_px": [
+            87,
+            99
+          ]
+        }
+      ],
+      "disposition": "retain readable two-row phrase",
+      "reason": "Both rows contain meaningful text, with no isolated word or punctuation. Retain the noun or action phrase and existing pauses; a phrase-link flag alone does not establish a layout defect."
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GEKO.BIN:table-1:g0029:l0002",
+      "payload_sha256": "c18667994d9fa39b97729ce1093707e42f1ff9eacef9d24605cf15886ea7a376",
+      "breaks": [
+        {
+          "page": 0,
+          "after_row": 0,
+          "origin": "wrapped",
+          "reasons": [
+            "phrase_link_at_row_end",
+            "early_break"
+          ],
+          "widths_px": [
+            86,
+            101
+          ]
+        }
+      ],
+      "disposition": "retain readable two-row phrase",
+      "reason": "Both rows contain meaningful text, with no isolated word or punctuation. Retain the noun or action phrase and existing pauses; a phrase-link flag alone does not establish a layout defect."
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/G_INVITE.BIN:table-0:g0002:l0000",
+      "payload_sha256": "3a4f4e5de0cdfd11c75dbff2a488fc0960937605c4fc47c0ddb1617a145baeb1",
+      "breaks": [
+        {
+          "page": 0,
+          "after_row": 1,
+          "origin": "wrapped",
+          "reasons": [
+            "phrase_link_at_row_end",
+            "early_break"
+          ],
+          "widths_px": [
+            76,
+            101
+          ]
+        }
+      ],
+      "disposition": "retain readable two-row phrase",
+      "reason": "Both rows contain meaningful text, with no isolated word or punctuation. Retain the noun or action phrase and existing pauses; a phrase-link flag alone does not establish a layout defect."
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/G_INVITE.BIN:table-3:g0004:l0000",
+      "payload_sha256": "a5dadd5b148e1864ce1b0e8184045b912acecca9754dc3dca1cc6b2ed95b9d81",
+      "breaks": [
+        {
+          "page": 0,
+          "after_row": 0,
+          "origin": "wrapped",
+          "reasons": [
+            "phrase_link_at_row_end",
+            "early_break"
+          ],
+          "widths_px": [
+            84,
+            94
+          ]
+        }
+      ],
+      "disposition": "retain readable two-row phrase",
+      "reason": "Both rows contain meaningful text, with no isolated word or punctuation. Retain the noun or action phrase and existing pauses; a phrase-link flag alone does not establish a layout defect."
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-8:g0024:l0000",
+      "payload_sha256": "6712430a7e1124d2a79fc085ff42b6815b1877be5c176918cdfbf769155f5b4e",
+      "breaks": [
+        {
+          "page": 0,
+          "after_row": 0,
+          "origin": "wrapped",
+          "reasons": [
+            "phrase_link_at_row_end",
+            "early_break"
+          ],
+          "widths_px": [
+            80,
+            107
+          ]
+        }
+      ],
+      "disposition": "retain readable two-row phrase",
+      "reason": "Both rows contain meaningful text, with no isolated word or punctuation. Retain the noun or action phrase and existing pauses; a phrase-link flag alone does not establish a layout defect."
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-9:g0024:l0000",
+      "payload_sha256": "6712430a7e1124d2a79fc085ff42b6815b1877be5c176918cdfbf769155f5b4e",
+      "breaks": [
+        {
+          "page": 0,
+          "after_row": 0,
+          "origin": "wrapped",
+          "reasons": [
+            "phrase_link_at_row_end",
+            "early_break"
+          ],
+          "widths_px": [
+            80,
+            107
+          ]
+        }
+      ],
+      "disposition": "retain readable two-row phrase",
+      "reason": "Both rows contain meaningful text, with no isolated word or punctuation. Retain the noun or action phrase and existing pauses; a phrase-link flag alone does not establish a layout defect."
+    }
+  ]
+}

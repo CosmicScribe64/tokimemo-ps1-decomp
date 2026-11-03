@@ -285,7 +285,7 @@
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_FU.BIN:initializer-13:g0000:l0013",
-      "payload_sha256": "44da60d9977397623466f75f86ba617519df57aa44140439776c0b1858f6505b",
+      "payload_sha256": "38fac0fac6aff1fbf958283160b7742e41a303c0edb1267dbebb85b2517e20ae",
       "window": "message_speech",
       "page_rows": [
         4
@@ -293,7 +293,9 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see event-queue-retested-long-pages-2026-11-02.json",
+      "previous_payload_sha256": "44da60d9977397623466f75f86ba617519df57aa44140439776c0b1858f6505b",
+      "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_KI.BIN:scene-01:g0001:l0005",
@@ -305,7 +307,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see event-queue-retested-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_KO.BIN:scene-01:g0003:l0004",
@@ -317,7 +319,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see event-queue-retested-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_NI.BIN:scene-00:g0002:l0010",
@@ -329,7 +331,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see saki-event-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_NI.BIN:scene-00:g0003:l0005",
@@ -341,7 +343,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see saki-event-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_NI.BIN:scene-01:g0006:l0001",
@@ -353,7 +355,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see saki-event-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_OT.BIN:initializer-21:g0006:l0000",
@@ -365,7 +367,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see event-queue-retested-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_OT.BIN:initializer-23:g0002:l0002",
@@ -377,7 +379,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see event-queue-retested-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-67:g0006:l0003",

@@ -62,3 +62,17 @@ The full-disc comparison finds only WHITE.BIN changed; 1,370 other file extents 
 ## White Day build published
 
 Published `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f` after all 15 browser checks passed. Pages deployment 41581825760 succeeded, and all 36 served files match the tested package. `translations/en/reviews/published-white-wrap-2026-11-02.json` records the release hashes and verification. The visual review queue remains at 37 pending records.
+
+## Early phrase review
+
+Reviewed the ten unresolved early-break candidates against their encoded rows and widths. Seven have readable two-row phrases without stranded words or punctuation; retain them. The other three share one festival reaction whose ellipsis may provide a better boundary. They still need a runtime comparison. `translations/en/reviews/early-phrase-triage-2026-11-02.json` records the decisions without changing dialogue or claiming additional visual coverage. Broader phrase-link triage remains open.
+
+## Event and festival boundaries
+
+The current-disc event batch shows Shiori's cake invitation splitting its question after the auxiliary verb. Prepared an exact-record override to retain the translation's sentence boundary, without changing the hesitant opening or trailing invitation. Prepared the same guarded treatment for the three copies of the festival reaction, breaking at the ellipsis. Corpus comparison and rebuilt-disc visual checks are pending; none of these four corrections is approved or published yet.
+
+## Event and festival corrections verified
+
+Built `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4`. The invitation keeps its question together, and the festival reaction breaks at its ellipsis. Receipts are `translations/en/reviews/event-queue-retested-long-pages-2026-11-02.json` and `translations/en/reviews/festival-ellipsis-verified-2026-11-02.json`. The festival receipt verifies the actual Yuina science-club renderer and proves the other two copies have identical payloads and player-speech commands; it does not claim separate scene runs for those copies.
+
+The corpus comparison changes exactly the seven registered overrides, including the three previously verified ones. Wording and unrelated payloads are unchanged. All 55 focused tests pass, with one optional skip. Script and executable audits pass; only the four intended script containers differ from the published disc. The other 1,367 file extents and the audio track match. Reviewed the new exact-ID/exact-payload overrides against CODING_STANDARDS.md: no default binary or raw-source changes, no new dependencies, fitting rows and runtime evidence for both corrected phrases. No unresolved implementation finding. Broader phrase triage remains open, and this build is not yet published.

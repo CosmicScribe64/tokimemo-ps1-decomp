@@ -130,3 +130,11 @@ The flagged White Day exclamation now stays on one row in the rebuilt disc. Insp
 ## White Day build published
 
 Published `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f` after all 15 browser checks passed. Pages deployment 41581825760 succeeded, and all 36 served files match the tested package. `translations/en/reviews/published-white-wrap-2026-11-02.json` records the release hashes and verification. The visual review queue remains at 37 pending records.
+
+## Saki event passages
+
+Three pending EVENT_NI passages pass controlled runtime layout review on the published White Day build. The loaded script header matches the disc, and table pointers, line advancement and completed text positions agree with the selected records. Inspected the opening rows, scrolling and closing quotes. The fixture retains Yumi's portrait and speaker binding, so this does not verify Saki's event artwork or natural staging. Receipt: `translations/en/reviews/saki-event-long-pages-2026-11-02.json`. The queue has 34 pending long passages.
+
+## Five more event passages
+
+Verified five further passages against rebuilt target `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4`, including the corrected Shiori invitation. The receipt checks script headers, on-disc payload hashes, table pointers, line advancement and completed rendering: `translations/en/reviews/event-queue-retested-long-pages-2026-11-02.json`. The shared DATE fixture retains Yumi's portrait and name binding; these are layout checks. The queue now has 29 pending long passages. An earlier run used incorrect character mappings for KI, KO and OT and was discarded without approvals. The corrected mappings were checked against the loader's CD addresses and ISO entries.

@@ -40,6 +40,18 @@ REVIEWED_ROWS = {
 
 # T-39537: reviewed generated breaks; keep wording and reply boundaries intact.
 REVIEWED_BREAK_ROWS = {
+    "talk:CDROM/SERIFU/EVENT_FU.BIN:initializer-13:g0000:l0013": (
+        b"Great...\nI've got a cake ready. Won't you come...\nto my room?",
+        b"Great...\nI've got a cake ready.\nWon't you come...\nto my room?"),
+    "talk:CDROM/BUNKA/BUN_PC.BIN:bun-pc:g0059:l0000": (
+        b"It blew up... Is the performer okay?",
+        b"It blew up...\nIs the performer okay?"),
+    "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0051:l0000": (
+        b"It blew up... Is the performer okay?",
+        b"It blew up...\nIs the performer okay?"),
+    "talk:CDROM/BUNKA/HI_S6O.BIN:main:g0012:l0000": (
+        b"It blew up... Is the performer okay?",
+        b"It blew up...\nIs the performer okay?"),
     "talk:CDROM/SERIFU/WHITE.BIN:table-3:g0001:l0001": (
         b"Oh?\nYou have someone to repay? What a surprise.\nWell, do your best.",
         b"Oh?\nYou have someone to repay?\nWhat a surprise.\nWell, do your best."),
