@@ -14,6 +14,68 @@
 #include "main/state.h"
 #include "main/talk.h"
 #include "main/text.h"
+#ifdef TOKIMEMO_ENGLISH
+#include "english/text.h"
+#include "libgpu.h"
+
+/* T-39536: a continuation starts only after every preceding glyph is revealed.
+ * Retain the reserved first entry and rows still in the subtitle window. Copy
+ * their atlas cells toward the start before loading the next spoken line. */
+static void ending_subtitle_compact(void) {
+    TextEntry *entries;
+    RECT rect;
+    s32 read_entry;
+    s32 write_entry;
+    s32 read_glyph;
+    s32 write_glyph;
+    s32 glyph;
+    s32 count;
+    s32 mark;
+    s32 source;
+    s32 target;
+
+    entries = (TextEntry *)text_list;
+    read_glyph = 0;
+    write_glyph = 0;
+    write_entry = 0;
+    mark = 0;
+    for (read_entry = 0; read_entry < text_state.count; read_entry++) {
+        count = entries[read_entry].glyph_count;
+        if (read_entry == 0 || entries[read_entry].y >= 0x48) {
+            for (glyph = 0; glyph < count; glyph++) {
+                source = read_glyph + glyph;
+                target = write_glyph + glyph;
+                if (source != target) {
+                    rect.x = 0x320 + (source / 128) * 0x40 + (source & 7) * 4;
+                    rect.y = 0x100 + (source & 0x78) * 2;
+                    rect.w = 4;
+                    rect.h = 12;
+                    func_8009C93C(&rect,
+                        0x320 + (target / 128) * 0x40 + (target & 7) * 4,
+                        0x100 + (target & 0x78) * 2);
+                    func_8009C674(0);
+                    english_glyph_pen[target] = english_glyph_pen[source];
+                }
+            }
+            entries[write_entry++] = entries[read_entry];
+            write_glyph += count;
+            if (read_entry < text_state.mark) {
+                mark++;
+            }
+        }
+        read_glyph += count;
+    }
+    for (read_entry = write_entry; read_entry < text_state.count; read_entry++) {
+        entries[read_entry].glyph_count = 0;
+        entries[read_entry].active = 0;
+        entries[read_entry].y = 0;
+    }
+    text_state.count = write_entry;
+    text_state.mark = mark;
+    text_state.total = write_glyph;
+    text_state.pos = write_glyph;
+}
+#endif
 
 void ending_graduation_dialogue_resource_table_init(void) {
     ending_dialogue_resource_tables[0][0] = 0x801F00B8;
@@ -224,6 +286,9 @@ s32 ending_dialogue_line_render(dialogue_text, dialogue_kind, voice_or_text_arg,
             talk_voice_state = 1;
             talk_voice_wait_frames = 0;
         }
+#ifdef TOKIMEMO_ENGLISH
+        ending_subtitle_compact();
+#endif
         talk_render(-0x82, talk_next_row_y, dialogue_color, buf, 0, "", "", 0);
         talk_line_clear = 1;
         break;
@@ -246,6 +311,9 @@ s32 ending_dialogue_line_render(dialogue_text, dialogue_kind, voice_or_text_arg,
             talk_voice_state = 1;
             talk_voice_wait_frames = 0;
         }
+#ifdef TOKIMEMO_ENGLISH
+        ending_subtitle_compact();
+#endif
         talk_render(-0x82, talk_next_row_y, dialogue_color, buf, 0, "", "", 0);
         talk_line_wait = 1;
         break;

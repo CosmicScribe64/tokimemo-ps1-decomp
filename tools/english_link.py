@@ -469,6 +469,7 @@ def cmd_aux(argv):
     used = referenced_names(out_dir, unit)
     defined = referenced_names(out_dir, unit, definitions_only=True)
     lines = ["/* free relink (T-39505): tools/english_link.py aux %s */" % unit]
+    imported = set()
     for path in side_scripts(unit):
         lines.append("/* from %s */" % path)
         for line in open(path):
@@ -478,6 +479,7 @@ def cmd_aux(argv):
                 lines.append(line)
                 continue
             indent, provide, name, number, _close, tail = m.groups()
+            imported.add(name)
             v = int(number, 16)
             new = None
             if name not in used:  # no object of this link refers to it (main_names.ld is shared)
@@ -502,10 +504,12 @@ def cmd_aux(argv):
             body = "%s = %s" % (name, new)
             lines.append("%s%s;%s" % (indent, "PROVIDE(%s)" % body if provide else body, tail))
     if unit != "main":
-        # symbols the variant adds to the main executable (English runtime), for overlay code
-        lines.append("/* new main-executable symbols */")
+        # T-39536: include existing main functions newly called by English overlays,
+        # such as SDK routines absent from the original overlay's imports.
+        lines.append("/* main-executable imports */")
         for name, (addr, _f, in_section, is_global) in sorted(main_syms.items()):
-            if in_section and is_global and name not in default_main_syms and not name.startswith("__en_"):
+            if in_section and is_global and not name.startswith("__en_") and \
+                    (name not in default_main_syms or (name in used and name not in imported)):
                 lines.append("%s = 0x%08X;" % (name, addr))
     with open(out, "w") as f:
         f.write("\n".join(lines) + "\n")
