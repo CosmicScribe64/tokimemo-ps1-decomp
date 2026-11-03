@@ -1,0 +1,10 @@
+{
+  "ticket": "T-39537",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "record_id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-4:g0023:l0006",
+  "run": "build/emu/camp-break-review",
+  "frame": 1200,
+  "capture_sha256": "ec81302c7e5fad4f95ac47d22d77527a2a537d4a7e907ac681da11d47e415dac",
+  "visual_status": "verified: three fitting rows, numbered label kept together, full speaker name and closing quote; no clipping/overlap",
+  "scope": "Controlled line selection in the actual camp talk runner with disc-loaded script. Pixel enlargement resolves the earlier reduced-preview label concern."
+}

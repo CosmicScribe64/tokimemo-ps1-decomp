@@ -3991,3 +3991,155 @@ Reviewed the source comments, ticket history and visual receipts with Deslop and
 ## [2026-11-02] ticket | Complete source-checked Yumi corrections
 
 Completed [[tickets/T-39538-yumi-name-translation]] with source/target guards, unchanged controls and six runtime receipts covering all 39 corrected records. Full-disc audits and focused tests pass. Reviewed the staged code and prose; pushed `76d07382e` to `patch/english`. Publication and broader visual review remain open.
+
+## [2026-11-02] build | Publish the reviewed ending package
+
+Pushed the reviewed source and receipts to patch/english at 3d09cbcc3 and opened draft PR #71. Automatic approval review rejected the direct main update; main remains unchanged. The explicitly requested patcher publication is pushed to gh-pages at fa1b90a521d592da6a6e62567fcca2e04320d1f9. Pages run 41554082219 is in progress. See [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] build | Verify the live ending review build
+
+Pages deployment 41554082219 succeeded. Compared all 36 served package files byte for byte with `build/patcher-ending-scoped-review`; every file matches. The receipt is `build/ending-scoped-served-files.json`. The public patcher serves a839441add3e. Main remains unchanged; source changes are available in draft PR #71. See [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Continue visual review with Nozomi's ending
+
+Started the published-build Nozomi ending replay with the linked overlay symbols, actual heroine dispatch and normal text timing. The run samples every 30 frames and targets 24,000 frames. Pending counts remain 31 inspected and 56 pending until the new captures are reviewed. See [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] query | Prepare ordinary park-date coverage
+
+Grouped the pending queue into 51 distinct payload/window pairs across 56 records without changing any approval. Traced Kagami's special arrival to scene flag 51 and started a fixture with that event marked visited, aiming to reach the four pending ordinary park passages. The loaded scene and complete text still need inspection. See [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] query | Reach Kagami's park and recapture the rental counter
+
+The corrected park fixture visibly reaches Kagami at the amusement park (frame 3,300). This establishes the intended scene, not complete long-passage approval. Started denser rental-counter captures with the bowling venue; the previous ski context could leave unrelated foreground art. See [[tickets/T-39511-english-text-quality]] and [[tickets/T-39533-sign-lettering-quality]].
+
+## [2026-11-02] ticket | Complete sign-lettering review
+
+Moved [[tickets/T-39533-sign-lettering-quality]] to Done after standards review, encoded-image checks, the roster fade review and the dense bowling-scene replay. All three published-disc images decode exactly to their reviewed previews. The rental lettering is covered by original foreground art in the actual scene; the receipt states that limit explicitly. Reviewed 151 bowling captures for composition and 50 roster captures for fade alignment. No whole-game sign-off is implied.
+
+## [2026-11-02] ticket | Repair awkward park reply wrapping
+
+Created [[tickets/T-39535-park-reply-wrap]] after inspecting the four pending Kagami park replies on the published disc. Reflow splits two opening sentences into awkward fragments. The fixture reaches the correct scene and completes the text, but these records remain pending until the phrase breaks are corrected and replayed. No wording change is needed.
+
+## [2026-11-02] ticket | Trace a long ending speech rendering failure
+
+Created [[tickets/T-39536-ending-continuation-glyph-capacity]] after inspecting 98 Nozomi ending captures across 11 sheets. Late continuation lines collapse beyond the 384-glyph pen/atlas capacity; sampled text totals reach 587 before reset. The next speech recovers. No Nozomi approvals were added. Updated [[english-text-runtime]] with the measured failure and the existing summary renderer's related solution.
+
+## [2026-11-02] build | Verify the scoped park phrase correction
+
+Implemented [[tickets/T-39535-park-reply-wrap]] for four exact records. Full payload comparison confirms unchanged wording, alternate replies and every unrelated payload. Existing English patch tests pass 46 cases with one optional disc test skipped. Runtime acceptance awaits a build with the continuation-capacity repair. Added the inspected Nozomi, park and bowling sheets to the local gallery, now 785 captures across 84 sheets. Defective passages are explicitly labeled and remain unapproved.
+
+## [2026-11-02] build | Bound ending continuation storage
+
+Audited 381 ending subtitle records for [[tickets/T-39536-ending-continuation-glyph-capacity]]. The longest chain contains 689 glyphs, while the largest next record plus two retained rows needs 307. Added an English-only candidate that compacts completed subtitle rows and their atlas cells before each continuation. Runtime validation is still required.
+
+## [2026-11-02] ticket | Add source-aware dialogue break review
+
+Created [[tickets/T-39537-dialogue-break-review]] to supplement screenshots with a text-level audit. It will retain provenance from the existing source-aware reflow pass, flag generated phrase splits and short rows for human review, and leave all payload bytes unchanged.
+
+## [2026-11-02] build | Review dialogue breaks across the corpus
+
+The initial [[tickets/T-39537-dialogue-break-review]] audit covered 30,573 records without changing payloads. Local review found a numbered-label split and an isolated final word; dynamic names caused false punctuation-only reports, now corrected with regression coverage. Original/intentional breaks remain separate. [[tickets/T-39536-ending-continuation-glyph-capacity]] needed two SDK imports absent from the original overlay; the linker now exports referenced main symbols missing from its existing imports. The default ENDING checksum passes; candidate runtime checks are next.
+
+## [2026-11-02] build | Freeze the continuation repair candidate
+
+Built and froze `build/ending-capacity-release` for [[tickets/T-39536-ending-continuation-glyph-capacity]] and [[tickets/T-39535-park-reply-wrap]]. The default ENDING checksum passes. Nozomi and the longest-chain route are running against the candidate; their restored main executable receives only the two verified changed bytes. The refined [[tickets/T-39537-dialogue-break-review]] scan reports 1,368 generated boundaries for contextual triage, with nine focused tests passing. No visual sign-off or new publication yet.
+
+## [2026-11-02] build | Correct two confirmed generated breaks
+
+For [[tickets/T-39537-dialogue-break-review]], scoped two wrapping corrections to exact record IDs and expected payloads. Whole-corpus comparison proves that only those two records change and only in newline placement. Inspected Nozomi frame 11850 from the continuation candidate: previously failing late speech now shows distinct glyphs and normal typewriter progression. Full-chain verification remains in progress.
+
+## [2026-11-02] build | Verify Nozomi's repaired overflow interval
+
+Inspected nine candidate captures spanning Nozomi's original glyph overflow through the completed speech and next reply. All rows remain distinct and scroll correctly. Frozen-disc script and executable audits pass; default matching, globals, renames and 64 focused tests pass (one optional test skipped). Full ending replays are still running. See [[tickets/T-39536-ending-continuation-glyph-capacity]].
+
+## [2026-11-02] build | Review two ending routes and expand contact sheets
+
+Inspected 98 Nozomi and 116 Rei captures, including both the originally corrupt interval and the longest continuation chain through its final quote. Added five hashed flagged-record approvals: 36 of 87 now have visual evidence, 51 remain pending. The local gallery has 999 captures on 108 sheets. Code review of [[tickets/T-39536-ending-continuation-glyph-capacity]] found no unresolved issue; remaining route regressions continue. The newer two-record wrapping build terminated with exit code 137; the frozen reviewed candidate is intact, and a retry waits for the active replays.
+
+## [2026-11-02] build | Finish Rei's ending dialogue review
+
+Inspected 15 tail captures through Rei's final line and closing quote. Added the sixth approval in `ending-capacity-2026-11-02.json`; the long-page queue now has 37 reviewed records and 50 pending. Both Nozomi and Rei dialogue replays are complete. The gallery now has 1,014 captures across 110 sheets. See [[tickets/T-39536-ending-continuation-glyph-capacity]] and [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] ticket | Verify Yumi self-reference errors
+
+Created [[tickets/T-39538-yumi-name-translation]] after the break audit exposed malformed pronouns in two DATE_SA reply records. The original Japanese explicitly names Yumi. Six English targets match the two obvious patterns; audit source-name occurrences before correcting the full scope. All twelve park reply variants were visually inspected, including settled captures after the runtime adds the closing quote; their receipt is next.
+
+## [2026-11-02] ticket | Complete park reply wrapping review
+
+Moved [[tickets/T-39535-park-reply-wrap]] to Done after code review, full-payload comparison, all twelve runtime variants and actual-disc verification of 498 strings/pointers. Inspected 64 captures including settled closing quotes. The long-page queue is now 41 reviewed and 46 pending. The local gallery contains 1,078 captures across 118 sheets. The follow-up build succeeded on retry in 167.8 seconds and is frozen at `build/break-reviewed-release` (track prefix `07f0ad3b7c0c`); Yukari's largest-load regression is running on it. No new publication yet.
+
+## [2026-11-02] build | Guard source-confirmed Yumi corrections
+
+Audited 446 source-name records and reviewed 55 active-game targets containing `my`. Added 39 confirmed corrections with source/target hashes and identical protected-marker order. Whole-corpus comparison proves only those 39 payloads change; reply counts stay intact, all rows fit and no new scrolling records appear. Sixty focused tests pass with one optional disc test skipped. Build and runtime verification remain open in [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] ticket | Complete and push the ending capacity repair
+
+Moved [[tickets/T-39536-ending-continuation-glyph-capacity]] to Done after inspecting 71 Yukari captures, including the largest subtitle load at 309 live glyphs. Nozomi, Rei and Yukari regressions, default matching, disc audits and focused tests pass. Reviewed the exact staged writing with deslop; corrected one outdated generated comment. Pushed `6c83d3eb8` to `patch/english`. The gallery now has 1,149 captures across 126 sheets. Building the 39 source-verified Yumi corrections next; those remain unverified in game.
+
+## [2026-11-02] build | Build the reviewed Yumi corrections
+
+Built and froze `build/yumi-reviewed-release` with all 39 guarded corrections. The build passed in 165.8 seconds, with 252 verified artwork placements and no unmapped characters. Prepared 31 changed DATE_SA variants for controlled runtime review and started a fresh Yumi scene. Full-disc script/executable audits are running. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Explain source-aware break detection
+
+Confirmed the current audit checks 30,573 dialogue records and distinguishes retained pre-wrap boundaries from generated wrapping. Its 1,368 generated candidates are review prompts, not confirmed defects; retained breaks remain protected from automatic changes. Two reviewed wrapping corrections preserve wording and unrelated payloads, but still need runtime checks. Text measurements cannot establish the absence of renderer overlap or artwork defects, so image review remains part of sign-off. See [[tickets/T-39537-dialogue-break-review]].
+
+## [2026-11-02] build | Start corrected-reply runtime review
+
+Confirmed the latest Yumi disc passes script and executable audits, and inspected the completed fresh date fixture. Started a 31-variant date replay plus a separate festival invitation replay on that disc. Inspected three early date frames: corrected names, closing quotes and spacing look clean. Prepared a contact-sheet collector that checks actual table addresses and complete text after a 120-frame settling interval. Memory samples are written at replay completion, so partial captures remain provisional. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Verify 31 corrected date replies
+
+Inspected four contact sheets covering all 31 changed DATE_SA variants across 25 records on track `7738fcbe89bee49102c68b025a5f5104ccf6b09f`. All have complete quotes and clean spacing. Saved capture hashes, table checks and scope in `translations/en/reviews/yumi-date-replies-2026-11-02.json`. Excluded the first festival test because it selected generic dialogue; started a loader retry from its initialized state. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Verify corrected festival invitation
+
+The retry loaded Yumi's invitation through the festival scene. Inspected the corrected reply with its portrait and complete quote; character, tables and settled text checks pass. Recorded three screenshot hashes in `translations/en/reviews/yumi-festival-invitation-2026-11-02.json`. Runtime approval now covers 26 of 39 corrected records. Started festival walk and New Year loader fixtures for further coverage. See [[tickets/T-39538-yumi-name-translation]] and [[english-text-runtime]].
+
+## [2026-11-02] query | Verify corrected festival walk replies
+
+Inspected three completed SA_S6W replies and recorded their character/table checks plus screenshot hashes. T-39538 now has runtime approval for 29 of 39 corrected records. The mode-0x52 New Year test reached Ijuin's scene and was excluded; source dispatch proves mode 0x53 enters the intended handler. Started the corrected fixture and the separate festival visit loader. See [[tickets/T-39538-yumi-name-translation]] and [[english-text-runtime]].
+
+## [2026-11-02] build | Correct remaining scene fixture addresses
+
+Confirmed mode 0x53 loads the New Year home scene and SHOGATU data. Excluded a probe that used original overlay globals; the replacement reads linked symbols from the frozen ELF and asserts their layout. The other festival loader needs a second entry after initialization to load the intended Yumi script; started that retry. Approval remains 29 of 39 T-39538 corrections. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Verify five corrected New Year replies
+
+Inspected all five linked-address New Year captures; tables, line progression and complete text states pass. A pixel enlargement resolved an ambiguous-looking word as the existing interjection, with intact glyphs. Saved screenshot hashes in `translations/en/reviews/yumi-new-year-2026-11-02.json`. Runtime approval now covers 34 of 39 T-39538 corrections. The festival visit retry is still live; no approval for it yet. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] lint | Refresh current-build dialogue break audit
+
+Audited 30,573 records using the latest frozen font metrics and corrected targets. Generated candidates now total 1,365, with no generated isolated-word, punctuation-only or split-number candidates. Retained counts are unchanged. Started the three event-reply replay using actual DATE scene variables from its ELF and the real event script loader. Festival retry remains live. See [[tickets/T-39537-dialogue-break-review]] and [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Verify three corrected event replies
+
+Inspected the three completed EVENT_SA corrections in the actual mode-0x5E talk runner. Linked tables, group/line progression and complete text states pass, with clean quotes and fitting rows. Recorded screenshot hashes and the backdrop/staging scope in `translations/en/reviews/yumi-event-2026-11-02.json`. T-39538 now has approval for 37 of 39 records; the festival visit retry is still running. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Diagnose paused festival visit fixture
+
+The visit retry reached its 600-second timeout. Added an ignored local pause listener using the PCSX-Redux documented event API; it recorded a frame-65 pause and unknown byte read during the forced intermediate dialogue state. Started a direct script-load entry and prepared the final two corrected visit replies. The approval count remains 37 of 39. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] build | Load the intended Yumi visit script
+
+The direct-load retry completed successfully with Yumi's portrait and the expected SA_S6 table triad. Inspected its arrival scene and started the final two corrected replies from the verified state. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] ticket | Complete Yumi name correction review
+
+The final two SA_S6 visit replies pass actual-table and complete-text checks with clean portraits and quotes. Six runtime receipts now cover exactly all 39 corrected records on the frozen track. Reviewed the correction loader, integration, manifest and tests against CODING_STANDARDS.md; no unresolved findings. Moved [[tickets/T-39538-yumi-name-translation]] to Done and updated the board. Started an Ayako date fixture for the separate T-39537 wrapping correction. Publication and full-game visual review remain open.
+
+## [2026-11-02] build | Commit and push reviewed Yumi corrections
+
+Committed the completed correction loader, 39-record manifest, tests, six runtime receipts and consolidated ticket as `76d07382e`. Reviewed the exact staged code and writing; deslop reports zero hits after consolidating stale ticket notes. Pushed `patch/english`. The live patcher package is unchanged. Ayako's fresh date scene is visually confirmed, and the targeted T-39537 wrapping replay is running.
+
+## [2026-11-02] query | Verify Ayako's reviewed phrase wrap
+
+Inspected the corrected DATE_KA reply in Ayako's real date scene. Two balanced rows, complete quote and actual-table/completed-text checks pass. Recorded the screenshot hash in `translations/en/reviews/ayako-break-2026-11-02.json`. Started the camp scene loader for the remaining numbered-label correction. See [[tickets/T-39537-dialogue-break-review]].
+
+## [2026-11-02] ticket | Investigate shortened speaker labels
+
+The camp reply preserves the numbered label and fits three rows, but its speaker label loses leading letters after controlled selection. Opened [[tickets/T-39539-speaker-label-reuse]] to compare natural progression, name buffers and glyph entries before publication. Similar suffix-only labels in late controlled date captures may share the cause. Packaged the audited track locally at `build/patcher-yumi-reviewed`; it is not published.
+
+## [2026-11-02] query | Verify camp wrap and resolve label preview concern
+
+Confirmed the camp correction fits three rows with the numbered label intact and a full closing quote. Pixel enlargements of camp, Ayako and late date captures show complete speaker names; memory also confirms intact name glyphs and draw origins. The earlier reduced previews were misread. Closed [[tickets/T-39539-speaker-label-reuse]] without a game-code change and saved `translations/en/reviews/camp-break-2026-11-02.json`. The new patcher package passes actual browser patching, ZIP drop, cancellation, output/audio hashes, CUE and mobile-layout checks. Publication remains pending.

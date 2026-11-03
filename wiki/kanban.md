@@ -24,7 +24,12 @@ kanban-plugin: board
 ## In Progress
 
 
-- [ ] [[tickets/T-39533-sign-lettering-quality|T-39533 Improve shoe-rental and class-roster lettering]]
+
+- [ ] [[tickets/T-39537-dialogue-break-review|T-39537 Flag suspicious dialogue breaks without changing intentional pauses]]
+
+
+
+
 
 
 
@@ -118,8 +123,15 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-39539-speaker-label-reuse|T-39539 Check shortened speaker labels after repeated replies]]
+
 - [ ] [[tickets/T-39538-yumi-name-translation|T-39538 Restore Yumi's name in mistranslated self-references]]
 
+- [ ] [[tickets/T-39536-ending-continuation-glyph-capacity|T-39536 Keep long ending continuations within the glyph atlas]]
+
+- [ ] [[tickets/T-39535-park-reply-wrap|T-39535 Keep Kagami's park reply phrases together]]
+
+- [ ] [[tickets/T-39533-sign-lettering-quality|T-39533 Improve shoe-rental and class-roster lettering]]
 - [ ] [[tickets/T-39534-ending-dialogue-visibility|T-39534 Verify and repair ending dialogue visibility]]
 - [ ] [[tickets/T-39532-school-trip-phrase-wrap|T-39532 Keep the school-trip invitation phrase together]]
 

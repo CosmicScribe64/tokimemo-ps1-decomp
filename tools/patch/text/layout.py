@@ -15,6 +15,7 @@ from collections import Counter
 from dataclasses import dataclass, field, replace
 
 from .containers import Container
+from .break_review import review as review_breaks
 from .reviewed_targets import reviewed_target
 from .english import EnglishEncoder, end_inline_label, untokenized_name_codes
 from .segments import Control, Text, encode
@@ -35,6 +36,27 @@ FIXED_GIRL_LABELS = {"CDROM/BUNKA/NI_S6W.BIN": b"Nijino"}
 REVIEWED_ROWS = {
     ("CDROM/SERIFU/SHUGAKU.BIN", b"Wanna go out again the day after tomorrow?"):
         b"Wanna go out again\nthe day after tomorrow?",
+}
+
+# T-39537: reviewed generated breaks; keep wording and reply boundaries intact.
+REVIEWED_BREAK_ROWS = {
+    "talk:CDROM/SERIFU/DATE_KA.BIN:section-01:g0001:l0000": (
+        b"A stroll down a path like this is so refreshing.",
+        b"A stroll down a path\nlike this is so refreshing."),
+    "talk:CDROM/SERIFU/GASSHUKU.BIN:table-4:g0023:l0006": (
+        b"T-that'd be nice, but \x15, let's become No. 1 first.",
+        b"T-that'd be nice, but\n\x15, let's become\nNo. 1 first."),
+}
+
+# T-39535: keep the first reply's phrase boundaries in these park records.
+PARK_REPLY_IDS = frozenset(
+    f"talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g{group:04d}:l0000"
+    for group in (25, 41, 50, 57))
+PARK_REPLY_ROWS = {
+    b"Because you were entranced by me?\nThen that's only natural.\nOhohoho.":
+        b"Because you were\nentranced by me?\nThen that's only natural.\nOhohoho.",
+    b"I'm not sure why, but that feels good.\nPraise me more.\nOhohoho.":
+        b"I'm not sure why,\nbut that feels good.\nPraise me more.\nOhohoho.",
 }
 
 SKIPPED_KINDS = ("speaktst", "reference_only")
@@ -148,6 +170,16 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                     if reviewed is not None:
                         payload = reviewed
                         note["reviewed_rows"] = "T-39532"
+                    reviewed_break = REVIEWED_BREAK_ROWS.get(record.id)
+                    if reviewed_break is not None and payload == reviewed_break[0]:
+                        payload = reviewed_break[1]
+                        note["reviewed_rows"] = "T-39537"
+                    if record.id in PARK_REPLY_IDS:
+                        first, separator, remaining = payload.partition(b"\x0b")
+                        reviewed = PARK_REPLY_ROWS.get(first)
+                        if reviewed is not None:
+                            payload = reviewed + separator + remaining
+                            note["reviewed_rows"] = "T-39535"
                 if window.name in ("ending_player", "ending_heroine"):
                     payload = speech.close_ending_speech(payload, speech.command_of(record))
                 elif container.kind in ("talk_script", "talk_script_supplemental"):
@@ -159,6 +191,10 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                     # sndisp appends the closing mark at runtime; reserve its advance.
                     window = replace(window, right=window.right - metrics.width(b'"'))
                 result = wrap(payload, window, metrics, joined=joined)
+                if window.reflow:
+                    note["break_review"] = review_breaks(
+                        payload[label_end(payload):], result.payload[label_end(result.payload):],
+                        metrics.for_window(window), window.width)
                 payload = speech.unclose(result.payload, unclosed, speech.command_of(record)) if closed else result.payload
                 note.update(window=window.name, basis=basis, rows=result.rows,
                             breaks_added=result.breaks_added)

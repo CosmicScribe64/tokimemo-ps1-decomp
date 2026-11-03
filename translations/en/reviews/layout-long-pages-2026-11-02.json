@@ -2,8 +2,8 @@
   "schema": "tokimemo.layout-flag-review.v1",
   "date": "2026-11-02",
   "ticket": "T-39511",
-  "target_sha1": "a839441add3e6dc6e72b04c4daacf8d0a59cce41",
-  "scope": "87 flagged long-page records, using each renderer's actual viewport. Previously verified payloads remain unchanged. Pending records require runtime scrolling and visual inspection; static checks do not certify whole-game visuals.",
+  "target_sha1": "66d0c190c1b60f200fa9e1796d120e890a14fa86",
+  "scope": "87 flagged long-page records using actual renderer viewports. Receipts identify the build for each inspected passage. Older approvals remain historical evidence; pending records and changed runtime paths require visual verification. No whole-game sign-off.",
   "records": [
     {
       "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0119:l0004",
@@ -132,7 +132,7 @@
     },
     {
       "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0025:l0000",
-      "payload_sha256": "8b1034a1aa179d53526267dceb586e4dcda14a545ab786f17812435d02f7a2b6",
+      "payload_sha256": "40600889cf0fa45641a660648f47ea81e21c34f13fba7448bcc3a9ef0aca962b",
       "window": "message_speech",
       "page_rows": [
         4,
@@ -142,11 +142,11 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see park-replies-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0041:l0000",
-      "payload_sha256": "8b1034a1aa179d53526267dceb586e4dcda14a545ab786f17812435d02f7a2b6",
+      "payload_sha256": "40600889cf0fa45641a660648f47ea81e21c34f13fba7448bcc3a9ef0aca962b",
       "window": "message_speech",
       "page_rows": [
         4,
@@ -156,11 +156,11 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see park-replies-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0050:l0000",
-      "payload_sha256": "82be580a5ab82ddc1610879f1f1a6509c00e90aa297618da3704315876854eb5",
+      "payload_sha256": "bda2e302e9e784d8077add223d8bc2627f61ebca62f9103818e7db1638f7706c",
       "window": "message_speech",
       "page_rows": [
         4,
@@ -170,11 +170,11 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see park-replies-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0057:l0000",
-      "payload_sha256": "8b1034a1aa179d53526267dceb586e4dcda14a545ab786f17812435d02f7a2b6",
+      "payload_sha256": "40600889cf0fa45641a660648f47ea81e21c34f13fba7448bcc3a9ef0aca962b",
       "window": "message_speech",
       "page_rows": [
         4,
@@ -184,7 +184,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see park-replies-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0008",
@@ -232,7 +232,7 @@
       "visible_rows": 2,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see ending-capacity-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/ENDING.BIN:table-13:g0000:l0001",
@@ -847,7 +847,7 @@
       "visible_rows": 2,
       "hard_row_limit": null,
       "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see ending-capacity-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/ENDING.BIN:table-10:g0000:l0013",
@@ -859,7 +859,7 @@
       "visible_rows": 2,
       "hard_row_limit": null,
       "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see ending-capacity-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/ENDING.BIN:table-10:g0001:l0012",
@@ -955,7 +955,7 @@
       "visible_rows": 2,
       "hard_row_limit": null,
       "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see ending-capacity-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/ENDING.BIN:table-5:g0000:l0029",
@@ -967,7 +967,7 @@
       "visible_rows": 2,
       "hard_row_limit": null,
       "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see ending-capacity-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/ENDING.BIN:table-5:g0000:l0043",
@@ -979,7 +979,7 @@
       "visible_rows": 2,
       "hard_row_limit": null,
       "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see ending-capacity-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/ENDING.BIN:table-6:g0000:l0001",
