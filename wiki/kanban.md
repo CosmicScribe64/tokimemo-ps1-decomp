@@ -93,7 +93,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-39513-skating-rink-advertisement|T-39513 Translate the omitted skating-rink advertisement]]
 
-- [ ] [[tickets/T-39512-browser-patcher|T-39512 Build and verify the local browser patcher]]
 
 - [ ] [[tickets/T-39509-opening-movie-pills|T-39509 Replace the heroine name pills in the opening movie]]
 - [ ] [[tickets/T-39505-english-memory-and-relink|T-39505 Give the English build room to grow (memory map and free relink)]]
@@ -122,6 +121,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39512-browser-patcher|T-39512 Build and verify the local browser patcher]]
 
 - [ ] [[tickets/T-39539-speaker-label-reuse|T-39539 Check shortened speaker labels after repeated replies]]
 

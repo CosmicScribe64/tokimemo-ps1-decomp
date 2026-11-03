@@ -4143,3 +4143,15 @@ The camp reply preserves the numbered label and fits three rows, but its speaker
 ## [2026-11-02] query | Verify camp wrap and resolve label preview concern
 
 Confirmed the camp correction fits three rows with the numbered label intact and a full closing quote. Pixel enlargements of camp, Ayako and late date captures show complete speaker names; memory also confirms intact name glyphs and draw origins. The earlier reduced previews were misread. Closed [[tickets/T-39539-speaker-label-reuse]] without a game-code change and saved `translations/en/reviews/camp-break-2026-11-02.json`. The new patcher package passes actual browser patching, ZIP drop, cancellation, output/audio hashes, CUE and mobile-layout checks. Publication remains pending.
+
+## [2026-11-02] build | Publish the verified correction package
+
+Committed the source-aware audit, scoped wraps and review receipts at `a61fd383e` and pushed `patch/english`. Updated the Pages package at `c4c7aeb9823ac0b636ede59be32310bd7ec8a2a1`; only the xdelta and release manifest changed. The local package passes full browser acceptance with ZIP drop, cancellation, source/patch rejection, exact disc/audio hashes, CUE and responsive layout. Pages deployment 41579156701 is running. Final served-file comparison is next; full-game visual review remains open.
+
+## [2026-11-02] build | Verify the published review package
+
+Pages deployment 41579156701 succeeded for commit `c4c7aeb9823ac0b636ede59be32310bd7ec8a2a1`. All 36 public files match the browser-tested package byte for byte, including the patch and release manifest. The live page now serves track `7738fcbe89bee49102c68b025a5f5104ccf6b09f`. Receipt: `build/yumi-reviewed-served-files.json`. Broader game review remains open in [[tickets/T-39511-english-text-quality]] and [[tickets/T-39537-dialogue-break-review]].
+
+## [2026-11-02] ticket | Complete browser patcher delivery
+
+The requested review build is published, its actual browser outputs match the audited disc/audio, and all 36 live files match the tested package. Saved `translations/en/reviews/published-build-2026-11-02.json`. Completed [[tickets/T-39512-browser-patcher]] and moved its board card to Done; format support is already complete in [[tickets/T-39527-patcher-disc-inputs]]. Whole-game visual review remains open.

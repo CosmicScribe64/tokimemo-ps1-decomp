@@ -1,7 +1,7 @@
 ---
 id: T-39512
 title: Build and verify the local browser patcher
-status: In Review
+status: Done
 assignee: codex
 created: 2026-11-01
 updated: 2026-11-02
@@ -18,7 +18,7 @@ A static browser patcher for the original PlayStation the Best track, suitable f
 - [x] Actual current xdelta applied in a headless browser; output matches the command-line build.
 - [x] Desktop and narrow-screen visual review, keyboard-accessible controls.
 - [x] Reproducible packaging contains no copyrighted input or output disc data.
-- [x] Review against CODING_STANDARDS.md before Done. Publication awaits campaign owner sign-off.
+- [x] Review against CODING_STANDARDS.md before Done.
 
 ## Notes
 
@@ -55,3 +55,9 @@ The name-width package (`build/patcher-phone-width-review`, target `97daa18d5f23
 The sports-bubble package (`build/patcher-sports-callout-review`, target `28107c11bdbc8c17520df11b6092ee1bc8f55e86`) passes all nine browser checks. Its completion page was inspected. Localhost:8769 now serves this package, including the verified phone and sports fixes. Public publication and final release signoff remain open.
 
 2026-11-02: the owner requested publication of available work and a patcher link in the README and GitHub description. T-39526 published the verified `2f9fd663374c` review package at https://cosmicscribe64.github.io/tokimemo-ps1-decomp/. Every served file matches the tested package; desktop/mobile review and a live-page browser smoke check pass. Broader game-quality signoff remains open. T-39527 adds the requested drag-and-drop inputs and extractor-format parity.
+
+2026-11-02: published review build `7738fcbe89bee49102c68b025a5f5104ccf6b09f` at the existing patching page. Full browser acceptance passes, including raw tracks, ZIP drop, cancellation, invalid source/archive, corrupted patch, exact disc/audio download hashes, CUE, no upload and responsive layout. Desktop and mobile result screens were inspected. Pages run 41579156701 succeeded; all 36 served files match the tested package. The package includes the ending capacity repair, 39 reviewed Yumi corrections and scoped phrase wraps. Broader game visual signoff remains open.
+
+## Closeout
+
+The owner requested publication, and the verified review package is live. All acceptance criteria and the recorded standards review pass. T-39527 completes drag-and-drop format support. Publication receipt: `translations/en/reviews/published-build-2026-11-02.json`. Moved this patcher ticket to Done; whole-game language and artwork review remains tracked separately.
