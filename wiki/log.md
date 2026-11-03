@@ -4249,3 +4249,13 @@ Visually inspected 254 shipped sprite targets and 16 translated still containers
 ## [2026-11-02] ticket | Close generated-break review
 
 Moved [[tickets/T-39537-dialogue-break-review]] from In Progress to Done after contextual triage, published-payload hash checks and standards review. All generated candidates are fixed or explained. No source-retained break was rewritten by this audit. Broader release signoff remains open under [[tickets/T-39500-english-translation-patch]].
+
+## [2026-11-02] query | Close the prototype-sheet evidence gap
+
+Read the actual published disc's 174 MAINROM sprite frames and checked the HUD texture uploads. None uses prototype texture index 5; its original bytes remain intact. Updated the inventory exception and regenerated the inventory without count changes. Receipt and scope are recorded in [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] lint | Review movie safeguards and release status
+
+Reviewed the opening-movie pipeline against CODING_STANDARDS; Docker tests pass (18 passed, one optional full-build skip). Recorded the review in [[tickets/T-39509-opening-movie-pills]]. Confirmed the public repository description links the patcher and updated PR 71 to reflect the published target and completed dialogue/art batches. [[tickets/T-39500-english-translation-patch]] records the remaining parent-ticket reconciliation without claiming every-route playback.
+
+T-39509 moves to Done after the standards review; its board card and ticket status agree.

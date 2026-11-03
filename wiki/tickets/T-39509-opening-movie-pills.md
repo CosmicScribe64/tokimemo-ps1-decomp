@@ -1,10 +1,10 @@
 ---
 id: T-39509
 title: Replace the heroine name pills in the opening movie
-status: In Review
+status: Done
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-01
+updated: 2026-11-02
 links: ["[[tickets/T-39500-english-translation-patch]]", "[[tickets/T-39508-english-art-on-disc]]", "[[movie-patch]]", "[[english-build]]"]
 ---
 
@@ -35,3 +35,5 @@ Part of [[tickets/T-39500-english-translation-patch]]. Method and results: [[mov
 - 2026-11-01 Codex: added SHA-256 verification of the entire encoded movie extent after the final disc write, including audio sectors. The report only promotes movie artwork after this check and complete registered-image coverage; container matching accepts the inventory's `CDROM/` prefix and fails if no item matches. Real build readback passed; mutation regression fails as expected. Existing movie playback evidence above remains applicable to the unchanged encoded movie bytes.
 
 - 2026-11-01 claude: implemented and verified; waiting for code review against `CODING_STANDARDS.md`.
+
+2026-11-02: reviewed the movie builder, stream writer, MDEC codec, caption compositor and `Disc.replace_stream` against CODING_STANDARDS. The writer preserves sector positions and audio, validates EDC/ECC, bounds encoded frames to their sector and decoder-buffer budgets, and verifies the final extent hash. No unresolved finding for the registered opening-movie input. Docker regression run: 19 tests, 18 passed and one optional full-build test skipped. Existing build and playback evidence above covers the unchanged encoded movie; this review adds no new playback claim. No production code changed.
