@@ -299,4 +299,8 @@ Previous target `c3c205c005712aa57072053c2e3faa511c1820fa` restores four distinc
 
 ## Fortune display spacing release, 2026-11-03
 
-Current target `45eac0efcc5981d60102a9de7e84e30757243b4c` separates full family and given names in the computer-fortune display. Native captures verify the widest presets and maximum-width inputs. The build passes the disc/source audits, all 27 original hashes and all 15 browser checks. Pages run 41606770799 succeeded, and all 37 public files match the tested package. Receipts: `translations/en/reviews/fortune-name-spacing-2026-11-03.json` and `published-fortune-spacing-2026-11-03.json`. T-39546 is Done; T-39511 remains open for the remaining review dispositions.
+Previous target `45eac0efcc5981d60102a9de7e84e30757243b4c` separates full family and given names in the computer-fortune display. Native captures verify the widest presets and maximum-width inputs. The build passes the disc/source audits, all 27 original hashes and all 15 browser checks. Pages run 41606770799 succeeded, and all 37 public files match the tested package. Receipts: `translations/en/reviews/fortune-name-spacing-2026-11-03.json` and `published-fortune-spacing-2026-11-03.json`. T-39546 is Done; T-39511 remains open for the remaining review dispositions.
+
+## TwinBee sprite correction release, 2026-11-03
+
+Current target `39454a5b82bcc53f05daba81040e6622a85310e1` preserves twelve sprite attribute arrays previously mistaken for text. Translation had changed three arrays. All twelve now match the original through their actual disc pointers. Native player, boss, ranking and controlled-preview captures are verified. The build passes 29 tests, complete text audits, 27 default hashes and 15 browser checks. All 37 served files match the package. Evidence: `translations/en/reviews/twinbee-sprite-attributes-2026-11-03.json` and `published-twinbee-sprite-attributes-2026-11-03.json`.

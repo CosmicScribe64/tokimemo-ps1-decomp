@@ -4391,3 +4391,7 @@ Reviewed the remaining 100 distinct growth payloads in [[tickets/T-39511-english
 ## [2026-11-03] build | Complete TwinBee sprite visual review
 
 Inspected four first-boss captures and a native preview of all three corrected sprite sets for [[tickets/T-39547-twinbee-sprite-attributes]]. Graphics are intact. The preview of set 8 does not claim a natural gameplay caller. Standards review is complete; publication is next. Asked the owner whether to preserve the original TwinBee title logo or use English lettering.
+
+## [2026-11-03] build | Publish TwinBee sprite correction
+
+Closed [[tickets/T-39547-twinbee-sprite-attributes]] after standards review and native sprite checks. Pages run 41609583646 succeeded, and all 37 public files match target 39454a5b82bcc53f05daba81040e6622a85310e1. The first readback saw the older manifest during deployment; the completed deployment passed. Updated [[english-build]] and [[kanban]]. The refreshed menu census has 827 growth records with 253 distinct payloads; sprite attributes are excluded. The original TwinBee logo preference remains pending.

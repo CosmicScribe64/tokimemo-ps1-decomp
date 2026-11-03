@@ -1,7 +1,7 @@
 {
   "ticket": "T-39547",
   "target_sha1": "39454a5b82bcc53f05daba81040e6622a85310e1",
-  "status": "verified; publication pending",
+  "status": "verified and published",
   "candidate_classification": [
     {
       "unit": "TT",
@@ -111,5 +111,6 @@
       ]
     }
   ],
-  "standards_review": "No unresolved findings. Narrow non-text exclusions, exact-hash language classifications, independent original-pointer regression and metadata-only receipts. No game C or raw sources changed."
+  "standards_review": "No unresolved findings. Narrow non-text exclusions, exact-hash language classifications, independent original-pointer regression and metadata-only receipts. No game C or raw sources changed.",
+  "publication_receipt": "translations/en/reviews/published-twinbee-sprite-attributes-2026-11-03.json"
 }

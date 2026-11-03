@@ -23,7 +23,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-39547-twinbee-sprite-attributes|T-39547 Preserve TwinBee sprite texture attributes]]
 
 
 
@@ -122,6 +121,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39547-twinbee-sprite-attributes|T-39547 Preserve TwinBee sprite texture attributes]]
 
 - [ ] [[tickets/T-39546-fortune-name-spacing|T-39546 Separate full names in the computer fortune display]]
 
