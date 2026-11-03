@@ -389,7 +389,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "runtime scrolling inspected; see yumi-event-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-68:g0002:l0003",
@@ -401,7 +401,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "runtime scrolling inspected; see yumi-event-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-4:g0005:l0006",
@@ -413,7 +413,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "runtime scrolling inspected; see camp-nozomi-scenes-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-4:g0006:l0001",
@@ -425,7 +425,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "runtime scrolling inspected; see camp-nozomi-scenes-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-5:g0006:l0000",
@@ -533,7 +533,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see new-year-long-page-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/SHUGAKU.BIN:table-0:g0037:l0000",
@@ -755,7 +755,7 @@
     },
     {
       "id": "talk:CDROM/SERIFU/WHITE.BIN:table-3:g0001:l0001",
-      "payload_sha256": "88ddcf443e9ec3dea02a32d7efb9cb0150deb4b93c68162b7123c8013a2f041e",
+      "payload_sha256": "aab7c3efad0eb2f9611e21c5ce4fc9a0b2fd2af28ccaa8f2db20747a13bdf5e0",
       "window": "message_speech",
       "page_rows": [
         4
@@ -763,7 +763,9 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "corrected phrase wrap verified in actual scene; see white-day-wrap-verified-2026-11-02.json",
+      "previous_payload_sha256": "88ddcf443e9ec3dea02a32d7efb9cb0150deb4b93c68162b7123c8013a2f041e",
+      "target_sha1": "fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f"
     },
     {
       "id": "talk:CDROM/SERIFU/WHITE.BIN:table-3:g0002:l0003",
@@ -775,7 +777,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see white-day-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/WHITE.BIN:table-7:g0003:l0002",
@@ -787,7 +789,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see white-day-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/WHITE.BIN:table-10:g0001:l0006",
@@ -799,7 +801,7 @@
       "visible_rows": 3,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see white-day-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/XMAS.BIN:table-6:g0003:l0000",

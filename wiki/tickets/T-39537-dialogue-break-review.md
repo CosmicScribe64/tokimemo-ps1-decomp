@@ -44,3 +44,17 @@ The GASSHUKU table 4 group 23 line 6 reply fits three rows, keeps the numbered l
 ## Standards review
 
 Reviewed the audit, layout integration and targeted overrides against CODING_STANDARDS.md. The audit changes metadata only, separates replies when tracking retained boundaries and excludes dynamic name bytes from punctuation-only warnings. Nine tests cover provenance, intentional pauses, controls and numeric labels. Overrides require exact IDs and payloads; whole-corpus comparison preserves wording and unrelated records, and both changes have actual-disc runtime receipts. No default C or assembly changes and no host dependencies. No unresolved implementation finding. Contextual review of the remaining candidates keeps this ticket In Progress.
+
+## Early-break contextual triage
+
+Inspected all 42 generated early-break candidates with their current encoded dialogue and measured row widths. Keep 27 balanced layouts and five dynamic-name reservations. Ten candidates also split a linked phrase and remain open for closer review. No dialogue bytes or intentional source breaks changed. The ID/hash receipt is `translations/en/reviews/early-break-triage-2026-11-02.json`; dialogue-bearing context stays in ignored `build/early-break-context.json`. This text review does not replace runtime visual checks or close the broader phrase-link queue.
+
+## White Day phrase correction
+
+The White Day runtime batch exposed an awkward generated break inside a short exclamation in table-3 group 1 line 1. Added an exact-ID/exact-payload override that restores the translation's sentence boundary while preserving its opening and closing rows. The corpus comparison confirms that only the three registered overrides differ when enabled, with unchanged wording, fitting rows and unrelated payloads unchanged. The rebuilt-disc verification is recorded below; this correction is not yet published. The other two overrides retain their existing runtime receipts.
+
+## White Day correction verified
+
+Built `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f` and reloaded WHITE.BIN through the scene's CD loader. The corrected exclamation stays on one row, with the opening, scrolling rows and closing quote intact. Receipt: `translations/en/reviews/white-day-wrap-verified-2026-11-02.json`.
+
+The full-disc comparison finds only WHITE.BIN changed; 1,370 other file extents and track 2 are identical to the published build. Script and executable audits pass. Focused tests pass 55 cases with one optional skip. Reviewed the exact-record override against CODING_STANDARDS.md: wording and unrelated records are preserved, no default binary or raw-source changes, and runtime evidence matches the new build. No unresolved implementation finding for this correction. Broader phrase triage remains open, and the new build is not yet published.

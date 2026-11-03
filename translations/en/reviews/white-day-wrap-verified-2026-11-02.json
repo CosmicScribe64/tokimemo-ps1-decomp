@@ -1,0 +1,98 @@
+{
+  "ticket": "T-39537",
+  "target_sha1": "fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f",
+  "run": "build/emu/white-wrap-verified",
+  "scope": "WHITE.BIN reloaded through the scene CD loader after restoring the prior build state. Main and overlay file extents are byte-identical to the published build. Corrected phrase and closing quote inspected in the actual White Day scene.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/WHITE.BIN:table-3:g0001:l0001",
+      "payload_sha256": "aab7c3efad0eb2f9611e21c5ce4fc9a0b2fd2af28ccaa8f2db20747a13bdf5e0",
+      "completed_text_position": 78,
+      "result": "Short exclamation stays on one row; complete scrolling passage, quote and speaker name; no clipped or overlapping glyphs.",
+      "captures": [
+        {
+          "frame": 660,
+          "sha256": "a62c6622708afcda1e052e08dea30ed34dad9047ca7877938f27bbe1c4caab21"
+        },
+        {
+          "frame": 720,
+          "sha256": "a07aabd8f4b5ce0204c591389b946de74ff52a588680e6d0d4a91d1718a77a8f"
+        },
+        {
+          "frame": 780,
+          "sha256": "b42b3ea15418c4d86b281bffceaa51952d51f2f01cf37764f57424df51c65dd1"
+        },
+        {
+          "frame": 840,
+          "sha256": "28a7edec355bf4a76ff97485d47f2a78baedc2b09d118cf8ceb5a24482a7b47f"
+        },
+        {
+          "frame": 900,
+          "sha256": "915c83950b592469daa7509f47828dbf4f4335873f3b905b18fe3c3d939733f9"
+        },
+        {
+          "frame": 1800,
+          "sha256": "d2db69d8901461c659c0152ea4db3a92a8796951ae977dfe01e267c02961b6ba"
+        }
+      ]
+    }
+  ],
+  "disc_comparison": {
+    "scope": "All ISO file extents resident in track 1, including original raw sectors for streamed audio/video. Matching LBA and length required. Track 2 compared separately.",
+    "changed": [
+      {
+        "path": "CDROM/SERIFU/WHITE.BIN",
+        "old_raw_sha256": "3a66b143c09b3318f6f69f39e1421e466cb4872f47f568755c763f33c3028503",
+        "new_raw_sha256": "9e7eb66db25e405c1257527367c184e18c40b30719e861ee1672078ade579115"
+      }
+    ],
+    "unchanged_file_extents": 1370,
+    "external_audio_entries": [
+      "CDROM/DADIR/TR02.DA"
+    ],
+    "track2_identical": true
+  },
+  "validation": {
+    "script_containers": 105,
+    "script_strings": 31471,
+    "script_pointers": 31334,
+    "executable_audit": "pass; zero pending slots",
+    "focused_tests": {
+      "passed": 55,
+      "skipped": 1
+    },
+    "whole_corpus": "Only the three registered overrides differ when enabled; wording and unrelated payloads unchanged.",
+    "browser": {
+      "status": "passed",
+      "checks": [
+        "wrong size",
+        "wrong source hash",
+        "corrupted patch",
+        "cancel",
+        "full patch",
+        "download hash",
+        "cue",
+        "no upload",
+        "responsive layout",
+        "invalid archive",
+        "archive drop",
+        "extraction cancel",
+        "audio download hash",
+        "archive cue",
+        "mobile result"
+      ],
+      "receipt_sha256": "b862264e7b7a79c4e8c4045f7cc5f19874873997ded52d2b72163eb8b322e3af",
+      "screenshots": [
+        {
+          "path": "build/white-wrap-browser-proof/complete.png",
+          "sha256": "baa11060999cac4a76253f8066a00418d33b34db746335aab14d39c39321d083"
+        },
+        {
+          "path": "build/white-wrap-browser-proof/archive-mobile.png",
+          "sha256": "a8b6e850f37bbae76589a45744964d2b7199e8bb7149e952db33a780c793f9f9"
+        }
+      ],
+      "visual_review": "Desktop completion and mobile archive completion inspected; readable controls and instructions, no horizontal overflow."
+    }
+  }
+}

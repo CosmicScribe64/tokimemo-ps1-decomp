@@ -40,6 +40,9 @@ REVIEWED_ROWS = {
 
 # T-39537: reviewed generated breaks; keep wording and reply boundaries intact.
 REVIEWED_BREAK_ROWS = {
+    "talk:CDROM/SERIFU/WHITE.BIN:table-3:g0001:l0001": (
+        b"Oh?\nYou have someone to repay? What a surprise.\nWell, do your best.",
+        b"Oh?\nYou have someone to repay?\nWhat a surprise.\nWell, do your best."),
     "talk:CDROM/SERIFU/DATE_KA.BIN:section-01:g0001:l0000": (
         b"A stroll down a path like this is so refreshing.",
         b"A stroll down a path\nlike this is so refreshing."),

@@ -4155,3 +4155,31 @@ Pages deployment 41579156701 succeeded for commit `c4c7aeb9823ac0b636ede59be3231
 ## [2026-11-02] ticket | Complete browser patcher delivery
 
 The requested review build is published, its actual browser outputs match the audited disc/audio, and all 36 live files match the tested package. Saved `translations/en/reviews/published-build-2026-11-02.json`. Completed [[tickets/T-39512-browser-patcher]] and moved its board card to Done; format support is already complete in [[tickets/T-39527-patcher-disc-inputs]]. Whole-game visual review remains open.
+
+## [2026-11-02] query | Review every generated early-break candidate
+
+For [[tickets/T-39537-dialogue-break-review]], rebuilt contextual output from the current encoded corpus in Docker and inspected all 42 generated early-break candidates. Retained 27 balanced layouts and five dynamic-name reservations; ten phrase-boundary cases remain open. Added `translations/en/reviews/early-break-triage-2026-11-02.json` with IDs and payload hashes. No game text changed. The broader visual queue still has 46 pending records across 17 containers. Updated [[english-text-runtime]]; no whole-game sign-off.
+
+## [2026-11-02] query | Inspect two more scrolling camp passages
+
+For [[tickets/T-39511-english-text-quality]], ran 2,400 frames against the published disc and inspected 20 captures on three contact sheets. Two GASSHUKU long passages show complete punctuation and clean scrolling. Verified active tables, line counters and full text reveal. Added `translations/en/reviews/camp-long-followup-2026-11-02.json` and updated the long-page queue to 44 pending layout checks. The controlled fixture retains a prior heroine-name binding, so the receipt explicitly excludes natural scene/name verification. No game bytes changed.
+
+## [2026-11-02] query | Add published-build captures to the review gallery
+
+For [[tickets/T-39511-english-text-quality]], copied 60 previously inspected captures from nine current-build receipts into `build/visual-review-pack`, verifying every image hash. Added 13 contact sheets; totals are now 1,209 captures and 139 sheets. Kept each group's build identity and limitations, including historical defect runs. Started `build/emu/camp-nozomi-entry` through the game's own scene initializer to check the heroine-name binding omitted by the earlier controlled line selections.
+
+## [2026-11-02] query | Verify Nozomi scene binding and two Yumi long passages
+
+For [[tickets/T-39511-english-text-quality]], inspected Nozomi's normal scene setup, controller progression and full name substitution. Replaced the two camp records' limited evidence with `translations/en/reviews/camp-nozomi-scenes-2026-11-02.json`. Excluded a controlled selection made during unfinished speech; it retained stale glyphs and is not a game-defect approval. Added `translations/en/reviews/yumi-event-long-pages-2026-11-02.json` for two further scrolling passages, with tables, line counters, completed text and screenshot hashes verified. The queue has 42 pending layout checks. Added the accepted captures to the gallery. No game bytes changed.
+
+## [2026-11-02] query | Inspect New Year and White Day long pages
+
+For [[tickets/T-39511-english-text-quality]], inspected 13 New Year captures and 30 White Day captures across six sheets. Approved one New Year and three White Day scrolling passages, with table and text-completion checks; White Day also matches the script header from the published disc. One White Day passage has an awkward generated phrase split and stays pending. Added an exact-record override under [[tickets/T-39537-dialogue-break-review]]; whole-corpus comparison proves unchanged wording and unrelated payloads. Rebuilt-disc visual verification of that correction remains open. The queue has 38 pending records; publication is unchanged.
+
+## [2026-11-02] build | Verify the White Day phrase correction
+
+For [[tickets/T-39537-dialogue-break-review]], built and froze `build/white-wrap-release`, target `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f`. Script and executable audits pass; 55 focused tests pass with one optional skip. Compared every in-track file extent against the published build: only WHITE.BIN changes, with 1,370 other extents and track 2 identical. Reloaded the new script through the scene CD loader and inspected the corrected phrase through its closing quote. Added `translations/en/reviews/white-day-wrap-verified-2026-11-02.json`, updated [[english-text-runtime]] and the [[tickets/T-39511-english-text-quality]] queue to 37 pending layout checks. Prepared `build/patcher-white-wrap`; browser acceptance and publication of this build remain pending.
+
+## [2026-11-02] build | Pass browser acceptance for the White Day build
+
+The `build/patcher-white-wrap` package passes all 15 browser checks on target `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f`. Actual downloads match the audited disc and audio. ZIP drag/drop, cancellation, bad-source rejection, CUE output, local-only processing and mobile layout pass. Inspected desktop and mobile completion screenshots and added their hashes to `translations/en/reviews/white-day-wrap-verified-2026-11-02.json`. Reviewed the staged prose with the requested deslop skill; its three weak hits are technical uses of dynamic-name reservations. Game wording is unchanged. Publication remains pending.

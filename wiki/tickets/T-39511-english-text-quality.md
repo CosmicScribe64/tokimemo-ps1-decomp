@@ -104,3 +104,25 @@ The 56 pending records contain 51 distinct payload/window pairs. These are still
 ## Continuation repair review
 
 Inspected 214 new ending captures across 24 sheets: Nozomi's complete dialogue and Rei through line 38, including the longest continued speech. Added five flagged-record approvals (36 of 87, 51 pending). The local gallery now contains 999 captures across 108 sheets, including historical defect evidence; these totals are not all unique scenes or current-build approvals. Receipts specify each build. Rei's tail and fresh park-variant checks continue. A follow-up build containing two further line-break corrections terminated with exit code 137 during concurrent replays and will be retried after they finish.
+
+## Camp long-page follow-up
+
+Inspected 20 captures across three contact sheets from `build/emu/camp-long-followup` on the published track. GASSHUKU table-4 group 5 line 6 and group 6 line 1 scroll cleanly from their opening rows through closing punctuation. Table pointers, post-dispatch line counters and fully revealed text were checked. The controlled fixture retains Kagami's name binding in the second passage; this is layout evidence, not approval of natural scene staging or its heroine binding. The receipt states that limit explicitly: `translations/en/reviews/camp-long-followup-2026-11-02.json`. The long-page queue now has 44 pending layout checks; scene-specific name binding still needs a natural-route check.
+
+## Published-build gallery update
+
+Added nine groups from the published build's hashed review receipts: Yumi's date replies, festival invitation/walk/visit, New Year and event dialogue, the Ayako and camp wrap fixes, and the camp scrolling follow-up. Each copied capture matches its receipt hash. The gallery now contains 1,209 captures on 139 sheets, including 60 newly added captures on 13 sheets. Historical runs remain labeled with their own build and scope; the total does not mean 1,209 unique current-build approvals. The local gallery is `build/visual-review-pack/index.html`.
+
+## Camp scene binding and Yumi long pages
+
+The camp initializer binds Nozomi's correct name and portrait. Controller-only progression from that initialized scene reaches table-4 group 5 line 6; its full scrolling passage is clean. A later controlled selection verifies group 6 line 1 with the full Kiyokawa-san substitution. The earlier Kagami-name limitation is resolved for these two records. An attempted selection during unfinished speech produced stale glyphs in the fixture; those frames are excluded, and the first passage uses the controller-driven run instead. See `translations/en/reviews/camp-nozomi-scenes-2026-11-02.json`.
+
+Two pending EVENT_SA passages also pass actual-renderer scrolling checks, including their closing punctuation and intentional thought breaks. Their receipt, `translations/en/reviews/yumi-event-long-pages-2026-11-02.json`, retains the limitation that the controlled fixture uses an existing date background. Active table pointers, line counters and full reveal were checked for all four passages. The long-page queue now has 42 pending layout checks. No game bytes changed.
+
+## Seasonal long-page batch
+
+The remaining flagged New Year passage and three White Day passages pass scrolling checks. Receipts are `translations/en/reviews/new-year-long-page-2026-11-02.json` and `translations/en/reviews/white-day-long-pages-2026-11-02.json`; they record actual tables, full reveal, screenshot hashes and the limits of controlled scene selection. The White Day receipt also verifies the disc-loaded script header. One further White Day passage splits a short exclamation awkwardly and remains pending under T-39537. Its exact-record wrap correction is prepared but needs rebuilt-disc visual verification. The long-page queue has 38 pending records.
+
+## White Day wrap retest
+
+The flagged White Day exclamation now stays on one row in the rebuilt disc. Inspected the full passage after reloading its script through the CD loader; the closing quote and scrolling rows are complete. `translations/en/reviews/white-day-wrap-verified-2026-11-02.json` records the screenshots and full-disc comparison. Only WHITE.BIN changes from the published disc, and the corpus proof preserves unrelated dialogue. The queue now has 37 pending layout checks. The new build is local; the public patch remains unchanged.

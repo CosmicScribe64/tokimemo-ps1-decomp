@@ -188,3 +188,7 @@ Exact-record overrides repair an isolated word in DATE_KA and a split numbered l
 Six runtime receipts cover all 39 corrected records on track `7738fcbe89bee49102c68b025a5f5104ccf6b09f`. They record actual-table checks, complete text and screenshot hashes, with the limits of controlled scene selection stated explicitly. Full-disc audits and focused tests pass. [[tickets/T-39538-yumi-name-translation]] is Done; broader visual review and publication remain separate.
 
 For New Year fixtures, mode 0x53 enters `new_year_mode_handler`; mode 0x52 enters Ijuin's scene. Read overlay globals from the current ELF because the English link moves them. Pixel enlargements and memory checks resolved the apparent shortened-label issue without a code change; see [[tickets/T-39539-speaker-label-reuse]].
+
+The current early-break triage inspected all 42 generated candidates: 27 balanced layouts and five dynamic-name reservations are retained; ten phrase-boundary cases remain open. `translations/en/reviews/early-break-triage-2026-11-02.json` records IDs, payload hashes and dispositions without embedding dialogue. No payload changed, and this text-only review does not approve runtime visuals.
+
+A third exact-record wrap override restores a sentence boundary in a White Day reply. Actual-scene verification passes on `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f`. Only WHITE.BIN changes from the published disc; all other 1,370 file extents and track 2 are identical. The receipt is `translations/en/reviews/white-day-wrap-verified-2026-11-02.json`.

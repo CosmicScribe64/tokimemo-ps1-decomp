@@ -1,0 +1,32 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "run": "build/emu/new-year-long-followup",
+  "scope": "Controlled table and line selection in the actual New Year dialogue runner with disc-loaded script. Verifies the long reply and preserved short farewell; the fixture retains the existing speaker and room, so natural scene staging is not covered.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-11:g0004:l0000",
+      "payload_sha256": "c8562d8b46cb26333c2de711bb2ad7b5f4efcad4235278b8d33b661c4e4faf0b",
+      "completed_text_position": 63,
+      "result": "Complete scrolling passage and closing quote inspected; intentional short clauses retained, no clipping or overlap.",
+      "captures": [
+        {
+          "frame": 360,
+          "sha256": "975c45e4a6e83f299d99e505ed01becd382409560b70891d56524c75c26f10be"
+        },
+        {
+          "frame": 480,
+          "sha256": "1f616fb96f450cd0d2e92fc33d2ea69c73dc8e860a5edae710fac7df7c651163"
+        },
+        {
+          "frame": 600,
+          "sha256": "9103acc1ff8ffa7efed5914fa2f4163ccee7dbe54066f5ee3db6b898a79084e0"
+        },
+        {
+          "frame": 1800,
+          "sha256": "9ea4331f42ade5988b31ad06bff3e77238240ab24b216d1fd7ebae1d2c88aa6f"
+        }
+      ]
+    }
+  ]
+}
