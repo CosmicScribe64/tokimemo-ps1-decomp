@@ -1,7 +1,7 @@
 ---
 id: T-39546
 title: Separate full names in the computer fortune display
-status: In Progress
+status: Done
 assignee: codex
 created: 2026-11-03
 updated: 2026-11-03
@@ -16,7 +16,7 @@ Keep a visible gap between family and given names in the festival computer-fortu
 
 - [x] Leave at least four pixels between full-width name fields and keep the blood-type label separate.
 - [x] Inspect a native capture with the widest presets and verify actual rendered coordinates.
-- [ ] Preserve the original build's 27 hashes; pass disc and browser checks and publish.
+- [x] Preserve the original build's 27 hashes; pass disc and browser checks and publish.
 - [x] Complete a standards review.
 
 ## Evidence
@@ -29,4 +29,4 @@ The rebuilt native captures show a five-pixel gap for the widest presets and fou
 
 All 27 default hashes match. Script, executable and generated-source audits pass, as do all 15 browser checks. The remaining 12 fortune-name entries and 12 RPG loot entries also fit their measured bounds. Receipt: `translations/en/reviews/fortune-name-spacing-2026-11-03.json`.
 
-Standards review found no unresolved issue. The four coordinate changes are English-only, and the original constants remain in the default build. No wording, artwork or gameplay logic changed. Publication is pending.
+Standards review found no unresolved issue. The four coordinate changes are English-only, and the original constants remain in the default build. No wording, artwork or gameplay logic changed. Published target `45eac0efcc5981d60102a9de7e84e30757243b4c`. Pages run 41606770799 succeeded; all 37 served files match the tested package byte for byte. Publication receipt: `translations/en/reviews/published-fortune-spacing-2026-11-03.json`.

@@ -23,7 +23,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-39546-fortune-name-spacing|T-39546 Separate full names in the computer fortune display]]
 
 
 
@@ -121,6 +120,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39546-fortune-name-spacing|T-39546 Separate full names in the computer fortune display]]
 
 - [ ] [[tickets/T-39545-name-code-compatibility|T-39545 Keep secret name codes usable in English]]
 

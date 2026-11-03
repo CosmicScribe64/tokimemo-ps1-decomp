@@ -295,4 +295,8 @@ Published target `b579f2ad31288f442436f718eba0cb61f7e359fe` restores 214 source-
 
 ## Secret-name correction release, 2026-11-03
 
-Current target `c3c205c005712aa57072053c2e3faa511c1820fa` restores four distinct secret-name effects with short English inputs. Only NAME_ENT.EXN changes among 992 compared disc files. The correction passes 16 tests using the real name encoder and generated comparison function, all disc/source audits, 27 default hashes and 15 browser checks. All 37 public files match the tested package. Evidence is in `translations/en/reviews/name-codes-2026-11-03.json` and `published-name-codes-2026-11-03.json`. The earlier dialogue and artwork review remains applicable.
+Previous target `c3c205c005712aa57072053c2e3faa511c1820fa` restores four distinct secret-name effects with short English inputs. Only NAME_ENT.EXN changes among 992 compared disc files. The correction passes 16 tests using the real name encoder and generated comparison function, all disc/source audits, 27 default hashes and 15 browser checks. All 37 public files match the tested package. Evidence is in `translations/en/reviews/name-codes-2026-11-03.json` and `published-name-codes-2026-11-03.json`. The earlier dialogue and artwork review remains applicable.
+
+## Fortune display spacing release, 2026-11-03
+
+Current target `45eac0efcc5981d60102a9de7e84e30757243b4c` separates full family and given names in the computer-fortune display. Native captures verify the widest presets and maximum-width inputs. The build passes the disc/source audits, all 27 original hashes and all 15 browser checks. Pages run 41606770799 succeeded, and all 37 public files match the tested package. Receipts: `translations/en/reviews/fortune-name-spacing-2026-11-03.json` and `published-fortune-spacing-2026-11-03.json`. T-39546 is Done; T-39511 remains open for the remaining review dispositions.

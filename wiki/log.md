@@ -4371,3 +4371,7 @@ A controlled native capture with the widest presets shows the family and given n
 ## [2026-11-03] build | Verify fortune name spacing
 
 [[tickets/T-39546-fortune-name-spacing]] passes native visual and coordinate checks with both the widest presets and two full-width names. The minimum name gap is four pixels; the blood label stays twelve pixels beyond a full-width given name. All disc/source audits, 27 default hashes and 15 browser checks pass. The remaining 24 fortune-name and loot-table entries also fit. Standards review is complete; publication is pending.
+
+## [2026-11-03] build | Publish verified fortune name spacing
+
+Closed [[tickets/T-39546-fortune-name-spacing]] after standards review, native maximum-width captures and release checks. Pages run 41606770799 succeeded; all 37 public files match the tested package. Target SHA1 is 45eac0efcc5981d60102a9de7e84e30757243b4c. Updated [[english-build]] and [[kanban]]; receipts are in translations/en/reviews/. The broader [[tickets/T-39511-english-text-quality]] review remains open.

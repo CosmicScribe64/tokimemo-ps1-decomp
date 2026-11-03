@@ -1,7 +1,7 @@
 {
   "ticket": "T-39546",
   "target_sha1": "45eac0efcc5981d60102a9de7e84e30757243b4c",
-  "status": "verified; publication pending",
+  "status": "verified and published",
   "scope": "Controlled native fortune-handler captures using the current overlay and the prior compatible main-executable state. The bedroom background and old top dialogue row remain from the fixture. Approval covers the two added fortune rows, not scene triggering or backdrop selection. The earlier fixture with wrong name offsets is rejected.",
   "visual_review": "Both widest presets and two maximum-width valid names have visible separation. Blood labels and values do not overlap.",
   "fixtures": [
@@ -312,5 +312,6 @@
     "audio download hash",
     "archive cue",
     "mobile result"
-  ]
+  ],
+  "publication_receipt": "translations/en/reviews/published-fortune-spacing-2026-11-03.json"
 }
