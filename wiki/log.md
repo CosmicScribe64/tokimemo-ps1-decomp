@@ -4359,3 +4359,7 @@ The remaining growth-candidate trace found overlong comparison keys and a collis
 ## [2026-11-03] build | Verify the secret-name correction
 
 [[tickets/T-39545-name-code-compatibility]] passes 16 tests using the production name encoder and generated comparison function. Script, executable and generated-source audits pass, as do all 27 default hashes and 15 browser checks. Only NAME_ENT.EXN changes among 992 compared disc files; the previous visual evidence remains applicable. The standards review checks source guards and encoded input behavior. Publication is pending.
+
+## [2026-11-03] build | Publish the secret-name correction
+
+Closed [[tickets/T-39545-name-code-compatibility]] after Pages deployment 41604350162 succeeded on its second attempt. The first attempt received HTTP 500 from GitHub's deployment API. All 37 served files match the tested package for target `c3c205c005712aa57072053c2e3faa511c1820fa`. [[english-build]] records the current release; [[tickets/T-39511-english-text-quality]] remains open.

@@ -23,7 +23,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-39545-name-code-compatibility|T-39545 Keep secret name codes usable in English]]
 
 
 
@@ -120,6 +119,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39545-name-code-compatibility|T-39545 Keep secret name codes usable in English]]
 
 - [ ] [[tickets/T-39544-stage-control-prefixes|T-39544 Preserve stage dialogue control prefixes]]
 

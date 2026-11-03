@@ -292,3 +292,7 @@ The first diagnostic census found three retained Japanese fragments caused by ma
 ## Stage and menu correction release, 2026-11-03
 
 Published target `b579f2ad31288f442436f718eba0cb61f7e359fe` restores 214 source-proven stage commands without changing the visible English. The stage speaker column adapts to full names; the mascot picker uses two columns clear of its preview. Fresh-state captures, actual-disc checks and the 15-check browser run are recorded in `translations/en/reviews/stage-controls-and-menu-spacing-2026-11-02.json`. All 37 served files match the tested package (`published-stage-controls-2026-11-03.json`). The broader quality ticket T-39511 remains open; publication does not claim every route has been played end to end.
+
+## Secret-name correction release, 2026-11-03
+
+Current target `c3c205c005712aa57072053c2e3faa511c1820fa` restores four distinct secret-name effects with short English inputs. Only NAME_ENT.EXN changes among 992 compared disc files. The correction passes 16 tests using the real name encoder and generated comparison function, all disc/source audits, 27 default hashes and 15 browser checks. All 37 public files match the tested package. Evidence is in `translations/en/reviews/name-codes-2026-11-03.json` and `published-name-codes-2026-11-03.json`. The earlier dialogue and artwork review remains applicable.

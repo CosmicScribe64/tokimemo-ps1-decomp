@@ -1,7 +1,7 @@
 {
   "ticket": "T-39545",
   "target_sha1": "c3c205c005712aa57072053c2e3faa511c1820fa",
-  "status": "verified; publication pending",
+  "status": "verified and published",
   "change": "Nine secret-name comparison keys and their nine compiled extent records now use short uppercase inputs. Word and arrow variants have distinct combinations. Game logic, displayed dialogue and artwork were not edited.",
   "tests": {
     "focused_run": 16,
@@ -58,5 +58,6 @@
     "audio download hash",
     "archive cue",
     "mobile result"
-  ]
+  ],
+  "publication_receipt": "translations/en/reviews/published-name-codes-2026-11-03.json"
 }

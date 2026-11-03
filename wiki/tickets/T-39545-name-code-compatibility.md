@@ -1,7 +1,7 @@
 ---
 id: T-39545
 title: Keep secret name codes usable in English
-status: In Progress
+status: Done
 assignee: codex
 created: 2026-11-03
 updated: 2026-11-03
@@ -16,7 +16,7 @@ Restore the original four secret-name effects through English inputs that fit th
 
 - [x] All English codes fit seven-letter fields and the zero/max combinations remain distinct.
 - [x] Execute the actual generated comparison function to check all four effects and a nonmatching name.
-- [ ] Rebuild, audit and publish the corrected patch; the default binaries remain unchanged.
+- [x] Rebuild, audit and publish the corrected patch; the default binaries remain unchanged.
 - [x] Review against coding standards and document the usable English codes.
 
 ## Notes
@@ -29,4 +29,6 @@ The final inputs are uppercase so the persistent name-pair encoder leaves the co
 
 Target `c3c205c005712aa57072053c2e3faa511c1820fa` passes script, executable and generated-source audits. All 27 original binary hashes still match. Of 992 compared disc files, 991 are byte-identical to the previous published build; only NAME_ENT.EXN changes. The normal artwork readback also passes. The earlier dialogue and artwork evidence remains applicable; this is not a new emulator playthrough.
 
-Reviewed the correction guards, generated comparisons, name encoding, test assertions and documentation against CODING_STANDARDS.md. No unresolved finding. The English codes are documented in `translations/en/README.md`. Receipt: `translations/en/reviews/name-codes-2026-11-03.json`. All 15 browser checks pass; publication is pending.
+Reviewed the correction guards, generated comparisons, name encoding, test assertions and documentation against CODING_STANDARDS.md. No unresolved finding. The English codes are documented in `translations/en/README.md`. Receipt: `translations/en/reviews/name-codes-2026-11-03.json`. All 15 browser checks pass.
+
+Published through Pages commit `7833cee6de05f6b64813924be428a2f72db97193`. Deployment run 41604350162 failed with a GitHub HTTP 500 on its first attempt; retrying the deploy job succeeded. All 37 served files match the tested package. Receipt: `translations/en/reviews/published-name-codes-2026-11-03.json`.

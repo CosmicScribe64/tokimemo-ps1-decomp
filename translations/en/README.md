@@ -6,7 +6,7 @@ Every record with Japanese source text is translated (100%), covering all 54,786
 
 ## Secret name codes
 
-The English secret name codes fit the seven-letter entry fields. Enter them with the capitalization shown:
+The English secret name codes use at most seven letters. Enter them with the capitalization shown:
 
 | Effect | Family name | Given name | Nickname |
 | --- | --- | --- | --- |
