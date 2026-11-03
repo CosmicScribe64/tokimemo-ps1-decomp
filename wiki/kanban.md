@@ -23,6 +23,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39546-fortune-name-spacing|T-39546 Separate full names in the computer fortune display]]
+
 
 
 

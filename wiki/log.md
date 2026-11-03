@@ -4363,3 +4363,11 @@ The remaining growth-candidate trace found overlong comparison keys and a collis
 ## [2026-11-03] build | Publish the secret-name correction
 
 Closed [[tickets/T-39545-name-code-compatibility]] after Pages deployment 41604350162 succeeded on its second attempt. The first attempt received HTTP 500 from GitHub's deployment API. All 37 served files match the tested package for target `c3c205c005712aa57072053c2e3faa511c1820fa`. [[english-build]] records the current release; [[tickets/T-39511-english-text-quality]] remains open.
+
+## [2026-11-03] ticket | Separate the fortune display's name columns
+
+A controlled native capture with the widest presets shows the family and given names running together in the computer-fortune display. Created [[tickets/T-39546-fortune-name-spacing]] for a four-pixel minimum gap and a separate blood-type column. The corrected fixture uses the declared GameState name offsets; the first fixture is rejected as width evidence.
+
+## [2026-11-03] build | Verify fortune name spacing
+
+[[tickets/T-39546-fortune-name-spacing]] passes native visual and coordinate checks with both the widest presets and two full-width names. The minimum name gap is four pixels; the blood label stays twelve pixels beyond a full-width given name. All disc/source audits, 27 default hashes and 15 browser checks pass. The remaining 24 fortune-name and loot-table entries also fit. Standards review is complete; publication is pending.
