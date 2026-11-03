@@ -16,7 +16,7 @@ from dataclasses import dataclass, field, replace
 
 from .containers import Container
 from .break_review import review as review_breaks
-from .reviewed_targets import reviewed_target
+from .reviewed_targets import REPAIRS, reviewed_target
 from .english import EnglishEncoder, end_inline_label, untokenized_name_codes
 from .segments import Control, Text, encode
 from .anomaly_repairs import repair_target
@@ -150,7 +150,7 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                 continue
             reviewed_row = reviewed_target(record.id, record.payload, row)
             if reviewed_row is not row:
-                note['translation_review'] = 'T-39538'
+                note['translation_review'] = REPAIRS[record.id]['ticket']
                 row = reviewed_row
             segments, problem = target_of(row, record.segments)
             if problem:

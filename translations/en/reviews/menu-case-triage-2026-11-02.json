@@ -1,0 +1,3013 @@
+{
+  "ticket": "T-39511",
+  "scope": "Case-folded, punctuation-trimmed comparison of distinct ASCII payloads of at most 60 characters from the non-dialogue census. This classifies these 65 candidate groups; it does not prove all menu geometries or review every sentence.",
+  "groups": [
+    {
+      "group": 0,
+      "status": "retained",
+      "reason": "Heading or lookup label versus sentence text; preserve context-specific case and punctuation.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/ovl/date/place_scenes.c",
+        "src/ovl/telephone"
+      ],
+      "variants": [
+        {
+          "sha256": "aba9fb33bc5596b3ffebbc0ecc5f7fba17542162162147deb7519aecac6a3745",
+          "records": [
+            {
+              "id": "c:main:8005ff68:1",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:main:8005ff68:3",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:main:8005ff68:5",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "SLPM_86.053:000701dc:cfb3819cbf6f",
+              "path": "SLPM_86.053",
+              "kind": "source_extent"
+            },
+            {
+              "id": "SLPM_86.053:00070200:cfb3819cbf6f",
+              "path": "SLPM_86.053",
+              "kind": "source_extent"
+            },
+            {
+              "id": "SLPM_86.053:00070228:cfb3819cbf6f",
+              "path": "SLPM_86.053",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "d3d922fa5a39dbb557ab2fc0cce5ee725cd44f078a5e236a9b3bb9f70f646185",
+          "records": [
+            {
+              "id": "c:OPTION:80132ba8:6",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:main:8005dea0:6",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:main:8005fdec:1",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 1,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "8a7961ab59837fd7340327fc375f3e5160cc2ec8cb38340de75e5055ee8ba271",
+          "records": [
+            {
+              "id": "c:BUNKASAI:8015af90:2",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:BUNKASAI:8015af90:3",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:BUNKAKEN:80152680:2",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:BUNKAKEN:80152680:3",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKAKEN.EXN:00023e0c:3a77c75dd56c",
+              "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKAKEN.EXN:00023e14:3a77c75dd56c",
+              "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKASAI.EXN:0002e46c:3a77c75dd56c",
+              "path": "CDROM/EXEDIR/BUNKASAI.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKASAI.EXN:0002e474:3a77c75dd56c",
+              "path": "CDROM/EXEDIR/BUNKASAI.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "c:TEL:8013d03c:7",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "3e8e40c0af5f5ea5a94837f090631379e090fdb2fcf0c65a65859ae051e2c794",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000ad58:22ec5d074ec1",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 2,
+      "status": "retained",
+      "reason": "Spoken reactions or sound-effect captions use different punctuation according to the line. Do not normalize dialogue by a case-folded comparison.",
+      "evidence": [
+        "src/ovl/telephone",
+        "CDROM/EXEDIR/BUNKA_SD.EXN"
+      ],
+      "variants": [
+        {
+          "sha256": "813713643cb7491a7bd42b9cc160eea9bd402cffc8ebcf8842848fc60643f663",
+          "records": [
+            {
+              "id": "c:TEL:8013adc0:1",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:8013adc0:2",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:8013aa30:2",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:8013b54c:1",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "68e47246ff9157d5c2e34b8bee2b09a4b892e4148077af17f8939c29970b3938",
+          "records": [
+            {
+              "id": "c:TEL:80132138:1",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:80132138:2",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:80134da0:1",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:80134da0:2",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:GEKO:80137120:1",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:GEKO:801372d4:1",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 3,
+      "status": "retained",
+      "reason": "Spoken reactions or sound-effect captions use different punctuation according to the line. Do not normalize dialogue by a case-folded comparison.",
+      "evidence": [
+        "src/ovl/telephone",
+        "CDROM/EXEDIR/BUNKA_SD.EXN"
+      ],
+      "variants": [
+        {
+          "sha256": "82b88addaabfc54efa5f357b51ba266d02a71d2f65c0d9dbfef3b9ef0aac7c68",
+          "records": [
+            {
+              "id": "c:TEL:801345c4:7",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:801345c4:17",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:80136724:12",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:80136724:17",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:80136724:22",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:80136724:23",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:80136724:25",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:80136724:27",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:GYOZI:8013506c:1",
+              "path": "CDROM/EXEDIR/GYOZI.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:SHOUGATU:8013315c:1",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:801352f0:7",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:801380d8:2",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:801384f0:1",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:8013883c:1",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:80138d20:1",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:80139064:1",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:801393a8:1",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:main:8007ef48:20",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "95ba4ed9329f4a2591e3bd89366e38cca9b26aeab3e72106ae60ad6757e05495",
+          "records": [
+            {
+              "id": "c:main:8007ef48:21",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 4,
+      "status": "retained",
+      "reason": "Heading or lookup label versus sentence text; preserve context-specific case and punctuation.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/ovl/date/place_scenes.c",
+        "src/ovl/telephone"
+      ],
+      "variants": [
+        {
+          "sha256": "673168cf02433827f40872645a5cb580ef50457d8e5e799cb7d537e26e6e6efe",
+          "records": [
+            {
+              "id": "c:TEL:8013d88c:1",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:TEL:8013d88c:3",
+              "path": "(source only)",
+              "kind": "source_literal"
+            },
+            {
+              "id": "CDROM/EXEDIR/TEL.EXN:0000e4c4:e7c2c9f1b4a8",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/TEL.EXN:0000e4e4:e7c2c9f1b4a8",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "683b24cc9abf536065ec2f01844b2ec3b23bf63db043e1c9e60c9fb0ace73bd4",
+          "records": [
+            {
+              "id": "c:TEL:80132fc4:2",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 5,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "8d5587ecd26ba9519e2a7e64fbdd43e1155739b6b95b93cc2ce029a9a4590520",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/BUNKAKEN.EXN:name_grid:02",
+              "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/BUNKASAI.EXN:name_grid:02",
+              "path": "CDROM/EXEDIR/BUNKASAI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:02",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:02",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:02",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:02",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:02",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "d4ab50afc83f369c9b94a4d03ebf3cd7698b10f5e568869304060d1721031127",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:02",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 6,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "cdf6ab75598ad12b3f21a85e036571dcdaae4b1c87d5f7027d06ecdfdb48b8e6",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/BUNKAKEN.EXN:name_grid:08",
+              "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/BUNKASAI.EXN:name_grid:08",
+              "path": "CDROM/EXEDIR/BUNKASAI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:08",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:08",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:08",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:08",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:08",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "5d1bbe4af490e932b5593deb9da7dd90d259ad8a28b564a73576ca1c5fbed02e",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:08",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "CDROM/EXEDIR/MASTER.EXN:00009fc8:64458076fd50",
+              "path": "CDROM/EXEDIR/MASTER.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 7,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "9d948c73e0ad7a5a213a5e7e00b962531ca6b07992a06bd8c2fc2ac5ae23c51b",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKAKEN.EXN:00022940:888ea01c1559",
+              "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "dictionary:SLPM_86.053:parameter_names:02",
+              "path": "SLPM_86.053",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "dictionary:SLPM_86.053:club_names:02",
+              "path": "SLPM_86.053",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "790fad4744a9da8d301e23c83b386f1baabd229611dbe5265df62a97b5357393",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000ae08:00dc21d67274",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 8,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "75df3579c73089e317e5bf917f6b6cf1cb8d19f21ad70c15e70e431c3aa2a62a",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKAKEN.EXN:00022960:938821947172",
+              "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "dictionary:SLPM_86.053:parameter_names:03",
+              "path": "SLPM_86.053",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "dictionary:SLPM_86.053:club_names:04",
+              "path": "SLPM_86.053",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "d3cec99112255db9bf4963f7798562b6a36f1bd0b2016918629e007d474deb70",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000ae10:47f7617c1c4c",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 9,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "ef9ee12da914a3b038e4a49e4a4e6e8f5335ae5d3ef4c2182c0e3fd8189d0ee8",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKAKEN.EXN:00023d54:d59cb4aa8942",
+              "path": "CDROM/EXEDIR/BUNKAKEN.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKASAI.EXN:0002e3b4:d59cb4aa8942",
+              "path": "CDROM/EXEDIR/BUNKASAI.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/TAIIKU.EXN:00016b24:d59cb4aa8942",
+              "path": "CDROM/EXEDIR/TAIIKU.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "35335e0f21518cdee5d4300c930d9edd55018b4e8b8f5b80aac2f1dffdfac6d9",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000bb28:822308ad077b",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000bf18:822308ad077b",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 10,
+      "status": "retained",
+      "reason": "One stage passage begins a sentence; the other continues the preceding clause. Neighboring records establish the distinction.",
+      "evidence": [
+        "CDROM/EXEDIR/BUNKA_SD.EXN:00007910..00007998",
+        "CDROM/EXEDIR/BUNKA_SD.EXN:00007c74..00007cf0"
+      ],
+      "variants": [
+        {
+          "sha256": "40b417ac198ef1c74ddab6b712051263e7c52aa3cf2543f27c4938879b56929f",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00007958:8a646bb4c3c4",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "f67f904f9422dcaf38c747dd5beeb54ecf51f750a173bb37d946c393da0414a4",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00007ca4:8a646bb4c3c4",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 11,
+      "status": "retained",
+      "reason": "Spoken reactions or sound-effect captions use different punctuation according to the line. Do not normalize dialogue by a case-folded comparison.",
+      "evidence": [
+        "src/ovl/telephone",
+        "CDROM/EXEDIR/BUNKA_SD.EXN"
+      ],
+      "variants": [
+        {
+          "sha256": "acbb5a5a1753ee10958eed62e1d34916377b3d724153d25b70f11efa147d5948",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00007a74:7be77cb6665d",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "e590dd195b352ef692b5b9295aac822198b2db4c8ba11e87194ad2fda653d078",
+          "records": [
+            {
+              "id": "c:main:8007ef48:17",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 12,
+      "status": "retained",
+      "reason": "Spoken reactions or sound-effect captions use different punctuation according to the line. Do not normalize dialogue by a case-folded comparison.",
+      "evidence": [
+        "src/ovl/telephone",
+        "CDROM/EXEDIR/BUNKA_SD.EXN"
+      ],
+      "variants": [
+        {
+          "sha256": "1b79d5fe7e200d03cca7c0d4b6049234cebc3a080d12465ac84a150e80e7b82b",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008430:137bc518b671",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "c5183c4b1d690e004b750dce3f494a50903337c876fa32e5f7bf86ce69fc1a48",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:000088c0:033f71892c60",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:000088d4:033f71892c60",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:000088f0:033f71892c60",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:000088fc:033f71892c60",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008908:033f71892c60",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008934:033f71892c60",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008950:033f71892c60",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:0000895c:033f71892c60",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008968:033f71892c60",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 13,
+      "status": "retained",
+      "reason": "Spacing belongs to concatenation or screen placement; labels share the same spelling. Preserve layout and assembly fragments.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/main/memory_card.c",
+        "src/ovl/rpg_battle"
+      ],
+      "variants": [
+        {
+          "sha256": "964b460c4279711291224e28c8fb1c1fec059f122ff70a578ff474bdf5a9727c",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008ad0:af3611c322dc",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008b70:f1b29b0bb022",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "9d6d82696973adbb61445cced31dab6cbaca1cc38b34cc47f81765e04f9515bc",
+          "records": [
+            {
+              "id": "c:TEL:8013226c:4",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 14,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "8b66ab55ee2e5706e1613efda53cbac8268704dae32b42909489693dc5082091",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008d10:d40bf735013d",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008d18:d40bf735013d",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008d40:d40bf735013d",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008d68:d40bf735013d",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008d88:d40bf735013d",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "d2e3a48f3f2446f7c146aa3aab3997bc0fd9f0c2ec7d7e23989ddc862cc7b650",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000bb98:a4166b8ecfc0",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000bf88:a4166b8ecfc0",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 15,
+      "status": "retained",
+      "reason": "Spoken reactions or sound-effect captions use different punctuation according to the line. Do not normalize dialogue by a case-folded comparison.",
+      "evidence": [
+        "src/ovl/telephone",
+        "CDROM/EXEDIR/BUNKA_SD.EXN"
+      ],
+      "variants": [
+        {
+          "sha256": "a2a9e136233cd48e47367a5f9324b6199c9eaea4b616a61737ceabe62f8c2dd7",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008f70:435fc12ac3b3",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "2c275f35a5e19b54612a9375e9361923da1ae403dc507c3dc2ae689ce6678852",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00009388:c9bf5f7f34b3",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:000093a0:c9bf5f7f34b3",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:000093f8:c9bf5f7f34b3",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:0000947c:c9bf5f7f34b3",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:0000949c:c9bf5f7f34b3",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 16,
+      "status": "retained",
+      "reason": "Spoken reactions or sound-effect captions use different punctuation according to the line. Do not normalize dialogue by a case-folded comparison.",
+      "evidence": [
+        "src/ovl/telephone",
+        "CDROM/EXEDIR/BUNKA_SD.EXN"
+      ],
+      "variants": [
+        {
+          "sha256": "4a93ac0135e0930dad53fb49fa0819e69fa2a5b52be8b2ffcf7f6df5e23b3449",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008f80:3b5613e6eca1",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "8007b204159ac513eb02141e9dd3d883a41267f652316dae1d8d10e10c65e896",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:000093b0:353d7cbea6f5",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:0000946c:353d7cbea6f5",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 17,
+      "status": "retained",
+      "reason": "Spoken reactions or sound-effect captions use different punctuation according to the line. Do not normalize dialogue by a case-folded comparison.",
+      "evidence": [
+        "src/ovl/telephone",
+        "CDROM/EXEDIR/BUNKA_SD.EXN"
+      ],
+      "variants": [
+        {
+          "sha256": "a0131956c9d576410cfdd71a1470a8acb10acc71bf8f6ee2957a25d2d5f98a08",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008f94:ec64b798c5a1",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "056387ffcd17526d296a2beeb3465efe930fe1aa8eb4b7e8f54a5f0d5dbc3f82",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:000093c0:4d51fffb8897",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 18,
+      "status": "retained",
+      "reason": "Spoken reactions or sound-effect captions use different punctuation according to the line. Do not normalize dialogue by a case-folded comparison.",
+      "evidence": [
+        "src/ovl/telephone",
+        "CDROM/EXEDIR/BUNKA_SD.EXN"
+      ],
+      "variants": [
+        {
+          "sha256": "75d5b43cd6aca26e710cebcd83905ea758850b6299d026c4864f053d9ea00eec",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008fa4:c76632649a93",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "a1b0a76a3be3db2c7bce3a133739a30341e38594aa7cd54da8d38248c387ccc9",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:000093d0:30408ed52c12",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:0000948c:30408ed52c12",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 19,
+      "status": "retained",
+      "reason": "Spoken reactions or sound-effect captions use different punctuation according to the line. Do not normalize dialogue by a case-folded comparison.",
+      "evidence": [
+        "src/ovl/telephone",
+        "CDROM/EXEDIR/BUNKA_SD.EXN"
+      ],
+      "variants": [
+        {
+          "sha256": "be7f5ef96a6abd8f6d1c52f29fbc9184fd4aac0e5d53d897f5f54e5076ebc9eb",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00008fb8:c63fc320e83c",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "9a16606a12c2c77e94e5f06fe5756e3355b564dfeb53d2bedfc155b282582186",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:000093e0:e5bd1ccdc0cd",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00009424:e5bd1ccdc0cd",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 20,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "5d63cf0c7d689c76aa2edca28dd898348c2360734bf7630092dbeffab3ada342",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:000091ec:e980ee0a271d",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "0bd5de8ec3685ec159b86d235869d65c00deafca48c58a7fb74fba68877814fb",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000bbd8:885ad995bf1d",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000bfc8:885ad995bf1d",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 21,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "36362b4a4e08336dbec4eba7f5dcc6542e4cd34b190723ecf424918ddaa08724",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/BUNKA_SD.EXN:00009220:7077ba2f3d8f",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "29c70a120f0ed1d1e77d6e2a312d3099b1e2d479217456fd89a12f7332c4d48e",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000b9f8:2e54a54bc8a3",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000bde8:2e54a54bc8a3",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 22,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "1499a166709402ecf2f32ccfabd7d7797a0168a3ee00828aba8ec39f6aa0f14d",
+          "records": [
+            {
+              "id": "c:BUNKA_SD:80132ff0:5",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:BUNKA_SD:80133204:4",
+              "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:SHOUGATU:80137e54:1",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "3b8dbbf7c401d98222cbf67408ba140194631e7db1c252eef3558031c3ba370b",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000ae60:66736e25a1d0",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "431ba1c6936744f659289a8ff5292f004a51ba6a96dcecc65ef8f0783018dd5f",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000af04:beb10084ef73",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000af30:beb10084ef73",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 23,
+      "status": "retained",
+      "reason": "Heading or lookup label versus sentence text; preserve context-specific case and punctuation.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/ovl/date/place_scenes.c",
+        "src/ovl/telephone"
+      ],
+      "variants": [
+        {
+          "sha256": "fe99028983435008000b1f151faeb9703716cea2e290a54f6d1b42ae98a2d56c",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:place_names:05",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "c:DATE:801347b8:1",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:EVENT:80112750:1",
+              "path": "CDROM/EXEDIR/EVENT.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "dictionary:SLPM_86.053:place_names:05",
+              "path": "SLPM_86.053",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "dcf56d5584e0f79461a1358bfed82b54b749b02a60eacf92b67e4657a442cb7f",
+          "records": [
+            {
+              "id": "c:TEL:80132fc4:24",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 24,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "5af695ae2237cc2645ec476319d211614dc4ae014c5c1f1f3db9c04c14b72671",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:10",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "15f43b1fb34eb7657b623296e391ffa2dccb178af0215771dadfe0b3a2fc4127",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:10",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:10",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:10",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:10",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:10",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 25,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "22874dd35c2e9968a62e8687ad8fde7dd1e7a5384ea483dc8335ddeac8e4bef7",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:15",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "ae44e33ebc474aacc57220a7f4a87660d285e8d2ecdfb8fecc41361bb7bf387d",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:15",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:15",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:15",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:15",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:15",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 26,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "e8509d541207332ab29d7836f09477a5eee583fb5def3c4794c6f3e5fe7578e0",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:22",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "184381d9549f50645a0801a2a23ef6416a3e370b013fc095a9999c37425ee5c0",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:22",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:22",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:22",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:22",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:22",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 27,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "3f25096f5e03a6a9ac77c39204781c5d099f7734fbab9ce80ffd9fdc6195150f",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:25",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "1227e235e5238bb5c2dafe296849235a9a739a8859c4d2e30d799ed6b81e3426",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:25",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:25",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:25",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:25",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:25",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 28,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "8e193256c0dd6410ef917ef819695869a89aca78ef4d047f9e1d23fd13e31ec3",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:26",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "5c710b3d1bb9bd3589bdc9dabac38d022bd836186fb966f918ef002eb3e6b3da",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:26",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:26",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:26",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:26",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:26",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 29,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "852e7e668e86cec25e2b6df5b64599602fc767078b96fe2b6dbcb3b8278b4ff3",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:38",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "6c3ed1050ce699053fbefb92c75fbaecbb7a9523acbb6e0351616c8048de3f55",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:38",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:38",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:38",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:38",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:38",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 30,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "3e6cd6aa2abcad0382923d35924a183c333a2f8b314e7c4b0a0b84db77681fd8",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:43",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "f2ddfa2c7092110c0d59f600c5178dd42bf69f1c0d3e5f00fc4b61610ad3c97f",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:43",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:43",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:43",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:43",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:43",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 31,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "7880701fa9dc2880de78864924862c21309c8f759200b5a79032765ad4d9f5e2",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:53",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "aa06dfc6f84ac3aa8d1bc7dd3c35a7a8bb3ef008e590bf10fc9cb8c5efcd4dd4",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:53",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:53",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:53",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:53",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:53",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 32,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "0751552b2d6d9a6165c2cf9f48b9975a8772cc2250746e83a716dfc416240678",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:58",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "52291097eaa60f2cc93c773d6a7d941fffdf2e144c66e7a630a58563198fee7b",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:58",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:58",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:58",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:58",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:58",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 33,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "38e8b74bbfd1142bd5187b4032f3164489778b93da874cc68a45a71d17252fb2",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:62",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "d73d52e0f07ac5e4e00321587b10df9c685b5d63c66513b8d8146e857895d47a",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:62",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:62",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:62",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:62",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:62",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 34,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "7121aabfe7f4cebd5da12b61ed03bc021738d9cdb59df243472424b3fa5ce9b1",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:66",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "fd6a7e0771190e5d419b226f0ac414348dcc324654237a3af81c1b9bac7ab1dc",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:66",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:66",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:66",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:66",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:66",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 35,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "bbfc3e73823613378e7b3bee9b8fd03657b5e7f6089321c49333052602d882d4",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:69",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "06caa58c47cd3dc853db38115e1610874ec862a03f249ab6c26a99ccbbe2d4ee",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:69",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:69",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:69",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:69",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:69",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 36,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "8fbef9dd77f567323558c8b2427ebef03811f2d80735b860b6c9ac7bcf279445",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:70",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "002cd44506fc153ad4901d450b6df4652c8411e08c4b8cee7655ce4be0ead69c",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:70",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:70",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:70",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:70",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:70",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 37,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "0de5284a4e26151b3bab1e521b96abdf8ebc226d6bbcae8f0fd4b363e43481df",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:78",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "5b7f4df25fbd034de79506dbfdb63ada97dc326eda15a104eeebf4f0c67842e7",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:78",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:78",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:78",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:78",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:78",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 38,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "c75a80ce4f71e2c822b10f2c390e9eac08f35ce80ab122a62d3afb3d7c9d37e9",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:79",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "f47c9d8e4947c6efc5bb51241d37b4be5983df043ead2f6d114bc724dc54e158",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:79",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:79",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:79",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:79",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:79",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 39,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "a937930148ac4963af94bc6bef63eb089064c300b154c0e6d63f7dd74f7537fc",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:86",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "85b97888fc37725d55a4de9e948328da8d23c655a90084f8a870ce5b0bb8c524",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:86",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:86",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:86",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:86",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:86",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 40,
+      "status": "corrected_verified",
+      "ticket": "T-39541",
+      "reason": "Same gift substituted into the same dialogue field; match the existing title-case spelling.",
+      "evidence": [
+        "src/ovl/date/girl_birthday.c:date_gift_name_set",
+        "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:amusement_karaoke_indexed_text_select"
+      ],
+      "variants": [
+        {
+          "sha256": "f32ae7adb85e7ec5826ee9d25b6cb6afdd9d9fd2a3187b8bc0a6845e477a851e",
+          "records": [
+            {
+              "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:89",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "b240180dd61c756b522225377417a596491009f0cfeb4f19f662263788511a17",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:gift_names:89",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:gift_names:89",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:gift_names:89",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHOUGATU.EXN:gift_names:89",
+              "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "overlay-table:CDROM/EXEDIR/SHUGAKU.EXN:gift_names:89",
+              "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ],
+      "verification": "gift-consistency-2026-11-02.json"
+    },
+    {
+      "group": 41,
+      "status": "retained",
+      "reason": "Heading or lookup label versus sentence text; preserve context-specific case and punctuation.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/ovl/date/place_scenes.c",
+        "src/ovl/telephone"
+      ],
+      "variants": [
+        {
+          "sha256": "f3795fd1ef3288d127d2987d98cb109e9c8a8d292f6e3afa96d5f9f8cdf4d6a3",
+          "records": [
+            {
+              "id": "c:DATE:80134c64:3",
+              "path": "CDROM/EXEDIR/DATE.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:EVENT:80112bec:3",
+              "path": "CDROM/EXEDIR/EVENT.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "e12afb0a2bc61b29ec8c5a0613640d77129cb7fb9e5bd4a78831e62915160e14",
+          "records": [
+            {
+              "id": "SLPM_86.053:00075a4c:ce8b2f49fe8e",
+              "path": "SLPM_86.053",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 42,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "6bccbbe36fb300471168253761e5abdc2925724e9ded8f8306fd70e7e11a800a",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/DATE2.EXN:menu_labels:01",
+              "path": "CDROM/EXEDIR/DATE2.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "c:main:800412e0:1",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "ed7d2dc167618472cae4402efcebd0e574afcbaa7e09fe39c23be7bec86e1c16",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000ae68:fc657fe9adf4",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 43,
+      "status": "retained",
+      "reason": "Sentence fragments and headings have different capitalization or terminal punctuation. Preserve the complete message wording.",
+      "evidence": [
+        "src/ovl/name_entry/file_select.c",
+        "src/ovl/help/help_icons_page.c",
+        "src/ovl/help/help_memory_card_page.c"
+      ],
+      "variants": [
+        {
+          "sha256": "e4b354301fec9e1825c35ceb4d80807e2a50ed0f55869bd4dfaf1cf582b5fff8",
+          "records": [
+            {
+              "id": "c:ETC:801415a4:3",
+              "path": "CDROM/EXEDIR/ETC.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:NAME_ENT:8013cb44:4",
+              "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:NAME_ENT:80140f90:2",
+              "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:NAME_ENT:80141820:2",
+              "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "f3663c6dab43c701bcf0e0ce08e0edaac9826816051a3924c734ca69f47fcf82",
+          "records": [
+            {
+              "id": "c:OLH:80136804:7",
+              "path": "CDROM/EXEDIR/OLH.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 44,
+      "status": "retained",
+      "reason": "Sentence fragments and headings have different capitalization or terminal punctuation. Preserve the complete message wording.",
+      "evidence": [
+        "src/ovl/name_entry/file_select.c",
+        "src/ovl/help/help_icons_page.c",
+        "src/ovl/help/help_memory_card_page.c"
+      ],
+      "variants": [
+        {
+          "sha256": "7bbed3008bf622efbecc082f6c366ac1e56329a496eab8ddb2a2cd0ccf21be3f",
+          "records": [
+            {
+              "id": "c:ETC:80145318:3",
+              "path": "CDROM/EXEDIR/ETC.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "317bc21071d5655cecf3bdc1b0763e68a6e7b18eed88ef6bfdb777865c34bc73",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/NAME_ENT.EXN:000197c8:14eb1689205d",
+              "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "1c04d885876b048f4901861769254a1a872cb58e5026bbd31b4ffb7fbe6fa116",
+          "records": [
+            {
+              "id": "c:OLH:8013306c:1",
+              "path": "CDROM/EXEDIR/OLH.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:main:8005bcec:1",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 45,
+      "status": "retained",
+      "reason": "Heading or lookup label versus sentence text; preserve context-specific case and punctuation.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/ovl/date/place_scenes.c",
+        "src/ovl/telephone"
+      ],
+      "variants": [
+        {
+          "sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/GEKO.EXN:place_names:11",
+              "path": "CDROM/EXEDIR/GEKO.EXN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "dictionary:CDROM/FUKUTEST/JOHO.NBN:club_labels:11",
+              "path": "CDROM/FUKUTEST/JOHO.NBN",
+              "kind": "dictionary_slot"
+            },
+            {
+              "id": "dictionary:SLPM_86.053:club_names:11",
+              "path": "SLPM_86.053",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "140bedbf9c3f6d56a9846d2ba7088798683f4da0c248231336e6a05679e4fdfe",
+          "records": [
+            {
+              "id": "SLPM_86.053:00071ca0:fdbb9db68f1d",
+              "path": "SLPM_86.053",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 46,
+      "status": "retained",
+      "reason": "Spacing belongs to concatenation or screen placement; labels share the same spelling. Preserve layout and assembly fragments.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/main/memory_card.c",
+        "src/ovl/rpg_battle"
+      ],
+      "variants": [
+        {
+          "sha256": "f6d6c72ed8daa978767827f92de7664940e7a05044d5cb54367040ba73e010aa",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:club_names_21:00",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "97946c666f7d1836f79351dced59804728b78186ea2eb40b245268c3a6d790ac",
+          "records": [
+            {
+              "id": "c:RPG_BAT:801368b0:1",
+              "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 47,
+      "status": "retained",
+      "reason": "Spacing belongs to concatenation or screen placement; labels share the same spelling. Preserve layout and assembly fragments.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/main/memory_card.c",
+        "src/ovl/rpg_battle"
+      ],
+      "variants": [
+        {
+          "sha256": "4e0077364d548b7b15ad65a2504f29e4434a87bf638053e4c76e0e7343a2efe0",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:club_names_21:03",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "b4f49f2668fa4ce6b4afb018b988d7061b5b9b5ea6fb947c4283c1954d6ad56d",
+          "records": [
+            {
+              "id": "c:RPG_BAT:8013a650:1",
+              "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 48,
+      "status": "retained",
+      "reason": "Spacing belongs to concatenation or screen placement; labels share the same spelling. Preserve layout and assembly fragments.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/main/memory_card.c",
+        "src/ovl/rpg_battle"
+      ],
+      "variants": [
+        {
+          "sha256": "a47bb474e922397b44fb035575c476a2fa7e463bd1e5d960cb75d511bf5703b9",
+          "records": [
+            {
+              "id": "overlay-table:CDROM/EXEDIR/KANGEI.EXN:club_names_21:10",
+              "path": "CDROM/EXEDIR/KANGEI.EXN",
+              "kind": "dictionary_slot"
+            }
+          ]
+        },
+        {
+          "sha256": "81e375b40d3a14de9d0b9bd330dac43de60aa4275a7676167f7c4eeabdd4be76",
+          "records": [
+            {
+              "id": "c:RPG_BAT:801321d0:1",
+              "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 49,
+      "status": "retained",
+      "reason": "Sentence fragments and headings have different capitalization or terminal punctuation. Preserve the complete message wording.",
+      "evidence": [
+        "src/ovl/name_entry/file_select.c",
+        "src/ovl/help/help_icons_page.c",
+        "src/ovl/help/help_memory_card_page.c"
+      ],
+      "variants": [
+        {
+          "sha256": "7c97a20a3a8200f9394b4ffaefb0d4e8f9d142d7ed18532943c3a96fa2efa5be",
+          "records": [
+            {
+              "id": "c:NAME_ENT:8013cb44:1",
+              "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "db14fbe3b999ecf756e9789a1dbf94f3b20fa918f80613f9203d061cfb81eda4",
+          "records": [
+            {
+              "id": "c:NAME_ENT:8013df88:2",
+              "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 50,
+      "status": "retained",
+      "reason": "Sentence fragments and headings have different capitalization or terminal punctuation. Preserve the complete message wording.",
+      "evidence": [
+        "src/ovl/name_entry/file_select.c",
+        "src/ovl/help/help_icons_page.c",
+        "src/ovl/help/help_memory_card_page.c"
+      ],
+      "variants": [
+        {
+          "sha256": "d5a1caa87b0562fd067f94925d0dc7a2ce75dcd0d6b243ff428d03bbac359bec",
+          "records": [
+            {
+              "id": "c:NAME_ENT:80140f90:4",
+              "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:NAME_ENT:80141820:4",
+              "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "36210dc9855cc68ad84e9e18fd59995cbc3460a93e82af297ae0f01b78f73643",
+          "records": [
+            {
+              "id": "c:OLH:80133508:5",
+              "path": "CDROM/EXEDIR/OLH.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 51,
+      "status": "retained",
+      "reason": "The single letter is a help-page kana-reading example; the ellipsis belongs to an opening-scene reaction.",
+      "evidence": [
+        "src/ovl/help/help_memory_card_page.c",
+        "src/ovl/name_entry/opening.c"
+      ],
+      "variants": [
+        {
+          "sha256": "fc7ed7b68999fdae4a99b38a1554db08f6835cb60bb3ce062649fd33935219dd",
+          "records": [
+            {
+              "id": "c:NAME_ENT:80143580:5",
+              "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "a83dd0ccbffe39d071cc317ddf6e97f5c6b1c87af91919271f9fa140b0508c6c",
+          "records": [
+            {
+              "id": "c:OLH:8013376c:2",
+              "path": "CDROM/EXEDIR/OLH.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:OLH:801338c8:2",
+              "path": "CDROM/EXEDIR/OLH.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:OLH:80133a24:2",
+              "path": "CDROM/EXEDIR/OLH.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:OLH:801356dc:2",
+              "path": "CDROM/EXEDIR/OLH.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:OLH:80135828:2",
+              "path": "CDROM/EXEDIR/OLH.EXN",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:OLH:80135974:2",
+              "path": "CDROM/EXEDIR/OLH.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 52,
+      "status": "retained",
+      "reason": "Sentence fragments and headings have different capitalization or terminal punctuation. Preserve the complete message wording.",
+      "evidence": [
+        "src/ovl/name_entry/file_select.c",
+        "src/ovl/help/help_icons_page.c",
+        "src/ovl/help/help_memory_card_page.c"
+      ],
+      "variants": [
+        {
+          "sha256": "5a9e52664035e6f22910618acc96580c81a222a5cc95b7f0f567b71cde9e95da",
+          "records": [
+            {
+              "id": "c:OLH:801349fc:2",
+              "path": "CDROM/EXEDIR/OLH.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "f411a1fb62758b4c54690d0a702b4955b54dd22115416fa7b1ce51b4a084818d",
+          "records": [
+            {
+              "id": "c:main:8005e454:4",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 53,
+      "status": "retained",
+      "reason": "Sentence fragments and headings have different capitalization or terminal punctuation. Preserve the complete message wording.",
+      "evidence": [
+        "src/ovl/name_entry/file_select.c",
+        "src/ovl/help/help_icons_page.c",
+        "src/ovl/help/help_memory_card_page.c"
+      ],
+      "variants": [
+        {
+          "sha256": "707956c4c8eeb6ec5537b1e76cd78fc8a87d05ee19282e454d7e9e702a22b780",
+          "records": [
+            {
+              "id": "c:OLH:801352a0:3",
+              "path": "CDROM/EXEDIR/OLH.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "5888675d99b95617ba8cccd20dabe5554e91c71f3877c69d759bd8a5f162ae70",
+          "records": [
+            {
+              "id": "c:TACO:8013f250:2",
+              "path": "CDROM/EXEDIR/TACO.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 54,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "cc2585df74ecdb8b43e3d9f1f793ee9ccd21d617a49e8e5698cb5e052c453dac",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000ad60:343fc6a967cd",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000adb8:343fc6a967cd",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000aecc:343fc6a967cd",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "57befefefd22cb67f781d09a68b0f4015392d1d30f32f8e7ec790d33ac49806f",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000b9e8:73fc84a414c7",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000bdd8:73fc84a414c7",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "72e81feaa8a14fac7f1fbdfb56503256cd3d8b6c1a2eb3142853cc6262570e35",
+          "records": [
+            {
+              "id": "c:TEL:8013d03c:8",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 55,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "62484e22a6a5ade1ba25cb1b7c55c4b8861de24caddab73c9409742734008b26",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000adf4:c8cd96766bc7",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "55898449eb74fb2e348d13e5a5d84ab019bb87ea92687b50b3d3302eb409b784",
+          "records": [
+            {
+              "id": "dictionary:SLPM_86.053:parameter_names:00",
+              "path": "SLPM_86.053",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 56,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "1cb542228c76558789d114d3cb273a75850cca54ec3ee9a41100f2dc56ee561e",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000ae14:30e3bf6bec84",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "9b1f5daf0a3d610e5a819b6c7664ffde2ea2f299fb1cacedfc6d1b68bed5e351",
+          "records": [
+            {
+              "id": "dictionary:SLPM_86.053:parameter_names:04",
+              "path": "SLPM_86.053",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 57,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "36bf28efead5bddccd2fd11ef1ef39cf5df2fea9b95f34589088e9a028993c97",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000ae30:0fc76f3f4e29",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "4f33bf7298cf35135db12f2a17fe38f2834ff7a42c73ab526722c7c1950ee2d2",
+          "records": [
+            {
+              "id": "dictionary:SLPM_86.053:parameter_names:07",
+              "path": "SLPM_86.053",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 58,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "f43dc8790ed6215684924d362753e3864cb66c0f06084e89ad36b57e15986c6e",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000ae38:4979b3861b8a",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "2319cd90fbab1065767f57378abbc36f6e2e47325acbf01365003069bbcc2553",
+          "records": [
+            {
+              "id": "dictionary:SLPM_86.053:parameter_names:08",
+              "path": "SLPM_86.053",
+              "kind": "dictionary_slot"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 59,
+      "status": "retained",
+      "reason": "The comparison crosses OPTION diagnostic labels and game dialogue or display labels. Preserve the existing diagnostic conventions.",
+      "evidence": [
+        "tools/assets/text_overlay_tables.py",
+        "src/ovl/options"
+      ],
+      "variants": [
+        {
+          "sha256": "93f25958c3500914c585c885ffe38105470c01139dd6b376875608f8a9ea4051",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000aff0:1a934e4a87a4",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "4ea0388f5fa1d70ac690d1a9201842d9a6573a2aa7edd6a35682ca0da0bc85f3",
+          "records": [
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000bc38:bbaa6619af0a",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            },
+            {
+              "id": "CDROM/EXEDIR/OPTION.EXN:0000c028:bbaa6619af0a",
+              "path": "CDROM/EXEDIR/OPTION.EXN",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 60,
+      "status": "retained",
+      "reason": "Spacing belongs to concatenation or screen placement; labels share the same spelling. Preserve layout and assembly fragments.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/main/memory_card.c",
+        "src/ovl/rpg_battle"
+      ],
+      "variants": [
+        {
+          "sha256": "3a0931580d18a6e0308c1135ee9c807f0aaa83cad286d951d3a8dfa6017aecf1",
+          "records": [
+            {
+              "id": "c:TACO:80135a04:6",
+              "path": "CDROM/EXEDIR/TACO.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "b7add62a6d817dedd72d5b9213af3839ac62ef72ea5d9417039f7d6e6f403105",
+          "records": [
+            {
+              "id": "c:TACO:8013555c:5",
+              "path": "CDROM/EXEDIR/TACO.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "d17d84a604994b722db37b35860b1ac7e8d9e43e725d0eb50702a9f7228a2999",
+          "records": [
+            {
+              "id": "c:main:8005dea0:8",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 61,
+      "status": "retained",
+      "reason": "Spoken reactions or sound-effect captions use different punctuation according to the line. Do not normalize dialogue by a case-folded comparison.",
+      "evidence": [
+        "src/ovl/telephone",
+        "CDROM/EXEDIR/BUNKA_SD.EXN"
+      ],
+      "variants": [
+        {
+          "sha256": "24d11f820772aff8de0a36093c9143b68c81b2267780a033e2898728ef53d924",
+          "records": [
+            {
+              "id": "c:TEL:80133d54:18",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "7a02a2f2edc8cd52c6f8309ab9f06700895cbbd71040f98d2e3aade03a7d0c28",
+          "records": [
+            {
+              "id": "c:TEL:801345c4:14",
+              "path": "CDROM/EXEDIR/TEL.EXN",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 62,
+      "status": "retained",
+      "reason": "Uppercase and lowercase hexadecimal digit alphabets are formatter data.",
+      "evidence": [
+        "SLPM_86.053:000a2e2c",
+        "SLPM_86.053:000a2e40"
+      ],
+      "variants": [
+        {
+          "sha256": "2125b2c332b1113aae9bfc5e9f7e3b4c91d828cb942c2df1eeb02502eccae9e9",
+          "records": [
+            {
+              "id": "SLPM_86.053:000a2e2c:15035c2b8a71",
+              "path": "SLPM_86.053",
+              "kind": "source_extent"
+            }
+          ]
+        },
+        {
+          "sha256": "9f9f5111f7b27a781f1f1ddde5ebc2dd2b796bfc7365c9c28b548e564176929f",
+          "records": [
+            {
+              "id": "SLPM_86.053:000a2e40:70ca61689484",
+              "path": "SLPM_86.053",
+              "kind": "source_extent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 63,
+      "status": "retained",
+      "reason": "Spacing belongs to concatenation or screen placement; labels share the same spelling. Preserve layout and assembly fragments.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/main/memory_card.c",
+        "src/ovl/rpg_battle"
+      ],
+      "variants": [
+        {
+          "sha256": "7e021a8f23dbed5dd785435c5eed4108a0fff6bc0bfd86d3cf1a391dca4bbd48",
+          "records": [
+            {
+              "id": "c:main:8005c14c:5",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "e3ee915a8e8c7aa02d2fced443314522b20824abd2535d5959c41dc8ab8a09e4",
+          "records": [
+            {
+              "id": "c:main:80061498:2",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": 64,
+      "status": "retained",
+      "reason": "Spacing belongs to concatenation or screen placement; labels share the same spelling. Preserve layout and assembly fragments.",
+      "evidence": [
+        "src/main/home_screens.c",
+        "src/main/memory_card.c",
+        "src/ovl/rpg_battle"
+      ],
+      "variants": [
+        {
+          "sha256": "6725e7bbcd28f3a8a586fa34bf191fd72dde8b61756932cd3237c17a6f196f1a",
+          "records": [
+            {
+              "id": "c:main:800696dc:2",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        },
+        {
+          "sha256": "2764601385b82affac627819c906f9107abf4711b0893864f3186df8dbdc6c5a",
+          "records": [
+            {
+              "id": "c:main:80054884:3",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            },
+            {
+              "id": "c:main:80054c74:3",
+              "path": "SLPM_86.053",
+              "kind": "source_literal"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "verified_target_sha1": "5c761523f939755d88c720adb2360927c58fe602"
+}

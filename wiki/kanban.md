@@ -46,6 +46,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-39511-english-text-quality|T-39511 Make the English read naturally on screen]]
 
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
@@ -91,8 +92,7 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-39503-text-container-writers|T-39503 Write every text container back from records]]
-- [ ] [[tickets/T-39504-emulator-screen-route|T-39504 Script an emulator route through the main screens with screenshots]]
+
 
 
 
@@ -112,6 +112,12 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39541-gift-name-capitalization|T-39541 Use consistent gift names]]
+
+- [ ] [[tickets/T-39504-emulator-screen-route|T-39504 Script an emulator route through the main screens with screenshots]]
+
+- [ ] [[tickets/T-39503-text-container-writers|T-39503 Write every text container back from records]]
 
 - [ ] [[tickets/T-39513-skating-rink-advertisement|T-39513 Translate the omitted skating-rink advertisement]]
 

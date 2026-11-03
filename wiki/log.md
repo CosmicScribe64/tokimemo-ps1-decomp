@@ -4287,3 +4287,23 @@ Created [[tickets/T-39540-magazine-button-sequence]] after executing the product
 ## [2026-11-02] lint | Close English runtime and rink wording reviews
 
 Reviewed the English glyph runtime and remaining date-ambush name changes against CODING_STANDARDS. All 27 default binaries match and all 31 text/name regressions pass. Saved emulator evidence confirms the complete ambush label and intact neighboring name. Closed [[tickets/T-39502-english-text-runtime]] and [[tickets/T-39506-english-script-runtime]]. Reinspected the rink source crop and English capture; retained the translation of the readable bus phrase without inventing its cropped suffix, closing [[tickets/T-39513-skating-rink-advertisement]]. No production code or game bytes changed.
+
+## [2026-11-02] ticket | Standardize repeated gift names
+
+Created [[tickets/T-39541-gift-name-capitalization]] after checking the DATE and DATE2 consumers of the flagged gift names. Both copy their indexed item names into the same dialogue field. Match the existing title-case forms while preserving words and controls; verify their new pixel widths and runtime display before publication.
+
+## [2026-11-02] query | Compare complete gift lookup tables
+
+All 99 Japanese gift slots match between DATE and DATE2, including six empty slots. Expanded [[tickets/T-39541-gift-name-capitalization]] to reuse the already-shipped DATE2 labels for 82 inconsistent DATE entries. The longest label fits the 33-byte table slot and 36-byte substitution field; the maximum width is 173 pixels. Runtime checks are required for the longer substitutions before publication.
+
+## [2026-11-02] lint | Complete writer and emulator route reviews
+
+Closed [[tickets/T-39503-text-container-writers]] after reviewing placement and C-literal safeguards alongside identity/coverage tests and disc audits. Closed [[tickets/T-39504-emulator-screen-route]] after checking route parsing, resumption, failure handling and screenshot capture; all 21 route tests pass. The historical English main route reports completion with 146 valid checkpoint images. Current-build visual evidence remains identified separately.
+
+## [2026-11-02] build | Verify consistent gift names
+
+[[tickets/T-39541-gift-name-capitalization]] passes all 99-slot readbacks, both disc text audits, three isolated long-name GPU checks and all 15 browser checks. Only DATE.EXN changes from the magazine release. Reviewed the source-guarded corrections and report attribution; no findings remain. [[tickets/T-39511-english-text-quality]] records all 65 case-group dispositions and the remaining horizontal-growth candidates.
+
+## [2026-11-02] build | Publish the verified gift update
+
+Pages deployment 41593310508 succeeded for target `5c761523f939755d88c720adb2360927c58fe602`. All 37 served files match the tested package. Closed [[tickets/T-39541-gift-name-capitalization]]; the publication receipt is `translations/en/reviews/published-gift-consistency-2026-11-02.json`.
