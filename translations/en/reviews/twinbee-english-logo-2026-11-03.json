@@ -1,0 +1,114 @@
+{
+  "date": "2026-11-03",
+  "target": {
+    "sha1": "b4e84775009f141b335574ae1268e49af5128fb7",
+    "size": 703097472
+  },
+  "art": {
+    "source_sha256": "5bc8e2ee7723b07956b54c8df06d3a4245a527a630f50d7682d8af8badc2d7ba",
+    "target_sha256": "d4a17ab5ff2aca17fa1e5b5a949dffad17ccabfe5806651377895da6aadf7a4d",
+    "art_sha256": "d3eb68a0b30bedba1f453d04e8b44cf5b231f7011f2f9a0cb9e6b8c3c501c15f",
+    "changed_pixels": 7892,
+    "palette_unchanged": true,
+    "regions": [
+      [
+        0,
+        0,
+        128,
+        64
+      ],
+      [
+        0,
+        64,
+        64,
+        64
+      ]
+    ],
+    "wording": "TWINBEE"
+  },
+  "screenshots": [
+    {
+      "path": "build/emu/twinbee-english-title/shot_240.png",
+      "sha256": "f8919e417f3af6aa277c1c6f802130118bd9ca3f43a3fbe95f0378872be6df12",
+      "inspected": true
+    },
+    {
+      "path": "build/emu/twinbee-english-title/shot_300.png",
+      "sha256": "ab969b43d7e30cd26f8005998c68651587766b3e2ba7780e13542675a8e67149",
+      "inspected": true
+    },
+    {
+      "path": "build/emu/twinbee-english-title/shot_360.png",
+      "sha256": "ab969b43d7e30cd26f8005998c68651587766b3e2ba7780e13542675a8e67149",
+      "inspected": true
+    },
+    {
+      "path": "build/emu/twinbee-english-title/shot_420.png",
+      "sha256": "ab969b43d7e30cd26f8005998c68651587766b3e2ba7780e13542675a8e67149",
+      "inspected": true
+    },
+    {
+      "path": "build/emu/twinbee-english-title/shot_600.png",
+      "sha256": "a65179d21f05ed6e2bbdcae3a7b796a0e76a222c69296aa85c20deea8d7cd6aa",
+      "inspected": true
+    },
+    {
+      "path": "build/emu/twinbee-english-title/shot_900.png",
+      "sha256": "2bec86b6e31cd212081cb3a80d5f1ddf83bca088ef96d49ce4057eaedc445754",
+      "inspected": true
+    },
+    {
+      "path": "build/emu/twinbee-english-title/shot_1500.png",
+      "sha256": "0769b901bb095b375a462091b309030b70f9bc16be0ce553681d395b602dafe8",
+      "inspected": true
+    },
+    {
+      "path": "build/emu/twinbee-title-entrance/shot_480.png",
+      "sha256": "ab969b43d7e30cd26f8005998c68651587766b3e2ba7780e13542675a8e67149",
+      "inspected": true
+    },
+    {
+      "path": "build/emu/twinbee-title-entrance/shot_510.png",
+      "sha256": "aa6b4f170f814ec8fa9583e9718f8317f73ae455a7d41c02168052e8e2d73949",
+      "inspected": true
+    },
+    {
+      "path": "build/emu/twinbee-title-entrance/shot_540.png",
+      "sha256": "f45a9f1a562c175740de063a207e83791a6211bde24dc099e2f82b5ad4d3591a",
+      "inspected": true
+    },
+    {
+      "path": "build/emu/twinbee-title-entrance/shot_600.png",
+      "sha256": "a65179d21f05ed6e2bbdcae3a7b796a0e76a222c69296aa85c20deea8d7cd6aa",
+      "inspected": true
+    }
+  ],
+  "native_review": "English title is legible and unclipped at rest; both pieces retain the original entrance animation. Subtitle, mascot and first-stage gameplay remain intact.",
+  "fixture_limit": "Controlled mode entry from a compatible save state. Early loading frames show texture data, byte-identical to the earlier build at frames 300, 420 and 480; frame 510 is also identical before the lettering enters. This is not proof of a normal menu-to-title transition.",
+  "checks": {
+    "art_suite": "27 passed before rebuild; one final-disc test deferred then passed",
+    "final_disc_tests": "4 passed, including all twelve original sprite attribute arrays",
+    "script_audit": "105 containers, 31471 strings, 31334 pointers; pass",
+    "executable_audit": "2802/2936 exact slots, 291 derived records, 286 pointers, zero pending; pass",
+    "source_audit": "1964 literals in 171 files across two snapshots; pass",
+    "default_binary_hashes": "27/27",
+    "browser": [
+      "wrong size",
+      "wrong source hash",
+      "corrupted patch",
+      "cancel",
+      "full patch",
+      "download hash",
+      "cue",
+      "no upload",
+      "responsive layout",
+      "invalid archive",
+      "archive drop",
+      "extraction cancel",
+      "audio download hash",
+      "archive cue",
+      "mobile result"
+    ]
+  },
+  "review": "Reviewed writer, integration and tests against CODING_STANDARDS.md. Source hash is guarded; final-disc comparison rejects any unexpected byte. Tests independently bound changes to the two logo regions. No original assets or build output are staged. No unresolved findings."
+}

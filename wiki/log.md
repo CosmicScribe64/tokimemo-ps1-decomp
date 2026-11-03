@@ -4411,3 +4411,19 @@ Reopened [[tickets/T-39510-no-japanese-left-check]] to In Review because the nat
 ## [2026-11-03] decision | Await the remaining logo disposition
 
 PR 71 now reflects completed [[tickets/T-39511-english-text-quality]] reconciliation. The worktree is otherwise clean, and the published build remains verified. The pending owner question is whether to preserve the original TwinBee Japanese logo or replace its lettering. This decision has remained unresolved across three goal turns; [[tickets/T-39510-no-japanese-left-check]] and [[tickets/T-39500-english-translation-patch]] remain open. No further rebuild or deployment is needed while that choice is pending.
+
+## [2026-11-03] decision | Translate the TwinBee title logo
+
+The owner viewed the original logo and requested English lettering. Opened [[tickets/T-39548-twinbee-english-logo]] to replace it while retaining the title animation and subtitle. The pending preference is resolved; [[tickets/T-39500-english-translation-patch]] now awaits implementation and verification.
+
+## [2026-11-03] build | Integrate English TwinBee lettering
+
+[[tickets/T-39548-twinbee-english-logo]] now has a generated wordmark, a native 16-color preview and a source-guarded writer. Two checks prove the palette, subtitle and all non-logo bytes remain unchanged and reject an unknown source. The build's art readback now verifies the new title container. Rebuild and native animation inspection are underway.
+
+## [2026-11-03] build | Verify title-region isolation
+
+The art regression suite for [[tickets/T-39548-twinbee-english-logo]] passes 27 checks; final-disc verification waits for the rebuild. The initial test import failed because the existing modules need the tools path; the corrected Docker invocation passed. Native palette conversion is legible, and preservation checks cover both sprite-region boundaries and the unchanged subtitle data.
+
+## [2026-11-03] build | Verify the English TwinBee title on disc
+
+[[tickets/T-39548-twinbee-english-logo]] passes native title/entrance inspection, four final-disc tests, all text/source audits, 27 original hashes and 15 browser checks. Early texture-loading captures match the previous build; controlled entry is not normal-transition coverage. The standards review has no unresolved findings. The package changes only the patch payload and release manifest; publication is underway.

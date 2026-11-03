@@ -6,7 +6,7 @@
 
 This repository contains a completed, byte-matching C decompilation of *Tokimeki Memorial: Forever with You*
 for PlayStation, an English patch covering text and artwork, and a browser patcher. The patch aims to stay
-faithful to the original game's tone and visual style and is still under review. It targets the Japanese
+faithful to the original game's tone and visual style. It targets the Japanese
 PlayStation the Best release (`SLPM-86053`).
 
 [Patch your disc in your browser](https://cosmicscribe64.github.io/tokimemo-ps1-decomp/), or use the source,
@@ -28,7 +28,8 @@ This project is independent. It is not affiliated with or endorsed by Konami.
 
 The patch translates dialogue and menus and redraws Japanese lettering in artwork, including signs and interface
 graphics. The aim is for the English to feel at home in the original game, preserving its meaning, character voices
-and visual style. Text and visual checks are still in progress, so expect some rough edges.
+and visual style. The release has passed text audits, artwork review, and scripted emulator checks across
+the main screens and selected events. This does not cover every possible route through the game.
 [Report a problem](https://github.com/CosmicScribe64/tokimemo-ps1-decomp/issues) with a screenshot and where it happened.
 
 Drag your original disc files onto the page, or use the file picker. It accepts BIN/CUE, CHD, combined BIN or IMG,
