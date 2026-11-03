@@ -1,7 +1,7 @@
 ---
 id: T-39510
 title: Prove no Japanese is left in the English game
-status: In Review
+status: Done
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-03
@@ -96,3 +96,5 @@ The published-build script audit covers 105 containers, 31,471 strings and 31,33
 Standards review covered the art readback verifier and build integration; failures stop the build, rewritten frames are checked through their actual executable pointers, and unrelated pixels are checked against originals. All 25 art tests pass in Docker. The first invocation omitted the tools import path and failed before running tests; the corrected invocation passes. This closeout changes only evidence and documentation, includes no game data and makes no new default-build matching claim. The prior source-audit reviews remain recorded above. Ticket and board move to Done.
 
 2026-11-03: reopened to In Review after native TwinBee title inspection found its Japanese logo outside the parent ticket exception list. The text and registered-art audits still pass, but they do not resolve this additional retained logo. The owner preference is pending; do not treat prior completion as approval for it.
+
+2026-11-03: The owner requested replacement of the TwinBee logo. T-39548 now supplies verified English lettering; no additional Japanese-logo exception is needed. The current target is b4e84775009f141b335574ae1268e49af5128fb7. All actual-disc audits pass, and the new DAT artwork has separate native and byte-level proof. The earlier text and artwork review remains applicable. The listed language-check scope is complete, with the existing approved exceptions and controlled-fixture limits retained.

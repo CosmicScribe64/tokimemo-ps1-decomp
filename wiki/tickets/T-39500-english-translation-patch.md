@@ -1,7 +1,7 @@
 ---
 id: T-39500
 title: Build and publish the English translation patch
-status: In Progress
+status: Done
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-03
@@ -18,8 +18,8 @@ Ship an English translation patch for the original disc (PlayStation the Best, S
 - [x] All dialogue and system text in English.
 - [x] All registered English art in place.
 - [x] Scripted emulator runs with screenshots across the main screens; patcher tested in a headless browser against the command-line build.
-- [ ] No Japanese is left on screen anywhere in the game, apart from the owner-approved exceptions: the title logo (TITLE frame 0 and the TOKIMEKI.BS splash), the magazine masthead (mainrom-0118), tiny authentic signs in stills (catalog-135, 138, 140, 148, 150), the illegible roster board P_01_02, the off-frame ride sign (catalog-142), the original ending staff credits (T-39529), and the kana and kanji keyboard pages of name entry (kept so players can still type Japanese names; the English letter page is the default and every tab label is English). Checked by [[tickets/T-39510-no-japanese-left-check]].
-- [ ] Owner review and sign-off, then GitHub Pages, README link and repository description.
+- [x] No Japanese is left on screen anywhere in the game, apart from the owner-approved exceptions: the title logo (TITLE frame 0 and the TOKIMEKI.BS splash), the magazine masthead (mainrom-0118), tiny authentic signs in stills (catalog-135, 138, 140, 148, 150), the illegible roster board P_01_02, the off-frame ride sign (catalog-142), the original ending staff credits (T-39529), and the kana and kanji keyboard pages of name entry (kept so players can still type Japanese names; the English letter page is the default and every tab label is English). Checked by [[tickets/T-39510-no-japanese-left-check]].
+- [x] Owner review and sign-off, then GitHub Pages, README link and repository description.
 
 ## Notes
 
@@ -36,3 +36,5 @@ Parts: [[tickets/T-39501-disc-rebuild-and-xdelta]], [[tickets/T-39502-english-te
 2026-11-02 verification closeout. The published target remains `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4`. All 87 flagged long dialogue records have runtime layout evidence; all 798 distinct generated phrase-boundary pairs and 39 remaining early-break cases have reviewed dispositions. The artwork pass inspected 254 shipped sprite targets and 16 decoded stills. The local dialogue gallery contains 1,482 captures on 174 sheets, including historical comparisons and repeated frames. These counts do not imply an end-to-end playthrough of every route. The GitHub description and homepage both link the patcher. PR 71 now describes the current build and verification scope. Final parent-ticket reconciliation remains open; the patch itself is already published.
 
 2026-11-03: T-39511 text-quality reconciliation is complete. The current published target is 39454a5b82bcc53f05daba81040e6622a85310e1; all release and public-file checks pass. Native TwinBee verification found its original Japanese title logo outside the earlier exception list. The owner has been asked whether to preserve that branding or replace its lettering. T-39510 returns to In Review for that explicit artwork disposition; text, registered-art placement and patcher verification are otherwise complete.
+
+2026-11-03: Final verification sign-off: the owner requested that we finish the review and sign off once the issues were resolved, then explicitly approved changing the remaining TwinBee logo. T-39548 closes that last known artwork issue. T-39511 text review and T-39510 language/art checks are complete; all release checks pass, and the published target b4e84775009f141b335574ae1268e49af5128fb7 matches the tested package across all 37 served files. README and GitHub patcher links are present. The source and README status update are pushed on patch/english for PR 71; the patch itself is live on Pages. This is technical sign-off within the documented review scope, not a claim that the owner personally played every scene or that every possible route was traversed. No known review finding remains open.

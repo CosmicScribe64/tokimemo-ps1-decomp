@@ -303,4 +303,11 @@ Previous target `45eac0efcc5981d60102a9de7e84e30757243b4c` separates full family
 
 ## TwinBee sprite correction release, 2026-11-03
 
-Current target `39454a5b82bcc53f05daba81040e6622a85310e1` preserves twelve sprite attribute arrays previously mistaken for text. Translation had changed three arrays. All twelve now match the original through their actual disc pointers. Native player, boss, ranking and controlled-preview captures are verified. The build passes 29 tests, complete text audits, 27 default hashes and 15 browser checks. All 37 served files match the package. Evidence: `translations/en/reviews/twinbee-sprite-attributes-2026-11-03.json` and `published-twinbee-sprite-attributes-2026-11-03.json`.
+Previous target `39454a5b82bcc53f05daba81040e6622a85310e1` preserves twelve sprite attribute arrays previously mistaken for text. Translation had changed three arrays. All twelve now match the original through their actual disc pointers. Native player, boss, ranking and controlled-preview captures are verified. The build passes 29 tests, complete text audits, 27 default hashes and 15 browser checks. All 37 served files match the package. Evidence: `translations/en/reviews/twinbee-sprite-attributes-2026-11-03.json` and `published-twinbee-sprite-attributes-2026-11-03.json`.
+
+
+## English TwinBee title and verification sign-off, 2026-11-03
+
+Current target `b4e84775009f141b335574ae1268e49af5128fb7` adds English TwinBee title lettering in the original palette and sprite animation. The subtitle and surrounding data are unchanged. Native title/entrance and first-stage captures pass inspection. All actual-disc audits, 27 default hashes and 15 browser checks pass; all 37 served files match the package. Receipts: `translations/en/reviews/twinbee-english-logo-2026-11-03.json` and `published-twinbee-english-logo-2026-11-03.json`.
+
+T-39548, T-39510 and T-39500 are Done after standards review and publication verification. Text-quality reconciliation was already completed under T-39511. This signs off the documented corpus, artwork and runtime review; the captures include controlled entry and repeated frames, not an end-to-end playthrough of every possible route.

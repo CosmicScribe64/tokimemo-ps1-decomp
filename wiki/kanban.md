@@ -55,7 +55,6 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
 
 
 - [ ] [[tickets/T-39212-english-artwork-drafts|T-39212 English WP-L: remaining artwork drafts and provenance]]
@@ -92,9 +91,7 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-39548-twinbee-english-logo|T-39548 Replace TwinBee title lettering with English]]
 
-- [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
 
 
 
@@ -125,6 +122,10 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39548-twinbee-english-logo|T-39548 Replace TwinBee title lettering with English]]
+- [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
+- [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
 
 - [ ] [[tickets/T-39511-english-text-quality|T-39511 Make the English read naturally on screen]]
 

@@ -4427,3 +4427,8 @@ The art regression suite for [[tickets/T-39548-twinbee-english-logo]] passes 27 
 ## [2026-11-03] build | Verify the English TwinBee title on disc
 
 [[tickets/T-39548-twinbee-english-logo]] passes native title/entrance inspection, four final-disc tests, all text/source audits, 27 original hashes and 15 browser checks. Early texture-loading captures match the previous build; controlled entry is not normal-transition coverage. The standards review has no unresolved findings. The package changes only the patch payload and release manifest; publication is underway.
+
+
+## [2026-11-03] build | Publish and sign off the English patch
+
+Pages run 41665706198 published target b4e84775009f141b335574ae1268e49af5128fb7. All 37 served files match the tested package; the first early readback rejected the still-old manifest. [[tickets/T-39548-twinbee-english-logo]], [[tickets/T-39510-no-japanese-left-check]] and [[tickets/T-39500-english-translation-patch]] move to Done after standards review. [[english-build]] records the final target and scope. The owner's requested fixes, text/art review and patcher checks are complete; this does not claim every route was played end to end.

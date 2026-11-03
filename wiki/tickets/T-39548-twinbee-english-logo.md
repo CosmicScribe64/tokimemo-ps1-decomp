@@ -1,7 +1,7 @@
 ---
 id: T-39548
 title: Replace TwinBee title lettering with English
-status: In Review
+status: Done
 assignee: codex
 created: 2026-11-03
 updated: 2026-11-03
@@ -16,7 +16,7 @@ Replace the Japanese TwinBee title lettering with English while preserving its c
 
 - [x] Integrate legible English lettering without changing neighboring artwork or sprite attributes.
 - [x] Inspect the assembled title and animation in the emulator.
-- [ ] Pass release checks, standards review and publication verification.
+- [x] Pass release checks, standards review and publication verification.
 
 ## Implementation
 
@@ -31,3 +31,5 @@ The rebuilt target is `b4e84775009f141b335574ae1268e49af5128fb7`. Four final-dis
 Inspected eleven native captures covering the entrance, settled title and first-stage gameplay. The lettering is legible, the subtitle is unchanged, and the sprite pieces enter normally. The controlled mode-entry fixture shows texture data during loading; frames 300, 420 and 480 match the earlier build byte for byte. This fixture does not establish a normal menu-to-title transition. Evidence: `translations/en/reviews/twinbee-english-logo-2026-11-03.json`.
 
 Standards review checked the writer, integration and tests against `CODING_STANDARDS.md`. Source hashes are guarded; actual-disc verification rejects unexpected changes; independent boundary tests protect the palette, subtitle and neighboring pixels. The only new image staged is generated English lettering, with no extracted original artwork. No C, symbols or matching code changed. No unresolved findings. Publication readback remains the last gate.
+
+2026-11-03: Publication verified: Pages run 41665706198 succeeded, and all 37 public files match the tested package. The first readback ran before deployment completed and correctly rejected the previous manifest. The later readback passed. The code, native review and publication gates are complete.
