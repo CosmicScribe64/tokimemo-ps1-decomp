@@ -121,6 +121,32 @@ class EnglishText:
         return Counter(note["status"] for note in self.notes.values())
 
 
+def stage_prefixes(container: Container) -> dict[str, bytes]:
+    """T-39544: command bytes belong to the physical row, before its visible text."""
+    prefixes = {}
+    for record in container.records.values():
+        if record.kind != "stage_text_record":
+            continue
+        context = (record.unit or {}).get("context", {})
+        stage = context.get("stage_context", {})
+        skip = stage.get("body_relative_offset", 0)
+        if not skip:
+            continue
+        prefix = bytes.fromhex(stage.get("protected_prefix_hex", ""))
+        if len(prefix) != skip:
+            raise ValueError("Missing stage command prefix: " + record.id)
+        for rid in context.get("source_inventory_record_ids", []):
+            owner = container.records[rid]
+            if owner.owner:
+                owner = container.records[owner.owner]
+            if not owner.payload.startswith(prefix):
+                raise ValueError("Stage prefix disagrees with physical source: " + rid)
+            if owner.id in prefixes and prefixes[owner.id] != prefix:
+                raise ValueError("Conflicting stage prefixes: " + owner.id)
+            prefixes[owner.id] = prefix
+    return prefixes
+
+
 def english_payloads(containers: dict[str, Container], targets: dict[str, dict], metrics: FontMetrics,
                      encoder: EnglishEncoder | None = None) -> EnglishText:
     encoder = encoder or EnglishEncoder()
@@ -128,6 +154,7 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
     for path, container in sorted(containers.items()):
         if container.kind in SKIPPED_KINDS:
             continue
+        prefixes = stage_prefixes(container)
         following = speech.next_commands(container.records.values()) if container.kind == "talk_script" else {}
         for record in container.records.values():
             if record.role not in ("owner", "source_only"):
@@ -238,6 +265,9 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                     note["too_many_lines"] = result.too_many_lines
             else:
                 note["width_px"] = metrics.width(payload)
+            if record.id in prefixes:
+                payload = prefixes[record.id] + payload
+                note["protected_stage_prefix"] = prefixes[record.id].hex()
             out.payloads.setdefault(path, {})[record.id] = payload
     return out
 

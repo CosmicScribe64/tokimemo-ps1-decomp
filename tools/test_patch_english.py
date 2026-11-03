@@ -519,6 +519,25 @@ class ProfileLabelsTest(unittest.TestCase):
 
 
 class ReportTest(unittest.TestCase):
+    def test_stage_control_survives_physical_owner_translation(self):
+        for prefix in (b' ', b'g', b'E'):
+            with self.subTest(prefix=prefix):
+                path = 'CDROM/EXEDIR/BUNKA_SD.EXN'
+                bank = Container(path, 'executable', None)
+                bank.records['physical'] = Record('physical', 'source_extent', path, 0,
+                                                   prefix + b'Original', [Text('Original')])
+                context = {'source_inventory_record_ids': ['physical'], 'stage_context': {
+                    'body_relative_offset': 1, 'protected_prefix_hex': prefix.hex()}}
+                bank.records['view'] = Record('view', 'stage_text_record', path, 1,
+                    b'Original', [Text('Original')], role='alias', owner='physical',
+                    unit={'context': context})
+                result = english_payloads({path: bank}, {'physical': {
+                    'target_text': 'good days', 'protected_tokens': []}}, METRICS)
+                self.assertEqual(result.payloads[path]['physical'], prefix + b'good days')
+                context['stage_context']['protected_prefix_hex'] = ''
+                with self.assertRaisesRegex(ValueError, 'Missing stage command'):
+                    english_payloads({path: bank}, {}, METRICS)
+
     def test_reviewed_trip_rows_preserve_wording_and_scope(self):
         sentence = "Wanna go out again the day after tomorrow?"
         for path, target, applied in (

@@ -610,6 +610,19 @@ void stage_show_speaker_label_wait(void) {
 }
 
 
+#ifdef TOKIMEMO_ENGLISH
+static s32 stage_show_script_text_x = -0x48;
+/* T-39543: keep full names inside the frame, with eight pixels before the quote. */
+static void stage_show_script_speaker(s32 x, s32 y, s32 color, s32 text, s32 ordering_slot) {
+    set_kanji_string(-0x80, y, 1, text, ordering_slot);
+    stage_show_script_text_x = -0x80 + english_text_width((u8 *) text) + 8 + 0xE;
+}
+#define STAGE_SHOW_TEXT_X stage_show_script_text_x
+#else
+#define stage_show_script_speaker set_kanji_string
+#define STAGE_SHOW_TEXT_X (-0x48)
+#endif
+
 void stage_show_script_line_render(void) {
     s32 index;
     u8 command;
@@ -620,31 +633,31 @@ void stage_show_script_line_render(void) {
         switch (festival_dispatch_variant) {
         case 0:
 #ifdef TOKIMEMO_ENGLISH
-            set_kanji_string(english_speaker_label_x(game_state.player_family_name), 0x30, 0,
+            stage_show_script_speaker(english_speaker_label_x(game_state.player_family_name), 0x30, 0,
                              (s32) game_state.player_family_name, 0);
 #else
             set_kanji_string((s16) (-0x68 - (strlen(game_state.player_family_name) * 4)), 0x30, 0, (s32) game_state.player_family_name, 0);
 #endif
             break;
         case 1:
-            set_kanji_string(-0x80, 0x30, 0, (s32) "弁論者", 0);
+            stage_show_script_speaker(-0x80, 0x30, 0, (s32) "弁論者", 0);
             break;
         case 2:
-            set_kanji_string(-0x78, 0x30, 0, (s32) "藤崎", 0);
+            stage_show_script_speaker(-0x78, 0x30, 0, (s32) "藤崎", 0);
             break;
         case 3:
-            set_kanji_string(-0x78, 0x30, 0, (s32) "如月", 0);
+            stage_show_script_speaker(-0x78, 0x30, 0, (s32) "如月", 0);
             break;
         case 4:
         default:
-            set_kanji_string(-0x80, 0x30, 0, (s32) "女生徒", 0);
+            stage_show_script_speaker(-0x80, 0x30, 0, (s32) "女生徒", 0);
             break;
         }
-        set_kanji_string(-0x56, 0x30, 0, (s32) "「", 0);
+        set_kanji_string(STAGE_SHOW_TEXT_X - 0xE, 0x30, 0, (s32) "「", 0);
         index = stage_show_text_line_index;
         if (index < 0x64) {
             do {
-                set_kanji_string(-0x48, (s16) (((index - stage_show_text_line_index) * 0x10) + 0x30), 0, ((u8 **)stage_show_selected_text_table)[index] + 1, 0);
+                set_kanji_string(STAGE_SHOW_TEXT_X, (s16) (((index - stage_show_text_line_index) * 0x10) + 0x30), 0, ((u8 **)stage_show_selected_text_table)[index] + 1, 0);
                 command = *((u8 **)stage_show_selected_text_table)[index];
                 if (command == 0x67) {
                     if (!(game_state.pad_held & PAD_CIRCLE) && (festival_dispatch_variant != 0)) {

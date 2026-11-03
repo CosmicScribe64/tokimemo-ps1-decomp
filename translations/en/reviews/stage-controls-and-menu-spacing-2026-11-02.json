@@ -1,0 +1,1720 @@
+{
+  "tickets": [
+    "T-39543",
+    "T-39544"
+  ],
+  "target_sha1": "b579f2ad31288f442436f718eba0cb61f7e359fe",
+  "scope": "Fresh current-build boot followed by controlled stage selection and settings initialization. The player stage speech completes and returns to the festival. This is not an every-route playthrough.",
+  "tests": {
+    "run": 70,
+    "passed": 69,
+    "skipped": 1,
+    "skip_reason": "Opt-in full-build unittest; the production build was run separately.",
+    "default_binary_hashes": 27,
+    "browser_checks": [
+      "wrong size",
+      "wrong source hash",
+      "corrupted patch",
+      "cancel",
+      "full patch",
+      "download hash",
+      "cue",
+      "no upload",
+      "responsive layout",
+      "invalid archive",
+      "archive drop",
+      "extraction cancel",
+      "audio download hash",
+      "archive cue",
+      "mobile result"
+    ]
+  },
+  "stage_speakers": [
+    {
+      "variant": 0,
+      "name": "Matsukawa",
+      "name_x": -128,
+      "quote_x": -65,
+      "text_x": -51,
+      "final_mode": 113
+    },
+    {
+      "variant": 3,
+      "name": "Kisaragi",
+      "name_x": -128,
+      "quote_x": -82,
+      "text_x": -68,
+      "final_mode": 128
+    }
+  ],
+  "restored_commands": [
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007910:60083809370e:skip1",
+      "pointer": 2148775600,
+      "prefix": "20",
+      "visible_text_sha256": "e715553747d37faec1ca1ad9862e38ec78bb89f9c49ad91e82f6ee1a2f801450"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007920:290c277e33f9:skip1",
+      "pointer": 2148775604,
+      "prefix": "20",
+      "visible_text_sha256": "91a496860c4729df0e09f16e0b792829c68a16845cfd07c5ad72b79e4130dd31"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007938:5711059ec7fb:skip1",
+      "pointer": 2148775608,
+      "prefix": "67",
+      "visible_text_sha256": "6d5bb4ebff7906a2fa19eac683a38fb4d539309875d85f172f82832cf42a43ab"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007958:8a646bb4c3c4:skip1",
+      "pointer": 2148775612,
+      "prefix": "20",
+      "visible_text_sha256": "40b417ac198ef1c74ddab6b712051263e7c52aa3cf2543f27c4938879b56929f"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007970:b753a9fc684c:skip1",
+      "pointer": 2148775616,
+      "prefix": "20",
+      "visible_text_sha256": "3837cf5496187a134f9c062ad81a3dddcddd1a9b4ad1f2cbcacec4424e8dca23"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007988:b49a45601e2a:skip1",
+      "pointer": 2148775620,
+      "prefix": "20",
+      "visible_text_sha256": "b3e7ab9204bb69ac9483322b80f7c6b41e0681975525b9ed91e584313087f212"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007998:937f4654b07c:skip1",
+      "pointer": 2148775624,
+      "prefix": "67",
+      "visible_text_sha256": "648a4530c77a46a8229073362ea60d99a6e285bdf707d3267cbca2658226397d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000079b4:ac0627f351c8:skip1",
+      "pointer": 2148775628,
+      "prefix": "20",
+      "visible_text_sha256": "34f8d0ce7851f9e1722118948a2ba12a3cb1760b7a49269ae76ca92fd984ee9b"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000079c8:b8a4ccba7d97:skip1",
+      "pointer": 2148775632,
+      "prefix": "67",
+      "visible_text_sha256": "805154f04e5cc3a590c79ac1905c924c52eecb8a619f6e76f7875fb5bb49b975"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000079e8:0cbd1c93140b:skip1",
+      "pointer": 2148775636,
+      "prefix": "20",
+      "visible_text_sha256": "1bc05fa86af09d7227b95287e771b2b45bcb19c47e8bf2c852a7b3500c3c0aef"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007a00:3afac328f4be:skip1",
+      "pointer": 2148775640,
+      "prefix": "67",
+      "visible_text_sha256": "49665521ba3f7e9dd7ed54a8c2ecc3beaab21463bda76caace8ba3691a387f3b"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007a20:3323ad632de5:skip1",
+      "pointer": 2148775644,
+      "prefix": "20",
+      "visible_text_sha256": "94405bd5902d900fc65eeded58debe4ce3c03c0f68c59c6f7fc1b64fc4a13486"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007a40:2d9b89b9492e:skip1",
+      "pointer": 2148775648,
+      "prefix": "20",
+      "visible_text_sha256": "a1d7419f3352c7c558f9c05b2201bbab57db0980f371d89cd2d898f83b07e974"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007a54:d8047987871d:skip1",
+      "pointer": 2148775652,
+      "prefix": "67",
+      "visible_text_sha256": "b4db59fa9dc31a2f487bf7e02d1b709073528b2b6be32c3bca2f74b4cd9f50b6"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007a74:7be77cb6665d:skip1",
+      "pointer": 2148775656,
+      "prefix": "20",
+      "visible_text_sha256": "acbb5a5a1753ee10958eed62e1d34916377b3d724153d25b70f11efa147d5948"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007a80:356bbcfb7ebb:skip1",
+      "pointer": 2148775660,
+      "prefix": "20",
+      "visible_text_sha256": "8bc7c956aeb6a01955ba13c6794b0e03dfb6e6982aba35c2f2919e1bdb0d0891"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007a9c:0302c4155d97:skip1",
+      "pointer": 2148775664,
+      "prefix": "45",
+      "visible_text_sha256": "7647fd63b3a64a6edc16b5b0fc5dc24b75609cfdd910e4cb062b56fad48b4489"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007abc:a0fa3ac484e1:skip1",
+      "pointer": 2148775716,
+      "prefix": "20",
+      "visible_text_sha256": "dfc43b4354be4dbb14ccf760709493313e8cfeaa4aaba0b7f4d893504cb82542"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007ad0:d3fe41a423b7:skip1",
+      "pointer": 2148775720,
+      "prefix": "67",
+      "visible_text_sha256": "92acf4634ee3629872e2b055590b83f36c4740d55cf4722540e1b4282952e3ae"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007ae4:cacd926fe547:skip1",
+      "pointer": 2148775724,
+      "prefix": "20",
+      "visible_text_sha256": "449fc413be4631409c1547a7e62fb5f1a39219497663fe43d9c2306607ec61a5"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007b00:0de859222904:skip1",
+      "pointer": 2148775728,
+      "prefix": "20",
+      "visible_text_sha256": "705985cd81aac41b96165d52523804ae0b213bbae4c0622e10df32ffc176fb38"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007b0c:bc2b3f72fb3b:skip1",
+      "pointer": 2148775732,
+      "prefix": "67",
+      "visible_text_sha256": "2603ef456985c0c3638bedb677da966588266c8ce5df2f56d22893b4233c9708"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007b30:b353c48cb8ff:skip1",
+      "pointer": 2148775736,
+      "prefix": "20",
+      "visible_text_sha256": "af2d894dd22017bcf1b81bea908573974179351b1f8b7ccedc971f71e9ffb83b"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007b44:4b2ceda99434:skip1",
+      "pointer": 2148775740,
+      "prefix": "67",
+      "visible_text_sha256": "dd1b4eec69b867151327f2fd5df6d6822c165c4892484ffaae0ece068c0e0d80"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007b64:65960d1ae4ac:skip1",
+      "pointer": 2148775744,
+      "prefix": "20",
+      "visible_text_sha256": "048055a09e4f6bd280845221b8b0b4fd4d5fa7763f479370c57fabf5059a8433"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007b78:cbbf1a8c90b5:skip1",
+      "pointer": 2148775748,
+      "prefix": "20",
+      "visible_text_sha256": "3834b70813c9cca3c7642ab14c9f530067810e7131eb77689613719a012c5c32"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007b88:fa9c058d08c0:skip1",
+      "pointer": 2148775752,
+      "prefix": "67",
+      "visible_text_sha256": "4de506921d936263cd950720fdaa4e4f809615a695aaaadfe6de481835ff2a15"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007ba4:e2fac3c7f135:skip1",
+      "pointer": 2148775756,
+      "prefix": "20",
+      "visible_text_sha256": "c679e9a004602e033f493b9bb44798ad579be1413a9bb2d5748afcc5c66ccc20"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007bbc:d431030e9bcd:skip1",
+      "pointer": 2148775760,
+      "prefix": "67",
+      "visible_text_sha256": "e6cfeb1d083c59a367453f5794bba86483a3de69a033f8debc4de90f6c3bedb9"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007bdc:9827fc050239:skip1",
+      "pointer": 2148775764,
+      "prefix": "20",
+      "visible_text_sha256": "8efb21812db8db0a73599e080f6be8db7f4832a60719384b885806e237ba298d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007bf8:4e6e053f35b6:skip1",
+      "pointer": 2148775768,
+      "prefix": "45",
+      "visible_text_sha256": "5052a206357400042820562cbb31c69a4395043c267aaffba25f214477f0c11d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007c10:91452c55d8e6:skip1",
+      "pointer": 2148775820,
+      "prefix": "20",
+      "visible_text_sha256": "540405e1b3a55aef1d1f86a3f379d358df3b0799d917b4543736be22d59cf4a1"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007c24:fd0ca594624c:skip1",
+      "pointer": 2148775824,
+      "prefix": "20",
+      "visible_text_sha256": "8614304d6e86a2e2481f902428c8c1e4f9addef2ee7a22b40f8778b552dd836e"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007c38:48b35bb60dfa:skip1",
+      "pointer": 2148775828,
+      "prefix": "20",
+      "visible_text_sha256": "bb131c8ad16f68058e14b386a2663c0d47228dcaa0634aeed2ef7e8e4d8d6e8d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007c4c:af3bad85e074:skip1",
+      "pointer": 2148775832,
+      "prefix": "67",
+      "visible_text_sha256": "63f4662e465722584226fe7745de4bba8b668657b3dc4b0ac6a7b5cf2645b37c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007c74:b89af695c7c0:skip1",
+      "pointer": 2148775836,
+      "prefix": "20",
+      "visible_text_sha256": "0449ae1ac1725102f172fdaa13cf6c05cc58646ff8d8cab81eaed3aa9fe6e5c2"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007c8c:8f1f0286ef9c:skip1",
+      "pointer": 2148775840,
+      "prefix": "20",
+      "visible_text_sha256": "339c2d2cc476c223f5611416473b3f9782ade8dc6874e5bdbb5ee72d3d19283d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007ca4:8a646bb4c3c4:skip1",
+      "pointer": 2148775844,
+      "prefix": "20",
+      "visible_text_sha256": "f67f904f9422dcaf38c747dd5beeb54ecf51f750a173bb37d946c393da0414a4"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007cbc:b7d894383fb4:skip1",
+      "pointer": 2148775848,
+      "prefix": "20",
+      "visible_text_sha256": "16035fb109406085f40e4593e13b5a456ffabdcc5eb9df65f4551eb1ae301940"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007cd8:72f36bc46f9e:skip1",
+      "pointer": 2148775852,
+      "prefix": "20",
+      "visible_text_sha256": "46082fb0a0e9786576150039c6ad7e0bd0200d65da13676a84574c1f1fbcb4d7"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007cf0:3c7463c6670c:skip1",
+      "pointer": 2148775856,
+      "prefix": "67",
+      "visible_text_sha256": "02bc08396fab05a8cacc480a0362ec2c791927a24acd0db02a63b6acb3f96add"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007d18:5bab0115dd30:skip1",
+      "pointer": 2148775860,
+      "prefix": "20",
+      "visible_text_sha256": "724399939915b954099d77974acd308d4d39124fb3c54bc0d096b5f924059b54"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007d30:726fa4197019:skip1",
+      "pointer": 2148775864,
+      "prefix": "20",
+      "visible_text_sha256": "b57a52d6ce5221e4833e1b45dd4cd9092d45bff2252acc9dd514bdf03b3c199f"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007d48:6b999e5c8ab0:skip1",
+      "pointer": 2148775868,
+      "prefix": "67",
+      "visible_text_sha256": "01f7a704a7c4a074e10c19bf7a4d0f1ebc473904d471ac73292ec728b49412e4"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007d74:69ad8bdd3d30:skip1",
+      "pointer": 2148775872,
+      "prefix": "20",
+      "visible_text_sha256": "36e7fcc58bdb44552d00f08c160a072fdb0bd86309922249b5bcf06c73c4311d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007d8c:c81b289c05b7:skip1",
+      "pointer": 2148775876,
+      "prefix": "20",
+      "visible_text_sha256": "67b84746b9c0aaf31f6a4ee6ef5b9d2cf5cd644cbb6da8f0148905eb862dab08"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007da8:588f2da8c0f2:skip1",
+      "pointer": 2148775880,
+      "prefix": "20",
+      "visible_text_sha256": "6f50a9f9db0305760629872466ac876ad2a95901361ba7cd64ba0e103c9e7955"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007dc0:ed4753d7acd7:skip1",
+      "pointer": 2148775884,
+      "prefix": "20",
+      "visible_text_sha256": "cdd6e4cf65469f2713294974a2f4c042c50b15e7312ca24c2401cad44f7b845c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007dd0:5f0f295ef120:skip1",
+      "pointer": 2148775888,
+      "prefix": "45",
+      "visible_text_sha256": "5089c5ee949901e91bf0e72bf8b9d9bbf2e85a0f675fba3eb04fb56260276c3e"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007df4:9b347529e1c7:skip1",
+      "pointer": 2148775892,
+      "prefix": "20",
+      "visible_text_sha256": "faba431abb5b9e355ed6cbe5708519177ca564621f00c525c6d7ed0c4f1d815d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007e0c:c4f656c5fb52:skip1",
+      "pointer": 2148775896,
+      "prefix": "67",
+      "visible_text_sha256": "85a424a4c4b05827ac6de483b36299f5b770e28ec4831e52e2a95f7ae763950e"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007e24:75b0a67e41ff:skip1",
+      "pointer": 2148775900,
+      "prefix": "20",
+      "visible_text_sha256": "749efd01151fa0f2cbaf845c09901d3f9d73a6509864974583fb5579d319ce7e"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007e34:43fde01f7eb1:skip1",
+      "pointer": 2148775904,
+      "prefix": "67",
+      "visible_text_sha256": "ed9f7e8249e72c81d51034df45339c3b959559d17a94124c80e4c60a7ad5b6df"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007e4c:787517c33697:skip1",
+      "pointer": 2148775908,
+      "prefix": "20",
+      "visible_text_sha256": "66e6b26cb2ec24cb3d28ec6a3c998951d37ba83daf7bd320cc6c116e13ebca82"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007e68:dcdbd13ce154:skip1",
+      "pointer": 2148775912,
+      "prefix": "20",
+      "visible_text_sha256": "b0adc4ef2b74b04d7e466ad088c0e45f5fdd7cf027bc47db0c7bee6189d9ab26"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007e80:497294c1bd60:skip1",
+      "pointer": 2148775916,
+      "prefix": "45",
+      "visible_text_sha256": "b220b1bc1417149819a17bb815e6e0a58d73dabb3e7cd0c7f3887109dad7edaa"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007e94:1761620765a5:skip1",
+      "pointer": 2148775944,
+      "prefix": "20",
+      "visible_text_sha256": "96add422e50e90ca956df74ed193291120e3a94aea23059cf185c1efad1b52dc"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007ea8:3102bcb9c01f:skip1",
+      "pointer": 2148775948,
+      "prefix": "67",
+      "visible_text_sha256": "da1dab30e1c341b384f994c436a2b94a2ed20bbd50cab2000191e097f6843539"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007ec4:b8b3467fc13d:skip1",
+      "pointer": 2148775952,
+      "prefix": "20",
+      "visible_text_sha256": "2513292c6290e7342ff860a2e7ecac6b65bac06137f41417df1e24bd094f256b"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007edc:49e03ead1b9b:skip1",
+      "pointer": 2148775956,
+      "prefix": "20",
+      "visible_text_sha256": "95bb6cca822eb11e67129d4ec65e307df67ca749fc2bf0e755c284901951d6e8"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00007ef4:7d3c0e8cf152:skip1",
+      "pointer": 2148775960,
+      "prefix": "45",
+      "visible_text_sha256": "52f0c41cef2a989efbda0a65d3469aac93e02bd8fa50e5322125a3656783cd44"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008090:aa2629e11832:skip1",
+      "pointer": 2148776016,
+      "prefix": "20",
+      "visible_text_sha256": "1b534a1c4fa562353af5dba34c7184c6b25b9075ceedc009bc8851d948e826c0"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000080ac:6ba513673e34:skip1",
+      "pointer": 2148776020,
+      "prefix": "20",
+      "visible_text_sha256": "648675430f0e0db11da37992343b23f063a371b32fe583a6497d58cf86d6e596"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000080c4:eda983bce825:skip1",
+      "pointer": 2148776024,
+      "prefix": "67",
+      "visible_text_sha256": "11f8bbfcd16062775706bf16ed686084232bcef9b94d258c5db6cb3acf27cda1"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000080e4:2ff8025cfde1:skip1",
+      "pointer": 2148776028,
+      "prefix": "20",
+      "visible_text_sha256": "d4a8726fd3c3f4a21491408d4e4b961f3fdd37f2d9ff538c5ada02cf468579b9"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000080f8:1ac4d72be6c5:skip1",
+      "pointer": 2148776032,
+      "prefix": "67",
+      "visible_text_sha256": "39df61d130733af636a39b1f7a49c8d0bb2520d9cba3c27333e3d4aca6467e67"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008118:e6bac51ed9a8:skip1",
+      "pointer": 2148776036,
+      "prefix": "20",
+      "visible_text_sha256": "c9c87f2ad661704fda97785f7789a7081e1586992269c6e6bb11ad6394b9869f"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000813c:fa14cb4827d6:skip1",
+      "pointer": 2148776040,
+      "prefix": "20",
+      "visible_text_sha256": "8b2c32856f949203d784078c7fec0b730bb4909102954bb7245ed0bd43e1aae5"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008164:d5f2e47ae0dc:skip1",
+      "pointer": 2148776044,
+      "prefix": "20",
+      "visible_text_sha256": "58b58178757e5c7b4c4398c2e7ffead1cfcd443f44d939ffae06beec2f3a4789"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008188:937cd3e2d351:skip1",
+      "pointer": 2148776048,
+      "prefix": "20",
+      "visible_text_sha256": "bca4b3bfaf680a0ed565026bfce6601caaf69b920c4670b2af5ee5376643897e"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000081b0:e13026e229dc:skip1",
+      "pointer": 2148776052,
+      "prefix": "67",
+      "visible_text_sha256": "ef7800946f343c5c8007446f09e36edf763b8f533e41f921abfbc1fa213be9a9"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000081cc:68bd672e7e46:skip1",
+      "pointer": 2148776056,
+      "prefix": "20",
+      "visible_text_sha256": "6c8ecff670ff506934a0368b2e68e3b2194b18b4fc15be168c8b88de9ddb966d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000081e4:f0b007c00d1d:skip1",
+      "pointer": 2148776060,
+      "prefix": "20",
+      "visible_text_sha256": "99a16e7572394b65142a8eb00ad8f67c023bb6a93797a6986045dea34430498f"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008200:110d540fbc60:skip1",
+      "pointer": 2148776064,
+      "prefix": "67",
+      "visible_text_sha256": "ee6954f38338e2f86ceb03048d8ea14cb31a03aa4c1898d4f7b0004ecb1093b8"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008210:ab49620ed6d9:skip1",
+      "pointer": 2148776068,
+      "prefix": "20",
+      "visible_text_sha256": "b8ed5c9f8c45dcf21d3df517aba85f364a9a760e5a041fa3af66562f6ccab7e5"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000822c:56d6e846d061:skip1",
+      "pointer": 2148776072,
+      "prefix": "20",
+      "visible_text_sha256": "f5ae07f5c2c8cb588b62e18feaac94535aa1ecdee54f9da932b26f6513557fae"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008244:110d540fbc60:skip1",
+      "pointer": 2148776076,
+      "prefix": "67",
+      "visible_text_sha256": "8b1d7bce8b106f255649b1fc187baef7e8dab1da5554327ff6691366101b20a3"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008254:0eb66caf5773:skip1",
+      "pointer": 2148776080,
+      "prefix": "20",
+      "visible_text_sha256": "15e47f798b45d87ff6971f64f3faff5d5be70786bca655c22a55682399283334"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008268:a502c44f2d5e:skip1",
+      "pointer": 2148776084,
+      "prefix": "20",
+      "visible_text_sha256": "f63a1cf6a1d24f34eddbf04fae0424769740ba0282276441e76b25535e7db650"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008284:e5263a1de46a:skip1",
+      "pointer": 2148776088,
+      "prefix": "67",
+      "visible_text_sha256": "c0a5f3de660d7a905cd812b0b745d457a40880f25bbd930dbc56c2a96761f660"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008294:f50a4ecd4f0d:skip1",
+      "pointer": 2148776092,
+      "prefix": "20",
+      "visible_text_sha256": "bf5d303a7be6ba597b32092eb765f7f489f8a889fbbe574f9f3d6012065f50d5"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000082ac:324c1b45f724:skip1",
+      "pointer": 2148776096,
+      "prefix": "67",
+      "visible_text_sha256": "01ea6add7770aee97821a33378d2f0391cdfbcf6ecfa568d898643d44467d6dd"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000082c4:b688aa00b866:skip1",
+      "pointer": 2148776100,
+      "prefix": "20",
+      "visible_text_sha256": "234e752fea612d98545ee92533a94be508bf89a1c1641ae91161b1dac7719cfb"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000082d0:3469abf8cb49:skip1",
+      "pointer": 2148776104,
+      "prefix": "20",
+      "visible_text_sha256": "55119bbfd7b7c80a503dc7a8fc79cc810475bfcab09fe1c7818f725607008b36"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000082f0:b877ba5fd404:skip1",
+      "pointer": 2148776108,
+      "prefix": "20",
+      "visible_text_sha256": "af39e6f397607d6e3d6fbe630575326f9cf21ae65c69d7fc6243d6edaf9d3290"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008304:166bedf037b7:skip1",
+      "pointer": 2148776112,
+      "prefix": "20",
+      "visible_text_sha256": "d9d789ad35c05924ba60d01cdb71a4bc16d8ec425531f524f11ca0f30f9e5ef9"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000831c:630a9637e2b8:skip1",
+      "pointer": 2148776116,
+      "prefix": "67",
+      "visible_text_sha256": "53b9d9a65d43ac70c3ca26a9cbe05e9330e991f305b3ebbd469c7bbbf1a5e9d9"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008338:7364c4e3ae9c:skip1",
+      "pointer": 2148776120,
+      "prefix": "20",
+      "visible_text_sha256": "d5ac79defd8ea171b60f84393952126d6e73a1466a0db0cc8499bd5b828a471f"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008350:c560cb52032f:skip1",
+      "pointer": 2148776124,
+      "prefix": "20",
+      "visible_text_sha256": "8570ce4d1232b16755fada10168aaab7f2559402004ea258503ef6e342bd9ddc"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008364:f4f95ddbfe0a:skip1",
+      "pointer": 2148776128,
+      "prefix": "67",
+      "visible_text_sha256": "cfbc8e2c8605349d28fd729d1368344793dec9a91810f750e6b31b925d905cef"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000837c:d0cae7033a23:skip1",
+      "pointer": 2148776132,
+      "prefix": "20",
+      "visible_text_sha256": "553c3cfc56d03ccc0a17d8d2fa23cad355cab424ebbe7f6adbbdd94a74f2b513"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008394:9decb5f73e1d:skip1",
+      "pointer": 2148776136,
+      "prefix": "20",
+      "visible_text_sha256": "672c25973eb5b8560f0d423419a1bb167b302b39ce06b087e91d9fff28d82855"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000083b0:2cf8718501ce:skip1",
+      "pointer": 2148776140,
+      "prefix": "67",
+      "visible_text_sha256": "131372b0719262b55effe0f652e700c5eddd1aca4ac5ed4e5739e6d9c23490ee"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000083c8:967925cce00d:skip1",
+      "pointer": 2148776144,
+      "prefix": "20",
+      "visible_text_sha256": "584a296ac3205e1d158f2c6baf51c163b947a33521a3b0be884cb5780ed51da8"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000083e8:06c588221221:skip1",
+      "pointer": 2148776148,
+      "prefix": "67",
+      "visible_text_sha256": "19e2a606e8ee85ab331d4652a5e0038370bafc8bf9c46c13599020c8b838781c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008400:4297d335568d:skip1",
+      "pointer": 2148776152,
+      "prefix": "67",
+      "visible_text_sha256": "323af95c842c20a2d3c49b6c8c77d7b2a8c443e1f9bfc888c1b1ecd940af0171"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008414:4d5ea4256754:skip1",
+      "pointer": 2148776156,
+      "prefix": "67",
+      "visible_text_sha256": "56fa2bddc3d7d72b579d208b52733be11e23e469ba88a036b1257a019c07a081"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008430:137bc518b671:skip1",
+      "pointer": 2148776160,
+      "prefix": "20",
+      "visible_text_sha256": "1b79d5fe7e200d03cca7c0d4b6049234cebc3a080d12465ac84a150e80e7b82b"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008450:50db5c5db88d:skip1",
+      "pointer": 2148776164,
+      "prefix": "20",
+      "visible_text_sha256": "4c0280e3335ea9487273f1b85f557434a6033e4d2a6a4a29cbfbbe2c7576de10"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000846c:d4d28e850926:skip1",
+      "pointer": 2148776168,
+      "prefix": "20",
+      "visible_text_sha256": "13eba701518ef9e3a451843a6c62fdd4b08324e104f73200058ce52802a5c5fb"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008480:c76a67b7c092:skip1",
+      "pointer": 2148776172,
+      "prefix": "67",
+      "visible_text_sha256": "eebffe06f34e03df0de043ef196d718db4f0c2fd3a4e136b38ee5a5939237253"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008498:52a3a2feb5c1:skip1",
+      "pointer": 2148776176,
+      "prefix": "20",
+      "visible_text_sha256": "c4e5425246e683618f3c4250702208151591c6f086b0e7461d943b8ad0540def"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000084b8:0da9b996c752:skip1",
+      "pointer": 2148776180,
+      "prefix": "20",
+      "visible_text_sha256": "d1ea344711524c94263d91b58f8a98fdd84f44741b1de2459ff2ac2cd496256a"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000084cc:68854ac546af:skip1",
+      "pointer": 2148776184,
+      "prefix": "67",
+      "visible_text_sha256": "eb1c85610c8040a8f0c2c6544a11a552141ea473f668e8bbc224937c05feb6a2"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000084e4:2af88915b95c:skip1",
+      "pointer": 2148776188,
+      "prefix": "20",
+      "visible_text_sha256": "a11a0dbddf93782de63897e339ba6c729b8b0ae6efca7f836b12c94fb3ef8280"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008504:f1b73ef1fdf0:skip1",
+      "pointer": 2148776192,
+      "prefix": "20",
+      "visible_text_sha256": "da45763494632692a5589125c3526442d663a384b50213e69045a9f46aba6eb8"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000851c:d3382a0a16d6:skip1",
+      "pointer": 2148776196,
+      "prefix": "67",
+      "visible_text_sha256": "34935d8f01f84604427ea7755cd8b1b8c1f393819d07a768af90fe82c1a22942"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008534:102be48d6a46:skip1",
+      "pointer": 2148776200,
+      "prefix": "20",
+      "visible_text_sha256": "20910655a07f9677e3716a3b015df844102902d34b200b057a7b722fd40a079e"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008554:e0b5312c6a44:skip1",
+      "pointer": 2148776204,
+      "prefix": "20",
+      "visible_text_sha256": "9c2b1aa9582615cafe491832b23dd95ba149335e6f9ea251b866c14703342dbb"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000856c:13e38de20062:skip1",
+      "pointer": 2148776208,
+      "prefix": "20",
+      "visible_text_sha256": "2d2d1b48e1278653f9f2026aa538dc8248e1cd092c5e41fec9a6c99f51cabb21"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008590:7c28c027d5cc:skip1",
+      "pointer": 2148776212,
+      "prefix": "67",
+      "visible_text_sha256": "97c8ff844b86813d250d89e8f567977b9241e610c3f5e6679d9b69cd7fa6f698"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000085b0:62e0b7e7b02d:skip1",
+      "pointer": 2148776216,
+      "prefix": "20",
+      "visible_text_sha256": "f53157755d80658ebe0e126846b65daac1c5143aa7b71a0c889f69d027e62a5e"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000085cc:0ba33ceb2d6f:skip1",
+      "pointer": 2148776220,
+      "prefix": "20",
+      "visible_text_sha256": "80ff2b7e7ed8c402fc89accf73fbe415b75baf72cb812c8e4a5699c237526af3"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000085fc:7144b2e456a3:skip1",
+      "pointer": 2148776224,
+      "prefix": "20",
+      "visible_text_sha256": "33396809bb40bf024a6cf603314b7fb46031874edf0c586ba5364855b8f5a091"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008610:29d9817edf79:skip1",
+      "pointer": 2148776228,
+      "prefix": "67",
+      "visible_text_sha256": "6c7da6c941f5543ff93c5923304ef6c9597b62b448f250d5e3455308c3f5df86"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000862c:6a5065bef11b:skip1",
+      "pointer": 2148776232,
+      "prefix": "67",
+      "visible_text_sha256": "5dcfbd8691f9318d773ba3c1920cffd8962f7e533b15a9c5f35e77eac42d510c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008644:794ae854b3b4:skip1",
+      "pointer": 2148776236,
+      "prefix": "20",
+      "visible_text_sha256": "7f95bc67e7d753bac4d1c7cba3113bbe0c8fb3318ced3fd621a53e4c08dece46"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008670:53e2fb8629aa:skip1",
+      "pointer": 2148776240,
+      "prefix": "20",
+      "visible_text_sha256": "e33079e4d9d1bfd015f422becce832526bcf6c8cc15cc293327a8ae75939ebbe"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008684:8f8b0c45c50c:skip1",
+      "pointer": 2148776244,
+      "prefix": "67",
+      "visible_text_sha256": "1b51ba7b02b7e0d7de8dbc4ccbad6fe65fa1d94dd017cde58b1bd5cb743e8199"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000086a0:72a89c9fceef:skip1",
+      "pointer": 2148776248,
+      "prefix": "67",
+      "visible_text_sha256": "f7d62f5d4b7ff64545ee8057621d81b9e1e5a71c20f54ae19e36e41c88ee0f25"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000086bc:ee6fa503b2e9:skip1",
+      "pointer": 2148776252,
+      "prefix": "20",
+      "visible_text_sha256": "6485b7c65371e9fc3f84b917dc4cc532a33cb7c7776073f5b819ab817f8612f5"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000086d4:994dbaa8c884:skip1",
+      "pointer": 2148776256,
+      "prefix": "20",
+      "visible_text_sha256": "6430e3bc05651a34ac075a2219ec3c6f5b07147c2ed255359007c6cbf183bf42"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000086ec:6f219f571e23:skip1",
+      "pointer": 2148776260,
+      "prefix": "67",
+      "visible_text_sha256": "2de6d41da53f8dff763b2d32a0f57b8343afe15ef7457db1835f463a2a302cf2"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008704:977cb0b8e6f8:skip1",
+      "pointer": 2148776264,
+      "prefix": "20",
+      "visible_text_sha256": "cace3deb96873a172c747d0c03a5e24ffd3d37ad5f735ed349cb02a624cd3b11"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008720:dc9107dd58c3:skip1",
+      "pointer": 2148776268,
+      "prefix": "67",
+      "visible_text_sha256": "3f0e62db188be026154cb09b732aebc27ddef15a3b43509c69cbf4614fde5dc2"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008734:bae468090355:skip1",
+      "pointer": 2148776272,
+      "prefix": "20",
+      "visible_text_sha256": "29e71f3dfec8213f8c3d79b225b9329b4fcbaf886bd6f07aa3869747ae69d10c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008754:101b18b2905f:skip1",
+      "pointer": 2148776276,
+      "prefix": "67",
+      "visible_text_sha256": "a9583e3bdbd881142b155f08321f1ccb2c16f4b70eeae9c3d1f84081a25eee46"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008770:52a5aacb2b43:skip1",
+      "pointer": 2148776280,
+      "prefix": "67",
+      "visible_text_sha256": "f2e2afaf68c1947facb90861b02a0791549f49be1f13c8085110c19a5a2bb23c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008788:e4c29437c433:skip1",
+      "pointer": 2148776284,
+      "prefix": "20",
+      "visible_text_sha256": "9accf8d798bebfe91edff797e02609cb5460d2fd7d32458ce09060b4d549815a"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008798:455464319ebe:skip1",
+      "pointer": 2148776288,
+      "prefix": "67",
+      "visible_text_sha256": "2790b8aba82cae002dd7a85fe7d7b22f26412ae6b2e8b048ca3fef5fca1a1de4"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000087b0:ae1729d3208b:skip1",
+      "pointer": 2148776292,
+      "prefix": "20",
+      "visible_text_sha256": "6593dc3e80206f11f82727523e4dc0307b6c619540de6b7aa16f42fc7c15a2c7"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000087d0:b804a3c3947a:skip1",
+      "pointer": 2148776296,
+      "prefix": "67",
+      "visible_text_sha256": "e4acb70fedcdc2b34e4c6f932b7fb1fed2301a053f1ea714c3899087cc1b2d29"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000087e8:7fd5df04232a:skip1",
+      "pointer": 2148776300,
+      "prefix": "20",
+      "visible_text_sha256": "41c751d5c3ef44df12d009cfc6fa489b62b427ca50b45a0ff8fe16c2c9748863"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008808:de7240d58d36:skip1",
+      "pointer": 2148776304,
+      "prefix": "67",
+      "visible_text_sha256": "62a9e75c072e127a62979817666ca214272341a57f76f9adb44fe99e437f7cf9"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000883c:809b44d54f6f:skip1",
+      "pointer": 2148776308,
+      "prefix": "67",
+      "visible_text_sha256": "5423dcf7736e47f1113db845d979b5acd7dfeb091e60590215f81b8406db1004"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008ad0:af3611c322dc:skip1",
+      "pointer": 2148779920,
+      "prefix": "20",
+      "visible_text_sha256": "964b460c4279711291224e28c8fb1c1fec059f122ff70a578ff474bdf5a9727c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008ae8:5af82472a038:skip1",
+      "pointer": 2148779924,
+      "prefix": "20",
+      "visible_text_sha256": "ef6a6d5bbec0e664456af18182ac81633c587c8722e29e5e49122fc33138377e"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008b00:679eba787449:skip1",
+      "pointer": 2148779928,
+      "prefix": "20",
+      "visible_text_sha256": "76ba5a296e11c4513a80bc87a551c9ef6f9d5f24b5cabd4a39277605869a4bc7"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008b18:eb1b1bc3f6dd:skip1",
+      "pointer": 2148779932,
+      "prefix": "20",
+      "visible_text_sha256": "6bbd2081c03068cfe7b6a0f1348a560d7c70b577596d330fdd85d0c8c571cd05"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008b30:42c612b51dd9:skip1",
+      "pointer": 2148779936,
+      "prefix": "67",
+      "visible_text_sha256": "5d4b64c5774bf75ee1a99fa02e96dc0239d275e8d56d40d8fcb2cec23de38418"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008b48:224a1c40fc23:skip1",
+      "pointer": 2148779940,
+      "prefix": "20",
+      "visible_text_sha256": "b5d82c59709c1df7f7e42098a16b948e1cf49a3f22860479adda7cc4a3a982ca"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008b5c:d89610c53785:skip1",
+      "pointer": 2148779944,
+      "prefix": "67",
+      "visible_text_sha256": "117f8e9b432c5c29cf41fc247bb6599ae2e2c9c767e88da0b4bd803f9652e5ba"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008b70:f1b29b0bb022:skip1",
+      "pointer": 2148779948,
+      "prefix": "20",
+      "visible_text_sha256": "964b460c4279711291224e28c8fb1c1fec059f122ff70a578ff474bdf5a9727c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008b88:cd6fc3f8c1b3:skip1",
+      "pointer": 2148779952,
+      "prefix": "20",
+      "visible_text_sha256": "c9f9b5b2a28828cda0c5fdebaf03b4802624c980744cb6290e46387595fbc4a7"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008ba0:6683139d5f29:skip1",
+      "pointer": 2148779956,
+      "prefix": "67",
+      "visible_text_sha256": "34eea7d65590bd6ccd679fb7a9eaccd6e76bf79f3b78a98db1dab854e3318d7e"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008bbc:53689fbd5eb1:skip1",
+      "pointer": 2148779960,
+      "prefix": "67",
+      "visible_text_sha256": "a0d07ffd0e4e73e38107a1d42a8154a36f77f50d6513cb2311949e63709a8b02"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008bcc:809719fbbfd1:skip1",
+      "pointer": 2148779964,
+      "prefix": "20",
+      "visible_text_sha256": "d461ef0cca3ecf4a2d6781af6a77675442b5a801bacd979c0739a331f26abaa1"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008bdc:690c85de52bd:skip1",
+      "pointer": 2148779968,
+      "prefix": "67",
+      "visible_text_sha256": "da91d5a3790e32393645189a70bec5081c509fc7eebfe3454b8ea75dbdf599f4"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008bf4:c36ad24b3483:skip1",
+      "pointer": 2148779972,
+      "prefix": "20",
+      "visible_text_sha256": "f7303d8d04712cc35efc604d322fa5a200b580ca975f579a716d96a8dfa1a84b"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008c10:a5c54167bd59:skip1",
+      "pointer": 2148779976,
+      "prefix": "67",
+      "visible_text_sha256": "a7652aeefa3fbbaa48a5fcf1f9abd2868c0e92ce9de687e104e2d7c34ae4b7eb"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008c2c:a206227d10e1:skip1",
+      "pointer": 2148779980,
+      "prefix": "20",
+      "visible_text_sha256": "e757b0184d8ca725a5062ac436ff896f04da179a503370b83ae9266fd5000892"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008c48:e370abf8d777:skip1",
+      "pointer": 2148779984,
+      "prefix": "20",
+      "visible_text_sha256": "539290a0913e1cb635d18c6ba9a2ef65f901cc5bf72eb9b77e8f82cf0d494d35"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008c60:302e83aae4a7:skip1",
+      "pointer": 2148779988,
+      "prefix": "67",
+      "visible_text_sha256": "55b43647d1a8386f8a48ca391bacb7149d385bb8aa1a669ff10f41aba23913bf"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008c78:1474ca6bf60c:skip1",
+      "pointer": 2148779992,
+      "prefix": "20",
+      "visible_text_sha256": "53a02070cea648bbc7b00c798c7cafa01adab6a9bba3ffa75e678ca4cc752076"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008c94:28d14d8c1d31:skip1",
+      "pointer": 2148779996,
+      "prefix": "20",
+      "visible_text_sha256": "b3658fa7b79482db0dbb65b67782276aad9579ca9b8e13e80157123b3b8b2efb"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008cb0:984150aa1f60:skip1",
+      "pointer": 2148780000,
+      "prefix": "67",
+      "visible_text_sha256": "d0d67e8c4b6b5904b5e540b3311b1b1904d24e166c32cc6ac3c58dcf65082b02"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008cbc:1af7c283a15d:skip1",
+      "pointer": 2148780004,
+      "prefix": "67",
+      "visible_text_sha256": "8b6fa01313ce51afc09e610f819250da501778ad363cba4f9e312a6ec823d42a"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008cd0:aa468dba683f:skip1",
+      "pointer": 2148780008,
+      "prefix": "67",
+      "visible_text_sha256": "0aad7da77d2ed59c396c99a74e49f3a4524dcdbcb5163251b1433d640247aeb4"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008cd8:3c0714255a2c:skip1",
+      "pointer": 2148780012,
+      "prefix": "67",
+      "visible_text_sha256": "11572d865e777d392049370d656d2dace356e50756b2251a025b176c88370828"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008cf4:6893bd933b1c:skip1",
+      "pointer": 2148780016,
+      "prefix": "67",
+      "visible_text_sha256": "91f8c022a8dca2111341e0c18b94297ab43ef899334b5be7e2b6c0cc1243cdbd"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008e70:e6a216d17ed6:skip1",
+      "pointer": 2148781872,
+      "prefix": "67",
+      "visible_text_sha256": "51c2d8e2bba443dcda6d73844177147b60573182de13048f08c7dcf968c7b067"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008e80:2f3c56d53e09:skip1",
+      "pointer": 2148781876,
+      "prefix": "20",
+      "visible_text_sha256": "6555bcc5b61572b54a0eba5938ea35cb397b7abc3935a543b02315b4f9927222"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008e98:96c494b966dd:skip1",
+      "pointer": 2148781880,
+      "prefix": "20",
+      "visible_text_sha256": "a716c3abe8aef3aaaacdee7beb200ca1cf9b556c1f625bcf259efe4fd1d9784a"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008eb0:df359643523f:skip1",
+      "pointer": 2148781884,
+      "prefix": "20",
+      "visible_text_sha256": "9e2faf834cc931c7e9af90c195a4e64fe67b459714e05f9ab98c21c6efada29c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008ec8:e02f23676011:skip1",
+      "pointer": 2148781888,
+      "prefix": "67",
+      "visible_text_sha256": "018f08073df5223b2293023dfcdf04e58bf28b60892d5bbf6f3ee23734cce560"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008edc:53d5adacaeb2:skip1",
+      "pointer": 2148781892,
+      "prefix": "67",
+      "visible_text_sha256": "f53bd2d2b09e0bbecff502811732f950327201dc2b5765aaf4a4f4b2f806898d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008eec:7483522de4dc:skip1",
+      "pointer": 2148781896,
+      "prefix": "20",
+      "visible_text_sha256": "57a519186572a205aacc94fb15273587b4c8cb47c9e1da974281385cc52096ce"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008f08:164379ac2a45:skip1",
+      "pointer": 2148781900,
+      "prefix": "67",
+      "visible_text_sha256": "3f2a0bc6c4414971448ae68437ba2e92829a933073a9f14353451d6e54c6be1d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008f28:53d5adacaeb2:skip1",
+      "pointer": 2148781904,
+      "prefix": "67",
+      "visible_text_sha256": "f53bd2d2b09e0bbecff502811732f950327201dc2b5765aaf4a4f4b2f806898d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008f38:4d9a326d71be:skip1",
+      "pointer": 2148781908,
+      "prefix": "67",
+      "visible_text_sha256": "a5dcd9a4dc29e888a80a6f874ff858aec3ebb998bd9fb2171666c9e2c44962fa"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008f54:36ed1ba8ea6d:skip1",
+      "pointer": 2148781912,
+      "prefix": "67",
+      "visible_text_sha256": "881f93fafe490d0905f83943890629e278882b645092f5d054929ebceeafb464"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008f70:435fc12ac3b3:skip1",
+      "pointer": 2148781916,
+      "prefix": "67",
+      "visible_text_sha256": "a2a9e136233cd48e47367a5f9324b6199c9eaea4b616a61737ceabe62f8c2dd7"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008f80:3b5613e6eca1:skip1",
+      "pointer": 2148781920,
+      "prefix": "67",
+      "visible_text_sha256": "4a93ac0135e0930dad53fb49fa0819e69fa2a5b52be8b2ffcf7f6df5e23b3449"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008f94:ec64b798c5a1:skip1",
+      "pointer": 2148781924,
+      "prefix": "67",
+      "visible_text_sha256": "a0131956c9d576410cfdd71a1470a8acb10acc71bf8f6ee2957a25d2d5f98a08"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008fa4:c76632649a93:skip1",
+      "pointer": 2148781928,
+      "prefix": "67",
+      "visible_text_sha256": "75d5b43cd6aca26e710cebcd83905ea758850b6299d026c4864f053d9ea00eec"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008fb8:c63fc320e83c:skip1",
+      "pointer": 2148781932,
+      "prefix": "67",
+      "visible_text_sha256": "be7f5ef96a6abd8f6d1c52f29fbc9184fd4aac0e5d53d897f5f54e5076ebc9eb"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008fc8:7bc842f342b6:skip1",
+      "pointer": 2148781936,
+      "prefix": "67",
+      "visible_text_sha256": "fd96d0fa245e34d5d126336a4a4e671587defeca5113218c64cc46cef8a0a133"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008fe0:41593c2e4e27:skip1",
+      "pointer": 2148781940,
+      "prefix": "20",
+      "visible_text_sha256": "17c780c6ac894b54bbc32ab3becf20255f6e4f09ae9703e808a700455963390f"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00008ff8:56b8060376f7:skip1",
+      "pointer": 2148781944,
+      "prefix": "20",
+      "visible_text_sha256": "e8d19e2c8aef2db1494ec80e7030940809eab520b811f677ac7236008da6b54c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009010:f01966155431:skip1",
+      "pointer": 2148781948,
+      "prefix": "20",
+      "visible_text_sha256": "c21f945dcb6b92a669871b44d34466dd709f143d42f1d3593a707e4584e14e5f"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009028:37c955ad001f:skip1",
+      "pointer": 2148781952,
+      "prefix": "67",
+      "visible_text_sha256": "0ce165afaefef639a1faaac87ff3eb872a3c54a5742399606d286822aa47ebab"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009044:dae900f366cd:skip1",
+      "pointer": 2148781956,
+      "prefix": "20",
+      "visible_text_sha256": "a5a53ec988aba73b01ac6c6dd6b7b3c04c3b82294dbec51c74151874ff1d0071"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009068:47822c40403b:skip1",
+      "pointer": 2148781960,
+      "prefix": "20",
+      "visible_text_sha256": "0ce5c8e686cd87a100808ba5b0b238ecb0b50c63a8b9d8748a6b9bf89e47786b"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000908c:6ad2121dfe22:skip1",
+      "pointer": 2148781964,
+      "prefix": "67",
+      "visible_text_sha256": "f819d8041060c96ffebaf753ad83daf6333dda582450c4e4e7feff7c7f84eb1a"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000090a0:86b414758d5a:skip1",
+      "pointer": 2148781968,
+      "prefix": "67",
+      "visible_text_sha256": "f53bd2d2b09e0bbecff502811732f950327201dc2b5765aaf4a4f4b2f806898d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000090ac:d8b86a1fe82e:skip1",
+      "pointer": 2148781972,
+      "prefix": "20",
+      "visible_text_sha256": "d50afe6aee98181143e7399c73c478e627e51dafe3361b56f4cc15bbae759a8f"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000090c0:33acac167532:skip1",
+      "pointer": 2148781976,
+      "prefix": "20",
+      "visible_text_sha256": "29e6e6ceebcbc2127a132409f1db083cf73a7172c8eb78a3698639ff655af600"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000090d4:a1d0a58242bb:skip1",
+      "pointer": 2148781980,
+      "prefix": "67",
+      "visible_text_sha256": "759dced0e55b9dfddd1ea5e8b5b855403c460767c9d1aec45b1aa3668d715a4c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000090ec:0cec9b3248bb:skip1",
+      "pointer": 2148781984,
+      "prefix": "67",
+      "visible_text_sha256": "c684075ea8ddeab8fd16b9d433523bdd5c57c5477424d8154af2517a4e04e2cd"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009108:86b414758d5a:skip1",
+      "pointer": 2148781988,
+      "prefix": "67",
+      "visible_text_sha256": "f53bd2d2b09e0bbecff502811732f950327201dc2b5765aaf4a4f4b2f806898d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009114:89301adda24d:skip1",
+      "pointer": 2148781992,
+      "prefix": "20",
+      "visible_text_sha256": "e44ecc084607d81e703070cb724d526f9dcf1a9beae9319b5ce72423d2c65910"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000912c:b8f3e097ce43:skip1",
+      "pointer": 2148781996,
+      "prefix": "20",
+      "visible_text_sha256": "83e78efd63425ed7ccd2c968accbe362c8c53d447f05cbc913e88e2c3b22b5e5"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009144:eab601119f17:skip1",
+      "pointer": 2148782000,
+      "prefix": "20",
+      "visible_text_sha256": "28cc30db649a7f6c5c2f4c4cce6af37499ef21630112d1c54565e5ecaaf0c7de"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009160:4238f104ee7c:skip1",
+      "pointer": 2148782004,
+      "prefix": "67",
+      "visible_text_sha256": "5f3a9349681d138d89d1f7508362628ba3ff894818e9702d778331062d4150f8"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000917c:bc39102f2978:skip1",
+      "pointer": 2148782008,
+      "prefix": "20",
+      "visible_text_sha256": "3ea44fe760e9b975d98237d0fced7666eb5e3cb421975c586930f69e035f888d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009194:aa8886ced3a8:skip1",
+      "pointer": 2148782012,
+      "prefix": "67",
+      "visible_text_sha256": "193cc1ad657c84b6848c7e051ee7258775fa2af99735fba41a5aa9b8941b9f52"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000091ac:027c54eaf381:skip1",
+      "pointer": 2148782016,
+      "prefix": "67",
+      "visible_text_sha256": "83dcfa62c7f90e2a48dfc2939767c29370ea5ee75d3d707b5dfc2f777484eae4"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000091c0:274b70934277:skip1",
+      "pointer": 2148782020,
+      "prefix": "67",
+      "visible_text_sha256": "ebd6f72768895e3831e3153b1356b675199bb526e31d3dc6b78c562cc56388ff"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000091dc:40576b8e6454:skip1",
+      "pointer": 2148782024,
+      "prefix": "67",
+      "visible_text_sha256": "1477b5ae6c41d1327d450d2d89aa60954096fe1ae540def78d0ad4c9c378b52c"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000091ec:e980ee0a271d:skip1",
+      "pointer": 2148782028,
+      "prefix": "67",
+      "visible_text_sha256": "5d63cf0c7d689c76aa2edca28dd898348c2360734bf7630092dbeffab3ada342"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000091f8:95b0f7ebaaa9:skip1",
+      "pointer": 2148782032,
+      "prefix": "67",
+      "visible_text_sha256": "955fb9ba501c76369ee9365be39de016790dbfbeed5888752a44b09776dcdccc"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009208:b9951fe26d8e:skip1",
+      "pointer": 2148782036,
+      "prefix": "67",
+      "visible_text_sha256": "ca9d0b012ce66378ac69c151835e24343d0218c87365aaa390b8fcdc024f872d"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009220:7077ba2f3d8f:skip1",
+      "pointer": 2148782040,
+      "prefix": "20",
+      "visible_text_sha256": "36362b4a4e08336dbec4eba7f5dcc6542e4cd34b190723ecf424918ddaa08724"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:0000923c:15e9084edfa1:skip1",
+      "pointer": 2148782044,
+      "prefix": "20",
+      "visible_text_sha256": "c3f341ffd755746762302547e8c656c27ddf8341d7d297bcebbb244797c00d48"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009258:c4caca3b7024:skip1",
+      "pointer": 2148782048,
+      "prefix": "20",
+      "visible_text_sha256": "eee413e3f3c048f97446028de29c02305ae08c0cc7ffa462850aaec233d0cd09"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009274:17d2055b4cbd:skip1",
+      "pointer": 2148782052,
+      "prefix": "67",
+      "visible_text_sha256": "1a6b7846f2fedbd3f55ff90b56a546a9ec464810356aafeef7bb3ce8e2f023b6"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009284:ee252d2df5b8:skip1",
+      "pointer": 2148782056,
+      "prefix": "20",
+      "visible_text_sha256": "951dd9faee5e60c443048f3b1504a554c99491dd1b91cd197fc7a8bb6becb081"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009294:a727e99d80ef:skip1",
+      "pointer": 2148782060,
+      "prefix": "20",
+      "visible_text_sha256": "d0bcd22a3b4f424016aa7f348c0b03f0253d667ca32ca21e88fc9e7024f20951"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000092b0:9c4741eac204:skip1",
+      "pointer": 2148782064,
+      "prefix": "67",
+      "visible_text_sha256": "9722daf31c114b30082abc328da931e1f90834609b00566967e783dd121e2071"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000092d0:24f636610607:skip1",
+      "pointer": 2148782068,
+      "prefix": "20",
+      "visible_text_sha256": "4568bd72f2e2a1e761a9c4f5e3d901ca0adeedd70ccf7eee3533e6d0d51c59b2"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:000092e8:3f80809e7245:skip1",
+      "pointer": 2148782072,
+      "prefix": "20",
+      "visible_text_sha256": "915564e506ff0106b4eca83200034a468f313b1add0c78b763a22d31c3a26273"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009300:98c0ff74631d:skip1",
+      "pointer": 2148782076,
+      "prefix": "67",
+      "visible_text_sha256": "ac9f9f4071ee9d77c4bc418981343ba22fa2441b9267005211437068abc40437"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009314:7d2e75d40a98:skip1",
+      "pointer": 2148782080,
+      "prefix": "20",
+      "visible_text_sha256": "eddba8bb81d3ea083ef3d306a571e1d7f69a179b8efa55081ccc04ebb426f785"
+    },
+    {
+      "id": "bunka-sd-view:CDROM/EXEDIR/BUNKA_SD.EXN:00009320:54439e24c47d:skip1",
+      "pointer": 2148782084,
+      "prefix": "67",
+      "visible_text_sha256": "426c156840714c182f43e90c87df81d75c55254595f99b8435bd558b4217671d"
+    }
+  ],
+  "menu_tables": [
+    {
+      "menu": "telephone",
+      "index": 0,
+      "x": -136,
+      "y": -56,
+      "width": 78,
+      "right_limit": -52,
+      "text": "Saotome Yoshio"
+    },
+    {
+      "menu": "telephone",
+      "index": 1,
+      "x": -136,
+      "y": -40,
+      "width": 67,
+      "right_limit": -52,
+      "text": "Fujisaki Shiori"
+    },
+    {
+      "menu": "telephone",
+      "index": 2,
+      "x": -136,
+      "y": -24,
+      "width": 58,
+      "right_limit": -52,
+      "text": "Kisaragi Mio"
+    },
+    {
+      "menu": "telephone",
+      "index": 3,
+      "x": -136,
+      "y": -8,
+      "width": 58,
+      "right_limit": -52,
+      "text": "Himoo Yuina"
+    },
+    {
+      "menu": "telephone",
+      "index": 4,
+      "x": -136,
+      "y": 8,
+      "width": 71,
+      "right_limit": -52,
+      "text": "Katagiri Ayako"
+    },
+    {
+      "menu": "telephone",
+      "index": 5,
+      "x": -48,
+      "y": -56,
+      "width": 49,
+      "right_limit": 36,
+      "text": "Nijino Saki"
+    },
+    {
+      "menu": "telephone",
+      "index": 6,
+      "x": -48,
+      "y": -40,
+      "width": 66,
+      "right_limit": 36,
+      "text": "Koshiki Yukari"
+    },
+    {
+      "menu": "telephone",
+      "index": 7,
+      "x": -48,
+      "y": -24,
+      "width": 83,
+      "right_limit": 36,
+      "text": "Kiyokawa Nozomi"
+    },
+    {
+      "menu": "telephone",
+      "index": 8,
+      "x": -48,
+      "y": -8,
+      "width": 59,
+      "right_limit": 36,
+      "text": "Kagami Mira"
+    },
+    {
+      "menu": "telephone",
+      "index": 9,
+      "x": -48,
+      "y": 8,
+      "width": 64,
+      "right_limit": 36,
+      "text": "Asahina Yuko"
+    },
+    {
+      "menu": "telephone",
+      "index": 10,
+      "x": 40,
+      "y": -56,
+      "width": 80,
+      "right_limit": 156,
+      "text": "Mikihara Megumi"
+    },
+    {
+      "menu": "telephone",
+      "index": 11,
+      "x": 40,
+      "y": -40,
+      "width": 69,
+      "right_limit": 156,
+      "text": "Saotome Yumi"
+    },
+    {
+      "menu": "telephone",
+      "index": 12,
+      "x": 40,
+      "y": -24,
+      "width": 40,
+      "right_limit": 156,
+      "text": "Ijuin Rei"
+    },
+    {
+      "menu": "telephone",
+      "index": 13,
+      "x": 40,
+      "y": -8,
+      "width": 31,
+      "right_limit": 156,
+      "text": "Cancel"
+    },
+    {
+      "menu": "mascot",
+      "index": 0,
+      "x": -8,
+      "y": -64,
+      "width": 36,
+      "right_limit": 42,
+      "text": "Fujisaki"
+    },
+    {
+      "menu": "mascot",
+      "index": 1,
+      "x": 46,
+      "y": -64,
+      "width": 38,
+      "right_limit": 106,
+      "text": "Kisaragi"
+    },
+    {
+      "menu": "mascot",
+      "index": 2,
+      "x": -8,
+      "y": -52,
+      "width": 28,
+      "right_limit": 42,
+      "text": "Himoo"
+    },
+    {
+      "menu": "mascot",
+      "index": 3,
+      "x": 46,
+      "y": -52,
+      "width": 38,
+      "right_limit": 106,
+      "text": "Katagiri"
+    },
+    {
+      "menu": "mascot",
+      "index": 4,
+      "x": -8,
+      "y": -40,
+      "width": 26,
+      "right_limit": 42,
+      "text": "Nijino"
+    },
+    {
+      "menu": "mascot",
+      "index": 5,
+      "x": 46,
+      "y": -40,
+      "width": 32,
+      "right_limit": 106,
+      "text": "Koshiki"
+    },
+    {
+      "menu": "mascot",
+      "index": 6,
+      "x": -8,
+      "y": -28,
+      "width": 45,
+      "right_limit": 42,
+      "text": "Kiyokawa"
+    },
+    {
+      "menu": "mascot",
+      "index": 7,
+      "x": 46,
+      "y": -28,
+      "width": 34,
+      "right_limit": 106,
+      "text": "Kagami"
+    },
+    {
+      "menu": "mascot",
+      "index": 8,
+      "x": -8,
+      "y": -16,
+      "width": 37,
+      "right_limit": 42,
+      "text": "Asahina"
+    },
+    {
+      "menu": "mascot",
+      "index": 9,
+      "x": 46,
+      "y": -16,
+      "width": 40,
+      "right_limit": 106,
+      "text": "Mikihara"
+    },
+    {
+      "menu": "mascot",
+      "index": 10,
+      "x": -8,
+      "y": -4,
+      "width": 43,
+      "right_limit": 42,
+      "text": "Saotome"
+    },
+    {
+      "menu": "mascot",
+      "index": 11,
+      "x": 46,
+      "y": -4,
+      "width": 60,
+      "right_limit": 106,
+      "text": "Tatebayashi"
+    },
+    {
+      "menu": "mascot",
+      "index": 12,
+      "x": -8,
+      "y": 8,
+      "width": 22,
+      "right_limit": 42,
+      "text": "Ijuin"
+    },
+    {
+      "menu": "mascot",
+      "index": 13,
+      "x": 46,
+      "y": 8,
+      "width": 54,
+      "right_limit": 106,
+      "text": "Don't show"
+    },
+    {
+      "menu": "clubs",
+      "index": 0,
+      "x": -128,
+      "y": -56,
+      "width": 52,
+      "right_limit": -48,
+      "text": "Literature"
+    },
+    {
+      "menu": "clubs",
+      "index": 1,
+      "x": -128,
+      "y": -40,
+      "width": 31,
+      "right_limit": -48,
+      "text": "Drama"
+    },
+    {
+      "menu": "clubs",
+      "index": 2,
+      "x": -128,
+      "y": -24,
+      "width": 36,
+      "right_limit": -48,
+      "text": "Science"
+    },
+    {
+      "menu": "clubs",
+      "index": 3,
+      "x": -128,
+      "y": -8,
+      "width": 48,
+      "right_limit": -48,
+      "text": "Computer"
+    },
+    {
+      "menu": "clubs",
+      "index": 4,
+      "x": -128,
+      "y": 8,
+      "width": 16,
+      "right_limit": -48,
+      "text": "Art"
+    },
+    {
+      "menu": "clubs",
+      "index": 5,
+      "x": -44,
+      "y": -56,
+      "width": 55,
+      "right_limit": 36,
+      "text": "Brass Band"
+    },
+    {
+      "menu": "clubs",
+      "index": 6,
+      "x": -44,
+      "y": -40,
+      "width": 39,
+      "right_limit": 36,
+      "text": "Baseball"
+    },
+    {
+      "menu": "clubs",
+      "index": 7,
+      "x": -44,
+      "y": -24,
+      "width": 33,
+      "right_limit": 36,
+      "text": "Soccer"
+    },
+    {
+      "menu": "clubs",
+      "index": 8,
+      "x": -44,
+      "y": -8,
+      "width": 31,
+      "right_limit": 36,
+      "text": "Tennis"
+    },
+    {
+      "menu": "clubs",
+      "index": 9,
+      "x": -44,
+      "y": 8,
+      "width": 46,
+      "right_limit": 36,
+      "text": "Swimming"
+    },
+    {
+      "menu": "clubs",
+      "index": 10,
+      "x": 40,
+      "y": -56,
+      "width": 49,
+      "right_limit": 156,
+      "text": "Basketball"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "build/emu/stage-controls-final-0/shot_150.png",
+      "sha256": "13072d12b03b3def57ab8f306b70feb684afbcc07dcdfcf2fcb27ef07464810d"
+    },
+    {
+      "path": "build/emu/stage-controls-final-0/shot_300.png",
+      "sha256": "9e8d5708c84d1c8537273abe0071b4f4884b4c00f284b1364980d48d72293f2c"
+    },
+    {
+      "path": "build/emu/stage-controls-final-0/shot_900.png",
+      "sha256": "c44d4896fb56ce5b5719e1a067062af5c957ebfa7852119e555954caf268667e"
+    },
+    {
+      "path": "build/emu/stage-controls-final-3/shot_150.png",
+      "sha256": "8bc0b068f123bce9e617482fbc7e4be9ee477164707bddbf1c4b88cca7bae8a2"
+    },
+    {
+      "path": "build/emu/stage-controls-final-3/shot_300.png",
+      "sha256": "8bb1fb535fc2768c4a9bb66bf006e6edea024161cb2844db9aa532236c3b0658"
+    },
+    {
+      "path": "build/emu/stage-controls-final-3/shot_900.png",
+      "sha256": "9ba98a06a9e4250c32d19a920d530f664581f61b8ed11bbad2946440bdd4cac2"
+    },
+    {
+      "path": "build/emu/mascot-spacing-final/shot_final.png",
+      "sha256": "fc09a14fae030f9c329a1acd44f335c7c3c074aee037d4e47b23ae5f96133e5a"
+    }
+  ],
+  "visual_review": "Final two-column mascot grid clears the divider and preview. Stage names remain inside the frame with an eight-pixel quote gap. Intermediate layouts were rejected and are not release evidence."
+}

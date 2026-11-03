@@ -345,6 +345,11 @@ def audit_derived(record, data, base, translate, payloads, slots):
                    if matching_payload(data, base, target, payloads[rid] + b'\0')]
         if not matched:
             raise ValueError('Stage pointer does not reach expected payload: ' + record['id'])
+        skip = stage.get('body_relative_offset', 0)
+        if skip:
+            prefix = bytes.fromhex(stage.get('protected_prefix_hex', ''))
+            if len(prefix) != skip or read_address(data, base, target, skip) != prefix:
+                raise ValueError('Stage control prefix changed or missing: ' + record['id'])
         result['pointers'].append({'site': site, 'target': target, 'matched_ids': matched,
                                    'body_skip': stage.get('body_relative_offset', 0)})
     return result

@@ -4319,3 +4319,23 @@ Created [[tickets/T-39542-complete-dialogue-values]] after tracing the growing f
 ## [2026-11-02] build | Publish complete fortune labels
 
 Closed [[tickets/T-39542-complete-dialogue-values]] after Pages deployment 41595860448 succeeded and all 37 served files matched the tested package. Target `81d34fdf65e956898051a76a72f8adeeeb7c804b` includes the visually checked substitution fix. [[tickets/T-39511-english-text-quality]] remains open for the remaining menu geometry and text-review scope.
+
+## [2026-11-02] ticket | Separate stage speaker names and quotes
+
+Created [[tickets/T-39543-stage-speaker-spacing]] for two confirmed same-row overlaps found during [[tickets/T-39511-english-text-quality]]. The other five candidates compare mutually exclusive speakers. Preserve dialogue rows and use an eight-pixel name-to-quote gap in the English build.
+
+## [2026-11-02] ticket | Restore stage dialogue commands
+
+Created [[tickets/T-39544-stage-control-prefixes]] after the [[tickets/T-39543-stage-speaker-spacing]] emulator fixture stalled. The translated BUNKA_SD rows omit their source-proven prefix bytes. All 214 prefixed views need preservation and independent audit checks; the previous pointer-equality audit did not establish this invariant.
+
+## [2026-11-02] build | Add independent stage-command checks
+
+The [[tickets/T-39544-stage-control-prefixes]] writer now restores prefixes from typed source metadata after laying out visible text. The actual-disc audit independently checks each protected prefix. The focused suite passes 69 tests with one opt-in full-build test skipped. The pre-fix stage fixture reached its timeout; a rebuilt disc and fresh-state visual checks are still required.
+
+## [2026-11-02] lint | Review native stage and mascot captures
+
+The restored stage commands advance Shiori's speech through multiple pages; Kisaragi and the other tested speaker variants render with the eight-pixel quote gap. All 214 restored prefixes preserve the previously shipped visible text, and every prefixed row fits its 196-pixel column. The first wider mascot grid was rejected because the preview sprite covered the final column. [[tickets/T-39543-stage-speaker-spacing]] now uses two columns within the notebook's right pane; its rebuilt visual check remains pending.
+
+## [2026-11-02] build | Verify stage commands and menu spacing
+
+[[tickets/T-39543-stage-speaker-spacing]] and [[tickets/T-39544-stage-control-prefixes]] pass final fresh-state visual checks, both disc audits, 27 default hashes and 15 browser checks. The player stage speech completes and returns to the festival; full names fit the frame and the mascot grid clears its preview. All 214 stage texts are unchanged apart from restored commands. Standards review found no unresolved issues. Publication remains pending.

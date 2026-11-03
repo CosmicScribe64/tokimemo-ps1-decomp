@@ -48,6 +48,8 @@ kanban-plugin: board
 
 
 
+
+
 - [ ] [[tickets/T-39511-english-text-quality|T-39511 Make the English read naturally on screen]]
 
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
@@ -86,6 +88,10 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-39544-stage-control-prefixes|T-39544 Preserve stage dialogue control prefixes]]
+
+- [ ] [[tickets/T-39543-stage-speaker-spacing|T-39543 Separate stage-show speaker names from opening quotes]]
 
 
 
