@@ -39,3 +39,5 @@ A good build prints `OK` for each of the 27 binaries and for the rename, symbol,
 ## Translations
 
 `translations/` keeps the English text records and translated artwork with their review history. The English build applies them to the game and produces a disc patch. The [browser patcher](https://cosmicscribe64.github.io/tokimemo-ps1-decomp/) is published; [[english-build]] documents the source build and [[tickets/T-39500-english-translation-patch]] tracks release verification.
+
+The original interrupted-session handoff is preserved in [[tickets/T-39600-recover-claude-session]]. Its pending-work list is historical; the completed integration and review are recorded in [[tickets/T-39500-english-translation-patch]].

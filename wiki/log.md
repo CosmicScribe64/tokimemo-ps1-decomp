@@ -4436,3 +4436,19 @@ Pages run 41665706198 published target b4e84775009f141b335574ae1268e49af5128fb7.
 ## [2026-11-03] decision | Merge the verified English patch into main
 
 The owner explicitly authorized merging PR 71 into main. [[tickets/T-39548-twinbee-english-logo]] records this follow-up to the completed release. Merge preparation changes documentation only; the published target and recorded verification remain unchanged. GitHub's merge record will identify the final main commit.
+
+## [2026-11-01] ticket | Recover the interrupted Claude session
+
+Opened [[tickets/T-39600-recover-claude-session]]. Initial inspection found the project session and eight patch worktrees; main alone does not contain the ongoing English patch work. Inspecting local logs read-only and preserving worktree changes.
+
+## [2026-11-01] query | Recovered the English patch stopping point
+
+Recorded the session, eight worktrees, two uncommitted script wiki updates, unmerged script/art work, and latest surviving build/route outputs in [[tickets/T-39600-recover-claude-session]]. Claude stopped on a recorded HTTP 403 subscription-access error; some background commands finished afterward. No Docker containers remain running. Updated [[status]] to point to the branch-local campaign. Documentation reviewed against CODING_STANDARDS.md with no findings; moved the recovery ticket to Done and its board card with it. No implementation was resumed and no historical test result is claimed as a fresh run.
+
+## [2026-11-01] build | T-39506 round 2: name entry in NAME_ENT, moved strings, reflow
+
+Merged `patch/english` (free relink, art) into `patch/script`. The English name entry is now an `#ifdef TOKIMEMO_ENGLISH` block of `src/ovl/name_entry/name_entry.c` (island and `tools/english_imports.py` gone). New `tools/patch/text/retarget.py` moves over-capacity in-place strings and re-points their relocations: `needs_relink` 266 -> 0 (196 moved, fixed-stride tables given pointer views, 27 under English C literals). The ETC album LBA tables had been "translated" as text; they and the kana pages now stay original. Remaining name draw sites fixed under the flag. Dialogue line breaks are judged on the Japanese source (`tools/patch/text/reflow.py`): 21,130 of 34,029 reflowed, rows 64,602 -> 48,999; rows set balanced; `layout.json` per record. The 340 empty targets are empty sources. Open: JOHO labels, second NAME_ENT texture page, page splitting, see [[tickets/T-39506-english-script-runtime]].
+
+## [2026-11-03] ingest | Preserve the remaining worktree notes before merging
+
+All eleven local branch tips are ancestors of patch/english. The only remaining worktree edits were recovery and script-review documentation. Preserved their historical notes in [[tickets/T-39600-recover-claude-session]], [[tickets/T-39506-english-script-runtime]] and this log without restoring obsolete ticket statuses or the old claim that main has no patch. The source worktrees remain untouched. Documentation reviewed against CODING_STANDARDS.md; no unresolved findings.

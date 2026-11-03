@@ -123,6 +123,8 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-39600-recover-claude-session|T-39600 Recover the interrupted Claude session state]]
+
 - [ ] [[tickets/T-39548-twinbee-english-logo|T-39548 Replace TwinBee title lettering with English]]
 - [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
