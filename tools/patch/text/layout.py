@@ -143,7 +143,9 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                     if reviewed is not None:
                         payload = reviewed
                         note["reviewed_rows"] = "T-39532"
-                if container.kind in ("talk_script", "talk_script_supplemental"):
+                if window.name in ("ending_player", "ending_heroine"):
+                    payload = speech.close_ending_speech(payload, speech.command_of(record))
+                elif container.kind in ("talk_script", "talk_script_supplemental"):
                     # measured with the closing quote that the runtime draws (speech.py)
                     unclosed = payload
                     payload, closed = speech.close_speech(payload, speech.command_of(record), following.get(record.id))

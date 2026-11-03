@@ -135,7 +135,12 @@ s32 ending_dialogue_line_render(dialogue_text, dialogue_kind, voice_or_text_arg,
         ending_audio_scene_tick_timer = 0;
         k_speed_set(TEXT_SPEED_EVERY_SEVENTEEN_FRAMES);
         x[1] = -0x66;
+#ifdef TOKIMEMO_ENGLISH
+        /* T-39534: place the narrow English mark beside its text. */
+        set_kanji_string(x[1] + 8, 0x48, 0, "『 ", 0);
+#else
         set_kanji_string(x[1], 0x48, 0, "『 ", 0);
+#endif
         talk_render(x[1] + 0xE, 0x48, 0, buf, 0, "", "", 0);
         talk_line_auto = 1;
         break;
@@ -143,7 +148,12 @@ s32 ending_dialogue_line_render(dialogue_text, dialogue_kind, voice_or_text_arg,
         ending_audio_scene_tick_timer = 0;
         k_speed_set(TEXT_SPEED_EVERY_SEVENTEEN_FRAMES);
         x[1] = -0x66;
+#ifdef TOKIMEMO_ENGLISH
+        /* T-39534: place the narrow English mark beside its text. */
+        set_kanji_string(x[1] + 8, 0x48, 0, "（ ", 0);
+#else
         set_kanji_string(x[1], 0x48, 0, "（ ", 0);
+#endif
         talk_render(x[1] + 0xE, 0x48, 0, buf, 0, "）", "", 0);
         talk_line_auto = 1;
         break;
@@ -162,7 +172,12 @@ s32 ending_dialogue_line_render(dialogue_text, dialogue_kind, voice_or_text_arg,
             talk_voice_state = 1;
             talk_voice_wait_frames = 0;
         }
+#ifdef TOKIMEMO_ENGLISH
+        /* T-39534: place the narrow English mark beside its text. */
+        set_kanji_string(-0x88, 0x48, dialogue_color, "「 ", 0);
+#else
         set_kanji_string(-0x90, 0x48, dialogue_color, "「 ", 0);
+#endif
         talk_render(-0x82, 0x48, dialogue_color, buf, 0, "", "", 0);
         talk_line_wait = 1;
         break;
@@ -181,7 +196,12 @@ s32 ending_dialogue_line_render(dialogue_text, dialogue_kind, voice_or_text_arg,
             talk_voice_state = 1;
             talk_voice_wait_frames = 0;
         }
+#ifdef TOKIMEMO_ENGLISH
+        /* T-39534: place the narrow English mark beside its text. */
+        set_kanji_string(-0x88, 0x48, dialogue_color, "「 ", 0);
+#else
         set_kanji_string(-0x90, 0x48, dialogue_color, "「 ", 0);
+#endif
         talk_render(-0x82, 0x48, dialogue_color, buf, 0, "", "", 0);
         talk_line_clear = 1;
         break;
@@ -242,6 +262,13 @@ s32 ending_dialogue_line_render(dialogue_text, dialogue_kind, voice_or_text_arg,
  * talk_active_text_table/140/144 hold the text, kind and voice tables of the scene (ending_scene_dialogue_table_bind). Returns 1 when a
  * message has finished. T-20930 */
 s32 ending_scene_dialogue_step_update(s32 voice_or_text_arg, s32 advance_dialogue, s32 dialogue_color) {
+#ifdef TOKIMEMO_ENGLISH
+    /* T-39534: finish the English text and keep its last rows visible for a second. */
+    if ((talk_line_clear != 0 || talk_line_wait != 0) &&
+        (check_end_k() == 0 || (u32)++game_state.mode_step_timer.w < 0x3C)) {
+        return 0;
+    }
+#endif
     if (talk_line_auto != 0) {
         if (check_end_k() != 0) {
             if (talk_voice_state == 0 || (talk_voice_state == 1 && cd_last_command() == 9)) {

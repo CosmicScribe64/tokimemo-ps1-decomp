@@ -287,6 +287,51 @@ class SpeechTest(unittest.TestCase):
 
 
 class WindowTest(unittest.TestCase):
+    def test_ending_uses_subtitle_geometry_without_speaker_label_reservation(self):
+        for command, left in ((0, -0x58), (6, -0x58), (1, -0x82), (0xC, -0x82),
+                              (0xD, -0x82), (0xF, -0x82)):
+            record = self.record("script_record", [Text("Subtitle")], command)
+            record.id = "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0001"
+            record.unit["context"]["profile_id"] = "serifu-ending"
+            window, _ = window_for("talk_script", record)
+            self.assertEqual(window.left, left)
+            self.assertEqual(window.lines, 2)
+            self.assertTrue(window.scroll)
+            self.assertEqual(speech.speech_window(window, command, b"Subtitle", METRICS), window)
+
+    def test_ending_boxed_tables_keep_regular_message_windows(self):
+        for table in (0, 3, 13, 15):
+            for command in (0, 1, 6):
+                record = self.record("script_record", [Text("Dialogue")], command)
+                record.id = f"talk:CDROM/SERIFU/ENDING.BIN:table-{table}:g0000:l0001"
+                record.unit["context"]["profile_id"] = "serifu-ending"
+                window, _ = window_for("talk_script", record)
+                self.assertEqual(window.name, "message_speech")
+                self.assertEqual(window.lines, 3)
+
+    def test_ending_quotes_close_only_complete_speeches(self):
+        for command in (0, 1, 0xF):
+            self.assertEqual(speech.close_ending_speech(b"First\nlast.", command), b'First\nlast."')
+            self.assertEqual(speech.close_ending_speech(b'Already closed."', command), b'Already closed."')
+        for command in (6, 0xC, 0xD):
+            self.assertEqual(speech.close_ending_speech(b"Continued", command), b"Continued")
+
+    def test_ending_closes_speech_before_a_trailing_thought(self):
+        self.assertEqual(speech.close_ending_speech(b"Spoken.\n(A private thought.)", 0),
+                         b'Spoken."\n(A private thought.)')
+        self.assertEqual(speech.close_ending_speech(b'Spoken."\n(A private thought.)', 0),
+                         b'Spoken."\n(A private thought.)')
+
+    def test_ending_balances_short_final_rows_without_changing_words(self):
+        text = b"One two three four five six seven eight nine ten eleven twelve."
+        result = wrap(text, WINDOWS["ending_heroine"], METRICS, joined=True)
+        rows = result.payload.split(b"\n")
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(b" ".join(rows), text)
+        widths = [METRICS.width(row) for row in rows]
+        self.assertLessEqual(max(widths), WINDOWS["ending_heroine"].width)
+        self.assertLess(max(widths) - min(widths), 50)
+
     def test_ending_summary_uses_its_actual_text_column(self):
         record = self.record("script_record", [Text("Summary")], 7)
         record.unit["context"]["profile_id"] = "serifu-epilog"
