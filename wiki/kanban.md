@@ -123,6 +123,8 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-39601-local-cleanup|T-39601 Remove merged worktrees and obsolete local build data]]
+
 - [ ] [[tickets/T-39600-recover-claude-session|T-39600 Recover the interrupted Claude session state]]
 
 - [ ] [[tickets/T-39548-twinbee-english-logo|T-39548 Replace TwinBee title lettering with English]]

@@ -4452,3 +4452,11 @@ Merged `patch/english` (free relink, art) into `patch/script`. The English name 
 ## [2026-11-03] ingest | Preserve the remaining worktree notes before merging
 
 All eleven local branch tips are ancestors of patch/english. The only remaining worktree edits were recovery and script-review documentation. Preserved their historical notes in [[tickets/T-39600-recover-claude-session]], [[tickets/T-39506-english-script-runtime]] and this log without restoring obsolete ticket statuses or the old claim that main has no patch. The source worktrees remain untouched. Documentation reviewed against CODING_STANDARDS.md; no unresolved findings.
+
+## [2026-11-03] setup | Clean the merged workspace
+
+Opened [[tickets/T-39601-local-cleanup]] after the owner authorized local cleanup. Eight merged worktrees occupy about 115 GB; five running containers serve old review builds. Preserve original game inputs, remove disposable outputs and this project's session history, and leave main clean. All patch branch tips and recovered notes are already in main.
+
+## [2026-11-03] setup | Finish local storage cleanup
+
+[[tickets/T-39601-local-cleanup]] is Done after scope review. Removed eight worktrees, ten merged local patch branches, disposable builds/caches, five preview containers, six project images and 863 MB of project Claude history. Docker build-cache pruning reported 9.73 GB. Repository usage fell from about 117 GB to 1.7 GB; original game inputs remain. Main contains the completed work and recovered notes.
