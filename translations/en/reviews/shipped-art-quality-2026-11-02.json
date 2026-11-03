@@ -1,0 +1,3111 @@
+{
+  "ticket": "T-39508",
+  "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+  "scope": "Visual inspection of all 254 shipped registered sprite target images and all 16 translated background still containers. Sprite selection follows actual placement and fallback IDs; their containing disc files match the build report hashes. The report separately proves placed sprite pixels match their targets. Stills are decoded directly from the current disc at registered dimensions. This is asset review; it does not claim every asset was seen in every natural scene.",
+  "result": "Lettering is legible within the original pixel-art style. No new overlap, clipped word or damaged neighboring artwork found. Texture-page fragments and highlight components are not standalone screens; their assembled title, file-select and exam layouts have separate runtime evidence. The tiny original roster and other retained Japanese artwork remain documented exceptions.",
+  "sprite_images": [
+    {
+      "item": "mainrom-0057",
+      "image": "mainrom-fix-0057.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "c5862cf5dae3e563143b8bbab8a12cb460bcccbb4722e8e54f1c34b7021e7830",
+      "size": [
+        24,
+        17
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0058",
+      "image": "mainrom-fix-0058.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "98ca9900323a1a4018b68d7732bed858f646858274e389ea4c5d3ab846263897",
+      "size": [
+        24,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0059",
+      "image": "mainrom-fix-0059.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "16cccefc765468753d1ce53fb62db2ada2c14dc32beff517439ed1af099a323e",
+      "size": [
+        24,
+        17
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0060",
+      "image": "mainrom-alt-0060-captions-part03.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "063c3a53869c1dd86280bee3db84b744fd9feb22a71c60ef45891f2c9568b6bf",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "mainrom-0060",
+      "image": "mainrom-alt-0060-captions-part04.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "897cf300bb1f65fe7a4f3f7a38708e255eff4ac10a93d2f3b199e1879149bd3f",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "mainrom-0060",
+      "image": "mainrom-alt-0060-captions-part05.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "edea413fe0aee860e3d92af37f31e1794fd6ff9ef262e97911b4456687f671b0",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "mainrom-0061",
+      "image": "mainrom-fix-0061.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "c70da80d209b270fc268a36cea9189616ed24b7642393203619595832da70284",
+      "size": [
+        296,
+        67
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "mainrom-0082",
+      "image": "mainrom-weekday-two-letter-mon.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "3ef2a39eac211401f257f37cdf5efd6a4e4a5690d567ee915a39ef18951c4b78",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0082",
+      "image": "mainrom-weekday-two-letter-mon.hud-43",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "dc02ccd09afae5f2c6d5f13cf29c748687e8f167b768292b84cbc8663b07942e",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0082",
+      "image": "mainrom-weekday-two-letter-mon.hud-44",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "0b40890885869a8e35635856d1b7cf2c834f1b689598bbe2e2c84de2763d363f",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0083",
+      "image": "mainrom-weekday-two-letter-tue.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "f0a42ee4707954cb46ea13864cefedc71ba3fe708c8d842f405ff06da0b005ad",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0083",
+      "image": "mainrom-weekday-two-letter-tue.hud-43",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "7f4f181c72e060e6d322931681c0248ead0e23e8b15a7470ede809fa649b8fb3",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0083",
+      "image": "mainrom-weekday-two-letter-tue.hud-44",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "0c18c055bac1c397b77dd24ba28f1a7c5f110353c7e6835a7721f3aa9fe547f3",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0084",
+      "image": "mainrom-weekday-two-letter-wed.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "794777edff3bb9af3db3c9f1f449df8b187ac371753a383f5432c181e54ec608",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0084",
+      "image": "mainrom-weekday-two-letter-wed.hud-43",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "3e685b52dc054b9f02d4005a94df46eeac31c9ec01742be8011b16416a8282f4",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0084",
+      "image": "mainrom-weekday-two-letter-wed.hud-44",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "99ddeffa2e9d3a1f076117d5e25f0d5a3b75c6618b4efc1d6c869b65aa23ddc5",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0085",
+      "image": "mainrom-weekday-two-letter-thu.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "dc8bfbbac148ac1af6b779d4e2a5d58439c7b3fb2b31d0db63626cef0cd702f2",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0085",
+      "image": "mainrom-weekday-two-letter-thu.hud-43",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "fe8760b48d8b9c2797d504f21164758cd5b4a97e6de2a8e2709a9875b1ec2b15",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0085",
+      "image": "mainrom-weekday-two-letter-thu.hud-44",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "1e09ea41fe44c4480448218342c207f7601233746e132c672da1204302566cf8",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0086",
+      "image": "mainrom-weekday-two-letter-fri.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "71435a9581ac4b5638f38d90231db925f92674fd130180ffa321b302b34cc3ea",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0086",
+      "image": "mainrom-weekday-two-letter-fri.hud-43",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "ed5c18e90087cea781f1c55f3fa3edf3b9c8f15856cdde7588d7e1f794d8daf5",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0086",
+      "image": "mainrom-weekday-two-letter-fri.hud-44",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "a920078380d2a80ea7bf3eb7a7299c18c7a14fac0e8cb2840be7c0d8804ad537",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0087",
+      "image": "mainrom-weekday-two-letter-sat.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "3eb10e0f0434c667c65ce8916d86556216d905938af43f0dc68472803372bc0d",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0087",
+      "image": "mainrom-weekday-two-letter-sat.hud-43",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "e71c2baf512215c316758af9b3cc148865929998d7f6d61a9978ec3ef5898355",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0087",
+      "image": "mainrom-weekday-two-letter-sat.hud-44",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "f454a783e1325dd88f9e57d9aa15aace209aa2d94c2f7c0b20a16c83cfc36a82",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0088",
+      "image": "mainrom-weekday-two-letter-sun.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "07da9cc50a1bdc2545b2bddda4d63b911668a0e2e372f77ef3016d31490b938c",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0088",
+      "image": "mainrom-weekday-two-letter-sun.hud-43",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "b04c1b00f43500fb95f51af99f14a8d68c1ddf9ade8d0a8175b15caeb75d776c",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0088",
+      "image": "mainrom-weekday-two-letter-sun.hud-44",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "f0ae958478c510a90ee2d544af7931a0eb8dc53065a05a025028bac20582ea4b",
+      "size": [
+        16,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0121",
+      "image": "mainrom-draft-0121.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "26dabab572fc78e81283cf7b0f8a28ad161a35045d16d85ed87616a8ae80321a",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0122",
+      "image": "mainrom-fix-0122.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "8fd467a9933d569a94cfaabd8b35eb67836ff2e699a9f94d1fff85810d9408a2",
+      "size": [
+        56,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0123",
+      "image": "mainrom-fix-0123.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "c9b2c4a3148828730929f2bbdc4804afb3d906190b7c4048af2237d5caee689d",
+      "size": [
+        56,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0124",
+      "image": "mainrom-fix-0124.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "bea14c94e5d3aedddde51ff9e3506a07afede0e6a4f292f1feef8f6c7d37db8b",
+      "size": [
+        56,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0125",
+      "image": "mainrom-fix-0125.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "6327c0f4a61c27c336f7057b66174d9276020660f82523be96dfb92fc91dfefe",
+      "size": [
+        56,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0126",
+      "image": "mainrom-fix-0126.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "97563e646060650d203b779ebabfa307383dad822c34082f3b59d5f9d8b84290",
+      "size": [
+        136,
+        24
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0127",
+      "image": "mainrom-fix-0127.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "3367b5e84905455bc57b4472d01b6996457e8f3d94a9372951edc231e34e592f",
+      "size": [
+        120,
+        24
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0128",
+      "image": "mainrom-fix-0128.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "ee0cf9f7762b896502950bc94a481e3fad516f0c079f593de0428db41ed7df46",
+      "size": [
+        112,
+        24
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0129",
+      "image": "mainrom-fix-0129.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "823499b0af122e916bec7ade418c0fffb16b445e8c68492564901d9ae266f739",
+      "size": [
+        144,
+        24
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0130",
+      "image": "mainrom-fix-0130.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "feda43bd49c8dcaf2f989d0f9a4409b956d22c9857fc8d25536649a55904c83a",
+      "size": [
+        112,
+        24
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0131",
+      "image": "mainrom-fix-0131.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "07f6778bcdf6197afe4843dbc977930167a917369f011ba21accc3570ad5a31e",
+      "size": [
+        144,
+        24
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0132",
+      "image": "mainrom-fix-0132.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "c003fe7b01c63ff1caf0b8e6543d6fe6c1edac4e8bf566c6e6a1a1d17a7a5ba5",
+      "size": [
+        152,
+        24
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0133",
+      "image": "mainrom-fix-0133.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "920ac260b0f3478f761e65f989e8f1d08be5fb1dabe12a805d109aa1b7d94e7c",
+      "size": [
+        152,
+        24
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0134",
+      "image": "mainrom-fix-0134.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "dd492fdff92d2a71f3eb716a16391b746f652de4f420aeb33fe40563ea196e58",
+      "size": [
+        40,
+        8
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0135",
+      "image": "mainrom-fix-0135.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "540d019e9c54241568de445a2b03fac9c0fa4a772085494e500e4bdf840bea1c",
+      "size": [
+        48,
+        8
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0136",
+      "image": "mainrom-fix-0136.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "55fb9cabecf8f7e336a37b6417cc519f37084fa2a9f4b330f0acfb78ed5d2d0a",
+      "size": [
+        40,
+        8
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0137",
+      "image": "mainrom-fix-0137.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "df569fb150aff3dfe1fd3bcba58fc325007a3d2c50901986eae8c4c32137c5e0",
+      "size": [
+        40,
+        8
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "mainrom-0138",
+      "image": "mainrom-fix-0138.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "5f20449fc523d37e575cfa85317404a53eaa9b3a468d3dea1b34cecfc76df2f8",
+      "size": [
+        24,
+        8
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "mainrom-0139",
+      "image": "mainrom-fix-0139.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "165f2beed707bf90b0daa5ec230a9432eb46e576febc10697c0e2057e734beed",
+      "size": [
+        24,
+        8
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0140",
+      "image": "mainrom-fix-0140.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "e69947e3579f4014e2fd2be113cb911316f937fdbf9058537ec71d4748c54a42",
+      "size": [
+        40,
+        8
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "mainrom-0141",
+      "image": "mainrom-fix-0141.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "2431781cf538514a2f0348a3ace2fda71c44df4c6b978f27dadbf6577195ec69",
+      "size": [
+        32,
+        8
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "mainrom-0142",
+      "image": "mainrom-fix-0142.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "c588ece4ff185d00cabcdf18ac014227f7f52d6f73b157c2e03ab132a0bbb332",
+      "size": [
+        24,
+        8
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "mainrom-0143",
+      "image": "mainrom-fix-0143.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "7049d23be2e5b77066cd9619c5971363855a4fb09c292ba5a0fe792558f348d0",
+      "size": [
+        64,
+        8
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "mainrom-0144",
+      "image": "mainrom-fix-0144.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "31b67918d558e470f9d65b5104a8d1a292b0704f0753c3f204ee958dba1881bc",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0145",
+      "image": "mainrom-fix-0145.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "619c7348399e6cf4f1aead8404d12cf2eab564e57f3027b78d3a203f188999b9",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0151",
+      "image": "mainrom-fix-0151.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "981730ea9fe714a4c5a58f90bfbea8e12583753fd6885e90b38652bed4912b0d",
+      "size": [
+        56,
+        66
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0152",
+      "image": "mainrom-fix-0152.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "3f8baf8ae6e7abfff6328430c39d4f2f970bfd3b300a3df489e81e7352ee46f1",
+      "size": [
+        56,
+        66
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0153",
+      "image": "mainrom-fix-0153.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "6d5b951f8207fbd1a7472d049182b88f4e983ecb30c00fb19a911f2737ea7e8f",
+      "size": [
+        56,
+        66
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "mainrom-0154",
+      "image": "mainrom-fix-0154.base",
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "source_sha256": "819d404df4b4e7edfdf4873bb940fca452f1f8014fcd963239954644f9797a8f",
+      "size": [
+        56,
+        66
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "option-0011",
+      "image": "draft:option-label-0011",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "0bf35f47a6453bbf2d296948a58ec65d5331fb48ad1784274b357cb956c05b39",
+      "size": [
+        44,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0012",
+      "image": "draft:option-label-0012",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "7eb44c03e483cc470011f44fa4d000d28292ceca16829f9f576cbadc72b1309e",
+      "size": [
+        44,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0013",
+      "image": "draft:option-label-0013",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "610698764e2c1f8b1182e3c502ac23745a7e1cb56e9890a5a54342e0ddaf15da",
+      "size": [
+        30,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0014",
+      "image": "draft:option-label-0014",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "c5fca5f25fb52568e43f771467bed96c2903e18ce1f777e97894315140aa7bcd",
+      "size": [
+        30,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0015",
+      "image": "draft:option-label-0015",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "cd5e254f132dc4474b58733325831cc9daebe80097946a60972699f9ca6a1c6b",
+      "size": [
+        30,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "option-0016",
+      "image": "draft:option-label-0016",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "cb2f5079ef208618ff15990ddd0299465982cbedaaf195554085196b43fa88a9",
+      "size": [
+        30,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "option-0017",
+      "image": "draft:option-label-0017",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "179261c4a4ee37152a56078896fe5250220e21e934372c0de96baaad0c048dfc",
+      "size": [
+        30,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0018",
+      "image": "draft:option-label-0018",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "b3bb936f2e97ce006ae8887d7fe91a3a913c1db28a199a802064eb9f97e5df33",
+      "size": [
+        30,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0019",
+      "image": "draft:option-label-0019",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "2eef1f9168e04add8c1fde73d560eb3c8fb43d58ea398c206a1acbf36343ce7f",
+      "size": [
+        44,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0020",
+      "image": "draft:option-label-0020",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "93938e48ca6f8d82fe20ee3d207700ed4ed1f99f6c1a1c9b55fb25ee5bc020c8",
+      "size": [
+        44,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0025",
+      "image": "draft:option-label-0025",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "045b82466aa096f7fbcc174233754bfebbc44b67778f6ab3d0bd66c7494826b6",
+      "size": [
+        44,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0026",
+      "image": "draft:option-label-0026",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "a51498142f7559ad3161fa1af733e58e80f29aab43c0990506d902d446d3e75e",
+      "size": [
+        44,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0027",
+      "image": "draft:option-label-0027",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "4fc8cfda3b8df5aa465f5afd3a7091ca0fa7801cc1f112066e83db4c52c81742",
+      "size": [
+        72,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0028",
+      "image": "draft:option-label-0028",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "5d938d39466ee4c8f8c6c3157a1778602c260fe0170c176e9fe8a20ec9dbc94a",
+      "size": [
+        72,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0029",
+      "image": "draft:option-label-0029",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "6ed507f661db813188b333c8d64c03659a8afb12d4686f237211a8f20a0c182d",
+      "size": [
+        100,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0030",
+      "image": "draft:option-label-0030",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "381affdcf8b084a221bb870b1dc3156e148b9a9fa36ba15ea0a848c3eead299f",
+      "size": [
+        100,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0031",
+      "image": "draft:option-label-0031",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "1abc6555d531202e0b70f942e90290392846ce7271e9027a68ed2df8b2830408",
+      "size": [
+        114,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0032",
+      "image": "draft:option-label-0032",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "9e5e53f61b96232d6d8e42b1776b77d5ab606bb35e92c7185e3f5ca47b0b2618",
+      "size": [
+        114,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0033",
+      "image": "draft:option-label-0033",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "98187d1b9dc5adf8485f3ce51c72ea009d5c616400bb8e2c9d7c99a54d337ef4",
+      "size": [
+        100,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0034",
+      "image": "draft:option-label-0034",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "41c90ed4d8730bcd6fc7d49b9a2775eb32ee98608f9a42928382e527c87e2af1",
+      "size": [
+        100,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0035",
+      "image": "draft:option-label-0035",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "f385509a92386a7c9a7f2d739208da1c571f0dbaf0c440108a0357adc3aee1f1",
+      "size": [
+        100,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0036",
+      "image": "draft:option-label-0036",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "05bd5fe66604b57d8f597f2ff6ce5e99b45fde6ed653efb90ca768ec3a0d1be3",
+      "size": [
+        100,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0037",
+      "image": "draft:option-label-0037",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "a08878ce694d180f1b7f709962575a316ed48f58ce877cfaf0d894554992303d",
+      "size": [
+        114,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0038",
+      "image": "draft:option-label-0038",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "b290a6ace8824819cfb6f6ee3aa6b706b1c8d74d4eea397916993b0b915e8fe1",
+      "size": [
+        114,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0039",
+      "image": "draft:option-label-0039",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "c8dd29f1c11d64973c8fa9305a201c559a3c9a803a2c68bf472ae496de2d7659",
+      "size": [
+        100,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0040",
+      "image": "draft:option-label-0040",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "dd21553975397919b72cf9c24f2e358ed1dbb4b9b7b82ecb157460808f92f2ba",
+      "size": [
+        100,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0041",
+      "image": "draft:option-label-0041",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "48a85de501a4e8e91016295e26eb289f7072e16e410cbe27b75997a3e6c880c3",
+      "size": [
+        58,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "option-0042",
+      "image": "draft:option-label-0042",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "a11a4b305c8fba207b94b5cb2d9b1f576d4facccfced5cf16941693eb7a54b32",
+      "size": [
+        58,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "option-0043",
+      "image": "draft:option-label-0043",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "d5f3ecc99c7c6211dd67d7934606ee0f07a18e67742fcde983be343c20b5da4f",
+      "size": [
+        30,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "option-0044",
+      "image": "draft:option-label-0044",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "73ce241972ce66ed0a24d77817c317bf213fc340ba613d99f74449d27d82a9e3",
+      "size": [
+        30,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "option-0049",
+      "image": "draft:option-label-0049",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "709c085f826ff6cd9739c65290396d265fcd4cd372aaa245156daed5350858c3",
+      "size": [
+        114,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0050",
+      "image": "draft:option-label-0050",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "bcb1f7bc6fb075720a2f710f8c27769e4c6b05c7c2508e91b169cbd18a96888c",
+      "size": [
+        114,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0051",
+      "image": "draft:option-label-0051",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "e42d51d883512f08374445c379113eed5970d466e86d1d7b5102a748cf43d295",
+      "size": [
+        72,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0052",
+      "image": "draft:option-label-0052",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "d51d7b7ec2c973fb678ae165e2c2a731618b04294c574901fa1768120783ba70",
+      "size": [
+        72,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0053",
+      "image": "draft:option-label-0053",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "09b033cdb2a07761ba3c0628eeb8436bdf6a3f3636849ce80bcd8eadd35f3065",
+      "size": [
+        86,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0054",
+      "image": "draft:option-label-0054",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "c5eee46655d5c0702c9895879d86f9d5c152bf93298db009bcbc9a99e7eae1bd",
+      "size": [
+        86,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0055",
+      "image": "draft:option-label-0055",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "ac899ee13e2a99fb27d3eb1d03026ce5dd8df6b1207e5debe7314d0f50e21ce0",
+      "size": [
+        86,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0056",
+      "image": "draft:option-label-0056",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "6904a918bfb42a5a32c39e77d3aebf395ffe6b1c46079ae940f3f2d2a620de5c",
+      "size": [
+        86,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0057",
+      "image": "draft:option-label-0057",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "81dd9fabe48cbda68c6f1fafe91d6d306724ffbbd7d23e520e575c0ea21b8d4d",
+      "size": [
+        100,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0058",
+      "image": "draft:option-label-0058",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "ff5419109c27a116b5f9f9f5443abfb96f558310b03290fd0d4b89e29e6ab47f",
+      "size": [
+        100,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0059",
+      "image": "draft:option-label-0059",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "791815969874ee1094f0b67df59f2da21ec021d7e1c4158cf09979c56995de6a",
+      "size": [
+        170,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0060",
+      "image": "draft:option-label-0060",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "9b604538b6fbf78bc7ab20b18c800f79e6c48a61e11492732dff3e26cad312d6",
+      "size": [
+        170,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0061",
+      "image": "draft:option-label-0061",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "a88a9af277302e693d47b1af70ae4c6740decd761673c11464e7055a120b7420",
+      "size": [
+        198,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0062",
+      "image": "draft:option-label-0062",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "84fa41501d51ffc4b3516e87bf448505b0ee094189c31ea293f51ce7b4569f0a",
+      "size": [
+        198,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0117",
+      "image": "option-label-0117",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "becd0b809d2e1571a15f1a2a42270706828a3997a66fd2258c0dcdca0cd94e88",
+      "size": [
+        86,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0118",
+      "image": "option-label-0118",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "4d84533901c0eb0b4d2cc6f69291598e3fbf27168a4882e133583c90c48ade51",
+      "size": [
+        86,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0122",
+      "image": "option-label-0122",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "d15ec462229ca832fef27ae1fc8aaf716fd14a9082a2505fd1377804726cd479",
+      "size": [
+        86,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0123",
+      "image": "option-label-0123",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "6f66691806a85219ece05bec4e4eb7f539a3d754e61f5b7837625634384af7c6",
+      "size": [
+        86,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0124",
+      "image": "option-label-0124",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "63e9a43eaca4e0eaeddaaeff8c4caa9215a4386575720bfc2130fbf262ce8bd9",
+      "size": [
+        58,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0125",
+      "image": "option-label-0125",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "6428c0f95bd55306b0c81bac6cb694eb275cbfa22ff04fcab59bf393fa43e37c",
+      "size": [
+        58,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0126",
+      "image": "option-label-0126",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "bd39df54316409797f567de4bfe37c7c45da7f49fb4925eb47f8514390a7e0b1",
+      "size": [
+        58,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0127",
+      "image": "option-label-0127",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "0b348ee1be17567993e99fb33abc102fbaf7d121ff5ebb38825e2f1ae4a1f948",
+      "size": [
+        58,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0128",
+      "image": "option-label-0128",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "cb1169c4bb4459213ad30d05299878e9b7a2edf6af774fc2929577fb60991a4b",
+      "size": [
+        156,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0129",
+      "image": "option-label-0129",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "9d9152de6cbcb7b5876cda97045160f101bc9395104eb91551e77481fa87b770",
+      "size": [
+        156,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0063",
+      "image": "option-label-0063",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "30154cd1707897823cfe99d86a0546bb08ddf6b2462bd548561ae40667a8006a",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0064",
+      "image": "option-label-0064",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "3328de40ed85543b46bc1a2827052212ee0071379bdccaa30fd138ae6c392f9f",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0071",
+      "image": "option-label-0071",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "0c9c1778fde8480e4ebe909601091ee6eb66aa1a58dfd015efc6c97311d954c3",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0072",
+      "image": "option-label-0072",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "5b7849f00ed20a17baf74cc5451570d510b465e061df39f9bf4d2c4a81eadbc8",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0067",
+      "image": "option-label-0067",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "1da3547cea1b8fe022fdfba82ce4e40ca9bd5eb663ccde0fefc8ad7b7df66d84",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0068",
+      "image": "option-label-0068",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "fdad9c061eec8c42787274f9727b728631e2ae4e46836a73430a05ccf1c70661",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0069",
+      "image": "option-label-0069",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "174c9fdef461e9579d966450850ab57b82270f41b14521fecdfe626b22d1e3e4",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0070",
+      "image": "option-label-0070",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "af22dd36c5e6bca0863b7885c8c0611c1509f2be4c87ca8568df0ca09a0fa6ee",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0079",
+      "image": "option-label-0079",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "ca88aeee68e5d23c78fe106fed85a70328f954ea8977284e4b0db4a2cdf1a0a5",
+      "size": [
+        136,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0080",
+      "image": "option-label-0080",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "cfc9ef8b139375b573d20f4d9bdc8088498eb572f19e103c0328abb18d9eb50f",
+      "size": [
+        136,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0073",
+      "image": "option-label-0073",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "636bef7cf2d309518f4ce36a572b440fd1180f911aba23fd420b8c339effdba2",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0074",
+      "image": "option-label-0074",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "849cf549b2b81937c6046340e90f2fb4609a38f7a3408ffd10cff8ff1b5cf481",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0083",
+      "image": "option-label-0083",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "a7d2d55e3d8319ce73c77cf988e8e008c22bdc3c0ba80cfffdb1f111f06eb623",
+      "size": [
+        152,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0084",
+      "image": "option-label-0084",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "b18b4e2130ba79472fb631169ef578bfe74ef7db024c077881a777c8aa6bd41f",
+      "size": [
+        152,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0065",
+      "image": "option-label-0065",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "776c4f41b579447821a2267bb6843e85040b92e71fc1f29aa6097bb26c801555",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0066",
+      "image": "option-label-0066",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "cd4f71b785a0cce41e89feac54ba79ca0bd7ea2dede09996ebc43b5cbfb5b249",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0081",
+      "image": "option-label-0081",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "6dbe3f83b30dbe9861ed47c134d1625b1cdcb23ef2226af1217136ab1b7bb909",
+      "size": [
+        136,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0082",
+      "image": "option-label-0082",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "a8319b17e8c4aef11dd14428997d84a94e8078574b105cf2fcf4373b7a6b932d",
+      "size": [
+        136,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0077",
+      "image": "option-label-0077",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "630fdcea23bcff0e90757f1c80ed2c8b6532126ee778c48fe5f4471db795d001",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0078",
+      "image": "option-label-0078",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "d3bb6da9d73bcec9c11f62d4c7ae816c3a1d07cbb68b45b456eaa7dcca254470",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0075",
+      "image": "option-label-0075",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "20efd8d868aa2429b31733da1bfe27a8757970951842080b5205b9e58d22d748",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0076",
+      "image": "option-label-0076",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "e747c7314ae96918b4a189ccf177d2a80de2e9246d022885c9931dc622d85bd8",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0087",
+      "image": "option-label-0087",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "915edeaf56f3229f1dcff57f4db32bd237b6758fca5f6dcf1ec040daed83924a",
+      "size": [
+        152,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0088",
+      "image": "option-label-0088",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "d8570828af919c07795705023a5a2b5ef639dc53b2fbfde20375b6aaabf6935c",
+      "size": [
+        152,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0085",
+      "image": "option-label-0085",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "bb29269acb78e9c9ffe6d6da8c88df83bcf78759b611a4a1f7f7e53620dfe65a",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0086",
+      "image": "option-label-0086",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "59a970412e366074ae4d86786db1301133da2150c011f3651670ff352c6ea078",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0089",
+      "image": "option-label-0089",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "f7af87ce1f73999991060a67f7efec550c439a1f58d9a5d133145535ba8839f2",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0090",
+      "image": "option-label-0090",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "2e51b0ff299f351046fdf81245d04dd4115e7e27cfb4b66a123bb977eec27078",
+      "size": [
+        122,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0091",
+      "image": "option-label-0091",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "29416d5e9ed85b3237ab73d2605de7e713cd0d8576f71935b1a67fe1963abd79",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0092",
+      "image": "option-label-0092",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "97dd420b2b98f32e0a8fac2c6d9359a9cdbb66e5a9aca3ebc297538e59175247",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0093",
+      "image": "option-label-0093",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "8c4773acd5818bf31418a91351fe64ae7b219acf3f9eca5ca27b6070c93e0a01",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0094",
+      "image": "option-label-0094",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "7033ce214fda306e87fbe74d820bbd6cb2f86c421d0f0bf57a9a260966fadf7c",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0095",
+      "image": "option-label-0095",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "06bcc979dde992824d7bdaa53a1486f469f713ecc4171f22c20937422241c1ac",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0096",
+      "image": "option-label-0096",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "78658c1df7d0ed34e212207c27d983786542bfa7d7306838de93629b99ba8815",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0097",
+      "image": "option-label-0097",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "981660b2e4d458b670f684ecffe50c428d158d7fd2c9bc7fa3d0974db069fc06",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0098",
+      "image": "option-label-0098",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "b731348deefdc7616d679318676fc8042f9085ef3e36a8b97a8f8044a23436ad",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0099",
+      "image": "option-label-0099",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "0cb21aa80ed03e3f351c1aa2c455f5de76e1429f753d2b8248260269add60c6b",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0100",
+      "image": "option-label-0100",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "46070e935367b4678c113679d4a5d0eb946208760c93bc644df078b9f94c7382",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0101",
+      "image": "option-label-0101",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "b9ec2d7b2e631e8480f58b5da67d47df13f1304fb582a7ef49da1423a5e6544d",
+      "size": [
+        84,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0102",
+      "image": "option-label-0102",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "404d3e9436b44e4d3ee002521b63b6335694115e9e2e08b03a64b02bfdee2e39",
+      "size": [
+        84,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0103",
+      "image": "option-label-0103",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "a4deb287a535c6d84d4ee795db2dff46ee0c6ea75be2ee34919d6f560aa5094d",
+      "size": [
+        56,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "option-0104",
+      "image": "option-label-0104",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "c196b7a16f915b0eccebc59281856b7ca497dd8a56987a027763fe6e4d2b1344",
+      "size": [
+        56,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "option-0105",
+      "image": "option-label-0105",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "08bbd1c010e9637411c5f7ecb98ebbf25f2891d2ce8c4df96c1e99a500e2311d",
+      "size": [
+        71,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0106",
+      "image": "option-label-0106",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "9a4cbe755832faecf74cf00764cc4fbab6b3c4766b6c182d869e1d543100f0a5",
+      "size": [
+        71,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0107",
+      "image": "option-label-0107",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "b3ae6cd2adb611afcbcec2c332f56047c3c5aad3d02780efdd623cac1045eaa2",
+      "size": [
+        84,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0108",
+      "image": "option-label-0108",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "08cb6f0fb4451089d7e706711308fb4e92ed3e7a60849d14f274ad468f33da0b",
+      "size": [
+        84,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0109",
+      "image": "option-label-0109",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "ac7699e844fcb5adbfdec8a4c019e4169e3210422de6b3d02dd003dcd8a6c9f3",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0110",
+      "image": "option-label-0110",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "1d7141cc5bcd423436a9f9088dc30a349f670b418de5a708102b5bc3b97a320d",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0111",
+      "image": "option-label-0111",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "6161f03e04a268124c383d16336b1f952c32d13c1d160ccf7d27896bc57f4e19",
+      "size": [
+        84,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0112",
+      "image": "option-label-0112",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "c750181c1f6f05f7413dc6fe458fa395825dd375eb146076202bd570cb8ad12e",
+      "size": [
+        84,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0113",
+      "image": "option-label-0113",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "c528e1085013e29045611440b9a5654eaee7300502b09e8a54d8fb65cbc3f131",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "option-0114",
+      "image": "option-label-0114",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "f36301690a968bf8367a531dab33bc47338979fe2bdfc9d79f22f0a0f174c1f9",
+      "size": [
+        70,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "option-0115",
+      "image": "option-label-0115",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "22999675b98c5a20c98509653c74b0c0704a4a65349acbd6118c7d250e030e74",
+      "size": [
+        84,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "option-0116",
+      "image": "option-label-0116",
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "source_sha256": "4a5b1d5f773c8ae17b8cd58e34ee19fbe89a3177aad2204a74eb31423e7a5a7e",
+      "size": [
+        84,
+        16
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "filesel-0000",
+      "image": "filesel-frame-0.base",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "f609e0882deaf2f4de210edb42e078b390c50e64c1957f838b2e298cb1c0a2c2",
+      "size": [
+        48,
+        32
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-0001",
+      "image": "filesel-frame-1.base",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "5f0298656bc7d46c9a7d4a641976f5c2c1f2ecd6cb828654663ef0097a365dd7",
+      "size": [
+        48,
+        32
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-0002",
+      "image": "filesel-frame-2.base",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "58285cdc810dbeed7bf1a25579fff04fbccfcec9507800859c6a4824dc403408",
+      "size": [
+        48,
+        32
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-0003",
+      "image": "filesel-frame-3.base",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "7217d8782f34ddcadec83795e9028f1bb802ba6d035524606ab72ce7b29e80ea",
+      "size": [
+        48,
+        32
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-0019",
+      "image": "filesel-frame-19.base",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "100a9ef5a80045b672cbcf69f2a33425586c58a3d1ade1afb72d3803b9b1624c",
+      "size": [
+        168,
+        96
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-0020",
+      "image": "filesel-frame-20.base",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "ca091309f99073e1018b3f9f373cc649a9ade6d6327a6cd343b6328be6da06ad",
+      "size": [
+        178,
+        96
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-0021",
+      "image": "filesel-frame-21.base",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "cbaea885c4fc6667d223f8cb9b204082b35708fe595a03a9556651710d0ab16d",
+      "size": [
+        96,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-0022",
+      "image": "filesel-frame-22.base",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "f90b2f22d801fdcb40ea802182b8b11dfc0b7384323d5472578122a33b2baf83",
+      "size": [
+        96,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-0030",
+      "image": "filesel-frame-30.base",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "860dce2b4e22c4cf4eb49018ef35b8b7fd9c1de98f54080ee04d5045726cf173",
+      "size": [
+        16,
+        32
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-0030",
+      "image": "filesel-frame-30.selected",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "3e1805859603d1b3ea67bfb7bb9f0c9226c82b2793f0d1b3b34a545f0ac4036c",
+      "size": [
+        16,
+        32
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-0031",
+      "image": "filesel-frame-31.base",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "781457cf6b852604f7fc52726d1d9a39c96eb46e375d8c4ae36a4fbc7294dafe",
+      "size": [
+        16,
+        32
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-0031",
+      "image": "filesel-frame-31.selected",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "92c3efda9d629a088247ddbd8120d2d2735af02f832b947a6b048a6a7926361b",
+      "size": [
+        16,
+        32
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "name_ent-0000",
+      "image": "name-panel-0000",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "07538057364127bec978d92319b156a760d17706f034fc692eaeacc72ddebb7c",
+      "size": [
+        304,
+        144
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "name_ent-0001",
+      "image": "name-panel-0001",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "7af469f8f0f052207329dc245f0ca8f23ed7817ad2cdacbc06b26786ff62d3df",
+      "size": [
+        296,
+        192
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "name_ent-0002",
+      "image": "name-panel-0002",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "eef24bfb16e5e31476710e7d8e9bebb64e8b5d7f8d952a530c2a3fade37fd8a3",
+      "size": [
+        288,
+        168
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "name_ent-0014",
+      "image": "name-panel-0014",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "84999e1f9fd0b8c1775c820da6b78c565c69e175a755270f7a99dc7ec53c6a52",
+      "size": [
+        288,
+        168
+      ],
+      "placement": "rebuilt"
+    },
+    {
+      "item": "name_ent-0015",
+      "image": "name-label-0015",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "69d1a272c4177ea7b720d0c6e47f5516020eac9f4ee4b42b0d28ef2176b5c6ba",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "name_ent-0016",
+      "image": "name-label-0016",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "4ae88f00ff081ac80de9ce0bf0249c841123fe0fadc11943ec0823288183ab79",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "name_ent-0017",
+      "image": "name-label-0017",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "31b76ed3ff5c57b9c6eac81e70c6ff50b01d9eb76a0475269400fb1b4a920b6f",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "name_ent-0018",
+      "image": "name-label-0018",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "766acdb8c9f5891927d9662fb59044dc7237ea50a11eb45898e3ecdf3ba3a7e6",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "name_ent-0019",
+      "image": "name-label-0019",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "088a21a547f6c0df2b9e4a8c8a24e717e473a771b0335abea2839061f61c5274",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "name_ent-0020",
+      "image": "name-label-0020",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "88ca09ac9ea177ba855f5c2c04c4495d6edeb979212361526259533ace5a01ce",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "name_ent-0021",
+      "image": "name-label-0021",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "8563c1a94c27038d5a6b09edefb6e08f4e3d64c3c70414076b26c974f53e5c4f",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "name_ent-0022",
+      "image": "name-label-0022",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "bc01efec51e2c8b6ed268d066c1cebefbcdae52aef388d83a75f9403db8869b4",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "name_ent-0023",
+      "image": "name-label-0023",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "d1b74ce85e23a2498fb6e2c68e600362e3bde0e0425ec418636f6a005c030c08",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "name_ent-0024",
+      "image": "name-label-0024",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "730c99e41a196c47935120a34664ab56da5b2409eb2acb9e559f103461f7bf13",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "title-0001",
+      "image": "title-0001",
+      "container": "CDROM/FUKUTEST/TITLE.NBN",
+      "source_sha256": "1193efc6ed696de13430e7a8faab76010ed5409aa77c612c6e628c55a38b2446",
+      "size": [
+        144,
+        16
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "title-0002",
+      "image": "title-0002",
+      "container": "CDROM/FUKUTEST/TITLE.NBN",
+      "source_sha256": "7ca36d2b62df5eacca9fa931b1ffbad5ce2f2d6f762ca9da3a497fab2f7defb2",
+      "size": [
+        112,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "title-0003",
+      "image": "title-0003",
+      "container": "CDROM/FUKUTEST/TITLE.NBN",
+      "source_sha256": "c2e88b0771464d6bde667cbe56f8e36d5aee72e892b542583d761a65fd46b4de",
+      "size": [
+        144,
+        16
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "title-0004",
+      "image": "title-0004",
+      "container": "CDROM/FUKUTEST/TITLE.NBN",
+      "source_sha256": "3ac25e76914a398635095d60348e2847e7b38ccbac570e53aab1fdf178dad787",
+      "size": [
+        80,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "examine-0000",
+      "image": "exam-0000",
+      "container": "CDROM/FUKUTEST/EXAMINE.NBN",
+      "source_sha256": "5de2fc5e1fe285e24cd54cb9b5230c98ef0a805c0f239e8c7cd5bffeba146329",
+      "size": [
+        320,
+        152
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "examine-0001",
+      "image": "exam-0001",
+      "container": "CDROM/FUKUTEST/EXAMINE.NBN",
+      "source_sha256": "d3105dd3794c6840cae3f387a6156569a7abf2d57d0efb6bfacc885a30869275",
+      "size": [
+        8,
+        16
+      ],
+      "placement": "in_place (fallback)"
+    },
+    {
+      "item": "catalog-127",
+      "image": "all-c-banner.source-page-3",
+      "container": "CDROM/LASTPHOT/ALL_C.NBN",
+      "source_sha256": "730b09c4b2e8a555e261b372fc9f84958140d5d8d9e9a95662167676a90091ba",
+      "size": [
+        128,
+        38
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "catalog-127",
+      "image": "all-c-banner.source-page-4",
+      "container": "CDROM/LASTPHOT/ALL_C.NBN",
+      "source_sha256": "c691e67b972f795324c7c1e0239274ab16686bcd5018a07319179f57d8cc1618",
+      "size": [
+        128,
+        38
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "catalog-127",
+      "image": "all-c-banner.source-page-5",
+      "container": "CDROM/LASTPHOT/ALL_C.NBN",
+      "source_sha256": "65457432479bd1415b38e746b698d291d04a5822c0ad4d05c4be8d7e8647e81d",
+      "size": [
+        64,
+        38
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "sports-ninsetu-0",
+      "image": "ninsetu-0",
+      "container": "CDROM/TAIIKU/NINSETU.BIN",
+      "source_sha256": "fb358dbcf3d64a50531baa284ba23e1c6bef960ab99245f5238525446ed6d9f9",
+      "size": [
+        320,
+        240
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "sports-ninsetu-1",
+      "image": "ninsetu-1",
+      "container": "CDROM/TAIIKU/NINSETU.BIN",
+      "source_sha256": "8064c181a042381d96ae8bdb14b9ef48c68d1224cb9fc030dd14f6cef2429187",
+      "size": [
+        320,
+        240
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "sports-spsetu-0",
+      "image": "spsetu-0",
+      "container": "CDROM/TAIIKU/SPSETU.BIN",
+      "source_sha256": "e9bd0fac49f5b44e7b24448af97aebf4387b9b24df80bef83576957decd00da7",
+      "size": [
+        320,
+        240
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "sports-tasetu-0",
+      "image": "tasetu-0",
+      "container": "CDROM/TAIIKU/TASETU.BIN",
+      "source_sha256": "d9fd1ae6b3e0debe74bb5448d3069d6444634830a8b56afb783309cfc1895ea3",
+      "size": [
+        320,
+        240
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "battle-habu-command-0",
+      "image": "vs_habu-0",
+      "container": "CDROM/BATTLE/VS_HABU.BIN",
+      "source_sha256": "5891ffa761b0e82f40a0843afc46bc97aabd7b7c27840c31340299adc112a798",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-habu-command-1",
+      "image": "vs_habu-1",
+      "container": "CDROM/BATTLE/VS_HABU.BIN",
+      "source_sha256": "9d9994854319df7d6204710785216cc1972c327ebdc7bedee3e82c85c6e4d57b",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-habu-command-2",
+      "image": "vs_habu-2",
+      "container": "CDROM/BATTLE/VS_HABU.BIN",
+      "source_sha256": "2a3e17b9cc5f370b186df5cfd7fdd7de2dddacece4ef8f3413235d9e3eae8d3e",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-habu-command-3",
+      "image": "vs_habu-3",
+      "container": "CDROM/BATTLE/VS_HABU.BIN",
+      "source_sha256": "23d7dc7eb770397e5222f1c0320ec4d298b0f549d5c85c7bcfc277ad39f1d7b1",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-habu-command-4",
+      "image": "vs_habu-4",
+      "container": "CDROM/BATTLE/VS_HABU.BIN",
+      "source_sha256": "b822271a2db5ec45826edbfe48b347b4a9f20a78545856b8683e098d7d5b154d",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-habu-command-5",
+      "image": "vs_habu-5",
+      "container": "CDROM/BATTLE/VS_HABU.BIN",
+      "source_sha256": "912de1d1d1833517281e98075bb4430c73fdcb9e6d2ce6ea1fef80414ebf8a6c",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-sika-command-0",
+      "image": "vs_sika-0",
+      "container": "CDROM/BATTLE/VS_SIKA.BIN",
+      "source_sha256": "5891ffa761b0e82f40a0843afc46bc97aabd7b7c27840c31340299adc112a798",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-sika-command-1",
+      "image": "vs_sika-1",
+      "container": "CDROM/BATTLE/VS_SIKA.BIN",
+      "source_sha256": "9d9994854319df7d6204710785216cc1972c327ebdc7bedee3e82c85c6e4d57b",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-sika-command-2",
+      "image": "vs_sika-2",
+      "container": "CDROM/BATTLE/VS_SIKA.BIN",
+      "source_sha256": "2a3e17b9cc5f370b186df5cfd7fdd7de2dddacece4ef8f3413235d9e3eae8d3e",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-sika-command-3",
+      "image": "vs_sika-3",
+      "container": "CDROM/BATTLE/VS_SIKA.BIN",
+      "source_sha256": "23d7dc7eb770397e5222f1c0320ec4d298b0f549d5c85c7bcfc277ad39f1d7b1",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-sika-command-4",
+      "image": "vs_sika-4",
+      "container": "CDROM/BATTLE/VS_SIKA.BIN",
+      "source_sha256": "b822271a2db5ec45826edbfe48b347b4a9f20a78545856b8683e098d7d5b154d",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-sika-command-5",
+      "image": "vs_sika-5",
+      "container": "CDROM/BATTLE/VS_SIKA.BIN",
+      "source_sha256": "912de1d1d1833517281e98075bb4430c73fdcb9e6d2ce6ea1fef80414ebf8a6c",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-kuma-command-0",
+      "image": "vs_kuma-0",
+      "container": "CDROM/BATTLE/VS_KUMA.BIN",
+      "source_sha256": "5891ffa761b0e82f40a0843afc46bc97aabd7b7c27840c31340299adc112a798",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-kuma-command-1",
+      "image": "vs_kuma-1",
+      "container": "CDROM/BATTLE/VS_KUMA.BIN",
+      "source_sha256": "9d9994854319df7d6204710785216cc1972c327ebdc7bedee3e82c85c6e4d57b",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-kuma-command-2",
+      "image": "vs_kuma-2",
+      "container": "CDROM/BATTLE/VS_KUMA.BIN",
+      "source_sha256": "2a3e17b9cc5f370b186df5cfd7fdd7de2dddacece4ef8f3413235d9e3eae8d3e",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-kuma-command-3",
+      "image": "vs_kuma-3",
+      "container": "CDROM/BATTLE/VS_KUMA.BIN",
+      "source_sha256": "23d7dc7eb770397e5222f1c0320ec4d298b0f549d5c85c7bcfc277ad39f1d7b1",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-kuma-command-4",
+      "image": "vs_kuma-4",
+      "container": "CDROM/BATTLE/VS_KUMA.BIN",
+      "source_sha256": "b822271a2db5ec45826edbfe48b347b4a9f20a78545856b8683e098d7d5b154d",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-kuma-command-5",
+      "image": "vs_kuma-5",
+      "container": "CDROM/BATTLE/VS_KUMA.BIN",
+      "source_sha256": "912de1d1d1833517281e98075bb4430c73fdcb9e6d2ce6ea1fef80414ebf8a6c",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-ufo-command-0",
+      "image": "vs_ufo-0",
+      "container": "CDROM/BATTLE/VS_UFO.BIN",
+      "source_sha256": "5891ffa761b0e82f40a0843afc46bc97aabd7b7c27840c31340299adc112a798",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-ufo-command-1",
+      "image": "vs_ufo-1",
+      "container": "CDROM/BATTLE/VS_UFO.BIN",
+      "source_sha256": "9d9994854319df7d6204710785216cc1972c327ebdc7bedee3e82c85c6e4d57b",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-ufo-command-2",
+      "image": "vs_ufo-2",
+      "container": "CDROM/BATTLE/VS_UFO.BIN",
+      "source_sha256": "2a3e17b9cc5f370b186df5cfd7fdd7de2dddacece4ef8f3413235d9e3eae8d3e",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-ufo-command-3",
+      "image": "vs_ufo-3",
+      "container": "CDROM/BATTLE/VS_UFO.BIN",
+      "source_sha256": "23d7dc7eb770397e5222f1c0320ec4d298b0f549d5c85c7bcfc277ad39f1d7b1",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-ufo-command-4",
+      "image": "vs_ufo-4",
+      "container": "CDROM/BATTLE/VS_UFO.BIN",
+      "source_sha256": "b822271a2db5ec45826edbfe48b347b4a9f20a78545856b8683e098d7d5b154d",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-ufo-command-5",
+      "image": "vs_ufo-5",
+      "container": "CDROM/BATTLE/VS_UFO.BIN",
+      "source_sha256": "912de1d1d1833517281e98075bb4430c73fdcb9e6d2ce6ea1fef80414ebf8a6c",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-robo-command-0",
+      "image": "vs_robo-0",
+      "container": "CDROM/BATTLE/VS_ROBO.BIN",
+      "source_sha256": "5891ffa761b0e82f40a0843afc46bc97aabd7b7c27840c31340299adc112a798",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-robo-command-1",
+      "image": "vs_robo-1",
+      "container": "CDROM/BATTLE/VS_ROBO.BIN",
+      "source_sha256": "9d9994854319df7d6204710785216cc1972c327ebdc7bedee3e82c85c6e4d57b",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-robo-command-2",
+      "image": "vs_robo-2",
+      "container": "CDROM/BATTLE/VS_ROBO.BIN",
+      "source_sha256": "2a3e17b9cc5f370b186df5cfd7fdd7de2dddacece4ef8f3413235d9e3eae8d3e",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-robo-command-3",
+      "image": "vs_robo-3",
+      "container": "CDROM/BATTLE/VS_ROBO.BIN",
+      "source_sha256": "23d7dc7eb770397e5222f1c0320ec4d298b0f549d5c85c7bcfc277ad39f1d7b1",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-robo-command-4",
+      "image": "vs_robo-4",
+      "container": "CDROM/BATTLE/VS_ROBO.BIN",
+      "source_sha256": "b822271a2db5ec45826edbfe48b347b4a9f20a78545856b8683e098d7d5b154d",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-robo-command-5",
+      "image": "vs_robo-5",
+      "container": "CDROM/BATTLE/VS_ROBO.BIN",
+      "source_sha256": "912de1d1d1833517281e98075bb4430c73fdcb9e6d2ce6ea1fef80414ebf8a6c",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-habu-miss-0",
+      "image": "vs_habu-miss-0",
+      "container": "CDROM/BATTLE/VS_HABU.BIN",
+      "source_sha256": "59e84a6c7960e55f276487daf221cb98645f1a885380aab2a01a2c162f9e8800",
+      "size": [
+        16,
+        8
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-habu-miss-1",
+      "image": "vs_habu-miss-1",
+      "container": "CDROM/BATTLE/VS_HABU.BIN",
+      "source_sha256": "0996eeb35256bc2a63741f9a5c5a2c1c439b39430ec80f6a5be3d6d96d4ecd55",
+      "size": [
+        16,
+        8
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-sika-miss-0",
+      "image": "vs_sika-miss-0",
+      "container": "CDROM/BATTLE/VS_SIKA.BIN",
+      "source_sha256": "59e84a6c7960e55f276487daf221cb98645f1a885380aab2a01a2c162f9e8800",
+      "size": [
+        16,
+        8
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-sika-miss-1",
+      "image": "vs_sika-miss-1",
+      "container": "CDROM/BATTLE/VS_SIKA.BIN",
+      "source_sha256": "0996eeb35256bc2a63741f9a5c5a2c1c439b39430ec80f6a5be3d6d96d4ecd55",
+      "size": [
+        16,
+        8
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-kuma-miss-0",
+      "image": "vs_kuma-miss-0",
+      "container": "CDROM/BATTLE/VS_KUMA.BIN",
+      "source_sha256": "59e84a6c7960e55f276487daf221cb98645f1a885380aab2a01a2c162f9e8800",
+      "size": [
+        16,
+        8
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-kuma-miss-1",
+      "image": "vs_kuma-miss-1",
+      "container": "CDROM/BATTLE/VS_KUMA.BIN",
+      "source_sha256": "0996eeb35256bc2a63741f9a5c5a2c1c439b39430ec80f6a5be3d6d96d4ecd55",
+      "size": [
+        16,
+        8
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-ufo-miss-0",
+      "image": "vs_ufo-miss-0",
+      "container": "CDROM/BATTLE/VS_UFO.BIN",
+      "source_sha256": "59e84a6c7960e55f276487daf221cb98645f1a885380aab2a01a2c162f9e8800",
+      "size": [
+        16,
+        8
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-ufo-miss-1",
+      "image": "vs_ufo-miss-1",
+      "container": "CDROM/BATTLE/VS_UFO.BIN",
+      "source_sha256": "0996eeb35256bc2a63741f9a5c5a2c1c439b39430ec80f6a5be3d6d96d4ecd55",
+      "size": [
+        16,
+        8
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-robo-miss-0",
+      "image": "vs_robo-miss-0",
+      "container": "CDROM/BATTLE/VS_ROBO.BIN",
+      "source_sha256": "59e84a6c7960e55f276487daf221cb98645f1a885380aab2a01a2c162f9e8800",
+      "size": [
+        16,
+        8
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "battle-robo-miss-1",
+      "image": "vs_robo-miss-1",
+      "container": "CDROM/BATTLE/VS_ROBO.BIN",
+      "source_sha256": "0996eeb35256bc2a63741f9a5c5a2c1c439b39430ec80f6a5be3d6d96d4ecd55",
+      "size": [
+        16,
+        8
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-page-information-1",
+      "image": "filesel-page-information-1",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "2afbc720f755f3fa952a854a15d8a215530c96daee6fccdc2c20eaa78d26b5a4",
+      "size": [
+        128,
+        128
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "filesel-page-information-2",
+      "image": "filesel-page-information-2",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "51d0c37b88a9471c05f8c47e304f10ea1b99e6f1b9bda0588263ef2b36d23752",
+      "size": [
+        128,
+        128
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "name_ent-abc",
+      "image": "name-label-abc.lit",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "ec5cb536b09f3d5c3330bf67851db1c6f7a33d5a6b7552e0e806fcec8f9118d8",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "name_ent-abc",
+      "image": "name-label-abc.unlit",
+      "container": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "source_sha256": "26578c203cd8a335b156a607ac4a9169b696aead3381382ded09eac6e7cd7162",
+      "size": [
+        32,
+        16
+      ],
+      "placement": "rebuilt (fallback)"
+    },
+    {
+      "item": "filesel-page-information-0",
+      "image": "filesel-page-information-0",
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "source_sha256": "e38e9db3379f4a11d45a77cb817a2fa72cedd8c62aafd4dafccf204c4308beaf",
+      "size": [
+        128,
+        128
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "sports-kasetu-0",
+      "image": "kasetu-0",
+      "container": "CDROM/TAIIKU/KASETU.BIN",
+      "source_sha256": "d78f5534c415db7a197bc71f84c851e1c91a16ea2168149d193a635b3bf14fd8",
+      "size": [
+        320,
+        240
+      ],
+      "placement": "relocated"
+    },
+    {
+      "item": "sports-callout-go",
+      "image": "sports-callout-go",
+      "container": "CDROM/TAIIKU/NINSETU.BIN",
+      "source_sha256": "69caf0489121df8ba6c5d262e37ecc5caffbe8e2e75920b3612c7593b4e45ae9",
+      "size": [
+        58,
+        24
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "sports-callout-ready",
+      "image": "sports-callout-ready",
+      "container": "CDROM/TAIIKU/NINSETU.BIN",
+      "source_sha256": "5cedb10b12405846688dc7dd4e0da74fdf2421ce9688b02e0e21b11d7633a30e",
+      "size": [
+        48,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "sports-callout-right",
+      "image": "sports-callout-right",
+      "container": "CDROM/TAIIKU/NINSETU.BIN",
+      "source_sha256": "c85720cadec03bca99d7a845e966f8d7718ef8f4ec4ca19d19ba581c7dc5b1c2",
+      "size": [
+        40,
+        16
+      ],
+      "placement": "in_place"
+    },
+    {
+      "item": "sports-callout-left",
+      "image": "sports-callout-left",
+      "container": "CDROM/TAIIKU/NINSETU.BIN",
+      "source_sha256": "9c668496d0bbf429b4e028e318cef0882b92c746e08f8dfb727fe5644d24c0ac",
+      "size": [
+        40,
+        16
+      ],
+      "placement": "in_place"
+    }
+  ],
+  "containers": {
+    "CDROM/FUKUTEST/MAINROM.NBN": "6691e936fdb6c97f06a892dd2bc9cd591896e0fc6514a9163e01c304421707a8",
+    "CDROM/FUKUTEST/OPTION.NBN": "ddf3976999f55599fb7cb9a3b707d3c2af2d6309055046b74820d01f765f72bd",
+    "CDROM/FUKUTEST/FILESEL.NBN": "f7065a270cbebd2762b72a8513d707250c6475d87babb38b3227f4aba14644a1",
+    "CDROM/NAME_ENT/NAME_ENT.NBN": "a3ddf08f2a97dfe6df4a133019a46fea9ae1d89ea388682451df0c525a34bf32",
+    "CDROM/FUKUTEST/TITLE.NBN": "a581d860d449310a4ac7a0f20dcc4abf1d33a1891cdf6b23fb749a644638fc79",
+    "CDROM/FUKUTEST/EXAMINE.NBN": "b467ffdc9a0640c43b72a38ded8d775500b0b430a3e3418fe3bfe0c9ceb8d62b",
+    "CDROM/LASTPHOT/ALL_C.NBN": "6170416575d0280922e4b9cfdd5db2c36fd1d17ff59087f39dbda23380b5a5d3",
+    "CDROM/BS/P_01_01.BS": "720f53e5caeab1e9701de6c76064db65da39d3b2eadc420e51f1a99848e36794",
+    "CDROM/BS/P_01_02.BS": "b8a94b9be689e8c5ea4de327a95b6cf24a77b1b664e8eb470f8a4a55308b9a7b",
+    "CDROM/BS/P_01_03.BS": "ff94e961d5c3ec90b03f8b0d19e7c9867da19bc273049e5ccbe2ec0c13bff43f",
+    "CDROM/BS/D_01_47.BS": "8a4d9fff9a4339b730bfbbff13bddfe62b11c2efca1bdee67787fc7b46982393",
+    "CDROM/BS/D_01_48.BS": "1edec1b4722ef90fe68f386104b6f41d3b80bf24eb84448db26ce75f012d81aa",
+    "CDROM/BS/D_01_70.BS": "22afcb125ec79ccfb4b60c4b0086f6636813220f9cae3356f1b6aefa9de37487",
+    "CDROM/BS/D_03_08.BS": "3976e6d581bf916dda2bf2fe8f99a6891018b70f779ecb34210788572a7dd5c9",
+    "CDROM/BS/D_29_09.BS": "d5f66f091cdf42ec4289aa3ac310682e9ec77c59e94e6be083766d80ec6ba398",
+    "CDROM/BS/D_15_03.BS": "1dc344f5c900f390d31616e3afdeb4aec5983d833bfe88b1aa6c543c1c07437e",
+    "CDROM/BS/D_19_02.BS": "97dd345879d28df6ff232bc7a0cfea5650ba4901e991593c44b2eb436b6e5cf5",
+    "CDROM/BS/D_24_03.BS": "d48897ea5810212dea2e907d4a907c269e3ac032f79a9dd1f0cf55cbe8e63d40",
+    "CDROM/BS/I_28_02.BS": "375db135e51f6c8bc38d802ef01dffca3195fcb597214e00a473d737be5896b1",
+    "CDROM/BS/C_01_28.BS": "1c24ed91c38340593bdebc50646261c1cf5b75216f0f54f02551014dd2cf68d1",
+    "CDROM/BS/I_17_01.BS": "83198f40531e353a4800d4bbbcbfcb315ea46ba5dbbcd4e73175830ef412a815",
+    "CDROM/TAIIKU/NINSETU.BIN": "6605530dd688f822e5062b27e37aa2a44ea13388f7cd42b39ea327974bf71d82",
+    "CDROM/TAIIKU/SPSETU.BIN": "d8d4ef7544b4030f03d86f0b063fbe31eef8da15b0e72fde1a405bd7cd54fc9b",
+    "CDROM/TAIIKU/TASETU.BIN": "6d3140086a930d1c87ca848dbca49caac850133e5c9fcb3d6010c311233588fe",
+    "CDROM/BATTLE/VS_HABU.BIN": "c1ffd1726a9a5c7526a3b4573eb7c0f54a69f534d1153ada650f6deedfd15820",
+    "CDROM/BATTLE/VS_SIKA.BIN": "0e062654445be6d1ca187bcb6cca8f668a5f9f787bc027f135198ee84e375394",
+    "CDROM/BATTLE/VS_KUMA.BIN": "1a59a2b97851a9f61be4e88a0250e61a6a5a2650d2e762a5c5349c59f63fbaa4",
+    "CDROM/BATTLE/VS_UFO.BIN": "04576aec44403f33a6fb00ea014786206df7089fc2db1a10ce0c1c7d5f3989fd",
+    "CDROM/BATTLE/VS_ROBO.BIN": "9454e04e7dbdc39c619888a4100939a1c33d2f858d53fccc3bf33dc6d33fcc12",
+    "CDROM/TAIIKU/KASETU.BIN": "0cbf553e6bd005d5a90a96acfb98273f34276ffa03b1587e188f2fa459c74685",
+    "CDROM/BS/D_19_03.BS": "dbf331fca8e2832c4261fa0e855c4c7cd32cd1ba1f4b39e10f6793012b06a91d"
+  },
+  "stills": [
+    {
+      "container": "CDROM/BS/C_01_28.BS",
+      "disc_sha256": "1c24ed91c38340593bdebc50646261c1cf5b75216f0f54f02551014dd2cf68d1",
+      "preview_sha256": "9ee27fcee84b2a361d63898a4b55496fd7ccf3baf5228fbbe80581665755d46a",
+      "dimensions": [
+        320,
+        96
+      ]
+    },
+    {
+      "container": "CDROM/BS/D_01_47.BS",
+      "disc_sha256": "8a4d9fff9a4339b730bfbbff13bddfe62b11c2efca1bdee67787fc7b46982393",
+      "preview_sha256": "35ca380d095ddd78c5dc65a7b05fc56c53cf37bda02bc84d33b83203927bcb7e",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/D_01_48.BS",
+      "disc_sha256": "1edec1b4722ef90fe68f386104b6f41d3b80bf24eb84448db26ce75f012d81aa",
+      "preview_sha256": "76e974c34624d881566e421969898de5b6744fdc77f903b77edb078fbc352692",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/D_01_70.BS",
+      "disc_sha256": "22afcb125ec79ccfb4b60c4b0086f6636813220f9cae3356f1b6aefa9de37487",
+      "preview_sha256": "de9eff678ca3c6ab53fadab1c29c1d63669191ebeb6bfde46b32f63f27ce0e08",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/D_03_08.BS",
+      "disc_sha256": "3976e6d581bf916dda2bf2fe8f99a6891018b70f779ecb34210788572a7dd5c9",
+      "preview_sha256": "6c2d5f6771d68f89b82eb7cef9c834f83a70d3a77af045bc1820df90bdbcdd92",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/D_15_03.BS",
+      "disc_sha256": "1dc344f5c900f390d31616e3afdeb4aec5983d833bfe88b1aa6c543c1c07437e",
+      "preview_sha256": "15d0442919ec7719281756cea20072659135dbb13d378031fcec008a9d92b8fb",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/D_19_02.BS",
+      "disc_sha256": "97dd345879d28df6ff232bc7a0cfea5650ba4901e991593c44b2eb436b6e5cf5",
+      "preview_sha256": "1218684ce0623afa2bcc11a37f56a91cd13f4d8f2d0eb12bd80db36f23b1ebce",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/D_19_03.BS",
+      "disc_sha256": "dbf331fca8e2832c4261fa0e855c4c7cd32cd1ba1f4b39e10f6793012b06a91d",
+      "preview_sha256": "7bad1889657917c34838d6b13e3a14415e39d3c1c2e7106d56b475f68dba080d",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/D_24_03.BS",
+      "disc_sha256": "d48897ea5810212dea2e907d4a907c269e3ac032f79a9dd1f0cf55cbe8e63d40",
+      "preview_sha256": "5b0ff7cb01d17b215a8f46be3b44c3bae0e9456eaefadef772bd54e6eb49985d",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/D_29_09.BS",
+      "disc_sha256": "d5f66f091cdf42ec4289aa3ac310682e9ec77c59e94e6be083766d80ec6ba398",
+      "preview_sha256": "eda53bd45e6d40ed3fa3bf6507cbe8fa257c0229d408e4f772c2ebac0904c5c8",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/I_17_01.BS",
+      "disc_sha256": "83198f40531e353a4800d4bbbcbfcb315ea46ba5dbbcd4e73175830ef412a815",
+      "preview_sha256": "b4be24d420d87e4260dfb0184bff087a7615928a89c58a1ddad81f3882adcbe5",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/I_28_02.BS",
+      "disc_sha256": "375db135e51f6c8bc38d802ef01dffca3195fcb597214e00a473d737be5896b1",
+      "preview_sha256": "0e9e6cbe6a02205578ac4205ba57b6f6b158d1db2c3d9151e8253d82c3e690e1",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/P_01_01.BS",
+      "disc_sha256": "720f53e5caeab1e9701de6c76064db65da39d3b2eadc420e51f1a99848e36794",
+      "preview_sha256": "45bdf0a4d7fda5490c66dab13330669925109371e346a5741ae23d3474946612",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/P_01_02.BS",
+      "disc_sha256": "b8a94b9be689e8c5ea4de327a95b6cf24a77b1b664e8eb470f8a4a55308b9a7b",
+      "preview_sha256": "1059ba781e7278d55437a0f9bcd3b2b051eee7fd06b031f9902c8da31c21a09b",
+      "dimensions": [
+        640,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/P_01_03.BS",
+      "disc_sha256": "ff94e961d5c3ec90b03f8b0d19e7c9867da19bc273049e5ccbe2ec0c13bff43f",
+      "preview_sha256": "8e1f81a89453c95042431782fc4fbd59c2a36118f65016ddf47fb1e7e9798af5",
+      "dimensions": [
+        320,
+        160
+      ]
+    },
+    {
+      "container": "CDROM/BS/P_01_03B.BS",
+      "disc_sha256": "ca0ae62c9bd1ade6624b13e2c509a2df1b6d339fbd2ef4b56f870c5bfb9f5238",
+      "preview_sha256": "643ffbc4721e750d7378af29a47318b9aea3f1a178194efd182bbc6bc1ceeacd",
+      "dimensions": [
+        320,
+        160
+      ]
+    }
+  ],
+  "separate_evidence": [
+    "translations/en/reviews/sign-lettering-2026-11-02.json",
+    "translations/en/graphics/reviews/retained-pixel-review-2026-11-02.json"
+  ],
+  "sheets": [
+    {
+      "path": "build/shipped-art-review/sheet-00.png",
+      "sha256": "05f00921f8009238a873568f4d7d51d051021d0a34bdfcbbbe4cebaaf8543d74"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-01.png",
+      "sha256": "de099d1aedc1dc6e051b35f6808e51b0274520de72c574002bdabab75ab138d4"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-02.png",
+      "sha256": "8978e98976e8c77c28790e644bf7595fefcde9a4c8f762a291add23930ee8b71"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-03.png",
+      "sha256": "b4522c4d18823662c19f247739d3553b9b8f55b33fd5551efb62377ed1607444"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-04.png",
+      "sha256": "3d70d6e73e2d6f92a1f69016d182a91201627c4783b2a63ce57f46b20ee0da7a"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-05.png",
+      "sha256": "34f8aa311ed3cbbb2f8aadbe1e9009540c9f105e0e971a18926901bd3a2d969d"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-06.png",
+      "sha256": "6cc0592d9ba7a7f5299368188043089793f4b26d4eea4c83f0bfedeeba68feec"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-07.png",
+      "sha256": "f97e13ba508ec4a17c741da41361b31c30975d0367d3096f29b84a30835e5494"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-08.png",
+      "sha256": "76626ef610b1fdc8a905fb276e8ab24a692a9385ff6c07dceda76419507aea95"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-09.png",
+      "sha256": "db322c0f149795b6e9273093a554f9db45fc1857dbf8c7b57bcdab160a6d531a"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-10.png",
+      "sha256": "1f0b49893bed2132c4d5b02adde494531bdcfe789eba3163e6b919ff2c0d64c2"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-11.png",
+      "sha256": "08463ed97e37c9cacc15c185f4ef8cc123ec50162e0fb0162c037800a7837537"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-12.png",
+      "sha256": "b2bfef9560976b27c3635ceef7b1fbb6822edb145a4b2343ed5e7ce0328f2fc1"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-13.png",
+      "sha256": "f0e54281d18c15d5982427e63c28992c880027e9c46c63e552419e4760267bbb"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-14.png",
+      "sha256": "546f962bc588a4ba5922a3b5e0881fcf671357c7318c96edd81326f96062bf16"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-15.png",
+      "sha256": "c272be6c79bd65f00679c11216adeebd7c5959251a22cbf71de5ad9a7776582b"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-16.png",
+      "sha256": "5f89fc80c5dadaf4414a2cf0a8388f4e7c3133861e387c9a876c02bfa8dc341e"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-17.png",
+      "sha256": "d87c0b3aec105a900cc120bd7753100d170a1e1a18743487cca6a5e59c2c894c"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-18.png",
+      "sha256": "328090351a2054672db1d8f8633062815997d475cc306605c23d5ca4edff2e39"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-19.png",
+      "sha256": "001d51554b080f1ae85a09e48287fd542a37ac2c8773600539238177f6d739fc"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-20.png",
+      "sha256": "709889bae1a1272b6504e49a81fdb5f1ee1c4e51b21315067161a7bd0a1b7297"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-21.png",
+      "sha256": "9cca1cbea99bde3f78d50c2c1e786e84f5d3ad4eab19583b664a6de89b0ea87f"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-22.png",
+      "sha256": "aa22730107cefcfedc4129ca1261164aa626b74d0987f9241fe102b3d7807fe7"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-23.png",
+      "sha256": "093990425cf6551349086ad3f21ce187330b86fbd6639d003842e1e9c4d83a87"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-24.png",
+      "sha256": "487244a921a35354ab84d9d738eab7a0d70ca665482b97a7b39218b3b3f6bc52"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-25.png",
+      "sha256": "47e134ff51192b4bd8094d4868ba7138c9ba95922ee80912d8ba645b3cc0a8d7"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-26.png",
+      "sha256": "c3c984bd0bf1806aebd4c47d4552e1c39a81c3af4d83d48ea4a14cd5dab0a7a2"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-27.png",
+      "sha256": "10a00c773f269d7d59b982484c10a56d7a2d9d3195058e140943f371a3b89ca9"
+    },
+    {
+      "path": "build/shipped-art-review/sheet-28.png",
+      "sha256": "e0a98e48b39c1c6fe4100a99ccd0eca3d2a22c7857e7d474e314607e001f4194"
+    },
+    {
+      "path": "build/shipped-still-review/sheet-00.png",
+      "sha256": "12696fe0d5df4bf57bb34f7f8ddf10960cb8e66d8ee5969357a04f72be1292a8"
+    },
+    {
+      "path": "build/shipped-still-review/sheet-01.png",
+      "sha256": "26497fa3352301b59844b32b2331e5877b08cfcf6552426190c582676f886f6b"
+    }
+  ]
+}

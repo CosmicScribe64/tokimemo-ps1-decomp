@@ -1,0 +1,241 @@
+{
+  "ticket": "T-39537",
+  "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+  "scope": "Closeout of generated-boundary triage. All 39 remaining early-break flags match previously reviewed payload hashes and retain decisions. All 1331 phrase-link flags are covered by phrase-boundary-triage-2026-11-02.json. Source-retained boundaries stay unchanged; this is not an assertion that all possible line breaks were manually reviewed.",
+  "early_checks": [
+    {
+      "record_id": "talk:CDROM/BUNKA/AS_S6W.BIN:main:g0087:l0000",
+      "payload_sha256": "2647d2eca14dad2233bc7daa092a3d94e9dc6fc54d187ba309ae22f82b84f3a8",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/AS_S6W.BIN:main:g0090:l0000",
+      "payload_sha256": "2647d2eca14dad2233bc7daa092a3d94e9dc6fc54d187ba309ae22f82b84f3a8",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/AS_S6W.BIN:main:g0093:l0000",
+      "payload_sha256": "2647d2eca14dad2233bc7daa092a3d94e9dc6fc54d187ba309ae22f82b84f3a8",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/HI_S6.BIN:main:g0163:l0001",
+      "payload_sha256": "3bcd85c859e78805b8bcc070d31cd3fcfece2943a22ddbe1b387b0cf90983941",
+      "disposition": "retain dynamic-name reservation",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/KG_S6W.BIN:main:g0046:l0000",
+      "payload_sha256": "0992b6332e6ac2e71456ebdf5cff158e945def682ff1347ef04326e26427ed92",
+      "disposition": "retain dynamic-name reservation",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/KG_S6W.BIN:main:g0047:l0002",
+      "payload_sha256": "c044e93cbd2e6984957347e305957d907c250b22e5a0dd7181934cb12f11abe9",
+      "disposition": "retain readable two-row phrase",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/KS_S6O.BIN:main:g0041:l0004",
+      "payload_sha256": "448e293c9012901bf44e7b7ee79a111656bcc6deab58ae6ea356a5b899a7a0ad",
+      "disposition": "retain dynamic-name reservation",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/KY_S6.BIN:main:g0044:l0000",
+      "payload_sha256": "9cb44f108281ecb99d7162977eb2189529dcc1a4436cdbdef53f9e307bf0350b",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/KY_S6S.BIN:main:g0000:l0004",
+      "payload_sha256": "09b60a32abb3958edf70333cf34038b15a370bc1836151295534472eb2a1b3bc",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/BUNKA/SA_S6W.BIN:main:g0004:l0002",
+      "payload_sha256": "9bc09e8b6e9f1bb1b2077af97601c989e05085cdf519197d6ce083fcc2541ab9",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/DATE_FU.BIN:section-05:g0009:l0000",
+      "payload_sha256": "4f6bb3b71acef62bbd26369681fd4b8445bb7003edfdb3bc000c742ec3af659d",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/DATE_NI.BIN:section-05:g0009:l0000",
+      "payload_sha256": "bed89df2d7c9020e8d7947d12b047d8d6405504e59ca321a2acc27b749c1af0d",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0005:l0000",
+      "payload_sha256": "8f2b14e1954d75cb180d628a2e62cc333c5861d5ed3767c348a848ebbed415c8",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-20:g0005:l0000",
+      "payload_sha256": "b97c5a5f9b4956198293f6c1752bed23b0b033439a756c0f45561bdcba47adbf",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-2:g0000:l0009",
+      "payload_sha256": "3e7f3bab67823bcb356cebc95e9ccf0521b7a8e7bc3650bc9044d551a51049ca",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-4:g0000:l0015",
+      "payload_sha256": "e0e4864ed654092c7508c28e7be26123ed41f1a73a6e6a95d252241c02d2e366",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-8:g0000:l0008",
+      "payload_sha256": "53d8ecc5c689d3f99085da731c2dc41537a31506dbeb0c728b983bf84790c457",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-8:g0001:l0001",
+      "payload_sha256": "3c6de0d6d44f47006924bc8a277f60517d68edff39b08fda9197e5a351f965a0",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-8:g0001:l0010",
+      "payload_sha256": "53d8ecc5c689d3f99085da731c2dc41537a31506dbeb0c728b983bf84790c457",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-11:g0000:l0018",
+      "payload_sha256": "49f27b5e7e385cba71b0ee071c83d41269d2c30dd4a43dde339aec3f6521433e",
+      "disposition": "retain dynamic-name reservation",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/EVENT_AS.BIN:initializer-00:g0005:l0003",
+      "payload_sha256": "ef76d0abd8b6f607fcef216be2ee566b2d81a1da54bbc4b372c6633aa9364378",
+      "disposition": "retain readable two-row phrase",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-0:g0040:l0005",
+      "payload_sha256": "fa60f4d4c1b6f529ee0b7ec6f09b1de206b3757df16c4bbe7b027e1f5c043047",
+      "disposition": "retain dynamic-name reservation",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-1:g0011:l0001",
+      "payload_sha256": "4b3958b969b8a90f05a4bcf328c5a7447d400dcee77a938669a457d8ef629671",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GASSH_FU.BIN:table-0:g0086:l0001",
+      "payload_sha256": "4b3958b969b8a90f05a4bcf328c5a7447d400dcee77a938669a457d8ef629671",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GEKO.BIN:table-1:g0029:l0002",
+      "payload_sha256": "c18667994d9fa39b97729ce1093707e42f1ff9eacef9d24605cf15886ea7a376",
+      "disposition": "retain readable two-row phrase",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GEKO.BIN:table-1:g0037:l0000",
+      "payload_sha256": "15525711fc54692ccf484a29fb6e6de34b402421c6ca778528e15c362a81ba76",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GEKO.BIN:table-2:g0037:l0000",
+      "payload_sha256": "15525711fc54692ccf484a29fb6e6de34b402421c6ca778528e15c362a81ba76",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GEKO.BIN:table-3:g0037:l0000",
+      "payload_sha256": "15525711fc54692ccf484a29fb6e6de34b402421c6ca778528e15c362a81ba76",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GEKO.BIN:table-7:g0037:l0000",
+      "payload_sha256": "15525711fc54692ccf484a29fb6e6de34b402421c6ca778528e15c362a81ba76",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GEKO.BIN:table-9:g0037:l0000",
+      "payload_sha256": "15525711fc54692ccf484a29fb6e6de34b402421c6ca778528e15c362a81ba76",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/G_INVITE.BIN:table-0:g0002:l0000",
+      "payload_sha256": "3a4f4e5de0cdfd11c75dbff2a488fc0960937605c4fc47c0ddb1617a145baeb1",
+      "disposition": "retain readable two-row phrase",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/G_INVITE.BIN:table-3:g0004:l0000",
+      "payload_sha256": "a5dadd5b148e1864ce1b0e8184045b912acecca9754dc3dca1cc6b2ed95b9d81",
+      "disposition": "retain readable two-row phrase",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/G_INVITE.BIN:table-3:g0010:l0000",
+      "payload_sha256": "601d6a14614ee07d5e718e656b63307ce5820118b3c2a39c2b046a14dc24d933",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/G_INVITE.BIN:table-3:g0018:l0000",
+      "payload_sha256": "4d8059d9f31901671cb680c4e86809ff2fe2aa42e343304358db48224dfd6517",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-8:g0024:l0000",
+      "payload_sha256": "6712430a7e1124d2a79fc085ff42b6815b1877be5c176918cdfbf769155f5b4e",
+      "disposition": "retain readable two-row phrase",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-9:g0024:l0000",
+      "payload_sha256": "6712430a7e1124d2a79fc085ff42b6815b1877be5c176918cdfbf769155f5b4e",
+      "disposition": "retain readable two-row phrase",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/VALEN.BIN:table-0:g0000:l0004",
+      "payload_sha256": "d4a12a9a9645346de2fa4406f2c0c8ba51a58d007cef372d604c49bfa082b28e",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/VALEN.BIN:table-6:g0000:l0003",
+      "payload_sha256": "d4a12a9a9645346de2fa4406f2c0c8ba51a58d007cef372d604c49bfa082b28e",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/WHITE.BIN:table-8:g0007:l0002",
+      "payload_sha256": "bc7e0fe3d99f340e70589ecea72a82132b7fedfe010c3fc829556691ea9a4c53",
+      "disposition": "retain balanced rows",
+      "boundaries": 1
+    }
+  ]
+}

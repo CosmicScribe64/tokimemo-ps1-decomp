@@ -1,7 +1,7 @@
 ---
 id: T-39537
 title: Flag suspicious dialogue breaks without changing intentional pauses
-status: In Progress
+status: Done
 assignee: codex
 created: 2026-11-02
 updated: 2026-11-02
@@ -18,7 +18,7 @@ Review dialogue across routes for awkward line breaks using encoded text, source
 - [x] Flag short stranded rows, separated punctuation and suspicious phrase boundaries for review.
 - [x] Preserve payload bytes; this audit must never rewrite dialogue.
 - [x] Test intentional pauses, reply boundaries and automatic breaks independently.
-- [ ] Run across the full translated dialogue corpus, review findings and record unresolved cases.
+- [x] Run across the full translated dialogue corpus, review findings and record unresolved cases.
 - [x] Review against CODING_STANDARDS.md.
 
 ## First corpus pass
@@ -84,3 +84,11 @@ Published `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4` after all 15 browser checks
 ## Published-build audit refresh
 
 Reran the diagnostic across all 30,573 dialogue records using the published build's font metrics. Generated early-break candidates decrease to 39 and phrase-link candidates to 1,331 after the festival corrections. There are no generated short-single-word, punctuation-only or numbered-label candidates. Retained boundaries remain separate. `translations/en/reviews/published-break-audit-2026-11-02.json` records the counts and report hash; contextual phrase review remains open.
+
+## Phrase-boundary review complete
+
+Read all 798 distinct adjacent-row pairs behind the 1,331 generated phrase-link flags, including their measured widths. Retain the readable word wraps, balanced short replies and dynamic-name reservations; none requires another forced break. A line ending in an article or preposition is a useful review hint, but does not by itself make ordinary word wrapping defective. `translations/en/reviews/phrase-boundary-triage-2026-11-02.json` records every occurrence by ID, payload hash and boundary. This is text review, not new runtime or artwork coverage. The remaining long-passage renderer checks stay under T-39511.
+
+## Closeout review
+
+The published-build audit, all 798 distinct phrase pairs, and all 39 remaining early-break records are accounted for. The early records still match their accepted payload hashes; see `translations/en/reviews/final-break-review-2026-11-02.json`. Reviewed the closeout against CODING_STANDARDS.md: diagnostic metadata only, no payload or raw-source edits, existing guarded corrections and tests retain their recorded review. No unresolved finding remains in this ticket. Broader scene and artwork signoff stays with T-39511 and T-39508.

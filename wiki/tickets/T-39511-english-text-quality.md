@@ -150,3 +150,11 @@ The final two flagged event passages, EVENT_AS initializer 00 and EVENT_FU scene
 ## Yuina ending subtitle
 
 One pending Yuina ending passage passes native-resolution scrolling review on the published build. `translations/en/reviews/yuina-ending-layout-2026-11-02.json` verifies the actual script payload, active tables and completed text position. The controlled fixture retains Yukari artwork, so the receipt covers subtitle layout only. A first probe retained old text and was discarded; clearing the saved fixture before selection removed that artifact. The queue is now 61 reviewed and 26 pending. No game bytes changed.
+
+## Ending subtitle batch
+
+Five standalone subtitles and three connected-speech passages pass native-resolution visual review. The connected tests start at the speech opening; memory samples confirm every preceding segment reaches full reveal. `translations/en/reviews/ending-batch-layout-2026-11-02.json` records payload hashes, active tables, completion positions and screenshot hashes. The shared fixture retains Yukari artwork, so these approvals cover subtitle layout and scrolling, not each heroine's staging. The queue is 69 reviewed and 18 pending. Three longer connected speeches are running next.
+
+## Long-passage queue complete
+
+All 87 flagged long records now have runtime layout receipts. The last three ending continuations pass with every preceding speech segment fully revealed. The final 15 message-box records, including all three DATE_AS response variants, pass native-resolution review through the shared dialogue renderer. `translations/en/reviews/remaining-message-layout-2026-11-02.json` checks every copied script chunk against the published disc and verifies the active payload, table pointers, advanced line and full reveal. Its controlled fixture retains Yumi's backdrop and name binding; it does not prove natural scene triggering or each scene's artwork. No new layout correction was required. The art review and final scope reconciliation remain separate.

@@ -1,0 +1,542 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+  "scope": "Controlled subtitle layout with Yukari artwork retained. Actual ending-script tables select each passage. The main executable, ending overlay and script match the saved-state build byte for byte. Each independent selection clears old text first; connected speeches start at their opening command and progress naturally. These checks cover subtitle wrapping, continuation and scrolling, not each heroine scene staging or voice synchronization.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-11:g0000:l0001",
+      "payload_sha256": "6e19c6e0ecde8810de93d3abeed9e230faf84b3c9832ee19aab34db469169b43",
+      "run": "build/emu/ending-batch-singles",
+      "tables": [
+        2149541528,
+        2149541556,
+        2149542120,
+        0,
+        2
+      ],
+      "completed_frame": 450,
+      "completed_text_position": 46,
+      "completed_chain_lines": [
+        1
+      ],
+      "result": "Opening rows, continuation, scrolling and final punctuation inspected. No overlap, clipped words or unintended gaps. Intentional pauses retained.",
+      "captures": [
+        {
+          "frame": 30,
+          "sha256": "4ed25a199e3921039ce6cf158f887288688eae6456046e16f612ff55ff8bdc61"
+        },
+        {
+          "frame": 150,
+          "sha256": "99709f6e221c31ba414a7faedb6a30d389cfaf36607b6b64bb27669fcdccfe1f"
+        },
+        {
+          "frame": 270,
+          "sha256": "54f36c9dda4a2127cd9c0d521c1c5d1a642f9c44b3b352262eb8bc82f3708c82"
+        },
+        {
+          "frame": 390,
+          "sha256": "7bd4e46004f5ee8813933c90d98578d30ffb0403bfcb87b43cbbc4d93fd5bb52"
+        },
+        {
+          "frame": 450,
+          "sha256": "9ac629b218b5820389e3c153dcd55e1c4f72bb6dd5c2bd951b3f8c5206644139"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-11:g0000:l0014",
+      "payload_sha256": "ac9a5622f202a485482a197cf6f0b7807e648dc8a421b6723acee244befb9e86",
+      "run": "build/emu/ending-batch-singles",
+      "tables": [
+        2149541528,
+        2149541556,
+        2149542120,
+        0,
+        15
+      ],
+      "completed_frame": 1650,
+      "completed_text_position": 45,
+      "completed_chain_lines": [
+        14
+      ],
+      "result": "Opening rows, continuation, scrolling and final punctuation inspected. No overlap, clipped words or unintended gaps. Intentional pauses retained.",
+      "captures": [
+        {
+          "frame": 1230,
+          "sha256": "3338b4f3fe0ce4c888d9eb333b280f41cf23468d5cf0017580d6a87239e91b4c"
+        },
+        {
+          "frame": 1350,
+          "sha256": "3604580fb9765e1bf443ac6f2d49f71cfc3d762781fea454cf52dd045976def3"
+        },
+        {
+          "frame": 1470,
+          "sha256": "47427ade421388874adbc76808b1b9deb2bf4714f7288045f866b334c8ce154a"
+        },
+        {
+          "frame": 1590,
+          "sha256": "4da68e7bae991c98d8e9c45bb16a13133f2cd5222a5c4e75fe9c81c0cc39be18"
+        },
+        {
+          "frame": 1650,
+          "sha256": "a18eedbe4f275bf476bd1b74a8b592960791e43d9f6888a91458e57316e05e02"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-6:g0000:l0001",
+      "payload_sha256": "fa048adc73b861a812d63dfc44658faefc71d81c7662a905ea88f81c8c0ef800",
+      "run": "build/emu/ending-batch-singles",
+      "tables": [
+        2149525996,
+        2149526028,
+        2149526732,
+        0,
+        2
+      ],
+      "completed_frame": 3000,
+      "completed_text_position": 63,
+      "completed_chain_lines": [
+        1
+      ],
+      "result": "Opening rows, continuation, scrolling and final punctuation inspected. No overlap, clipped words or unintended gaps. Intentional pauses retained.",
+      "captures": [
+        {
+          "frame": 2430,
+          "sha256": "483d9879258e5a46c7474b1393779dbe659433850156729dc0f4bb23a69ca744"
+        },
+        {
+          "frame": 2550,
+          "sha256": "501b0125a9db69a51486e16e4545700c297751eaa017c01e1d1b08dfb9f4cfb8"
+        },
+        {
+          "frame": 2670,
+          "sha256": "6165b5c3097c896141e2582903d0eab11f042f3be47b0be61d1be452abf568c6"
+        },
+        {
+          "frame": 2790,
+          "sha256": "0f322a1812aaef3e20af76610376ea3584b91e4e169503b1b664f31c3f6255ac"
+        },
+        {
+          "frame": 2910,
+          "sha256": "7bc2094dc4d7ca15f7874833b7cf93cc0e2ccfc4fc83a019da53d353e89d0405"
+        },
+        {
+          "frame": 3000,
+          "sha256": "3f3949c781d56142c6219ea63f9d36f30d0bbdd391c4f38966b912c7213265ec"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-7:g0000:l0027",
+      "payload_sha256": "ab53a0870ab6126bffa8a2c49c8d4e0d68bd76fb3d234793c361ff5fec4bd052",
+      "run": "build/emu/ending-batch-singles",
+      "tables": [
+        2149528312,
+        2149528348,
+        2149529220,
+        0,
+        28
+      ],
+      "completed_frame": 4050,
+      "completed_text_position": 46,
+      "completed_chain_lines": [
+        27
+      ],
+      "result": "Opening rows, continuation, scrolling and final punctuation inspected. No overlap, clipped words or unintended gaps. Intentional pauses retained.",
+      "captures": [
+        {
+          "frame": 3630,
+          "sha256": "f2793b80ed49808f73c3115af827bada264debeec2f4f5a3e9ef11bfe80bb32c"
+        },
+        {
+          "frame": 3750,
+          "sha256": "8fbf86fe00620cf97dc51aa9ababc642e06af7730ff83dd52cc9f053a5316569"
+        },
+        {
+          "frame": 3870,
+          "sha256": "06a8417385da903b93c81b02c98f35b48aff9a48e5d7f2007136f6800119d484"
+        },
+        {
+          "frame": 3990,
+          "sha256": "76de241747e4c3d8bc69f77e81d3233204bdea2caa20a8ab2b2f18f045ecce7b"
+        },
+        {
+          "frame": 4050,
+          "sha256": "9e318c4a50f388c272d14935d274e0236a84091bba75d8721977708f3c128aa2"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-7:g0000:l0029",
+      "payload_sha256": "cbc6e9e628c6ab14d49d951e09e640ad20e97cb7825524b60f54ed29f09fa913",
+      "run": "build/emu/ending-batch-singles",
+      "tables": [
+        2149528312,
+        2149528348,
+        2149529220,
+        0,
+        30
+      ],
+      "completed_frame": 5400,
+      "completed_text_position": 64,
+      "completed_chain_lines": [
+        29
+      ],
+      "result": "Opening rows, continuation, scrolling and final punctuation inspected. No overlap, clipped words or unintended gaps. Intentional pauses retained.",
+      "captures": [
+        {
+          "frame": 4830,
+          "sha256": "2f1a9964913ff97458e7bfda77007ad538a599db72628711d036723962b44854"
+        },
+        {
+          "frame": 4950,
+          "sha256": "95d6bcb4418c40ffa92b92cd7186237c2d350a80fc462b0ae90cd3d1b10ff5bd"
+        },
+        {
+          "frame": 5070,
+          "sha256": "05007786193e5fd722bd53f05bf0128b9e69d5cbdfafe66ab834a5c4dfe7d472"
+        },
+        {
+          "frame": 5190,
+          "sha256": "ae31cac5c4c5382a2cbda16d25edf60d73cf9550d8399aaa85a9662ed3a83055"
+        },
+        {
+          "frame": 5310,
+          "sha256": "368eca10dbe6503f4b77183460c94054d6550d4ee6583f6a7531f3bea2b5ad9b"
+        },
+        {
+          "frame": 5400,
+          "sha256": "cc96b61c13a24ea2add4185a0c263716ef7fe0a9baa180913fa33719dbc365bd"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-11:g0000:l0008",
+      "payload_sha256": "3aa2850f7f0d2a385a40226cf55c7cd138c4763d19d004fb6636ab9a62a784e4",
+      "run": "build/emu/ending-batch-megumi",
+      "tables": [
+        2149541528,
+        2149541556,
+        2149542120,
+        0,
+        9
+      ],
+      "completed_frame": 2100,
+      "completed_text_position": 152,
+      "completed_chain_lines": [
+        7,
+        8
+      ],
+      "result": "Opening rows, continuation, scrolling and final punctuation inspected. No overlap, clipped words or unintended gaps. Intentional pauses retained.",
+      "captures": [
+        {
+          "frame": 780,
+          "sha256": "ec3e8dcb6f6173df7129171ee0d681680e9027aa0b61da42693f6f94690c3f0a"
+        },
+        {
+          "frame": 900,
+          "sha256": "5e9b71e882d999edf0384700998d5ffa29d4b4e4c694d976ff8584502846e87b"
+        },
+        {
+          "frame": 1020,
+          "sha256": "e30d309e731f5d9f69a87b8cd5b3b703931668146ff39b160f39684bc238529c"
+        },
+        {
+          "frame": 1140,
+          "sha256": "66ffc4922c8bada81b0b9ae04866c482bb03f6b4eae50990c78c48f03e2fd852"
+        },
+        {
+          "frame": 1260,
+          "sha256": "2ca782c8a4f7d63583a32c5de3fc2cdd8c2cc9455c8d5a961c585322b47db189"
+        },
+        {
+          "frame": 1380,
+          "sha256": "a86832208b4c2f877505dc003b1bb851bbb01d94ff9b1bf7ecdf155341df3b0d"
+        },
+        {
+          "frame": 1500,
+          "sha256": "473e8bb15140768cc928e6c55697a0e70195e872db09887b3422aff4c3db2315"
+        },
+        {
+          "frame": 1620,
+          "sha256": "dadcb79bb0f1166ef1d13ee23c57546b253b1b0b364ea65628fd38513601e3ea"
+        },
+        {
+          "frame": 1740,
+          "sha256": "07be724633daa20a10764aa9922806d3724d65f9eba5eb2dd283299421e0ae45"
+        },
+        {
+          "frame": 1860,
+          "sha256": "4766d53ddd3e3877f0d7a6514a91126a33f9e9b8e028908a3e256999190a00cd"
+        },
+        {
+          "frame": 1980,
+          "sha256": "327ca31f9cf8dbfa656ca772396d5166ae3768a1a0523ed919c49c8ab1ec6243"
+        },
+        {
+          "frame": 2100,
+          "sha256": "593f2aaae937c88d3372dbcecb2e37ef62cf4bf9decafa7932982b35724d11ac"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-11:g0000:l0010",
+      "payload_sha256": "9fc70e5722d0ef0b835834367442bd440a6291c7f447ea19ff70c02a2de8844a",
+      "run": "build/emu/ending-batch-megumi",
+      "tables": [
+        2149541528,
+        2149541556,
+        2149542120,
+        0,
+        11
+      ],
+      "completed_frame": 3090,
+      "completed_text_position": 98,
+      "completed_chain_lines": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "result": "Opening rows, continuation, scrolling and final punctuation inspected. No overlap, clipped words or unintended gaps. Intentional pauses retained.",
+      "captures": [
+        {
+          "frame": 2700,
+          "sha256": "40c947430b694f92fdcccc82df5f4279cfa49ed0cd87bc73b3e2fcc0a4b4016d"
+        },
+        {
+          "frame": 2820,
+          "sha256": "07f2c8755bff9cd1c29301cca7d58fa4747ab231d5d0bb265be6808fcc53e49c"
+        },
+        {
+          "frame": 2940,
+          "sha256": "19471d2602fb0c4e34c15b00b02f6d209caaf765e0f4a67104e16fd35784eb89"
+        },
+        {
+          "frame": 3060,
+          "sha256": "3ebf2536b6a05eab5de872660d818329bb9b70817aaa7a1b1dc1ab4aac7c1632"
+        },
+        {
+          "frame": 3090,
+          "sha256": "47550f91b1fb05a09b79aceb3140c4278fea76ac86b778713d9769eccd7741bc"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-16:g0000:l0008",
+      "payload_sha256": "bee98fcda4d5b4f4e763e09dd4318b7e2a7cdac9883aa96ca704ce5ef64dc042",
+      "run": "build/emu/ending-batch-miharu",
+      "tables": [
+        2149547928,
+        2149547952,
+        2149548404,
+        0,
+        9
+      ],
+      "completed_frame": 2010,
+      "completed_text_position": 125,
+      "completed_chain_lines": [
+        6,
+        7,
+        8
+      ],
+      "result": "Opening rows, continuation, scrolling and final punctuation inspected. No overlap, clipped words or unintended gaps. Intentional pauses retained.",
+      "captures": [
+        {
+          "frame": 930,
+          "sha256": "75ccb13260d8b0ae4d51052cfb797477784cd4133965f1d9e5bf46bc67f23109"
+        },
+        {
+          "frame": 1050,
+          "sha256": "0b399d89898240a5f8a18de236c35dce80cf288e3b60418c84b23b6db19bfc8a"
+        },
+        {
+          "frame": 1170,
+          "sha256": "b972bbebc1d852c2723235d62527295c8081cf74dc03059878edd84e4c52d17b"
+        },
+        {
+          "frame": 1290,
+          "sha256": "0abe2d5d3f3cfa15d7709ee0975d53b39b2d31694694644963b6f0336401138d"
+        },
+        {
+          "frame": 1410,
+          "sha256": "09ff4146e885b79f4f34de37961affe26de993b3a212335e559a87ecac359d92"
+        },
+        {
+          "frame": 1530,
+          "sha256": "13e9769d9b6addbb552d3c774e6485bdfd87c59bfbd8227efafab7e7b631dfcf"
+        },
+        {
+          "frame": 1650,
+          "sha256": "ffd1a12f9d24d9a3002dd1181f112ff9f7430c0db76ee5dc435d4fb467f9dc00"
+        },
+        {
+          "frame": 1770,
+          "sha256": "a8d6805a1bcd6a774b7fcab3baa532fd02096f37cfc9d4773d6a82114613d470"
+        },
+        {
+          "frame": 1890,
+          "sha256": "6ca5684520197e6af47340f83f355079adf8132c471e70e650a6fcc6d0206493"
+        },
+        {
+          "frame": 2010,
+          "sha256": "0981f036cc1fa491862f93b0466a904b7263e58f5996982107e5a0ac6edc596a"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-10:g0001:l0012",
+      "payload_sha256": "77dffe680025ae2613dd0bb45aa1739f246d5c8a9e7eff7d21b0907e02041c5d",
+      "run": "build/emu/ending-batch-nozomi",
+      "tables": [
+        2149538772,
+        2149538844,
+        2149540588,
+        1,
+        13
+      ],
+      "completed_frame": 6180,
+      "completed_text_position": 143,
+      "completed_chain_lines": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "result": "Opening rows, continuation, scrolling and final punctuation inspected. No overlap, clipped words or unintended gaps. Intentional pauses retained.",
+      "captures": [
+        {
+          "frame": 5700,
+          "sha256": "be813adc2806df5da661d70ea888dc379448f1147487d302b13a07653a713cd4"
+        },
+        {
+          "frame": 5820,
+          "sha256": "c37a936df18f7f10a69857c452f628509c6cf3e01f2c329c49cec2083acb6618"
+        },
+        {
+          "frame": 5940,
+          "sha256": "913924c8c34a6d9af09b542967120d1a66429e6544cfb3feff262a737f72a46b"
+        },
+        {
+          "frame": 6060,
+          "sha256": "85ca660ae8c4bb04e8d2b8204bb212565ffbe7700193d2cc917f3d6c57d849a4"
+        },
+        {
+          "frame": 6180,
+          "sha256": "3fc6b739e65cdfbef765f52a6d2122933aade4e11e5bb1edb4d83087249b2dad"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-7:g0000:l0023",
+      "payload_sha256": "e53e1415c36070925d77d8f7f1faaff66dbf3c1a86d714c32b3639458dc3cc8d",
+      "run": "build/emu/ending-batch-mira",
+      "tables": [
+        2149528312,
+        2149528348,
+        2149529220,
+        0,
+        24
+      ],
+      "completed_frame": 6990,
+      "completed_text_position": 117,
+      "completed_chain_lines": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "result": "Opening rows, continuation, scrolling and final punctuation inspected. No overlap, clipped words or unintended gaps. Intentional pauses retained.",
+      "captures": [
+        {
+          "frame": 6570,
+          "sha256": "47c2136f0c9461cf2282c42158c055552053d9264d43f24e6e99bde6f9ce6701"
+        },
+        {
+          "frame": 6690,
+          "sha256": "caabfc2b879da0d3246f4db6d2bef4c887b0549f04878f768f5b36c1587c366f"
+        },
+        {
+          "frame": 6810,
+          "sha256": "4ab30e7802350d2496f666f5aac454056832d8b805c725895210b563664f29e7"
+        },
+        {
+          "frame": 6930,
+          "sha256": "e4fc49a90df661d0c9660fd4e747af756b9eb49c3cf3123d627908ec84c3ea60"
+        },
+        {
+          "frame": 6990,
+          "sha256": "0e850380ef8d3d686a0ceeeec8abd027f0bc0dd18e7bf35cd3f37cec316701c0"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-6:g0000:l0013",
+      "payload_sha256": "66a915c3fa4f0ccfd85e49e772cb6cd18f5088456bf2086cf1e994a1b14bb164",
+      "run": "build/emu/ending-batch-ayako",
+      "tables": [
+        2149525996,
+        2149526028,
+        2149526732,
+        0,
+        14
+      ],
+      "completed_frame": 5460,
+      "completed_text_position": 149,
+      "completed_chain_lines": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "result": "Opening rows, continuation, scrolling and final punctuation inspected. No overlap, clipped words or unintended gaps. Intentional pauses retained.",
+      "captures": [
+        {
+          "frame": 4800,
+          "sha256": "93dd6f53dd06f2325d50f288b00000ea6beaa822fad724b13b888cf7990db6bb"
+        },
+        {
+          "frame": 4920,
+          "sha256": "4ea65736359fb8cae34efbc69e340ef8aab3a29104172ebba4aafe827bbd2fb8"
+        },
+        {
+          "frame": 5040,
+          "sha256": "b720bee2570f71d851c3cb991ffea818d3569fd991acdf4aad76d44d0d308e7d"
+        },
+        {
+          "frame": 5160,
+          "sha256": "20767927dce9f34d54b82d235a4231d58f7a28dd08f71233c914cb920e333f07"
+        },
+        {
+          "frame": 5280,
+          "sha256": "21e6ed9efce1452177fed4da392a7e29e6e50a44bc56425ba709d36f0d6f8ef8"
+        },
+        {
+          "frame": 5400,
+          "sha256": "eec3745fa5eb773be4341f6034f02a13207afb8966512386bbe38fb8a6c369fc"
+        },
+        {
+          "frame": 5460,
+          "sha256": "e5a66bd1f9c5c1ffb0d87ddf9061bd327a71c0a91c50d92fe497eff554f64899"
+        }
+      ]
+    }
+  ]
+}

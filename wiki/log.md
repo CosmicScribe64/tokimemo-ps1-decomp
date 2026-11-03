@@ -4233,3 +4233,19 @@ The ten EVENT_* records above are this follow-up batch; earlier Yumi event appro
 ## [2026-11-02] lint | Published dialogue audit and ending fixture check
 
 Refreshed the full dialogue break audit and verified one pending ending passage through the subtitle renderer. See [[tickets/T-39537-dialogue-break-review]] for corpus counts and [[tickets/T-39511-english-text-quality]] for the controlled fixture's scope. The first probe retained stale text and was excluded. The corrected run checks the on-disc payload, table pointers and full reveal; the visual queue is 61 reviewed and 26 pending. No game or patcher bytes changed.
+
+## [2026-11-02] query | Phrase triage and eight ending layout checks
+
+Completed contextual review of all generated phrase-link flags and inspected eight more pending ending passages. See [[tickets/T-39537-dialogue-break-review]] for the text decisions and [[tickets/T-39511-english-text-quality]] for the runtime evidence. No dialogue or artwork changed. The long-passage queue is 69 reviewed and 18 pending; the remaining ending chains are still running.
+
+## [2026-11-02] query | Complete the 87-record long-passage queue
+
+Inspected the remaining ending continuations and 17 message-box variants covering 15 records. The final queue is 87 reviewed and zero pending. Receipts distinguish natural continuation from controlled script selection and retain their artwork and scene-coverage limits. Updated [[tickets/T-39511-english-text-quality]]; the published game bytes are unchanged. Prepared a separate current-disc artwork contact sheet set for final visual review.
+
+## [2026-11-02] query | Review shipped sprites and decoded signs
+
+Visually inspected 254 shipped sprite targets and 16 translated still containers from the published build. Current-disc container hashes match the build report, and the review follows the selected fallback images. Recorded the scope and hashes in `translations/en/reviews/shipped-art-quality-2026-11-02.json` and updated [[tickets/T-39508-english-art-on-disc]]. No new art correction was required; separate movie, prologue-banner and retained-art evidence still applies.
+
+## [2026-11-02] ticket | Close generated-break review
+
+Moved [[tickets/T-39537-dialogue-break-review]] from In Progress to Done after contextual triage, published-payload hash checks and standards review. All generated candidates are fixed or explained. No source-retained break was rewritten by this audit. Broader release signoff remains open under [[tickets/T-39500-english-translation-patch]].

@@ -25,7 +25,6 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-39537-dialogue-break-review|T-39537 Flag suspicious dialogue breaks without changing intentional pauses]]
 
 
 
@@ -121,6 +120,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39537-dialogue-break-review|T-39537 Flag suspicious dialogue breaks without changing intentional pauses]]
 
 - [ ] [[tickets/T-39512-browser-patcher|T-39512 Build and verify the local browser patcher]]
 
