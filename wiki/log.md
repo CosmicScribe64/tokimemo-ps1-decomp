@@ -4183,3 +4183,11 @@ For [[tickets/T-39537-dialogue-break-review]], built and froze `build/white-wrap
 ## [2026-11-02] build | Pass browser acceptance for the White Day build
 
 The `build/patcher-white-wrap` package passes all 15 browser checks on target `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f`. Actual downloads match the audited disc and audio. ZIP drag/drop, cancellation, bad-source rejection, CUE output, local-only processing and mobile layout pass. Inspected desktop and mobile completion screenshots and added their hashes to `translations/en/reviews/white-day-wrap-verified-2026-11-02.json`. Reviewed the staged prose with the requested deslop skill; its three weak hits are technical uses of dynamic-name reservations. Game wording is unchanged. Publication remains pending.
+
+## [2026-11-02] build | Publish the verified White Day wrap fix
+
+Pushed `b7f25285b` to `patch/english` and published Pages commit `eaf375566dae0a2d52deeb12e686252960bf5574`. Deployment 41581825760 succeeded. All 36 public files match `build/patcher-white-wrap`, which passed all 15 browser checks. Saved `translations/en/reviews/published-white-wrap-2026-11-02.json`. The correction is live; [[tickets/T-39511-english-text-quality]] and [[tickets/T-39537-dialogue-break-review]] remain open for broader review.
+
+## [2026-11-02] query | Refresh the dialogue review sheets
+
+Added the verified New Year and White Day captures to `build/visual-review-pack/index.html`. The gallery now contains 1,252 captures across 146 sheets, including historical builds and repeated frames. These counts do not represent unique dialogue boxes or complete game coverage. Checked the current White Day grid visually; its completed rows preserve the corrected sentence and closing quote. [[tickets/T-39511-english-text-quality]] retains 37 pending long passages.

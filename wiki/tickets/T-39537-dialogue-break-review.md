@@ -58,3 +58,7 @@ The White Day runtime batch exposed an awkward generated break inside a short ex
 Built `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f` and reloaded WHITE.BIN through the scene's CD loader. The corrected exclamation stays on one row, with the opening, scrolling rows and closing quote intact. Receipt: `translations/en/reviews/white-day-wrap-verified-2026-11-02.json`.
 
 The full-disc comparison finds only WHITE.BIN changed; 1,370 other file extents and track 2 are identical to the published build. Script and executable audits pass. Focused tests pass 55 cases with one optional skip. Reviewed the exact-record override against CODING_STANDARDS.md: wording and unrelated records are preserved, no default binary or raw-source changes, and runtime evidence matches the new build. No unresolved implementation finding for this correction. Broader phrase triage remains open, and the new build is not yet published.
+
+## White Day build published
+
+Published `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f` after all 15 browser checks passed. Pages deployment 41581825760 succeeded, and all 36 served files match the tested package. `translations/en/reviews/published-white-wrap-2026-11-02.json` records the release hashes and verification. The visual review queue remains at 37 pending records.

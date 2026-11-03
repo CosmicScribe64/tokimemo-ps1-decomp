@@ -126,3 +126,7 @@ The remaining flagged New Year passage and three White Day passages pass scrolli
 ## White Day wrap retest
 
 The flagged White Day exclamation now stays on one row in the rebuilt disc. Inspected the full passage after reloading its script through the CD loader; the closing quote and scrolling rows are complete. `translations/en/reviews/white-day-wrap-verified-2026-11-02.json` records the screenshots and full-disc comparison. Only WHITE.BIN changes from the published disc, and the corpus proof preserves unrelated dialogue. The queue now has 37 pending layout checks. The new build is local; the public patch remains unchanged.
+
+## White Day build published
+
+Published `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f` after all 15 browser checks passed. Pages deployment 41581825760 succeeded, and all 36 served files match the tested package. `translations/en/reviews/published-white-wrap-2026-11-02.json` records the release hashes and verification. The visual review queue remains at 37 pending records.
