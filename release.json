@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "label": "Review build \u00b7 5c761523f939",
+  "label": "Review build \u00b7 81d34fdf65e9",
   "source": {
     "sha1": "00b595095e26108d0e07d76492a11aaf3f71ccf1",
     "size": 702072000
@@ -10,12 +10,12 @@
     "size": 45151344
   },
   "target": {
-    "sha1": "5c761523f939755d88c720adb2360927c58fe602",
+    "sha1": "81d34fdf65e956898051a76a72f8adeeeb7c804b",
     "size": 703097472
   },
   "patch": {
     "file": "assets/tokimemo-en.xdelta",
-    "size": 6563578,
-    "sha256": "f43a863292314c6ebd0d29db8f060eef4c705fbb03466e5a169c3ef59be783dd"
+    "size": 6563868,
+    "sha256": "060d8a050160bac5618bfa03075478982cc0e4ea54bb39401900e1cf2c0f13ab"
   }
 }
