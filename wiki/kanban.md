@@ -118,6 +118,8 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-39538-yumi-name-translation|T-39538 Restore Yumi's name in mistranslated self-references]]
+
 - [ ] [[tickets/T-39534-ending-dialogue-visibility|T-39534 Verify and repair ending dialogue visibility]]
 - [ ] [[tickets/T-39532-school-trip-phrase-wrap|T-39532 Keep the school-trip invitation phrase together]]
 

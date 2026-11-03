@@ -3987,3 +3987,7 @@ Moved [[tickets/T-39534-ending-dialogue-visibility]] to Done after code review a
 ## [2026-11-02] lint | Review the release's staged records
 
 Reviewed the source comments, ticket history and visual receipts with Deslop and Humanizer. Preserved append-only log entries and their repeated cross-references. Corrected an audit-metadata error that listed the ending-summary viewport as three rows; its renderer uses ten. No payload or approved screenshot changed. Committed the art fix at f4f38569b and ending fix at 53cdad04c. See [[tickets/T-39534-ending-dialogue-visibility]] and [[tickets/T-39533-sign-lettering-quality]].
+
+## [2026-11-02] ticket | Complete source-checked Yumi corrections
+
+Completed [[tickets/T-39538-yumi-name-translation]] with source/target guards, unchanged controls and six runtime receipts covering all 39 corrected records. Full-disc audits and focused tests pass. Reviewed the staged code and prose; pushed `76d07382e` to `patch/english`. Publication and broader visual review remain open.
