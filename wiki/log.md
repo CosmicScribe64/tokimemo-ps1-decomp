@@ -4351,3 +4351,11 @@ Read the distinct labels from all 27 table families in the growth census and che
 ## [2026-11-03] lint | Check mixed-source labels and fortune results
 
 Classified 1,154 records omitted by the Japanese-only width comparison and read all 74 distinct remaining translations. All seven formatted fortune results fit their actual buffer and display bounds; the widest is 174 pixels. The receipt at `translations/en/reviews/mixed-label-review-2026-11-03.json` records the scope and limits. No game bytes changed. [[tickets/T-39511-english-text-quality]] remains open for broader reading and geometry evidence.
+
+## [2026-11-03] ticket | Restore usable English secret names
+
+The remaining growth-candidate trace found overlong comparison keys and a collision between the zero-stat and maximum-stat name codes. Created [[tickets/T-39545-name-code-compatibility]] to restore four distinct effects with inputs that fit the English entry fields. The published build remains unchanged pending the correction and tests.
+
+## [2026-11-03] build | Verify the secret-name correction
+
+[[tickets/T-39545-name-code-compatibility]] passes 16 tests using the production name encoder and generated comparison function. Script, executable and generated-source audits pass, as do all 27 default hashes and 15 browser checks. Only NAME_ENT.EXN changes among 992 compared disc files; the previous visual evidence remains applicable. The standards review checks source guards and encoded input behavior. Publication is pending.

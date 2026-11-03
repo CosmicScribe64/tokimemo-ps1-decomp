@@ -845,5 +845,131 @@
     "target_text": "Glass Marbles",
     "ticket": "T-39541",
     "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "c:NAME_ENT:80139440:1": {
+    "source_sha256": "37bd7838d4e7a5347f6ff5bb755da5acf286c0d1a049de2621b4dd09f3185714",
+    "previous_target_sha256": "7cb26f355a7835032fa2ffe97d39094dacfad0ba697cd5a13c774050c3ff8c70",
+    "target_text": "KONAMI",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:00019590:744809258e2c": {
+    "source_sha256": "37bd7838d4e7a5347f6ff5bb755da5acf286c0d1a049de2621b4dd09f3185714",
+    "previous_target_sha256": "7cb26f355a7835032fa2ffe97d39094dacfad0ba697cd5a13c774050c3ff8c70",
+    "target_text": "KONAMI",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:2": {
+    "source_sha256": "b818693c9ca2c7ec6eae58bd552d2361c9759d8606045733e7732a399edec6f0",
+    "previous_target_sha256": "da2e5dc515b188dcac1afa88c93f859834ad57dfd921581172c9a74ab190e9f1",
+    "target_text": "ALL",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:0001959c:1e3fc5f31f1e": {
+    "source_sha256": "b818693c9ca2c7ec6eae58bd552d2361c9759d8606045733e7732a399edec6f0",
+    "previous_target_sha256": "da2e5dc515b188dcac1afa88c93f859834ad57dfd921581172c9a74ab190e9f1",
+    "target_text": "ALL",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:3": {
+    "source_sha256": "eaf3f1e708f9c46d49b43bdc4afff4090034c2f8a0602d9c21aa6e9c026f976a",
+    "previous_target_sha256": "be131658df293df96139be8e86fa8467bf89f1993d26820db3eb588a4051b707",
+    "target_text": "FRIENDS",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195a4:49fc4d4c2c93": {
+    "source_sha256": "eaf3f1e708f9c46d49b43bdc4afff4090034c2f8a0602d9c21aa6e9c026f976a",
+    "previous_target_sha256": "be131658df293df96139be8e86fa8467bf89f1993d26820db3eb588a4051b707",
+    "target_text": "FRIENDS",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:4": {
+    "source_sha256": "5ea831dbc9c2d5a9697e04319c069f72f51047ddcd3a2f0171c3e2abd39f04ac",
+    "previous_target_sha256": "e773347afcf29c0f4c62e728f963817f2086994f2bd4742849927e179db7739b",
+    "target_text": "UPUP",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195ac:3c25b9c21544": {
+    "source_sha256": "5ea831dbc9c2d5a9697e04319c069f72f51047ddcd3a2f0171c3e2abd39f04ac",
+    "previous_target_sha256": "e773347afcf29c0f4c62e728f963817f2086994f2bd4742849927e179db7739b",
+    "target_text": "UPUP",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:5": {
+    "source_sha256": "6646a3cb19400f681d50ecf26a42bfa7387aa98faa909ae953d82795f45089da",
+    "previous_target_sha256": "260e64e84a97afb6ff3d96e8d190625a8ae0b533c7b7c640f065b21af766951f",
+    "target_text": "DNDN",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195b4:3a798ad4e2ea": {
+    "source_sha256": "6646a3cb19400f681d50ecf26a42bfa7387aa98faa909ae953d82795f45089da",
+    "previous_target_sha256": "260e64e84a97afb6ff3d96e8d190625a8ae0b533c7b7c640f065b21af766951f",
+    "target_text": "DNDN",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:6": {
+    "source_sha256": "ccb2b1afc1436a86e3d5a18c3f96e33a866aae862055b8a8da0739f54338c50d",
+    "previous_target_sha256": "0515fe8f56b7a908ed430a61056aaf39c8554d392cf221ad31987056f3f629fa",
+    "target_text": "LRLRX",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195bc:12b009aff7ec": {
+    "source_sha256": "ccb2b1afc1436a86e3d5a18c3f96e33a866aae862055b8a8da0739f54338c50d",
+    "previous_target_sha256": "0515fe8f56b7a908ed430a61056aaf39c8554d392cf221ad31987056f3f629fa",
+    "target_text": "LRLRX",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:7": {
+    "source_sha256": "dee279c6e395efbd31a351d64c15703f508bbd4fa561e6d97c10a352352c23ed",
+    "previous_target_sha256": "e773347afcf29c0f4c62e728f963817f2086994f2bd4742849927e179db7739b",
+    "target_text": "UU",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195c8:df22bcdc5325": {
+    "source_sha256": "dee279c6e395efbd31a351d64c15703f508bbd4fa561e6d97c10a352352c23ed",
+    "previous_target_sha256": "e773347afcf29c0f4c62e728f963817f2086994f2bd4742849927e179db7739b",
+    "target_text": "UU",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:8": {
+    "source_sha256": "6917ed2ebfc332d905e59194f819ba7cb5aed0509bb8816a344f1c3cb29149e6",
+    "previous_target_sha256": "260e64e84a97afb6ff3d96e8d190625a8ae0b533c7b7c640f065b21af766951f",
+    "target_text": "DD",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195d0:4fcb6c35f69d": {
+    "source_sha256": "6917ed2ebfc332d905e59194f819ba7cb5aed0509bb8816a344f1c3cb29149e6",
+    "previous_target_sha256": "260e64e84a97afb6ff3d96e8d190625a8ae0b533c7b7c640f065b21af766951f",
+    "target_text": "DD",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:9": {
+    "source_sha256": "5d3d3564768b950fdfbade66adda604d49c69ba1ade29726db8c1384c00eb431",
+    "previous_target_sha256": "0515fe8f56b7a908ed430a61056aaf39c8554d392cf221ad31987056f3f629fa",
+    "target_text": "LRLRX",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195d8:620e239965bd": {
+    "source_sha256": "5d3d3564768b950fdfbade66adda604d49c69ba1ade29726db8c1384c00eb431",
+    "previous_target_sha256": "0515fe8f56b7a908ed430a61056aaf39c8554d392cf221ad31987056f3f629fa",
+    "target_text": "LRLRX",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
   }
 }

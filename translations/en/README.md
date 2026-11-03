@@ -4,6 +4,19 @@ This directory holds the English translation for *Tokimeki Memorial: Forever wit
 
 Every record with Japanese source text is translated (100%), covering all 54,786 translatable lines in `returned-v3.jsonl` and all 508 lines in `supplemental.jsonl`. The remaining 617 records in `returned-v3.jsonl` are empty source slots on the PS1 disc (`_(empty slot)_`) kept so table indices match the binary layout.
 
+## Secret name codes
+
+The English secret name codes fit the seven-letter entry fields. Enter them with the capitalization shown:
+
+| Effect | Family name | Given name | Nickname |
+| --- | --- | --- | --- |
+| Set all nine parameters to 573 | Any | Any | `KONAMI` |
+| Apply the original friendship bonus | `ALL` | `FRIENDS` | Any |
+| Set all nine parameters to zero | `UPUP` | `DNDN` | `LRLRX` |
+| Set all nine parameters to 999 | `UU` | `DD` | `LRLRX` |
+
+The word and arrow versions of the original directional code have different English inputs so their effects remain distinct.
+
 ## Guides and indexes
 
 - [Contributing guide (CONTRIBUTING.md)](CONTRIBUTING.md) covers editing tables, column roles, and local validation.

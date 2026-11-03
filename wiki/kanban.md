@@ -23,6 +23,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-39545-name-code-compatibility|T-39545 Keep secret name codes usable in English]]
+
 
 
 
