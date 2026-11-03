@@ -4315,3 +4315,7 @@ Created [[tickets/T-39542-complete-dialogue-values]] after tracing the growing f
 ## [2026-11-02] build | Verify complete fortune labels
 
 [[tickets/T-39542-complete-dialogue-values]] passes the production-helper regressions, both disc audits, 27 default hashes and all 15 browser checks. Controlled GPU checks show both long fortune labels with their closing punctuation. Standards review found no unresolved issues; publication remains pending. The menu-coordinate census for [[tickets/T-39511-english-text-quality]] finds 1,005 constant-X calls within the reviewed horizontal bounds; 95 dynamic calls and possible adjacent-column overlaps remain outside that check.
+
+## [2026-11-02] build | Publish complete fortune labels
+
+Closed [[tickets/T-39542-complete-dialogue-values]] after Pages deployment 41595860448 succeeded and all 37 served files matched the tested package. Target `81d34fdf65e956898051a76a72f8adeeeb7c804b` includes the visually checked substitution fix. [[tickets/T-39511-english-text-quality]] remains open for the remaining menu geometry and text-review scope.

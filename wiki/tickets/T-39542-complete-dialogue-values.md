@@ -1,7 +1,7 @@
 ---
 id: T-39542
 title: Preserve complete long dialogue values
-status: In Review
+status: Done
 assignee: codex
 created: 2026-11-02
 updated: 2026-11-02
@@ -17,7 +17,7 @@ The O/W substitution values use a character-name-sized backing buffer. English f
 - [x] Reproduce truncation with the production setter and protect adjacent fields in regression tests.
 - [x] Give dialogue values sufficient independent capacity; leave character-name storage unchanged.
 - [x] Verify the longest fortune labels in the emulator and check placement, RAM limits and default matching.
-- [ ] Review the fix and publish a build that passes the disc and browser checks.
+- [x] Review the fix and publish a build that passes the disc and browser checks.
 
 ## Reproduction
 
@@ -29,4 +29,4 @@ The production helper passes the complete-value, bounded-prefix, adjacent-field,
 
 Controlled emulator fixtures execute the real fortune setter and dialogue renderer for Future Blessing (Suekichi) and Middle Blessing (Chukichi). Both show complete labels and closing punctuation. The initial fixture retained the previous scene's text and was rejected; the isolated captures clear that text before selecting the line. The fixture does not establish a natural shrine playthrough. Evidence is recorded in `translations/en/reviews/dialogue-values-2026-11-02.json`.
 
-Reviewed the C89 change and regression against CODING_STANDARDS.md. Only the English O/W backing arrays grow, by 80 bytes total. Legacy state fields and character-name capacities remain unchanged. Copies use their destination capacity and retain the existing termination and multibyte rules. No unresolved review findings remain. Publication is pending.
+Reviewed the C89 change and regression against CODING_STANDARDS.md. Only the English O/W backing arrays grow, by 80 bytes total. Legacy state fields and character-name capacities remain unchanged. Copies use their destination capacity and retain the existing termination and multibyte rules. No unresolved review findings remain. Pages deployment 41595860448 succeeded. All 37 served files match the tested package; the publication receipt is `translations/en/reviews/published-dialogue-values-2026-11-02.json`.

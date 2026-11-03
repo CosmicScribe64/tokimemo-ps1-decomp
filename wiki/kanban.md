@@ -87,7 +87,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-39542-complete-dialogue-values|T-39542 Preserve complete long dialogue values]]
 
 
 
@@ -115,6 +114,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39542-complete-dialogue-values|T-39542 Preserve complete long dialogue values]]
 
 - [ ] [[tickets/T-39541-gift-name-capitalization|T-39541 Use consistent gift names]]
 
