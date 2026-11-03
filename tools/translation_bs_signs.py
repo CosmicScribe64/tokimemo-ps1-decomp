@@ -159,7 +159,7 @@ SIGNS += [
      'runs': [{'text': 'FINE ARTS', 'box': [110, 43, 32, 8], 'cap': 7, 'aspect': 9, 'stroke': 1.0, 'gap': 1.6}]},
     {'id': 'bs-i-28-02-counter-sign', 'file': 'I_28_02', 'catalog_item': 'catalog-146', 'sign': 'neon counter sign',
      'init': 'light', 'rect': [68, 34, 75, 9], 'fit': [26, 34, 114, 9], 'ink_share': 0.15,
-     'runs': [{'text': 'SHOE RENTAL', 'box': [70, 34, 68, 9], 'cap': 8, 'aspect': 1.0, 'stroke': 1.6}]},
+     'runs': [{'text': 'SHOE RENTAL', 'box': [70, 34, 68, 9], 'cap': 7, 'aspect': 1.0, 'stroke': 1.0, 'gap': 4.0}]},
 ]
 DEFAULTS = {'rotation': 0, 'aspect': 1.0, 'gap': font.GAP}
 # How the face of each `fill` kind is made (recorded per crop).
