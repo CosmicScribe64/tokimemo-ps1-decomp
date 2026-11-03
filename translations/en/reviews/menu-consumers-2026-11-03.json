@@ -1,0 +1,1516 @@
+{
+  "date": "2026-11-03",
+  "target_sha1": "39454a5b82bcc53f05daba81040e6622a85310e1",
+  "scope": "331 current growth records absent from the direct-call/shared-table hash join; 99 distinct payloads. Source consumer review, not a natural playthrough. Other census groups have separate receipts.",
+  "counts": {
+    "scene_title": 47,
+    "speaker_name": 5,
+    "fortune_names": 3,
+    "ending_lyric": 10,
+    "wrapped_substitution": 16,
+    "mouse_button": 2,
+    "unloaded_unit": 1,
+    "opening_lyric": 4,
+    "name_prompt": 1,
+    "rpg_loot": 3,
+    "rpg_label": 2,
+    "wrapped_dialogue": 1,
+    "name_suffix": 1,
+    "initial_state": 1,
+    "comparison": 2
+  },
+  "checks": [
+    {
+      "payload_sha256": "6f4a0dc571bffed12b128bba7e896446e09f461c78a822cede0e999d05bcf4fa",
+      "ids": [
+        "c:GYOZI:801393c8:1",
+        "c:GYOZI:801393c8:8",
+        "c:BUNKAKEN:80149144:3",
+        "c:ENDING:801330e4:1",
+        "c:EVENT:80105c8c:2",
+        "c:EVENT:8010a7e0:3",
+        "c:EVENT:801016bc:2",
+        "c:EVENT:801002c8:2",
+        "c:EVENT:801004f0:2",
+        "c:EVENT:801041c4:2",
+        "c:EVENT:800fd820:2",
+        "c:EVENT:800fd974:2",
+        "c:EVENT:801071d8:2",
+        "c:EVENT:80102ab0:2",
+        "c:EVENT:80102cc4:1",
+        "c:EVENT:800f788c:3",
+        "c:EVENT:80108f50:2",
+        "c:GEKO:80135dc0:1",
+        "c:GEKO:801367ec:1",
+        "c:GEKO:80142c9c:1",
+        "c:GEKO:8013eca8:1",
+        "c:GEKO:801410a4:1",
+        "c:GEKO:8013d2c8:2",
+        "c:GEKO:8013cd18:2",
+        "c:GEKO:8013cf40:2",
+        "c:GEKO:8013dd58:1",
+        "c:GEKO:8013c090:2",
+        "c:GEKO:8013c200:2",
+        "c:GEKO:8013f0bc:2",
+        "c:GEKO:8013d7d4:1",
+        "c:GEKO:8013d9c4:2",
+        "c:GEKO:80139640:3",
+        "c:GEKO:8014016c:2",
+        "c:GEKO:801403a0:1",
+        "CDROM/EXEDIR/GYOZI.EXN:000119e0:bc44e2021539",
+        "CDROM/EXEDIR/GYOZI.EXN:00011a00:bc44e2021539",
+        "CDROM/EXEDIR/GYOZI.EXN:00011a38:bc44e2021539",
+        "CDROM/EXEDIR/GYOZI.EXN:00011ba0:bc44e2021539",
+        "c:GYOZI:8013b5e8:1",
+        "c:GYOZI:8013e308:1",
+        "c:GYOZI:8013ad30:1",
+        "c:GYOZI:8013ad74:1",
+        "c:GYOZI:8013adbc:1",
+        "c:GYOZI:8013ae04:1",
+        "c:OMIMAI:80134384:14",
+        "c:SHOUGATU:8013b758:1",
+        "c:SHOUGATU:80139734:1",
+        "c:SHOUGATU:80138758:1",
+        "c:SHOUGATU:80137f70:1",
+        "c:VALEN:80133088:1",
+        "c:VALEN:80132578:1"
+      ],
+      "width_px": 36,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/culture_festival_tour/birthday.c:118",
+        "src/ovl/ending/graduation_candidate_selection.c:97",
+        "src/ovl/girl_encounters/birthday_and_shared_scene_flow.c:805",
+        "src/ovl/girl_encounters/birthday_and_shared_scene_flow.c:972",
+        "src/ovl/girl_encounters/invite.c:174",
+        "src/ovl/girl_encounters/megumi_scenes.c:318",
+        "src/ovl/girl_encounters/miharu_scenes.c:199",
+        "src/ovl/girl_encounters/mio_scenes.c:79",
+        "src/ovl/girl_encounters/mira_scenes.c:143",
+        "src/ovl/girl_encounters/mira_scenes.c:184",
+        "src/ovl/girl_encounters/nozomi_scenes.c:78",
+        "src/ovl/girl_encounters/rei_scenes.c:252",
+        "src/ovl/girl_encounters/rei_scenes.c:289",
+        "src/ovl/girl_encounters/saki_scenes.c:92",
+        "src/ovl/girl_encounters/yukari_scenes.c:119",
+        "src/ovl/girl_encounters/yukari_scenes.c:163",
+        "src/ovl/girl_encounters/yuko_scenes.c:97",
+        "src/ovl/girl_encounters/yumi_scenes.c:382",
+        "src/ovl/girl_encounters/yumi_scenes.c:413",
+        "src/ovl/new_year_christmas/girl_dialogue_setup.c:51",
+        "src/ovl/new_year_christmas/mira_scene_resources.c:150",
+        "src/ovl/new_year_christmas/yuina_scene_handlers.c:210",
+        "src/ovl/new_year_christmas/yuko_scene_handlers.c:113",
+        "src/ovl/sick_visit/sick_visit_scene_dialogue.c:489",
+        "src/ovl/valentine/valentine_girl_selection.c:238",
+        "src/ovl/valentine/valentine_scene_handlers.c:54"
+      ]
+    },
+    {
+      "payload_sha256": "5b547053395f200730a98acb9b3cb3c66d3e77b8b4bec165634cd6585d4cddbc",
+      "ids": [
+        "c:GYOZI:801393c8:2",
+        "c:GYOZI:801393c8:7",
+        "c:VALEN:80133088:2",
+        "c:VALEN:80133088:8",
+        "c:ENDING:801330e4:2",
+        "c:EVENT:8010b970:2",
+        "c:GEKO:8013e828:2",
+        "c:GEKO:8013a6d0:2",
+        "c:GEKO:801420e4:2",
+        "CDROM/EXEDIR/GYOZI.EXN:00011a08:8498c8f30462",
+        "CDROM/EXEDIR/GYOZI.EXN:00011a30:8498c8f30462",
+        "CDROM/EXEDIR/GYOZI.EXN:00011c20:8498c8f30462",
+        "c:GYOZI:8013b55c:1",
+        "c:GYOZI:8013b5a0:1",
+        "c:GYOZI:8013b644:1",
+        "c:OMIMAI:80134384:2",
+        "c:SHOUGATU:8013ac7c:1",
+        "c:SHOUGATU:801386cc:1",
+        "c:SHOUGATU:80138710:1",
+        "c:SHOUGATU:80138868:1",
+        "CDROM/EXEDIR/VALEN.EXN:00002338:8498c8f30462",
+        "CDROM/EXEDIR/VALEN.EXN:00002368:8498c8f30462"
+      ],
+      "width_px": 49,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/ending/graduation_candidate_selection.c:98",
+        "src/ovl/girl_encounters/megumi_scenes.c:244",
+        "src/ovl/girl_encounters/shiori_scenes.c:367",
+        "src/ovl/girl_encounters/yoshio_scenes.c:242",
+        "src/ovl/new_year_christmas/saki_scene_handlers.c:84",
+        "src/ovl/new_year_christmas/yuina_scene_handlers.c:185",
+        "src/ovl/new_year_christmas/yuina_scene_handlers.c:192",
+        "src/ovl/new_year_christmas/yuina_scene_handlers.c:219",
+        "src/ovl/sick_visit/sick_visit_scene_dialogue.c:431",
+        "src/ovl/valentine/valentine_girl_selection.c:242",
+        "src/ovl/valentine/valentine_girl_selection.c:272"
+      ]
+    },
+    {
+      "payload_sha256": "fd79c3a9d7666d195b536ada9f9a8e8c5d7056dee9d98cad11c0e94c96f469c6",
+      "ids": [
+        "c:DATE:80133ea0:4",
+        "c:DATE:80133ea0:5",
+        "CDROM/EXEDIR/DATE.EXN:00028b50:62c174800751",
+        "CDROM/EXEDIR/DATE.EXN:00028b54:62c174800751",
+        "c:DATE:8015996c:1",
+        "c:EVENT:80111f04:4",
+        "c:EVENT:8010981c:1"
+      ],
+      "width_px": 24,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:706",
+        "src/ovl/date/place_scenes.c:714",
+        "src/ovl/date/scene_yumi.c:110"
+      ]
+    },
+    {
+      "payload_sha256": "123a3ebc57e39958b780cd74685872601bfe4ce97d8141822af4053877b244e1",
+      "ids": [
+        "c:DATE:8013426c:3",
+        "c:DATE:8013426c:4",
+        "c:DATE:801349a0:2",
+        "c:DATE:801349a0:3",
+        "c:DATE:80134c64:5",
+        "c:DATE:80134c64:6",
+        "c:EVENT:8011220c:3",
+        "c:EVENT:8011220c:4",
+        "c:EVENT:80112930:2",
+        "c:EVENT:80112930:3",
+        "c:EVENT:80112bec:5",
+        "c:EVENT:80112bec:6",
+        "CDROM/EXEDIR/DATE.EXN:00028b70:b6c4e7fb5d84",
+        "CDROM/EXEDIR/DATE.EXN:00028b78:b6c4e7fb5d84",
+        "CDROM/EXEDIR/DATE.EXN:00028bc8:b6c4e7fb5d84",
+        "CDROM/EXEDIR/DATE.EXN:00028bd0:b6c4e7fb5d84",
+        "CDROM/EXEDIR/DATE.EXN:00028c00:b6c4e7fb5d84",
+        "CDROM/EXEDIR/DATE.EXN:00028c08:b6c4e7fb5d84",
+        "c:DATE:80135e7c:2",
+        "CDROM/EXEDIR/EVENT.EXN:00029c74:b6c4e7fb5d84",
+        "CDROM/EXEDIR/EVENT.EXN:00029c7c:b6c4e7fb5d84",
+        "CDROM/EXEDIR/EVENT.EXN:00029ccc:b6c4e7fb5d84",
+        "CDROM/EXEDIR/EVENT.EXN:00029cd4:b6c4e7fb5d84",
+        "CDROM/EXEDIR/EVENT.EXN:00029d04:b6c4e7fb5d84",
+        "CDROM/EXEDIR/EVENT.EXN:00029d0c:b6c4e7fb5d84",
+        "c:EVENT:80113ca0:2"
+      ],
+      "width_px": 29,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:1296",
+        "src/ovl/date/place_scenes.c:750",
+        "src/ovl/date/place_scenes.c:754",
+        "src/ovl/date/place_scenes.c:864",
+        "src/ovl/date/place_scenes.c:867",
+        "src/ovl/date/place_scenes.c:967",
+        "src/ovl/date/place_scenes.c:971"
+      ]
+    },
+    {
+      "payload_sha256": "bea17b6589f402a51e8610d9217e306fb25a9a88f16890cc144b328d14f75602",
+      "ids": [
+        "c:DATE:801344c8:2",
+        "c:DATE:801344c8:3",
+        "c:DATE:801344c8:4",
+        "c:DATE:801344c8:5",
+        "c:EVENT:80112460:3",
+        "c:EVENT:80112460:4",
+        "c:EVENT:80112460:5",
+        "CDROM/EXEDIR/DATE.EXN:00028b88:66beb7346bba",
+        "CDROM/EXEDIR/DATE.EXN:00028b90:66beb7346bba",
+        "CDROM/EXEDIR/DATE.EXN:00028b98:66beb7346bba",
+        "CDROM/EXEDIR/DATE.EXN:00028ba0:66beb7346bba",
+        "c:DATE:801347b8:2",
+        "c:DATE:80150344:1",
+        "c:DATE2:80132c60:2",
+        "CDROM/EXEDIR/EVENT.EXN:00029c94:66beb7346bba",
+        "CDROM/EXEDIR/EVENT.EXN:00029c9c:66beb7346bba",
+        "CDROM/EXEDIR/EVENT.EXN:00029ca4:66beb7346bba",
+        "c:EVENT:80112750:2"
+      ],
+      "width_px": 55,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/amusement_park_date/date_scene_steps.c:148",
+        "src/ovl/date/place_scenes.c:2628",
+        "src/ovl/date/place_scenes.c:783",
+        "src/ovl/date/place_scenes.c:787",
+        "src/ovl/date/place_scenes.c:791",
+        "src/ovl/date/place_scenes.c:796",
+        "src/ovl/date/place_scenes.c:828",
+        "src/ovl/date/scene_yuina.c:88"
+      ]
+    },
+    {
+      "payload_sha256": "60b21e4d7214872ecb40d1d554bd21d24f6561178779392c07908d9ddd73d695",
+      "ids": [
+        "c:DATE:8013518c:2",
+        "c:DATE:8013518c:3",
+        "c:DATE:8013518c:4",
+        "c:EVENT:801130f0:2",
+        "c:EVENT:801130f0:3",
+        "CDROM/EXEDIR/DATE.EXN:00028c18:595aeccaa54a",
+        "CDROM/EXEDIR/DATE.EXN:00028c24:595aeccaa54a",
+        "CDROM/EXEDIR/DATE.EXN:00028c30:595aeccaa54a",
+        "CDROM/EXEDIR/EVENT.EXN:00029d1c:595aeccaa54a",
+        "CDROM/EXEDIR/EVENT.EXN:00029d28:595aeccaa54a"
+      ],
+      "width_px": 69,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:1027",
+        "src/ovl/date/place_scenes.c:1030",
+        "src/ovl/date/place_scenes.c:1039"
+      ]
+    },
+    {
+      "payload_sha256": "9ce3119843cb1a86dc873d48b9b9737eb388f372f1ca75ec0a0456183cfe5807",
+      "ids": [
+        "c:SHUGAKU:801381bc:3",
+        "c:SHUGAKU:801381bc:4",
+        "CDROM/EXEDIR/SHUGAKU.EXN:00008ea8:51457d716738",
+        "CDROM/EXEDIR/SHUGAKU.EXN:00008eb0:51457d716738",
+        "c:SHUGAKU:80138290:2",
+        "c:SHUGAKU:8013aaec:2"
+      ],
+      "width_px": 39,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/school_trip/destination_choice_and_detour_routing.c:244",
+        "src/ovl/school_trip/destination_choice_and_detour_routing.c:245",
+        "src/ovl/school_trip/destination_choice_and_detour_routing.c:263",
+        "src/ovl/school_trip/destination_label_and_day_resume.c:22"
+      ]
+    },
+    {
+      "payload_sha256": "7728954816ba6d0e50ad54fd4f8c9896201b5912115afaee4abb220876332966",
+      "ids": [
+        "c:OMIMAI:80134384:1",
+        "c:OMIMAI:80134384:5",
+        "c:GEKO:801367ec:2",
+        "CDROM/EXEDIR/GYOZI.EXN:00011bb8:ddbfceeafb47",
+        "CDROM/EXEDIR/GYOZI.EXN:00011bc0:ddbfceeafb47",
+        "CDROM/EXEDIR/GYOZI.EXN:00011bc8:ddbfceeafb47",
+        "c:GYOZI:8013caa4:1",
+        "c:KANGEI:80134bc4:1",
+        "CDROM/EXEDIR/OMIMAI.EXN:00002920:ddbfceeafb47",
+        "CDROM/EXEDIR/OMIMAI.EXN:00002940:ddbfceeafb47",
+        "c:SHOUGATU:80139d80:1",
+        "c:SHOUGATU:80139dc4:1",
+        "c:SHOUGATU:80139e0c:1",
+        "c:SHOUGATU:80139e54:1"
+      ],
+      "width_px": 71,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/girl_encounters/birthday_and_shared_scene_flow.c:979",
+        "src/ovl/new_year_christmas/scene_step_handlers.c:137",
+        "src/ovl/new_year_christmas/scene_step_handlers.c:144",
+        "src/ovl/new_year_christmas/scene_step_handlers.c:151",
+        "src/ovl/new_year_christmas/scene_step_handlers.c:159",
+        "src/ovl/sick_visit/sick_visit_scene_dialogue.c:427",
+        "src/ovl/sick_visit/sick_visit_scene_dialogue.c:449",
+        "src/ovl/summer_camp/girl_meeting_routes.c:299"
+      ]
+    },
+    {
+      "payload_sha256": "58a184993d3a0111c4f31c6dadb8b8b8666d310a057aa310f5fdb8ce62879810",
+      "ids": [
+        "c:TEL:8013a88c:1",
+        "c:TEL:8013a88c:3",
+        "CDROM/EXEDIR/TEL.EXN:0000dab4:e0b940448f76",
+        "CDROM/EXEDIR/TEL.EXN:0000dad4:e0b940448f76"
+      ],
+      "width_px": 48,
+      "disposition": "speaker_name",
+      "reason": "Uses the English speaker/name path reviewed with full names.",
+      "source_locations": [
+        "src/ovl/telephone/appointment_call_scenes.c:526",
+        "src/ovl/telephone/appointment_call_scenes.c:537"
+      ]
+    },
+    {
+      "payload_sha256": "6d3c0b98b7bb8ca99ba8ed7a156eca9d42ed0362b33241b1b8fd891cc5c2392f",
+      "ids": [
+        "c:VALEN:80133088:5",
+        "c:VALEN:80133088:6",
+        "c:EVENT:800fa8b8:2",
+        "c:GEKO:801325c0:1",
+        "CDROM/EXEDIR/GYOZI.EXN:00011c40:66483bf212f2",
+        "c:GYOZI:801393c8:5",
+        "c:SHOUGATU:8013b114:1",
+        "CDROM/EXEDIR/VALEN.EXN:00002350:83d0a6fffa87",
+        "CDROM/EXEDIR/VALEN.EXN:00002358:83d0a6fffa87"
+      ],
+      "width_px": 58,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/girl_encounters/walk_home.c:58",
+        "src/ovl/new_year_christmas/yumi_scene_handlers.c:69",
+        "src/ovl/valentine/valentine_girl_selection.c:256",
+        "src/ovl/valentine/valentine_girl_selection.c:260"
+      ]
+    },
+    {
+      "payload_sha256": "e2c3de2216aee3fac1b290bbf0b6a70a48be8fa5a4603e6a2864732d5823b55b",
+      "ids": [
+        "CDROM/EXEDIR/BUNKAKEN.EXN:00023d38:69c728dce480",
+        "CDROM/EXEDIR/BUNKASAI.EXN:0002e398:69c728dce480",
+        "CDROM/EXEDIR/TAIIKU.EXN:00016b1c:69c728dce480"
+      ],
+      "width_px": 29,
+      "disposition": "fortune_names",
+      "reason": "Actual-disc table and widest-name native captures verified in T-39546.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "ef04de3072c5e4dd77f177121f2e778151b9966268dc61cc2b2299fc818bcb28",
+      "ids": [
+        "CDROM/EXEDIR/BUNKAKEN.EXN:00023d50:167cb70fe172",
+        "CDROM/EXEDIR/BUNKASAI.EXN:0002e3b0:167cb70fe172",
+        "CDROM/EXEDIR/TAIIKU.EXN:00016b18:167cb70fe172"
+      ],
+      "width_px": 34,
+      "disposition": "fortune_names",
+      "reason": "Actual-disc table and widest-name native captures verified in T-39546.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "94531c7b8df0a1611b14c0f680a8b105afb3f9c1813c1b88c4c4db1fa58d3545",
+      "ids": [
+        "CDROM/EXEDIR/BUNKAKEN.EXN:00023d64:5e97f0a7efc5",
+        "CDROM/EXEDIR/BUNKASAI.EXN:0002e3c4:5e97f0a7efc5",
+        "CDROM/EXEDIR/TAIIKU.EXN:00016aec:5e97f0a7efc5"
+      ],
+      "width_px": 36,
+      "disposition": "fortune_names",
+      "reason": "Actual-disc table and widest-name native captures verified in T-39546.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "718cb3eea6d048698ee83077582cf033a8d9e5df93fdb887f4d7e7548f249437",
+      "ids": [
+        "c:BUNKAKEN:80144f70:1",
+        "c:BUNKASAI:80142700:1"
+      ],
+      "width_px": 78,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/culture_festival/festival_entry.c:24",
+        "src/ovl/culture_festival_tour/festival_frame_control.c:27"
+      ]
+    },
+    {
+      "payload_sha256": "13282bc8615f8968640c73e39781045b4e004604319e7f6ae231e395120438cb",
+      "ids": [
+        "CDROM/EXEDIR/BUNKA_SD.EXN:00008924:7222ac8ac0fc",
+        "CDROM/EXEDIR/BUNKA_SD.EXN:0000892c:7222ac8ac0fc",
+        "c:ETC:8014bc00:1",
+        "c:ETC:8014c06c:1",
+        "c:EVENT:800f788c:2",
+        "c:GEKO:80139640:2"
+      ],
+      "width_px": 31,
+      "disposition": "speaker_name",
+      "reason": "Uses the English speaker/name path reviewed with full names.",
+      "source_locations": [
+        "src/ovl/girl_encounters/yuko_scenes.c:91",
+        "src/ovl/misc_scenes/career_guidance.c:501",
+        "src/ovl/misc_scenes/career_guidance.c:643"
+      ]
+    },
+    {
+      "payload_sha256": "f353bc7ab9dbec18c7c8658f9296a1402c8d1770b1781ba8b52a76191eda13c2",
+      "ids": [
+        "c:DATE:80133ea0:2",
+        "c:EVENT:8010aaf8:4",
+        "c:EVENT:80111f04:3",
+        "c:GEKO:80141374:4"
+      ],
+      "width_px": 81,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:692",
+        "src/ovl/girl_encounters/miharu_scenes.c:305"
+      ]
+    },
+    {
+      "payload_sha256": "d77964f54ef3516a6fdae8254b760dfd5e01505d814d8052ee5137e7cbc46f37",
+      "ids": [
+        "c:DATE:80133ea0:3"
+      ],
+      "width_px": 103,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:701"
+      ]
+    },
+    {
+      "payload_sha256": "f3795fd1ef3288d127d2987d98cb109e9c8a8d292f6e3afa96d5f9f8cdf4d6a3",
+      "ids": [
+        "c:DATE:80134c64:3",
+        "c:EVENT:80112bec:3"
+      ],
+      "width_px": 84,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:946"
+      ]
+    },
+    {
+      "payload_sha256": "6e1bf5be1273341beb9d2aa085c8115716abb7601b01297bb3a957869b5d1141",
+      "ids": [
+        "c:DATE:80134c64:4",
+        "c:EVENT:80112bec:4"
+      ],
+      "width_px": 117,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:957"
+      ]
+    },
+    {
+      "payload_sha256": "8273c8d618cacc85f76bcf5a2f708843015601db04f873bbcdc88ff2179b7d3b",
+      "ids": [
+        "c:DATE:80136340:2",
+        "c:EVENT:80113fd4:2"
+      ],
+      "width_px": 49,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:1408"
+      ]
+    },
+    {
+      "payload_sha256": "c6e86eee00b489c02de36294a9b8e9623f49f32e2f8275fd53767edb2e3ca103",
+      "ids": [
+        "c:DATE:80136870:1"
+      ],
+      "width_px": 56,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:1464"
+      ]
+    },
+    {
+      "payload_sha256": "ecb573ed143368529687d9a98a0f39620acc80d57f135c4d2f3888db717dd527",
+      "ids": [
+        "c:DATE:80136870:2",
+        "c:EVENT:801144ac:2",
+        "c:SHUGAKU:8013a42c:2",
+        "c:SHUGAKU:8013a4f8:2"
+      ],
+      "width_px": 29,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:1465",
+        "src/ovl/school_trip/destination_outings_and_hotel_lobby.c:189",
+        "src/ovl/school_trip/destination_outings_and_hotel_lobby.c:212"
+      ]
+    },
+    {
+      "payload_sha256": "128e6ca41ba216bc1705e01010358a9d8c46149430604ad8b10b17a85f95f08d",
+      "ids": [
+        "c:DATE:80136a74:1",
+        "c:EVENT:801146b4:1"
+      ],
+      "width_px": 54,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:1492"
+      ]
+    },
+    {
+      "payload_sha256": "d792854247c6bde67be2969009c638e3a42a1fc90cdc7e5109601a970ecc2f5a",
+      "ids": [
+        "c:DATE:80136a74:2",
+        "c:EVENT:801146b4:2"
+      ],
+      "width_px": 90,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:1493"
+      ]
+    },
+    {
+      "payload_sha256": "3c979c214963572dade6283d05b21e09a14d5aa2bcd95222eb41fe50d0437fac",
+      "ids": [
+        "c:DATE:801387b8:1",
+        "c:DATE:80156f10:1",
+        "c:EVENT:801144ac:3"
+      ],
+      "width_px": 78,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:2180",
+        "src/ovl/date/scene_nozomi.c:176"
+      ]
+    },
+    {
+      "payload_sha256": "544859c498e2981a9eab884001f9fbc7b950762e2891d58fbe2d98feebaee292",
+      "ids": [
+        "c:DATE:80138934:6",
+        "c:DATE:8014fe5c:1",
+        "c:DATE2:80133494:1",
+        "c:EVENT:80115c18:6",
+        "c:EVENT:800fb8ec:1"
+      ],
+      "width_px": 61,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/amusement_park_date/date_scene_state.c:209",
+        "src/ovl/date/place_scenes.c:2293",
+        "src/ovl/date/scene_shiori.c:297"
+      ]
+    },
+    {
+      "payload_sha256": "c75e952e4af8cfedca69448ad2c6681c67c076a0b9efaa49693448a33183f2ad",
+      "ids": [
+        "c:DATE:8013cadc:1"
+      ],
+      "width_px": 56,
+      "disposition": "speaker_name",
+      "reason": "Uses the English speaker/name path reviewed with full names.",
+      "source_locations": [
+        "src/ovl/date/place_scenes.c:3621",
+        "src/ovl/date/place_scenes.c:3623"
+      ]
+    },
+    {
+      "payload_sha256": "5b8036d7e67ad506de3035092ffe68caf2b36a3f315900163e2097d7ab348199",
+      "ids": [
+        "CDROM/EXEDIR/ENDING.EXN:0000ac48:b714683d1a2d"
+      ],
+      "width_px": 134,
+      "disposition": "ending_lyric",
+      "reason": "ending_draw_song_lyric centers by actual English pixel width.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "0c8df956d3dac66c561b2a72bf0befc5cb426e492ef650cf6d50b88a3018c30e",
+      "ids": [
+        "c:ENDING:8013a2e8:4"
+      ],
+      "width_px": 99,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:481"
+      ]
+    },
+    {
+      "payload_sha256": "c29f212631b4af8328cba1fdcacb328ba143ad78a36da0ec2b31b72ca824112c",
+      "ids": [
+        "c:ENDING:8013a2e8:5"
+      ],
+      "width_px": 116,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:483"
+      ]
+    },
+    {
+      "payload_sha256": "bf6d6ad7666effe38372b1b2bd7f8ab9e0e6350596f2c5528f15c0d3436c32c3",
+      "ids": [
+        "c:ENDING:8013a2e8:6"
+      ],
+      "width_px": 106,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:485"
+      ]
+    },
+    {
+      "payload_sha256": "78fd5705cc33c6e1521e171398feeda9e981195f284acc0e19ccee1dced5c464",
+      "ids": [
+        "c:ENDING:8013a2e8:7"
+      ],
+      "width_px": 109,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:487"
+      ]
+    },
+    {
+      "payload_sha256": "02c7acced4f409012eeaadb07cf07d8952c8b28072967429ecba0fe9d6583d43",
+      "ids": [
+        "c:ENDING:8013a2e8:8"
+      ],
+      "width_px": 126,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:489"
+      ]
+    },
+    {
+      "payload_sha256": "890c5cb239a5d0e3fe8cb0a7bf5dbcf50444aa9b472cc2eb7ae58dbcd1fcb7f7",
+      "ids": [
+        "c:ENDING:8013a2e8:9"
+      ],
+      "width_px": 116,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:491"
+      ]
+    },
+    {
+      "payload_sha256": "37270bcc7b7e817f03768efcc456564e04035c90127574540b987cdc3442d24e",
+      "ids": [
+        "c:ENDING:8013a2e8:10"
+      ],
+      "width_px": 97,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:493"
+      ]
+    },
+    {
+      "payload_sha256": "d662e28a02bfc63500b7d25d0111141e512195c6a35d3cc1c17f0c71b14b7c5c",
+      "ids": [
+        "c:ENDING:8013a2e8:11"
+      ],
+      "width_px": 92,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:495"
+      ]
+    },
+    {
+      "payload_sha256": "cd1a02b3f8784263c23d36444e42473a475c3302cea84d87d6625431e9dfa691",
+      "ids": [
+        "c:ENDING:8013a2e8:12"
+      ],
+      "width_px": 107,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:497"
+      ]
+    },
+    {
+      "payload_sha256": "916c6ebf81d50ac13101237816f0da88aeae8df51b56a06357573191f93391d2",
+      "ids": [
+        "c:ENDING:8013a2e8:14"
+      ],
+      "width_px": 95,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:501"
+      ]
+    },
+    {
+      "payload_sha256": "5019047d0a46d213c8f29e73c39afa66df81c3e1e59894482852e3b234253f1f",
+      "ids": [
+        "c:ENDING:8013a2e8:15"
+      ],
+      "width_px": 99,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:503"
+      ]
+    },
+    {
+      "payload_sha256": "b3ed580a9a754e3c55780caf7974d33eaa85a0e7cb8a67b481fb2eb44e1598f0",
+      "ids": [
+        "c:ENDING:8013a2e8:16"
+      ],
+      "width_px": 102,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:505"
+      ]
+    },
+    {
+      "payload_sha256": "8432acfd7e7b4c112efd7d1f2e47583891b8db9726344ba3692f4266e7dd51a2",
+      "ids": [
+        "c:ENDING:8013a2e8:17"
+      ],
+      "width_px": 101,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:507"
+      ]
+    },
+    {
+      "payload_sha256": "f815ea31eec23c76c9ab1de96439e55a0318da1a0322fa3fd1f029381bc9f1e1",
+      "ids": [
+        "c:ENDING:8013a2e8:19"
+      ],
+      "width_px": 102,
+      "disposition": "wrapped_substitution",
+      "reason": "Career description enters the 36-byte M substitution field and the ending dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/ending/career_and_epilogue_summary.c:511"
+      ]
+    },
+    {
+      "payload_sha256": "ae7b7a1daa754adce29211394570a060ca55d719b1072353bb1fae42a0edfc78",
+      "ids": [
+        "supplemental:CDROM/EXEDIR/ENDING.EXN:ac93"
+      ],
+      "width_px": 132,
+      "disposition": "ending_lyric",
+      "reason": "ending_draw_song_lyric centers by actual English pixel width.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "a98508ef58b742b6e67eb63304b3d4a9bed000c6b437359c7fd5584b45bfaae0",
+      "ids": [
+        "supplemental:CDROM/EXEDIR/ENDING.EXN:acac"
+      ],
+      "width_px": 131,
+      "disposition": "ending_lyric",
+      "reason": "ending_draw_song_lyric centers by actual English pixel width.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "47632cf2ae4898937668343a0782e23016d9dd9f61395f84bc09ee379744d190",
+      "ids": [
+        "supplemental:CDROM/EXEDIR/ENDING.EXN:acc5"
+      ],
+      "width_px": 140,
+      "disposition": "ending_lyric",
+      "reason": "ending_draw_song_lyric centers by actual English pixel width.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "6e6f0efea2ee1c4e7fe75a3180184dc1aa7b7801c043f16f3b44a6c1cae40201",
+      "ids": [
+        "supplemental:CDROM/EXEDIR/ENDING.EXN:acde"
+      ],
+      "width_px": 143,
+      "disposition": "ending_lyric",
+      "reason": "ending_draw_song_lyric centers by actual English pixel width.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "bf4a691db3f6e0d5f498f5c663e1ff38faa44eda69eea1af4877711b4cc84cd7",
+      "ids": [
+        "supplemental:CDROM/EXEDIR/ENDING.EXN:acf7"
+      ],
+      "width_px": 108,
+      "disposition": "ending_lyric",
+      "reason": "ending_draw_song_lyric centers by actual English pixel width.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "06c56752db7c545746fa9b493a1bd46f9196d5b6ed25f48912cddc19eab51f85",
+      "ids": [
+        "supplemental:CDROM/EXEDIR/ENDING.EXN:ad10"
+      ],
+      "width_px": 179,
+      "disposition": "ending_lyric",
+      "reason": "ending_draw_song_lyric centers by actual English pixel width.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "032c13e36cbb44012f5657d3069f3f28d4f26452bc521eb66f65d1afd10a2dce",
+      "ids": [
+        "supplemental:CDROM/EXEDIR/ENDING.EXN:ad29"
+      ],
+      "width_px": 170,
+      "disposition": "ending_lyric",
+      "reason": "ending_draw_song_lyric centers by actual English pixel width.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "31b2f11e3e93be107e111f1719fa1b9d387feaa3cdd835c3952f0f7af9f2712c",
+      "ids": [
+        "supplemental:CDROM/EXEDIR/ENDING.EXN:ad42"
+      ],
+      "width_px": 190,
+      "disposition": "ending_lyric",
+      "reason": "ending_draw_song_lyric centers by actual English pixel width.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "6320dae51cffb6b2f0a41d5d97387df22750bb901d8ea6823cf665ab432e9aa6",
+      "ids": [
+        "supplemental:CDROM/EXEDIR/ENDING.EXN:ad5b"
+      ],
+      "width_px": 190,
+      "disposition": "ending_lyric",
+      "reason": "ending_draw_song_lyric centers by actual English pixel width.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "883361d5d682a1574410961ce51450b6e036a779c9f098dec71e28aec832bfa6",
+      "ids": [
+        "CDROM/EXEDIR/ETC.EXN:0001e128:2d3c6ccb605f",
+        "SLPM_86.053:00075f2c:2d3c6ccb605f"
+      ],
+      "width_px": 25,
+      "disposition": "mouse_button",
+      "reason": "Album helpers select mouse-button labels. Inspected call positions include x=-120,-128,-60,-52,60,92; maximum right edge is 117.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "58eb9032e3bb83f0e39d644ebc87ca254117b95bf458483bec7379bea0b419d0",
+      "ids": [
+        "CDROM/EXEDIR/ETC.EXN:0001e12c:7c1c18544297",
+        "SLPM_86.053:00075f30:7c1c18544297"
+      ],
+      "width_px": 22,
+      "disposition": "mouse_button",
+      "reason": "Album helpers select mouse-button labels. Inspected call positions include x=-120,-128,-60,-52,60,92; maximum right edge is 117.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "2206ccc3d4a74d17ca2d180e3f01c0ad12ca67049183e0c78a204728c8ce38ec",
+      "ids": [
+        "c:ETC:80132198:1"
+      ],
+      "width_px": 85,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/misc_scenes/confession_and_epilogue_handlers.c:56"
+      ]
+    },
+    {
+      "payload_sha256": "9fc3f9e0034ce3923ad4e30ac8b2761da26f272f3a868c1201143370f8928d13",
+      "ids": [
+        "c:ETC:80132254:1"
+      ],
+      "width_px": 115,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/misc_scenes/confession_and_epilogue_handlers.c:74"
+      ]
+    },
+    {
+      "payload_sha256": "0c11af93bd791df0faef6f7cf4f6939c806904609009b2cd24a7e5151b527d01",
+      "ids": [
+        "c:ETC:801326c0:1"
+      ],
+      "width_px": 86,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/misc_scenes/confession_and_epilogue_handlers.c:204"
+      ]
+    },
+    {
+      "payload_sha256": "926d3f11edc67280547a59b0474996adcf8b3a1fe31d654e66965e0977d0b8f2",
+      "ids": [
+        "c:EVENT:800fe138:2",
+        "c:GEKO:8013c73c:2",
+        "CDROM/EXEDIR/GYOZI.EXN:00011a40:f619b4a5ee0d",
+        "c:GYOZI:801393c8:3",
+        "c:TAIIKU:80140a90:2",
+        "c:VALEN:80133088:3",
+        "c:VALEN:801335c0:1"
+      ],
+      "width_px": 67,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/girl_encounters/ayako_scenes.c:98",
+        "src/ovl/sports_festival/scene_actor_resource_tables.c:178",
+        "src/ovl/valentine/valentine_girl_selection.c:246",
+        "src/ovl/valentine/valentine_girl_selection.c:351"
+      ]
+    },
+    {
+      "payload_sha256": "c2563ae5885bd7d5b6e58d70db06eba3ba2a55ac5e32cacf847903d0e5f8650c",
+      "ids": [
+        "c:EVENT:8010aaf8:2",
+        "c:GEKO:80141374:2"
+      ],
+      "width_px": 82,
+      "disposition": "speaker_name",
+      "reason": "Uses the English speaker/name path reviewed with full names.",
+      "source_locations": [
+        "src/ovl/girl_encounters/miharu_scenes.c:293"
+      ]
+    },
+    {
+      "payload_sha256": "3a6c55377ba83591c8c90f05fa770b4da9f11e806898f5775f20977be745b859",
+      "ids": [
+        "c:EVENT:80111f04:2"
+      ],
+      "width_px": 66,
+      "disposition": "unloaded_unit",
+      "reason": "EVENT/GYOZI are excluded from the loaded English overlay set.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "66d5c95f408bbbddff4081f0186b34c47dd58cf83623640e892e123d78eaa548",
+      "ids": [
+        "c:EVENT:800fc1bc:1",
+        "c:GEKO:8013b510:1",
+        "c:GYOZI:801393c8:4",
+        "c:VALEN:80133088:4"
+      ],
+      "width_px": 40,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/girl_encounters/yuina_scenes.c:186",
+        "src/ovl/valentine/valentine_girl_selection.c:250"
+      ]
+    },
+    {
+      "payload_sha256": "4de3c5e973402cb8a837432354ce1259992c17e261ef4f153a619edadf670f0c",
+      "ids": [
+        "c:EVENT:800f788c:4",
+        "c:GEKO:80139640:4"
+      ],
+      "width_px": 57,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/girl_encounters/yuko_scenes.c:98"
+      ]
+    },
+    {
+      "payload_sha256": "5e3e24569d4d25305dcc7cd70bd7a4f153d196a3177ebc6fa76b5dbbbc3696e8",
+      "ids": [
+        "c:GEKO:801367ec:4",
+        "c:GYOZI:8013b5e8:2",
+        "c:GYOZI:8013b644:2",
+        "c:GYOZI:8013b6cc:1",
+        "c:GYOZI:8013b740:1",
+        "c:KANGEI:80134bc4:3",
+        "c:OMIMAI:80134384:7",
+        "c:SHOUGATU:80138758:2",
+        "c:SHOUGATU:80138868:2",
+        "c:SHOUGATU:801388f0:1",
+        "c:SHOUGATU:80138964:1"
+      ],
+      "width_px": 58,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/girl_encounters/birthday_and_shared_scene_flow.c:987",
+        "src/ovl/new_year_christmas/yuina_scene_handlers.c:211",
+        "src/ovl/new_year_christmas/yuina_scene_handlers.c:220",
+        "src/ovl/new_year_christmas/yuina_scene_handlers.c:228",
+        "src/ovl/new_year_christmas/yuina_scene_handlers.c:236",
+        "src/ovl/sick_visit/sick_visit_scene_dialogue.c:457",
+        "src/ovl/summer_camp/girl_meeting_routes.c:307"
+      ]
+    },
+    {
+      "payload_sha256": "78d25e1369b52a23e33f8dc9563b15fa2203d4524f1970468b5654331845b03b",
+      "ids": [
+        "c:GEKO:801367ec:5",
+        "c:KANGEI:80134bc4:4",
+        "c:OMIMAI:80134384:8"
+      ],
+      "width_px": 97,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/girl_encounters/birthday_and_shared_scene_flow.c:991",
+        "src/ovl/sick_visit/sick_visit_scene_dialogue.c:461",
+        "src/ovl/summer_camp/girl_meeting_routes.c:311"
+      ]
+    },
+    {
+      "payload_sha256": "1f2e903edb5f2fd54fef45f9110a89a54661bcff98b44e56fb78b9fda3023738",
+      "ids": [
+        "c:GEKO:801367ec:6",
+        "c:GYOZI:8013bc40:1",
+        "c:KANGEI:80134bc4:5",
+        "c:OMIMAI:80134384:9",
+        "c:SHOUGATU:80138e60:1"
+      ],
+      "width_px": 46,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/girl_encounters/birthday_and_shared_scene_flow.c:995",
+        "src/ovl/new_year_christmas/ayako_scene_handlers.c:86",
+        "src/ovl/sick_visit/sick_visit_scene_dialogue.c:465",
+        "src/ovl/summer_camp/girl_meeting_routes.c:315"
+      ]
+    },
+    {
+      "payload_sha256": "139111c424927ce8ed76389e68ae0d67c26e855db6e6ead8c9776edc95a82154",
+      "ids": [
+        "c:GEKO:801367ec:7",
+        "c:GYOZI:8013bcb4:1",
+        "c:KANGEI:80134bc4:6",
+        "c:OMIMAI:80134384:10",
+        "c:SHOUGATU:80138ed4:1"
+      ],
+      "width_px": 56,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/girl_encounters/birthday_and_shared_scene_flow.c:999",
+        "src/ovl/new_year_christmas/ayako_scene_handlers.c:94",
+        "src/ovl/sick_visit/sick_visit_scene_dialogue.c:469",
+        "src/ovl/summer_camp/girl_meeting_routes.c:319"
+      ]
+    },
+    {
+      "payload_sha256": "02b0333baa8131503151c15147b10f86e54ca86dd7388ea9d6bd46fe48dbe308",
+      "ids": [
+        "c:GEKO:8013c090:3"
+      ],
+      "width_px": 57,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/girl_encounters/rei_scenes.c:253"
+      ]
+    },
+    {
+      "payload_sha256": "df29a09e244ebe47c97ee1ef67e029967feba2b9d0b2ae5d9a896e77480df745",
+      "ids": [
+        "CDROM/EXEDIR/GYOZI.EXN:00011b80:2a8d484c02e9",
+        "c:OMIMAI:80134384:3",
+        "c:SHOUGATU:80138e1c:1",
+        "c:TAIIKU:80141cdc:1"
+      ],
+      "width_px": 51,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/new_year_christmas/ayako_scene_handlers.c:78",
+        "src/ovl/sick_visit/sick_visit_scene_dialogue.c:439",
+        "src/ovl/sports_festival/candidate_scene_state_handlers.c:47"
+      ]
+    },
+    {
+      "payload_sha256": "10d0bd0ab0df88001ccfb279234ba35a1a439e2c432ecea4372a8fa62df36255",
+      "ids": [
+        "c:GYOZI:80140464:1",
+        "c:GYOZI:80145084:1",
+        "c:SHOUGATU:8013daac:1",
+        "c:SHOUGATU:80142da0:1"
+      ],
+      "width_px": 57,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/new_year_christmas/christmas_mansion_entry.c:127",
+        "src/ovl/new_year_christmas/scene_particle_helpers.c:437"
+      ]
+    },
+    {
+      "payload_sha256": "c8d3fc567bbcbf384407a4ca279787fdb6e73932155e962e562507acfbf53094",
+      "ids": [
+        "c:GYOZI:80140464:3",
+        "c:SHOUGATU:8013daac:2"
+      ],
+      "width_px": 29,
+      "disposition": "speaker_name",
+      "reason": "Uses the English speaker/name path reviewed with full names.",
+      "source_locations": [
+        "src/ovl/new_year_christmas/christmas_mansion_entry.c:145"
+      ]
+    },
+    {
+      "payload_sha256": "a880609518703653ccede172b2f0b6e7e89bb69d67eef32a50ca0fd9f52fdd94",
+      "ids": [
+        "c:GYOZI:80135988:1",
+        "c:SHOUGATU:80133d98:1"
+      ],
+      "width_px": 113,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/new_year_christmas/shrine_visit_dialogue.c:18"
+      ]
+    },
+    {
+      "payload_sha256": "8281954ee1b5d8bbf7588a9c0137a875f4754060188d9ce702f840fead3c223c",
+      "ids": [
+        "CDROM/EXEDIR/KANGEI.EXN:0000780c:ef5c2007136c"
+      ],
+      "width_px": 82,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "20be7bb9b63108aabff43b6e4b4902fcb4932ef39b4d1c3e18671881c78806c6",
+      "ids": [
+        "c:MASTER:801321b0:5"
+      ],
+      "width_px": 93,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/club_master/club_master_mode_stage_dispatch.c:53"
+      ]
+    },
+    {
+      "payload_sha256": "6ddd89e3ffed6c052b2696f95ad2c592bd6fbfab7367c330e12f20c7a6cfe713",
+      "ids": [
+        "CDROM/EXEDIR/NAME_ENT.EXN:0001a554:581eab602ad4"
+      ],
+      "width_px": 234,
+      "disposition": "opening_lyric",
+      "reason": "Opening lyric starts at x=-136; maximum flagged width 234 ends at 98.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "75792fb86f21c2a0764fcc46ff62f9bb70248ed94bbe6ea557ec94899734f08b",
+      "ids": [
+        "CDROM/EXEDIR/NAME_ENT.EXN:0001a65c:8608a0500b97"
+      ],
+      "width_px": 74,
+      "disposition": "opening_lyric",
+      "reason": "Opening lyric starts at x=-136; maximum flagged width 234 ends at 98.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "32fedf1b29af4cc4adbf4c781278e5c0adbfb1cb9d8a449e3ddeded36d036b6b",
+      "ids": [
+        "CDROM/EXEDIR/NAME_ENT.EXN:0001a6a0:2acc57fc3778"
+      ],
+      "width_px": 91,
+      "disposition": "opening_lyric",
+      "reason": "Opening lyric starts at x=-136; maximum flagged width 234 ends at 98.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "e7a35364a2d9596ebd33167458f764412e2531c4c93753aac896b5d9f95e2096",
+      "ids": [
+        "CDROM/EXEDIR/NAME_ENT.EXN:0001a6e0:b865da671d14"
+      ],
+      "width_px": 127,
+      "disposition": "opening_lyric",
+      "reason": "Opening lyric starts at x=-136; maximum flagged width 234 ends at 98.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "54e77efbdd4b8dee1de351f3dcecefbf0d8d5a7d89f26b7eca610e9ee299e3e5",
+      "ids": [
+        "CDROM/EXEDIR/NAME_ENT.EXN:0001ad04:f23fe121b0e1"
+      ],
+      "width_px": 59,
+      "disposition": "name_prompt",
+      "reason": "Name-entry prompt; 59 pixels fits the heading starting at x=-152.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "1f3f3213ce981740702a882534c4350cb4fb914669ecc3972acd926fee1e349b",
+      "ids": [
+        "c:RENSYU:801320e0:1"
+      ],
+      "width_px": 74,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/practice_match/practice_match_mode_stage_dispatch.c:51"
+      ]
+    },
+    {
+      "payload_sha256": "c070ec1f5bfbcecb81490a793dace277c628cc3a3adcb8c9af11d188d3dfac82",
+      "ids": [
+        "CDROM/EXEDIR/RPG_BAT.EXN:0002b7f4:da58e2f2e3bf"
+      ],
+      "width_px": 51,
+      "disposition": "rpg_loot",
+      "reason": "All 12 actual-disc loot entries fit the 40-byte buffer and x=-126..124 display, including Loot prefix; T-39546 receipt.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "f9ac54053bc53dfd6e3931d40abcbfcaa7ce0ee37a5635fd825667ac0f0f0293",
+      "ids": [
+        "CDROM/EXEDIR/RPG_BAT.EXN:0002b820:df6a970a4a3a"
+      ],
+      "width_px": 75,
+      "disposition": "rpg_loot",
+      "reason": "All 12 actual-disc loot entries fit the 40-byte buffer and x=-126..124 display, including Loot prefix; T-39546 receipt.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "31ef92854ee2e6ae6f3ab8deed571b9b7235d8e3c8d199d99a7dd231ea3123e1",
+      "ids": [
+        "CDROM/EXEDIR/RPG_BAT.EXN:0002b840:98d1743b846b"
+      ],
+      "width_px": 66,
+      "disposition": "rpg_loot",
+      "reason": "All 12 actual-disc loot entries fit the 40-byte buffer and x=-126..124 display, including Loot prefix; T-39546 receipt.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "2ad9eabe3a45ad37261cf2baf0f646f33dca8e20d74de04084c672101f76008d",
+      "ids": [
+        "c:RPG_BAT:801525b0:11"
+      ],
+      "width_px": 104,
+      "disposition": "rpg_label",
+      "reason": "Screen x=23; the widest label ends at x=155, before the next column at x=177.",
+      "source_locations": [
+        "src/ovl/rpg_battle/labels_intro_and_wave_transition.c:44"
+      ]
+    },
+    {
+      "payload_sha256": "0a938a3a587c5fdbe274825bbe0ea85af08ba1e1bd13f0d1540e8e6f7a04d10c",
+      "ids": [
+        "c:RPG_BAT:801525b0:12"
+      ],
+      "width_px": 132,
+      "disposition": "rpg_label",
+      "reason": "Screen x=23; the widest label ends at x=155, before the next column at x=177.",
+      "source_locations": [
+        "src/ovl/rpg_battle/labels_intro_and_wave_transition.c:45"
+      ]
+    },
+    {
+      "payload_sha256": "d2e84058c20a36430329a99366cf3611c964c765a8b914c43ff79f9a54d71799",
+      "ids": [
+        "c:SHUGAKU:80138290:1",
+        "c:SHUGAKU:8013aaec:1",
+        "c:SHUGAKU:80139400:1"
+      ],
+      "width_px": 29,
+      "disposition": "wrapped_substitution",
+      "reason": "Destination enters the S substitution field and dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/school_trip/destination_choice_and_detour_routing.c:260",
+        "src/ovl/school_trip/destination_label_and_day_resume.c:19",
+        "src/ovl/school_trip/sightseeing_and_companion_selection.c:268"
+      ]
+    },
+    {
+      "payload_sha256": "8dfc35dc0711136c3431201cb670ebf56c15fdd536f8c436fde9394bd087247d",
+      "ids": [
+        "c:SHUGAKU:8013a42c:1",
+        "c:SHUGAKU:8013a4f8:1"
+      ],
+      "width_px": 71,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/school_trip/destination_outings_and_hotel_lobby.c:185",
+        "src/ovl/school_trip/destination_outings_and_hotel_lobby.c:208"
+      ]
+    },
+    {
+      "payload_sha256": "0cce88351bbf4e9ae4841d432447dc73e0312d666c6b56d825964559db30e169",
+      "ids": [
+        "c:SHUGAKU:80139054:1"
+      ],
+      "width_px": 89,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/school_trip/sightseeing_and_companion_selection.c:170"
+      ]
+    },
+    {
+      "payload_sha256": "062928653a86cf7a095c78c6a0d388d3b785aa774b83f111119f61dc752d8bb4",
+      "ids": [
+        "c:SHUGAKU:80139054:2"
+      ],
+      "width_px": 78,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/school_trip/sightseeing_and_companion_selection.c:174"
+      ]
+    },
+    {
+      "payload_sha256": "a570a0670c557bfa0d143fb4149a2806ec4b2af4026614a772d7a95abe23ee19",
+      "ids": [
+        "c:SHUGAKU:80139054:3"
+      ],
+      "width_px": 59,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/school_trip/sightseeing_and_companion_selection.c:178"
+      ]
+    },
+    {
+      "payload_sha256": "d541c48d1253b8309cf144fc55b0ee7b6916228e47afbdd6e115912880dcb2e8",
+      "ids": [
+        "c:SHUGAKU:80139400:3"
+      ],
+      "width_px": 41,
+      "disposition": "wrapped_substitution",
+      "reason": "Destination enters the S substitution field and dialogue wrapper.",
+      "source_locations": [
+        "src/ovl/school_trip/sightseeing_and_companion_selection.c:274"
+      ]
+    },
+    {
+      "payload_sha256": "48499ddfc1efdce5796529a38e429480e32da442bf99873217d6e1c3353dc168",
+      "ids": [
+        "c:TAIIKU:80141280:1"
+      ],
+      "width_px": 75,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/ovl/sports_festival/festival_entry_and_competition_select.c:30"
+      ]
+    },
+    {
+      "payload_sha256": "3d666a38cfcca1a8e2df2032cc1758e8572b539dbc9e7b33d3fff110b2a48407",
+      "ids": [
+        "c:TEL:801345c4:11"
+      ],
+      "width_px": 88,
+      "disposition": "wrapped_dialogue",
+      "reason": "Uses the sndi dialogue renderer; this short row is 88 pixels.",
+      "source_locations": [
+        "src/ovl/telephone/call_and_invitation_flow.c:1012"
+      ]
+    },
+    {
+      "payload_sha256": "df71cb8400e5e7f2a45bc5bab6b5a55fc18cfba8df02763fae394d85e3e0c0c3",
+      "ids": [
+        "SLPM_86.053:00072e34:7edf9d356618"
+      ],
+      "width_px": 22,
+      "disposition": "name_suffix",
+      "reason": "Name-form substitution handled by the English expansion and dialogue wrapper.",
+      "source_locations": []
+    },
+    {
+      "payload_sha256": "893cb48d4f6fe73990d4129edc889b94de50f78f63f61b35170737ecaf348939",
+      "ids": [
+        "c:main:800412e0:3"
+      ],
+      "width_px": 52,
+      "disposition": "initial_state",
+      "reason": "Eight-byte initial given-name marker, replaced by name entry; not a menu heading.",
+      "source_locations": [
+        "src/main/game_init.c:189"
+      ]
+    },
+    {
+      "payload_sha256": "3bc05b642e88837a5f4700afeb774a400757d5ffe722b1dec9a1aff965d54609",
+      "ids": [
+        "c:main:800755b4:1"
+      ],
+      "width_px": 122,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/main/holiday.c:199"
+      ]
+    },
+    {
+      "payload_sha256": "ede1c315ca7dcbff7d7daf8512531062d388365dd74aa2eb1a2e3d424d48801e",
+      "ids": [
+        "c:main:8005a668:1"
+      ],
+      "width_px": 131,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/main/home_screens.c:242"
+      ]
+    },
+    {
+      "payload_sha256": "cd75814e1b95d50dc72a22e22ffe32098130e087009356d76e28dfd8cee45415",
+      "ids": [
+        "c:main:8007ef48:23"
+      ],
+      "width_px": 66,
+      "disposition": "comparison",
+      "reason": "Original sound-effect comparison in the bypassed talk body; not a separately drawn label.",
+      "source_locations": [
+        "src/main/scene_library.c:1246"
+      ]
+    },
+    {
+      "payload_sha256": "27bdebef095e414f07e0f2c4cc773ad0568f8589e55da7abe5ac6b09796115fe",
+      "ids": [
+        "c:main:8007ef48:26"
+      ],
+      "width_px": 62,
+      "disposition": "comparison",
+      "reason": "Original sound-effect comparison in the bypassed talk body; not a separately drawn label.",
+      "source_locations": [
+        "src/main/scene_library.c:1248"
+      ]
+    },
+    {
+      "payload_sha256": "24ecca5096ee98b288db28a2547c8d86a8b43435d8057decb90a669df16ffca7",
+      "ids": [
+        "c:main:80073198:1"
+      ],
+      "width_px": 31,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/main/scheduler.c:2418"
+      ]
+    },
+    {
+      "payload_sha256": "eff933a07fd2c046f8142c6d98e9e4b269a7277427c738e713ba69ba8a8dbdf1",
+      "ids": [
+        "c:main:800734c4:1",
+        "c:main:800735b8:1",
+        "c:main:800736ac:1"
+      ],
+      "width_px": 32,
+      "disposition": "scene_title",
+      "reason": "Settled title text starts at x=-142. Background width is 14*floor(byte_length/2)+8; text starts two pixels inside it.",
+      "source_locations": [
+        "src/main/scheduler.c:2493",
+        "src/main/scheduler.c:2515",
+        "src/main/scheduler.c:2537"
+      ]
+    }
+  ],
+  "pending": [],
+  "resolved_data_defect": {
+    "ticket": "T-39547",
+    "record_ids": [
+      "CDROM/EXEDIR/TT.EXN:00027b00:9a43ac4beb24"
+    ],
+    "disposition": "Excluded sprite texture attributes from translation; twelve original arrays and all three changed sprite sets verified. See twinbee-sprite-attributes-2026-11-03.json."
+  },
+  "growth_coverage": {
+    "records": 827,
+    "distinct_payloads": 253,
+    "direct_call_matches": 57,
+    "shared_table_matches": 468,
+    "remaining_consumer_records": 331,
+    "note": "Direct-call and shared-table matches overlap. This join establishes review coverage, not a new independent geometry measurement.",
+    "source_receipts": [
+      "menu-direct-call-triage-2026-11-02.json",
+      "stage-controls-and-menu-spacing-2026-11-02.json",
+      "fortune-name-spacing-2026-11-03.json",
+      "mixed-label-review-2026-11-03.json"
+    ]
+  }
+}

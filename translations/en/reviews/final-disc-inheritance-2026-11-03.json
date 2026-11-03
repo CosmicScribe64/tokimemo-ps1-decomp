@@ -1,0 +1,3974 @@
+{
+  "scope": "All BIN, NBN, BS and EXN files plus the main executable, compared through their ISO directory entries. Movie/audio streams are outside this comparison.",
+  "previous_target_sha1": "b579f2ad31288f442436f718eba0cb61f7e359fe",
+  "changed": [
+    "CDROM/EXEDIR/BUNKAKEN.EXN",
+    "CDROM/EXEDIR/NAME_ENT.EXN",
+    "CDROM/EXEDIR/TT.EXN"
+  ],
+  "unchanged_count": 989,
+  "unchanged_files": [
+    {
+      "path": "CDROM/BATTLE/PARK.BIN",
+      "sha256": "7e46b001135fbae54e9ca6e9a4b13c6d74f7b9bc23fa8cfd1907063608dadbf9"
+    },
+    {
+      "path": "CDROM/BATTLE/UTYU.BIN",
+      "sha256": "866257d6bb6374ace0c04c85a48f8a306f10f3e0a415621429c7d2e9c9408a1a"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_ACT.BIN",
+      "sha256": "79cb7aae52f71b9b808046524bdf4a3dc6d34271064dd991278a540dd0976ab2"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_ARTS.BIN",
+      "sha256": "fe0d3006b6443dee3d1c5a0d69f499e62863584d9cc373996ee5f1450457719c"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_ASA.BIN",
+      "sha256": "cd37ba3f9fed0ea5ad1e58935261647efe047c234459d6cd6891e3a71ff19185"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_BAN.BIN",
+      "sha256": "6723e9ff5ab373321edddd2a676bcfc52f2dd67cf02eb0fa7f39d9ddec5c171b"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_BASK.BIN",
+      "sha256": "5815d5d74a8b5e9ba25bb5ec88728d7291c9b13d06a5e32053c7cbbc9116ffd8"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_BLOW.BIN",
+      "sha256": "ab3f24fd28737ca74c7342246ba565aaed88de5907f548be935418020a149eae"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_BUN.BIN",
+      "sha256": "f034066377c8cd33c57edd08b9bbc8908d0c10e3385e85e79939205bd3d699c4"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_DENN.BIN",
+      "sha256": "f36414ee072ffca5eb14bbe08040322758507eb2a814e594046b11d0ee876985"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_HABU.BIN",
+      "sha256": "c1ffd1726a9a5c7526a3b4573eb7c0f54a69f534d1153ada650f6deedfd15820"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_HIMO.BIN",
+      "sha256": "295d14b107fff70b050b308eacd010fb0e33f4f290432a5f1a07ccb26d6f7b71"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_HOME.BIN",
+      "sha256": "35aaa227b3963b2f1d3ef37dbbec9b5382773b108eb0aa82af8fa3d17a0ce30e"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_HUJI.BIN",
+      "sha256": "7b08501b063f9d0b54a8a0203dd888f70b85908d76b6bf98151c4d14284c903c"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_KAGA.BIN",
+      "sha256": "06003bcaff956dc6b4d3f77fb54a1c8fd04309aaaacf3d2af6e637b6a2d504a5"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_KATA.BIN",
+      "sha256": "56b5bfdf6dc85070b76c3e8b7351240e9591e5fbb6e317a878e32dc6c7c8df90"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_KISA.BIN",
+      "sha256": "7efc9e533a053fa63b681f677be8abdafb3cd4ede70f68adcb494e7821952916"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_KIYO.BIN",
+      "sha256": "6ece9d2e385c195f58b8b833d9702ef376614e7018624b65b6827823a080f807"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_KOSI.BIN",
+      "sha256": "ac888909bd524ff5d140f1cef41ed0748242d5a623eca5ab3bbffe28acc7253c"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_KUMA.BIN",
+      "sha256": "1a59a2b97851a9f61be4e88a0250e61a6a5a2650d2e762a5c5349c59f63fbaa4"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_MIKI.BIN",
+      "sha256": "7e4e00797a5068195cd586f94e2835171c6bad42deafb05d407fb2c086ac0e94"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_NIJI.BIN",
+      "sha256": "11100fa66d5aea9c636ceecdb73f1c5498f717556dd4029e8a7441c073370cf6"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_PARK.BIN",
+      "sha256": "e0bfb65f70a36660733382a5248e407df7f8eda42411f4ffb6b102b9a1ffd222"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_ROBO.BIN",
+      "sha256": "9454e04e7dbdc39c619888a4100939a1c33d2f858d53fccc3bf33dc6d33fcc12"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_SCIE.BIN",
+      "sha256": "ef47d92991eb962a952b54f185899e1793e6899d7c0060efe66a01f6359a2073"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_SIKA.BIN",
+      "sha256": "0e062654445be6d1ca187bcb6cca8f668a5f9f787bc027f135198ee84e375394"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_SOCC.BIN",
+      "sha256": "fa2fe6ab51ce12ae8deaade5613e0065899f013645bdf77da8538dd1446f5a66"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_SWIM.BIN",
+      "sha256": "c33782d73a944b1cefb7b7acd2ed3985fed55702b3ca195e0dd5d23c25ebe9c4"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_TENN.BIN",
+      "sha256": "f7a7a39223b537e43ca1df1a5b18175b5535fa8cb3345f6df3656c7f543a7e85"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_UFO.BIN",
+      "sha256": "04576aec44403f33a6fb00ea014786206df7089fc2db1a10ce0c1c7d5f3989fd"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_UTYU.BIN",
+      "sha256": "ea88ae1f0030842108fb6099872b6660c4a8de3fb4eed967676e56584ea7210b"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_YAKY.BIN",
+      "sha256": "cd75fc5a6b0f7b7d9dba0dedf71d2f10b90572b1fc02396922cf3383d5fd32a3"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_YOSI.BIN",
+      "sha256": "cddac44dd4c99a212750a654e27a5c8d954abf133ba1364fb5d8aa49a4cdc144"
+    },
+    {
+      "path": "CDROM/BATTLE/VS_YUMI.BIN",
+      "sha256": "695cc8cd0637b6a30df4c4249160f30252da67952e1a612f7e10f90188c3a0a8"
+    },
+    {
+      "path": "CDROM/BS/C_01_27.BS",
+      "sha256": "7543e723ea06c7db100b148350394f79c1a94ff8961aa65904d4aa1613295992"
+    },
+    {
+      "path": "CDROM/BS/C_01_28.BS",
+      "sha256": "1c24ed91c38340593bdebc50646261c1cf5b75216f0f54f02551014dd2cf68d1"
+    },
+    {
+      "path": "CDROM/BS/C_01_29.BS",
+      "sha256": "901521c943e6490e58042500d4e7b5bf4f1da1a121092b9aaca42b2729c12c75"
+    },
+    {
+      "path": "CDROM/BS/C_01_30.BS",
+      "sha256": "2d408231b46b04b2cd9717db036d1f40d06d27d57d5d5e4ec1e61b2bb13a3954"
+    },
+    {
+      "path": "CDROM/BS/C_01_31.BS",
+      "sha256": "767619b6f99da5f5c4bcd5b2c94042d2ce99b6be40b2564f116d03bf52a3f88f"
+    },
+    {
+      "path": "CDROM/BS/C_01_32.BS",
+      "sha256": "11768289bdbd6b434bc066ff1ecf642166f1e7a905c4bf24b2b39ec4be7788ce"
+    },
+    {
+      "path": "CDROM/BS/C_01_33.BS",
+      "sha256": "c1a7c5793d2d52cb84171ff5db1ef4724945fd92216da209b13363b0bc78389b"
+    },
+    {
+      "path": "CDROM/BS/C_01_34.BS",
+      "sha256": "0a965b9d42ed1df5900b2d08faa9ee05d6f2f9b58eb677b1bb146725a2157245"
+    },
+    {
+      "path": "CDROM/BS/C_01_35.BS",
+      "sha256": "8a2ac8e9c93e1f9de24d7b2135b48a66a17415db7476bf9fea1e6a1a75078eba"
+    },
+    {
+      "path": "CDROM/BS/C_01_36.BS",
+      "sha256": "600600ef3a51ba1673209d3cdf55b954bafa346cf497b8a4fa08587349246f56"
+    },
+    {
+      "path": "CDROM/BS/C_01_37.BS",
+      "sha256": "b3a6769a1400d13ef10fdcf0a981df78123113f196dc581b568a7de3a6ef87cd"
+    },
+    {
+      "path": "CDROM/BS/C_01_38.BS",
+      "sha256": "73adbf50e22e24cabf11c1181e8b157b209bf78d8b98f2fb34514443c1ee5c90"
+    },
+    {
+      "path": "CDROM/BS/C_01_39.BS",
+      "sha256": "563db3028e223e3c57ded52cb604eb89c39b793f0b40dbc3c6b316e85ff0d8c5"
+    },
+    {
+      "path": "CDROM/BS/C_01_40.BS",
+      "sha256": "09a8ea797f6b798bca5424c61c7c0a825b9820eac73fe8d80dcbb83c3e507fa7"
+    },
+    {
+      "path": "CDROM/BS/C_01_41.BS",
+      "sha256": "8772193f47bc5ee9485296b96f5589efee379eed0fe3fb045fbb4be5620795be"
+    },
+    {
+      "path": "CDROM/BS/C_01_42.BS",
+      "sha256": "91cd791faa088328f4ff229caa96898f1ecbb1cd9fbf54e5479240b0e36f2897"
+    },
+    {
+      "path": "CDROM/BS/C_01_43.BS",
+      "sha256": "1dfb89945070062dc86b04f842d13ce0c867851bf39ad21b4b0ecd76bb8658dd"
+    },
+    {
+      "path": "CDROM/BS/C_01_44.BS",
+      "sha256": "951ec47906f6a19748d2f3b803cb086c0e5af3a467f3cb6819515225bb6365e0"
+    },
+    {
+      "path": "CDROM/BS/C_01_45.BS",
+      "sha256": "178abeb2f9cbd69ee1cb6703b7f98b5a853cf30a2da61813f19b2682bf678102"
+    },
+    {
+      "path": "CDROM/BS/C_02_01A.BS",
+      "sha256": "48505cd48b9afc6cb44300e42c0b688b9e79492b11092f43f1e30e50bbfd8e6d"
+    },
+    {
+      "path": "CDROM/BS/C_02_01F.BS",
+      "sha256": "ada9877364d22bb96e6c8d18abc94831f79da4201b85a89cbe069f553aeedd57"
+    },
+    {
+      "path": "CDROM/BS/C_02_01H.BS",
+      "sha256": "98f97915de1e3ec174f47a6fcac79b0dd84052e870e4f6a4babed473ae2a7252"
+    },
+    {
+      "path": "CDROM/BS/C_02_01N.BS",
+      "sha256": "c6b8ad799283ba821c027e1bffab517007d5dd86954dcd13af106e74fda0b287"
+    },
+    {
+      "path": "CDROM/BS/C_02_01S.BS",
+      "sha256": "336993831748dc6163946d8276405d233adb01d8ee26c44d75667d9c1267a6ef"
+    },
+    {
+      "path": "CDROM/BS/C_02_02A.BS",
+      "sha256": "3d23ba6d581759dc715b85c04849ef4ec63a4846ec5afef64fcc5b3dc427d14d"
+    },
+    {
+      "path": "CDROM/BS/C_02_02F.BS",
+      "sha256": "3ced1fe0b5e3db373c59fff54e5f915cf2a174fa65ad2e819f90e29938aa38fe"
+    },
+    {
+      "path": "CDROM/BS/C_02_02H.BS",
+      "sha256": "ea4f9201486e8bfc21b03706b4427a2e3e0865f2be7a30f5057802618747ec96"
+    },
+    {
+      "path": "CDROM/BS/C_02_02N.BS",
+      "sha256": "9ee3e7443d9641ccabedc812c4329cbffe2581fb932e0e2936d908b1fc054a55"
+    },
+    {
+      "path": "CDROM/BS/C_02_03.BS",
+      "sha256": "1fa26a6b07b8f8114c695b5b7f979616ddb0d3ac676cd7576e7f79fe59d7c3cc"
+    },
+    {
+      "path": "CDROM/BS/C_29_02.BS",
+      "sha256": "7a6498afcc5ab53050bae8ad5bf371049320643620d74b4a709d48c7a854e869"
+    },
+    {
+      "path": "CDROM/BS/C_29_10.BS",
+      "sha256": "28e5f5d57920e26a29704441767d46d7a9f10b55a127b196e5592ab9655c95d5"
+    },
+    {
+      "path": "CDROM/BS/D_01_46.BS",
+      "sha256": "33dfaf9078a56fcb3b41b78b8e9a64b40b8389108cd726401333b2449e349b48"
+    },
+    {
+      "path": "CDROM/BS/D_01_47.BS",
+      "sha256": "8a4d9fff9a4339b730bfbbff13bddfe62b11c2efca1bdee67787fc7b46982393"
+    },
+    {
+      "path": "CDROM/BS/D_01_48.BS",
+      "sha256": "1edec1b4722ef90fe68f386104b6f41d3b80bf24eb84448db26ce75f012d81aa"
+    },
+    {
+      "path": "CDROM/BS/D_01_49.BS",
+      "sha256": "1c73759682862464746ae870ab52d3bc2dc2da18ba99205c0e220a62beee555f"
+    },
+    {
+      "path": "CDROM/BS/D_01_50.BS",
+      "sha256": "935a6f85ffb4d4c100ad561d7c113253564220ddf6813768c1657588ededc8ba"
+    },
+    {
+      "path": "CDROM/BS/D_01_51.BS",
+      "sha256": "6661c95b74d3888502144d1c1df4ec91198b02c426a20855cff9c521deed2183"
+    },
+    {
+      "path": "CDROM/BS/D_01_52.BS",
+      "sha256": "f52f5af7602bdba4b0188e31daa42c3596099725a504f58adb1bb531902ca4fb"
+    },
+    {
+      "path": "CDROM/BS/D_01_52B.BS",
+      "sha256": "4145392ab98c2e1b04dd126862b30dbc6e87aa168a3be018b32f3ae47faba08f"
+    },
+    {
+      "path": "CDROM/BS/D_01_53.BS",
+      "sha256": "2fec4886cfff7755aac0b6dd9db93dbaf93029f6d8b28bbaab343b390743b734"
+    },
+    {
+      "path": "CDROM/BS/D_01_53B.BS",
+      "sha256": "643f4c840d0fc14f0e2fe3e987ed98a22136761379d4895df052142c94f978d5"
+    },
+    {
+      "path": "CDROM/BS/D_01_54.BS",
+      "sha256": "efee894d42097ce1fd06aebe19447272f48ad5801e31a20380e1f6a5cc71b2c4"
+    },
+    {
+      "path": "CDROM/BS/D_01_55.BS",
+      "sha256": "ea709c3232ba8158698bb183f4f07305d05e33c186ac655f702bd108c8c4768a"
+    },
+    {
+      "path": "CDROM/BS/D_01_56.BS",
+      "sha256": "ce7815e68be015f1f312eb95f6f8850c4eeb18d38826db3d91d3e66e9961167e"
+    },
+    {
+      "path": "CDROM/BS/D_01_57.BS",
+      "sha256": "a9de7ceb48bb8fd6ccd47260bbf51feba9f25da91a663c4335c678ece2887272"
+    },
+    {
+      "path": "CDROM/BS/D_01_58.BS",
+      "sha256": "eff0fdc80e3d1c45d715fae471ad2c0060017a4193ac162351345c727476122d"
+    },
+    {
+      "path": "CDROM/BS/D_01_59.BS",
+      "sha256": "01148ce1c27ec63cd1a0f5f6202e21c8454cab06d9a987fe52f699af18f061db"
+    },
+    {
+      "path": "CDROM/BS/D_01_60.BS",
+      "sha256": "66638a92f5e2face356fa22959b9da1bb7ec9ef31cf42b6f346f9b11dd0540bb"
+    },
+    {
+      "path": "CDROM/BS/D_01_61.BS",
+      "sha256": "6b57be7918ccaf126c33bc8aa13bdd3773b246f1c5853c5c57f15bceb66a27c1"
+    },
+    {
+      "path": "CDROM/BS/D_01_62.BS",
+      "sha256": "2deed7c42dcf883774f930f30725baf04e7d4ce35c16c2623e337356059949ee"
+    },
+    {
+      "path": "CDROM/BS/D_01_63.BS",
+      "sha256": "67cf13590223f2d8cffc151058f5ca39e4f5f9690cff28e046bb47a9394798ec"
+    },
+    {
+      "path": "CDROM/BS/D_01_64.BS",
+      "sha256": "3419b8aac40345b3414e2bac3c052389aa2ac88157aa9b345a3c5a0176334e65"
+    },
+    {
+      "path": "CDROM/BS/D_01_65.BS",
+      "sha256": "fa16bd5cad3a1cda9d7cfe48a592a74da14b36d6f521490434afd50575d65474"
+    },
+    {
+      "path": "CDROM/BS/D_01_66.BS",
+      "sha256": "f44402d4aeeb8d5060a274c4c498e44b8f20e157593c9734d2d62532dc82fdff"
+    },
+    {
+      "path": "CDROM/BS/D_01_67.BS",
+      "sha256": "f23480b621e99b32f5083712e6092fbf1b677b11d12355940b76add1ef3800b2"
+    },
+    {
+      "path": "CDROM/BS/D_01_68.BS",
+      "sha256": "bae0910785124db801a9ae54997e841a86051d76ed4d34644c14d6f2558d97a3"
+    },
+    {
+      "path": "CDROM/BS/D_01_69.BS",
+      "sha256": "a00808c2f12a976a6a4d20646878095b4d825d639986469cf268ead020ade227"
+    },
+    {
+      "path": "CDROM/BS/D_01_70.BS",
+      "sha256": "22afcb125ec79ccfb4b60c4b0086f6636813220f9cae3356f1b6aefa9de37487"
+    },
+    {
+      "path": "CDROM/BS/D_01_71.BS",
+      "sha256": "dcf435e3fe4269b264a18ac11f5666b1b3e55cde35dbe2324c58375d4c7873ac"
+    },
+    {
+      "path": "CDROM/BS/D_01_72.BS",
+      "sha256": "6de33d2a65828c17c16945ee53e0590447d73089a22d36c26c39320ef349f78c"
+    },
+    {
+      "path": "CDROM/BS/D_01_73.BS",
+      "sha256": "4121864c80febb24684ec0f26abefe09811bdb7502777c3363f79d0f54232a5b"
+    },
+    {
+      "path": "CDROM/BS/D_01_74.BS",
+      "sha256": "cf2987f4cf2db172eb13c3dcc9ffba9205f66b3204e8379a37e6f0e95b1f46e7"
+    },
+    {
+      "path": "CDROM/BS/D_01_81.BS",
+      "sha256": "e750ada5302b3919312d861b2fd35ccb58c2a0c389d6ddaaca1224d1be146381"
+    },
+    {
+      "path": "CDROM/BS/D_01_81B.BS",
+      "sha256": "3bb1734da1fcfd10909049aa9ce76297addffbb14f8a69efbed43e62910eedab"
+    },
+    {
+      "path": "CDROM/BS/D_02_04.BS",
+      "sha256": "30ad6b7950cf168640552ff444b5178bd658bbf7f409b76797b462848e411756"
+    },
+    {
+      "path": "CDROM/BS/D_02_05.BS",
+      "sha256": "223d28caa9ee5cfdbe71c8b90db60ccf090c17146d77cd5c6110f0d43d49dcef"
+    },
+    {
+      "path": "CDROM/BS/D_02_05B.BS",
+      "sha256": "2377a14d39e360d5d6616d9f49767144809a970b7ee1cbc6ec7d28fbd29ebefe"
+    },
+    {
+      "path": "CDROM/BS/D_02_05C.BS",
+      "sha256": "83a48259ea0a0d9d65d68a459d1e01a3a6e1dfeffec95b9ffbc09d00fa04d288"
+    },
+    {
+      "path": "CDROM/BS/D_02_06.BS",
+      "sha256": "c078fde0fb13c40eb372be2d5ca4c9b63ab70f1d445469cc852610bcf2875ba5"
+    },
+    {
+      "path": "CDROM/BS/D_02_08.BS",
+      "sha256": "3b67a7b9de194fa84a6a16492b818b4aa17b5dc238b66eb9914304afd9ca5035"
+    },
+    {
+      "path": "CDROM/BS/D_03_01.BS",
+      "sha256": "50c03850a5a81d8a98f30a112327c891c9003ef660102d70b5ce1ad6f5fa060d"
+    },
+    {
+      "path": "CDROM/BS/D_03_02.BS",
+      "sha256": "ce7f2242e31d8fbbdfe0bef761224d5751188338cc2e466c7b7a28ee335a9b1e"
+    },
+    {
+      "path": "CDROM/BS/D_03_03.BS",
+      "sha256": "17c3da58dc2ac1779d9af43d7902864a46d897772399540c6b6d78af44a31e1e"
+    },
+    {
+      "path": "CDROM/BS/D_03_04.BS",
+      "sha256": "98b774e04c9cb6d25cf0e0648123a563a99bdaa484a9f0e40f53d98bd823fc47"
+    },
+    {
+      "path": "CDROM/BS/D_03_05.BS",
+      "sha256": "c0597326202021e00e15af3fd87342d494f958d4faf538a01851d6996427d051"
+    },
+    {
+      "path": "CDROM/BS/D_03_06.BS",
+      "sha256": "b14d5fe6f311c72b802453101baa54cabb0fc9b4c3a8bb0ad72495691611c534"
+    },
+    {
+      "path": "CDROM/BS/D_03_07.BS",
+      "sha256": "2f5ba86e6b6b1f407e4515e11471ee0332462e5a553aca2cedeae8550532c4a4"
+    },
+    {
+      "path": "CDROM/BS/D_03_08.BS",
+      "sha256": "3976e6d581bf916dda2bf2fe8f99a6891018b70f779ecb34210788572a7dd5c9"
+    },
+    {
+      "path": "CDROM/BS/D_03_09.BS",
+      "sha256": "f318ae25a5697ddf9ea2642a96b7c32448fca6ada80a0d44e9d4339ce281277d"
+    },
+    {
+      "path": "CDROM/BS/D_04_01.BS",
+      "sha256": "323a6b2ba960c10ad4cbc544d31418874d37b273978880ba8e83fa02290c95e0"
+    },
+    {
+      "path": "CDROM/BS/D_04_02.BS",
+      "sha256": "666fb416df4b5a8f3baeeacf35027f4b21fbfdbd932e22d0ee3643eeaa607d0f"
+    },
+    {
+      "path": "CDROM/BS/D_04_03.BS",
+      "sha256": "8372de4f0e3e78e83983935c52d02de4783f1ca6d0c7d64cb05ad77c303c7d4b"
+    },
+    {
+      "path": "CDROM/BS/D_04_06.BS",
+      "sha256": "96fe1287bbbbf48fcde77e75ea95e9492b95ad4d512d75d1e126c76908d5f954"
+    },
+    {
+      "path": "CDROM/BS/D_05_01.BS",
+      "sha256": "726a0d0cb9449b946c6681c36fa0cdaa0722d72b5f9b238349d9b10812debee9"
+    },
+    {
+      "path": "CDROM/BS/D_05_02.BS",
+      "sha256": "55ef93104804ce77cd73d6937db72e92171870b3530314a26c27d5c9dd1cd1e8"
+    },
+    {
+      "path": "CDROM/BS/D_05_03.BS",
+      "sha256": "179d3a6fd93e29d2e42a808b2ea2311778383ba99cf44698f34820f208d89b15"
+    },
+    {
+      "path": "CDROM/BS/D_06_01A.BS",
+      "sha256": "3cbe7d0dc3e92423262b155d9b66a7b312455bc8bdb9e8fa76f28972232620c6"
+    },
+    {
+      "path": "CDROM/BS/D_06_01B.BS",
+      "sha256": "c37d529bf8a9b34b89cf78ed0dac91b6e735745aed1455bc8ce9e1a8f45f8f19"
+    },
+    {
+      "path": "CDROM/BS/D_06_01C.BS",
+      "sha256": "5a7acb07c5ce995f2ac9245a47c9f9c54694ea46e8f438f50ce22b222280f5e9"
+    },
+    {
+      "path": "CDROM/BS/D_06_02.BS",
+      "sha256": "b980bacf586aecd1796fb55c0f28205bebaf9bcd4a435986f9149b6533bb319f"
+    },
+    {
+      "path": "CDROM/BS/D_06_03.BS",
+      "sha256": "91aeb2a1a405f3d5ed379277bca3bfb1364d77642aeb042d6e6bcf76d4e8a936"
+    },
+    {
+      "path": "CDROM/BS/D_06_04.BS",
+      "sha256": "0301647d99a8a3ad6831bacf58da620070ba2c598ce158fa5f7439b70f395a54"
+    },
+    {
+      "path": "CDROM/BS/D_06_05.BS",
+      "sha256": "80335a12cb771655ce166a74074b95c4b89b88062afe8a9b1cae7f273ea7aad2"
+    },
+    {
+      "path": "CDROM/BS/D_06_06.BS",
+      "sha256": "0871ea3dbb848621fa130599d7ec790e5a0cdbdb661af68a70c29a7e9a8257db"
+    },
+    {
+      "path": "CDROM/BS/D_06_07.BS",
+      "sha256": "0898431e1362e87185c5a2b7cacd746bcc7ebaf7c1698637bf9e6eb035e7f81f"
+    },
+    {
+      "path": "CDROM/BS/D_06_08.BS",
+      "sha256": "118705826936904c06875d3a5e3955456c7e412962de89b5124ac91768562d7e"
+    },
+    {
+      "path": "CDROM/BS/D_06_09.BS",
+      "sha256": "7f9b6586f593676db4933b5cbb3fa7bd28f1bbc9b5d1fa2385e959b33b653b40"
+    },
+    {
+      "path": "CDROM/BS/D_06_10.BS",
+      "sha256": "6898f62616b2f75a7c1df9c38ba22c58e171e7c018455e828b53f41f65c8203a"
+    },
+    {
+      "path": "CDROM/BS/D_06_11.BS",
+      "sha256": "6d2a043da5fa127105d0bf21393a004afc0a37f5384ba0be64dd8b2d1c9a10fd"
+    },
+    {
+      "path": "CDROM/BS/D_06_12.BS",
+      "sha256": "00c32da85906a1ec44cb175588719300eda264918ca523c11fef94721e32864c"
+    },
+    {
+      "path": "CDROM/BS/D_07_02.BS",
+      "sha256": "36be29db4acf92bd2ca2a4d4b4aefb1a467c8b626f17596de20a7f7b30d0559e"
+    },
+    {
+      "path": "CDROM/BS/D_07_03.BS",
+      "sha256": "2807c76702a6b97c8e2b609b2c3ca6e2805e627af8059060b3eb0e8b1bf3d732"
+    },
+    {
+      "path": "CDROM/BS/D_07_04.BS",
+      "sha256": "23bbe6338d502feb529a0558cf20e3993fe22a1f93696a44c6b58731c4062760"
+    },
+    {
+      "path": "CDROM/BS/D_07_05.BS",
+      "sha256": "2452f06f547f7ad7d04f19612a1c3ac5a118d396b58768ee85bc3d8391511f03"
+    },
+    {
+      "path": "CDROM/BS/D_07_06.BS",
+      "sha256": "3aea9b8eea09a3c71309313064c5af76780e46943fb3aa629bd459621d45aad6"
+    },
+    {
+      "path": "CDROM/BS/D_07_07.BS",
+      "sha256": "44caba119be6fca93442c279daa0242a452b08207e4e814fd2ebdf2c13e4f78a"
+    },
+    {
+      "path": "CDROM/BS/D_07_08.BS",
+      "sha256": "87659790730899f21e140f295f3fdfb95f56b4cb9bd2a0b18b6e87e3f28c26c7"
+    },
+    {
+      "path": "CDROM/BS/D_08_01.BS",
+      "sha256": "9ecdf0d1964059afb7d8aa7b9b8110b8e6e0edaced94a71cd0b532510fefb5bc"
+    },
+    {
+      "path": "CDROM/BS/D_09_02.BS",
+      "sha256": "8d94a5659b04b547446c6d628dc02375a54289f85b8b9e31c9ac59fd8e224d0d"
+    },
+    {
+      "path": "CDROM/BS/D_09_02B.BS",
+      "sha256": "c51aad608364948ec2699026dcdf9352cf8ab4d30557d44cc2d115363adde2ea"
+    },
+    {
+      "path": "CDROM/BS/D_10_05.BS",
+      "sha256": "91b37a7878702a5cdfc7e8fb0853c410d949401f97ed2aef93f7270f94f96025"
+    },
+    {
+      "path": "CDROM/BS/D_10_05B.BS",
+      "sha256": "ea096e33542a98983ae71fc9f909322fb889898da612c1593359ce2c8f758657"
+    },
+    {
+      "path": "CDROM/BS/D_10_06.BS",
+      "sha256": "34bd7cd0fc1355e3d2a9527ba713c2c2bd8c2a4949d199bf9bc3e18db38aca85"
+    },
+    {
+      "path": "CDROM/BS/D_10_06B.BS",
+      "sha256": "a845a283bc0023e638ea975de6d9c6066f6c078987bb85624f7a65ec408011d4"
+    },
+    {
+      "path": "CDROM/BS/D_10_07.BS",
+      "sha256": "104a2d74a022ea0bc1f4361177a3ac169d784719d72a836b34918a4a3993959a"
+    },
+    {
+      "path": "CDROM/BS/D_10_07B.BS",
+      "sha256": "5fce7b7a3ec831fdfc7ad8f2f2b5359cb8d7d9d98d6edfc68754816760aa5a8a"
+    },
+    {
+      "path": "CDROM/BS/D_10_08.BS",
+      "sha256": "5c4b5fea51ecaa0a469abecd886c60972980b491d8e20007cc62b630e372322d"
+    },
+    {
+      "path": "CDROM/BS/D_11_06.BS",
+      "sha256": "2a7c436d0a7097c5dce56d73041e2fccc5de7df77cdfda594aa4b70276a57812"
+    },
+    {
+      "path": "CDROM/BS/D_11_07.BS",
+      "sha256": "66451482b79ea0fa05facfb6034cb90b0f6694ddef496ea1d3a244fffe9a5505"
+    },
+    {
+      "path": "CDROM/BS/D_11_08.BS",
+      "sha256": "c2696ea30b45400f86a371dedd5ddfe87c51ddd9b0168e1f82941b0258748505"
+    },
+    {
+      "path": "CDROM/BS/D_11_09.BS",
+      "sha256": "c89352069d134f150b7c650a7e143e1b827fca0881a05d96057de4e0f1305273"
+    },
+    {
+      "path": "CDROM/BS/D_11_10.BS",
+      "sha256": "2a808ad2c12c630962e0a25de8ea83e208dcff0952540b897ae594c524e3fa58"
+    },
+    {
+      "path": "CDROM/BS/D_11_11.BS",
+      "sha256": "dd47a536363dfcea2aa6bd7ea54b844fda0d77c4366b74d1058b8cb5f6eae971"
+    },
+    {
+      "path": "CDROM/BS/D_11_12.BS",
+      "sha256": "368d67630bb52da4431c05a15105a8c19feebb61248b8f23bc2a9a738fd9c08d"
+    },
+    {
+      "path": "CDROM/BS/D_11_13.BS",
+      "sha256": "eb1f255a550d8ee2906bb1b364c532ae320a84569fcd2c34aee6e4a2d075f9cf"
+    },
+    {
+      "path": "CDROM/BS/D_11_14.BS",
+      "sha256": "bd7aae5fad0ba291f7104a10b4f14669504c193f3736ba830a90d44c7edef4b3"
+    },
+    {
+      "path": "CDROM/BS/D_11_16A.BS",
+      "sha256": "4594f038f57a22140b55cee488196a1d63c41b5aec26f758447bb94c5038255d"
+    },
+    {
+      "path": "CDROM/BS/D_11_16B.BS",
+      "sha256": "a2c485d73d363c133d2236bf2e900b783f89cb3d4d22f6e7bebc2dd93ed1bf54"
+    },
+    {
+      "path": "CDROM/BS/D_11_16C.BS",
+      "sha256": "59196e938a0b5e2a15d97f6e8daeb92d3dbb4866007e297b0b669cca4604005b"
+    },
+    {
+      "path": "CDROM/BS/D_11_16D.BS",
+      "sha256": "a22a2b16c5ec7106d4620ec199a2a50a41b8df63a220b224fff9a4206c1ec758"
+    },
+    {
+      "path": "CDROM/BS/D_11_16E.BS",
+      "sha256": "ad92965f74d03ce30b6b729488549ec64e453285cf615a021721648bac4375c3"
+    },
+    {
+      "path": "CDROM/BS/D_11_16F.BS",
+      "sha256": "a2c72e7fe154f5af769353dd7cac68d0afab5d94ff4f601e7c2af2d36ab393b1"
+    },
+    {
+      "path": "CDROM/BS/D_11_16G.BS",
+      "sha256": "7b9b2732e2e65cc9be1822c2f7ff81201a95f7f5addcaca7019e7517fc4c226f"
+    },
+    {
+      "path": "CDROM/BS/D_11_16H.BS",
+      "sha256": "e00c2ed78c1a68782adb69229313fdae73c838a48d1c811abc3215ed35eba828"
+    },
+    {
+      "path": "CDROM/BS/D_11_17.BS",
+      "sha256": "7cc09163663ad0533b08de65e40751cd610acc78b0c94240011d26aafcf90573"
+    },
+    {
+      "path": "CDROM/BS/D_11_18.BS",
+      "sha256": "bfe8390f83ee312ae11be24576637f90e4e7aacddd356145bdcd3beb1afcc774"
+    },
+    {
+      "path": "CDROM/BS/D_11_19A.BS",
+      "sha256": "86eeb71047afbe234229247a634af23a1bdf7de4df09977bc3869063d3579bd6"
+    },
+    {
+      "path": "CDROM/BS/D_11_19B.BS",
+      "sha256": "748d35056516215eae5a0984ff7f7378e275b25031b89803c9598fd63ab71f79"
+    },
+    {
+      "path": "CDROM/BS/D_11_19C.BS",
+      "sha256": "14cdb8e5ebeabd53e969ebb932be8f0e09effce33bb85ccfc27933dd5142eaf7"
+    },
+    {
+      "path": "CDROM/BS/D_11_19D.BS",
+      "sha256": "95aead5630535d6e2c62ecb7fab54e05fa1aec226641f451e72e239ff48596aa"
+    },
+    {
+      "path": "CDROM/BS/D_12_02.BS",
+      "sha256": "a944050818bf36d96bbced538e65d766929e1f452c9c37560b8ddf9fb44682f8"
+    },
+    {
+      "path": "CDROM/BS/D_12_03.BS",
+      "sha256": "66a46aea8ee50b53b76184edeae366478b4a411b1b8a437ce325a58fed1df14c"
+    },
+    {
+      "path": "CDROM/BS/D_12_04.BS",
+      "sha256": "e610d269415154cb6b157a20abcccd61b14c37b536543fefc05171780716f858"
+    },
+    {
+      "path": "CDROM/BS/D_12_05.BS",
+      "sha256": "dde0d06b6ea9de115c6304966bdfb84234ce148542ae67b828cf2635f4637479"
+    },
+    {
+      "path": "CDROM/BS/D_12_06.BS",
+      "sha256": "846fb08f09d234bd6f4bb3845dd9213fbe19e99a511b595732b9c387af104f81"
+    },
+    {
+      "path": "CDROM/BS/D_12_07.BS",
+      "sha256": "f72f382266451ed4ca1510f27734fd339f1b88d5dbb1900582bb0aec71c45cae"
+    },
+    {
+      "path": "CDROM/BS/D_12_08.BS",
+      "sha256": "71f2f4a9a9ae3f143c3005a2395315f55905efb229eda736b935adce4d5b1ba6"
+    },
+    {
+      "path": "CDROM/BS/D_12_09.BS",
+      "sha256": "1e27140218eb290c6ea219cc17a7f0d052c77a3a3643745bbecb1b85edc7f4a8"
+    },
+    {
+      "path": "CDROM/BS/D_12_10.BS",
+      "sha256": "c3d47e36935e82663997a5193799f57f291776565bb7b1d88721cdd4f27139e4"
+    },
+    {
+      "path": "CDROM/BS/D_12_11.BS",
+      "sha256": "47d3a13478c97f8fb8fd01b8e7210f82f1d42eca57330aaa29d3033c29562517"
+    },
+    {
+      "path": "CDROM/BS/D_12_12.BS",
+      "sha256": "f5ec6cb118fe8dc8969d57f8647af72764c2b338d4c7b9733df5b70cde08791a"
+    },
+    {
+      "path": "CDROM/BS/D_12_13.BS",
+      "sha256": "5d42e8af88e650312786df5689f3bd0d1c99dd3c21fe1061e256217419a438e1"
+    },
+    {
+      "path": "CDROM/BS/D_12_14.BS",
+      "sha256": "7cbc063dbd357aee70c22c28a0c32306ab254a9205a53bd19584365fb802f443"
+    },
+    {
+      "path": "CDROM/BS/D_13_02.BS",
+      "sha256": "7d19520aa2c0c2391508fb9cb180e0ddb05f44219164f4ad336e55c2bc9529c3"
+    },
+    {
+      "path": "CDROM/BS/D_13_03.BS",
+      "sha256": "e485e2ce07f8cbc521708a3fa77c1b7488106bef2d9641925ea8dd7818fd90b5"
+    },
+    {
+      "path": "CDROM/BS/D_13_04.BS",
+      "sha256": "9ad40167f5475811e164f915509508472d686f6aad0c16fe2f8918c8bbb8874a"
+    },
+    {
+      "path": "CDROM/BS/D_13_04B.BS",
+      "sha256": "e47f77d87780934d0d8a53de4f669a5e242bcc277fc0f87597122947f13aeadb"
+    },
+    {
+      "path": "CDROM/BS/D_13_04C.BS",
+      "sha256": "3ef8ab4e314cdb520e7077b03483a2c03840815510e2097fc66bd576ef0ac023"
+    },
+    {
+      "path": "CDROM/BS/D_13_05.BS",
+      "sha256": "dbd7abd22c11af4ec7626aff4fa1b4626fc3c4556fef9950c98a9e706c39ed47"
+    },
+    {
+      "path": "CDROM/BS/D_13_05B.BS",
+      "sha256": "708fd1fa34bf4382b23fb1fa57eef2afef2a105f8cc7e49c4231ce59d8563b55"
+    },
+    {
+      "path": "CDROM/BS/D_13_06.BS",
+      "sha256": "9025796d20272876dbeadc276867c6bc432732551628367695411c7dbba4f1cf"
+    },
+    {
+      "path": "CDROM/BS/D_13_06B.BS",
+      "sha256": "2377552e723a180e63e644872cfea6862d2fa10699c3c935a433e6f4b7f31582"
+    },
+    {
+      "path": "CDROM/BS/D_13_06C.BS",
+      "sha256": "f6408d312cfd273b6f983b64712aae259ecf37d382e4252cc77ccf233a5a436b"
+    },
+    {
+      "path": "CDROM/BS/D_13_07.BS",
+      "sha256": "c2753761948cc2acf8cbe5170eedf8f023c4414a3e9589a3ee106c59680ed9fb"
+    },
+    {
+      "path": "CDROM/BS/D_13_08.BS",
+      "sha256": "44211b18529ac63e982492df3cbccca9b6961316d22c8dd84a861fcaa9ab4209"
+    },
+    {
+      "path": "CDROM/BS/D_14_03.BS",
+      "sha256": "e910b2b6a537504283d6156a2779a5da6cc8d17e30668eba1ce96a7acbd63208"
+    },
+    {
+      "path": "CDROM/BS/D_14_04.BS",
+      "sha256": "9253eaac5bcf8eb26b9c0c27d46c14598c405ea0d352b39d32cfccd8211c7f7e"
+    },
+    {
+      "path": "CDROM/BS/D_14_05.BS",
+      "sha256": "61a57db951f816d54a0cee6502916688db16cf8117682bb335258e408b812b13"
+    },
+    {
+      "path": "CDROM/BS/D_15_03.BS",
+      "sha256": "1dc344f5c900f390d31616e3afdeb4aec5983d833bfe88b1aa6c543c1c07437e"
+    },
+    {
+      "path": "CDROM/BS/D_15_04.BS",
+      "sha256": "a8b97c3d5b1d6c66d95ac95e52d68a090841154f06a5d7e9c0dd9f840ef5fc0b"
+    },
+    {
+      "path": "CDROM/BS/D_15_05.BS",
+      "sha256": "737edbd4cd1f23b6b07cffd4d5230a19f4c6ead8ba2e2a8738900d4f9666659f"
+    },
+    {
+      "path": "CDROM/BS/D_15_06.BS",
+      "sha256": "aa7cc01a784bc5cb8ab358a814bfca8818770c07fd4945b66344295a9c8a092e"
+    },
+    {
+      "path": "CDROM/BS/D_15_07.BS",
+      "sha256": "d7983d202bf3382efbb771c4508c0865855debeae0f05021475bcba53771a2c3"
+    },
+    {
+      "path": "CDROM/BS/D_16_03.BS",
+      "sha256": "9882825d4a3a776f2869046e68cfb82b2364a6e8730524ad14ff4015463c00eb"
+    },
+    {
+      "path": "CDROM/BS/D_16_04.BS",
+      "sha256": "dca524dab65fad40728e0cded8cec09621d82237731430bad01ed7ace3aa08bf"
+    },
+    {
+      "path": "CDROM/BS/D_16_05.BS",
+      "sha256": "77be15fda73f453cc2afe8cf975b7dacbbb6c978f9dafab685b1fcf5c45c8620"
+    },
+    {
+      "path": "CDROM/BS/D_16_06.BS",
+      "sha256": "e150840fe421eac222e5e492ac0c0bc13cbef5ae507a6973f0164eed05b49a36"
+    },
+    {
+      "path": "CDROM/BS/D_17_02.BS",
+      "sha256": "8da5506af821ebe5b4ae59221aa467fdc976b4e1050727a262327580ffab8cb4"
+    },
+    {
+      "path": "CDROM/BS/D_17_03.BS",
+      "sha256": "0899db526f04451495025fbb36da6feb8d4bc91d6a38c741b15404fae3858d6a"
+    },
+    {
+      "path": "CDROM/BS/D_18_04.BS",
+      "sha256": "e1050b650294b5b3120309b3af2e2d1e9330b554841dbdd94dbae5cee52d3ffd"
+    },
+    {
+      "path": "CDROM/BS/D_18_05.BS",
+      "sha256": "25186c1ad62b0ef917182252c35f837f752d0de0f2d41f488909e6c9ac8414e6"
+    },
+    {
+      "path": "CDROM/BS/D_19_02.BS",
+      "sha256": "97dd345879d28df6ff232bc7a0cfea5650ba4901e991593c44b2eb436b6e5cf5"
+    },
+    {
+      "path": "CDROM/BS/D_19_03.BS",
+      "sha256": "dbf331fca8e2832c4261fa0e855c4c7cd32cd1ba1f4b39e10f6793012b06a91d"
+    },
+    {
+      "path": "CDROM/BS/D_20_02.BS",
+      "sha256": "2c28f2e3e526539a2c70f27ed78743f983761a874d7fd2c882122efada6ff857"
+    },
+    {
+      "path": "CDROM/BS/D_20_03.BS",
+      "sha256": "62110d4602499e79434acac032b7ee973d5c24a3be5795aabbdc6bfcc69ef40a"
+    },
+    {
+      "path": "CDROM/BS/D_21_02.BS",
+      "sha256": "f351d3741b1a6dd54c321ea6e830e7741003fa460feb654bd3b0a852c5146b4f"
+    },
+    {
+      "path": "CDROM/BS/D_21_03.BS",
+      "sha256": "325bb295d21abaad2430a74157524f53f514ab23629f5e266e2569eecc773f05"
+    },
+    {
+      "path": "CDROM/BS/D_22_04.BS",
+      "sha256": "b1314654b9081a96a4a627134ba27ed8a0767a13fa82d828c4cbfc537687efc3"
+    },
+    {
+      "path": "CDROM/BS/D_22_05.BS",
+      "sha256": "ace89e1fe97a75c8f3354363a7a0873eb1c06fa20575a86e7c004e9f0df4f36a"
+    },
+    {
+      "path": "CDROM/BS/D_22_06.BS",
+      "sha256": "787a8af36cf1aaf4529abc42d13309d0adc03a1c8d8fe1b0ce9a78992e8df96c"
+    },
+    {
+      "path": "CDROM/BS/D_23_02.BS",
+      "sha256": "94cdd2eacfcd80d9c148d6304bd444bd4d86026464e89ea2b02ab4662f019f61"
+    },
+    {
+      "path": "CDROM/BS/D_23_03.BS",
+      "sha256": "415deaa29cf392f3436bfccf53c4131f746757b0331897395d0b1728adf2aebd"
+    },
+    {
+      "path": "CDROM/BS/D_24_03.BS",
+      "sha256": "d48897ea5810212dea2e907d4a907c269e3ac032f79a9dd1f0cf55cbe8e63d40"
+    },
+    {
+      "path": "CDROM/BS/D_24_04.BS",
+      "sha256": "cdc11f8b3be2ceb23d25e55a6eb64781105ff8958a9c1c715449add1dca480f0"
+    },
+    {
+      "path": "CDROM/BS/D_25_02.BS",
+      "sha256": "ab8993b2c887589168929dd92bc800b67d05ad2f32f1d9d93e36d0ed81ec5eb3"
+    },
+    {
+      "path": "CDROM/BS/D_25_03.BS",
+      "sha256": "03be2adf71a8fc7fd3514c8fe0cbcf705e084b3adc6a5cc1042882d69b71c0fb"
+    },
+    {
+      "path": "CDROM/BS/D_26_03.BS",
+      "sha256": "f5935192e4d85a93e2068bffdf6cd1b27ab756bccfb7fac3a2ade2aa8079f2c3"
+    },
+    {
+      "path": "CDROM/BS/D_26_04.BS",
+      "sha256": "cfe935543f43781bbef21f2f8ffa8f295f7ab1300e90564b848a65c4ed016670"
+    },
+    {
+      "path": "CDROM/BS/D_26_05.BS",
+      "sha256": "3e52cd7d3bf2cc9d1ca5bd8f03911c5e0ef4376a16559fb3742073fcb8391635"
+    },
+    {
+      "path": "CDROM/BS/D_27_02.BS",
+      "sha256": "4d518a26c59ba70f4e4cbda08eaa15e890661ffedafc8cae80c66bb26cf02ea3"
+    },
+    {
+      "path": "CDROM/BS/D_27_03.BS",
+      "sha256": "c17ca1e2cde9c2aa84e946d916bd91c6b18594f9560f5572b8ca34c0ffb514de"
+    },
+    {
+      "path": "CDROM/BS/D_28_03.BS",
+      "sha256": "9758d6bdc33678ef617bc1c49f9fb96e448152e8db7d648c331d9b6043b9b39c"
+    },
+    {
+      "path": "CDROM/BS/D_28_04.BS",
+      "sha256": "26a10984b6bb2e2712cd5199042ad60d620da73404b5a3bffbfe5af80d2d6520"
+    },
+    {
+      "path": "CDROM/BS/D_29_03.BS",
+      "sha256": "5160f565ad7be1676fd48dfc7d4fe210691518b431afbb3f2d3b1d121c3e0f74"
+    },
+    {
+      "path": "CDROM/BS/D_29_04.BS",
+      "sha256": "794568c318e1c37612e465bed838e29587858f030e26f8629162eaa7e7b9c71d"
+    },
+    {
+      "path": "CDROM/BS/D_29_05.BS",
+      "sha256": "32393d881bc71213ecd95eedeeb1051c2efc6ac036b31d399e0fa73327806378"
+    },
+    {
+      "path": "CDROM/BS/D_29_06.BS",
+      "sha256": "bb75923775cd582557735d996e8048bc86114a5e1a45224f4b2470580f1a2d6c"
+    },
+    {
+      "path": "CDROM/BS/D_29_07.BS",
+      "sha256": "f29e6e0911e1db666b94e7e1f030063246c0fec8af9aabc153abce425b927d92"
+    },
+    {
+      "path": "CDROM/BS/D_29_08.BS",
+      "sha256": "44e2c1ff951c6b8ca38c4f32a79e201eab2500f4310fa4717e59516cd680f307"
+    },
+    {
+      "path": "CDROM/BS/D_29_09.BS",
+      "sha256": "d5f66f091cdf42ec4289aa3ac310682e9ec77c59e94e6be083766d80ec6ba398"
+    },
+    {
+      "path": "CDROM/BS/D_30_01.BS",
+      "sha256": "14dc639f13f43316c85a0364fd51be5a2202ec5be216f54e4e99b4010fe00890"
+    },
+    {
+      "path": "CDROM/BS/D_30_1.BS",
+      "sha256": "e96b3cd291c86b5d80074940fdea667b2db17b5a8752b0ddd27849e030e059a9"
+    },
+    {
+      "path": "CDROM/BS/I_01_14.BS",
+      "sha256": "ee6908f9bf0413f91fb695adbdfa064580bf52af07bfa6b4c71798ea3022d752"
+    },
+    {
+      "path": "CDROM/BS/I_01_15.BS",
+      "sha256": "a2229adfd94b7b3cfbdab1a44833d83a9c1ff21c584b5db61fadc33f0a42c974"
+    },
+    {
+      "path": "CDROM/BS/I_01_16.BS",
+      "sha256": "75ac8280b2b5fc05c9f925678bf28b57a1966c6e2b72b12f3d0ca23cac9bb465"
+    },
+    {
+      "path": "CDROM/BS/I_01_17.BS",
+      "sha256": "848136c92b0a0ca316789a5674f1bc3a25c75ccb63ae00488e4dc4e86c3331a3"
+    },
+    {
+      "path": "CDROM/BS/I_01_18.BS",
+      "sha256": "e60fc26d2af79119c89ec5c824a0bb8f9fb5e8ab36f79a8892d1df2c2d682ee2"
+    },
+    {
+      "path": "CDROM/BS/I_01_19.BS",
+      "sha256": "037a97b793252673b41cef07bebbcacf43dc4688c3ecc6b7fe57e8831f4468dc"
+    },
+    {
+      "path": "CDROM/BS/I_01_20.BS",
+      "sha256": "caa6ff140ae0e970915177c468f1884db54acb744ff9f825475a08fe3085c5ea"
+    },
+    {
+      "path": "CDROM/BS/I_01_21.BS",
+      "sha256": "04fd1fe1769323c454365f3997fd6f5f346c8639ecfc22b1d7bfa711d2d8883a"
+    },
+    {
+      "path": "CDROM/BS/I_01_22.BS",
+      "sha256": "8a330bcbad3024293ac11f21990b11a8d194ee7990e1f9bcbb4f159faab85285"
+    },
+    {
+      "path": "CDROM/BS/I_01_23.BS",
+      "sha256": "d5b819dfad352460f676d60d757555b6d2d19676d819405bcc9f95d15e236576"
+    },
+    {
+      "path": "CDROM/BS/I_01_24.BS",
+      "sha256": "e755dc7e3d314e440f8cf0e363cd82f6791436f1ca3bc38cff9d3c995281c4bd"
+    },
+    {
+      "path": "CDROM/BS/I_01_25.BS",
+      "sha256": "22a9d4f4a809ae49bc595cc8d5d5d1275593f73161210f07bbcea470ea2ba3a2"
+    },
+    {
+      "path": "CDROM/BS/I_01_26.BS",
+      "sha256": "baab6ed013a63ad56c4da15eeda7c46b804dd4782816e767c9af27c1997eec33"
+    },
+    {
+      "path": "CDROM/BS/I_01_78.BS",
+      "sha256": "4a2d5893b9d7e65fd631cf40be597ede8e005d29a621786d84c929c07ba7667d"
+    },
+    {
+      "path": "CDROM/BS/I_01_80.BS",
+      "sha256": "1d9b70456975378cd572af79b7881a4e84936d61bfdb0e60c499263b7b03daa2"
+    },
+    {
+      "path": "CDROM/BS/I_01_81.BS",
+      "sha256": "080aa486ef9fa2e5febbb7ea7c936daa4328538fe1922e3a77d4a4eb3b5b42c8"
+    },
+    {
+      "path": "CDROM/BS/I_01_81B.BS",
+      "sha256": "3bb1734da1fcfd10909049aa9ce76297addffbb14f8a69efbed43e62910eedab"
+    },
+    {
+      "path": "CDROM/BS/I_01_82.BS",
+      "sha256": "6a434855da53db0d983d083b7fa1d59c27bbd42ec3726030db5d27d441306d39"
+    },
+    {
+      "path": "CDROM/BS/I_01_83.BS",
+      "sha256": "5a515276b28152fb3fc6b8e11566d4d43fae3954575a5319930083a4b1fc748f"
+    },
+    {
+      "path": "CDROM/BS/I_02_08.BS",
+      "sha256": "43636be0d86c0a6fc5d30fece24386ff77bbdee221131fefcf273625dbc015eb"
+    },
+    {
+      "path": "CDROM/BS/I_02_09.BS",
+      "sha256": "f9643cd49d1beb5d31f651cde4d7b450c4feb3a4347f03b728ed3e4b2d23854f"
+    },
+    {
+      "path": "CDROM/BS/I_02_10.BS",
+      "sha256": "33b2c22895f9737b9aa110a5d8f1881b472409ca37ead62ac6189e962783c2ca"
+    },
+    {
+      "path": "CDROM/BS/I_03_09.BS",
+      "sha256": "f318ae25a5697ddf9ea2642a96b7c32448fca6ada80a0d44e9d4339ce281277d"
+    },
+    {
+      "path": "CDROM/BS/I_04_04.BS",
+      "sha256": "4504f6fa4a15bd376c107b7c082cb6c2e39081f9c101eb5d035e65b7357d056f"
+    },
+    {
+      "path": "CDROM/BS/I_04_05.BS",
+      "sha256": "3cf84127a9206cac045c939c73abcf5fbd5a5de92e90fc204d13cc3c8972b3ca"
+    },
+    {
+      "path": "CDROM/BS/I_06_13.BS",
+      "sha256": "d8b511b0470ca72e50f554626d1a390538f46813d6c9b87844a8fa516efea5f8"
+    },
+    {
+      "path": "CDROM/BS/I_06_14.BS",
+      "sha256": "9144055669f77791844e83a711fae8cfef99e9f9d91d0cf406d8b183079c1eca"
+    },
+    {
+      "path": "CDROM/BS/I_06_15.BS",
+      "sha256": "14c95039900e4c95af267f7308fbd8eb0c41820fb17cb3854f3e83b5b33969f8"
+    },
+    {
+      "path": "CDROM/BS/I_07_01.BS",
+      "sha256": "8ba66aa4faf05602d83e0940b1a0dca837f01f15cf553a4c97eab168bd3e6d40"
+    },
+    {
+      "path": "CDROM/BS/I_07_09.BS",
+      "sha256": "f1eefe3e18f0ddc68e11ad23e8a6561ad0b5a9e84df826e70cc9d85bafc0922a"
+    },
+    {
+      "path": "CDROM/BS/I_07_10.BS",
+      "sha256": "cabf03bd8781cef3c7747ae75128530686e0713a75b871e9082f30aaa942d079"
+    },
+    {
+      "path": "CDROM/BS/I_07_11.BS",
+      "sha256": "87279adfbd411e0d2badc3f1d8a61feaefc2d8840f262179ba4c9e0d8bfd1324"
+    },
+    {
+      "path": "CDROM/BS/I_07_12.BS",
+      "sha256": "4433bdc0489e51694b090982fda626d422894e486b0ce163fd2ab5fee30409dc"
+    },
+    {
+      "path": "CDROM/BS/I_07_13.BS",
+      "sha256": "4433bdc0489e51694b090982fda626d422894e486b0ce163fd2ab5fee30409dc"
+    },
+    {
+      "path": "CDROM/BS/I_07_14.BS",
+      "sha256": "1ab3b5a29498d64a8375c5129db99ebb183a6114d50c8c39a699bfb7e1fd367f"
+    },
+    {
+      "path": "CDROM/BS/I_09_01.BS",
+      "sha256": "f6ee3d5a0a9352bd5ac966dc906cbe258548d08811588ad118f3332677921456"
+    },
+    {
+      "path": "CDROM/BS/I_09_03.BS",
+      "sha256": "325d790977e9bad72e11916f7ad515bdd95791a5a1f16e0fc72ca65eb97d22dd"
+    },
+    {
+      "path": "CDROM/BS/I_10_01.BS",
+      "sha256": "fb092294ad65214c84e15214e9f3a12f7ccdec6213d0b39e67108f7e5ec33fc7"
+    },
+    {
+      "path": "CDROM/BS/I_10_02.BS",
+      "sha256": "17df3fb868e446dfd02f60efdf2c4cacd697d4340d687cefd34867e3fa40d415"
+    },
+    {
+      "path": "CDROM/BS/I_10_03.BS",
+      "sha256": "013c243b39e6128d50c66ea8d2bde01a188c4ea30d81c2280c883b434b38395a"
+    },
+    {
+      "path": "CDROM/BS/I_10_04.BS",
+      "sha256": "a501a68193cfe25153793e695203c3b4e7818f1672a7f2edb65b938d721c04f2"
+    },
+    {
+      "path": "CDROM/BS/I_10_09.BS",
+      "sha256": "9a32e3803a24e038ee7778b76ae696a675ab8bd2c5334adcac735092537e5650"
+    },
+    {
+      "path": "CDROM/BS/I_10_10.BS",
+      "sha256": "eeeb7a757e63327637e01e11e7a79d3d088f70cc54c285e5cbe4ef191941d7f1"
+    },
+    {
+      "path": "CDROM/BS/I_11_01.BS",
+      "sha256": "3c12567e011303cfbe333f3a3e1c0f6e32f3de1848ab28c5e53c05e70b147c10"
+    },
+    {
+      "path": "CDROM/BS/I_11_02.BS",
+      "sha256": "edf7e222de614d3d88264561af4ec58d864e7719a436d7904a3dbfc0cbe53707"
+    },
+    {
+      "path": "CDROM/BS/I_11_03.BS",
+      "sha256": "803b13984084cab9f480bfb8e2750acef32b07e3b449ff45d03fff6795fb0428"
+    },
+    {
+      "path": "CDROM/BS/I_11_04.BS",
+      "sha256": "12dce69e014c2a9d2915886ece5f8c27cf0b5c4fcbf36216c0ed36a5208e2e92"
+    },
+    {
+      "path": "CDROM/BS/I_11_05.BS",
+      "sha256": "bab06895740492aa329ce72a2e40b2cbfdc8a8ebfbdb77a163c7176805ab6783"
+    },
+    {
+      "path": "CDROM/BS/I_11_15.BS",
+      "sha256": "33b9750995dc95e10ea36377779bda51a71f4f574935376d3681d16619c3ce82"
+    },
+    {
+      "path": "CDROM/BS/I_12_01.BS",
+      "sha256": "7480052a2d8bcba0f66004e921b834b2f6e2a8561982cb5badf3cdfd20c526a6"
+    },
+    {
+      "path": "CDROM/BS/I_13_01.BS",
+      "sha256": "61b4515dd9113386d0103b93875f406fd7fcf765dd983631487b11f3a8c1efcc"
+    },
+    {
+      "path": "CDROM/BS/I_14_01.BS",
+      "sha256": "31e8cf22f97319f496386f8cf5fab654cda54bfdad647ad62617797cdcc0a6ca"
+    },
+    {
+      "path": "CDROM/BS/I_14_02.BS",
+      "sha256": "f2ebcc14fdf3c66e1bb26c6652e54e557b8264e62c20189789b729a42a73ccb6"
+    },
+    {
+      "path": "CDROM/BS/I_15_01.BS",
+      "sha256": "f18dfa40313c449e249ee26c6e02e66579f875296723f5d9f4d5ae83ae417e86"
+    },
+    {
+      "path": "CDROM/BS/I_15_02.BS",
+      "sha256": "72d21f6f1d3455211b2e1413e43fd195ee360e66ae6d0c92411e77e89c291b5d"
+    },
+    {
+      "path": "CDROM/BS/I_16_01.BS",
+      "sha256": "6f14a086b7e0c4e7cc4efe279edda8c27c5e18c1876593cdeaaf3581541a60a6"
+    },
+    {
+      "path": "CDROM/BS/I_16_02.BS",
+      "sha256": "75efb4b2eb64d12796c183b8375449b0c208d06b0076ae390db9ad9b30de8919"
+    },
+    {
+      "path": "CDROM/BS/I_17_01.BS",
+      "sha256": "83198f40531e353a4800d4bbbcbfcb315ea46ba5dbbcd4e73175830ef412a815"
+    },
+    {
+      "path": "CDROM/BS/I_17_04.BS",
+      "sha256": "b73eb543d8b08c1b01cf01ccf928ba7f9ac66ba9ded3d38a1efda2228091f8bb"
+    },
+    {
+      "path": "CDROM/BS/I_18_01.BS",
+      "sha256": "e13ff70a2de3b84722d61475ac713a230144330dafc8379504ec990c81d39907"
+    },
+    {
+      "path": "CDROM/BS/I_18_02.BS",
+      "sha256": "97c28b2c2d28df031154ac6f7ea619161e7614dd74d3ca900157e21d97ad20c5"
+    },
+    {
+      "path": "CDROM/BS/I_18_03.BS",
+      "sha256": "09c376fda43ae254b021f3f40c05b341d2f68379377de92cba62eda23381c09a"
+    },
+    {
+      "path": "CDROM/BS/I_19_01.BS",
+      "sha256": "609827d4c4ae9e10bbbe5e6de28cc1e05e1d9cf84f5ba59fa5d30b8416ade2e1"
+    },
+    {
+      "path": "CDROM/BS/I_20_01.BS",
+      "sha256": "6442d1df58cc5eec22165c15c5b9f1009fc6d2436bf52d39020ccc90345aef3f"
+    },
+    {
+      "path": "CDROM/BS/I_21_01.BS",
+      "sha256": "7809521c7ce97888afb121c552163ef5550476d8f0d5711c0a31f6e1c25edeff"
+    },
+    {
+      "path": "CDROM/BS/I_22_01.BS",
+      "sha256": "8500d7f5634aa92632a100ab5510d7c619592a37e7dda66387f4f5b3316ed6c1"
+    },
+    {
+      "path": "CDROM/BS/I_22_02.BS",
+      "sha256": "d926ce275e4361a89718c75c5b85c1c61f4d887ce04be711a98ace97fb62345e"
+    },
+    {
+      "path": "CDROM/BS/I_22_03.BS",
+      "sha256": "23c35ef38b8cb46d73fe33a22d1b068114a795ac186ac6be8d06c85091d74225"
+    },
+    {
+      "path": "CDROM/BS/I_22_07.BS",
+      "sha256": "9a1b903cbc091ca186fdb8e2bac1f425c8d2daff1d06b48acd9b33605a731768"
+    },
+    {
+      "path": "CDROM/BS/I_23_01.BS",
+      "sha256": "109fa04ad25a3a75f918934c6e822892066b9f73f7034f21a21c9908cc05944b"
+    },
+    {
+      "path": "CDROM/BS/I_23_04.BS",
+      "sha256": "7f10cab1053d726779281dd510974e00f9f5bc0b255510a80f5988a3b86cf1fb"
+    },
+    {
+      "path": "CDROM/BS/I_24_01.BS",
+      "sha256": "f5f0d1bef4c454427c2c1a152e404a24e24354e6549dedaa730bccc9e78643cc"
+    },
+    {
+      "path": "CDROM/BS/I_24_02.BS",
+      "sha256": "88709dc0c4e87a57ba782de663ac49a8d156ee60318209c9f453db883b60e646"
+    },
+    {
+      "path": "CDROM/BS/I_25_01.BS",
+      "sha256": "4195dd56bdf8b2e0d2ca8286cca4cdfdc104159e4409d7e8aa55d062dd3f45da"
+    },
+    {
+      "path": "CDROM/BS/I_26_01.BS",
+      "sha256": "8ff44fa636ee37e4b7e8d88e27fb1bc010ebd741c80c4b6c890185d30b3c19ee"
+    },
+    {
+      "path": "CDROM/BS/I_26_02.BS",
+      "sha256": "5877418735f5fdaeb91fee2c6a0390f18746c4578ec5f4e1096111218c88464d"
+    },
+    {
+      "path": "CDROM/BS/I_27_01.BS",
+      "sha256": "27dafa893247f3f4db1b10d1af2a7c897f98fb63c8b6160f9f5a0da81e8cf943"
+    },
+    {
+      "path": "CDROM/BS/I_28_01.BS",
+      "sha256": "d3c881509011de2a96255ad8d1d0d0b1dc8b39eeafe144a0add9ef2e00aae3e6"
+    },
+    {
+      "path": "CDROM/BS/I_28_02.BS",
+      "sha256": "375db135e51f6c8bc38d802ef01dffca3195fcb597214e00a473d737be5896b1"
+    },
+    {
+      "path": "CDROM/BS/I_28_02S.BS",
+      "sha256": "56f448b9d7045f452c718e9b0799a1821abeab2a3bfeb3b715f3ac2efcc50d40"
+    },
+    {
+      "path": "CDROM/BS/I_29_01.BS",
+      "sha256": "f36fc5d05db4f619f68209d7390a07fc2151f18d2be50c677bcf64f511e45318"
+    },
+    {
+      "path": "CDROM/BS/P_01_01.BS",
+      "sha256": "720f53e5caeab1e9701de6c76064db65da39d3b2eadc420e51f1a99848e36794"
+    },
+    {
+      "path": "CDROM/BS/P_01_02.BS",
+      "sha256": "b8a94b9be689e8c5ea4de327a95b6cf24a77b1b664e8eb470f8a4a55308b9a7b"
+    },
+    {
+      "path": "CDROM/BS/P_01_03.BS",
+      "sha256": "ff94e961d5c3ec90b03f8b0d19e7c9867da19bc273049e5ccbe2ec0c13bff43f"
+    },
+    {
+      "path": "CDROM/BS/P_01_03B.BS",
+      "sha256": "ca0ae62c9bd1ade6624b13e2c509a2df1b6d339fbd2ef4b56f870c5bfb9f5238"
+    },
+    {
+      "path": "CDROM/BS/P_01_10.BS",
+      "sha256": "c064b04b84daa381117a3b37e1c68b6e0a754b5f559dfc26aa579042e2f16762"
+    },
+    {
+      "path": "CDROM/BS/P_01_12.BS",
+      "sha256": "e5c33edfb057565c49dd9b9366781c825dae153929757632294931e8598aff08"
+    },
+    {
+      "path": "CDROM/BS/X_01_13.BS",
+      "sha256": "2be9eaa707dd2ffd064f287aa9ccfbba191ee7ad67a76bcce1c8805096dfabcb"
+    },
+    {
+      "path": "CDROM/BS/X_02_07.BS",
+      "sha256": "b3f661a273e3c534a463f72e98f30aa2cba482473d786b5ebcc043afcd6faeaa"
+    },
+    {
+      "path": "CDROM/BUNKA/AS_S6.BIN",
+      "sha256": "cc6a1e8334a5d6bc6412a322159ca0e708274f18cef673a3fc0f7ef35e6380dc"
+    },
+    {
+      "path": "CDROM/BUNKA/AS_S6S.BIN",
+      "sha256": "0fe4b5cb7f6007ea318c399bb5a432e8a93af9d8ec5b77b3582f9a41d3104e7b"
+    },
+    {
+      "path": "CDROM/BUNKA/AS_S6W.BIN",
+      "sha256": "1513ad07e8f1747c134f7dcef45823bfdcec39a4bb8545a95d01bcaec3930906"
+    },
+    {
+      "path": "CDROM/BUNKA/BUN_FU.BIN",
+      "sha256": "be705ccc989e883d61989858c4175455fb447b0f64c7850e8b2ee5c0976bd2b2"
+    },
+    {
+      "path": "CDROM/BUNKA/BUN_PC.BIN",
+      "sha256": "c3a9dca01bf18bd6e345dcf9dfd9523f2d7fcf721d4fe580264a7fc2a32612d8"
+    },
+    {
+      "path": "CDROM/BUNKA/FU_S6.BIN",
+      "sha256": "2e1cc877c9df1d07f50dc528959c064e5730f4dda8be4be2b160c312022eb9b6"
+    },
+    {
+      "path": "CDROM/BUNKA/FU_S6B.BIN",
+      "sha256": "72a58cf40f9669e30ff75c583a3684a518d2086f0c4cb1f8e81c2603d2967b42"
+    },
+    {
+      "path": "CDROM/BUNKA/FU_S6I.BIN",
+      "sha256": "668a06e0b3df94637cd1b69fed367a717c7d76d23a837393bc69dafe8ade6a2b"
+    },
+    {
+      "path": "CDROM/BUNKA/FU_S6O.BIN",
+      "sha256": "9350d779444de55cdd7a902543fcd7f96a0d18160034c12ca2fba91b7acbafe7"
+    },
+    {
+      "path": "CDROM/BUNKA/FU_S6S.BIN",
+      "sha256": "519d9d6a36d72e08456e1171f3b01822b2048e646f72b82841995641e41b8e8e"
+    },
+    {
+      "path": "CDROM/BUNKA/FU_S6W.BIN",
+      "sha256": "86565e14cf52b23f1597d475ef935b537ed45235efb482b32c2be1787edebc4d"
+    },
+    {
+      "path": "CDROM/BUNKA/HI_S6.BIN",
+      "sha256": "d6a3d61930d2082b29fc9b409a314d020b12ccd0768550ad9583b0e9aed83d60"
+    },
+    {
+      "path": "CDROM/BUNKA/HI_S6B.BIN",
+      "sha256": "db3b1afa592733447197da4dab71056c3fe4bdfd0e92b23b933fdb42684d22fe"
+    },
+    {
+      "path": "CDROM/BUNKA/HI_S6I.BIN",
+      "sha256": "060437efc5d986b81104d143a3aa0889b6fa71bddc494e74fba8fea8188a3a74"
+    },
+    {
+      "path": "CDROM/BUNKA/HI_S6O.BIN",
+      "sha256": "bd2cc0975065ee9b08d8139fc6d63aee15e8cf61cd8d18ff7ca5f37546357f88"
+    },
+    {
+      "path": "CDROM/BUNKA/KG_S6.BIN",
+      "sha256": "6771e738e49202c5eeb3a226b7ff7508167633a30f079ea2a57f4e95ae73977e"
+    },
+    {
+      "path": "CDROM/BUNKA/KG_S6S.BIN",
+      "sha256": "dd3d43bab258115c7c3d2d618b2b27876dce685f823b78baccfd6667e0af90ce"
+    },
+    {
+      "path": "CDROM/BUNKA/KG_S6W.BIN",
+      "sha256": "53d2b855da64f1c8a93e48714543082942d000d07d6f04c004e811285f9d8f33"
+    },
+    {
+      "path": "CDROM/BUNKA/KO_S6.BIN",
+      "sha256": "2a81d6e28f1eae4a6df4c679ca08d4b3cbeaa6f83589af2b7b9981270a53727c"
+    },
+    {
+      "path": "CDROM/BUNKA/KO_S6S.BIN",
+      "sha256": "2551abf3b35da1bf4b34da5f149240167f9a5c4adb0aa1e3ba3ef2d77229bfbf"
+    },
+    {
+      "path": "CDROM/BUNKA/KO_S6W.BIN",
+      "sha256": "a8c50f3b45eff8c9b1ff0a4b1440be09d49c924b002d514cc38de17254a68d3f"
+    },
+    {
+      "path": "CDROM/BUNKA/KS_S61.BIN",
+      "sha256": "e500b4aecbf88305ca06ca5f05f013a8e2ba10444dcd603843ba22ea7bc390d5"
+    },
+    {
+      "path": "CDROM/BUNKA/KS_S62.BIN",
+      "sha256": "5d9c6bf72348a2de46e54685c6f1e2f9579974abca5f43482e64fd508c49fe1b"
+    },
+    {
+      "path": "CDROM/BUNKA/KS_S6B.BIN",
+      "sha256": "b9dec6e0b0a097baccd5dc40d0362aacacc759b4c3b07d7f21238ed09ab51c1b"
+    },
+    {
+      "path": "CDROM/BUNKA/KS_S6I.BIN",
+      "sha256": "3725f14350eb20ebd706ab6fab210ee13b2a1046aaa4f07eaa711bfb3b5469a2"
+    },
+    {
+      "path": "CDROM/BUNKA/KS_S6O.BIN",
+      "sha256": "8cdc86ab66128a8461c8099a47d8f069e8b8d990163dc82d80b12fbcc96213c2"
+    },
+    {
+      "path": "CDROM/BUNKA/KT_S61.BIN",
+      "sha256": "366e02e27a1c11c15c10b1e6ff60442936ce2c52716d1a493db1eda8eaf66e95"
+    },
+    {
+      "path": "CDROM/BUNKA/KT_S62.BIN",
+      "sha256": "654d196196cc4d9249ab90e271602ebc74bbddf1bc00a67f22ad26a232f6e0ba"
+    },
+    {
+      "path": "CDROM/BUNKA/KT_S63.BIN",
+      "sha256": "57cc0a26f799b8640e2a270bceb3154ae15cb337a1fa76396c6db13cab05cfda"
+    },
+    {
+      "path": "CDROM/BUNKA/KT_S6B.BIN",
+      "sha256": "bd258a8d0d153684a9737a86a3f8f43a9266604fa8d01120e259ac50a96daedd"
+    },
+    {
+      "path": "CDROM/BUNKA/KT_S6I.BIN",
+      "sha256": "2c71c246090311497e30a55c2935e2be91ea993b092b6862b863d3272e4cf303"
+    },
+    {
+      "path": "CDROM/BUNKA/KT_S6O.BIN",
+      "sha256": "22cd8ea3e7db35b7c52d6b5c5298fdb0267c346fb1c424a28f76b8d5d0c5e91c"
+    },
+    {
+      "path": "CDROM/BUNKA/KY_S6.BIN",
+      "sha256": "2a3227bb884f32b4a3a2ed37eb920872972f96d53fe25b11fa513cb7801a9e36"
+    },
+    {
+      "path": "CDROM/BUNKA/KY_S6S.BIN",
+      "sha256": "380d969ed0636035cdab313fd5b6638943df0655596b32f8b88536dae143550c"
+    },
+    {
+      "path": "CDROM/BUNKA/KY_S6W.BIN",
+      "sha256": "b3c286591ce34863137c0474ffa254b089cc70415273b52e7ad5df63f61f1bf5"
+    },
+    {
+      "path": "CDROM/BUNKA/MI_S6.BIN",
+      "sha256": "18d8e8965042a3e3ae0d88ecb41ae053a8107c9867a540b798278a06ee39ec7b"
+    },
+    {
+      "path": "CDROM/BUNKA/MI_S6S.BIN",
+      "sha256": "74ec10a003c9dddab9d0907e4ed714a573c12a04240c9205d55faedfbc5f6086"
+    },
+    {
+      "path": "CDROM/BUNKA/MI_S6W.BIN",
+      "sha256": "4b8a038a3e49c8bf38b40ac5ae9e05cbdf3d02120bd6adb335675dba669d18c3"
+    },
+    {
+      "path": "CDROM/BUNKA/NI_S6.BIN",
+      "sha256": "ae9cd719490c53af715de615be73d07313e56f98bd356192777177a608d41046"
+    },
+    {
+      "path": "CDROM/BUNKA/NI_S6S.BIN",
+      "sha256": "063046897f822db7c2126f039660012d86bc266f178c63c94e60b83abab13d8d"
+    },
+    {
+      "path": "CDROM/BUNKA/NI_S6W.BIN",
+      "sha256": "3bef79c3882222f3a5b4e90557ca2eb578b8a705767243930b39796e231b794c"
+    },
+    {
+      "path": "CDROM/BUNKA/SA_S6.BIN",
+      "sha256": "a3c9a61fe9e1f0fed2973b74dbecb6abb0f062d273cbe8e78222eb335168c1bb"
+    },
+    {
+      "path": "CDROM/BUNKA/SA_S6S.BIN",
+      "sha256": "77a6a5ea54a3470adae83aac6e0ff38007bd08581520e29588adda6905bff0a8"
+    },
+    {
+      "path": "CDROM/BUNKA/SA_S6W.BIN",
+      "sha256": "9b01daab6d9ac98ac4dfc28ab04391da6bf70550f9300a2225570e6a3f4b7de6"
+    },
+    {
+      "path": "CDROM/BUNKA/TWINBEE.BIN",
+      "sha256": "eb8edf09aa318f92311a8409f398d13156953f841bd9138ff5c961a38f3e1f8a"
+    },
+    {
+      "path": "CDROM/BUNKA/URANAI.BIN",
+      "sha256": "51075a058f5dc45470b2e5005df00b7a19abd591111f327f6328a831971ff284"
+    },
+    {
+      "path": "CDROM/BUNKASD/B_BUNGEI.BIN",
+      "sha256": "32d6f21f9da00aa69cc14be93eed7105887883bafbd93326991dda9db10ff660"
+    },
+    {
+      "path": "CDROM/BUNKASD/B_DENNOU.BIN",
+      "sha256": "427660750000360adadb247291a607398322c7001679ec32b508dac001ac1e3a"
+    },
+    {
+      "path": "CDROM/BUNKASD/B_JIKKEN.BIN",
+      "sha256": "2214c095e0963177d4ce2d1c3700a635be7d00edb03f9952e3a6ebf525d3756e"
+    },
+    {
+      "path": "CDROM/BUNKASD/B_KARUTO.BIN",
+      "sha256": "dd1a48f4cc98c8ba1e6a48e09253b5c89237a0a58c41fcc06f2beaabb3b4f90a"
+    },
+    {
+      "path": "CDROM/BUNKASD/B_KINTA.BIN",
+      "sha256": "0ceafdce812b196d697075f4b1880f60f2d98e883930bb82fc40a5794b8aa460"
+    },
+    {
+      "path": "CDROM/BUNKASD/B_LASER.BIN",
+      "sha256": "18ec763e1757a58a42027df087d4d774af17f2dec45f31dc2a002f1b53aace43"
+    },
+    {
+      "path": "CDROM/BUNKASD/B_ROMEO.BIN",
+      "sha256": "20996a4bdf70b79c90ef1c5704989d290ca79f6374e2972658f4715782811edb"
+    },
+    {
+      "path": "CDROM/BUNKASD/B_SUISOU.BIN",
+      "sha256": "6b667c153841615c4d4cef99b6105e69fd0215d78f7531eeca8c58a2410c18c3"
+    },
+    {
+      "path": "CDROM/BUNKASD/B_TENSOU.BIN",
+      "sha256": "890d7ae52ef10f078422d3f669939da9821e7aa7047c9e976ba07b9b6a283a26"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS01.BIN",
+      "sha256": "ecdcac1141aad6d1b8bb324a2810cbca35d9ed22399b8d274b0d054effaf5284"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS02.BIN",
+      "sha256": "cba1a439868614b4b3b75c74242be59f672e515dcc8a89ccf9f5bb084dfcb0c0"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS10.BIN",
+      "sha256": "9002abad6119657d1a244581d610277a830d29db38db1091ddfbffe6bc4f0e16"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS11.BIN",
+      "sha256": "8d019c376d26eccdc2cf95f2c55655a760ad8c26db63305e1d8b0e532592a66a"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS12.BIN",
+      "sha256": "ceb5e8d509499ed033a09acfcd0c5300ee71a96785a62d5a7744df93d1278a58"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS13.BIN",
+      "sha256": "c56f1fdf38f204fd39371f7b78301123f8a95bdd8662842b61191e83f743d7ea"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS14A.BIN",
+      "sha256": "0edaaa9455b203fbaf736c43b7cdab4c43ab81273c6627e116f46c43d8f65f7f"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS14B.BIN",
+      "sha256": "dc33a417705fc9378685886d038cdeb32f1f52847d08ac7fb8b98762bd8d6b8e"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS14C.BIN",
+      "sha256": "bf4bbcc9702f42e6579629ac5b7845b6ba0b0e2a54da83c6c998a6638005829f"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS15.BIN",
+      "sha256": "a80f8a3377204e20ef8b5884db7662895e4f74daa6f1ffd0bf568367780f8ff6"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS16.BIN",
+      "sha256": "4ba38d660d8d91332b2558251e7fd63b6803de855d330fb5665a51430f858981"
+    },
+    {
+      "path": "CDROM/BUSTUP/AS34.BIN",
+      "sha256": "4eb161b1fd33ae8e37f64b426ae502f4e6270487d957ade355f83845d878cab4"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI01.BIN",
+      "sha256": "1a0151557c2bc9b8ef34a53c267189bffe8b4656546f27bfd019837b20be9748"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI02.BIN",
+      "sha256": "cf78df67d1c3c4e081332ed6d2125740c3160386766464a028e7073bd0d0b07e"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI05.BIN",
+      "sha256": "5fa935886c29fcaf315be9f53a1155defa2a97e59acdf90b446222c287f90e54"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI10.BIN",
+      "sha256": "1518dc15c70dd46c9a1b4d8e68351853e80546af1b9df5857d16dc38b2caa480"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI11.BIN",
+      "sha256": "919403e8f7c4275753e9a8c6f3dba1bba61c924fc33beef80d4e81b0606d7756"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI12.BIN",
+      "sha256": "d92cd57a125ec482a39b109a93941a607e74bd33d36a9eb9c2829f37fdd2f18f"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI13.BIN",
+      "sha256": "6f0e0b007a516018d3318cffcef6a274930741a46c92256cc2541310917a9223"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI14.BIN",
+      "sha256": "cc1f71d2f6a22ee6546ad78d0767e4abe7cc9f3186bbc15849091498777a93a8"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI16.BIN",
+      "sha256": "65af9fc85f77fbff4841e95685f239ebc66d473fbb3ba3668168d7d543f29ad2"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI26.BIN",
+      "sha256": "4aa93fbe98013dd3b1888b2c139b40540607d36c2d465cad9a7a8d7c7af9750d"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI27.BIN",
+      "sha256": "8d5a93d1a9ea32d19fba9f8b04b7c959d776f8a3f3cb483b399886f909d804c1"
+    },
+    {
+      "path": "CDROM/BUSTUP/HI34.BIN",
+      "sha256": "7ff59ab0ea1791d8bd4474b424fd3987b23e4565e106f9387a1f83f6de7e382c"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU01.BIN",
+      "sha256": "dc7e66f759aae75dab12cad6c512c092b481e09d93551f0772dbdb2d1e76de24"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU02.BIN",
+      "sha256": "73da14834f74fa84475016b5684372bf4fe82eb4d1f43b377c1ac48fe6662d69"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU03.BIN",
+      "sha256": "5675a2a0b280a367a042eefd6d4cb59fdb2fc0858bea44ffcdccd27263ea4513"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU04.BIN",
+      "sha256": "55389c7a8d1bc0984cb7f9281bdc7d5a6877b457eeb728c0290489d444f046bf"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU05.BIN",
+      "sha256": "1396d504333d6f096c7647b32dffaf2c7e929f4618317160bd27263d20563b7b"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU06.BIN",
+      "sha256": "55e83b8f66919b5477ae41f7b47c1c47a05453368c791f26d6ce4314282e0bd5"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU07.BIN",
+      "sha256": "876bed242155eb6e4edb486d86f5f1b1dae500d4bd9b8a4944bc737f8137ff0c"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU08.BIN",
+      "sha256": "25c79964ddeb8359d17d1505e239379cdc67346eaa77790752a400ff43853c0e"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU09.BIN",
+      "sha256": "a48aaaf67181ce5556b8d97964bccb15db8e203c162e77cb43513111cc1becff"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU10.BIN",
+      "sha256": "44cd14d428c17551399487f8325961a17d3a3c3e87c69e64fdf09c8ff68536e2"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU11.BIN",
+      "sha256": "703d7c6dd0e44bee164e4ae3635e5562b58bcf67a58470755be95f422ff2817d"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU12.BIN",
+      "sha256": "a2ce35b6623a1af7edcb44ba5f8b30cfb33b6ea0de9ffc6a99a629184f4be962"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU13.BIN",
+      "sha256": "11d8124b673b9b66eaa3f9a9558c21215ab9d06ace188ef172239de58399510b"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU14.BIN",
+      "sha256": "da038aafac009659160d3b0924224086502a6fa4ea7e0101c0522257e0e9b70c"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU15.BIN",
+      "sha256": "c5242f953af1f96830d3fb5c0a0b0234d6b075d509e748ffab65475c70e1c2d9"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU16.BIN",
+      "sha256": "e45e62103594d069ebfd3e71bfa0b4b3b61a73e3817bdb98075339c044a957e5"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU17.BIN",
+      "sha256": "5efe12d8fbcf6acc8b68ffcca657cf8b2d81f23f042c2f82dc261aa80dc857c3"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU18.BIN",
+      "sha256": "164d99b9f84c9c9ddc185ea958e702577910fda823e7293dcfa943f0847d0a0e"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU26.BIN",
+      "sha256": "22fefa2ee3d14817c968ebf1d29298898e272c391e0286683084a357e8f62b3a"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU27.BIN",
+      "sha256": "edc3429a854da074d758dca937a69cf823bb71158266b1ed081421357551ca76"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU34.BIN",
+      "sha256": "931538884208a12c8571c61952176cdbbd68da1c980e3b8d93a9f40fa7ef9798"
+    },
+    {
+      "path": "CDROM/BUSTUP/HU36.BIN",
+      "sha256": "eccdda540b8481238e5d9bd778c1cbe6e60f0323a50c2685ed9a35ef0f87510a"
+    },
+    {
+      "path": "CDROM/BUSTUP/IJ01.BIN",
+      "sha256": "e170b1855a39a0f09365a1e21588a2ad5beaf14e35804b13be8beaa7dd9658f4"
+    },
+    {
+      "path": "CDROM/BUSTUP/IJ02.BIN",
+      "sha256": "f3e405f30e123efd6de3674bfbeed2655de70b5207a238a6a4600c4f64302e8a"
+    },
+    {
+      "path": "CDROM/BUSTUP/IJ16.BIN",
+      "sha256": "82b56820c4fcfeae2a08f4f376d3af312cb99612ad3e3f1e0eb46b990062c093"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA01.BIN",
+      "sha256": "4d4f6b8cd0b5494b9684ba2e034e61a7a512328e91f7a3eb6f46b35d37787a25"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA02.BIN",
+      "sha256": "5b3c6e8f08920df37f13e3944c4e4ea237c006c8e9a1627cadc519dfff322de4"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA04.BIN",
+      "sha256": "62c888c8cddb6420594918169caa15d64a0a0205fffd2ccf540dc4246a1e1c96"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA10.BIN",
+      "sha256": "9385e460aeb232b3019fc6cdfa7e59599e8865d6cdcdb5d9bcefe14d7e93d0e2"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA11.BIN",
+      "sha256": "d85f8f03a532ac4c46062590acfa365360b5ba5aa81c8b169acd675ac60e47f1"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA12.BIN",
+      "sha256": "c89e485470c8651ba8c26b4e9030a6ec18979844249ac3362073465d193123ff"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA13.BIN",
+      "sha256": "91c8c04e2e24eda5e55a1238306328acf2334386f6f1a2a5608e779618c9a71b"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA14.BIN",
+      "sha256": "f4d5b870725edcc6cc8f58258ff850213bc81a52f4e795216813d684fc12696e"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA16.BIN",
+      "sha256": "435b7ecbdd903204f86b18dc216da5a04ad954011375249933e766553f4e04a0"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA17.BIN",
+      "sha256": "b6796308d81270b7a5c3f52ef80c552fb9d3e75470241b0f5d7ec6b0ddea9ba8"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA26.BIN",
+      "sha256": "79a23aa4ca6ad857fd07db5beb3d604602c3cc337602410ef75c0f29e8274bac"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA27.BIN",
+      "sha256": "e4eda668600cadaea91ca38c52b7d4f760ea31c030ed0275f32662b039941e22"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA28.BIN",
+      "sha256": "0ba295ba42c3a2cb6aabe8d3221a4865c24c71defae41055e63282779fe38505"
+    },
+    {
+      "path": "CDROM/BUSTUP/KA34.BIN",
+      "sha256": "43eed951007f939c0a090223fbf54861785db38290eff1354cf377dfb3464a17"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG01.BIN",
+      "sha256": "ec5deaaab3bbfb2d8914e5cda638f96b7a35588a4f5828f5fe63cabb7e6d4451"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG02.BIN",
+      "sha256": "636e75b596a26f190a10a0c0779ae2a523496d766623c5027e29f7ee4c4ee575"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG10.BIN",
+      "sha256": "0e9876b161d2add0b8821c9ca4f70166868c4abb79b3d4e3da88f9f3132d148a"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG11.BIN",
+      "sha256": "36a442385547b5d1fd832994d7f4211dc67dc9875a0ad65c19bc35eb66e008aa"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG12.BIN",
+      "sha256": "b18d7a19a7cc6ce68522853d6a97b35408d1e732b62cd5b1069d7fdff4bf77b8"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG13.BIN",
+      "sha256": "1130d7c2c07885994cc7dac69aecd233b585778aca592f03b5b2108ab2d6776d"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG14.BIN",
+      "sha256": "b78b013d58a602212030901e35d115191348bf60598a2fd1da1d47014e75aa96"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG15.BIN",
+      "sha256": "abcab66088ffcf2a037ef23867a9b839a53a8e80b5ceb307af6eb892c568e734"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG16.BIN",
+      "sha256": "18412c1e2e418062794cdf49bfa32f01fd6dfb07774006e278c2de6347293dcc"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG16S.BIN",
+      "sha256": "bc79dbdf314cdbd212601ed1a479cd51da9f66078dd5d7c9b7dc675ec98f6a28"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG17.BIN",
+      "sha256": "d4aae21ecce788c33727f1970faac41e7108e38f9b4d31ee2b9ab4ab2261e272"
+    },
+    {
+      "path": "CDROM/BUSTUP/KG34.BIN",
+      "sha256": "b9b8cda1bbdb603c6cfa4ff0fd268f41b12a77a4e7229a1d5f07591aa17b73d8"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI01.BIN",
+      "sha256": "2db47dfbd1e2b74bb6155e7e033931018844324501754031372b9a3ca3181ac8"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI02.BIN",
+      "sha256": "2de43e3846d29226ec174cc807c0f5e546637337df5f54472619df81f4c11819"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI03.BIN",
+      "sha256": "b0be31a8904aee463f2e683fd6c458723ce02c980f89e259a11e94eefe9ec4df"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI10.BIN",
+      "sha256": "9db2641d9a8e281a3f1d02eac89fce03c6a013e7b301c945fb0b6baa511cb292"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI11.BIN",
+      "sha256": "92c3dc7699275256ea6a52018452f840b64fd6657d33ac1e6a821aa05a16f1f7"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI12.BIN",
+      "sha256": "ea23c1d6dc74ad82edda9b577fed4ac32e323b77a2677912c71603d02a764e0d"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI13.BIN",
+      "sha256": "57e97c5c917f001f4c150f6573e75334be07773aee707eca07e9ec41f0ee69c3"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI14.BIN",
+      "sha256": "7e9d40d04520bc6138793072c277da82ddf99187dcb39163172a3eddff6468e7"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI16.BIN",
+      "sha256": "13185b7c5c3c0bbf7e72cc3e8173cf2fc9dfa301d8a6f05b2d649feee585d4ca"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI17.BIN",
+      "sha256": "d723c413fa1b61c2c9a87978f35ca511dab2f4165fe93659a141ea92ff815f48"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI26.BIN",
+      "sha256": "f91342ef5de1181ab5ccaaf1d41e8dc31dcc50e90cdfe390d813d07e3adbfb58"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI27.BIN",
+      "sha256": "392bb7a35fd3e401b5300e365bdcbc50d887e0e25feb793ce8352c5f8d28b17b"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI28.BIN",
+      "sha256": "94885d65ad083d371affe1f6d834fc99a4d03e47b23a0f711c30f8c4b61d8be7"
+    },
+    {
+      "path": "CDROM/BUSTUP/KI34.BIN",
+      "sha256": "c3d0a5a1f50bb98442779e05f81b4161fba3d08d0efa30bc4aea576979b633b1"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO01.BIN",
+      "sha256": "bbda1514bbb1834a9ab523fc3d70f5a598d12051323d17f94d411b1f318420dd"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO02.BIN",
+      "sha256": "74636df7e491d03e9b2e240a4aa6b3b667dc7c597b740f90d35145085a53a075"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO07.BIN",
+      "sha256": "c09482db089132b632422ad8e0583e206934a0c11ef1352a93e61583a5a32ba8"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO10.BIN",
+      "sha256": "4d205d068fcc343f43858cb7a06e33f4817ea131017d6bc288b859e936982aa9"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO11.BIN",
+      "sha256": "4549c86256c036ad9a483484a653a253e37a76c1c69d4328ba47005a566bccfc"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO12.BIN",
+      "sha256": "fdcba2ed35d3141e1dcc8746a0e811a94665daecd8c9cc744d27f9aa877ea5e5"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO13.BIN",
+      "sha256": "90c602ee87d79add7187934f8df7b041655b8bcb792c96a9c12f6130ed935f09"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO14.BIN",
+      "sha256": "648d3b4c8b398b00dbf3fbf24ad682fec4322b3af218e747cf97987895548261"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO15.BIN",
+      "sha256": "ae839220782f2ab16d6d183765d4e4e5042b61b015b0dc336a2fea7473fd5708"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO16.BIN",
+      "sha256": "7251b4cf4f4eedc85e9633a6f8b278dc6862bd504b72b7ed8170005527f29b38"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO18.BIN",
+      "sha256": "cc1da3c42394a51017e025a17e53c0af85d5633c5cb1ba5f91c094612f58355f"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO26.BIN",
+      "sha256": "146e34cb83c8a659c7c2429f6fe45af8fbd5c201bbd4c41824a5589af2d5344a"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO27.BIN",
+      "sha256": "879432013ffde75058ebd49de2aedc286a23b6a4516226bd1006d8218ce411bb"
+    },
+    {
+      "path": "CDROM/BUSTUP/KO34.BIN",
+      "sha256": "d467fff3ba0ad0acda8aa90bb9aef537d8e7a0d414833c9b9dcb25238cc92aa7"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY01.BIN",
+      "sha256": "7cdfad6d3a2999124199cfdca734f7edf7e7d885349cef3822e22b7727cfb06d"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY02.BIN",
+      "sha256": "84e1ab17b89bb3b639c9a32508f5eaf9c8eea1dceea5c2a554548ec7488be2b9"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY08.BIN",
+      "sha256": "a11a36677a4864c736c6ec9fffa260237b1b95c2b7cee3fa064ada1473607bbd"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY10.BIN",
+      "sha256": "b82080a7fd03192bc5dca551ce0cdfe539cf608fa82b8c5d6a4e0e4354938e2e"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY11.BIN",
+      "sha256": "fc55b59158dfdcd92d00471a022f7b410828117c30e4c910add13c0f33623b5a"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY12.BIN",
+      "sha256": "3f273cd4b256e91e170de6cb5e1e00dfbd8e6eabe63cbe846164c34006633f81"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY13.BIN",
+      "sha256": "069aee753384f6a27db5bd33803ad608f22b168fb7b6ea07cebb5ca50f74a731"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY14.BIN",
+      "sha256": "0a651af561a929518df60781fdb10b451631a60a97a4617118056df350f69b1f"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY15.BIN",
+      "sha256": "a39af25e56fccee1fd9da3b8db234642f146310f662102a9dc3960a71b410352"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY16.BIN",
+      "sha256": "79f749b223a0ce203220dda918ec20ef8a73d1e9092da0891cc5c1a0c3f4743a"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY17.BIN",
+      "sha256": "d0e3bb34c3ababb7a9fdd3a3f338828b9eb6ccf4fdb037cfd31159cf8304faa5"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY26.BIN",
+      "sha256": "bbc93ab18e2a274a9fe44f9e37495d31b181c9483e25b2d07177133c6953c396"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY27.BIN",
+      "sha256": "88931d5ab64fb2d49b0e7a9f1d0112c0d8a29fd4e863343cb22947f9b044e9bf"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY29.BIN",
+      "sha256": "75b3dc81ad3cf0eda4d8653e9b5da45e3e2be218b22ed95232310bb4a0b39ef5"
+    },
+    {
+      "path": "CDROM/BUSTUP/KY34.BIN",
+      "sha256": "c1adb821626e3e56607e77833c18d43fa754c820e2043690de83366ebd0d0659"
+    },
+    {
+      "path": "CDROM/BUSTUP/MI01.BIN",
+      "sha256": "56eeeab52175a75687fda82d76068da6d27a91ed4327611f8a8e933665c4fd1d"
+    },
+    {
+      "path": "CDROM/BUSTUP/MI02.BIN",
+      "sha256": "417b73f0726a9a8de8b13d85c09875f310f83932cd6c2f9e4f836980689f6ed2"
+    },
+    {
+      "path": "CDROM/BUSTUP/MI10.BIN",
+      "sha256": "2ba868c6631031b1ed55922503c591f503929dd72821aadc778596ca9ddb7c8e"
+    },
+    {
+      "path": "CDROM/BUSTUP/MI11.BIN",
+      "sha256": "96e0def76128ce6be7b26c91ae02768b56e2280c577f93ed45238bee6b76a9c0"
+    },
+    {
+      "path": "CDROM/BUSTUP/MI12.BIN",
+      "sha256": "6cd88883b7528fd92fe0477c01444df47ff491929a32b1f755ec9d800247329c"
+    },
+    {
+      "path": "CDROM/BUSTUP/MI13.BIN",
+      "sha256": "09edd846dc4d2c2c301767655dc2cc77e7986c731f9bd061cbcc1a8afd6e23c6"
+    },
+    {
+      "path": "CDROM/BUSTUP/MI14.BIN",
+      "sha256": "5293c28164ecd04d2976dd3c6e318bcbc34824b995c87b6f1da02528471de58b"
+    },
+    {
+      "path": "CDROM/BUSTUP/MI16.BIN",
+      "sha256": "d8bc9995ad6dd45f3a397ceb6be74fba107eb4b1f0303c83b9eda374c65c8aac"
+    },
+    {
+      "path": "CDROM/BUSTUP/MI17.BIN",
+      "sha256": "a40fedac0d5e2fa5d7b935d5434c539a59ad1a93a1090e969c33c44603708dcc"
+    },
+    {
+      "path": "CDROM/BUSTUP/MI30.BIN",
+      "sha256": "623be21b5d88269543dea7ae911959cca109c781a90b971e2d4b849d99018b8b"
+    },
+    {
+      "path": "CDROM/BUSTUP/MI34.BIN",
+      "sha256": "b98d5d50b113bb953e68e2a44fdde0f9f731be3daf4fad30b85ec0de73c6b50c"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI01.BIN",
+      "sha256": "022ee481829b34fc910de6cc67a19e1c63b745d692b0f934994a2d994928f576"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI02.BIN",
+      "sha256": "571f32c8b2fe4ab52745ac0cfb5499a7e04f4f7db75ef8ea1a1017149ab9014c"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI06.BIN",
+      "sha256": "9eaefeebdab207ffef40828592422b11822a1eda4c48a9dd658dc08783e02d13"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI10.BIN",
+      "sha256": "ca98c8cc2d525997f116bafa99b36194e2fc39f1ed62e36325da251c1765a082"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI11.BIN",
+      "sha256": "ed5f751d6d6c2a6357c4fdbd082f449a89fefdf8fdaf89ec44b05f76703799f8"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI12.BIN",
+      "sha256": "bb5d5eb8ed0c29603f27c983d3434ae9120fc8035fb3f587edc97a5134603549"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI13.BIN",
+      "sha256": "fd4e878b02ddd087ac437f3649fa0ff1f8a92d72820356b4c166e4e9821f68c2"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI14.BIN",
+      "sha256": "f8eb49da67c441a44f74da180a70fc4a226f76a9f5d96d20b347e62a07825e83"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI15.BIN",
+      "sha256": "6e4d853f18122b22f8d9704c1de04ba83eb38c9988e7e567c9acd053c5ad23f6"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI16.BIN",
+      "sha256": "b05271a50751eed1fb332a35ab6e91d06930f67076651f878c87cd396ee61618"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI17.BIN",
+      "sha256": "8ff2369aec5188a1d8eec881cc74a127f48d7661416612b0a8a7ba7127395750"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI26.BIN",
+      "sha256": "b689a4a9f3cd54c83fb095542351453f41caffde341352670326bc3142d7bd30"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI27.BIN",
+      "sha256": "c0622c51255a2d01ae089487e230e22e9fad715ea1fce0caf4b571717e6baceb"
+    },
+    {
+      "path": "CDROM/BUSTUP/NI34.BIN",
+      "sha256": "6b6ed09ac8a547f13b7088b7aa36966affd27d5b7ec320e87a6712bd8fa75c42"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA01.BIN",
+      "sha256": "7cab227009ea84205624c27f02247650f24d3a68687e473c1a90f7db91c0e615"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA02.BIN",
+      "sha256": "7cea72752d9713f4e9cfccf5b3ccab8ee0bf2cbca04c35e4ab3516e03cd59ff0"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA09.BIN",
+      "sha256": "95dd1ec83e0110a24e5a913f435bb8fc6974e516bf0d9a80809746f223fb494c"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA10.BIN",
+      "sha256": "fec2841faab43a9fa4e610d9189233e5598a40ecb5ddf5100e0930f558115ad9"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA11.BIN",
+      "sha256": "078513e63303749017b3fe0f71ec558f4d188630f9259c3cce1fb95d9b0fa972"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA12.BIN",
+      "sha256": "2bf61b8ec27e3768bd5c6e7000b417052541fcf9734d1d7e284f83fef1a60951"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA13.BIN",
+      "sha256": "e671f544b7764e8cf67926a6717a6f806358159dfe9bc21153aa0ec5a09d66e0"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA14.BIN",
+      "sha256": "ae3f238e1913307dd66a730d904c32cd481d84e98fd1527f0478e7c7f94edff7"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA15.BIN",
+      "sha256": "b6476c1562ed2b10b6006cd001d873ccc2747825f2479a4dd28084a3746e0c5b"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA16.BIN",
+      "sha256": "bb28061dc8b3ec9ae692a307b445b881667bdfe4c94ef7fa36078b23671debeb"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA26.BIN",
+      "sha256": "6ea84478d997ab91622e76c811ff6e23bc663195a16397f70fa7c0f4b81a0634"
+    },
+    {
+      "path": "CDROM/BUSTUP/SA34.BIN",
+      "sha256": "8b6c9336acdf1e8e11e83d0b273f3fc407a5ba82a44a8eac6a7bbe928edbeb42"
+    },
+    {
+      "path": "CDROM/BUSTUP/SO16.BIN",
+      "sha256": "fdcea6442e0ddc0f52a07e46bb9d259d184fd9467873da6c3ba75bff38419002"
+    },
+    {
+      "path": "CDROM/BUSTUP/TA01.BIN",
+      "sha256": "2a065defdddff1ec5bf9a82971cac65f8794d36fd76b280dd2830bf45661bea5"
+    },
+    {
+      "path": "CDROM/BUSTUP/TA02.BIN",
+      "sha256": "9bd4bd580a3bc971e43fcb6f2a92a9efbd88e80de4b146c76ac85f6a36a43ab0"
+    },
+    {
+      "path": "CDROM/BUSTUP/TA10.BIN",
+      "sha256": "55a02afc781fb9ffb98d16c025522de806eafdb02231821f98b277798319b8c6"
+    },
+    {
+      "path": "CDROM/BUSTUP/TA14.BIN",
+      "sha256": "a932629ead1d2c883b6b2a1ad0e388965f9621a7df60f580bee56eea67579039"
+    },
+    {
+      "path": "CDROM/BUSTUP/TA35.BIN",
+      "sha256": "d9f40f1b26d2b8693d7e6281d222bc7ce5b289618b668211b74b5f5b962cf79f"
+    },
+    {
+      "path": "CDROM/BUSTUP/YO01.BIN",
+      "sha256": "816465eea442cd894b1f3a0f59e5307e99a2ae30fa0814e21359fbe96dec1e8c"
+    },
+    {
+      "path": "CDROM/BUSTUP/YO02.BIN",
+      "sha256": "e09283fdcdf1756f2333089795271027c86edcea42e6f6c987f45a22a2374f0a"
+    },
+    {
+      "path": "CDROM/BUSTUP/YO11.BIN",
+      "sha256": "3999ca50108019c9fa28ee583604e07777fcf67503ec5cf7f622c18efcfc17eb"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P0E.NBN",
+      "sha256": "01c4834417bd55b7a7bc829acce123089a039399065ed253e2f0a869fe916f67"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P0EW.NBN",
+      "sha256": "9f51fd6410d5db6fde52b2eed425b6fe03a4e93f13239b5aa6742b7e54e22a66"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P0F.NBN",
+      "sha256": "e2806a6c29bdc062b1114c4f611a3bae9dd5bdfa7e2dfb2dafaa5452eef43ac6"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P0FW.NBN",
+      "sha256": "6cea4b01571a19c3b00bf3af5de69593d63eac82841c0ec64c23d4c045e13fc3"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P10.NBN",
+      "sha256": "2513e9c09f1edd832299350ee932e77c017aeaae4d80842cd30cd1b799550669"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P10W.NBN",
+      "sha256": "9eb4e7bb7d792828383e2ce02b105a770e4a58349cb248fe3f7101ae68c1539b"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P11.NBN",
+      "sha256": "899f84b2de8daf1b3b695f7ab86e6b48d670a890bb14e6197d87972480e0af06"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P11W.NBN",
+      "sha256": "79be0fe326f4f35ac8ae188976f48c6335cf5952f7970e722bc5915147d5efcf"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P12.NBN",
+      "sha256": "dc00047e6025bc9f898ac0d2ff7a1a6dfe349ca12540ab6f8a9696d476937dc5"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P12W.NBN",
+      "sha256": "013ea5c36e8dc6f45f6ca101af0886ebbcd10b42a6c48ea7171dd6c4c7242d9c"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P13.NBN",
+      "sha256": "e49b4910a51bc7185a76ee72608b9b525be9ac70e6abe254745683687f7a8b61"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P13W.NBN",
+      "sha256": "7af25f72adf719585a8b7c67c61df320f0a470cca2b4d0a203bbd636a91e6a32"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P14.NBN",
+      "sha256": "d33ce57ca5f3613cc6055af6ebda55123b71511627d39886a0eca78672984ffb"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P15.NBN",
+      "sha256": "cfb57f7e37206ee8f7020f1399a1eff66ed9aeddd67c428aa5f34983720b833c"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P16.NBN",
+      "sha256": "c471a9cc8ccb88565fba9f51f303d33ab43edb91e2340b37713814786565c1d4"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P17.NBN",
+      "sha256": "619e7949ddc8a98888bda3be705f7f185b2a25c02ef569b68e56ddc1a6ae4fb9"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P18.NBN",
+      "sha256": "d6f16717e283997c1a36b74c597266a07521a742468cb830cb2cc3530048253f"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P19.NBN",
+      "sha256": "4954c8dd443978067e40ae9a614e94dcc50282ba0df866b013332b3204d81962"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P1A.NBN",
+      "sha256": "fe021ab1479ba4fc685c3af4bc309f4cbaa0985b9fa9b637317fce571ba1ff70"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P1B.NBN",
+      "sha256": "4e612d65fcb5030e019c455dd4db6b379ff77b1f50c288cf424e1250247def5e"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P1C.NBN",
+      "sha256": "8917750e6e05d855b265bb2583453e52337860d6edbe4185f39561882fe6ef04"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P1D.NBN",
+      "sha256": "2810a171a6aac7bb8f5fdcb22c1f9d08c82b9416da5dfc0fb69e4c3ba12e8ff2"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P1E.NBN",
+      "sha256": "1d3a476e225ad682f9a4bffbc32edad9a89b8a2e2dc35d7a333d4c9dcecfa678"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P1EW.NBN",
+      "sha256": "b404d25fb21b65a4b9d9bc0e34efb61f612b1a7b56540ea85ed97603abbb18d9"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P1F.NBN",
+      "sha256": "a056ccada7053435b7cf32b5c35f17969e12c580209f7d8a8c7c06a96f91c41f"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P1FW.NBN",
+      "sha256": "1257982585db5c7eba3a0a7580a0b0f8a8b4d78f31cedfe67fa5c1a25f6f0aac"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P20.NBN",
+      "sha256": "842162b3b1e5505d517600d64125073fdf5e767b69b007ae17005d65319fed2c"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P20W.NBN",
+      "sha256": "c1a351cb9702ee2077f726e23259039549cb063a0274793201e9ea17ff18e757"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P21.NBN",
+      "sha256": "69409eca18026f1bc817cc8dd363aa31a76e41dc3eccd580c47408b18625cbb9"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P21W.NBN",
+      "sha256": "59a49e4ab02df6d149f1adea09d4e42bd5440adef5a464c60be09b9cdb506b07"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P22.NBN",
+      "sha256": "22c96a92ab3b1a011da1b8f7d37744d7669bd136e97bf863fa9a4cdd39b0d1d9"
+    },
+    {
+      "path": "CDROM/CLUB_SD/SD_P23.NBN",
+      "sha256": "f96e5c97ea4e449e1eb85474e106fca715308aa6a5b67572a9be7dfa3d27fd21"
+    },
+    {
+      "path": "CDROM/END_OBJ/EBD_KY.BIN",
+      "sha256": "a687852c4097f23f69cd0b9e56a42973d5eead4696a168a0b6356a63ca331601"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_AL.BIN",
+      "sha256": "44a09f6102d93bf7ff31a6fa0ab62cef5e871404cb777155d6fbee6581532215"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_AS.BIN",
+      "sha256": "55bf42f46587af997605b30ff34eea7702325ad1c3774faa446c5403cdb0844c"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_FU.BIN",
+      "sha256": "5a85087db8b991d3a306708218760cc700573f5714fe93266cd3e82c4ba77f35"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_HI.BIN",
+      "sha256": "9bb40710dcd96a25490ce7624f4f2dbbb8f7379fc865e9896dbd79c497bebe0f"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_IJ.BIN",
+      "sha256": "e2f77ad501007029552993397125b0ae3b1af53337387af35111f2748e7f3d42"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_KA.BIN",
+      "sha256": "e08057acfb96fb1236d4137e74153333fe2a6d998beb76bc6f5562603233c366"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_KG.BIN",
+      "sha256": "e9074423c3619b8d53dab7185782e4d64b6ebe98e24a6881e67290915b47b5c7"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_KI.BIN",
+      "sha256": "f35e139b6300516e9cb9361f40549881f915d27befee9c6e3cb883a514522790"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_KI2.BIN",
+      "sha256": "f4935954b2268e416e979d1ca4415d0e920a32dffc8b671f43a0f36b0dd5fc24"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_KO.BIN",
+      "sha256": "b996d91b74d503c907c06792a7690c70f7e80e550b38b76d902f8ee8920114a1"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_KY.BIN",
+      "sha256": "30040a2070939248185febec047682335721ede26441d9200acb4a9f1c76e2bd"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_KY2.BIN",
+      "sha256": "a1a0174697eedc8921eaf17bdecf63b2a0cea13e0e3630c52fa4be6006c0ea2f"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_MI.BIN",
+      "sha256": "2f66e20b81b40943bad5ccc189ab8e7ac1286a75f19ae52ca6025363f416dff7"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_NI.BIN",
+      "sha256": "21c7d266323aaac376b994e8543c187a135952950545c651c219eef34e3d376f"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_SA.BIN",
+      "sha256": "9d9ccb8651878fb4b03aaa76a0b45f3b4ae820b92e69aede5959e3a42bf4abca"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_TA.BIN",
+      "sha256": "ff5b853fab1d589704580509688d3440f3e7478d12f721ef64154af93a1804f0"
+    },
+    {
+      "path": "CDROM/END_OBJ/END_TREE.BIN",
+      "sha256": "d6c96ee0035a295d7838a33e0938abe69b471c27935e5cd813e386f3a54618fe"
+    },
+    {
+      "path": "CDROM/END_OBJ/RUNNING.BIN",
+      "sha256": "0c459c501417f54d80c55de5d7a68237f3d11ffbe74ddc4fb673966dd8a4d967"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFFCOL.BIN",
+      "sha256": "6d14ea1007eaf8c659471cc5d7a4489255a808a341e92df540f8fcb02eeaab3f"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXAS.BIN",
+      "sha256": "53ca5f0c1300bb3080b15f1d34c09f2a3e3708bc00a038bdb6c378cf1c6b24ec"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXHI.BIN",
+      "sha256": "daaf33c4213f3f1085fce9cf8bbbd8bdcf9af46f87f5338a030619843fa8d536"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXHU.BIN",
+      "sha256": "0688815304ee3c5bd4e6b3635634aad31fe371b14e9e58268e7274d4de6eb74a"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXIJ.BIN",
+      "sha256": "1683b6548a4807bad3ee05b7360be7dae8579769a0a772554a965c858ec7ef31"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXKA.BIN",
+      "sha256": "f0d5a58986c1b5d7f91a0662aaa271dc98ef9c58a8a8c0ecf4c6776f47e612f7"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXKG.BIN",
+      "sha256": "0fff19f6c2d87485dfc0d75929d1fc6f08613553807ca43832f7f86830b3fec6"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXKI.BIN",
+      "sha256": "195dc53f3db6bdd31ea407d917c92a8e0bdd0cc294f3b99fbae405c80d9e9a1c"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXKO.BIN",
+      "sha256": "5586fa7422ebdd1fd3d97ef0f07b2788d2f3db3724b9943a50a934b6ba416404"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXKY.BIN",
+      "sha256": "0bcc5a4de64ca96b73f60db0966a55a4a87ec70f5b256b77f2241a71fe4c5d62"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXMI.BIN",
+      "sha256": "b9a2583feca124bb5c9d40d807d34c664dd18698df3cd33e3aeb187332c903cb"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXNI.BIN",
+      "sha256": "fc3c84090f32f3eee891d54310434e96605d6b135676055daa7a7a2de5e6092b"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXSA.BIN",
+      "sha256": "6e47f39702ddbfe53c8ea66449184121c7eac803cf3cea573680fe67cc5e7226"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXTA.BIN",
+      "sha256": "e034a773e4887a4b8c40dac66f0031870cea8412880d68e402cbe41417999ccc"
+    },
+    {
+      "path": "CDROM/END_OBJ/STAFTXYO.BIN",
+      "sha256": "110c6209651e7429ef7652494d897adb78f2f2cac312b82a09b904c59d85a13c"
+    },
+    {
+      "path": "CDROM/EN_GAME/KINGYO.BIN",
+      "sha256": "b88a141316605e134c8f5b6b403ac601588b013381670b560ef28f54e3603a68"
+    },
+    {
+      "path": "CDROM/EN_GAME/KINGYO.NBN",
+      "sha256": "95f18dab19c242a2a2f8bd83ff13aecd0792cad86c8406e89cf62d8fe1bf832e"
+    },
+    {
+      "path": "CDROM/EN_GAME/SHATEKI.BIN",
+      "sha256": "df460b82255c8cc9d25801697fe65dfaa1c52015ee7114f3c93f35123147d4d5"
+    },
+    {
+      "path": "CDROM/ETC_SD/SD_P30.NBN",
+      "sha256": "e62e658ef2880d57bec4de446121f2953932b9cff6e9e71907176c20e32529a8"
+    },
+    {
+      "path": "CDROM/ETC_SD/SD_P30W.NBN",
+      "sha256": "bd25bcc80df8a5ed0440aa4cc4a6ca25f811dd7c87bb602ee818a729c3d8371e"
+    },
+    {
+      "path": "CDROM/ETC_SD/SD_P31.NBN",
+      "sha256": "720bb2fdd12ae20f91c08b089d3cf1072d7a85bb18b8ec7db16e668f62e4473b"
+    },
+    {
+      "path": "CDROM/EVENT/EV_AS01.BIN",
+      "sha256": "2615d9a6fafa99da83df9977ef3d75b3f20a1fb54ffc1aa606395ab27fa9fb5d"
+    },
+    {
+      "path": "CDROM/EVENT/EV_AS02.BIN",
+      "sha256": "91fcea154ca249147ba5c6520e41ccfde28fad2090c2b7d27d12a90faaac07b5"
+    },
+    {
+      "path": "CDROM/EVENT/EV_AS03.BIN",
+      "sha256": "15a289e6ebe5e1cd54c0ace232f6301eb23739ceaf5912e0666312620500d3a0"
+    },
+    {
+      "path": "CDROM/EVENT/EV_AS04.BIN",
+      "sha256": "4ecc0f6ddbe3a7bf854bdf535bb93aef43e7cbfea57ae521ab5d8dbd679e6121"
+    },
+    {
+      "path": "CDROM/EVENT/EV_AS05.BIN",
+      "sha256": "fcf9a85d2f0876df6f055d51b522f51cabf1ddeea2ba1808b11dc8dba76ad2f4"
+    },
+    {
+      "path": "CDROM/EVENT/EV_AS06.BIN",
+      "sha256": "8a5c6cb4ddfcb215f3127dae5ad3af59f36fa8074f2ba08659229bd7697ec3a4"
+    },
+    {
+      "path": "CDROM/EVENT/EV_FU01.BIN",
+      "sha256": "afb264e080facf49dc75155066c84a1d4f9e9614079acb621ddf1d5f0546f0d6"
+    },
+    {
+      "path": "CDROM/EVENT/EV_FU03.BIN",
+      "sha256": "4daa6ea7d0b13d1db7acb1a03b0e066fcacd8a66e008f3824892b7c696488ede"
+    },
+    {
+      "path": "CDROM/EVENT/EV_FU04.BIN",
+      "sha256": "d93a821f00d841dd3b3384def7b4e50c514306bae4a6a3e83c778d43bed7d4e6"
+    },
+    {
+      "path": "CDROM/EVENT/EV_FU05.BIN",
+      "sha256": "7e6565d69d415f5257e068b0360582cb036277e0d216df297a178ea227772801"
+    },
+    {
+      "path": "CDROM/EVENT/EV_FU06.BIN",
+      "sha256": "b437e8f827332df11aa5c89409816d865ab16d53afcb8bc49b766285cac706f2"
+    },
+    {
+      "path": "CDROM/EVENT/EV_FU07.BIN",
+      "sha256": "0ccb83dbdf52677058a1d9d024f2b4e73590d3844a430e97180a16e07d9e1935"
+    },
+    {
+      "path": "CDROM/EVENT/EV_FU08.BIN",
+      "sha256": "0783ec57435289735d2c4de0888d76ce1c61d7e895f36f2ffe7411b2c8ec6c40"
+    },
+    {
+      "path": "CDROM/EVENT/EV_HI01.BIN",
+      "sha256": "c8b48f74ddb4abb0f1487f59c201a3f21fe12a31ea6ceceec06aa0b54ed2e849"
+    },
+    {
+      "path": "CDROM/EVENT/EV_HI02.BIN",
+      "sha256": "ecad8e9dd94161a512b7468ea1977cb2a138abdcf2266db0a0b470abab93c91d"
+    },
+    {
+      "path": "CDROM/EVENT/EV_HI03.BIN",
+      "sha256": "e7a0ac1d97a9147aebca724373579c805b502041b15248d447d207370339577d"
+    },
+    {
+      "path": "CDROM/EVENT/EV_HI04.BIN",
+      "sha256": "ed8b9b85572dd505f641909534ce2cf53f6c570993a3322fb9da0cddfc4973da"
+    },
+    {
+      "path": "CDROM/EVENT/EV_HI05.BIN",
+      "sha256": "e4b730f4d965659cb0463e18113fc153cea725eb3c28c2d786a8c9d730a12fe1"
+    },
+    {
+      "path": "CDROM/EVENT/EV_HI06.BIN",
+      "sha256": "fd068c9364e753df22adde39d3c0c601850c8728972a9bbe3619cbd42d02561d"
+    },
+    {
+      "path": "CDROM/EVENT/EV_IJ02.BIN",
+      "sha256": "5bae6caf063c045015bb52593db40415a35e0b0e5a2448a0f9a7da4879d8f048"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KA01.BIN",
+      "sha256": "10ad88288cf3e56ff60d174b8256f116af680a58c5d36845689cba03d322ae4d"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KA02.BIN",
+      "sha256": "ee1c1eff019b167ae2bb5f89f3fd9eeaa69454282cd797b754427ce914e4bf33"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KA03.BIN",
+      "sha256": "5f0ebd98cbd1c2bbd0d7dcbe004091de04481f0d6186e923277fd466fc3a8d47"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KA04.BIN",
+      "sha256": "3d5ba8e3e989d0ab3605469282cfa15702c2412fce15c521e5f936fad4b909bc"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KA05.BIN",
+      "sha256": "b22f58fbcd29b258b6a16f3120f7ca89cb14cbbe7bad75386c799e25c0ec336a"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KA06.BIN",
+      "sha256": "544c94467752000274b035cf0817a80269c5b470b3b2df2c32072e6b232f86f6"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KG01.BIN",
+      "sha256": "5701e1e0ca3152dc746cf5b08f88b4a51abd1a7c7a18226f40ce4c631ec14bd8"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KG02.BIN",
+      "sha256": "2ad50350a2c87c3fe6b4bdd6c5ce39868ca7c2dca81b5cd50b7a6bc326505e56"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KG03.BIN",
+      "sha256": "400a9564dd2c8a2f030d912091469308f16969ac69f391c01d958f7bdcca54c7"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KG04.BIN",
+      "sha256": "0cb23ca1f70b01ee7f674d60a34746d13967f52356c18a013bab057b36dcc25b"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KG05.BIN",
+      "sha256": "174e89ae31d0fef71ea51e9968efc1aa2c88f408392218b0729a46bfba32c207"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KG07.BIN",
+      "sha256": "e4a5a75ba201f9102921507a745c5fb07e81cb1664cd2bc72b0dca534ad1dde6"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KG10.BIN",
+      "sha256": "d0b914dbe104f780dfeea532406f16261b073b6b565312c92016512cc4c853a1"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KI01.BIN",
+      "sha256": "45c57a4914ef33f18693548145e5c1f87a3169c8cff3fd61f623f50da2cf495b"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KI02.BIN",
+      "sha256": "95bd4b63d2ef26c13b88caa5a199a445c45c0304341805bd00492c60f4aeb14d"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KI03.BIN",
+      "sha256": "6040086c55b52f581b582a914a8b51ce536d79a7500499fbd5495cdccf07df78"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KI04.BIN",
+      "sha256": "f37e259eca75a46a69340df2bea7576c6cf057ab3baa7d62146ac516908965b3"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KI05.BIN",
+      "sha256": "7e6ff88a583fc31ea887e344ea71a27de6105147bf883b9267b370a705329c4f"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KI10.BIN",
+      "sha256": "9bd9da841f3a46cb00a9446e3caf8fcbfd3e017f120b1c800d2b955cd03e0693"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KO01.BIN",
+      "sha256": "10d3af5b59c3769a8892b6e8e345d096f938ac71eb77033d7358a7c12a05ceb1"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KO03.BIN",
+      "sha256": "4ee7bf68a118d3538440d5badaf9602daf6805bff813786b8569501975e566ea"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KO04.BIN",
+      "sha256": "d65c7889b4a3ae92f6606bdea172991734db8a016b9a04495e0d37965d468d69"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KO05.BIN",
+      "sha256": "c6cc1ef977727ddddd122e74bc9d32c1058df5f1a122b78f44bb5baacdb65105"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KO06.BIN",
+      "sha256": "5872201d07410f7879a078316409ee9264c6e837e3b1b9b6f4d9f42aab28e4d5"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KO07.BIN",
+      "sha256": "2e898f10bfa611426ce0c4b66055e92a3765116508479f90b41a40097ce0c6cb"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KY01.BIN",
+      "sha256": "95d10bd6642ed8387f7fda910dc1b0a8b82e55eca17e113a4fad0abd9696eff8"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KY02.BIN",
+      "sha256": "ef9934d48c45b11950b050c64f6d5f9724ba5d4df6db480f7b99a1e06c726e3f"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KY03.BIN",
+      "sha256": "4823c7e4f934d6f6b31404feb5e6cce5d18612410a3dc21edd00beab07cab935"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KY04.BIN",
+      "sha256": "3c35adbc8ea7e88eb9ef1b2e2013132829fbfbc99252605d228eeaafc8244321"
+    },
+    {
+      "path": "CDROM/EVENT/EV_KY05.BIN",
+      "sha256": "75ae3a9a420ff197d14f86e069d6400e7d1cfafd3002e4f7195724124f1ac3b9"
+    },
+    {
+      "path": "CDROM/EVENT/EV_MI01.BIN",
+      "sha256": "2e4f57f9976fc0cd37e6a67aef5180cb995096249ca43e700ca21c6b222a60cb"
+    },
+    {
+      "path": "CDROM/EVENT/EV_MI03.BIN",
+      "sha256": "b7926d1b2853c0dc00485d9676ad10e07fde40d6d2ce10cd5ed1770f854a3b0a"
+    },
+    {
+      "path": "CDROM/EVENT/EV_MI04.BIN",
+      "sha256": "2b33cd1e1f304ccb6f12437596b3439700e6e63eff54258c1d4edf1f61a0ae63"
+    },
+    {
+      "path": "CDROM/EVENT/EV_MI05.BIN",
+      "sha256": "b1ec691e56d9327e170d89c868acaeb05956b50fc0f216e12aeacea45b78a046"
+    },
+    {
+      "path": "CDROM/EVENT/EV_MI06.BIN",
+      "sha256": "d44c1a5c88ff35ed3bca1c51dd26d85092e4ebef8804cddd2471a6a49ab241ea"
+    },
+    {
+      "path": "CDROM/EVENT/EV_MI07.BIN",
+      "sha256": "161495bb36d9e3586bcc4762328ae91b410d2ae090b7a7cdb0a59223d9d52a5e"
+    },
+    {
+      "path": "CDROM/EVENT/EV_NI01.BIN",
+      "sha256": "0a53b63db76081ca13ffc07ac269c45887b22770b0da4e61cd29ec69498408cd"
+    },
+    {
+      "path": "CDROM/EVENT/EV_NI02.BIN",
+      "sha256": "7552c1963dd1348055e78fa16e46636bd4df71a555bc73027d9ed67eda9663df"
+    },
+    {
+      "path": "CDROM/EVENT/EV_NI03.BIN",
+      "sha256": "897ffdffc0a06b766f95736e142734cce2651de6ec6f2fb71a185c63d415c883"
+    },
+    {
+      "path": "CDROM/EVENT/EV_NI04.BIN",
+      "sha256": "f6e943b972e4b61ad4e391000fd2873ad0db9c8c80700bd9286553e6073521cc"
+    },
+    {
+      "path": "CDROM/EVENT/EV_NI05.BIN",
+      "sha256": "32cf8ca3b5913a93fa28cc5270071bb06d44c4cc8c51125c694ed754e56511bf"
+    },
+    {
+      "path": "CDROM/EVENT/EV_NI06.BIN",
+      "sha256": "7422ff8d646d1bee2a31a1f5cf4a9d169843d6b4b16db9e4c8ebae11cb138098"
+    },
+    {
+      "path": "CDROM/EVENT/EV_SA01.BIN",
+      "sha256": "b531f63039f4448a23b9fde98962ca213c16b0cba54c9a84ce0600e344abb6e7"
+    },
+    {
+      "path": "CDROM/EVENT/EV_SA03.BIN",
+      "sha256": "86e2fb8631b9830f4de8d221daedf39303051c20bf38bceb576700f1e639b163"
+    },
+    {
+      "path": "CDROM/EVENT/EV_SA04.BIN",
+      "sha256": "5eb105cfad450e8c6ff7fc07375d9d019a50b41b7937b2ed85d14d9673931cd1"
+    },
+    {
+      "path": "CDROM/EVENT/EV_SA05.BIN",
+      "sha256": "c390365a4d9b9c9315e557a5af895e21c371f8bd7d2dea07ce5aa1680c163026"
+    },
+    {
+      "path": "CDROM/EVENT/EV_SA06.BIN",
+      "sha256": "6c673ef16febec4e9def0f2621c3d3ebbf51029304858d7388a0a09c39f490df"
+    },
+    {
+      "path": "CDROM/EVENT/EV_SA07.BIN",
+      "sha256": "760fcc58c1fc2163e4a71d7a5c221abb391b969f859f33eb59082dc9e4ce944e"
+    },
+    {
+      "path": "CDROM/EVENT/EV_TA02.BIN",
+      "sha256": "1511ea0965939b0ca682e52c341dd2ecada2e2602b4438c6b2d6cb956571a820"
+    },
+    {
+      "path": "CDROM/EVENT/EV_TA04.BIN",
+      "sha256": "f8d7230e449e154b0c48d7264df0497d10842acf113aa35ff0f0141073f8c985"
+    },
+    {
+      "path": "CDROM/EVENT/EV_YO01.BIN",
+      "sha256": "f80083f088f2691e17ca50dd8aeb82aa1e310323d52db20e34122317c97b7ccc"
+    },
+    {
+      "path": "CDROM/EVENT/KATA_KAR.BIN",
+      "sha256": "bf7a9ab037aa3445d10e8aade648f78540a3a5c64cbee25aba0ed34873b9aec0"
+    },
+    {
+      "path": "CDROM/EVENT/NOZOKI1.BIN",
+      "sha256": "fb5e8ab25c5464a61402707eec5e198a5f1ead01790365606eb9c03c812acef2"
+    },
+    {
+      "path": "CDROM/EVENT/NOZOKI2.BIN",
+      "sha256": "8e29c66b521aba6fa7a147da2d7d5aa55b275cb6c101b1c62cd721b24218038e"
+    },
+    {
+      "path": "CDROM/EVENT/NOZOKI3.BIN",
+      "sha256": "c313e8aa36dab42b2de32fba936c3d59b788c792e01d8dc3fcb8114b80b49324"
+    },
+    {
+      "path": "CDROM/EVENT/NOZOKI4.BIN",
+      "sha256": "93ef3296c13ef3cd58392efe850836a896ac25a85ddedc3c5b08d1c60b1887aa"
+    },
+    {
+      "path": "CDROM/EVENT/NOZOKI5.BIN",
+      "sha256": "df51dddc7e2b8e5e6043b4f0c507842bf85ebda46959d63ff9493a08ffd65252"
+    },
+    {
+      "path": "CDROM/EVENT/UFOCATCH.BIN",
+      "sha256": "63256374dd71444bb3e3f8252f5594fd64e47e1d68f6ce4fb3773c3d129d63c3"
+    },
+    {
+      "path": "CDROM/EXEDIR/BUNKASAI.EXN",
+      "sha256": "41c0f09601ce5f13c5182580b873a89876f9feff4fe11143961eaa8ae953c673"
+    },
+    {
+      "path": "CDROM/EXEDIR/BUNKA_SD.EXN",
+      "sha256": "855ccf5f961105937f34c6ae1c69e38f9aeceff428a6fc9841f7192de125e6b1"
+    },
+    {
+      "path": "CDROM/EXEDIR/DATE.EXN",
+      "sha256": "aa61ee0e1e004d8ab6078a2e1ec7c2029ed9c1664a3df53b2fc2dee098ae16a9"
+    },
+    {
+      "path": "CDROM/EXEDIR/DATE2.EXN",
+      "sha256": "a444bc1f7aa372ac08f538a799e42c0577c94ead3a0cbe7378e1bb767d99c663"
+    },
+    {
+      "path": "CDROM/EXEDIR/ENDING.EXN",
+      "sha256": "5295f91a30a7638d527e9271f113631d1df0bfd4d34552b73ba42e0f4017cc2b"
+    },
+    {
+      "path": "CDROM/EXEDIR/EN_NICHI.EXN",
+      "sha256": "37c3103fcfbc6410c6c51d9916c751df53995a86f976c12b3324c62c1163b280"
+    },
+    {
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "sha256": "5a24f2b11b0a0a411dce284429221fcc2a389ba533f54e787f15099460ea9122"
+    },
+    {
+      "path": "CDROM/EXEDIR/EVENT.EXN",
+      "sha256": "891730ab9ab7e17b110c6fe4cba4c34f95dfc057c824be1f273075ae3e5dcfe0"
+    },
+    {
+      "path": "CDROM/EXEDIR/GEKO.EXN",
+      "sha256": "a91d32920ed063019913838574f9469bfbea48f86ae5e7b4587b758d13390b92"
+    },
+    {
+      "path": "CDROM/EXEDIR/GYOZI.EXN",
+      "sha256": "f186f48fe7669a4f9abf468a0d2f34451b453d458f459ba3487ae7e3e92f3d4e"
+    },
+    {
+      "path": "CDROM/EXEDIR/KANGEI.EXN",
+      "sha256": "cc274f980bdb732631d56c37239a7f8bcbd8a07cbfa671309f7d3d364fbf60d3"
+    },
+    {
+      "path": "CDROM/EXEDIR/MASTER.EXN",
+      "sha256": "ac5de9b030d561c06b030efced9306c45c71455de9c34cc7ae07402ff3dc55e3"
+    },
+    {
+      "path": "CDROM/EXEDIR/O.BIN",
+      "sha256": "6624dba1e1f6bb4fca5360110554ae9f1720ec563fd445ec7859884cc3813c41"
+    },
+    {
+      "path": "CDROM/EXEDIR/OLH.EXN",
+      "sha256": "3d23f40253d7aefd52bee6d4f7d536ec620347a94b2ac1c66ea1d565d4d965c0"
+    },
+    {
+      "path": "CDROM/EXEDIR/OMIMAI.EXN",
+      "sha256": "399237c05848b4f0cc40ed5f2639484e529b0fc4d01832d487ef85d063364036"
+    },
+    {
+      "path": "CDROM/EXEDIR/OPTION.EXN",
+      "sha256": "1df64090b6c9919d2f670c01b7a84c607904cca3420fe5ae06589a9271897372"
+    },
+    {
+      "path": "CDROM/EXEDIR/RENSYU.EXN",
+      "sha256": "e436b35028e298a44fafdf110c0d6429ee7179183adc3481966003d8b7204db7"
+    },
+    {
+      "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+      "sha256": "194bab14d9c608f0f43e3f6bd290bb3e0ce24ad0aebc8c14a0b97849f4d30f22"
+    },
+    {
+      "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+      "sha256": "cbbe16e1daf0bad892bcba9098ceab7d258d017bd925214f094e08cbdf38a0dc"
+    },
+    {
+      "path": "CDROM/EXEDIR/SHUGAKU.EXN",
+      "sha256": "217b09e99afc2b97867a1c7d52a5dd92cdfbddff154b9ab9998481f176108966"
+    },
+    {
+      "path": "CDROM/EXEDIR/TACO.EXN",
+      "sha256": "a121340007f095228e0e96cce43b59da8852d7a96f719ecb4551676d4b4dc377"
+    },
+    {
+      "path": "CDROM/EXEDIR/TAIIKU.EXN",
+      "sha256": "284d126354a096ec8bb7d011b40fd14f44d3a6b8d9be2a0fd88b0caeee55c316"
+    },
+    {
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "sha256": "d5f8200f217a4206c141843b9a1a5448794e14d2bf38dc28b22ead6d65df93e7"
+    },
+    {
+      "path": "CDROM/EXEDIR/VALEN.EXN",
+      "sha256": "377223b1402af0ec1770b0e8ce3a22eb08eea1e1394d32959b50077650e3f0b6"
+    },
+    {
+      "path": "CDROM/FUKUTEST/ALBUM.NBN",
+      "sha256": "0e6d7e9c82b08a06a823a3be46b231d656c2cebbc41e912eddcc3263947bdbdb"
+    },
+    {
+      "path": "CDROM/FUKUTEST/CALROM.NBN",
+      "sha256": "775356bc13a15499b79172e57ea9d42e753fd916e0c01c166f42bb426fe5c867"
+    },
+    {
+      "path": "CDROM/FUKUTEST/CLUBMAST.NBN",
+      "sha256": "bda8f22376afcea075f94ee366b17293b553dc3e49c81a243203b09802b28f23"
+    },
+    {
+      "path": "CDROM/FUKUTEST/EXAMINE.NBN",
+      "sha256": "b467ffdc9a0640c43b72a38ded8d775500b0b430a3e3418fe3bfe0c9ceb8d62b"
+    },
+    {
+      "path": "CDROM/FUKUTEST/FILESEL.NBN",
+      "sha256": "f7065a270cbebd2762b72a8513d707250c6475d87babb38b3227f4aba14644a1"
+    },
+    {
+      "path": "CDROM/FUKUTEST/GIRLINFO.NBN",
+      "sha256": "1e600af4f725b2ff2970f25d917d5be5684b32af7b967ad66a0f238e0200dbb4"
+    },
+    {
+      "path": "CDROM/FUKUTEST/JOHO.NBN",
+      "sha256": "d9fdaaafba927032a0ca73d7fbffcd463d999f5aa38a6879b4c218222e224d9e"
+    },
+    {
+      "path": "CDROM/FUKUTEST/MAINROM.NBN",
+      "sha256": "6691e936fdb6c97f06a892dd2bc9cd591896e0fc6514a9163e01c304421707a8"
+    },
+    {
+      "path": "CDROM/FUKUTEST/MEMCARD.NBN",
+      "sha256": "162f3deaf7e0d825aa674c3051d367b70a3e3cf63aa466bc8a6200fd3a1388ff"
+    },
+    {
+      "path": "CDROM/FUKUTEST/NAME_KAN.NBN",
+      "sha256": "29c22ef10985a33a93acb2fef4a6bb6942c1b73e6aff7f4ea974a265213039a9"
+    },
+    {
+      "path": "CDROM/FUKUTEST/NOZOKI.NBN",
+      "sha256": "a7f4fe76cb30dd9d6b28f2da2afea6cbcae3936ab3e388833218d22a5f2c7ad9"
+    },
+    {
+      "path": "CDROM/FUKUTEST/OPEN.NBN",
+      "sha256": "53eae9e38c68658769a9f5527dd96beca92165eb090df28456959fc8a0f3aee7"
+    },
+    {
+      "path": "CDROM/FUKUTEST/OPTION.NBN",
+      "sha256": "ddf3976999f55599fb7cb9a3b707d3c2af2d6309055046b74820d01f765f72bd"
+    },
+    {
+      "path": "CDROM/FUKUTEST/O_31_01.NBN",
+      "sha256": "464dfdccd0ecf473945cb249ee74d9b17d284ef2fcb0dafe90e6f0146e742082"
+    },
+    {
+      "path": "CDROM/FUKUTEST/O_31_02.NBN",
+      "sha256": "1aafda491a6d0904f7774ff3e7f642f2c9c3ef7540058f938aa61b917ffe4aa2"
+    },
+    {
+      "path": "CDROM/FUKUTEST/O_31_03.NBN",
+      "sha256": "28cc9ce93b8cf5797d7ce6e4b2e9061fc6e81cd72f44ba305d2953ecd9e67cac"
+    },
+    {
+      "path": "CDROM/FUKUTEST/O_31_04.NBN",
+      "sha256": "ca37048cb650c8c89587750c86f98490519f4a7ce40b5b9ea96227a0ad0e6ba7"
+    },
+    {
+      "path": "CDROM/FUKUTEST/O_31_05L.NBN",
+      "sha256": "62ff73a334b26ad5a89494430094e6117c74610500ef1a2b58e1397045a108f3"
+    },
+    {
+      "path": "CDROM/FUKUTEST/O_31_05R.NBN",
+      "sha256": "2007f19bfe009e08824be02c6ad424a90fd6c73b7c0f416a44f06bbecde0b69d"
+    },
+    {
+      "path": "CDROM/FUKUTEST/O_31_06.NBN",
+      "sha256": "04c8dffe50291fe7eddc9f099b81fca5e5e46ed6c9961b7fcc60ff4a3925c8ed"
+    },
+    {
+      "path": "CDROM/FUKUTEST/O_31_07.NBN",
+      "sha256": "4485a0e1e7b798c50b7b3ad50b861033520ceaee2221665aba0f926fdc93d32f"
+    },
+    {
+      "path": "CDROM/FUKUTEST/STAFF_R.NBN",
+      "sha256": "e4807da733518e2da6d2f4b3d2cacfcddbed60b161774b26615c88b40c1a08d0"
+    },
+    {
+      "path": "CDROM/FUKUTEST/STAFF_T.NBN",
+      "sha256": "23b5268d1c4b095ac00705ce42672549b8070add29526364a65b2ad95b99a655"
+    },
+    {
+      "path": "CDROM/FUKUTEST/TITLE.NBN",
+      "sha256": "a581d860d449310a4ac7a0f20dcc4abf1d33a1891cdf6b23fb749a644638fc79"
+    },
+    {
+      "path": "CDROM/FUKUTEST/TOKIMEKI.BS",
+      "sha256": "64e223c8a1f8537bd44045a80e40aab1d8cdad10c5498e3471d3d0b917046d2b"
+    },
+    {
+      "path": "CDROM/FUKUTEST/XA.NBN",
+      "sha256": "23daae0a9ef602d3f788b3fe0fd8636f8d36aa8130d21845f8abbf0515184db7"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P24.NBN",
+      "sha256": "95bb6e0afc3d9e706765236afd5055b470c356dcec980b452c83826cf7cc2a7d"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P24W.NBN",
+      "sha256": "d3d769779a8fd6d7d088978db69870c1fe2f9008c303d40f14f43a6ef6220d36"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P25.NBN",
+      "sha256": "2113d2875a0f197c5fa13f759d53568396cbd5e09f9dc08cce656386e006db24"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P25W.NBN",
+      "sha256": "d846d08a0c107c07c47871823f440e049b2f16c55b459928108ba29def1de950"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P26.NBN",
+      "sha256": "d409b9a60faba75faebe5802680917e6fd6e6c5a91babd0916179cdbd6b4ad09"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P26W.NBN",
+      "sha256": "c70fa952ce0a4125ea4afb589648811d77ccd542fcea44c57038397e4f975fc9"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P27.NBN",
+      "sha256": "dd05236d1a614f6d53dd5a60b4c0b2dc5a1c585117fbee713e063ea002b212f2"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P27W.NBN",
+      "sha256": "41182ae9b13fc48baa569558df16a6a43505a7f0869a77a77291ac1c13a0c322"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P28.NBN",
+      "sha256": "47952e20655c88fbf717e796998bd2588c47107a86156f9b1a3aedf88d77b2e9"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P28W.NBN",
+      "sha256": "6a24b73d8ca7949a9d7c1d163a70fac81ef8b79dc92c2fc8a35cf74672bf6562"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P29.NBN",
+      "sha256": "0bae78283dbd5f6667f2d6dac76c9eeb4b9a84c1e955fe9c59881fed5b8110f0"
+    },
+    {
+      "path": "CDROM/HOLI_SD/SD_P29W.NBN",
+      "sha256": "f2151c2c0347213a878bbb28ea3a558b11c5d950200ca0218d8827c9887722bb"
+    },
+    {
+      "path": "CDROM/LASTPHOT/ALL_C.NBN",
+      "sha256": "6170416575d0280922e4b9cfdd5db2c36fd1d17ff59087f39dbda23380b5a5d3"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_AS.NBN",
+      "sha256": "9055e8c5d49ed8553df233ba552bffaad4e219cd0d88cbad6535ad1fae91cfeb"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_HI.NBN",
+      "sha256": "d1eb5d95362d6e7487982ac444b99d10ae41f4f033269768ef65986c75ff1182"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_HU.NBN",
+      "sha256": "dea8dbf5848a5463b78d96e45a82d7c73401204c48ab54d1b72c1c5ec2d7cf98"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_IZ.NBN",
+      "sha256": "e568a1d4dd9b64dc2fe066f42ca17fd87d9b11694d7a294bd2427967996956a3"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_KA.NBN",
+      "sha256": "9c946d64ad99bdc72f3ae315d1e55bbc155970fcf2d51510c4a8271c1ea5556d"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_KG.NBN",
+      "sha256": "ac8a16159eaf2d7994cbb8967549a55bb6ae2e88884f8bc9d4fd1ec355354aab"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_KI.NBN",
+      "sha256": "986ad25a9756f2073d1a85f84d0ce8d20a0c2cdd35532d2df1dd8683674d796d"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_KO.NBN",
+      "sha256": "46accc20b1583f67fcdab1c251d87ad86cc331e7088c3863cd070a69f41ad7d6"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_KY.NBN",
+      "sha256": "8a376df94fcf7112ac15116e92e1a61a5925ccc5bb8b2feab3344208bef69c63"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_MI.NBN",
+      "sha256": "aa0b1d4f8075d24f84f0f03cbd45b1f9c9bb20bf50aa5f3b8300f4a936360583"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_NI.NBN",
+      "sha256": "8cd1a50dc42c8e1fa27b7d422557d72463b1ac10a944da34278f5845a5bfd9fe"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_TA.NBN",
+      "sha256": "e5b293696a1d09755f340481da416b6e73cde3c371ba9bba5019fc451fab98c1"
+    },
+    {
+      "path": "CDROM/LASTPHOT/LASTP_YU.NBN",
+      "sha256": "185ae5f0e26f4c5db3cc79dcaaccd427b0d4f051586fbf49d1b31bf5993920a3"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P00.NBN",
+      "sha256": "074340d0ed64f286d26c8a0564d09bb2ebe68653db542d559ab56763ed05406a"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P00W.NBN",
+      "sha256": "5a0ab6bff28ee61340bd4935262004b7b505bc1cc087c7f43b9bf14798d2a5f9"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P01.NBN",
+      "sha256": "c41dfe7950c4623315a025d5f2b1698ba1bd7bd0b399fbf8e040285982ceb456"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P01W.NBN",
+      "sha256": "6fea04f95b7eb68731816fa21395605942b1b912b0b915afcfea4d540da7eb6f"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P02.NBN",
+      "sha256": "914763ccc3b608fcc85d0e3e1f3abd1b37fbafdb65c3f770c8fdf8c85a0405ab"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P02W.NBN",
+      "sha256": "cf98d7004f1827e3a79dc12f4fbef6add970e18396599a05a320a10d266a2f5d"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P03.NBN",
+      "sha256": "734cf19bcd6f6ca2200f574c3f93606d6d8c44b0cfc0efb9f73ebe71c28a76ce"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P03W.NBN",
+      "sha256": "fe44f01ad81aed7f2cb918c96762f3866c8df1f0ef8f1e86a2e942617b7e7b58"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P04.NBN",
+      "sha256": "f311b88458e69306712f2096e581357215efd2b1a38710cb87ce8b768a2eb72a"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P04W.NBN",
+      "sha256": "e3d9c708310b567859955524bac28893c363955abea12f08b242fcab19a8f00f"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P05.NBN",
+      "sha256": "ccaaaf5f066ad2b11743dd4ee1e6262d6336068eb66f4c78587f5a87a1c2cdd8"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P05W.NBN",
+      "sha256": "7dff1117947f643a2946be13cc9a2dbaec1152b90db072195800edfac60d1164"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P06.NBN",
+      "sha256": "ecd6e7039004a69c878e0113760814bce9c44ae427d3ebfdbcb11d35d1761ea3"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P07.NBN",
+      "sha256": "7999ab9f3ee289f0980d8eb5cbbcb9e25411a2c2d840000fba1b3a4678c68636"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P08.NBN",
+      "sha256": "2476d64cf55dc95f262e6b331739da53f3897d0236f277f7e11d2fcb35a1401e"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P09.NBN",
+      "sha256": "14bd2adc784c6943c7ea34b6af57039b8f83f2f04dd3fcb1eff7c5027e0258e2"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P09W.NBN",
+      "sha256": "1ad4b906e8aefbb57fd0b9a22afea9af83a0d5109234f9621abc5f91829e7d28"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P0A.NBN",
+      "sha256": "96d3ed6366b9461643288c24aac1222898f46a16b69cd5ac8222c851d52c61f2"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P0AW.NBN",
+      "sha256": "ac87b1aa20969c26a65dc2d6785425199585ba585ee67e86444ab35e357cc63a"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P0B.NBN",
+      "sha256": "6268a8549d9be1ddd1c4ec78d7b0cc71cadda20ed13e6471da67376478d698d9"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P0BW.NBN",
+      "sha256": "7ae2ed9d832a4aa24f2339acc0155fba5266130682822775824f1cfdda62d42d"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P0C.NBN",
+      "sha256": "91051a99aedd4720f568c42261c28497d9ab628932b526f230f986c64dea9ac6"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P0CW.NBN",
+      "sha256": "e4652eacc698e6130043d71b586d43deaa9ea8ee582ed90eb3abd3aa5bcefaf6"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P0D.NBN",
+      "sha256": "7680ed98af35ffd4d7e9ec06462874016f62858c30494010724728e3725ca8b0"
+    },
+    {
+      "path": "CDROM/MAIN_SD/SD_P0DW.NBN",
+      "sha256": "ac6148de4e181b8bdb4f9df633269ac4f216a54f39d079d605276c3b64e5c304"
+    },
+    {
+      "path": "CDROM/MASTER/EN_GP.BIN",
+      "sha256": "8049b360664fc732d930a93b272b0784828d2c30c8d3c96f2fb170fc2246134f"
+    },
+    {
+      "path": "CDROM/MASTER/G_CON.BIN",
+      "sha256": "a45797adcf7555e09bc71bdb80235bf38fcac1ed638774fdc822dcc675ed259e"
+    },
+    {
+      "path": "CDROM/MASTER/KOSIEN.BIN",
+      "sha256": "aa7dee74d3a713df28fff5a6d30c69aeb7f6daffaa629036a330c91955787971"
+    },
+    {
+      "path": "CDROM/MASTER/MOKUTEN.BIN",
+      "sha256": "34eb5423754b9452cf72c5b760aadcafb2ca8412a2bae4769faa5b5c857a344f"
+    },
+    {
+      "path": "CDROM/MASTER/NOBEL.BIN",
+      "sha256": "367db913bb86ab3406a9209f9c76491be087f877b69eb540e6422e2fd20a37b5"
+    },
+    {
+      "path": "CDROM/MASTER/SUI_CON.BIN",
+      "sha256": "a4d258f3e12e09167c1d52c3fb0fd7db9752ffd799b33889a1338be8197661a5"
+    },
+    {
+      "path": "CDROM/MASTER/TAI_MAS.BIN",
+      "sha256": "02fbfeaecec175bd99371b88e9223070e2c0abf45c2f2b0cf33bcbb5f93de08a"
+    },
+    {
+      "path": "CDROM/MASTER/TEAR.BIN",
+      "sha256": "04ebe53ee599942009ac0c8c72de7f322b653661c8f035a71cd45b3feb8672ce"
+    },
+    {
+      "path": "CDROM/MASTER/UEKI.BIN",
+      "sha256": "e0f96ca0d27b7ed76728bb9f44e7d876a5ed5e3c72e50962de22320d783e4375"
+    },
+    {
+      "path": "CDROM/NAME_ENT/NAME_ENT.NBN",
+      "sha256": "a3ddf08f2a97dfe6df4a133019a46fea9ae1d89ea388682451df0c525a34bf32"
+    },
+    {
+      "path": "CDROM/NAME_ENT/NAME_SAK.BS",
+      "sha256": "7e9491995df6d5a373d5636c8148b1768bddef3113db49a512c813d6c37874da"
+    },
+    {
+      "path": "CDROM/PROLODIR/CUT_05.NBN",
+      "sha256": "34494d1b0c7305466b097d62c4c68b10486325d70e71cb0115bc58d335ebd87c"
+    },
+    {
+      "path": "CDROM/PROLODIR/CUT_07.NBN",
+      "sha256": "3fff84684395c29849d57652a111282820977b4ca5fd44006deab14b3eefa125"
+    },
+    {
+      "path": "CDROM/PROLODIR/CUT_08.NBN",
+      "sha256": "444165354346eeac36f2614a3375bd24e3ff5b457924b1d81705b4e174c3e3ca"
+    },
+    {
+      "path": "CDROM/PROLODIR/CUT_09.NBN",
+      "sha256": "9c4a73089b11368c754de62a546344668182fb2b37ba9862e5bed0263d9cbd0b"
+    },
+    {
+      "path": "CDROM/PROLODIR/CUT_10.NBN",
+      "sha256": "4fbc92812e043e4a2c48a970a0ed29016ebe0f93e4c235c4000d2510634b622d"
+    },
+    {
+      "path": "CDROM/PROLODIR/CUT_12.NBN",
+      "sha256": "43b8e386cd4588a67c3a8ac9c71c7ac0416bfce3a340cb502ac508764606bd97"
+    },
+    {
+      "path": "CDROM/PROLODIR/CUT_14.NBN",
+      "sha256": "8059ef80df31cb4662db9c8b816b258066e1730251b7454e14d3426b42c2fefe"
+    },
+    {
+      "path": "CDROM/PROLODIR/CUT_16.NBN",
+      "sha256": "de1f091899464b4c04916815f71d6da40221da0cf3ab30c6336765e7ba279b17"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_01.NBN",
+      "sha256": "bb224a47fa1ac9c102dd4701d3d3e0819ba30cac1e5637183886b8be4f95340c"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_05.NBN",
+      "sha256": "59bd16f64d1510ab290dc4af732418a91534c16eee313f1e0540d8890a606ac5"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_06.NBN",
+      "sha256": "dc5d73f5bf58ec9b9a5267e9800f7fb2bd838bc635d0bca66f75ee5e56cabd3d"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_07.NBN",
+      "sha256": "fb0053368ca62fa7ba2f4de8615b9a8e631284ee35ea952472cc62e74c506715"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_08.NBN",
+      "sha256": "239a20180cd00bd8c117603075505147fff5d1e1f5769eb94323c7d0fd78de77"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_09.NBN",
+      "sha256": "6dcde1bbf652c9cf5ca77c9c68547afe723ce08b56bfe6c08bf3048fa85ac331"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_10.NBN",
+      "sha256": "dacf206a52a5396872e759effd471f9a21a769b2a57c9a141edc221789fb3ead"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_11.NBN",
+      "sha256": "3e901c18b0ed186323446151f35892bdb66e477d8a419e772034fd2b61be0628"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_12.NBN",
+      "sha256": "b2458308e1b1de9714a59a49239728b4be60b4eaff30100566e155c2403c1954"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_13.NBN",
+      "sha256": "38c0149c0fb6bd9b6b812b06a5c170a2529e7a0271b0cb3ffc812e6ce6b4236f"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_14.NBN",
+      "sha256": "f81f398f969215f0ca65f04ac6624fca8f733568f21bf719fec023c7eb30bee5"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_15.NBN",
+      "sha256": "9d6aea8ea1356ee666fba64e1f76d22db106fac4ad08b4e99de87ffb9326a0db"
+    },
+    {
+      "path": "CDROM/PROLODIR/O_16.NBN",
+      "sha256": "0bde8b1c5285bf6f1509adbfab894a983c0f5cd5c5238979643f7bbd84abe03f"
+    },
+    {
+      "path": "CDROM/PROLODIR/P_01_04.BS",
+      "sha256": "dcf99efbac821fbb769847204c0e8a1a1b611ed15daa0450700a59257387fae6"
+    },
+    {
+      "path": "CDROM/PROLODIR/P_01_04B.BS",
+      "sha256": "ffa02dc52c645679bdbfd66739254e1088fd58672321acbefa2d671c870f2ba2"
+    },
+    {
+      "path": "CDROM/PROLODIR/P_01_05.BS",
+      "sha256": "d082130abe5c199b7d8c9c75add436ce0f0f33b23e6a58e3e2e06782aa41119e"
+    },
+    {
+      "path": "CDROM/PROLODIR/P_01_06.BS",
+      "sha256": "5feccf3ed08b49ed918458c4772c870b8c1533e7fbc0391df314e59172c7858c"
+    },
+    {
+      "path": "CDROM/PROLODIR/P_01_07.BS",
+      "sha256": "a4f19c201f7650e14be9c1eca419d3055c7704d6785f1a8263cd3f1eea559980"
+    },
+    {
+      "path": "CDROM/PROLODIR/P_01_07B.BS",
+      "sha256": "184c047fce1e4da8f736980e8d25a38aec0b4fc41d8297095b8a2bea9e50a774"
+    },
+    {
+      "path": "CDROM/PROLODIR/P_01_08.BS",
+      "sha256": "d9b717964b37f3dcb0ef57856170269e79c10185281958bde7a8a69b94052cf2"
+    },
+    {
+      "path": "CDROM/PROLODIR/P_01_09.BS",
+      "sha256": "78c2813b109d87b5692783bbfc1bfd69ce5c89d015ed2b070cc5c8f5c7082098"
+    },
+    {
+      "path": "CDROM/SERIFU/DATE_AS.BIN",
+      "sha256": "0cb57f307740c36d3fc8450d4498ae8928557e7ee8c3d17c926951b2bc106572"
+    },
+    {
+      "path": "CDROM/SERIFU/DATE_FU.BIN",
+      "sha256": "70c4de046f4276f0a02ee8491db8907f16591f8f03f3711a876a2e523386ab7f"
+    },
+    {
+      "path": "CDROM/SERIFU/DATE_HI.BIN",
+      "sha256": "f8bf20c32adc1f02ab61794737b34285530379e5e5854d3639b900063f64e537"
+    },
+    {
+      "path": "CDROM/SERIFU/DATE_KA.BIN",
+      "sha256": "9cca228160b6dc107142be9295f70bf9b503821557e29edd297ab9c9cfe910b3"
+    },
+    {
+      "path": "CDROM/SERIFU/DATE_KG.BIN",
+      "sha256": "51226771a79bb116952cf610558fc4e85d9b9827f5b178928da005987dd7f654"
+    },
+    {
+      "path": "CDROM/SERIFU/DATE_KI.BIN",
+      "sha256": "acdf6049b48a8322e06f5a50894c1e7d61eff8a38bc997b2f42f7327c0f30637"
+    },
+    {
+      "path": "CDROM/SERIFU/DATE_KO.BIN",
+      "sha256": "f18f77873f1439827ef72cd7eb93bf2a5941cd9ac69a27648e044cb623818efc"
+    },
+    {
+      "path": "CDROM/SERIFU/DATE_KY.BIN",
+      "sha256": "3453e4ed9343102550adbf7e03d5fa6c143ad1e800a63dff770a388fcf106248"
+    },
+    {
+      "path": "CDROM/SERIFU/DATE_MI.BIN",
+      "sha256": "fe7d700feff265ea6db83f3dce8dd82c68a574590758aa17d37d8362aaae014f"
+    },
+    {
+      "path": "CDROM/SERIFU/DATE_NI.BIN",
+      "sha256": "3a22896604a4dde7016d844328efc1ac4895068d729dfa6faeb6ff78d8a70ba8"
+    },
+    {
+      "path": "CDROM/SERIFU/DATE_SA.BIN",
+      "sha256": "09d156ae1c337b670621171f27d887b47d48bc334376c6ce2d6fc0656a5079aa"
+    },
+    {
+      "path": "CDROM/SERIFU/ENDING.BIN",
+      "sha256": "d0e3bdc126776b265e744ea8bddaf12a348d196ab0db52fd8910cf71f0e59f55"
+    },
+    {
+      "path": "CDROM/SERIFU/EPILOG.BIN",
+      "sha256": "c344db53f8348ff767775dc3b63be24b19c1cb763b3589404263e235a170f0e9"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_AS.BIN",
+      "sha256": "f46db92b9d9c1af4c0cbe4b9795029f6348d8be5f8d8931fd89a47a0f9e23a9f"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_FU.BIN",
+      "sha256": "c761c70f815be4e0aaa885c1a99045ad48ac936c0ebffb7727c350c631759aa0"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_HI.BIN",
+      "sha256": "2d1eb99435a13336c2408ad60bd25dcedfad313c62a3ccbc79c3e46dda8d4cfd"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_KA.BIN",
+      "sha256": "88a24801bed68c5de7dad6aa3ba42de33b62fb67b5aec1cde8a1f3bbd4345e10"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_KG.BIN",
+      "sha256": "480e6d5e79c3cfc2f2ee97da9638da27ca83814bc932859d91815b74fc573814"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_KI.BIN",
+      "sha256": "f8298cefd2257a6dbbc43fb21598e259aaa291fe0d9cfa0d561b1ab92eab1dbc"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_KO.BIN",
+      "sha256": "0aec9169249a739da104b1c4be698903f38d4b559d6a5bc8383f19f7e04c465d"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_KY.BIN",
+      "sha256": "6a98ad96cb670fed005b97b70e96412cb92ff3efcec4e54238da8213bea6ce31"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_MI.BIN",
+      "sha256": "aaac838bc35e19c7d36aa2cdeb12ce12d2e6b4c7354c7ed9c10a14e3153b1959"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_NI.BIN",
+      "sha256": "fd521bbf54050579573e918fb6dfd71051b7613b71aee127469dfd23c0c3dc6a"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_OT.BIN",
+      "sha256": "e6fd178b2f21e1211e2d82e4833194739ac649d5fb0a99d347e1015f0f2b6ed5"
+    },
+    {
+      "path": "CDROM/SERIFU/EVENT_SA.BIN",
+      "sha256": "dff33e74677e2c80d85f98554845ad7ae600becf91dd8559e67055d191b66e69"
+    },
+    {
+      "path": "CDROM/SERIFU/GASSHUKU.BIN",
+      "sha256": "c0c600d230f0487847ce11c929c27076c84b888fa3690e59b747f4f05d9f6d6c"
+    },
+    {
+      "path": "CDROM/SERIFU/GASSH_FU.BIN",
+      "sha256": "6492ef3212efa53f4cd0ee17520d36654c0d4dff0d6becbcaa6ece7985565962"
+    },
+    {
+      "path": "CDROM/SERIFU/GEKO.BIN",
+      "sha256": "e4cf6b017716433f7a410090125e67d6e279101f2305e9787dac279a3f6d9c00"
+    },
+    {
+      "path": "CDROM/SERIFU/GROUP_D.BIN",
+      "sha256": "b70b62af59853f2a1cca0988df8bd3ba6f2040e5f69b177c5964d55a3550fddc"
+    },
+    {
+      "path": "CDROM/SERIFU/G_APPEAR.BIN",
+      "sha256": "817cf84b4a1a6c234c37be8b16d5b60a3b3241ca0c6593aaa247acd2aaffcc68"
+    },
+    {
+      "path": "CDROM/SERIFU/G_BIRTH.BIN",
+      "sha256": "530eb83b18b3ec6866a5eb54f649dc3b55bc8db7b7a2445d9ef6d3cd86da6a25"
+    },
+    {
+      "path": "CDROM/SERIFU/G_INVITE.BIN",
+      "sha256": "4364ae45014575dd4a49151e6d6887e907649128adf0a25b8265ae3f54760ec7"
+    },
+    {
+      "path": "CDROM/SERIFU/HAGEMASI.BIN",
+      "sha256": "7b78d793232512179fa726863f264fdbbff73f6a12e810e5c8e6420e5fb5d738"
+    },
+    {
+      "path": "CDROM/SERIFU/KARADATA.BIN",
+      "sha256": "bccbc744a3e754332223a9b5e615a9e1752051c9a2a38e67531d9aea2afe9c10"
+    },
+    {
+      "path": "CDROM/SERIFU/NYUBU.BIN",
+      "sha256": "bacd3e2aac6cf3d158bb727f5074b7ee4569531dab45ad8b3cc3bea09152b7bd"
+    },
+    {
+      "path": "CDROM/SERIFU/OMIMAI.BIN",
+      "sha256": "2cb7b39dad16c4d1cbef8c6ffc9d80fe26a530c61c04518729b3d902f2b16885"
+    },
+    {
+      "path": "CDROM/SERIFU/P_BIRTH.BIN",
+      "sha256": "5ece7de59aedf266b102202dcb4cc1837c6b0189d251042dbc0bd195565e991e"
+    },
+    {
+      "path": "CDROM/SERIFU/SERIFU.BIN",
+      "sha256": "4e97109c2d44a138bb9241d758885f387b106bef9f203de3086aab1e4a6e6642"
+    },
+    {
+      "path": "CDROM/SERIFU/SHOGATU.BIN",
+      "sha256": "f11d9518ad81ea7f3f7feb50666f6247051e86511bd9278e5f6477f6af08b688"
+    },
+    {
+      "path": "CDROM/SERIFU/SHUGAKU.BIN",
+      "sha256": "e9830cabc347f5f60cca49baa6f845a18df8823005995b8c1e84f1e6a16ad71a"
+    },
+    {
+      "path": "CDROM/SERIFU/TAKU3.BIN",
+      "sha256": "9993981ba17097005d38f14ce2a5a3ea090a88947438f218b7ffe9706eea9955"
+    },
+    {
+      "path": "CDROM/SERIFU/VALEN.BIN",
+      "sha256": "8899b0c62b777501a3b7031fbcad321fef5f2c5be183578f0f478cdcf7eda306"
+    },
+    {
+      "path": "CDROM/SERIFU/WHITE.BIN",
+      "sha256": "c128553f1daf8832b02b50b2b802232e0e3deb0f1e0ca4987d8bdff0374ec236"
+    },
+    {
+      "path": "CDROM/SERIFU/XMAS.BIN",
+      "sha256": "4bf0e4b112ddc5d6fff1320ade46c92186389d44ee0ce4cdf332151d15c6b03b"
+    },
+    {
+      "path": "CDROM/SERIFU/ZAKOSEN.BIN",
+      "sha256": "4b6b8f7037c567c9525e690281bf93ddc0ee50679f68d96282ec563cbac95e19"
+    },
+    {
+      "path": "CDROM/SHIAI/SIAI_B.BIN",
+      "sha256": "88f61d9e00c70528174b2ae41be6fd9b930c4791c9b1c4548da290a84b827ca2"
+    },
+    {
+      "path": "CDROM/SHIAI/SIAI_F.BIN",
+      "sha256": "0bbe3d5e65e6cac34365c799e8ea26b77c233e8f355a17f7d9ce48a09af50f73"
+    },
+    {
+      "path": "CDROM/SHIAI/SIAI_S.BIN",
+      "sha256": "7609ed05d0ce37e8ecdd4e768e6500a017e5142402a4ce18d72ec3f1103abef0"
+    },
+    {
+      "path": "CDROM/SHIAI/SIAI_T.BIN",
+      "sha256": "3d3f3b1b7ce77a9b8ea821571122d60f4f3883d7367dbe4d3fbf5b5b76160ece"
+    },
+    {
+      "path": "CDROM/SHIAI/SIAI_TX.BIN",
+      "sha256": "3bb728d978dead0b65aa4bddc374475a5b014c7233c5e9440e1b1a1f9543b87d"
+    },
+    {
+      "path": "CDROM/SHIAI/SIAI_Y.BIN",
+      "sha256": "9105f5f7a52a7458b75c23d4d171819213f0e29bce2f98c1d5379c463f287970"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_AS.BIN",
+      "sha256": "1c0aada1f569ce16bf657020f9a0a63c651c78bac67b986f39f65a5bde21786a"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_FU.BIN",
+      "sha256": "d37bd4f81051b4ee938967d8254a0810c1ad72b1176bc0b128888a62c3ae7e6d"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_HI.BIN",
+      "sha256": "62f2e316d2e544171fb490a9d45743162f071578d1ee7c7e76c72830392bdb23"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_KA.BIN",
+      "sha256": "79a10e169c413000686b85ae0edd3cd58c550768d17c5d8dfd237bee218746d9"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_KG.BIN",
+      "sha256": "1418f8ee8993c068a7a565f58973ec73659c46d6a0ca4faec85e0e9cf6b78f64"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_KI.BIN",
+      "sha256": "77b4c87c0d79db2b290e9c8f87e192b33d1ffd9d7d65350c03488889e5ac5168"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_KO.BIN",
+      "sha256": "0629dcf3ff391b267416311e1e0317313469b617440fdfe3b8c45ab512cbfca5"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_KY.BIN",
+      "sha256": "50e3af9d73e1aa242631e0fd913afef3c614ee9be4b7f13c4c96724c347ffc60"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_MI.BIN",
+      "sha256": "eba4182e0f56b93a55ae2d4ebb91d86b02f7f279e5e94d8707dd9128e1046b63"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_NI.BIN",
+      "sha256": "fab4ea3e0a9e1953c3f7f4dd2d383473f1fcf8c058266238140dbe59e3b7404e"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_OT.BIN",
+      "sha256": "3c3958c9081c42bee314c5654956f4aea3abc895ae2dab2ab45b4a21044177a5"
+    },
+    {
+      "path": "CDROM/SPEAKTST/TEST_SA.BIN",
+      "sha256": "bc1ea000f6168b9f81886461cd5d7e993158bbc78f5132d95cc6ac0b4d98010f"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2AS.NBN",
+      "sha256": "15cfd44a83fd1ada36fad38979bde49f5829ffb8f6bab6e0fb436d116cc86610"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2COL.NBN",
+      "sha256": "c706895be525eff057143ee1984b1f1f8c81e943962cf844cb970c5b77b67f7c"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2HI.NBN",
+      "sha256": "3e33ae8875213abe330fcdd3faa8d98672decb22fd107ad52536b5fa39da8e68"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2HU.NBN",
+      "sha256": "732e30c7b55595c26694bd83feb494c7ee76fc8493d8a914d2c1e0581140bbc1"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2IJ.NBN",
+      "sha256": "58f3f17819339ceadcad91383deccefcf66a2f33f91f3ee05549a95a1577d7b3"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2KG.NBN",
+      "sha256": "72badff30fb3b77be21492158a693904d456d889fa7c93352ab802dde0cf6108"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2KO.NBN",
+      "sha256": "f45c87b637426ed8296d428b47fcd130eb5f6116f549c7360c338c2ce7042334"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2KS.NBN",
+      "sha256": "93034727a7f9cc53bba744f17df417d33b90c810d5186f1cafeceae7096e8848"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2KT.NBN",
+      "sha256": "530eb04453ba98b8f3f399d2ad502db77258dadb357d5185e12b58b58c12da37"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2KY.NBN",
+      "sha256": "9c0effea4006324bdd66afc6d78798eb1c1e74b2c5ab0506a7ab2015ebc8f8d6"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2MK.NBN",
+      "sha256": "a668b832e99d06865595f5bff6987cf3883623f8bc23c079f370b4366432d410"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2NZ.NBN",
+      "sha256": "4c9acd82e154c160ee53af56946399a128732adf80664368a0582ee39ef6be20"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2SA.NBN",
+      "sha256": "f1b7153e356d562424bbbfe56120e4e3df1fc0a9732f266cfe026b5ef8e11587"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2TA.NBN",
+      "sha256": "e884e710d555b1265bec47bab21a011dfd2c21d22c7c68713f7435ea30fd42d5"
+    },
+    {
+      "path": "CDROM/STAFF2/STAF2YO.NBN",
+      "sha256": "3e718948bc7b8aa4e4707de60f42d74c166dc980dc467b62e366c02def01c1be"
+    },
+    {
+      "path": "CDROM/TACO/3D_0.BS",
+      "sha256": "d9e1e06f61e7d3459455d352616eedb807e70346eb7378da9e084a00fbfc704d"
+    },
+    {
+      "path": "CDROM/TACO/3D_1.BS",
+      "sha256": "fbfffa7aa0d379939101c9f0a9cabaee33b4bb7dd9e2eb4ec7845dfd7c007656"
+    },
+    {
+      "path": "CDROM/TACO/ALBUM1.NBN",
+      "sha256": "46d4988f09a89507b120de6d8756c0e3057d0cbc91c37b8221cada1e4907c92d"
+    },
+    {
+      "path": "CDROM/TACO/BS00.NBN",
+      "sha256": "7df57ffc33ae8ebb92c044f105d379156896a5f4f95ce1a1b90de732a235966d"
+    },
+    {
+      "path": "CDROM/TACO/BS01.NBN",
+      "sha256": "7e2d029b50d9d173cd77595b198db8bf950fa0a356bb4a43e725beefcf4a4192"
+    },
+    {
+      "path": "CDROM/TACO/BS01_MTX.NBN",
+      "sha256": "b04ac54c696c23309575906edf4c8a87e6a4accb5f6fc272d8bcc9ce89dd287a"
+    },
+    {
+      "path": "CDROM/TACO/C_JIKI.NBN",
+      "sha256": "7e7c71641266843bcca50bdc9d085f5b56887e6fa315d38757e0c4455a4c7f37"
+    },
+    {
+      "path": "CDROM/TACO/DRA_MTX.NBN",
+      "sha256": "20c6b3244833391b80e201b1e3f6d3b8c597bb9e235cd4e17814b2a97ab4c200"
+    },
+    {
+      "path": "CDROM/TACO/D_IWA.NBN",
+      "sha256": "8aeabde5ead23a62b455793048a4716eb5179dbbd60d2425f09fc454e262e04f"
+    },
+    {
+      "path": "CDROM/TACO/ENE_COL.NBN",
+      "sha256": "3812a15ad53d3d005c9bceab97cbffda0fbe733d353684c2d08a5e21c34747f3"
+    },
+    {
+      "path": "CDROM/TACO/IWA.NBN",
+      "sha256": "c0f3e03e9a1a0eb176caaa3faf910c2c7addd2c3f919fd710db0643851d976c0"
+    },
+    {
+      "path": "CDROM/TACO/JIMEN.NBN",
+      "sha256": "3beb3590b378d96fa344e799cae9f0c9b282a2104f48bc7818a0f1ad5db8f93e"
+    },
+    {
+      "path": "CDROM/TACO/SYS_COL.NBN",
+      "sha256": "1589c4f7e11481227e926c16da69bba6a7c1307c56f4ec9d49aa693357fd2364"
+    },
+    {
+      "path": "CDROM/TACO/TACOETC.NBN",
+      "sha256": "3fa4d621a4d3f2ea2bb2f28aca9f9db61cc7d87f6a2fab9d5b50780ef300f0ed"
+    },
+    {
+      "path": "CDROM/TACO/TACOJIKI.NBN",
+      "sha256": "42a0c185d3f8530b2133ee13ac8eaae22ec9fe1c3c386240c0cf704c4a2160f6"
+    },
+    {
+      "path": "CDROM/TACO/TACOTEX.NBN",
+      "sha256": "c4c71d9ed20ab398a20aae13ffa606680ba7223d549ac3b03f1b1e4c36beab30"
+    },
+    {
+      "path": "CDROM/TACO/TACOTEXO.NBN",
+      "sha256": "ff7574f40badb1c7dbc1e92398dc635f3fab86d6cacd2d58a2c8d0199a0192df"
+    },
+    {
+      "path": "CDROM/TACO/TAKO_MTX.NBN",
+      "sha256": "65f839fb3a005b2e67cc1aecc01c49a1eea231843c590b13d188b9ffdf66d21a"
+    },
+    {
+      "path": "CDROM/TACO/T_DRA.NBN",
+      "sha256": "02aeb29dd2ae07fb7c42686cbd292f4b2059a749a4ec3261ed7f5efe20ed0a7a"
+    },
+    {
+      "path": "CDROM/TACO/T_EX0.NBN",
+      "sha256": "d38ba169ec2ce9b075e5eaa5ec7c0b77ff17aa21ba49c78a258c9fbbdf44861e"
+    },
+    {
+      "path": "CDROM/TACO/T_HAMA.NBN",
+      "sha256": "986eaaaf85d4d37a99aff6352d8a1eeeed5e8ddd323e80270c673b33634d6112"
+    },
+    {
+      "path": "CDROM/TACO/T_JIKI.NBN",
+      "sha256": "c35d3cfd9a320beee1b59275b2c3bc007b9f5a2a3b7e720b6c6b13dfff05844e"
+    },
+    {
+      "path": "CDROM/TACO/T_NICHE.NBN",
+      "sha256": "3d1408555f1465930c46ba61da03bd123b15e72594c733f7868aec739d268c6b"
+    },
+    {
+      "path": "CDROM/TACO/T_SKIN.NBN",
+      "sha256": "a9d1c7c453582f8c441896d9241580236998375a751705d91ed2db5fad04b98e"
+    },
+    {
+      "path": "CDROM/TACO/T_SORA.NBN",
+      "sha256": "5679576f3e26353d33714e4e5035cf668253a119e41290841f9989c976d8a963"
+    },
+    {
+      "path": "CDROM/TACO/T_SUNA.NBN",
+      "sha256": "be53f168ecf572cf01ca319a5842b19f960cc79ba31ed178fbbd487be8a24622"
+    },
+    {
+      "path": "CDROM/TACO/T_TAKO1.NBN",
+      "sha256": "b85e32f816eb4d89d5571303f7dd8b09434528d87226787d953acbea6f49ddcc"
+    },
+    {
+      "path": "CDROM/TACO/T_TAKO2.NBN",
+      "sha256": "206fd66dcfd592eefea25bc336516dc5c251029c8a86de4791cbfdb5d7ad3b8b"
+    },
+    {
+      "path": "CDROM/TACO/T_UMI.NBN",
+      "sha256": "02f2df4e4be1fc5a91d5adf40b85b0d1f32076428cfb172cbad60f18b49956c0"
+    },
+    {
+      "path": "CDROM/TACO/T_ZA00.NBN",
+      "sha256": "30640dff9679cba33c2bb4f5469634a8ae9c7370eda77c5f6af72963ec3c7356"
+    },
+    {
+      "path": "CDROM/TACO/ZK_0.NBN",
+      "sha256": "465bd4a81a86d5a1d4d9cff84becf456a463497dc72ee38b353e5a318cbe9d58"
+    },
+    {
+      "path": "CDROM/TACO/ZK_1.NBN",
+      "sha256": "8cb3d2e91ff456a267e0a491379ef5b36f180aa50c8c023057b7909c42306a27"
+    },
+    {
+      "path": "CDROM/TACO/ZK_2.NBN",
+      "sha256": "3edbe6472a51b7ede66f126f8151a7c79bd95c28d7d45aa9de36fa26224e5a2e"
+    },
+    {
+      "path": "CDROM/TAIIKU/F_DANCE.BIN",
+      "sha256": "1efb0e04a822b0d852d6077bc431445308dde917e2cba48f616d134ea70d4c15"
+    },
+    {
+      "path": "CDROM/TAIIKU/KARI.BIN",
+      "sha256": "7738a0e4d8cc1e341d6680e0a73d8579d5d6fb23460641fef61785c965341b11"
+    },
+    {
+      "path": "CDROM/TAIIKU/KASETU.BIN",
+      "sha256": "0cbf553e6bd005d5a90a96acfb98273f34276ffa03b1587e188f2fa459c74685"
+    },
+    {
+      "path": "CDROM/TAIIKU/KISA23.BIN",
+      "sha256": "526051cb75c228257abc0f3cd43a3aff810af62cae1bf1392a80667ad81baf5e"
+    },
+    {
+      "path": "CDROM/TAIIKU/KIYOTAI.BIN",
+      "sha256": "18e330787d7b75214cf2b871351d74147b560a328e42debc2477e6c9c089db3f"
+    },
+    {
+      "path": "CDROM/TAIIKU/NININ.BIN",
+      "sha256": "40fddf48009ab7269473e32fa3bbc13dae0ed3bc70cd7e32755a76fe3ea150bd"
+    },
+    {
+      "path": "CDROM/TAIIKU/NINSETU.BIN",
+      "sha256": "6605530dd688f822e5062b27e37aa2a44ea13388f7cd42b39ea327974bf71d82"
+    },
+    {
+      "path": "CDROM/TAIIKU/SPOON.BIN",
+      "sha256": "948b233b662596ddb8f3dc4ad9e30824eeb9ce538d18cf23051f6fc45a76e1d7"
+    },
+    {
+      "path": "CDROM/TAIIKU/SPSETU.BIN",
+      "sha256": "d8d4ef7544b4030f03d86f0b063fbe31eef8da15b0e72fde1a405bd7cd54fc9b"
+    },
+    {
+      "path": "CDROM/TAIIKU/TAI_BG.BIN",
+      "sha256": "344200420cffffedbe5a8a35e2fd6164865fffa2f2e684de402fa02e070af67c"
+    },
+    {
+      "path": "CDROM/TAIIKU/TAI_TX.BIN",
+      "sha256": "c74660398e05fc5647a6201104c51f9151ee4e65ab38a079e53bd5a10d62e638"
+    },
+    {
+      "path": "CDROM/TAIIKU/TAMA.BIN",
+      "sha256": "c4f15cc79bdf5be7dc564292d65ca18a3ecfa2598de63a3a0fa233e3cdab751f"
+    },
+    {
+      "path": "CDROM/TAIIKU/TAOPD.BIN",
+      "sha256": "c75a03538ed936e75b9c257e7bf736b9f68f53a52373236d28080c4ae4687cf4"
+    },
+    {
+      "path": "CDROM/TAIIKU/TASETU.BIN",
+      "sha256": "6d3140086a930d1c87ca848dbca49caac850133e5c9fcb3d6010c311233588fe"
+    },
+    {
+      "path": "CDROM/TAIIKU/T_KIS_EV.BIN",
+      "sha256": "60133b0b9b3b4f6d7f005a62a76ba7b4b65eacb6253666b15b3750232c72a769"
+    },
+    {
+      "path": "CDROM/TAIIKU/T_KIY_EV.BIN",
+      "sha256": "a1dd9b4eaec23182bab829501fbe9934f013f78fafaff8b0676af63c259e993d"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/BUS.BIN",
+      "sha256": "349ea674ffc3012b8f00c4909f21e80d52d69ae25baeac5de0213ef336016484"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/CLUBMAST.BIN",
+      "sha256": "ebf70e8efaf4c25e6d96c4083a1ba959a3782bf7a10018884d679e528b9c8373"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/HANA.BIN",
+      "sha256": "4fd87b0e688060a032e3ff21318bb2e3f1a7e421db7759ff059063115afa5048"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/HANABI.BIN",
+      "sha256": "a0d399de88616291e822064140cf91746043398d59287e4d7ba0bc49244c7ae6"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/HOSI.BIN",
+      "sha256": "ec13bf9095e74e42e97dfa53c777c3645d5b6c01f8c1195f5370132f2e2408d1"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/HOUCHOU.BIN",
+      "sha256": "21d1b5357708750fd9a8628948fad03d6220b8629aee4a6229ca5c6cad5d4087"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/KANRAN.BIN",
+      "sha256": "b4abaa3f7fe9208111cff0e0e0aa74270d16fcab3390bfb2af441bc451bc74d8"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/KARAKASI.BIN",
+      "sha256": "cbb949b02d598d8c573595289ff621f2a702643b3a0e1b4aa7a049249de86d60"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/KIRAKIRA.BIN",
+      "sha256": "1713bc2e9cf782c838ff50fb2ca6a4d651a269640c3c5dc74c8c3074be6c14d4"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/NI_PARA.BIN",
+      "sha256": "63dc6880e321bab505642fbddb3bf02b36b479048816edf47276610041427963"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/OMIKUJI.BIN",
+      "sha256": "01769141cf9c39b4305602fb55e7e10558adab54b15beab0081b771f187be8ac"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/OTAMA.BIN",
+      "sha256": "3196b1f3d20129e2b17cd9a0263f2dc44fe9e3dc2b4d88fbfb9f1cd68fa7d379"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/VIR_IWA.BIN",
+      "sha256": "6e2a3456c312048e28112c934fcd68af1e51c8eba087b1b3f3542675a394ff6a"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/XMASTREE.BIN",
+      "sha256": "6dc82ab584bd003d2e28a71c4b6c772cc3b667d7493dcdab80687c9ca9eecadf"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/XMAS_PRE.BIN",
+      "sha256": "4c78d63851363238b0f0ce12b081c3fce54b5f3adc1335bfe8aff4f86e6b3d9a"
+    },
+    {
+      "path": "CDROM/TARA_OBJ/YUKI.BIN",
+      "sha256": "836061c7971894b8d50ae74c79c4f53e329719c49316aa07b317354a75e5f7ca"
+    },
+    {
+      "path": "SLPM_86.053",
+      "sha256": "edcd142ebd8d53e4707ec2b484a701256b139fbf5423dacd9073e942ed6d5171"
+    }
+  ],
+  "target_sha1": "39454a5b82bcc53f05daba81040e6622a85310e1",
+  "changed_file_reviews": {
+    "CDROM/EXEDIR/BUNKAKEN.EXN": "fortune-name-spacing-2026-11-03.json",
+    "CDROM/EXEDIR/NAME_ENT.EXN": "name-codes-2026-11-03.json",
+    "CDROM/EXEDIR/TT.EXN": "twinbee-sprite-attributes-2026-11-03.json"
+  }
+}

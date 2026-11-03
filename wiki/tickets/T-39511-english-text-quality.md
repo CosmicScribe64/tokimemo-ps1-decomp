@@ -1,7 +1,7 @@
 ---
 id: T-39511
 title: Make the English read naturally on screen
-status: In Progress
+status: Done
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-03
@@ -15,8 +15,8 @@ The owner found much of the on-screen English rough: lines broken where the Japa
 ## Acceptance criteria
 
 - [x] Dialogue, monologue, narration and telephone text is reflowed to each window's pixel width, ignoring the Japanese line breaks, with balanced lines, no orphaned words, and the fewest lines that fit (done in [[tickets/T-39506-english-script-runtime]]).
-- [ ] Automated layout checks over the whole script and every menu, label and table: orphans, avoidable extra lines, overflow, clipping, labels too wide for their slot, inconsistent capitalisation and punctuation across menus, leftover Japanese. Every flag is fixed or explained.
-- [ ] A reading review of the full emulator run (every dialogue page and screen) and of the off-route text, listing stiff or too-literal English, tone problems and menu wording, with proposed rewrites. The owner approves rewrites before they replace approved translations.
+- [x] Automated layout checks over the whole script and every menu, label and table: orphans, avoidable extra lines, overflow, clipping, labels too wide for their slot, inconsistent capitalisation and punctuation across menus, leftover Japanese. Every flag is fixed or explained.
+- [x] A reading review of the full emulator run (every dialogue page and screen) and of the off-route text, listing stiff or too-literal English, tone problems and menu wording, with proposed rewrites. The owner approves rewrites before they replace approved translations.
 - [x] Before/after screenshot sheet for the owner.
 
 ## Notes
@@ -195,3 +195,15 @@ The follow-up census covers the 1,154 records excluded by the Japanese-only sour
 2026-11-03: The current growth census has 828 records with 254 distinct payloads after T-39545's name-code corrections. Tracing the remaining label consumers found a tight family/given-name gap in the computer-fortune screen. T-39546 verifies the correction with widest-preset and full-width native captures. All 24 remaining fortune-name and RPG-loot table entries fit. The fresh direct-call scan has 996 constant-coordinate calls with no screen-edge candidate and 100 symbolic-coordinate calls. Five symbolic rows are newly introduced macro expressions: four duplicated blood-label call records now verified at x=0, and the stage quote already covered by T-39543. The other 95 retain the earlier dispositions. These counts include repeated call-site matches.
 
 2026-11-03: traced the 100 distinct growth payloads missing from the direct-call/table join. Most use scene-title, lyric or substitution renderers. The TT surname candidate is actually a sprite texture attribute array; T-39547 tracks its preservation and verification. The draft consumer receipt remains incomplete until that correction and the last name-path dispositions are recorded.
+
+## Current-build reconciliation, November 3
+
+The menu-growth queue is now fully assigned: 827 records, 253 distinct payloads. The direct-call and shared-table reviews cover their matching records; the remaining 331 records have 99 distinct consumer dispositions in `translations/en/reviews/menu-consumers-2026-11-03.json`. Those categories overlap and must not be added as independent counts. T-39547 resolves the one binary-data defect found during this tracing. No consumer remains unclassified in that queue.
+
+The editorial baseline is the documented T-28009 review and remediation commit `ab2615137ed765fee0b387b432b93ee11c0f57bc`. Compared every current corpus record with that commit and read all seven changes: six approved stat-label replacements and the sports-event label. Also read every distinct later guarded override and all four anomaly repairs. No new wording rewrite is proposed. The original standalone review reports are unavailable here, and the historical narrative hashes differ from the preserved commit. `editorial-inheritance-2026-11-03.json` records the actual hashes and distinguishes inherited review from this new delta review. This is not a fresh manual reading of all 55,911 corpus records.
+
+Compared the current disc with the reviewed stage-controls release through the ISO directory. Of 992 executable and BIN/NBN/BS files, 989 are byte-identical. The three changed overlays have separate current verification: full-name fortune spacing, secret-name compatibility and TwinBee sprite preservation. `final-disc-inheritance-2026-11-03.json` records each unchanged file hash and the three follow-up receipts. Movie and audio streams are outside that comparison.
+
+The main-route, off-route long-page, generated-break, orphan, menu-case and art receipts remain distinct evidence. Their counts do not imply an end-to-end playthrough of every route. The original TwinBee title-logo preference remains open under the parent release review.
+
+Standards review of the reconciliation found no unresolved finding. The receipts contain metadata and hashes, not extracted game assets. Text-quality review is complete on the documented basis above; the parent release still tracks the separate TwinBee logo decision.

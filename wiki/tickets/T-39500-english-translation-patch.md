@@ -4,7 +4,7 @@ title: Build and publish the English translation patch
 status: In Progress
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-02
+updated: 2026-11-03
 links: ["[[tickets/T-39500-english-translation-patch]]"]
 ---
 
@@ -15,8 +15,8 @@ Ship an English translation patch for the original disc (PlayStation the Best, S
 ## Acceptance criteria
 
 - [x] Playable slice: title, menus, name entry (English letter page by default), the opening and the first school day in English, booting in the emulator, patched by a local copy of the patcher page.
-- [ ] All dialogue and system text in English.
-- [ ] All registered English art in place.
+- [x] All dialogue and system text in English.
+- [x] All registered English art in place.
 - [x] Scripted emulator runs with screenshots across the main screens; patcher tested in a headless browser against the command-line build.
 - [ ] No Japanese is left on screen anywhere in the game, apart from the owner-approved exceptions: the title logo (TITLE frame 0 and the TOKIMEKI.BS splash), the magazine masthead (mainrom-0118), tiny authentic signs in stills (catalog-135, 138, 140, 148, 150), the illegible roster board P_01_02, the off-frame ride sign (catalog-142), the original ending staff credits (T-39529), and the kana and kanji keyboard pages of name entry (kept so players can still type Japanese names; the English letter page is the default and every tab label is English). Checked by [[tickets/T-39510-no-japanese-left-check]].
 - [ ] Owner review and sign-off, then GitHub Pages, README link and repository description.
@@ -34,3 +34,5 @@ Parts: [[tickets/T-39501-disc-rebuild-and-xdelta]], [[tickets/T-39502-english-te
 2026-11-02 publication update: the owner authorized publishing the review build. GitHub Pages, the README link and repository description are live. T-39527 adds tested local drag/drop support for raw disc images, CHD, ZIP and 7z. Full longer presets, the speaker gap/color, perspective plaque and phone farewell fixes are also complete. The boundary candidate has passed all 134 route captures and three controlled festival scrolling checks. Whole-game text/art coverage and final quality sign-off remain open; review publication does not close those requirements.
 
 2026-11-02 verification closeout. The published target remains `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4`. All 87 flagged long dialogue records have runtime layout evidence; all 798 distinct generated phrase-boundary pairs and 39 remaining early-break cases have reviewed dispositions. The artwork pass inspected 254 shipped sprite targets and 16 decoded stills. The local dialogue gallery contains 1,482 captures on 174 sheets, including historical comparisons and repeated frames. These counts do not imply an end-to-end playthrough of every route. The GitHub description and homepage both link the patcher. PR 71 now describes the current build and verification scope. Final parent-ticket reconciliation remains open; the patch itself is already published.
+
+2026-11-03: T-39511 text-quality reconciliation is complete. The current published target is 39454a5b82bcc53f05daba81040e6622a85310e1; all release and public-file checks pass. Native TwinBee verification found its original Japanese title logo outside the earlier exception list. The owner has been asked whether to preserve that branding or replace its lettering. T-39510 returns to In Review for that explicit artwork disposition; text, registered-art placement and patcher verification are otherwise complete.

@@ -1,10 +1,10 @@
 ---
 id: T-39510
 title: Prove no Japanese is left in the English game
-status: Done
+status: In Review
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-02
+updated: 2026-11-03
 links: ["[[tickets/T-39500-english-translation-patch]]"]
 ---
 
@@ -94,3 +94,5 @@ The published-build script audit covers 105 containers, 31,471 strings and 31,33
 `translations/en/reviews/retained-art-current-disc-2026-11-02.json` revalidates all 24 retained menu views and all 75 retained background, portrait and SD containers against the current disc. The banner and raw opening-movie extent also remain byte-identical to their earlier verified build. Together with the prototype-sheet proof, the 254-sprite/16-still review and final-disc placement checks, this closes the listed art criterion. Original lettering retained by explicit decision remains an exception.
 
 Standards review covered the art readback verifier and build integration; failures stop the build, rewritten frames are checked through their actual executable pointers, and unrelated pixels are checked against originals. All 25 art tests pass in Docker. The first invocation omitted the tools import path and failed before running tests; the corrected invocation passes. This closeout changes only evidence and documentation, includes no game data and makes no new default-build matching claim. The prior source-audit reviews remain recorded above. Ticket and board move to Done.
+
+2026-11-03: reopened to In Review after native TwinBee title inspection found its Japanese logo outside the parent ticket exception list. The text and registered-art audits still pass, but they do not resolve this additional retained logo. The owner preference is pending; do not treat prior completion as approval for it.

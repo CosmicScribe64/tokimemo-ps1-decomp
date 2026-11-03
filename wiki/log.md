@@ -4395,3 +4395,15 @@ Inspected four first-boss captures and a native preview of all three corrected s
 ## [2026-11-03] build | Publish TwinBee sprite correction
 
 Closed [[tickets/T-39547-twinbee-sprite-attributes]] after standards review and native sprite checks. Pages run 41609583646 succeeded, and all 37 public files match target 39454a5b82bcc53f05daba81040e6622a85310e1. The first readback saw the older manifest during deployment; the completed deployment passed. Updated [[english-build]] and [[kanban]]. The refreshed menu census has 827 growth records with 253 distinct payloads; sprite attributes are excluded. The original TwinBee logo preference remains pending.
+
+## [2026-11-03] query | Reconcile final menu and editorial evidence
+
+[[tickets/T-39511-english-text-quality]] now has dispositions for all 827 current menu-growth records and a documented editorial baseline plus review of every later corpus change and guarded override. Corrected the provenance caveat in [[tickets/T-28009-version-translation-overlays]]: historical narrative hashes differ from the preserved remediation commit, and the missing original reports were not independently reread. Compared 992 current disc files with the reviewed stage-controls release; 989 are identical, and the three changed overlays have current verification receipts. Confirmed the public README and repository description already explain the project and link the patcher. Updated PR 71 to describe the current published build and verification scope. The TwinBee logo preference remains pending.
+
+## [2026-11-03] decision | Close text-quality review with recorded scope
+
+Closed [[tickets/T-39511-english-text-quality]] after reconciling the current menu flags, documented historical editorial baseline, later wording changes and current-disc inheritance. Standards review found no unresolved finding in the metadata receipts. The initial scratch report script had an unmatched brace; corrected it and verified both generated receipts. [[tickets/T-39500-english-translation-patch]] still tracks the separate TwinBee title-logo decision.
+
+## [2026-11-03] ticket | Keep the retained minigame logo decision open
+
+Reopened [[tickets/T-39510-no-japanese-left-check]] to In Review because the native TwinBee title logo is outside the recorded exceptions. [[tickets/T-39500-english-translation-patch]] now records completed text and registered-art placement checks, while the logo preference and final sign-off remain open. No new approval is inferred from the earlier completed ticket.

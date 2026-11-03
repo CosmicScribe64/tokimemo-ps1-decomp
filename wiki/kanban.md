@@ -53,7 +53,6 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-39511-english-text-quality|T-39511 Make the English read naturally on screen]]
 
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
 
@@ -92,6 +91,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
+
 
 
 
@@ -121,6 +122,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39511-english-text-quality|T-39511 Make the English read naturally on screen]]
 
 - [ ] [[tickets/T-39547-twinbee-sprite-attributes|T-39547 Preserve TwinBee sprite texture attributes]]
 
@@ -156,7 +159,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-39501-disc-rebuild-and-xdelta|T-39501 Rebuild the disc image with replaced files and make the xdelta patch]]
 
-- [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
 
 - [ ] [[tickets/T-39509-opening-movie-pills|T-39509 Replace the heroine name pills in the opening movie]]
 
