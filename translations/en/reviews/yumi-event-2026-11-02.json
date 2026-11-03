@@ -1,0 +1,26 @@
+{
+  "ticket": "T-39538",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "run": "build/emu/yumi-event-corrected-lines",
+  "scope": "Three corrected EVENT_SA replies through mode 0x5E date_scene_speak with real script loading and controlled table/line selection. Existing date backdrop and portrait remain; natural event art staging is not covered.",
+  "records": [
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-67:g0005:l0002",
+      "frame": 2400,
+      "capture_sha256": "7e9fbe0fc987cfcbf35dd79fd1996a991d1d946f2ece6b7ccc4ba200399ec713",
+      "visual_status": "verified: corrected name, complete quote, fitting rows and no overlap/clipping"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-68:g0000:l0004",
+      "frame": 3000,
+      "capture_sha256": "f49b1199e9b09774b7c85763f5c7d250c22d3b909e68e6b9dc68719fd01fd749",
+      "visual_status": "verified: corrected name, complete quote, fitting rows and no overlap/clipping"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-73:g0005:l0002",
+      "frame": 3900,
+      "capture_sha256": "27612e51c680001e18d3acd8c895a6b770659bba771558d60deca560232bfda7",
+      "visual_status": "verified: corrected name, complete quote, fitting rows and no overlap/clipping"
+    }
+  ]
+}

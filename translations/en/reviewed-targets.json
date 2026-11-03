@@ -1,0 +1,275 @@
+{
+  "talk:CDROM/BUNKA/SA_S6.BIN:main:g0038:l0000": {
+    "source_sha256": "66081f985e8e605a408ada6c129ca48b490929f213022a0cfe2365fa50c30cdc",
+    "previous_target_sha256": "fac77688a29ad3b3eaa15648d1345fd8c32b91566b821387f33bb906ea2fd6cb",
+    "target_text": "Yumi's[[T001:row]]seen this before.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/BUNKA/SA_S6.BIN:main:g0039:l0000": {
+    "source_sha256": "784e8dcc65ca9095e24c606e2b11ba0f33333a737c0f8e868784da0cd75446c4",
+    "previous_target_sha256": "b89132a061ad6c3dd88b4a6025bd99f0b8450e1a644276c946574ff871fb95e2",
+    "target_text": "Yumi's seen that[[T001:row]]on TV.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/BUNKA/SA_S6S.BIN:main:g0006:l0002": {
+    "source_sha256": "42054739538582fa7b3e85eb0606e6f71fceab58170a8e85e3eed31559c26ce2",
+    "previous_target_sha256": "38725ea4a081e5266ed77635c432b90fcc7295a3ec81b8dc33afbb4d36b13261",
+    "target_text": "Yumi's looking around[[T001:row]]with her older brother...",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/BUNKA/SA_S6W.BIN:main:g0029:l0000": {
+    "source_sha256": "66081f985e8e605a408ada6c129ca48b490929f213022a0cfe2365fa50c30cdc",
+    "previous_target_sha256": "fac77688a29ad3b3eaa15648d1345fd8c32b91566b821387f33bb906ea2fd6cb",
+    "target_text": "Yumi's[[T001:row]]seen this before.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/BUNKA/SA_S6W.BIN:main:g0030:l0000": {
+    "source_sha256": "784e8dcc65ca9095e24c606e2b11ba0f33333a737c0f8e868784da0cd75446c4",
+    "previous_target_sha256": "b89132a061ad6c3dd88b4a6025bd99f0b8450e1a644276c946574ff871fb95e2",
+    "target_text": "Yumi's seen that[[T001:row]]on TV.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/BUNKA/SA_S6W.BIN:main:g0057:l0004": {
+    "source_sha256": "9b39978bc7f24ef47ac21b8f451ce5c6d4c18d20da6120a1cd39a8a23025c9f1",
+    "previous_target_sha256": "0ec8c6d2145427c57d0cbba4e4b446c32e4eab09c0e8e641438ebb4ce1dee698",
+    "target_text": "Being with my older brother[[T001:row]]is so embarrassing,[[T002:row]]Yumi's going home.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-02:g0005:l0000": {
+    "source_sha256": "3c6c2c26f14557afeff286464298f18895593e5383e23e1cb3d41fcaffe9031a",
+    "previous_target_sha256": "1105564bd7b2ddbd567dce0d48df2730289f6c342fe13edb6332fcf7bd851c60",
+    "target_text": "When I do,[[T001:row]]you be the prince![[T002:reply_variant]]Yumi's[[T003:row]]not weird![[T004:reply_variant]]Yeah![[T005:row]]I'll try hard.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-02:g0008:l0000": {
+    "source_sha256": "747c3540a693dc771dd9d4469a2716215aaf7b2d68448ce649f76791bdd3d1d8",
+    "previous_target_sha256": "2372badd452a88448f5ed8e69fadfbf76eec7c8abb5be078b9873626e5bed608",
+    "target_text": "Huh, really?[[T001:row]]I didn't know.[[T002:row]]You're so smart![[T003:reply_variant]]Fine, Yumi's[[T004:row]]just dumb! Hmph![[T005:reply_variant]]Dolphins are so cute,[[T006:row]]I forgive[[T007:row]]them!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-03:g0002:l0000": {
+    "source_sha256": "da5eacae6276466ab94b1e581909078e2141d41d4667704ffe4e13635a33b01a",
+    "previous_target_sha256": "97867dd96a57ea5d6aff12ea450b905b9b010d7a849bc7fc7eb97f6a0a022245",
+    "target_text": "Yeah.[[T001:row]]I looove[[T002:row]]rare animals![[T003:reply_variant]]Fine, Yumi's[[T004:row]]just a kid! Hmph![[T005:reply_variant]]Then let's go see[[T006:row]]all kinds of animals!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-04:g0002:l0000": {
+    "source_sha256": "d942da1085ffc8a8b2a56d6623094386dbab16d9407bb4f99199baad37be6b4b",
+    "previous_target_sha256": "798a07d58532ab607c62dd342b20966154c5f4f883d46714b274eb168934f480",
+    "target_text": "Yeah.[[T001:row]]It's calming.[[T002:reply_variant]]I hate[[T003:row]]veggies![[T004:reply_variant]]But Yumi's[[T005:row]]prettier, right?",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-07:g0002:l0000": {
+    "source_sha256": "6df0c60e5315b68db6569ddafe6508c1d00fe98af8b46c422806d353b084a889",
+    "previous_target_sha256": "bc1aa90a08dae4c74cd195069780c6f0b093269b8f771553afa08747949e3135",
+    "target_text": "Wow, really![[T001:row]]Studying in a library![[T002:row]]Amazing![[T003:reply_variant]]Yumi's bad at[[T004:row]]staying quiet.[[T005:row]]This is tough.[[T006:reply_variant]]Yumi's gonna go[[T007:row]]read some manga!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0002:l0000": {
+    "source_sha256": "6e6a9f09df24a08a3afabb2fa7de388a5347c1b1e3040e10d6e9ccc72c5df7b7",
+    "previous_target_sha256": "b13fe9f723d5229ab53ba38d51812d59c14f8d454947efcc2c980758f3044cb7",
+    "target_text": "Yumi's a girl, but she[[T001:row]]loves the arcade!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0003:l0000": {
+    "source_sha256": "b0e57610e29afbd1392aba1d3266618710615907416dc58bb98ec2e61809c80f",
+    "previous_target_sha256": "43cf925ef8ded24169321f96d805322ec38d6d3718594e3e6bfa7e0fd8276813",
+    "target_text": "Yumi's so happy[[T001:row]]you said that![[T002:reply_variant]]Nuh-uh![[T003:row]]Yumi's a good girl![[T004:reply_variant]]Yeah.[[T005:row]]Yumi's got lots of[[T006:row]]friends she met[[T007:row]]at the arcade!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0005:l0000": {
+    "source_sha256": "0df2eda5c37cfad3f0d41eb4bfc08bbb4fde39aa3ac0d14b7be94a9e55495669",
+    "previous_target_sha256": "145469b0423fde594f3f4da91e1bbeea96f0bd7f3e3fad5b177a75a5070617e2",
+    "target_text": "Yeah, a hardcore[[T001:row]]side-scrolling shooter![[T002:reply_variant]]Yumi's bad at puzzles[[T003:row]]and quizzes, so she[[T004:row]]doesn't play them.[[T005:reply_variant]]Then I'll give[[T006:row]]it a try!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0009:l0000": {
+    "source_sha256": "1d40491ec5c50818786e2cb63caf6eeb83a99b1b1df0a58c8f602adfceee0b69",
+    "previous_target_sha256": "8fe1e4db2f31edc354a5f163dc8d2c293768e063db59e37fe0e97091a7bcf746",
+    "target_text": "Yeah.[[T001:row]]Yumi's better[[T002:row]]at that one![[T003:reply_variant]]I don't know that.[[T004:reply_variant]]Slots could[[T005:row]]be fun too.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-09:g0005:l0000": {
+    "source_sha256": "62812ff58cef44b53696d797c3394de3f6a70aa71ab95b4c5b620ffff05ffc43",
+    "previous_target_sha256": "a5a0263a355e55484ff94596adf989353f695578edccf4b4b944033e08fa8c55",
+    "target_text": "Yumi's gonna bowl[[T001:row]]strike after strike![[T002:reply_variant]]And what about[[T003:row]]you, huh?[[T004:reply_variant]]Huh?[[T005:row]]What's that?[[T006:row]]I don't know!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-10:g0002:l0000": {
+    "source_sha256": "d4ace33f523fd6c87703e4820f0334ac7e75165065c1d5cce37b6a99e46c187a",
+    "previous_target_sha256": "f84695d59495b1f3b64a5a196c4b271b7c09477325a4666049784c8c685adb18",
+    "target_text": "Hehe.[[T001:row]]Yumi's great[[T002:row]]at karaoke![[T003:reply_variant]]Huh?[[T004:row]]Is Yumi that bad?[[T005:reply_variant]]But I'm good at this...",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0020:l0000": {
+    "source_sha256": "f53830662ec0d709956463b97a1e67e966db59dc704ef7e45fd9d0206b0814d0",
+    "previous_target_sha256": "0f148959c9060df73630b0c1e0546c3c5beba4e9e7bf9f78be5d8901eeb34526",
+    "target_text": "Hehe.[[T001:row]]Yumi's happy![[T002:reply_variant]]Yumi's bored![[T003:reply_variant]]Oh yeah,[[T004:row]]Yumi saw a cake shop!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0028:l0000": {
+    "source_sha256": "8ee0f33b29bee0bd315cd39f5768ffb8b0098d60e62af40989ffdcd7fccd16b2",
+    "previous_target_sha256": "37507ea8c7240365e52f53d88497f63c4d5a66d011d51b2d4923866624b79d16",
+    "target_text": "Hehe.[[T001:row]]Even if it's flattery,[[T002:row]]Yumi's happy![[T003:reply_variant]]If it's fun,[[T004:row]]waiting's no big[[T005:row]]deal for me![[T006:reply_variant]]I think so too!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0036:l0000": {
+    "source_sha256": "f53830662ec0d709956463b97a1e67e966db59dc704ef7e45fd9d0206b0814d0",
+    "previous_target_sha256": "0f148959c9060df73630b0c1e0546c3c5beba4e9e7bf9f78be5d8901eeb34526",
+    "target_text": "Hehe.[[T001:row]]Yumi's happy![[T002:reply_variant]]Yumi's bored![[T003:reply_variant]]Oh yeah,[[T004:row]]Yumi saw a cake shop!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0044:l0000": {
+    "source_sha256": "8ee0f33b29bee0bd315cd39f5768ffb8b0098d60e62af40989ffdcd7fccd16b2",
+    "previous_target_sha256": "37507ea8c7240365e52f53d88497f63c4d5a66d011d51b2d4923866624b79d16",
+    "target_text": "Hehe.[[T001:row]]Even if it's flattery,[[T002:row]]Yumi's happy![[T003:reply_variant]]If it's fun,[[T004:row]]waiting's no big[[T005:row]]deal for me![[T006:reply_variant]]I think so too!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0047:l0000": {
+    "source_sha256": "cf1d8b53a4bd692de5e486f2f6548ca44ab400a38737cf5e8be233b135ccbab3",
+    "previous_target_sha256": "ecca0e2f289759475dac36354285e1179984994f3061886c0e0cc1e6a4022264",
+    "target_text": "Yumi was so surprised.[[T001:row]]My eyes went wide![[T002:reply_variant]]Fine,[[T003:row]]Yumi's just[[T004:row]]a kid! Hmph![[T005:reply_variant]]That's the[[T006:row]]Virtual Ship for you!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0052:l0000": {
+    "source_sha256": "f53830662ec0d709956463b97a1e67e966db59dc704ef7e45fd9d0206b0814d0",
+    "previous_target_sha256": "0f148959c9060df73630b0c1e0546c3c5beba4e9e7bf9f78be5d8901eeb34526",
+    "target_text": "Hehe.[[T001:row]]Yumi's happy![[T002:reply_variant]]Yumi's bored![[T003:reply_variant]]Oh yeah,[[T004:row]]Yumi saw a cake shop!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-12:g0003:l0000": {
+    "source_sha256": "45e781f7163dada2e48d215b5616c5f8ad8f9b5f34de9d75e2f1f2424439bb12",
+    "previous_target_sha256": "bb6fe9147d8490da715cdcff08837c5a6d6483080af610ca443ee58177b451a6",
+    "target_text": "Yeah, thanks![[T001:row]]Okay, time to look hard![[T002:reply_variant]]Whaaa? That's so mean![[T003:row]]Yumi's gonna cry![[T004:reply_variant]]Nuh-uh.[[T005:row]]It's okay.[[T006:row]]Yumi kinda liked[[T007:row]]boys' clothes too.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-12:g0008:l0000": {
+    "source_sha256": "c74833d39c04e4c058be06c6547f649b32c357b04aa34dc6b9306c8d634c5f84",
+    "previous_target_sha256": "6a671c101097ad24011f17dde87c4a43f183e3ab2a172bc07e91f121e33f8fbc",
+    "target_text": "Really?[[T001:row]]Yumi's happy![[T002:reply_variant]]Meanie.[[T003:row]]You could've lied[[T004:row]]and said it suits me.[[T005:reply_variant]]Oh, you're right![[T006:row]]Now I can't decide.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-16:g0004:l0000": {
+    "source_sha256": "d978cabdcd39e59bd5bf2fc5e6e3e0da78e1821e8eea844756cb2f7f5b25229e",
+    "previous_target_sha256": "34167d0316ca3b1fd7993f3854b160c9475670278f99cede2ff2a0feb899ce60",
+    "target_text": "Yumi's[[T001:row]]a good swimmer!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-17:g0005:l0000": {
+    "source_sha256": "4c8bc164239dd7b100d2bc5a8cb2771a514f4fa6db628ddd17544539e37304fa",
+    "previous_target_sha256": "12d6bea8f3ae9574b8130c5672f96d0a642d0a37d794385f649ce06985e1e7fe",
+    "target_text": "Whaaa, really?[[T001:row]]Yumi's so happy![[T002:reply_variant]]Hmph![[T003:row]]I'm not[[T004:row]]that chubby![[T005:reply_variant]]Yumi swims all[[T006:row]]smooth and flowy, right?",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-19:g0001:l0000": {
+    "source_sha256": "dff7f5490b577ab3977385c9479375c7b779e9e85191d166b4e5507ba9a24671",
+    "previous_target_sha256": "845d7bca6a7232a84a73ad7d0084c81736d2ed65aaf382820eb1d956cbc46f6e",
+    "target_text": "On the ice,[[T001:row]]Yumi's invincible!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-19:g0002:l0000": {
+    "source_sha256": "0a3bb373f62eba41878857639cb4421bed5e6c6d32788b7098c8757c071fa2ff",
+    "previous_target_sha256": "b5a2aa857dfec5e6e09f784d6b667948d185eb1c518688755cadaca18de0ec28",
+    "target_text": "Heh heh.[[T001:row]]On ice, nobody beats[[T002:row]]Yumi-sama![[T003:reply_variant]]No way![[T004:row]]Yumi's way more invincible![[T005:reply_variant]]my lessons[[T006:row]]are kinda pricey.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-19:g0005:l0000": {
+    "source_sha256": "03d5633335af31ee642b732dc2300c14c0a60740b041af11844297b6628d8612",
+    "previous_target_sha256": "0c39b2824b04d433a6a06191bc52bd80c1fd4f53419c94397d475547577d9647",
+    "target_text": "Yumi's so happy![[T001:reply_variant]]Yumi won't fall![[T002:reply_variant]]I'll be fine.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-20:g0005:l0000": {
+    "source_sha256": "50083b57384c2040f5b458b0307a8050175fcc432df384b6cff9d83bdd1c20ad",
+    "previous_target_sha256": "2e970d90324b914fb0ffceb3e0af797f1590927b9491a2df0b46a8af4469fb71",
+    "target_text": "Hehe.[[T001:row]]Yumi's blushing![[T002:reply_variant]]Whaaa?[[T003:row]]That's mean![[T004:reply_variant]]Hmm,[[T005:row]]was it not[[T006:row]]grown-up enough?",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-67:g0005:l0002": {
+    "source_sha256": "737b76a709be8a469fe0fabed355411d712f2c84778b9cf60299b6f8b482d8e2",
+    "previous_target_sha256": "0eb97fcc83bb8b1046181f98595ce520c23a79304040c79576dd4520c34306dd",
+    "target_text": "You can eat other girls'[[T001:row]]lunches, but you can't[[T002:row]]eat Yumi's?",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-68:g0000:l0004": {
+    "source_sha256": "d29bb0fcace86e29c6b9e6dd52da33bb0940383029289512b5c4437c19641921",
+    "previous_target_sha256": "9dfb12b07a5d2cb6b87018dbb8b84fc4505978c49a8eeb0f7b48ed00b373d1d2",
+    "target_text": "It matches[[T001:row]]Yumi's!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-73:g0005:l0002": {
+    "source_sha256": "f574c26fe354f53a6b3dfa36a5e4f71f45984a54eb775fec78f6154c4dab7164",
+    "previous_target_sha256": "fa9b7c27cc98d217609bbef076292e06c82687926ae5ae4c053958319251cf59",
+    "target_text": "Yumi's always[[T001:row]]been good at this.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0016:l0000": {
+    "source_sha256": "12fd2ceaae31091307501a31fb9fc4407bbc1aa95407534cd8434cf17a26ab46",
+    "previous_target_sha256": "521b7bd9b97923317a264c5bc2e6ac30ad3e5dc1daf510a9d9c8c638a4f3c374",
+    "target_text": "Sorry![[T001:row]]Yumi's late.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0032:l0000": {
+    "source_sha256": "127c37eca4deb4b93caa9f39db28b69f44e55a04f424af50e5b323b2d8f620c0",
+    "previous_target_sha256": "d568963faea2c6fb7143948c211b3eb50588aa54cbed3faeafd98dea32847dea",
+    "target_text": "Wowww![[T001:row]]Same as Yumi's!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0032:l0002": {
+    "source_sha256": "828a96776960809447974474066b13f026786afb9e043e9b88d4a94d3d5498a3",
+    "previous_target_sha256": "a926262ac65aefb3c5a3d16491591871a3c1777227724131fb67d11e1deb4cf0",
+    "target_text": "Yumi's always[[T001:row]]been lucky[[T002:row]]with draws.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0033:l0002": {
+    "source_sha256": "57878e68388f45391d3d713f2de72764ad7c895c1bedcbb5b8468e09594bcfd8",
+    "previous_target_sha256": "bcf5b3d2634430c3321317f2a2081e6b715424d91e14e06b53e4d0f54b5dac66",
+    "target_text": "Yumi's is[[T001:row]]Best!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0034:l0004": {
+    "source_sha256": "eef84e0088dbf3ed38c973aee1ac031a7083754aebd92784f04d49b6160d032c",
+    "previous_target_sha256": "1ee8f82f0c5742f3395aa1e2441d1fab046e46fb1b5efcae0f415512c65aa7d1",
+    "target_text": "But Yumi's[[T001:row]]never drawn one[[T002:row]]before.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  }
+}

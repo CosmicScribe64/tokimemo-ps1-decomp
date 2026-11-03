@@ -1,0 +1,560 @@
+{
+  "ticket": "T-39538",
+  "date": "2026-11-02",
+  "build": "build/yumi-reviewed-release",
+  "track1_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "scope": "31 changed DATE_SA reply variants across 25 corrected records. Controlled table selection in the actual date renderer; natural route traversal and other scene renderers are not covered.",
+  "checks": [
+    "actual group and table triad matched the requested record",
+    "post-render line increment checked against talk_run in src/main/scene_library.c",
+    "text fully revealed, with a further 120 frames for closing quote",
+    "four native-resolution contact sheets visually inspected"
+  ],
+  "records": [
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-02:g0005:l0000",
+      "section": "section-02",
+      "group": 5,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149186608,
+        2149186688,
+        2149187176
+      ],
+      "completed_frame": 420,
+      "settled_frame": 540,
+      "total_glyphs": 40,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "fbcc997a98fb3be5083cd98d976fcfdc38d9201d60f27c51cc077af926d7b22c"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-02:g0008:l0000",
+      "section": "section-02",
+      "group": 8,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149186608,
+        2149186688,
+        2149187176
+      ],
+      "completed_frame": 1080,
+      "settled_frame": 1200,
+      "total_glyphs": 52,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "5d97be3689e10a0a54d992595b2aa74baefdd223b399ef743ddba183a496467a"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-03:g0002:l0000",
+      "section": "section-03",
+      "group": 2,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149160392,
+        2149160464,
+        2149160920
+      ],
+      "completed_frame": 1680,
+      "settled_frame": 1800,
+      "total_glyphs": 53,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "2b2c5ee75b61667b6e5bbc726759f603950e6916766bcf3e84083234cd84af1d"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-04:g0002:l0000",
+      "section": "section-04",
+      "group": 2,
+      "line": 0,
+      "variant": 2,
+      "tables": [
+        2149179004,
+        2149179052,
+        2149179356
+      ],
+      "completed_frame": 2280,
+      "settled_frame": 2400,
+      "total_glyphs": 50,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "3e02e4fb93f1aa53e5ba5f8a200ece3ea5f141957495c20a0f7fc213ed69b54c"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-07:g0002:l0000",
+      "section": "section-07",
+      "group": 2,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149187836,
+        2149187892,
+        2149188256
+      ],
+      "completed_frame": 2940,
+      "settled_frame": 3060,
+      "total_glyphs": 65,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "a5035c81ff5e22a2fdbe0475cfbbeffd55b717d8e105d119c0444a919c9f22f0"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-07:g0002:l0000",
+      "section": "section-07",
+      "group": 2,
+      "line": 0,
+      "variant": 2,
+      "tables": [
+        2149187836,
+        2149187892,
+        2149188256
+      ],
+      "completed_frame": 3480,
+      "settled_frame": 3600,
+      "total_glyphs": 55,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "728e1d954e116b97efbb92ff71ffaaac7c409c37f8c1bf85044e37e0f54a0af4"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0002:l0000",
+      "section": "section-08",
+      "group": 2,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149166004,
+        2149166084,
+        2149166544
+      ],
+      "completed_frame": 4140,
+      "settled_frame": 4260,
+      "total_glyphs": 62,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "a3ac2de0abc7645905063d54e270d20f8040116de5c70cec1fdbb058d7437550"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0003:l0000",
+      "section": "section-08",
+      "group": 3,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149166004,
+        2149166084,
+        2149166544
+      ],
+      "completed_frame": 4680,
+      "settled_frame": 4800,
+      "total_glyphs": 53,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "c818e44f310fa38f29d0f10dab2d6da29d6d5b9b34790cdda9f7556820105dc9"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0003:l0000",
+      "section": "section-08",
+      "group": 3,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149166004,
+        2149166084,
+        2149166544
+      ],
+      "completed_frame": 5280,
+      "settled_frame": 5400,
+      "total_glyphs": 49,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "07a4dd8616aadc653fcf87b827a305e54f3127f381caa7ddf2171c2f5d9898cf"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0003:l0000",
+      "section": "section-08",
+      "group": 3,
+      "line": 0,
+      "variant": 2,
+      "tables": [
+        2149166004,
+        2149166084,
+        2149166544
+      ],
+      "completed_frame": 6000,
+      "settled_frame": 6120,
+      "total_glyphs": 76,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "2330b72a2d837fab62e6e28d80daf6cb7e0a05e4edfe8fe89011401a3dc48e51"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0005:l0000",
+      "section": "section-08",
+      "group": 5,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149166004,
+        2149166084,
+        2149166544
+      ],
+      "completed_frame": 6600,
+      "settled_frame": 6720,
+      "total_glyphs": 82,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "10ce660a36be2ff102a7a4a319b9f9bff9afe96c41ef5e5a5de0d477b94a5075"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0009:l0000",
+      "section": "section-08",
+      "group": 9,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149166004,
+        2149166084,
+        2149166544
+      ],
+      "completed_frame": 7080,
+      "settled_frame": 7200,
+      "total_glyphs": 54,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "333d92a07f6c629e9e90f5a23bdd1a6217796d523181457bd76904e28688c430"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-09:g0005:l0000",
+      "section": "section-09",
+      "group": 5,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149158300,
+        2149158356,
+        2149158692
+      ],
+      "completed_frame": 7740,
+      "settled_frame": 7860,
+      "total_glyphs": 60,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "2cd3f5ea60079a1aa440e0e8ba5aedbe1e304e61942fdd7c65633c48a04c44e9"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-10:g0002:l0000",
+      "section": "section-10",
+      "group": 2,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149169632,
+        2149169680,
+        2149169984
+      ],
+      "completed_frame": 8280,
+      "settled_frame": 8400,
+      "total_glyphs": 52,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "b641aa9f8dc6d84fdf29a4d04d2a49366f7512ffccac803e0ba6056960eaa0af"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0020:l0000",
+      "section": "section-11",
+      "group": 20,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149194092,
+        2149194540,
+        2149197396
+      ],
+      "completed_frame": 8820,
+      "settled_frame": 8940,
+      "total_glyphs": 41,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "8bb6f57035cde33095f439d0a749722c9bedc667754485eea37658171c74173c"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0020:l0000",
+      "section": "section-11",
+      "group": 20,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149194092,
+        2149194540,
+        2149197396
+      ],
+      "completed_frame": 9420,
+      "settled_frame": 9540,
+      "total_glyphs": 36,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "b370c685633d9db27821678c9d400403175fe01dc075eeedddfe62fed58966f6"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0028:l0000",
+      "section": "section-11",
+      "group": 28,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149194092,
+        2149194540,
+        2149197396
+      ],
+      "completed_frame": 10140,
+      "settled_frame": 10260,
+      "total_glyphs": 64,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "6d135061b01cdbedeb1260b055b00943baeca36a5d49e7b9814de152769ac011"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0036:l0000",
+      "section": "section-11",
+      "group": 36,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149194092,
+        2149194540,
+        2149197396
+      ],
+      "completed_frame": 10620,
+      "settled_frame": 10740,
+      "total_glyphs": 41,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "bbf21c71ed6a055ae70dee86a674dd1af52e0acc3a2751d9ad5a8c30c6e9e388"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0036:l0000",
+      "section": "section-11",
+      "group": 36,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149194092,
+        2149194540,
+        2149197396
+      ],
+      "completed_frame": 11220,
+      "settled_frame": 11340,
+      "total_glyphs": 36,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "8b712c41ccd0cbe689a964b08c94a1cec7f0520d040bc2f8c1a6cdc8b5d3771e"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0044:l0000",
+      "section": "section-11",
+      "group": 44,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149194092,
+        2149194540,
+        2149197396
+      ],
+      "completed_frame": 11940,
+      "settled_frame": 12060,
+      "total_glyphs": 64,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "3bee585f5379f8b60a9bfb9f2bef80f2760dac43ab26709a8b06725c4ec46fdf"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0047:l0000",
+      "section": "section-11",
+      "group": 47,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149194092,
+        2149194540,
+        2149197396
+      ],
+      "completed_frame": 12480,
+      "settled_frame": 12600,
+      "total_glyphs": 53,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "a103a1e573f9426167921a5f45d8ef6270e7f90acdce74dfec56084d57a65969"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0052:l0000",
+      "section": "section-11",
+      "group": 52,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149194092,
+        2149194540,
+        2149197396
+      ],
+      "completed_frame": 13020,
+      "settled_frame": 13140,
+      "total_glyphs": 41,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "1b105e263623adae948681ded311bec791463c2e46e6316c2ca78d098402d261"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0052:l0000",
+      "section": "section-11",
+      "group": 52,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149194092,
+        2149194540,
+        2149197396
+      ],
+      "completed_frame": 13620,
+      "settled_frame": 13740,
+      "total_glyphs": 36,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "5b19cdc81f120af78435ef3378ebe97fe2fa202e9bfb18eb833064fc4b544c97"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-12:g0003:l0000",
+      "section": "section-12",
+      "group": 3,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149181116,
+        2149181236,
+        2149181912
+      ],
+      "completed_frame": 14340,
+      "settled_frame": 14460,
+      "total_glyphs": 62,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "250e3df6f0788a9d5f77be1bc01c51523f6aa3c52f785e55e0f7a1e33ac24866"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-12:g0008:l0000",
+      "section": "section-12",
+      "group": 8,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149181116,
+        2149181236,
+        2149181912
+      ],
+      "completed_frame": 14880,
+      "settled_frame": 15000,
+      "total_glyphs": 43,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "fb6656655f66afb910d1204f4339e30a426db413207f12ac89ac95293e7a06b9"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-16:g0004:l0000",
+      "section": "section-16",
+      "group": 4,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149174900,
+        2149174948,
+        2149175224
+      ],
+      "completed_frame": 15480,
+      "settled_frame": 15600,
+      "total_glyphs": 45,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "bcffc05188c342573efcff101ba728f0bbef6970e6d5a5124acf80827292bf82"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-17:g0005:l0000",
+      "section": "section-17",
+      "group": 5,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149178144,
+        2149178192,
+        2149178440
+      ],
+      "completed_frame": 16080,
+      "settled_frame": 16200,
+      "total_glyphs": 53,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "50b093ee2f5984b930115ca7f208d9495fa09bb07c446a3203e8470325f41506"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-19:g0001:l0000",
+      "section": "section-19",
+      "group": 1,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149182536,
+        2149182584,
+        2149182888
+      ],
+      "completed_frame": 16680,
+      "settled_frame": 16800,
+      "total_glyphs": 53,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "6504d18cd769ba613ea8a50b3c28b2cef5a6b52acabcda058b8872a6bcfd45ae"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-19:g0002:l0000",
+      "section": "section-19",
+      "group": 2,
+      "line": 0,
+      "variant": 1,
+      "tables": [
+        2149182536,
+        2149182584,
+        2149182888
+      ],
+      "completed_frame": 17340,
+      "settled_frame": 17460,
+      "total_glyphs": 58,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "692da56a8fcbd745fa8389666c10312c580575f0fa92614fe6d0c91a648455b3"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-19:g0005:l0000",
+      "section": "section-19",
+      "group": 5,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149182536,
+        2149182584,
+        2149182888
+      ],
+      "completed_frame": 17820,
+      "settled_frame": 17940,
+      "total_glyphs": 39,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "7f550628bfac36b3ec07b5b31e77bd6302171f0108c8ad663012183bd7d57721"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_SA.BIN:section-20:g0005:l0000",
+      "section": "section-20",
+      "group": 5,
+      "line": 0,
+      "variant": 0,
+      "tables": [
+        2149183524,
+        2149183572,
+        2149183876
+      ],
+      "completed_frame": 18480,
+      "settled_frame": 18600,
+      "total_glyphs": 44,
+      "visual_status": "verified: settled reply inspected; complete quote, readable spacing, no clipping or overlap",
+      "capture_sha256": "01999641bb9702834e0be76483653f2860016743abab2f122e886d1701b6e8da"
+    }
+  ],
+  "sheets": [
+    {
+      "path": "build/yumi-date-review-sheets/sheet-01.png",
+      "sha256": "0089396a8f180f972ae0a8e9b9932dff4475851ccea03e7f3316ed0c26c1bff7"
+    },
+    {
+      "path": "build/yumi-date-review-sheets/sheet-02.png",
+      "sha256": "b844a88a4e1ec9100067ec0ce7f48cbf687094df811800184c535c5d95bc5345"
+    },
+    {
+      "path": "build/yumi-date-review-sheets/sheet-03.png",
+      "sha256": "45ee52813d53a7de43e4d5f7f23672db7b7bc069fef333564f195ef328d0cf15"
+    },
+    {
+      "path": "build/yumi-date-review-sheets/sheet-04.png",
+      "sha256": "0f08b0bace11ea9b6b4f1c26e995864ea15996dd279062ef8dc9a99cb863c334"
+    }
+  ]
+}
