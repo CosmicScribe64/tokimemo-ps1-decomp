@@ -1,0 +1,58 @@
+{
+  "ticket": "T-39534",
+  "date": "2026-11-02",
+  "scope": "Original versus English face rectangle, including open and closed eyes; excludes subtitles and black transitions. Seven unique pairs visually inspected.",
+  "rectangle": [
+    90,
+    60,
+    220,
+    180
+  ],
+  "matching_english_captures": 183,
+  "distinct_face_states": 7,
+  "pairs": [
+    {
+      "original": "build/emu/ending-yukari-original-long/shot_5880.png",
+      "english": "build/emu/ending-yukari-auto-long/shot_10020.png",
+      "crop_sha256": "8c7bd3592d3165655bfbd3f4c61e04a9e50f0198b2c6091d745b38e944478a2e"
+    },
+    {
+      "original": "build/emu/ending-yukari-original-holiday/shot_7500.png",
+      "english": "build/emu/ending-yukari-auto-long/shot_1020.png",
+      "crop_sha256": "ff1f7cba4e69533cb891fafc79b94efde5ea4e73353a923afd0f0c0e17fef756"
+    },
+    {
+      "original": "build/emu/ending-yukari-original-long/shot_5400.png",
+      "english": "build/emu/ending-yukari-auto-long/shot_10320.png",
+      "crop_sha256": "30b6938832c25cff9fbdd060624762cf520b8d65f0d0c21ffeb7b31771adcd33"
+    },
+    {
+      "original": "build/emu/ending-yukari-original-late/shot_7700.png",
+      "english": "build/emu/ending-yukari-auto-long/shot_10500.png",
+      "crop_sha256": "1e798b131c1f8e2a6c5e53199ca9995a385010c706e1e1a8e7c163dd74218193"
+    },
+    {
+      "original": "build/emu/ending-yukari-original-holiday/shot_4750.png",
+      "english": "build/emu/ending-yukari-auto-long/shot_1080.png",
+      "crop_sha256": "0a539ca82d17d47cdb5d9e6d85239748ef2332bd07dc50ce3bd1dc7c3d050b3e"
+    },
+    {
+      "original": "build/emu/ending-yukari-original-long/shot_4020.png",
+      "english": "build/emu/ending-yukari-auto-long/shot_5820.png",
+      "crop_sha256": "0938242c65e7e8efe370cd6683f062e59006a572d0df433de14d81ea123d6167"
+    },
+    {
+      "original": "build/emu/ending-yukari-original-long/shot_4140.png",
+      "english": "build/emu/ending-yukari-auto-long/shot_5880.png",
+      "crop_sha256": "afa6e8a167fdc22a535a9f4df34840acea7e66a03ecc0a4299140c55e25aa520"
+    }
+  ],
+  "result": "The observed eye/nose seams match the original game under this emulator pixel for pixel.",
+  "original_runs": [
+    "build/emu/ending-yukari-original-holiday",
+    "build/emu/ending-yukari-original-long",
+    "build/emu/ending-yukari-original-late"
+  ],
+  "english_run": "build/emu/ending-yukari-auto-long",
+  "comparison_manifest_sha256": "79352c9313307947e9b094a2eb89ffc847449784cbc53fd1624935f3741eec00"
+}

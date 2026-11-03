@@ -2,8 +2,8 @@
   "schema": "tokimemo.layout-flag-review.v1",
   "date": "2026-11-02",
   "ticket": "T-39511",
-  "target_sha1": "ca7ff1e93b03c8f7c0be9bebd61a02d6187cc439",
-  "scope": "Read all 49 unique payloads behind 67 long-page warnings. Static checks confirm scrolling windows, no unwrappable rows and no hard row-limit violations. This does not certify runtime scrolling or whole-game visuals.",
+  "target_sha1": "a839441add3e6dc6e72b04c4daacf8d0a59cce41",
+  "scope": "87 flagged long-page records, using each renderer's actual viewport. Previously verified payloads remain unchanged. Pending records require runtime scrolling and visual inspection; static checks do not certify whole-game visuals.",
   "records": [
     {
       "id": "talk:CDROM/BUNKA/FU_S6O.BIN:main:g0119:l0004",
@@ -102,7 +102,7 @@
       "visible_rows": 3,
       "hard_row_limit": 6,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see phone-long-pages-2026-11-02.json"
     },
     {
       "id": "c:TEL:8013adc0:6",
@@ -114,7 +114,7 @@
       "visible_rows": 3,
       "hard_row_limit": 6,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see phone-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/DATE_AS.BIN:section-15:g0004:l0000",
@@ -188,48 +188,48 @@
     },
     {
       "id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0008",
-      "payload_sha256": "7aa55cde0a4c98b4c3ef7ac847507ad39937bab96b8fdec70a5a447ab739143a",
-      "window": "message_speech",
+      "payload_sha256": "82ad20c89e3ceaf2226a5e440c5b7dfcbda83948e861101ac99f7e82f601ac70",
+      "window": "ending_heroine",
       "page_rows": [
-        7
+        6
       ],
-      "visible_rows": 3,
+      "visible_rows": 2,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see ending-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0010",
-      "payload_sha256": "86abf3ebfb7ba87697f7a319abd2637e6d47a588e1f5f58248d8e6bd66c43138",
-      "window": "message_speech",
-      "page_rows": [
-        5
-      ],
-      "visible_rows": 3,
-      "hard_row_limit": null,
-      "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
-    },
-    {
-      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0014",
-      "payload_sha256": "185e82da885bdfed767bff75394cad06e0b27df5facef2f78e70aadd2f93b1a3",
-      "window": "message_speech",
+      "payload_sha256": "e2fab1b7a19ce11c513c92ed4f3b375311640950651d357675ecf2f10b9ec3a4",
+      "window": "ending_heroine",
       "page_rows": [
         4
       ],
-      "visible_rows": 3,
+      "visible_rows": 2,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
-      "visual_status": "targeted runtime verification pending"
+      "visual_status": "controlled runtime scrolling inspected; see ending-long-pages-2026-11-02.json"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0014",
+      "payload_sha256": "29b2e64fd30ce862349411b23a5b219a015d5bd1dadd8ccd2469994857e296f3",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "uses supported scrolling; preserves text and intentional pauses",
+      "visual_status": "controlled runtime scrolling inspected; see ending-long-pages-2026-11-02.json"
     },
     {
       "id": "talk:CDROM/SERIFU/ENDING.BIN:table-10:g0000:l0021",
-      "payload_sha256": "a38185d9b5c9db73eb875eea83a0ae4502a6ffa0c20098806fa27f85843d8c12",
-      "window": "message_speech",
+      "payload_sha256": "55e2a9eaa8fb812840165d72f23689a9ce8cc147057821b352e47ced73078fb7",
+      "window": "ending_heroine",
       "page_rows": [
-        5
+        3
       ],
-      "visible_rows": 3,
+      "visible_rows": 2,
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
       "visual_status": "targeted runtime verification pending"
@@ -836,6 +836,247 @@
       "hard_row_limit": null,
       "disposition": "uses supported scrolling; preserves text and intentional pauses",
       "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-10:g0000:l0003",
+      "payload_sha256": "f2c6522dd73b49abe08c0ce88f3a516386106dffbecf9d393f129933d56bab36",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-10:g0000:l0013",
+      "payload_sha256": "77dffe680025ae2613dd0bb45aa1739f246d5c8a9e7eff7d21b0907e02041c5d",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-10:g0001:l0012",
+      "payload_sha256": "77dffe680025ae2613dd0bb45aa1739f246d5c8a9e7eff7d21b0907e02041c5d",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-11:g0000:l0001",
+      "payload_sha256": "6e19c6e0ecde8810de93d3abeed9e230faf84b3c9832ee19aab34db469169b43",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-11:g0000:l0008",
+      "payload_sha256": "3aa2850f7f0d2a385a40226cf55c7cd138c4763d19d004fb6636ab9a62a784e4",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-11:g0000:l0010",
+      "payload_sha256": "9fc70e5722d0ef0b835834367442bd440a6291c7f447ea19ff70c02a2de8844a",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-11:g0000:l0014",
+      "payload_sha256": "ac9a5622f202a485482a197cf6f0b7807e648dc8a421b6723acee244befb9e86",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-16:g0000:l0008",
+      "payload_sha256": "bee98fcda4d5b4f4e763e09dd4318b7e2a7cdac9883aa96ca704ce5ef64dc042",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-4:g0000:l0001",
+      "payload_sha256": "5f818d82f4d53205222100da8479e2954ff99e2899189d3648a40fa822360acb",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-5:g0000:l0007",
+      "payload_sha256": "97f50c20d7465a189eff6f242449904285232ce03c669a1d52745e13a843108d",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-5:g0000:l0029",
+      "payload_sha256": "1ad4b1dcf2e81a546736f40888150c30ae204f9676d0a1307b72678b12be0821",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-5:g0000:l0043",
+      "payload_sha256": "51ac48081873bbf399a933dfea736959b32d8e32787682427ca4ace3a749f227",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-6:g0000:l0001",
+      "payload_sha256": "fa048adc73b861a812d63dfc44658faefc71d81c7662a905ea88f81c8c0ef800",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-6:g0000:l0013",
+      "payload_sha256": "66a915c3fa4f0ccfd85e49e772cb6cd18f5088456bf2086cf1e994a1b14bb164",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-7:g0000:l0023",
+      "payload_sha256": "e53e1415c36070925d77d8f7f1faaff66dbf3c1a86d714c32b3639458dc3cc8d",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-7:g0000:l0027",
+      "payload_sha256": "ab53a0870ab6126bffa8a2c49c8d4e0d68bd76fb3d234793c361ff5fec4bd052",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-7:g0000:l0029",
+      "payload_sha256": "cbc6e9e628c6ab14d49d951e09e640ad20e97cb7825524b60f54ed29f09fa913",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "targeted runtime verification pending"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0001",
+      "payload_sha256": "cc89c5f8f7725758f710b2852b4c92d59d7ca430b2eb8dd4573a35d18f92830c",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "controlled runtime scrolling inspected; see ending-long-pages-2026-11-02.json"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0003",
+      "payload_sha256": "62ada5b1fdcab1109df54dd7f5a5ead78fc8b6804739bfeaadced97b56fde537",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "controlled runtime scrolling inspected; see ending-long-pages-2026-11-02.json"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0012",
+      "payload_sha256": "64fdf7765cd8235e016bb9e4129877b935bc3c468e04e60d686a9253b80efb8b",
+      "window": "ending_heroine",
+      "page_rows": [
+        3
+      ],
+      "visible_rows": 2,
+      "hard_row_limit": null,
+      "disposition": "ending subtitle viewport has two rows; scrolling requires runtime review",
+      "visual_status": "controlled runtime scrolling inspected; see ending-long-pages-2026-11-02.json"
     }
-  ]
+  ],
+  "previous_target_sha1": "c0dafc36074dd66d6e6debb5b7d14d0f44e6649a"
 }

@@ -15,7 +15,6 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-39533-sign-lettering-quality|T-39533 Improve shoe-rental and class-roster lettering]]
 
 
 
@@ -23,6 +22,9 @@ kanban-plugin: board
 
 
 ## In Progress
+
+
+- [ ] [[tickets/T-39533-sign-lettering-quality|T-39533 Improve shoe-rental and class-roster lettering]]
 
 
 
@@ -116,6 +118,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-39534-ending-dialogue-visibility|T-39534 Verify and repair ending dialogue visibility]]
 - [ ] [[tickets/T-39532-school-trip-phrase-wrap|T-39532 Keep the school-trip invitation phrase together]]
 
 - [ ] [[tickets/T-39531-literature-club-wrap|T-39531 Fix the split Literature Club question]]

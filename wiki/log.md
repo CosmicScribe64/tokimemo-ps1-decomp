@@ -3855,3 +3855,135 @@ For [[tickets/T-39511-english-text-quality]], began a labelled review gallery co
 Built and opened `build/visual-review-pack/index.html`: 235 captures on 31 labelled sheets. Inspected the new festival and Kagami samples, Nijino trip, sports and ending sheets, plus all 16 patched background stills. Native inspection found cramped shoe-rental and roster lettering; created Ready ticket [[tickets/T-39533-sign-lettering-quality]]. Game images remain ignored.
 
 For [[tickets/T-39511-english-text-quality]], rejected a forced jump that retained unfinished text. A corrected probe waits for the prior page; both Kagami long passages now scroll cleanly through their closing quotes. Thirty samples match the current disc header and table pointers, with 25 post-selection group checks. Receipt `translations/en/reviews/mira-trip-long-pages-2026-11-02.json` leaves 44 of 67 long-page records pending. No patch bytes changed in this review.
+
+## [2026-11-02] decision | Refine lettering while preserving the chosen roster layout
+
+Moved [[tickets/T-39533-sign-lettering-quality]] to In Progress. The inventory records the owner's chosen rotated roster layout and shared crossfade position; preserve both while trying lighter strokes and more letter spacing. Prepared local generator previews for the roster pair and shoe-rental sign. The preceding visual-review receipts were pushed to main and patch/english at bec2b87db.
+
+## [2026-11-02] build | Check lighter sign lettering
+
+For [[tickets/T-39533-sign-lettering-quality]], implemented reproducible replacement crops and inspected original-game references and revised previews. Existing lettering tests pass (61 passed, two skipped), including roster margins and shared crossfade geometry. The rental sign passes encoding and native preview inspection; roster encoding remains live in the Docker job logged at `build/sign-quality-encode.log`. Prepared local disc readback and emulator probes for the next checks. Public patch unchanged.
+
+## [2026-11-02] query | Begin Yukari ending dialogue coverage
+
+For [[tickets/T-39511-english-text-quality]], traced ENDING table 9 to Yukari and started a current-disc controlled ending entry with timed captures and table/header samples. This is a new probe, not accepted visual evidence yet. The three pending table-9 long passages remain pending until the loaded scene and complete text are inspected.
+
+## [2026-11-02] query | Correct the ending probe's entry mode
+
+The first live preview showed the sports festival: the draft probe copied a generic script's 0x72 default instead of GAME_MODE_ENDING (0x63). Stopped that probe, kept its rejected output separate, checked the enum, and started `build/emu/ending-yukari-current`. No ending checks were credited and no game source changed for this correction.
+
+## [2026-11-02] query | Bind ending instrumentation to the relinked overlay
+
+The corrected-mode preview reaches the graduation classroom, but review of the probe found ENDING-local addresses were still original-link addresses. The main-address mapper deliberately does not translate overlays. Rejected that probe as verification evidence, stopped it, and changed the capture and saved-girl write to use `build/english-boundary-proof/ovl/ENDING.elf` symbols. The clean run is `build/emu/ending-yukari-mapped`; all long-page counts remain unchanged.
+
+## [2026-11-02] query | Capture both remaining phone passages
+
+For [[tickets/T-39511-english-text-quality]], located c:TEL:8013ac0c:2 in the answering-machine initializer and c:TEL:8013adc0:6 in the relationship report's substep 0x13. Started `build/emu/phone-long-pages` using the current disc, real telephone stage dispatch and relinked TEL function-byte samples. The mapped ending probe's frame 4250 visibly reaches Yukari's close-up; complete dialogue checks are still pending.
+
+## [2026-11-02] query | Verify the two phone long pages
+
+For [[tickets/T-39511-english-text-quality]], inspected the completed phone captures and verified 49 runtime samples against both function bodies in the current disc's TEL.EXN. Recorded `translations/en/reviews/phone-long-pages-2026-11-02.json`; 42 of 67 long-page records remain pending. The mapped Yukari ending entry completed, showing her actual artwork and initial dialogue. Started a 12,000-frame controller-only continuation from its saved state; pending ending passages are not credited yet.
+
+## [2026-11-02] query | Add the verified phone captures to the gallery
+
+Added eight phone frames and one inspected contact sheet to `build/visual-review-pack/index.html`. The local gallery now contains 243 captures across 32 sheets and shows 25 verified / 42 pending long-page records. Historical bulk-review receipt counts remain the snapshot taken before this addition.
+
+## [2026-11-02] query | Expand date coverage to Kagami at the amusement park
+
+For [[tickets/T-39511-english-text-quality]], traced DATE_KG section 11 to the amusement-park table and started `build/emu/mira-park-review`. Setup selects a met companion and the park appointment, then controller input drives the scene. Runtime table pointers and the loaded script header are sampled. Four pending records belong to this table; none are credited yet.
+
+## [2026-11-02] query | Flag missing ending subtitles during bulk review
+
+Inspected four contact sheets and native frames 5760/8160 from `build/emu/ending-yukari-dialogue`. Player replies appear, but heroine passages do not remain visibly readable in the sampled frames. Table/line samples map the three pending records to kinds 0xF/1/1. Created [[tickets/T-39534-ending-dialogue-visibility]] to trace live text/audio state and verify complete paragraphs, with voice on and off. Face-animation seams also need original comparison. No ending records were credited; the queue remains at 42 pending.
+
+## [2026-11-02] query | Identify the original ending subtitle toggle
+
+For [[tickets/T-39534-ending-dialogue-visibility]], found the explicit pad-held visibility gate in `ending_audio_level_update`; kinds 0/6 stay visible, voiced lines are hidden without input. Started `build/emu/ending-yukari-subtitles` with Circle held for inspection and asked the owner about automatic English subtitle display. The observed hidden heroine lines therefore do not by themselves establish a patch defect.
+
+## [2026-11-02] decision | Show English ending subtitles automatically
+
+The owner chose automatic English subtitle display. For [[tickets/T-39534-ending-dialogue-visibility]], added TOKIMEMO_ENGLISH guards that keep voiced text visible and require complete text plus a one-second final-row pause before the existing clear/wait and audio gates advance. The matching-language code is preserved. Runtime validation and review remain pending.
+
+## [2026-11-02] build | Finish the revised sign encodes
+
+All three [[tickets/T-39533-sign-lettering-quality]] streams finished encoding. Inspected both roster images at native size: lighter separated letters, intact margins and the same Fujisaki placement. The rental sign was already inspected. Started the local candidate-disc assembly/readback for emulator verification; these are not published assets yet.
+
+## [2026-11-02] build | Automatic ending subtitle candidate
+
+Built the sign and English ending subtitle changes into `build/sign-subtitle-release/disc`; all 252 art placements passed build verification. Started a fresh mapped ending entry for [[tickets/T-39534-ending-dialogue-visibility]]. Finished reviewing all 50 timed school-introduction captures for [[tickets/T-39533-sign-lettering-quality]]; the roster fade stays aligned and the classroom quote/parenthetical repair remains clean. This candidate is not published or signed off.
+
+## [2026-11-02] build | Ending candidate text readback
+
+The combined candidate passed script and executable disc audits with zero pending executable slots. The default ENDING binary also passed its original SHA-1. Receipts and remaining runtime checks are recorded in [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Automatic subtitles visible in ending replay
+
+Inspected candidate ending captures and confirmed heroine subtitles remain visible without a held button. Started a denser, input-free continuation for the long passages. [[tickets/T-39534-ending-dialogue-visibility]] remains In Progress; no ending long-page records have been marked verified from these early frames.
+
+## [2026-11-02] query | Ending timing and winter scene review
+
+The default build checks passed. Candidate ending captures now reach complete final rows without held input, but closing quotes and the ending text column still need attention; [[tickets/T-39534-ending-dialogue-visibility]] remains open. The winter-date replay produced 23 reviewed captures but did not reach the rental counter, so it does not close that acceptance criterion in [[tickets/T-39533-sign-lettering-quality]].
+
+## [2026-11-02] query | Input-free ending reaches epilogue
+
+The candidate ending replay completed 12,000 additional frames without controller input and reached the epilogue. All three target long passages have visible final-row evidence. Reviewed the final sheets and recorded the precise scope in [[tickets/T-39534-ending-dialogue-visibility]]; presentation findings still block sign-off and publication of this candidate.
+
+## [2026-11-02] build | Ending subtitle layout correction
+
+Replaced the generic dialogue-box width for ENDING with its actual subtitle columns, retained closing quotes in completed ending speeches, and tightened opening-mark spacing behind the English guard. Added synthetic coverage for both columns and continuation quote boundaries. Started an original Japanese ending replay for the face-animation comparison in [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Ending face seams match Japanese reference
+
+A valid original-game ending replay produced two facial animation states whose face-region pixels exactly match 96 English captures. Inspected the side-by-side images and recorded hashes in `build/ending-face-reference/comparison.json`. The observed seams are original behavior under the emulator. The wider subtitle candidate also passed both text-disc audits; runtime voice-option checks continue in [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Expand ending scrolling review to its actual viewport
+
+Reconciled the long-page queue with the candidate layout: 87 records, including 20 newly flagged ending passages. The 25 previously verified payloads remain unchanged; 62 records are pending. Extended and inspected the Japanese face comparison to seven exact matching states, including closed eyes. See [[tickets/T-39511-english-text-quality]] and [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Refine face comparison coverage
+
+The seven-crop comparison sheet includes a black transition and six facial states, not a closed-eye pose. Corrected the current ticket's scope and started a later Japanese reference capture. Open-eye seams match exactly; closed-eye comparison is still pending in [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] build | Refine ending rows after full replay review
+
+Reviewed 196 timed candidate captures across 22 sheets and compared both voice settings. Found short final subtitle rows and a speech quote placed after a trailing thought. Added ending-only final-row balancing and thought-aware quote placement, with focused tests. These findings keep [[tickets/T-39534-ending-dialogue-visibility]] open; no new long-page approvals or publication were recorded.
+
+## [2026-11-02] query | Complete original ending face comparison
+
+Inspected all seven exact facial-state pairs, now including closed eyes and excluding black transitions. The 183 matching English captures show that the observed seams are present in the Japanese game under the emulator. Saved a source-safe receipt in `translations/en/reviews/ending-face-comparison-2026-11-02.json`; [[tickets/T-39534-ending-dialogue-visibility]] still awaits the final subtitle-layout replay and code review.
+
+## [2026-11-02] query | Restrict ending subtitle rules to their actual consumers
+
+Source review identified four ENDING tables rendered in ordinary dialogue boxes rather than subtitles. Recorded the required table-specific correction and regression checks in [[tickets/T-39534-ending-dialogue-visibility]]. The in-progress candidate is not approved for publication.
+
+## [2026-11-02] build | Preserve boxed graduation dialogue
+
+Applied the table-specific subtitle rule and verified the four boxed tables retain their existing windows. The 48-case focused suites pass with one optional full-disc test skipped. Rebuilding the corrected candidate for [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Add ending sheets to the local review gallery
+
+Added the 196 inspected ending frames and 22 sheets to `build/visual-review-pack`, bringing it to 439 captures and 54 sheets. The section names its superseded candidate and outstanding findings; it does not claim final approval. Linked the original face comparison and updated the queue count for [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Verify scoped ending candidate on disc
+
+Built the table-specific balanced ending candidate and passed both text readback audits. Reconciled the queue hashes without carrying over approval to any changed payload; 25 records remain verified and 62 pending. Started denser runtime capture with text-completion samples for [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Inspect complete early ending subtitles
+
+Verified two flagged Yukari passages on the table-scoped candidate, including all rows and final quotes. Capture hashes and completed text-state evidence are recorded in `translations/en/reviews/ending-long-pages-2026-11-02.json`. The targeted queue is 27 of 87 inspected; 60 remain pending. Started a denser continuation for the remaining long ending speeches. See [[tickets/T-39534-ending-dialogue-visibility]] and [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] query | Review ending changes and refresh gallery
+
+Reviewed the English-only C and table-scoped layout changes against the coding standards; no unresolved code findings remain. Default ENDING matching and the focused suites pass. Runtime acceptance remains open. Added the current candidate's early subtitle sheets to the local gallery, now 454 captures across 56 sheets. See [[tickets/T-39534-ending-dialogue-visibility]] and [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Package the current ending candidate for browser verification
+
+Packaged candidate `a839441add3e6dc6e72b04c4daacf8d0a59cce41` at `build/patcher-ending-scoped-review`. The 6,563,384-byte patch has SHA-256 `32a98f88370431ccb2d19cb621b4de3f9bd4a4e11763a86cb016d6a8e75ef4b9`. Browser acceptance is running against the original tracks; this packaging step does not publish the build. See [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] ticket | Complete ending subtitle visibility review
+
+Moved [[tickets/T-39534-ending-dialogue-visibility]] to Done after code review and runtime acceptance. Inspected 62 continuation captures across seven sheets; all rows and final punctuation pass for four further long Yukari passages. All 416 sampled script headers match the candidate disc. The broader queue is now 31 of 87 inspected, with 56 pending under [[tickets/T-39511-english-text-quality]]. The gallery contains 516 captures across 63 sheets. Browser acceptance passes for the same candidate, including ZIP drag-and-drop and exact output hashes; receipts are preserved in `build/ending-scoped-browser-proof`. No new build has been published yet.
+
+## [2026-11-02] lint | Review the release's staged records
+
+Reviewed the source comments, ticket history and visual receipts with Deslop and Humanizer. Preserved append-only log entries and their repeated cross-references. Corrected an audit-metadata error that listed the ending-summary viewport as three rows; its renderer uses ten. No payload or approved screenshot changed. Committed the art fix at f4f38569b and ending fix at 53cdad04c. See [[tickets/T-39534-ending-dialogue-visibility]] and [[tickets/T-39533-sign-lettering-quality]].
