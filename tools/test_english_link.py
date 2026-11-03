@@ -9,6 +9,8 @@ import sys
 import unittest
 import subprocess
 import tempfile
+from types import SimpleNamespace
+from unittest.mock import patch
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -32,6 +34,35 @@ def itype(op, rs, rt, imm):
 
 
 class SelectedReferencesTest(unittest.TestCase):
+    def test_overlay_imports_existing_main_function_at_relinked_address(self):
+        main_symbols = {
+            'existing_sdk': (0x800A1234, 0, True, True),
+            'already_imported': (0x800A5678, 0, True, True),
+            'unused_sdk': (0x800A9000, 0, True, True),
+            'english_added': (0x80120000, 0, True, True),
+        }
+        layout = SimpleNamespace(default_syms={name: value for name, value in main_symbols.items()
+                                              if name != 'english_added'},
+                                 value=lambda address, syms: 0x800A5678)
+        with tempfile.TemporaryDirectory() as folder:
+            side = Path(folder) / 'imports.ld'
+            out = Path(folder) / 'result.ld'
+            side.write_text('already_imported = 0x80095678;\n')
+            with patch.object(english_link, 'Layout', return_value=layout), \
+                    patch.object(english_link, 'redirected_objects', return_value={}), \
+                    patch.object(english_link, 'symbols', return_value=main_symbols), \
+                    patch.object(english_link, 'side_scripts', return_value=[str(side)]), \
+                    patch.object(english_link, 'referenced_names',
+                                 side_effect=lambda *a, **kw: set() if kw else
+                                 {'existing_sdk', 'already_imported'}):
+                english_link.cmd_aux(['ENDING', 'build/en', str(out), '--main-elf', 'main.elf'])
+            result = out.read_text()
+            self.assertIn('existing_sdk = 0x800A1234;', result)
+            self.assertEqual(result.count('already_imported ='), 1)
+            self.assertIn('already_imported = 0x800A5678;', result)
+            self.assertIn('english_added = 0x80120000;', result)
+            self.assertNotIn('unused_sdk', result)
+
     def test_discarded_code_cannot_keep_its_undefined_entry_alive(self):
         source = """
 .text

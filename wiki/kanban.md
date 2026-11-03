@@ -15,7 +15,6 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-39533-sign-lettering-quality|T-39533 Improve shoe-rental and class-roster lettering]]
 
 
 
@@ -37,14 +36,25 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
 
-- [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
 
-- [ ] [[tickets/T-39511-english-text-quality|T-39511 Make the English read naturally on screen]]
 
-- [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
-- [ ] [[tickets/T-39506-english-script-runtime|T-39506 Make dialogue, choices, names and name entry work in English]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 - [ ] [[tickets/T-39212-english-artwork-drafts|T-39212 English WP-L: remaining artwork drafts and provenance]]
@@ -84,18 +94,15 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-39513-skating-rink-advertisement|T-39513 Translate the omitted skating-rink advertisement]]
 
-- [ ] [[tickets/T-39512-browser-patcher|T-39512 Build and verify the local browser patcher]]
 
-- [ ] [[tickets/T-39509-opening-movie-pills|T-39509 Replace the heroine name pills in the opening movie]]
-- [ ] [[tickets/T-39505-english-memory-and-relink|T-39505 Give the English build room to grow (memory map and free relink)]]
-- [ ] [[tickets/T-39507-english-disc-build|T-39507 Build the English disc and patch in one command]]
-- [ ] [[tickets/T-39501-disc-rebuild-and-xdelta|T-39501 Rebuild the disc image with replaced files and make the xdelta patch]]
 
-- [ ] [[tickets/T-39502-english-text-runtime|T-39502 Add the English text runtime behind a build flag]]
-- [ ] [[tickets/T-39503-text-container-writers|T-39503 Write every text container back from records]]
-- [ ] [[tickets/T-39504-emulator-screen-route|T-39504 Script an emulator route through the main screens with screenshots]]
+
+
+
+
+
+
 
 
 
@@ -116,6 +123,65 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-39600-recover-claude-session|T-39600 Recover the interrupted Claude session state]]
+
+- [ ] [[tickets/T-39548-twinbee-english-logo|T-39548 Replace TwinBee title lettering with English]]
+- [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
+- [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
+
+- [ ] [[tickets/T-39511-english-text-quality|T-39511 Make the English read naturally on screen]]
+
+- [ ] [[tickets/T-39547-twinbee-sprite-attributes|T-39547 Preserve TwinBee sprite texture attributes]]
+
+- [ ] [[tickets/T-39546-fortune-name-spacing|T-39546 Separate full names in the computer fortune display]]
+
+- [ ] [[tickets/T-39545-name-code-compatibility|T-39545 Keep secret name codes usable in English]]
+
+- [ ] [[tickets/T-39544-stage-control-prefixes|T-39544 Preserve stage dialogue control prefixes]]
+
+- [ ] [[tickets/T-39543-stage-speaker-spacing|T-39543 Separate stage-show speaker names from opening quotes]]
+
+- [ ] [[tickets/T-39542-complete-dialogue-values|T-39542 Preserve complete long dialogue values]]
+
+- [ ] [[tickets/T-39541-gift-name-capitalization|T-39541 Use consistent gift names]]
+
+- [ ] [[tickets/T-39504-emulator-screen-route|T-39504 Script an emulator route through the main screens with screenshots]]
+
+- [ ] [[tickets/T-39503-text-container-writers|T-39503 Write every text container back from records]]
+
+- [ ] [[tickets/T-39513-skating-rink-advertisement|T-39513 Translate the omitted skating-rink advertisement]]
+
+- [ ] [[tickets/T-39506-english-script-runtime|T-39506 Make dialogue, choices, names and name entry work in English]]
+
+- [ ] [[tickets/T-39502-english-text-runtime|T-39502 Add the English text runtime behind a build flag]]
+
+- [ ] [[tickets/T-39540-magazine-button-sequence|T-39540 Keep the magazine button sequence on one row]]
+
+- [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
+
+- [ ] [[tickets/T-39507-english-disc-build|T-39507 Build the English disc and patch in one command]]
+
+- [ ] [[tickets/T-39505-english-memory-and-relink|T-39505 Give the English build room to grow (memory map and free relink)]]
+
+- [ ] [[tickets/T-39501-disc-rebuild-and-xdelta|T-39501 Rebuild the disc image with replaced files and make the xdelta patch]]
+
+
+- [ ] [[tickets/T-39509-opening-movie-pills|T-39509 Replace the heroine name pills in the opening movie]]
+
+- [ ] [[tickets/T-39537-dialogue-break-review|T-39537 Flag suspicious dialogue breaks without changing intentional pauses]]
+
+- [ ] [[tickets/T-39512-browser-patcher|T-39512 Build and verify the local browser patcher]]
+
+- [ ] [[tickets/T-39539-speaker-label-reuse|T-39539 Check shortened speaker labels after repeated replies]]
+
+- [ ] [[tickets/T-39538-yumi-name-translation|T-39538 Restore Yumi's name in mistranslated self-references]]
+
+- [ ] [[tickets/T-39536-ending-continuation-glyph-capacity|T-39536 Keep long ending continuations within the glyph atlas]]
+
+- [ ] [[tickets/T-39535-park-reply-wrap|T-39535 Keep Kagami's park reply phrases together]]
+
+- [ ] [[tickets/T-39533-sign-lettering-quality|T-39533 Improve shoe-rental and class-roster lettering]]
+- [ ] [[tickets/T-39534-ending-dialogue-visibility|T-39534 Verify and repair ending dialogue visibility]]
 - [ ] [[tickets/T-39532-school-trip-phrase-wrap|T-39532 Keep the school-trip invitation phrase together]]
 
 - [ ] [[tickets/T-39531-literature-club-wrap|T-39531 Fix the split Literature Club question]]

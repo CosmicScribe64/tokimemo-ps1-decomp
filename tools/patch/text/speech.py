@@ -118,6 +118,23 @@ def separate_aside(payload: bytes) -> bytes:
     return payload
 
 
+def close_ending_speech(payload: bytes, command) -> bytes:
+    """ENDING closes standalone speech (0/1) and the last continuation (F).
+
+    C opens a multi-record speech and D continues it. Its renderer does not
+    append quotes, so these marks remain in the on-disc payload. T-39534.
+    """
+    if command not in (0, 1, 0xF):
+        return payload
+    aside = separate_aside(payload)
+    boundary = aside.rfind(b"\n(")
+    if boundary >= 0 and aside.endswith(b")"):
+        spoken = aside[:boundary].rstrip()
+        if spoken.endswith((b".", b"!", b"?", b"\xa5") + CLOSING):
+            return _close(spoken) + aside[boundary:]
+    return _close(payload)
+
+
 def close_speech(payload: bytes, command, next_command) -> tuple[bytes, int]:
     """The payload with matched quotes, and how many were added."""
     label = _label(payload)

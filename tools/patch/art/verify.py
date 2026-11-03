@@ -30,7 +30,7 @@ import numpy as np
 
 from tools.assets import mdec_splice
 from tools.patch import disc as disc_mod
-from tools.patch.art import ArtBuildError, sheets, sprites, stills, prologue
+from tools.patch.art import ArtBuildError, sheets, sprites, stills, prologue, twinbee
 from tools.patch.art.build import MAINROM_RECORDS
 from tools.patch.art.indexed import TRANSPARENT, View, compose, read_index
 from tools.patch.art.placer import frame_image
@@ -210,6 +210,9 @@ def verify(root: Path, track1: Path, files_root: Path, art: dict) -> dict:
         written = planned["files"][path]
         if path == prologue.PATH:
             checked = prologue.verify(original, written)
+            facts[path] = checked["facts"]
+        elif path == twinbee.PATH:
+            checked = twinbee.verify(original, written)
             facts[path] = checked["facts"]
         elif path.endswith(".BS"):
             checked = verify_still(path, original, written, planned["stills"][path])

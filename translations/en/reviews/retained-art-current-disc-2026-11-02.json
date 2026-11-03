@@ -1,0 +1,210 @@
+{
+  "ticket": "T-39510",
+  "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+  "scope": "Revalidate retained-pixel evidence against the published disc. All listed menu views retain original pixels; six retained backgrounds/portraits and 69 SD containers match the previously reviewed hashes. The prologue banner and raw opening movie extent match the prior ending-stream build. This carries forward existing visual evidence without claiming additional scene playback.",
+  "prior_receipt": "translations/en/graphics/reviews/retained-pixel-review-2026-11-02.json",
+  "prior_receipt_sha256": "755c31869e92e9cd9f36495d2254d72032d941d812c314b51c214dce5994008a",
+  "menu_views": [
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-120.base",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-173.base",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-120.hud-43",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-173.hud-43",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-120.hud-44",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-173.hud-44",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-120.icon-51",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-173.icon-51",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-120.icon-52",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-173.icon-52",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-120.icon-53",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/MAINROM.NBN",
+      "view": "frame-173.icon-53",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "view": "frame-119.base",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "view": "frame-120.base",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/OPTION.NBN",
+      "view": "frame-121.base",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "view": "page-primary-0",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "view": "page-primary-1",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "view": "page-primary-2",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "view": "page-primary-3",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "view": "page-primary-4",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "view": "page-primary-5",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "view": "page-information-3",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "view": "page-information-4",
+      "pixels_identical": true
+    },
+    {
+      "container": "CDROM/FUKUTEST/FILESEL.NBN",
+      "view": "page-information-5",
+      "pixels_identical": true
+    }
+  ],
+  "retained_containers": {
+    "CDROM/PROLODIR/P_01_04B.BS": "ffa02dc52c645679bdbfd66739254e1088fd58672321acbefa2d671c870f2ba2",
+    "CDROM/PROLODIR/P_01_07.BS": "a4f19c201f7650e14be9c1eca419d3055c7704d6785f1a8263cd3f1eea559980",
+    "CDROM/BS/D_01_72.BS": "6de33d2a65828c17c16945ee53e0590447d73089a22d36c26c39320ef349f78c",
+    "CDROM/BUSTUP/AS34.BIN": "4eb161b1fd33ae8e37f64b426ae502f4e6270487d957ade355f83845d878cab4",
+    "CDROM/BUSTUP/HI05.BIN": "5fa935886c29fcaf315be9f53a1155defa2a97e59acdf90b446222c287f90e54",
+    "CDROM/BUSTUP/KO15.BIN": "ae839220782f2ab16d6d183765d4e4e5042b61b015b0dc336a2fea7473fd5708",
+    "CDROM/CLUB_SD/SD_P0E.NBN": "01c4834417bd55b7a7bc829acce123089a039399065ed253e2f0a869fe916f67",
+    "CDROM/CLUB_SD/SD_P0EW.NBN": "9f51fd6410d5db6fde52b2eed425b6fe03a4e93f13239b5aa6742b7e54e22a66",
+    "CDROM/CLUB_SD/SD_P0F.NBN": "e2806a6c29bdc062b1114c4f611a3bae9dd5bdfa7e2dfb2dafaa5452eef43ac6",
+    "CDROM/CLUB_SD/SD_P0FW.NBN": "6cea4b01571a19c3b00bf3af5de69593d63eac82841c0ec64c23d4c045e13fc3",
+    "CDROM/CLUB_SD/SD_P10.NBN": "2513e9c09f1edd832299350ee932e77c017aeaae4d80842cd30cd1b799550669",
+    "CDROM/CLUB_SD/SD_P10W.NBN": "9eb4e7bb7d792828383e2ce02b105a770e4a58349cb248fe3f7101ae68c1539b",
+    "CDROM/CLUB_SD/SD_P11.NBN": "899f84b2de8daf1b3b695f7ab86e6b48d670a890bb14e6197d87972480e0af06",
+    "CDROM/CLUB_SD/SD_P11W.NBN": "79be0fe326f4f35ac8ae188976f48c6335cf5952f7970e722bc5915147d5efcf",
+    "CDROM/CLUB_SD/SD_P12.NBN": "dc00047e6025bc9f898ac0d2ff7a1a6dfe349ca12540ab6f8a9696d476937dc5",
+    "CDROM/CLUB_SD/SD_P12W.NBN": "013ea5c36e8dc6f45f6ca101af0886ebbcd10b42a6c48ea7171dd6c4c7242d9c",
+    "CDROM/CLUB_SD/SD_P13.NBN": "e49b4910a51bc7185a76ee72608b9b525be9ac70e6abe254745683687f7a8b61",
+    "CDROM/CLUB_SD/SD_P13W.NBN": "7af25f72adf719585a8b7c67c61df320f0a470cca2b4d0a203bbd636a91e6a32",
+    "CDROM/CLUB_SD/SD_P14.NBN": "d33ce57ca5f3613cc6055af6ebda55123b71511627d39886a0eca78672984ffb",
+    "CDROM/CLUB_SD/SD_P15.NBN": "cfb57f7e37206ee8f7020f1399a1eff66ed9aeddd67c428aa5f34983720b833c",
+    "CDROM/CLUB_SD/SD_P16.NBN": "c471a9cc8ccb88565fba9f51f303d33ab43edb91e2340b37713814786565c1d4",
+    "CDROM/CLUB_SD/SD_P17.NBN": "619e7949ddc8a98888bda3be705f7f185b2a25c02ef569b68e56ddc1a6ae4fb9",
+    "CDROM/CLUB_SD/SD_P18.NBN": "d6f16717e283997c1a36b74c597266a07521a742468cb830cb2cc3530048253f",
+    "CDROM/CLUB_SD/SD_P19.NBN": "4954c8dd443978067e40ae9a614e94dcc50282ba0df866b013332b3204d81962",
+    "CDROM/CLUB_SD/SD_P1A.NBN": "fe021ab1479ba4fc685c3af4bc309f4cbaa0985b9fa9b637317fce571ba1ff70",
+    "CDROM/CLUB_SD/SD_P1B.NBN": "4e612d65fcb5030e019c455dd4db6b379ff77b1f50c288cf424e1250247def5e",
+    "CDROM/CLUB_SD/SD_P1C.NBN": "8917750e6e05d855b265bb2583453e52337860d6edbe4185f39561882fe6ef04",
+    "CDROM/CLUB_SD/SD_P1D.NBN": "2810a171a6aac7bb8f5fdcb22c1f9d08c82b9416da5dfc0fb69e4c3ba12e8ff2",
+    "CDROM/CLUB_SD/SD_P1E.NBN": "1d3a476e225ad682f9a4bffbc32edad9a89b8a2e2dc35d7a333d4c9dcecfa678",
+    "CDROM/CLUB_SD/SD_P1EW.NBN": "b404d25fb21b65a4b9d9bc0e34efb61f612b1a7b56540ea85ed97603abbb18d9",
+    "CDROM/CLUB_SD/SD_P1F.NBN": "a056ccada7053435b7cf32b5c35f17969e12c580209f7d8a8c7c06a96f91c41f",
+    "CDROM/CLUB_SD/SD_P1FW.NBN": "1257982585db5c7eba3a0a7580a0b0f8a8b4d78f31cedfe67fa5c1a25f6f0aac",
+    "CDROM/CLUB_SD/SD_P20.NBN": "842162b3b1e5505d517600d64125073fdf5e767b69b007ae17005d65319fed2c",
+    "CDROM/CLUB_SD/SD_P20W.NBN": "c1a351cb9702ee2077f726e23259039549cb063a0274793201e9ea17ff18e757",
+    "CDROM/CLUB_SD/SD_P21.NBN": "69409eca18026f1bc817cc8dd363aa31a76e41dc3eccd580c47408b18625cbb9",
+    "CDROM/CLUB_SD/SD_P21W.NBN": "59a49e4ab02df6d149f1adea09d4e42bd5440adef5a464c60be09b9cdb506b07",
+    "CDROM/CLUB_SD/SD_P22.NBN": "22c96a92ab3b1a011da1b8f7d37744d7669bd136e97bf863fa9a4cdd39b0d1d9",
+    "CDROM/CLUB_SD/SD_P23.NBN": "f96e5c97ea4e449e1eb85474e106fca715308aa6a5b67572a9be7dfa3d27fd21",
+    "CDROM/HOLI_SD/SD_P24.NBN": "95bb6e0afc3d9e706765236afd5055b470c356dcec980b452c83826cf7cc2a7d",
+    "CDROM/HOLI_SD/SD_P24W.NBN": "d3d769779a8fd6d7d088978db69870c1fe2f9008c303d40f14f43a6ef6220d36",
+    "CDROM/HOLI_SD/SD_P25.NBN": "2113d2875a0f197c5fa13f759d53568396cbd5e09f9dc08cce656386e006db24",
+    "CDROM/HOLI_SD/SD_P25W.NBN": "d846d08a0c107c07c47871823f440e049b2f16c55b459928108ba29def1de950",
+    "CDROM/HOLI_SD/SD_P26.NBN": "d409b9a60faba75faebe5802680917e6fd6e6c5a91babd0916179cdbd6b4ad09",
+    "CDROM/HOLI_SD/SD_P26W.NBN": "c70fa952ce0a4125ea4afb589648811d77ccd542fcea44c57038397e4f975fc9",
+    "CDROM/HOLI_SD/SD_P27.NBN": "dd05236d1a614f6d53dd5a60b4c0b2dc5a1c585117fbee713e063ea002b212f2",
+    "CDROM/HOLI_SD/SD_P27W.NBN": "41182ae9b13fc48baa569558df16a6a43505a7f0869a77a77291ac1c13a0c322",
+    "CDROM/HOLI_SD/SD_P28.NBN": "47952e20655c88fbf717e796998bd2588c47107a86156f9b1a3aedf88d77b2e9",
+    "CDROM/HOLI_SD/SD_P28W.NBN": "6a24b73d8ca7949a9d7c1d163a70fac81ef8b79dc92c2fc8a35cf74672bf6562",
+    "CDROM/HOLI_SD/SD_P29.NBN": "0bae78283dbd5f6667f2d6dac76c9eeb4b9a84c1e955fe9c59881fed5b8110f0",
+    "CDROM/HOLI_SD/SD_P29W.NBN": "f2151c2c0347213a878bbb28ea3a558b11c5d950200ca0218d8827c9887722bb",
+    "CDROM/MAIN_SD/SD_P00.NBN": "074340d0ed64f286d26c8a0564d09bb2ebe68653db542d559ab56763ed05406a",
+    "CDROM/MAIN_SD/SD_P00W.NBN": "5a0ab6bff28ee61340bd4935262004b7b505bc1cc087c7f43b9bf14798d2a5f9",
+    "CDROM/MAIN_SD/SD_P01.NBN": "c41dfe7950c4623315a025d5f2b1698ba1bd7bd0b399fbf8e040285982ceb456",
+    "CDROM/MAIN_SD/SD_P01W.NBN": "6fea04f95b7eb68731816fa21395605942b1b912b0b915afcfea4d540da7eb6f",
+    "CDROM/MAIN_SD/SD_P02.NBN": "914763ccc3b608fcc85d0e3e1f3abd1b37fbafdb65c3f770c8fdf8c85a0405ab",
+    "CDROM/MAIN_SD/SD_P02W.NBN": "cf98d7004f1827e3a79dc12f4fbef6add970e18396599a05a320a10d266a2f5d",
+    "CDROM/MAIN_SD/SD_P03.NBN": "734cf19bcd6f6ca2200f574c3f93606d6d8c44b0cfc0efb9f73ebe71c28a76ce",
+    "CDROM/MAIN_SD/SD_P03W.NBN": "fe44f01ad81aed7f2cb918c96762f3866c8df1f0ef8f1e86a2e942617b7e7b58",
+    "CDROM/MAIN_SD/SD_P04.NBN": "f311b88458e69306712f2096e581357215efd2b1a38710cb87ce8b768a2eb72a",
+    "CDROM/MAIN_SD/SD_P04W.NBN": "e3d9c708310b567859955524bac28893c363955abea12f08b242fcab19a8f00f",
+    "CDROM/MAIN_SD/SD_P05.NBN": "ccaaaf5f066ad2b11743dd4ee1e6262d6336068eb66f4c78587f5a87a1c2cdd8",
+    "CDROM/MAIN_SD/SD_P05W.NBN": "7dff1117947f643a2946be13cc9a2dbaec1152b90db072195800edfac60d1164",
+    "CDROM/MAIN_SD/SD_P06.NBN": "ecd6e7039004a69c878e0113760814bce9c44ae427d3ebfdbcb11d35d1761ea3",
+    "CDROM/MAIN_SD/SD_P07.NBN": "7999ab9f3ee289f0980d8eb5cbbcb9e25411a2c2d840000fba1b3a4678c68636",
+    "CDROM/MAIN_SD/SD_P08.NBN": "2476d64cf55dc95f262e6b331739da53f3897d0236f277f7e11d2fcb35a1401e",
+    "CDROM/MAIN_SD/SD_P09.NBN": "14bd2adc784c6943c7ea34b6af57039b8f83f2f04dd3fcb1eff7c5027e0258e2",
+    "CDROM/MAIN_SD/SD_P09W.NBN": "1ad4b906e8aefbb57fd0b9a22afea9af83a0d5109234f9621abc5f91829e7d28",
+    "CDROM/MAIN_SD/SD_P0A.NBN": "96d3ed6366b9461643288c24aac1222898f46a16b69cd5ac8222c851d52c61f2",
+    "CDROM/MAIN_SD/SD_P0AW.NBN": "ac87b1aa20969c26a65dc2d6785425199585ba585ee67e86444ab35e357cc63a",
+    "CDROM/MAIN_SD/SD_P0B.NBN": "6268a8549d9be1ddd1c4ec78d7b0cc71cadda20ed13e6471da67376478d698d9",
+    "CDROM/MAIN_SD/SD_P0BW.NBN": "7ae2ed9d832a4aa24f2339acc0155fba5266130682822775824f1cfdda62d42d",
+    "CDROM/MAIN_SD/SD_P0C.NBN": "91051a99aedd4720f568c42261c28497d9ab628932b526f230f986c64dea9ac6",
+    "CDROM/MAIN_SD/SD_P0CW.NBN": "e4652eacc698e6130043d71b586d43deaa9ea8ee582ed90eb3abd3aa5bcefaf6",
+    "CDROM/MAIN_SD/SD_P0D.NBN": "7680ed98af35ffd4d7e9ec06462874016f62858c30494010724728e3725ca8b0",
+    "CDROM/MAIN_SD/SD_P0DW.NBN": "ac6148de4e181b8bdb4f9df633269ac4f216a54f39d079d605276c3b64e5c304"
+  },
+  "unchanged_banner_movie": {
+    "CDROM/PROLODIR/CUT_10.NBN": "4fbc92812e043e4a2c48a970a0ed29016ebe0f93e4c235c4000d2510634b622d",
+    "OPENXA.STR": "1ac608c9cd64145d8d56b6466eb8edd1741136fc33fe16aa6ac64c328a4b8b66"
+  }
+}

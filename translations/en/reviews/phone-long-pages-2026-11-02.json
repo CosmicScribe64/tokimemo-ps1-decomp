@@ -1,0 +1,63 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "c3706ff4c86b9237ff3342ba332b58f08c0eb077",
+  "scope": "Controlled telephone stage/substep selection. Checks the actual renderer and two scrolling passages, not natural call triggering.",
+  "run": "build/emu/phone-long-pages",
+  "function_byte_samples_verified": 49,
+  "checks": [
+    {
+      "record_id": "c:TEL:8013ac0c:2",
+      "result": "Text scrolls into the final three rows, retaining the final sentence and closing parenthesis without clipping or stale letters.",
+      "captures": [
+        {
+          "frame": 900,
+          "sha256": "0874d2adf60503f8d100f7cc3f06e26d727ceceb8849046ef20c5f207ae9c8d2"
+        },
+        {
+          "frame": 1200,
+          "sha256": "7b78ed4de1d1bbc8a78702e9d22516c22262f48317ec27e4af5b29894fbef205"
+        },
+        {
+          "frame": 1500,
+          "sha256": "58c55e02419c8c9722f2f228de11b84748c8dbe4f8a0188269b9357ce8ee06ba"
+        },
+        {
+          "frame": 1800,
+          "sha256": "a85d9a537b5354c8b1642968f8a75ebf04b9f4bb3bf66d0a2873810b9616252e"
+        }
+      ]
+    },
+    {
+      "record_id": "c:TEL:8013adc0:6",
+      "result": "Text scrolls into the final three rows, retaining the final sentence and closing parenthesis without clipping or stale letters.",
+      "captures": [
+        {
+          "frame": 2250,
+          "sha256": "fdeefeb92157558eafbf782b602955735931637214d0996a2e7d33686184b6ee"
+        },
+        {
+          "frame": 2550,
+          "sha256": "47ac27afe097c3dc6b1df77549ba216f692b3c79db1ed1e080f99333433fed89"
+        },
+        {
+          "frame": 3000,
+          "sha256": "f1a26457eceb4dad33cc6f22ec0ff05dbe4ba2b53d1ccfbc3efebec2896267d6"
+        },
+        {
+          "frame": 3600,
+          "sha256": "783a361dfb9810116ad32cf3026cd1e1fbb5076b019a41b42033bc3439b594c9"
+        }
+      ]
+    }
+  ],
+  "font_trace": {
+    "entries": {},
+    "calls": 0,
+    "unknown_calls": 0,
+    "overflow_calls": 0,
+    "coverage": "vload_font uploads; includes preloaded text, excludes sprite artwork",
+    "load_address": 2147808100,
+    "ranges_address": 2148237164,
+    "frame_origin": "start of this emulator run"
+  }
+}

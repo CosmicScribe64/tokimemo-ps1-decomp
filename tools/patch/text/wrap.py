@@ -174,7 +174,8 @@ def _break_row(row: bytes, limit: int, metrics: FontMetrics, skip: int) -> tuple
         start += cut + 1
 
 
-def _balanced_row(row: bytes, limit: int, metrics: FontMetrics, skip: int) -> list[bytes] | None:
+def _balanced_row(row: bytes, limit: int, metrics: FontMetrics, skip: int,
+                  balance_last: bool = False) -> list[bytes] | None:
     """Fewest rows that fit, with the most even fill and no lone short word on the last row
     (T-39506); None when a word is wider than the window (the greedy break reports it)."""
     words = row.split(b" ")
@@ -206,7 +207,8 @@ def _balanced_row(row: bytes, limit: int, metrics: FontMetrics, skip: int) -> li
         if k == 1:
             w = span(i, count)
             result = (None if w > limit else
-                      (limit * limit if count - i == 1 and w < limit // 3 else 0), count)
+                      ((limit - w) ** 2 if balance_last else
+                       limit * limit if count - i == 1 and w < limit // 3 else 0), count)
         else:
             result = None
             for j in range(i + 1, count - k + 2):
@@ -245,7 +247,10 @@ def wrap(payload: bytes, window: Window, metrics: FontMetrics, joined: bool = Fa
     block_rows, rows_total, max_block = 0, 0, 0
     for index, (row, separator) in enumerate(_split_rows(payload)):
         lead = skip if index == 0 else 0
-        balanced = _balanced_row(row, window.width, metrics, lead) if window.wrap and window.reflow else None
+        # T-39534: balance subtitle rows, including the final row of each sentence.
+        balanced = _balanced_row(row, window.width, metrics, lead,
+                                 window.name in ("ending_player", "ending_heroine")) \
+            if window.wrap and window.reflow else None
         if balanced is not None:
             pieces, too_wide = balanced, []
         elif window.wrap:

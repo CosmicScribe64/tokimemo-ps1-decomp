@@ -97,7 +97,7 @@ CALLIGRAPHY = {'nib': 20, 'contrast': 1.2, 'entry': 0.25, 'taper': 0.7, 'wobble'
 SKY_ERASE = {'region': [0, 0, 303, 160], 'below': 48, 'margin': 2, 'smooth': [[0, 48, 14, 32]]}
 
 
-def rotated_runs(columns, cap=13, aspect=0.74, gap=4.0, weight=2.0, only=None):
+def rotated_runs(columns, cap=12, aspect=0.74, gap=4.5, weight=1.35, only=None):
     runs = []
     for family, given, point, slope in columns:
         if only and family != only:

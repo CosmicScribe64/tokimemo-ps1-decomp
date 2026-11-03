@@ -170,3 +170,25 @@ Ending summaries can exceed the entire 384-glyph atlas (the controlled Rei fixtu
 ### Runtime phone orphan handling (T-39524)
 
 Assembled telephone sentences now keep a short final word with the preceding word when both fit. Only runtime-inserted breaks move; explicit paragraphs and the six-row limit remain unchanged. The full-name reservation is included in the width check. Candidate `2f9fd663374c` passes C89/runtime tests, both disc text audits and browser checks. A fresh route completes 33,572 frames through date and save/load; targeted GPU captures verify the corrected farewell, closing quotes and preserved names. Broader source-break mapping is tracked separately in T-39525.
+
+## Continued ending speech capacity (T-39536)
+
+Long C/D/F ending speeches exceeded the 384-slot glyph atlas. The English renderer now compacts completed subtitle entries while retaining visible rows, pen positions and typewriter timing. Default matching, disc audits and the Nozomi, Rei and Yukari regressions pass. The largest sampled load is 309 glyphs. See [[tickets/T-39536-ending-continuation-glyph-capacity]] and its hashed receipts.
+
+## Source-aware break review (T-39537)
+
+`tools/patch/review_breaks.py` reviews encoded dialogue without changing payloads. Findings include the page, row, pixel widths and whether a boundary survived source-aware reflow or came from wrapping. The published-build pass covers 30,573 records and flags 1,362 generated boundaries for contextual review. Retained pauses remain separate; candidates are not confirmed defects.
+
+Exact-record overrides repair an isolated word in DATE_KA and a split numbered label in GASSHUKU. Both have actual-disc runtime receipts. Four Kagami park replies also have reviewed phrase rows, with all twelve variants inspected. Whole-corpus comparisons preserve wording and unrelated payloads. Candidate triage is complete in [[tickets/T-39537-dialogue-break-review]]: 798 distinct phrase-boundary pairs covering 1,331 occurrences and all 39 remaining early-break cases have reviewed dispositions.
+
+## Reviewed translation corrections (T-39538)
+
+`translations/en/reviewed-targets.json` keeps source-checked corrections separate from the immutable export. Its loader checks source and prior-target hashes, then requires identical protected markers in the same order before parsing. Exactly 39 malformed Yumi self-references change; unrelated records and reply counts remain intact.
+
+Six runtime receipts cover all 39 corrected records on track `7738fcbe89bee49102c68b025a5f5104ccf6b09f`. They record actual-table checks, complete text and screenshot hashes, with the limits of controlled scene selection stated explicitly. Full-disc audits and focused tests pass. [[tickets/T-39538-yumi-name-translation]] is Done; broader visual review and publication remain separate.
+
+For New Year fixtures, mode 0x53 enters `new_year_mode_handler`; mode 0x52 enters Ijuin's scene. Read overlay globals from the current ELF because the English link moves them. Pixel enlargements and memory checks resolved the apparent shortened-label issue without a code change; see [[tickets/T-39539-speaker-label-reuse]].
+
+The initial early-break triage inspected 42 generated candidates: 27 balanced layouts and five dynamic-name reservations are retained; ten phrase-boundary cases needed follow-up, since completed in T-39537. `translations/en/reviews/early-break-triage-2026-11-02.json` records IDs, payload hashes and dispositions without embedding dialogue. No payload changed, and this text-only review does not approve runtime visuals.
+
+A third exact-record wrap override restores a sentence boundary in a White Day reply. Actual-scene verification passes on `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f`. Only WHITE.BIN changes from the published disc; all other 1,370 file extents and track 2 are identical. The receipt is `translations/en/reviews/white-day-wrap-verified-2026-11-02.json`.

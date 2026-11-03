@@ -1,0 +1,806 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "b579f2ad31288f442436f718eba0cb61f7e359fe",
+  "scope": "Review of non-dialogue records excluded by the Japanese-only source-width comparison. Counts include duplicate literals and extents. Unchanged bytes do not independently prove screen geometry. The reader reviewed all distinct translated payloads; source tracing distinguishes dialogue fragments, formatting, diagnostics and unloaded code. This is not an every-route playthrough.",
+  "counts": {
+    "records": 1154,
+    "distinct_payloads": 772,
+    "unchanged_source_bytes": 836,
+    "previously_verified_stage_rows": 214,
+    "other_translated_records": 104,
+    "other_distinct_translations": 74
+  },
+  "findings": [],
+  "fortune_results": [
+    {
+      "index": 0,
+      "bytes_with_nul": 40,
+      "width_px": 174,
+      "right": 70,
+      "sha256": "e093e8dc2e73084a06097cbce3181b6f33f5ca118bb91f93584e8545de27a978"
+    },
+    {
+      "index": 1,
+      "bytes_with_nul": 37,
+      "width_px": 161,
+      "right": 57,
+      "sha256": "009810a17434b142d99ce2e59ad04cce127088d83ecb4de7bbbbc68edb279da5"
+    },
+    {
+      "index": 2,
+      "bytes_with_nul": 27,
+      "width_px": 110,
+      "right": 6,
+      "sha256": "3014c26a5c50f8b5dcd0ed715df2803b99694bd7c1e302251f25cebe61f5c4a4"
+    },
+    {
+      "index": 3,
+      "bytes_with_nul": 19,
+      "width_px": 83,
+      "right": -21,
+      "sha256": "589e55fa2e38bbd66331315ec0a822b6a413cf2be8c5b098f8fb70e3a8c62eaa"
+    },
+    {
+      "index": 4,
+      "bytes_with_nul": 28,
+      "width_px": 128,
+      "right": 24,
+      "sha256": "268e2b9c2aaaf5ce59b1b312561d9e1c70911feb81e1971c809ed7d52e81431e"
+    },
+    {
+      "index": 5,
+      "bytes_with_nul": 36,
+      "width_px": 155,
+      "right": 51,
+      "sha256": "e4c17d9f93abc424fbdc10cf52b3aba22448cf33d0373a3eb4b0c3c3596bf45f"
+    },
+    {
+      "index": 6,
+      "bytes_with_nul": 37,
+      "width_px": 165,
+      "right": 61,
+      "sha256": "b299c4e42ccaee4ffa12888ce4f1b3c2296fef988f8e7a26120a802754c1fe7e"
+    }
+  ],
+  "translated_records": [
+    {
+      "id": "c:main:8007ef48:45",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 5,
+      "sha256": "8a331fdde7032f33a71e1b2e257d80166e348e00fcb17914f48bdb57a1c63007"
+    },
+    {
+      "id": "c:main:8007ef48:49",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 5,
+      "sha256": "8a331fdde7032f33a71e1b2e257d80166e348e00fcb17914f48bdb57a1c63007"
+    },
+    {
+      "id": "c:main:8007ef48:53",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 4,
+      "sha256": "32ebb1abcc1c601ceb9c4e3c4faba0caa5b85bb98c4f1e6612c40faa528a91c9"
+    },
+    {
+      "id": "c:main:8007ef48:57",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 5,
+      "sha256": "8a331fdde7032f33a71e1b2e257d80166e348e00fcb17914f48bdb57a1c63007"
+    },
+    {
+      "id": "c:main:8007ef48:61",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 5,
+      "sha256": "8a331fdde7032f33a71e1b2e257d80166e348e00fcb17914f48bdb57a1c63007"
+    },
+    {
+      "id": "c:main:8007ef48:65",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 5,
+      "sha256": "8a331fdde7032f33a71e1b2e257d80166e348e00fcb17914f48bdb57a1c63007"
+    },
+    {
+      "id": "c:main:8007ef48:69",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 5,
+      "sha256": "8a331fdde7032f33a71e1b2e257d80166e348e00fcb17914f48bdb57a1c63007"
+    },
+    {
+      "id": "c:main:8007ef48:73",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 5,
+      "sha256": "8a331fdde7032f33a71e1b2e257d80166e348e00fcb17914f48bdb57a1c63007"
+    },
+    {
+      "id": "c:main:8007ef48:78",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 4,
+      "sha256": "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068"
+    },
+    {
+      "id": "c:main:8007ef48:81",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 4,
+      "sha256": "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068"
+    },
+    {
+      "id": "c:main:8007ef48:105",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 4,
+      "sha256": "32ebb1abcc1c601ceb9c4e3c4faba0caa5b85bb98c4f1e6612c40faa528a91c9"
+    },
+    {
+      "id": "c:ENDING:80132420:7",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 5,
+      "sha256": "8a331fdde7032f33a71e1b2e257d80166e348e00fcb17914f48bdb57a1c63007"
+    },
+    {
+      "id": "c:ENDING:80132420:10",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 5,
+      "sha256": "8a331fdde7032f33a71e1b2e257d80166e348e00fcb17914f48bdb57a1c63007"
+    },
+    {
+      "id": "c:TEL:80136724:5",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 15,
+      "sha256": "c6841a08f37db3c496639ac1d8effc3fc0389e063bc728cf44604e2ca686f227"
+    },
+    {
+      "id": "c:TEL:80136724:10",
+      "path": "(source only)",
+      "kind": "source_literal",
+      "width": 15,
+      "sha256": "c6841a08f37db3c496639ac1d8effc3fc0389e063bc728cf44604e2ca686f227"
+    },
+    {
+      "id": "CDROM/EXEDIR/ENDING.EXN:00009f18:8376cca9dd05",
+      "path": "CDROM/EXEDIR/ENDING.EXN",
+      "kind": "source_extent",
+      "width": 9,
+      "sha256": "769d3e22b2c440cabc1bcad70620923d7e61747a9f4449d3243afedf19dd7056"
+    },
+    {
+      "id": "CDROM/EXEDIR/ENDING.EXN:00009f24:8376cca9dd05",
+      "path": "CDROM/EXEDIR/ENDING.EXN",
+      "kind": "source_extent",
+      "width": 9,
+      "sha256": "769d3e22b2c440cabc1bcad70620923d7e61747a9f4449d3243afedf19dd7056"
+    },
+    {
+      "id": "c:ENDING:8013a2e8:1",
+      "path": "CDROM/EXEDIR/ENDING.EXN",
+      "kind": "source_literal",
+      "width": 145,
+      "sha256": "167dd7b52ceaabd218c9fcf937ea0ba5fa107f887ebd9766a29b8f591baadfc9"
+    },
+    {
+      "id": "c:ENDING:8013a2e8:13",
+      "path": "CDROM/EXEDIR/ENDING.EXN",
+      "kind": "source_literal",
+      "width": 106,
+      "sha256": "a9f73810a4bfdd3f2913d67c3c8c970e4040a650ddd49370ef54ce5cd65ac780"
+    },
+    {
+      "id": "c:ENDING:8013a2e8:18",
+      "path": "CDROM/EXEDIR/ENDING.EXN",
+      "kind": "source_literal",
+      "width": 93,
+      "sha256": "f3964e6dffb724a501399c8efad46b3b195ed1b975d918349f4c98b0ad38abb3"
+    },
+    {
+      "id": "c:ENDING:8013a2e8:20",
+      "path": "CDROM/EXEDIR/ENDING.EXN",
+      "kind": "source_literal",
+      "width": 112,
+      "sha256": "25c2823fa1902366a321d920ba968f6fee434732b583660a973bae2d3e6d590f"
+    },
+    {
+      "id": "c:ENDING:80132420:1",
+      "path": "CDROM/EXEDIR/ENDING.EXN",
+      "kind": "source_literal",
+      "width": 5,
+      "sha256": "8a331fdde7032f33a71e1b2e257d80166e348e00fcb17914f48bdb57a1c63007"
+    },
+    {
+      "id": "c:ENDING:80132420:4",
+      "path": "CDROM/EXEDIR/ENDING.EXN",
+      "kind": "source_literal",
+      "width": 4,
+      "sha256": "32ebb1abcc1c601ceb9c4e3c4faba0caa5b85bb98c4f1e6612c40faa528a91c9"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001efc0:393963edadba",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 295,
+      "sha256": "871d15dd966f7f92328d11ed5c112da83bc9a640e13de20f0e6ff2c5109be6a9"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f004:620684446129",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 280,
+      "sha256": "ec9674eb83866bf6b162ce8d812171d7106d847165d7f7ea00d6050354da364a"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f04c:20ef8542af03",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 292,
+      "sha256": "a28db686bc74d42b73818accc9cac37d661c34c6780f207a5625b17ae18e5484"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f090:74c4e1ab9a63",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 325,
+      "sha256": "3d321f236a72adda0b23584fd81a525829894bccd4af9551c231ade5e3b826ad"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f0dc:024889f6a9e4",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 216,
+      "sha256": "0bc1621117cf5648b55df83dfd7eebfc40e9286e325bbf0f8adc4833238ddb21"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f110:d5827387dad4",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 306,
+      "sha256": "f2dc5d06756892a3d3a0fd2ec28c1790415086e6276a6bbe51aff3c454d89c7d"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f154:ededc373b706",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 294,
+      "sha256": "05a07a55b8a67d2cba5369294cb32f4854e41c8be426ad49cda1a51af98342f6"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f194:3496c6943b46",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 423,
+      "sha256": "db6377d6e81a03dd5517ebf0bea95f2048cc4ac4bf8164a8383eb7d2992baad1"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f1ec:957286435267",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 293,
+      "sha256": "d46016d6249d83900aa50a0faf04c90b96b3089966f77d98a3292647d36fe2d9"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f22c:91749c5b1475",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 329,
+      "sha256": "b7b991bbcb84dbe2ae90f10360baa17a3075032a8a3b21dc09dbd1b5c137757d"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f278:1d8c86b8ed6f",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 155,
+      "sha256": "16317422bbf17f2564892c4d349984b40b6e64d5a3efcc65e6d0e04ac4ffd06f"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f2a4:29225a898a4a",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 223,
+      "sha256": "21ec0dca9d36e62bc9ce614c3a22ed694b34dc488a8eeb48e80f1536d85a2153"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f2d4:585340ec4f84",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 331,
+      "sha256": "cb5428036a2489a99737adf2b20e6b8743b72628e1d9f71d816814753276aa1d"
+    },
+    {
+      "id": "CDROM/EXEDIR/ETC.EXN:0001f31c:d8b258633bd5",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_extent",
+      "width": 251,
+      "sha256": "c091e7279c2923dd582e9213a75fab81820b9c807ff1cc1541e54a806b14ca95"
+    },
+    {
+      "id": "c:ETC:80146400:1",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_literal",
+      "width": 60,
+      "sha256": "8840c4cbf206c83da96cc09fe64e93531ac85b80373a221042fa40f0e94a970c"
+    },
+    {
+      "id": "c:ETC:80146d4c:2",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_literal",
+      "width": 85,
+      "sha256": "f77dccd637959b2e69c50160ac35e16bc3d5e92b8020d0d79b7977c2e94077b1"
+    },
+    {
+      "id": "c:ETC:80146d4c:3",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_literal",
+      "width": 73,
+      "sha256": "28fc38e525524cde7e2411bc007a5545fcbbb413dfc4c45b47e9694e56b0796f"
+    },
+    {
+      "id": "c:ETC:8014790c:1",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_literal",
+      "width": 35,
+      "sha256": "219c4a6c86a716e99d5dc9611b61e584deb11b57e972d87d4b773387ebc3cadd"
+    },
+    {
+      "id": "c:ETC:801480d0:2",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_literal",
+      "width": 46,
+      "sha256": "6718abe544e2343410b234e7e0fa1cf25f08032e7836c056d2f8d0236b37b1b0"
+    },
+    {
+      "id": "c:ETC:801480d0:4",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_literal",
+      "width": 49,
+      "sha256": "f6c6ae219441497e1b2160f61b77e6770e2a227fb92d295e8046b5c1f2949d3c"
+    },
+    {
+      "id": "c:ETC:801480d0:6",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_literal",
+      "width": 49,
+      "sha256": "ee5348717f13b3349a8732c46264d7cf08133e8fbb0fb27c4baa9f698d08d70b"
+    },
+    {
+      "id": "c:ETC:801480d0:8",
+      "path": "CDROM/EXEDIR/ETC.EXN",
+      "kind": "source_literal",
+      "width": 63,
+      "sha256": "eeb06d53594f51acd3490b89b8c4902809f01ba18d0f83b79eacd42d5ef65133"
+    },
+    {
+      "id": "c:GYOZI:801368b8:5",
+      "path": "CDROM/EXEDIR/GYOZI.EXN",
+      "kind": "source_literal",
+      "width": 36,
+      "sha256": "b47341924e70b657431303bffaa268846b4a39917400e39e5ffb805a8a2077d9"
+    },
+    {
+      "id": "c:GYOZI:801368b8:6",
+      "path": "CDROM/EXEDIR/GYOZI.EXN",
+      "kind": "source_literal",
+      "width": 50,
+      "sha256": "197da65ae2aa7116ab2f9f28d5f2696e846894d3407ea3e0eb94a33d04713299"
+    },
+    {
+      "id": "c:GYOZI:801368b8:7",
+      "path": "CDROM/EXEDIR/GYOZI.EXN",
+      "kind": "source_literal",
+      "width": 69,
+      "sha256": "30d1cc24d1d25fc7e8d66535f61df607e780829c1f12061e591a8b1b4ad330f1"
+    },
+    {
+      "id": "c:NAME_ENT:8014068c:3",
+      "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+      "kind": "source_literal",
+      "width": 32,
+      "sha256": "1d6d84930b5e9b93bdb94a853db2864cd9d4b86718bf668409992802c1f40821"
+    },
+    {
+      "id": "c:NAME_ENT:8014068c:4",
+      "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+      "kind": "source_literal",
+      "width": 32,
+      "sha256": "ef55e6cc544e245824734f62618ef7e7ba133e87154466745a081f0faaaa3479"
+    },
+    {
+      "id": "c:NAME_ENT:8014068c:5",
+      "path": "CDROM/EXEDIR/NAME_ENT.EXN",
+      "kind": "source_literal",
+      "width": 32,
+      "sha256": "dc88d50550f998d80a3c1d56790529efdd953c6ffb2816bcc46b4c8f7d1e733d"
+    },
+    {
+      "id": "c:RPG_BAT:801505b8:2",
+      "path": "CDROM/EXEDIR/RPG_BAT.EXN",
+      "kind": "source_literal",
+      "width": 150,
+      "sha256": "1289856e83fc17456a1b09544038a0f37d4dab7bf41ae34e4e3707c10217b6c2"
+    },
+    {
+      "id": "c:SHOUGATU:80133b44:2",
+      "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+      "kind": "source_literal",
+      "width": 5,
+      "sha256": "8a331fdde7032f33a71e1b2e257d80166e348e00fcb17914f48bdb57a1c63007"
+    },
+    {
+      "id": "c:SHOUGATU:801350f8:4",
+      "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+      "kind": "source_literal",
+      "width": 36,
+      "sha256": "b47341924e70b657431303bffaa268846b4a39917400e39e5ffb805a8a2077d9"
+    },
+    {
+      "id": "c:SHOUGATU:801350f8:5",
+      "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+      "kind": "source_literal",
+      "width": 50,
+      "sha256": "197da65ae2aa7116ab2f9f28d5f2696e846894d3407ea3e0eb94a33d04713299"
+    },
+    {
+      "id": "c:SHOUGATU:801350f8:6",
+      "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+      "kind": "source_literal",
+      "width": 69,
+      "sha256": "30d1cc24d1d25fc7e8d66535f61df607e780829c1f12061e591a8b1b4ad330f1"
+    },
+    {
+      "id": "c:SHOUGATU:8013afec:1",
+      "path": "CDROM/EXEDIR/SHOUGATU.EXN",
+      "kind": "source_literal",
+      "width": 33,
+      "sha256": "08b484032255fa8d7fcbe1f60ddc7c9fb033ad4089661ef7643b6585c7de57ff"
+    },
+    {
+      "id": "CDROM/EXEDIR/TEL.EXN:0000ce2c:23d2d5689234",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_extent",
+      "width": 32,
+      "sha256": "986a12d684648d008445f4fddca04c91b9fc186b4aaf09fcda37db3a93c01094"
+    },
+    {
+      "id": "CDROM/EXEDIR/TEL.EXN:0000ce58:23d2d5689234",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_extent",
+      "width": 15,
+      "sha256": "c6841a08f37db3c496639ac1d8effc3fc0389e063bc728cf44604e2ca686f227"
+    },
+    {
+      "id": "CDROM/EXEDIR/TEL.EXN:0000f770:ee1e9b5d442d",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_extent",
+      "width": 123,
+      "sha256": "ec1eb7e9f7a359c39c5aeed8debf72a9f86d0f7333a4b5f4a35d891c7de7f4cc"
+    },
+    {
+      "id": "CDROM/EXEDIR/TEL.EXN:0000f7ac:a768e9f6512b",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_extent",
+      "width": 138,
+      "sha256": "d4564147d8d495672f966b3014d7b2368fc21f831810be43996927afde6965f9"
+    },
+    {
+      "id": "CDROM/EXEDIR/TEL.EXN:0000f7d4:cd6749051537",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_extent",
+      "width": 121,
+      "sha256": "eb6d8a6f831ec49acfa5fb5a162fd68cd9f37b6c06c31e73b3434a3fa82ded28"
+    },
+    {
+      "id": "CDROM/EXEDIR/TEL.EXN:0000f80c:d25751625c95",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_extent",
+      "width": 59,
+      "sha256": "a12456aab8c4fcd9e7660c43dc00b7aad56e99ce72ecb438843abf292d502749"
+    },
+    {
+      "id": "CDROM/EXEDIR/TEL.EXN:0000f828:d25751625c95",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_extent",
+      "width": 59,
+      "sha256": "a12456aab8c4fcd9e7660c43dc00b7aad56e99ce72ecb438843abf292d502749"
+    },
+    {
+      "id": "CDROM/EXEDIR/TEL.EXN:0000f85c:e6f4eab0103a",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_extent",
+      "width": 236,
+      "sha256": "12e01fbf9214de53a9affe9a8af338d04cdfba3442fca0c2eddbac59f6dcdc99"
+    },
+    {
+      "id": "CDROM/EXEDIR/TEL.EXN:0000f890:98cfd6537f5d",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_extent",
+      "width": 121,
+      "sha256": "a9be984b17646fc433ebdb73f5c35d473531b50a0a32844413dc922a85d08372"
+    },
+    {
+      "id": "CDROM/EXEDIR/TEL.EXN:0000f8b0:98cfd6537f5d",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_extent",
+      "width": 121,
+      "sha256": "a9be984b17646fc433ebdb73f5c35d473531b50a0a32844413dc922a85d08372"
+    },
+    {
+      "id": "CDROM/EXEDIR/TEL.EXN:0000f908:d38e6ba95e66",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_extent",
+      "width": 217,
+      "sha256": "7bef1a9630dee68629d22f3d89298c2d0ea2f34fc3ac2d5eb0ac0f9ad1e57f6d"
+    },
+    {
+      "id": "c:TEL:80139e90:1",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_literal",
+      "width": 70,
+      "sha256": "b5c4a4a0253e0f8bfd399ad2ed1a9e9fc78829c6435e545b9a7949e8dc947773"
+    },
+    {
+      "id": "c:TEL:80139e90:2",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_literal",
+      "width": 137,
+      "sha256": "29ae9f1d4fb6d0db95de5338ec7dd5a08660a6f208b37447691d613bc2e03fb2"
+    },
+    {
+      "id": "c:TEL:8013adc0:4",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_literal",
+      "width": 95,
+      "sha256": "c01a8a35bd861989860ba1a41ba2664aec9ffa4834ac41c743c34af7f6529674"
+    },
+    {
+      "id": "c:TEL:8013adc0:5",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_literal",
+      "width": 215,
+      "sha256": "5c7548b0bc8bb7d93ae8a8c639bf000d47b5f2a4860d19cc0d1abc1ba8bb8679"
+    },
+    {
+      "id": "c:TEL:8013b54c:2",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_literal",
+      "width": 31,
+      "sha256": "5aacc51ca63e9011d18f1bbbc32fe3e957da5b8a8c61a872897ae3f866855d17"
+    },
+    {
+      "id": "c:TEL:8013b54c:3",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_literal",
+      "width": 135,
+      "sha256": "b755d3b82e4d28f5f538e6cc678e99709534fee58b6ccaca1df1c72f38747729"
+    },
+    {
+      "id": "c:TEL:801352f0:3",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_literal",
+      "width": 90,
+      "sha256": "ba45ab77f353aaf84faca956d410e320cf1f0afdee9568bb7a4cbe2a4d956547"
+    },
+    {
+      "id": "c:TEL:80136724:6",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_literal",
+      "width": 76,
+      "sha256": "e0055586f768e0ed8206fc59890236c003d1012aff7e317c0981cf41695cb696"
+    },
+    {
+      "id": "c:TEL:80136724:11",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_literal",
+      "width": 192,
+      "sha256": "5c05b6cf3d32cb11538fb71788a7f24aaaa00a18af87a4e329a98d974aad1342"
+    },
+    {
+      "id": "c:TEL:80136724:13",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_literal",
+      "width": 51,
+      "sha256": "979fd910e1adeb4dc01ecbfba6cdf34606229cfb7bf057d673c6bf8c39ef4a55"
+    },
+    {
+      "id": "c:TEL:80136724:16",
+      "path": "CDROM/EXEDIR/TEL.EXN",
+      "kind": "source_literal",
+      "width": 56,
+      "sha256": "30f9ef42cb533dc8bbe2f2a249433825ae4a0eea4e893542a90adbbf32c3d887"
+    },
+    {
+      "id": "CDROM/EXEDIR/TT.EXN:0001c100:78a83aafb506",
+      "path": "CDROM/EXEDIR/TT.EXN",
+      "kind": "source_extent",
+      "width": 28,
+      "sha256": "ca009a233fed1c918d587d5d0bced919ece15066beaa6b2591c0bbae4be2013e"
+    },
+    {
+      "id": "SLPM_86.053:000718e4:5871d889baa3",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 9,
+      "sha256": "769d3e22b2c440cabc1bcad70620923d7e61747a9f4449d3243afedf19dd7056"
+    },
+    {
+      "id": "SLPM_86.053:000718f4:5871d889baa3",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 9,
+      "sha256": "769d3e22b2c440cabc1bcad70620923d7e61747a9f4449d3243afedf19dd7056"
+    },
+    {
+      "id": "SLPM_86.053:00071904:370f8ad5618f",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 8,
+      "sha256": "0ead086dacc1230ae6545be37fb01588a14088da600399edb315f4e585536235"
+    },
+    {
+      "id": "SLPM_86.053:00071914:8376cca9dd05",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 9,
+      "sha256": "769d3e22b2c440cabc1bcad70620923d7e61747a9f4449d3243afedf19dd7056"
+    },
+    {
+      "id": "SLPM_86.053:00071924:8376cca9dd05",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 9,
+      "sha256": "769d3e22b2c440cabc1bcad70620923d7e61747a9f4449d3243afedf19dd7056"
+    },
+    {
+      "id": "SLPM_86.053:00071934:8376cca9dd05",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 9,
+      "sha256": "769d3e22b2c440cabc1bcad70620923d7e61747a9f4449d3243afedf19dd7056"
+    },
+    {
+      "id": "SLPM_86.053:00071944:8376cca9dd05",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 9,
+      "sha256": "769d3e22b2c440cabc1bcad70620923d7e61747a9f4449d3243afedf19dd7056"
+    },
+    {
+      "id": "SLPM_86.053:00071954:8376cca9dd05",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 9,
+      "sha256": "769d3e22b2c440cabc1bcad70620923d7e61747a9f4449d3243afedf19dd7056"
+    },
+    {
+      "id": "SLPM_86.053:00071968:0c3e57450654",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 8,
+      "sha256": "6c179f21e6f62b629055d8ab40f454ed02e48b68563913473b857d3638e23b28"
+    },
+    {
+      "id": "SLPM_86.053:00071974:0c3e57450654",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 8,
+      "sha256": "6c179f21e6f62b629055d8ab40f454ed02e48b68563913473b857d3638e23b28"
+    },
+    {
+      "id": "SLPM_86.053:000719f4:370f8ad5618f",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 8,
+      "sha256": "0ead086dacc1230ae6545be37fb01588a14088da600399edb315f4e585536235"
+    },
+    {
+      "id": "SLPM_86.053:00075c20:8e1e6d4d402c",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 428,
+      "sha256": "eeaa2ad1f2ca9a6f73daaf3b1d0c7fddee29221a2fb657e3838d4fea585de1d2"
+    },
+    {
+      "id": "SLPM_86.053:00075cbc:0eece0091a24",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 477,
+      "sha256": "8d95664acd07be890e002fa729c54e2c2c6f2e6b38a7da1ea0700cfbc548bb8a"
+    },
+    {
+      "id": "SLPM_86.053:00075d20:b37d1465cade",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 293,
+      "sha256": "400fd2d508a578ddc161bfd109f8c585a49b67eb73fa63c57935552f55c3dec8"
+    },
+    {
+      "id": "SLPM_86.053:00075d74:47fa26b3287e",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 358,
+      "sha256": "10c5f6a423ab2569a9b1d20e65a57cebb06e05a1ab12599979bb56389c53e4f7"
+    },
+    {
+      "id": "SLPM_86.053:00075de0:8ffcda58bea5",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 93,
+      "sha256": "f1ee1c41edcd35e0ea92d8eb9402f5d7ef339cd7ca5abddc95dd072f276927bc"
+    },
+    {
+      "id": "SLPM_86.053:00075e0c:48a6d7d45052",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 264,
+      "sha256": "e2c72eeb0e2608c7c88e692f6efc862e7a139178351d30912c82988ec5f8e54d"
+    },
+    {
+      "id": "SLPM_86.053:00075e58:eaef9ac27bcb",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 135,
+      "sha256": "80a68c537bab4c96dd2ef53c1a6544c0a3680212e23fbc3a35f4490409f7090b"
+    },
+    {
+      "id": "SLPM_86.053:00075e74:b1c5085df322",
+      "path": "SLPM_86.053",
+      "kind": "source_extent",
+      "width": 181,
+      "sha256": "35e4893caabefa0de8ca680b32ec2e50a8ae3a9d8d3d2875f02674949d4b4b8a"
+    },
+    {
+      "id": "c:main:80076c7c:1",
+      "path": "SLPM_86.053",
+      "kind": "source_literal",
+      "width": 84,
+      "sha256": "cb98eb927c154bdef39bae7c9f8ac95bfd23f9179149aa145622e3f18b827a20"
+    },
+    {
+      "id": "c:main:80076c7c:2",
+      "path": "SLPM_86.053",
+      "kind": "source_literal",
+      "width": 16,
+      "sha256": "10c22bcf4c768b515be4e94bcafc71bf3e8fb5f70b2584bcc8c7533217f2e7f9"
+    },
+    {
+      "id": "c:main:80061498:1",
+      "path": "SLPM_86.053",
+      "kind": "source_literal",
+      "width": 34,
+      "sha256": "52cc5c4dba2ee4687e8c81d220d6c071ed012a827516db208d9ed0d1706c561e"
+    },
+    {
+      "id": "c:main:80061498:2",
+      "path": "SLPM_86.053",
+      "kind": "source_literal",
+      "width": 26,
+      "sha256": "e3ee915a8e8c7aa02d2fced443314522b20824abd2535d5959c41dc8ab8a09e4"
+    },
+    {
+      "id": "c:main:80061498:3",
+      "path": "SLPM_86.053",
+      "kind": "source_literal",
+      "width": 173,
+      "sha256": "7b4802386c84047b65c26187b5fddcd002e34b91d7da14f8f1811e75b9b031c6"
+    }
+  ],
+  "evidence": [
+    "translations/en/reviews/stage-controls-and-menu-spacing-2026-11-02.json",
+    "translations/en/reviews/menu-direct-call-triage-2026-11-02.json",
+    "build/mixed-label-context.log",
+    "build/mixed-label-census.log"
+  ],
+  "limitations": [
+    "The old inventory source line numbers drift in some generated files; those consumers were located by their literal strings instead.",
+    "Full off-route editorial reading remains open.",
+    "The unchanged-source bucket is an inventory disposition, not a new geometric proof."
+  ]
+}

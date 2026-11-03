@@ -1,0 +1,45 @@
+{
+  "ticket": "T-39542",
+  "target_sha1": "81d34fdf65e956898051a76a72f8adeeeb7c804b",
+  "scope": "Controlled seasonal callback executes the production fortune setter, followed by the actual SHOGATU table-3 group-31 line-0 talk renderer. Previous scene text is cleared before selecting the line. This checks substitution and placement, not a natural shrine playthrough.",
+  "screenshots": [
+    {
+      "file": "build/emu/fortune-values-cleared/shot_final.png",
+      "sha256": "4f40882535b6b6c36a2d11922e10a2e9315c4982c4b688be2aad93602b06a334"
+    },
+    {
+      "file": "build/emu/fortune-values-middle/shot_final.png",
+      "sha256": "e2ffd06ace242f6d467e9d2f6b78674cfb6937ab747445a1ab2ce8aa575c6094"
+    },
+    {
+      "file": "build/emu/fortune-values-chukichi/shot_final.png",
+      "sha256": "b21c2031e041f555b58d12eb2ba24ed224a6935cf23be2d22c1f65b0ab9dcd11"
+    }
+  ],
+  "checks": {
+    "native_regressions": 16,
+    "original_binary_hashes": 27,
+    "script_disc_audit": "passed",
+    "executable_disc_audit": "passed",
+    "browser": [
+      "wrong size",
+      "wrong source hash",
+      "corrupted patch",
+      "cancel",
+      "full patch",
+      "download hash",
+      "cue",
+      "no upload",
+      "responsive layout",
+      "invalid archive",
+      "archive drop",
+      "extraction cancel",
+      "audio download hash",
+      "archive cue",
+      "mobile result"
+    ],
+    "main_load_end": "0x801314B0",
+    "main_load_limit": "0x80132000"
+  },
+  "remaining_scope": "Menu geometry and broader text-quality review remain under T-39511."
+}

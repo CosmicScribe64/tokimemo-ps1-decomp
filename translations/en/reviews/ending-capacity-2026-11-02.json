@@ -1,0 +1,169 @@
+{
+  "ticket": "T-39536",
+  "target_sha1": "66d0c190c1b60f200fa9e1796d120e890a14fa86",
+  "scope": "Controlled ending entry and normal subtitle progression. All 98 selected Nozomi captures and 131 Rei captures inspected, including the final dialogue. Other routes are separate checks.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-10:g0000:l0003",
+      "payload_sha256": "f2c6522dd73b49abe08c0ce88f3a516386106dffbecf9d393f129933d56bab36",
+      "run": "build/emu/ending-capacity-nozomi",
+      "completed_frame": 6390,
+      "completed_text_position": 87,
+      "maximum_sampled_glyphs_for_table": 234,
+      "result": "Complete scrolling rows and final punctuation inspected; no overlap, clipping or stale glyphs.",
+      "captures": [
+        {
+          "frame": 5610,
+          "sha256": "a6eb2af3c65fdeb1d7ca72a9ac55fc4627e54c6258f8d83717b9ba18ab978930"
+        },
+        {
+          "frame": 5850,
+          "sha256": "d72562b2afb3a4e62c1afd718999d174d36edf0cc227eac50ab6c68fcc48a9a3"
+        },
+        {
+          "frame": 6090,
+          "sha256": "c8890d8071e27bfa5218a64108e7b37bd3684ba4beaac06bcb77d8d43b0d12be"
+        },
+        {
+          "frame": 6330,
+          "sha256": "a702287d8a8bfab5a8c18761d891a740ea52a919c5a9a38838d58ba8c1fb0691"
+        },
+        {
+          "frame": 6390,
+          "sha256": "8695e627ea0d286c2809bd3424293c346eee101a438ced90c5c4c5ae634ca026"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-10:g0000:l0013",
+      "payload_sha256": "77dffe680025ae2613dd0bb45aa1739f246d5c8a9e7eff7d21b0907e02041c5d",
+      "run": "build/emu/ending-capacity-nozomi",
+      "completed_frame": 13080,
+      "completed_text_position": 131,
+      "maximum_sampled_glyphs_for_table": 234,
+      "result": "Complete scrolling rows and final punctuation inspected; no overlap, clipping or stale glyphs.",
+      "captures": [
+        {
+          "frame": 12600,
+          "sha256": "78a3c2c91363095014e2f322ef90db24733dc629caaedff48b4396360bd27498"
+        },
+        {
+          "frame": 12840,
+          "sha256": "3fb25ec5d336012f5ddfc439b6e744b8b974ad1e6764d43b152c5f152e22ed4b"
+        },
+        {
+          "frame": 13080,
+          "sha256": "3bdc27a069bf20aeb561d6dfc293c3ce5d099f4c62d9c20340a9659ac1872bb2"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-10:g0000:l0021",
+      "payload_sha256": "55e2a9eaa8fb812840165d72f23689a9ce8cc147057821b352e47ced73078fb7",
+      "run": "build/emu/ending-capacity-nozomi",
+      "completed_frame": 17010,
+      "completed_text_position": 100,
+      "maximum_sampled_glyphs_for_table": 234,
+      "result": "Complete scrolling rows and final punctuation inspected; no overlap, clipping or stale glyphs.",
+      "captures": [
+        {
+          "frame": 16110,
+          "sha256": "a2fd3115e3ff4d46a22e13a47f89855f002c43a7db9415f13386ee812db59d56"
+        },
+        {
+          "frame": 16350,
+          "sha256": "4f96c91ae4d77b4e74c5f792bf1da30d043f55db8da00f296ad09034d620b15b"
+        },
+        {
+          "frame": 16590,
+          "sha256": "ce8815f6f4b4d243366e20dd775611b67c9ecc7161d74d39e1b999da2c02ed17"
+        },
+        {
+          "frame": 16830,
+          "sha256": "3c52b9ca027ac6c0c19f98845a2777b2dc443cf7d0a117910181f069b39c50d7"
+        },
+        {
+          "frame": 17010,
+          "sha256": "bc7c03ce31573e09998ccdf1ed8c3bff42f003f4ff35a86c90b083cc757549f6"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-5:g0000:l0007",
+      "payload_sha256": "97f50c20d7465a189eff6f242449904285232ce03c669a1d52745e13a843108d",
+      "run": "build/emu/ending-capacity-rei",
+      "completed_frame": 7080,
+      "completed_text_position": 52,
+      "maximum_sampled_glyphs_for_table": 137,
+      "result": "Complete scrolling rows and final punctuation inspected; no overlap, clipping or stale glyphs.",
+      "captures": [
+        {
+          "frame": 6630,
+          "sha256": "1c7952dcf48201a22d708e3546a60a4222b626aafa4169a63671f2b727f0abf9"
+        },
+        {
+          "frame": 6870,
+          "sha256": "a0251cf9acaebe1086d5dabeb4e94e74c9842006c3b72a37047b5a99c81c3879"
+        },
+        {
+          "frame": 7080,
+          "sha256": "ea560c196312373ed688d1ebbb0a4ef08b90dc318de750accafd84b5146b89fd"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-5:g0000:l0029",
+      "payload_sha256": "1ad4b1dcf2e81a546736f40888150c30ae204f9676d0a1307b72678b12be0821",
+      "run": "build/emu/ending-capacity-rei",
+      "completed_frame": 20070,
+      "completed_text_position": 74,
+      "maximum_sampled_glyphs_for_table": 137,
+      "result": "Complete scrolling rows and final punctuation inspected; no overlap, clipping or stale glyphs.",
+      "captures": [
+        {
+          "frame": 19410,
+          "sha256": "fad3b9d7b48a11b7649e2f61c0a1e7016d5fc475d6c96190f6ad34e0c717778b"
+        },
+        {
+          "frame": 19650,
+          "sha256": "ca99d4b4365e00fac1ac4273fa6a311be88b2bcfc93106691813fc8df72b73a0"
+        },
+        {
+          "frame": 19890,
+          "sha256": "0594332f863135bb007bf29788fb9abef2ba1bab5571c0df54916cb43846da6a"
+        },
+        {
+          "frame": 20070,
+          "sha256": "9f6eb89c689a61dc01037cfb8ff4d42f3606d6fd4a80dd08190f45a5f79574e6"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-5:g0000:l0043",
+      "payload_sha256": "51ac48081873bbf399a933dfea736959b32d8e32787682427ca4ace3a749f227",
+      "run": "build/emu/ending-capacity-rei-tail",
+      "completed_frame": 2310,
+      "completed_text_position": 60,
+      "maximum_sampled_glyphs_for_table": 303,
+      "result": "Complete scrolling rows and final punctuation inspected; no overlap, clipping or stale glyphs.",
+      "captures": [
+        {
+          "frame": 1770,
+          "sha256": "5af15ae6f9fbd72eca5ba09c1aecb308f7b491b2d41fc025c714a7e9fd50b6ee"
+        },
+        {
+          "frame": 2010,
+          "sha256": "98bcc1ff3f5227b08560efcb88e78889def143a82908db1e361bde2bb2dd9bc5"
+        },
+        {
+          "frame": 2250,
+          "sha256": "c05d9966bd85a49f0718a6326d704c0dd2d144bbd97eec76819423308f7b993c"
+        },
+        {
+          "frame": 2310,
+          "sha256": "221d4ae5fe58bd355e5a9ad8352571ab193bf1618c8f032675bd3b3c9f76d06e"
+        }
+      ]
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 ---
 id: T-39503
 title: Write every text container back from records
-status: In Review
+status: Done
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-01
+updated: 2026-11-02
 links: ["[[tickets/T-39500-english-translation-patch]]", "[[english-text-containers]]", "tools/patch/text/", "tools/patch_text.py", "tools/test_patch_text.py"]
 ---
 
@@ -32,3 +32,9 @@ Part of [[tickets/T-39500-english-translation-patch]].
 - For T-39502: in talk scripts, space and the letters q n P p m F G Y S O W A M are control codes; inline labels have a fixed length; 557 overlay-table targets wrap the Japanese in a marker, which the writer drops.
 - Awaiting code review against CODING_STANDARDS.md.
 
+
+## Final standards review
+
+Reviewed container ownership/alias assignment, fixed-slot bounds, structure preservation and pointer placement in `tools/patch/text/containers.py`, `image.py` and `inplace.py`, plus C-literal location, escaping, array sizing and identity checks in `c_literals.py`. In-place updates verify expected original bytes; relocation reserves modeled slots before allocating overflow data. Unmapped or overflowing records remain explicit in reports. Literal rewrites leave original sources intact and use the English build tree.
+
+The production text tests include original-container identity, record coverage, C-literal round trips and English pointer checks. The latest build's 24 writer/reviewed-target tests pass (`build/gift-consistency-build.log`). Published-build readback audits independently verify 31,334 script pointers and report zero pending executable bindings. These supplement the original full identity counts above; they do not replace them with a smaller sample. No unresolved standards findings remain.

@@ -345,6 +345,11 @@ def audit_derived(record, data, base, translate, payloads, slots):
                    if matching_payload(data, base, target, payloads[rid] + b'\0')]
         if not matched:
             raise ValueError('Stage pointer does not reach expected payload: ' + record['id'])
+        skip = stage.get('body_relative_offset', 0)
+        if skip:
+            prefix = bytes.fromhex(stage.get('protected_prefix_hex', ''))
+            if len(prefix) != skip or read_address(data, base, target, skip) != prefix:
+                raise ValueError('Stage control prefix changed or missing: ' + record['id'])
         result['pointers'].append({'site': site, 'target': target, 'matched_ids': matched,
                                    'body_skip': stage.get('body_relative_offset', 0)})
     return result
@@ -402,6 +407,8 @@ def referenced_candidates(data, base, references, hooks):
 def audit_language_census(files, bases, translations, units, report, link):
     reviewed = json.loads(Path('translations/en/reviews/executable-binding-2026-11-02.json')
                           .read_text())['candidate_classification']
+    reviewed += json.loads(Path('translations/en/reviews/twinbee-sprite-attributes-2026-11-03.json')
+                           .read_text())['candidate_classification']
     numeric = {(row['unit'], row['symbol']): row for row in reviewed
                if row['classification'] == 'numeric_data'}
     code = next(row for row in reviewed if row['classification'] == 'code_pointer')

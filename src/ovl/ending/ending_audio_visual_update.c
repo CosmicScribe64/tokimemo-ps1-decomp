@@ -201,6 +201,15 @@ s32 ending_audio_level_update(void) {
     } else if (lvl >= 3) {
         D_8011F524 = 3;
     }
+#ifdef TOKIMEMO_ENGLISH
+    /* T-39534: translated ending dialogue stays visible without holding a button. */
+    for (i = 1; i <= *cnt; i++) {
+        e = (TextEntry *)get_k_work(i);
+        if (e->y >= 0x48) {
+            e->active = 1;
+        }
+    }
+#else
     if (g->pad_held != 0) {
         for (i = 1; i <= *cnt; i++) {
             e = (TextEntry *)get_k_work(i);
@@ -214,6 +223,7 @@ s32 ending_audio_level_update(void) {
         e = (TextEntry *)get_k_work(i);
         e->active = 0;
     }
+#endif
 }
 
 void ending_audio_scene_character_dispatch(void) {

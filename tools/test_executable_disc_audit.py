@@ -72,7 +72,7 @@ class ExecutableAuditTest(unittest.TestCase):
         self.slots = {'physical': {'exact': True}}
         self.record = {'id': 'view', 'kind': 'stage_text_record', 'context': {
             'source_inventory_record_ids': ['physical'],
-            'stage_context': {'body_relative_offset': 1,
+            'stage_context': {'body_relative_offset': 0,
                               'uses': [{'pointer_evidence': {'address': self.base}}]}}}
 
     def check_view(self, record=None):
@@ -83,6 +83,18 @@ class ExecutableAuditTest(unittest.TestCase):
         result = self.check_view()
         self.assertEqual(result['pointers'][0]['site'], self.base + 4)
         self.assertEqual(result['pointers'][0]['target'], self.base + 48)
+
+    def test_missing_control_fails_even_when_payload_and_pointer_agree(self):
+        self.record['context']['stage_context'].update(body_relative_offset=1,
+                                                       protected_prefix_hex='67')
+        self.data[48:55] = b'gHello\0'
+        self.payloads['physical'] = b'gHello'
+        self.check_view()
+        for text in (b'Hello', b'EHello'):
+            self.data[48:55] = (text + b'\0').ljust(7, b'\0')
+            self.payloads['physical'] = text
+            with self.assertRaisesRegex(ValueError, 'control prefix'):
+                self.check_view()
 
     def test_wrong_pointer_fails_even_if_expected_string_exists(self):
         struct.pack_into('<I', self.data, 4, self.base + 64)

@@ -5,6 +5,15 @@
 
 void talk_names_set();
 
+/* T-39546: English name fields can each use 56 pixels. */
+#ifdef TOKIMEMO_ENGLISH
+#define TOUR_FORTUNE_GIVEN_X -0x44
+#define TOUR_FORTUNE_BLOOD_X 0
+#else
+#define TOUR_FORTUNE_GIVEN_X -0x48
+#define TOUR_FORTUNE_BLOOD_X -0x10
+#endif
+
 INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/culture_festival_tour/computer_fortune.rodata", D_80155D20);
 
 INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/culture_festival_tour/computer_fortune.rodata", D_80155D28);
@@ -123,7 +132,7 @@ void tour_stage_fortune_telling(void) {
         } else {
             set_kanji_string(-0x80, 0x42, 0, (s32) girl_short_name_table[game_mode_scene_girl], 0);
         }
-        set_kanji_string(-0x48, 0x42, 0, (s32)names.names[game_mode_scene_girl], 0);
+        set_kanji_string(TOUR_FORTUNE_GIVEN_X, 0x42, 0, (s32)names.names[game_mode_scene_girl], 0);
         k_disp_start(4);
         tour_fortune_wait_counter = 0;
         mode_step_next();
@@ -136,7 +145,7 @@ void tour_stage_fortune_telling(void) {
         }
         break;
     case 10:
-        set_kanji_string(-0x10, 0x42, 0, (s32) "血液型", 0);
+        set_kanji_string(TOUR_FORTUNE_BLOOD_X, 0x42, 0, (s32) "血液型", 0);
         k_disp_start(5);
         mode_step_next();
         break;
@@ -169,7 +178,7 @@ void tour_stage_fortune_telling(void) {
         break;
     case 15:
         set_kanji_string(-0x80, 0x52, 0, (s32) g->player_family_name, 0);
-        set_kanji_string(-0x48, 0x52, 0, (s32) g->player_given_name, 0);
+        set_kanji_string(TOUR_FORTUNE_GIVEN_X, 0x52, 0, (s32) g->player_given_name, 0);
         k_disp_start(8);
         tour_fortune_wait_counter = 0;
         mode_step_next();
@@ -182,7 +191,7 @@ void tour_stage_fortune_telling(void) {
         }
         break;
     case 17:
-        set_kanji_string(-0x10, 0x52, 0, (s32) "血液型", 0);
+        set_kanji_string(TOUR_FORTUNE_BLOOD_X, 0x52, 0, (s32) "血液型", 0);
         k_disp_start(9);
         mode_step_next();
         break;

@@ -58,6 +58,10 @@ class Window:
 ENGLISH_ROW_BYTES = 159
 
 WINDOWS = {window.name: window for window in (
+    Window("ending_player", -0x58, MESSAGE_RIGHT, 2, True, True, ENGLISH_ROW_BYTES,
+           "ending_dialogue_line_render: player text x=-0x58; two scrolling rows", reflow=True),
+    Window("ending_heroine", -0x82, MESSAGE_RIGHT, 2, True, True, ENGLISH_ROW_BYTES,
+           "ending_dialogue_line_render: heroine text x=-0x82; two scrolling rows", reflow=True),
     Window("ending_summary", -0x48, MESSAGE_RIGHT, 10, True, True, ENGLISH_ROW_BYTES,
            "ending_graduation_result_dialogue_select: x=-0x48; scrolling text y=-80..80", reflow=True),
     Window("message_speech", -0x48, MESSAGE_RIGHT, 3, True, True, ENGLISH_ROW_BYTES,
@@ -101,6 +105,11 @@ YOSHIO = b"Yoshio"
 
 SNDISP_CALLS = frozenset(("sndisp", "sndi"))
 
+# T-39534: graduation_scene_tables.c binds these to ending_scene_dialogue_tables.
+# Tables 0, 3, 13 and 15 instead use the regular message-box renderer.
+ENDING_SUBTITLE_TABLES = frozenset(f"table-{index}" for index in
+                                  (1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16))
+
 
 def consumer_calls(unit: dict) -> set:
     """Functions the unit's proven consumers pass the string to (source and MIPS contexts)."""
@@ -119,6 +128,11 @@ def consumer_calls(unit: dict) -> set:
 def window_for(container_kind: str, record) -> tuple[Window | None, str]:
     """(window, basis) for a record; basis says why that window was chosen."""
     unit = record.unit or {}
+    if (unit.get("context") or {}).get("profile_id") == "serifu-ending" \
+            and any(part in ENDING_SUBTITLE_TABLES for part in record.id.split(":")):
+        command = ((unit.get("context") or {}).get("command") or {}).get("value")
+        name = "ending_player" if command in (0, 6) else "ending_heroine"
+        return WINDOWS[name], "ENDING dialogue renderer (T-39534)"
     if (unit.get("context") or {}).get("profile_id") == "serifu-epilog":
         return WINDOWS["ending_summary"], "EPILOG summary renderer at x=-0x48 (T-39517)"
     controls = [s for s in record.segments if getattr(s, "kind", None)]

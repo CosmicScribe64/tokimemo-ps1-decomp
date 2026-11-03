@@ -29,7 +29,8 @@ from dataclasses import dataclass, field
 from .english import LINE_END, OPTION_END
 from .segments import Control, Text
 
-ORIGINAL_ROW_CELLS = {"message_speech": 14, "message_narration": 18, "telephone_narration": 14}
+ORIGINAL_ROW_CELLS = {"message_speech": 14, "message_narration": 18, "telephone_narration": 14,
+                      "ending_player": 15, "ending_heroine": 18}
 FULL_MARGIN = 2
 NAME_CODE_CELLS = 3  # a Japanese name substitution is about three glyphs
 KEEP_ALL_BREAKS: tuple = ()

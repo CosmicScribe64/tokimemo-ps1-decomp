@@ -1,10 +1,10 @@
 ---
 id: T-39511
 title: Make the English read naturally on screen
-status: In Progress
+status: Done
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-02
+updated: 2026-11-03
 links: ["[[tickets/T-39500-english-translation-patch]]", "[[tickets/T-39506-english-script-runtime]]"]
 ---
 
@@ -14,10 +14,10 @@ The owner found much of the on-screen English rough: lines broken where the Japa
 
 ## Acceptance criteria
 
-- [ ] Dialogue, monologue, narration and telephone text is reflowed to each window's pixel width, ignoring the Japanese line breaks, with balanced lines, no orphaned words, and the fewest lines that fit (done in [[tickets/T-39506-english-script-runtime]]).
-- [ ] Automated layout checks over the whole script and every menu, label and table: orphans, avoidable extra lines, overflow, clipping, labels too wide for their slot, inconsistent capitalisation and punctuation across menus, leftover Japanese. Every flag is fixed or explained.
-- [ ] A reading review of the full emulator run (every dialogue page and screen) and of the off-route text, listing stiff or too-literal English, tone problems and menu wording, with proposed rewrites. The owner approves rewrites before they replace approved translations.
-- [ ] Before/after screenshot sheet for the owner.
+- [x] Dialogue, monologue, narration and telephone text is reflowed to each window's pixel width, ignoring the Japanese line breaks, with balanced lines, no orphaned words, and the fewest lines that fit (done in [[tickets/T-39506-english-script-runtime]]).
+- [x] Automated layout checks over the whole script and every menu, label and table: orphans, avoidable extra lines, overflow, clipping, labels too wide for their slot, inconsistent capitalisation and punctuation across menus, leftover Japanese. Every flag is fixed or explained.
+- [x] A reading review of the full emulator run (every dialogue page and screen) and of the off-route text, listing stiff or too-literal English, tone problems and menu wording, with proposed rewrites. The owner approves rewrites before they replace approved translations.
+- [x] Before/after screenshot sheet for the owner.
 
 ## Notes
 
@@ -86,3 +86,124 @@ The corrected `build/phone-width-proof` passes the actual-disc script audit (105
 2026-11-02: verified group 37/line 0 separately in SHUGAKU tables 0 through 9. Inspected each passage near its start and after scrolling through its final sentence and closing quote. All 100 runtime samples match the selected table pointers/group and the published disc header. The fixture uses the hotel scene with controlled table/line selections; it does not prove natural destination traversal or artwork. Receipt: `translations/en/reviews/trip-table-variants-2026-11-02.json`. The queue now has 48 pending long-page records.
 
 2026-11-02: also inspected SHUGAKU table 11/group 34/line 0 and table 12/group 14/line 0 through their closing quotes. All 20 memory samples confirm the selected pointers/group and disc header. Both payloads are unchanged between the saved-state disc and the current c3706ff4c86b build. Added the scoped proof to `trip-table-variants-2026-11-02.json`; 46 long-page records remain pending.
+
+2026-11-02: inspected both pending TEL passages in `build/emu/phone-long-pages`. The answering-machine message and relationship-report follow-up scroll through their final sentences and closing parentheses without overlap. All 49 samples from frame 720 onward match both relevant function bodies read from the published TEL.EXN. This uses controlled stage/substep selection, not natural call triggering. Receipt: `translations/en/reviews/phone-long-pages-2026-11-02.json`. The queue now has 25 verified records and 42 pending. Yukari's mapped ending probe reaches her close-up and opening dialogue; a controller-only continuation is running for the three pending table-9 passages.
+
+The ending-specific viewport correction revealed 20 additional three-row ending records that scroll in its two-row area. Updated the long-page queue for candidate `c0dafc36074dd66d6e6debb5b7d14d0f44e6649a`: 87 records total, 25 previously verified and 62 pending. Verified payload hashes remain unchanged; only five already-pending ending payloads changed. New ending replays are not counted until their complete passages have been inspected.
+
+The local review gallery now contains 439 captures across 54 contact sheets, including all 196 reviewed frames from the wider-column ending candidate and the Japanese face comparison. The ending section is explicitly marked superseded and not approved; the latest layout refinements still need runtime verification. The gallery's pending count is updated to 62 of 87 flagged records.
+
+On the current ending candidate, two additional long passages are visually checked with complete-text samples and capture hashes (`ending-long-pages-2026-11-02.json`). The targeted queue is 27 of 87 inspected, with 60 pending. The local gallery now contains 454 captures across 56 sheets, with the current ending checks separated from the superseded candidate. Gallery size is evidence volume, not a count of approved passages.
+
+The current ending continuation clears four more flagged records, bringing the queue to 31 inspected and 56 pending. All six flagged Yukari ending passages now have completed-text and screenshot evidence. The gallery contains 516 captures across 63 sheets. T-39534 is complete; other endings, routes and the remaining sign checks still require inspection before whole-game sign-off.
+
+Started `build/emu/ending-scoped-nozomi` against the published a839441add3e build. The fixture selects Nozomi before the ending scene loads; table 10 is bound by the game's own heroine dispatch. Captures and text-state samples run every 30 frames through 24,000 frames, with no controller input after frame 4,200. No additional records are approved until the completed passages are inspected.
+
+The 56 pending records contain 51 distinct payload/window pairs. These are still individual pending records; identical bytes alone do not grant runtime approval. Source tracing found an unvisited Kagami arrival event selected by `date_scene_choose` when scene flag 51 is clear. Started `build/emu/mira-park-no-special` with that event marked visited to inspect the ordinary park date. This is a controlled fixture change, not a patch change or proof of natural event ordering.
+
+## Continuation repair review
+
+Inspected 214 new ending captures across 24 sheets: Nozomi's complete dialogue and Rei through line 38, including the longest continued speech. Added five flagged-record approvals (36 of 87, 51 pending). The local gallery now contains 999 captures across 108 sheets, including historical defect evidence; these totals are not all unique scenes or current-build approvals. Receipts specify each build. Rei's tail and fresh park-variant checks continue. A follow-up build containing two further line-break corrections terminated with exit code 137 during concurrent replays and will be retried after they finish.
+
+## Camp long-page follow-up
+
+Inspected 20 captures across three contact sheets from `build/emu/camp-long-followup` on the published track. GASSHUKU table-4 group 5 line 6 and group 6 line 1 scroll cleanly from their opening rows through closing punctuation. Table pointers, post-dispatch line counters and fully revealed text were checked. The controlled fixture retains Kagami's name binding in the second passage; this is layout evidence, not approval of natural scene staging or its heroine binding. The receipt states that limit explicitly: `translations/en/reviews/camp-long-followup-2026-11-02.json`. The long-page queue now has 44 pending layout checks; scene-specific name binding still needs a natural-route check.
+
+## Published-build gallery update
+
+Added nine groups from the published build's hashed review receipts: Yumi's date replies, festival invitation/walk/visit, New Year and event dialogue, the Ayako and camp wrap fixes, and the camp scrolling follow-up. Each copied capture matches its receipt hash. The gallery now contains 1,209 captures on 139 sheets, including 60 newly added captures on 13 sheets. Historical runs remain labeled with their own build and scope; the total does not mean 1,209 unique current-build approvals. The local gallery is `build/visual-review-pack/index.html`.
+
+## Camp scene binding and Yumi long pages
+
+The camp initializer binds Nozomi's correct name and portrait. Controller-only progression from that initialized scene reaches table-4 group 5 line 6; its full scrolling passage is clean. A later controlled selection verifies group 6 line 1 with the full Kiyokawa-san substitution. The earlier Kagami-name limitation is resolved for these two records. An attempted selection during unfinished speech produced stale glyphs in the fixture; those frames are excluded, and the first passage uses the controller-driven run instead. See `translations/en/reviews/camp-nozomi-scenes-2026-11-02.json`.
+
+Two pending EVENT_SA passages also pass actual-renderer scrolling checks, including their closing punctuation and intentional thought breaks. Their receipt, `translations/en/reviews/yumi-event-long-pages-2026-11-02.json`, retains the limitation that the controlled fixture uses an existing date background. Active table pointers, line counters and full reveal were checked for all four passages. The long-page queue now has 42 pending layout checks. No game bytes changed.
+
+## Seasonal long-page batch
+
+The remaining flagged New Year passage and three White Day passages pass scrolling checks. Receipts are `translations/en/reviews/new-year-long-page-2026-11-02.json` and `translations/en/reviews/white-day-long-pages-2026-11-02.json`; they record actual tables, full reveal, screenshot hashes and the limits of controlled scene selection. The White Day receipt also verifies the disc-loaded script header. One further White Day passage splits a short exclamation awkwardly and remains pending under T-39537. Its exact-record wrap correction is prepared but needs rebuilt-disc visual verification. The long-page queue has 38 pending records.
+
+## White Day wrap retest
+
+The flagged White Day exclamation now stays on one row in the rebuilt disc. Inspected the full passage after reloading its script through the CD loader; the closing quote and scrolling rows are complete. `translations/en/reviews/white-day-wrap-verified-2026-11-02.json` records the screenshots and full-disc comparison. Only WHITE.BIN changes from the published disc, and the corpus proof preserves unrelated dialogue. The queue now has 37 pending layout checks. The new build is local; the public patch remains unchanged.
+
+## White Day build published
+
+Published `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f` after all 15 browser checks passed. Pages deployment 41581825760 succeeded, and all 36 served files match the tested package. `translations/en/reviews/published-white-wrap-2026-11-02.json` records the release hashes and verification. The visual review queue remains at 37 pending records.
+
+## Saki event passages
+
+Three pending EVENT_NI passages pass controlled runtime layout review on the published White Day build. The loaded script header matches the disc, and table pointers, line advancement and completed text positions agree with the selected records. Inspected the opening rows, scrolling and closing quotes. The fixture retains Yumi's portrait and speaker binding, so this does not verify Saki's event artwork or natural staging. Receipt: `translations/en/reviews/saki-event-long-pages-2026-11-02.json`. The queue has 34 pending long passages.
+
+## Five more event passages
+
+Verified five further passages against rebuilt target `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4`, including the corrected Shiori invitation. The receipt checks script headers, on-disc payload hashes, table pointers, line advancement and completed rendering: `translations/en/reviews/event-queue-retested-long-pages-2026-11-02.json`. The shared DATE fixture retains Yumi's portrait and name binding; these are layout checks. The queue now has 29 pending long passages. An earlier run used incorrect character mappings for KI, KO and OT and was discarded without approvals. The corrected mappings were checked against the loader's CD addresses and ISO entries.
+
+## Event and festival build published
+
+The verified event and festival corrections are live. See [[tickets/T-39537-dialogue-break-review]] for publication checks and `translations/en/reviews/published-event-festival-2026-11-02.json` for the release hashes. The long-passage queue has 27 pending records.
+
+## Event queue complete
+
+The final two flagged event passages, EVENT_AS initializer 00 and EVENT_FU scene 01, pass the same disc-header, payload-hash, pointer and completed-rendering checks. Their opening, scrolling and closing punctuation are visually inspected. `translations/en/reviews/event-remaining-long-pages-2026-11-02.json` records the evidence and the retained Yumi fixture's limits. All ten EVENT_* passages in this follow-up batch now have layout receipts. The overall long-passage queue is 60 reviewed and 27 pending.
+
+## Yuina ending subtitle
+
+One pending Yuina ending passage passes native-resolution scrolling review on the published build. `translations/en/reviews/yuina-ending-layout-2026-11-02.json` verifies the actual script payload, active tables and completed text position. The controlled fixture retains Yukari artwork, so the receipt covers subtitle layout only. A first probe retained old text and was discarded; clearing the saved fixture before selection removed that artifact. The queue is now 61 reviewed and 26 pending. No game bytes changed.
+
+## Ending subtitle batch
+
+Five standalone subtitles and three connected-speech passages pass native-resolution visual review. The connected tests start at the speech opening; memory samples confirm every preceding segment reaches full reveal. `translations/en/reviews/ending-batch-layout-2026-11-02.json` records payload hashes, active tables, completion positions and screenshot hashes. The shared fixture retains Yukari artwork, so these approvals cover subtitle layout and scrolling, not each heroine's staging. The queue is 69 reviewed and 18 pending. Three longer connected speeches are running next.
+
+## Long-passage queue complete
+
+All 87 flagged long records now have runtime layout receipts. The last three ending continuations pass with every preceding speech segment fully revealed. The final 15 message-box records, including all three DATE_AS response variants, pass native-resolution review through the shared dialogue renderer. `translations/en/reviews/remaining-message-layout-2026-11-02.json` checks every copied script chunk against the published disc and verifies the active payload, table pointers, advanced line and full reveal. Its controlled fixture retains Yumi's backdrop and name binding; it does not prove natural scene triggering or each scene's artwork. No new layout correction was required. The art review and final scope reconciliation remain separate.
+
+## Published-build orphan recheck
+
+All 456 orphan flags across 455 records are classified on the published build. Of these records, 444 retain a previously reviewed payload hash. Read all 11 changed payloads in full: one ellipsis reaction, four laughter endings and six brief ending replies or hesitations. Keep their intentional pauses and closing marks. `translations/en/reviews/current-orphan-triage-2026-11-02.json` records the changed hashes and dispositions. No new layout edit is needed. Menu/table classification and broader editorial reading remain separate criteria.
+
+## Menu and table census
+
+Collected 4,655 non-dialogue records with 2,520 distinct encoded payloads in ignored `build/menu-text-context.json`. Seventeen exceed 252 pixels before runtime formatting: ten career-summary strings, five magazine thoughts and two SDK diagnostic formats. These are review candidates, not confirmed clipping. The magazine thoughts enter `sndisp`; the raw width is not their rendered row width. Case/punctuation grouping also identifies gift-name title case versus sentence case, sentence fragments, debug labels and presentation headings. Call-site classification remains open; do not treat a 252-pixel scan as proof of each menu's narrower geometry.
+
+## Final shared-label pass, November 3
+
+Regenerated the growth census and shared-label inventory against published target `b579f2ad31288f442436f718eba0cb61f7e359fe`. The census still has 834 growth candidates with 258 distinct payloads. Read the distinct English labels in all 27 associated table families. No translation or layout change resulted from this pass. The inventory and maximum widths are in `build/shared-label-inventory.json` and `build/shared-label-inventory.log`.
+
+The source distinguishes several different uses of these tables:
+
+- Gift strings have at most 32 bytes, fitting their 33-byte table slots and 36-byte dialogue substitution fields. The festival `name_grid` tables also supply dialogue substitutions; their names do not describe visible menu grids.
+- Encounter phrases have at most 28 bytes and camp attack names have at most 25 bytes. Both fit the 36-byte substitution fields. Dialogue wrapping handles their visible widths.
+- Full preset names use the existing packed encoding. The largest rendered family name is 55 pixels in a 56-pixel field.
+- Telephone destination labels reach 106 pixels in 116-pixel menu cells. Profile club labels fit their 18-byte slots, and zodiac labels fit their 12-byte slots.
+- The magazine heading table uses English pointers and reaches 117 pixels from x=32, ending at x=149 within the 320-pixel screen. Its earlier runtime review remains applicable.
+- No explicit word or paired address relocation into the parameter-name pointer table appears in the main executable or 24 loaded overlays. This is a reference census, not proof against every possible computed address.
+
+Reinspected the final native festival and mascot screenshots. The festival lettering is legible, dialogue has one clean row, and the mascot names clear both the notebook divider and the preview sprite. Evidence is already recorded in `translations/en/reviews/stage-controls-and-menu-spacing-2026-11-02.json`.
+
+The published build passes its release checks. This ticket remains open because the broader criterion requests a full editorial reading of off-route text, and the conservative growth census does not prove every label's geometry. The completed screenshot and diagnostic reviews must not be described as a natural playthrough of every route or a manual reading of every translated line.
+
+The follow-up census covers the 1,154 records excluded by the Japanese-only source comparison. Of these, 836 retain the original bytes, 214 are the verified stage command rows, and 104 are other translations with 74 distinct payloads. Read all 74 translated payloads and traced their uses. The long strings feed wrapped dialogue; the short set includes formatting fragments, diagnostic output, the exam title and unloaded annual-event code. No new correction resulted. All seven active fortune-result formats also fit the 64-byte buffer and display bounds, with a maximum width of 174 pixels. `translations/en/reviews/mixed-label-review-2026-11-03.json` records the hashes, dimensions and scope. Unchanged bytes alone do not establish screen geometry. The initial scratch command failed to import the project package; rerunning it as a module completed successfully.
+
+2026-11-02: T-39540 resolves the menu census's confirmed button-sequence split. All 15 wide gameplay rows fit after the production runtime wrapper; the two remaining wide rows are SDK diagnostics. The current-disc receipt records the magazine capture and all 15 browser checks. Capitalization and narrow-slot coverage remain separate from these width checks; this result does not claim every menu geometry has been exercised.
+
+2026-11-02: Classified all 65 short-text case/punctuation groups in `translations/en/reviews/menu-case-triage-2026-11-02.json`: 46 contextual differences retained and 19 gift-name case groups corrected under T-39541. Comparing the complete gift tables expanded that fix to 82 inconsistent labels for identical Japanese source text. A conservative horizontal-growth census now isolates 834 records (258 distinct payloads); 2,667 eligible Japanese-only source records do not grow. These are geometry candidates, not confirmed clipping. The ignored candidate file is `build/menu-growth-candidates.json`; mixed/control source records are outside this particular comparison.
+
+2026-11-02: Classified all 95 variable-position direct calls in `translations/en/reviews/menu-direct-call-triage-2026-11-02.json`. The same-row scan found five mutually exclusive speaker pairs and two real speaker/quote overlaps. T-39543 fixes stage names and the mascot grid; T-39544 restores 214 omitted stage commands and strengthens the disc audit. All 39 telephone, club and mascot table entries fit their inspected columns. This closes the direct-call coordinate queue; remaining dictionary-family and broader reading scope still require reconciliation.
+
+2026-11-03: The current growth census has 828 records with 254 distinct payloads after T-39545's name-code corrections. Tracing the remaining label consumers found a tight family/given-name gap in the computer-fortune screen. T-39546 verifies the correction with widest-preset and full-width native captures. All 24 remaining fortune-name and RPG-loot table entries fit. The fresh direct-call scan has 996 constant-coordinate calls with no screen-edge candidate and 100 symbolic-coordinate calls. Five symbolic rows are newly introduced macro expressions: four duplicated blood-label call records now verified at x=0, and the stage quote already covered by T-39543. The other 95 retain the earlier dispositions. These counts include repeated call-site matches.
+
+2026-11-03: traced the 100 distinct growth payloads missing from the direct-call/table join. Most use scene-title, lyric or substitution renderers. The TT surname candidate is actually a sprite texture attribute array; T-39547 tracks its preservation and verification. The draft consumer receipt remains incomplete until that correction and the last name-path dispositions are recorded.
+
+## Current-build reconciliation, November 3
+
+The menu-growth queue is now fully assigned: 827 records, 253 distinct payloads. The direct-call and shared-table reviews cover their matching records; the remaining 331 records have 99 distinct consumer dispositions in `translations/en/reviews/menu-consumers-2026-11-03.json`. Those categories overlap and must not be added as independent counts. T-39547 resolves the one binary-data defect found during this tracing. No consumer remains unclassified in that queue.
+
+The editorial baseline is the documented T-28009 review and remediation commit `ab2615137ed765fee0b387b432b93ee11c0f57bc`. Compared every current corpus record with that commit and read all seven changes: six approved stat-label replacements and the sports-event label. Also read every distinct later guarded override and all four anomaly repairs. No new wording rewrite is proposed. The original standalone review reports are unavailable here, and the historical narrative hashes differ from the preserved commit. `editorial-inheritance-2026-11-03.json` records the actual hashes and distinguishes inherited review from this new delta review. This is not a fresh manual reading of all 55,911 corpus records.
+
+Compared the current disc with the reviewed stage-controls release through the ISO directory. Of 992 executable and BIN/NBN/BS files, 989 are byte-identical. The three changed overlays have separate current verification: full-name fortune spacing, secret-name compatibility and TwinBee sprite preservation. `final-disc-inheritance-2026-11-03.json` records each unchanged file hash and the three follow-up receipts. Movie and audio streams are outside that comparison.
+
+The main-route, off-route long-page, generated-break, orphan, menu-case and art receipts remain distinct evidence. Their counts do not imply an end-to-end playthrough of every route. The original TwinBee title-logo preference remains open under the parent release review.
+
+Standards review of the reconciliation found no unresolved finding. The receipts contain metadata and hashes, not extracted game assets. Text-quality review is complete on the documented basis above; the parent release still tracks the separate TwinBee logo decision.

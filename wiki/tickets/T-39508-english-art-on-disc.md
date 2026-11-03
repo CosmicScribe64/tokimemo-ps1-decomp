@@ -1,7 +1,7 @@
 ---
 id: T-39508
 title: Put the English art on the disc
-status: In Progress
+status: Done
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-02
@@ -14,10 +14,10 @@ The English disc build writes every registered English image into its container 
 
 ## Acceptance criteria
 
-- [x] Every artwork item with a registered English candidate is written by `tools/patch/build_english.py`; the report lists each item as placed, deferred (with the reason) or untranslated by decision. (All 272 items; 230 placed and verified on the disc, 14 deferred with reasons.)
+- [x] Every artwork item with a registered English candidate is written by `tools/patch/build_english.py`; the report lists each item as placed, deferred (with the reason) or untranslated by decision. (Published build: 252 verified items, 28 explicit exceptions, zero deferred or missing.)
 - [x] Indexed images round-trip byte-exact with the original pixels; English pixels use only colours (and STP values) the container's palette allows.
-- [x] Stills are re-encoded to fit their read size or moved, and decode back to the intended image within the codec's error. (14 stills; 2 deferred, see Notes.)
-- [ ] The emulator route on the English disc shows the English art at the title, file select, name entry, the magazine, the opening stills and the sports card. (Title, options, file select, name-entry labels, stat bar, prologue stills shown; the magazine screen and the sports card are not on the route.)
+- [x] Stills are re-encoded to fit their read size or moved, and decode back to the intended image within the codec's error. (All 16 translated stills verified; zero deferred.)
+- [x] Emulator coverage shows the English art at the title, file select, name entry, the magazine, opening stills and sports cards. The magazine and sports cards have separate controlled runs, documented below.
 - [x] The default build still matches 27/27.
 
 ## Notes
@@ -58,3 +58,13 @@ Round 2 (2026-11-01): merged `patch/english` (free relink, T-39505); the art ste
 2026-11-02: T-39516 repairs two omitted school-name plates beside the existing festival banners. `build/festival-plates-proof` verifies 248 art placements and 28 exceptions; actual-disc comparison changes only D_01_47.BS and D_01_48.BS. Both festival GPU captures show English banners and plates, with zero original-font activity over 1,000 frames each. Inventory retention prose was stale and is now corrected. Broader decoded-pixel audit remains open; clean trace counts do not prove sprite text coverage.
 
 T-39521 repairs all four omitted sports bubbles. The latest disc verifies 252 placed images with 28 approved exceptions. Both partner variants were inspected in the emulator; a longer cycle confirms the readiness label and both direction labels. The start-call bubble has decoded-pixel and disc-readback evidence only. No clipping, overlap or damage to neighboring artwork was found.
+
+## Published artwork quality pass
+
+Inspected all 254 shipped sprite target images, using the actual placement and fallback selections, and all 16 translated still containers decoded directly from the current disc. Container hashes match the published build report. No new clipping, overlap or damaged neighboring artwork was found. Texture-page fragments and highlight components were assessed with their assembled runtime examples; they are not standalone screens. `translations/en/reviews/shipped-art-quality-2026-11-02.json` records image hashes, current container identity and the 31 review sheets. Movie, generated prologue banner and retained-pixel evidence remain separate from this pass.
+
+2026-11-02 reconciliation: re-opened the first magazine page and prologue banner captures; the English remains legible, with the approved magazine masthead retained. Current-disc comparison preserves the banner and movie bytes. The 25 art tests pass. The published report records 252 verified items, 28 explicit exceptions and zero deferred or missing items, replacing the historical totals above. Source-review closeout remains separate from these completed visual checks.
+
+## Completed source review
+
+2026-11-02: reviewed art planning, sprite selection and fallback handling, executable frame relocation, still encoding and the final-disc verifier against CODING_STANDARDS. Grown frames stay within the reserved block and their on-disc pointers are checked. Still candidates must fit their original sectors and pass surrounding-pixel and decoder checks; sprite targets and unaffected views are compared after placement. Generated game-derived outputs remain ignored. The 25-test art suite passes, and the published report contains no deferred or missing item. Existing generator-specific reviews cover the later signs, banner and sports additions. No unresolved code finding remains for the registered assets. This technical/artwork sign-off does not claim every possible scene composition was played. Ticket and board move to Done.

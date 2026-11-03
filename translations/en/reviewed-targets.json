@@ -1,0 +1,975 @@
+{
+  "talk:CDROM/BUNKA/SA_S6.BIN:main:g0038:l0000": {
+    "source_sha256": "66081f985e8e605a408ada6c129ca48b490929f213022a0cfe2365fa50c30cdc",
+    "previous_target_sha256": "fac77688a29ad3b3eaa15648d1345fd8c32b91566b821387f33bb906ea2fd6cb",
+    "target_text": "Yumi's[[T001:row]]seen this before.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/BUNKA/SA_S6.BIN:main:g0039:l0000": {
+    "source_sha256": "784e8dcc65ca9095e24c606e2b11ba0f33333a737c0f8e868784da0cd75446c4",
+    "previous_target_sha256": "b89132a061ad6c3dd88b4a6025bd99f0b8450e1a644276c946574ff871fb95e2",
+    "target_text": "Yumi's seen that[[T001:row]]on TV.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/BUNKA/SA_S6S.BIN:main:g0006:l0002": {
+    "source_sha256": "42054739538582fa7b3e85eb0606e6f71fceab58170a8e85e3eed31559c26ce2",
+    "previous_target_sha256": "38725ea4a081e5266ed77635c432b90fcc7295a3ec81b8dc33afbb4d36b13261",
+    "target_text": "Yumi's looking around[[T001:row]]with her older brother...",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/BUNKA/SA_S6W.BIN:main:g0029:l0000": {
+    "source_sha256": "66081f985e8e605a408ada6c129ca48b490929f213022a0cfe2365fa50c30cdc",
+    "previous_target_sha256": "fac77688a29ad3b3eaa15648d1345fd8c32b91566b821387f33bb906ea2fd6cb",
+    "target_text": "Yumi's[[T001:row]]seen this before.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/BUNKA/SA_S6W.BIN:main:g0030:l0000": {
+    "source_sha256": "784e8dcc65ca9095e24c606e2b11ba0f33333a737c0f8e868784da0cd75446c4",
+    "previous_target_sha256": "b89132a061ad6c3dd88b4a6025bd99f0b8450e1a644276c946574ff871fb95e2",
+    "target_text": "Yumi's seen that[[T001:row]]on TV.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/BUNKA/SA_S6W.BIN:main:g0057:l0004": {
+    "source_sha256": "9b39978bc7f24ef47ac21b8f451ce5c6d4c18d20da6120a1cd39a8a23025c9f1",
+    "previous_target_sha256": "0ec8c6d2145427c57d0cbba4e4b446c32e4eab09c0e8e641438ebb4ce1dee698",
+    "target_text": "Being with my older brother[[T001:row]]is so embarrassing,[[T002:row]]Yumi's going home.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-02:g0005:l0000": {
+    "source_sha256": "3c6c2c26f14557afeff286464298f18895593e5383e23e1cb3d41fcaffe9031a",
+    "previous_target_sha256": "1105564bd7b2ddbd567dce0d48df2730289f6c342fe13edb6332fcf7bd851c60",
+    "target_text": "When I do,[[T001:row]]you be the prince![[T002:reply_variant]]Yumi's[[T003:row]]not weird![[T004:reply_variant]]Yeah![[T005:row]]I'll try hard.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-02:g0008:l0000": {
+    "source_sha256": "747c3540a693dc771dd9d4469a2716215aaf7b2d68448ce649f76791bdd3d1d8",
+    "previous_target_sha256": "2372badd452a88448f5ed8e69fadfbf76eec7c8abb5be078b9873626e5bed608",
+    "target_text": "Huh, really?[[T001:row]]I didn't know.[[T002:row]]You're so smart![[T003:reply_variant]]Fine, Yumi's[[T004:row]]just dumb! Hmph![[T005:reply_variant]]Dolphins are so cute,[[T006:row]]I forgive[[T007:row]]them!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-03:g0002:l0000": {
+    "source_sha256": "da5eacae6276466ab94b1e581909078e2141d41d4667704ffe4e13635a33b01a",
+    "previous_target_sha256": "97867dd96a57ea5d6aff12ea450b905b9b010d7a849bc7fc7eb97f6a0a022245",
+    "target_text": "Yeah.[[T001:row]]I looove[[T002:row]]rare animals![[T003:reply_variant]]Fine, Yumi's[[T004:row]]just a kid! Hmph![[T005:reply_variant]]Then let's go see[[T006:row]]all kinds of animals!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-04:g0002:l0000": {
+    "source_sha256": "d942da1085ffc8a8b2a56d6623094386dbab16d9407bb4f99199baad37be6b4b",
+    "previous_target_sha256": "798a07d58532ab607c62dd342b20966154c5f4f883d46714b274eb168934f480",
+    "target_text": "Yeah.[[T001:row]]It's calming.[[T002:reply_variant]]I hate[[T003:row]]veggies![[T004:reply_variant]]But Yumi's[[T005:row]]prettier, right?",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-07:g0002:l0000": {
+    "source_sha256": "6df0c60e5315b68db6569ddafe6508c1d00fe98af8b46c422806d353b084a889",
+    "previous_target_sha256": "bc1aa90a08dae4c74cd195069780c6f0b093269b8f771553afa08747949e3135",
+    "target_text": "Wow, really![[T001:row]]Studying in a library![[T002:row]]Amazing![[T003:reply_variant]]Yumi's bad at[[T004:row]]staying quiet.[[T005:row]]This is tough.[[T006:reply_variant]]Yumi's gonna go[[T007:row]]read some manga!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0002:l0000": {
+    "source_sha256": "6e6a9f09df24a08a3afabb2fa7de388a5347c1b1e3040e10d6e9ccc72c5df7b7",
+    "previous_target_sha256": "b13fe9f723d5229ab53ba38d51812d59c14f8d454947efcc2c980758f3044cb7",
+    "target_text": "Yumi's a girl, but she[[T001:row]]loves the arcade!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0003:l0000": {
+    "source_sha256": "b0e57610e29afbd1392aba1d3266618710615907416dc58bb98ec2e61809c80f",
+    "previous_target_sha256": "43cf925ef8ded24169321f96d805322ec38d6d3718594e3e6bfa7e0fd8276813",
+    "target_text": "Yumi's so happy[[T001:row]]you said that![[T002:reply_variant]]Nuh-uh![[T003:row]]Yumi's a good girl![[T004:reply_variant]]Yeah.[[T005:row]]Yumi's got lots of[[T006:row]]friends she met[[T007:row]]at the arcade!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0005:l0000": {
+    "source_sha256": "0df2eda5c37cfad3f0d41eb4bfc08bbb4fde39aa3ac0d14b7be94a9e55495669",
+    "previous_target_sha256": "145469b0423fde594f3f4da91e1bbeea96f0bd7f3e3fad5b177a75a5070617e2",
+    "target_text": "Yeah, a hardcore[[T001:row]]side-scrolling shooter![[T002:reply_variant]]Yumi's bad at puzzles[[T003:row]]and quizzes, so she[[T004:row]]doesn't play them.[[T005:reply_variant]]Then I'll give[[T006:row]]it a try!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-08:g0009:l0000": {
+    "source_sha256": "1d40491ec5c50818786e2cb63caf6eeb83a99b1b1df0a58c8f602adfceee0b69",
+    "previous_target_sha256": "8fe1e4db2f31edc354a5f163dc8d2c293768e063db59e37fe0e97091a7bcf746",
+    "target_text": "Yeah.[[T001:row]]Yumi's better[[T002:row]]at that one![[T003:reply_variant]]I don't know that.[[T004:reply_variant]]Slots could[[T005:row]]be fun too.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-09:g0005:l0000": {
+    "source_sha256": "62812ff58cef44b53696d797c3394de3f6a70aa71ab95b4c5b620ffff05ffc43",
+    "previous_target_sha256": "a5a0263a355e55484ff94596adf989353f695578edccf4b4b944033e08fa8c55",
+    "target_text": "Yumi's gonna bowl[[T001:row]]strike after strike![[T002:reply_variant]]And what about[[T003:row]]you, huh?[[T004:reply_variant]]Huh?[[T005:row]]What's that?[[T006:row]]I don't know!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-10:g0002:l0000": {
+    "source_sha256": "d4ace33f523fd6c87703e4820f0334ac7e75165065c1d5cce37b6a99e46c187a",
+    "previous_target_sha256": "f84695d59495b1f3b64a5a196c4b271b7c09477325a4666049784c8c685adb18",
+    "target_text": "Hehe.[[T001:row]]Yumi's great[[T002:row]]at karaoke![[T003:reply_variant]]Huh?[[T004:row]]Is Yumi that bad?[[T005:reply_variant]]But I'm good at this...",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0020:l0000": {
+    "source_sha256": "f53830662ec0d709956463b97a1e67e966db59dc704ef7e45fd9d0206b0814d0",
+    "previous_target_sha256": "0f148959c9060df73630b0c1e0546c3c5beba4e9e7bf9f78be5d8901eeb34526",
+    "target_text": "Hehe.[[T001:row]]Yumi's happy![[T002:reply_variant]]Yumi's bored![[T003:reply_variant]]Oh yeah,[[T004:row]]Yumi saw a cake shop!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0028:l0000": {
+    "source_sha256": "8ee0f33b29bee0bd315cd39f5768ffb8b0098d60e62af40989ffdcd7fccd16b2",
+    "previous_target_sha256": "37507ea8c7240365e52f53d88497f63c4d5a66d011d51b2d4923866624b79d16",
+    "target_text": "Hehe.[[T001:row]]Even if it's flattery,[[T002:row]]Yumi's happy![[T003:reply_variant]]If it's fun,[[T004:row]]waiting's no big[[T005:row]]deal for me![[T006:reply_variant]]I think so too!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0036:l0000": {
+    "source_sha256": "f53830662ec0d709956463b97a1e67e966db59dc704ef7e45fd9d0206b0814d0",
+    "previous_target_sha256": "0f148959c9060df73630b0c1e0546c3c5beba4e9e7bf9f78be5d8901eeb34526",
+    "target_text": "Hehe.[[T001:row]]Yumi's happy![[T002:reply_variant]]Yumi's bored![[T003:reply_variant]]Oh yeah,[[T004:row]]Yumi saw a cake shop!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0044:l0000": {
+    "source_sha256": "8ee0f33b29bee0bd315cd39f5768ffb8b0098d60e62af40989ffdcd7fccd16b2",
+    "previous_target_sha256": "37507ea8c7240365e52f53d88497f63c4d5a66d011d51b2d4923866624b79d16",
+    "target_text": "Hehe.[[T001:row]]Even if it's flattery,[[T002:row]]Yumi's happy![[T003:reply_variant]]If it's fun,[[T004:row]]waiting's no big[[T005:row]]deal for me![[T006:reply_variant]]I think so too!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0047:l0000": {
+    "source_sha256": "cf1d8b53a4bd692de5e486f2f6548ca44ab400a38737cf5e8be233b135ccbab3",
+    "previous_target_sha256": "ecca0e2f289759475dac36354285e1179984994f3061886c0e0cc1e6a4022264",
+    "target_text": "Yumi was so surprised.[[T001:row]]My eyes went wide![[T002:reply_variant]]Fine,[[T003:row]]Yumi's just[[T004:row]]a kid! Hmph![[T005:reply_variant]]That's the[[T006:row]]Virtual Ship for you!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-11:g0052:l0000": {
+    "source_sha256": "f53830662ec0d709956463b97a1e67e966db59dc704ef7e45fd9d0206b0814d0",
+    "previous_target_sha256": "0f148959c9060df73630b0c1e0546c3c5beba4e9e7bf9f78be5d8901eeb34526",
+    "target_text": "Hehe.[[T001:row]]Yumi's happy![[T002:reply_variant]]Yumi's bored![[T003:reply_variant]]Oh yeah,[[T004:row]]Yumi saw a cake shop!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-12:g0003:l0000": {
+    "source_sha256": "45e781f7163dada2e48d215b5616c5f8ad8f9b5f34de9d75e2f1f2424439bb12",
+    "previous_target_sha256": "bb6fe9147d8490da715cdcff08837c5a6d6483080af610ca443ee58177b451a6",
+    "target_text": "Yeah, thanks![[T001:row]]Okay, time to look hard![[T002:reply_variant]]Whaaa? That's so mean![[T003:row]]Yumi's gonna cry![[T004:reply_variant]]Nuh-uh.[[T005:row]]It's okay.[[T006:row]]Yumi kinda liked[[T007:row]]boys' clothes too.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-12:g0008:l0000": {
+    "source_sha256": "c74833d39c04e4c058be06c6547f649b32c357b04aa34dc6b9306c8d634c5f84",
+    "previous_target_sha256": "6a671c101097ad24011f17dde87c4a43f183e3ab2a172bc07e91f121e33f8fbc",
+    "target_text": "Really?[[T001:row]]Yumi's happy![[T002:reply_variant]]Meanie.[[T003:row]]You could've lied[[T004:row]]and said it suits me.[[T005:reply_variant]]Oh, you're right![[T006:row]]Now I can't decide.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-16:g0004:l0000": {
+    "source_sha256": "d978cabdcd39e59bd5bf2fc5e6e3e0da78e1821e8eea844756cb2f7f5b25229e",
+    "previous_target_sha256": "34167d0316ca3b1fd7993f3854b160c9475670278f99cede2ff2a0feb899ce60",
+    "target_text": "Yumi's[[T001:row]]a good swimmer!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-17:g0005:l0000": {
+    "source_sha256": "4c8bc164239dd7b100d2bc5a8cb2771a514f4fa6db628ddd17544539e37304fa",
+    "previous_target_sha256": "12d6bea8f3ae9574b8130c5672f96d0a642d0a37d794385f649ce06985e1e7fe",
+    "target_text": "Whaaa, really?[[T001:row]]Yumi's so happy![[T002:reply_variant]]Hmph![[T003:row]]I'm not[[T004:row]]that chubby![[T005:reply_variant]]Yumi swims all[[T006:row]]smooth and flowy, right?",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-19:g0001:l0000": {
+    "source_sha256": "dff7f5490b577ab3977385c9479375c7b779e9e85191d166b4e5507ba9a24671",
+    "previous_target_sha256": "845d7bca6a7232a84a73ad7d0084c81736d2ed65aaf382820eb1d956cbc46f6e",
+    "target_text": "On the ice,[[T001:row]]Yumi's invincible!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-19:g0002:l0000": {
+    "source_sha256": "0a3bb373f62eba41878857639cb4421bed5e6c6d32788b7098c8757c071fa2ff",
+    "previous_target_sha256": "b5a2aa857dfec5e6e09f784d6b667948d185eb1c518688755cadaca18de0ec28",
+    "target_text": "Heh heh.[[T001:row]]On ice, nobody beats[[T002:row]]Yumi-sama![[T003:reply_variant]]No way![[T004:row]]Yumi's way more invincible![[T005:reply_variant]]my lessons[[T006:row]]are kinda pricey.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-19:g0005:l0000": {
+    "source_sha256": "03d5633335af31ee642b732dc2300c14c0a60740b041af11844297b6628d8612",
+    "previous_target_sha256": "0c39b2824b04d433a6a06191bc52bd80c1fd4f53419c94397d475547577d9647",
+    "target_text": "Yumi's so happy![[T001:reply_variant]]Yumi won't fall![[T002:reply_variant]]I'll be fine.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/DATE_SA.BIN:section-20:g0005:l0000": {
+    "source_sha256": "50083b57384c2040f5b458b0307a8050175fcc432df384b6cff9d83bdd1c20ad",
+    "previous_target_sha256": "2e970d90324b914fb0ffceb3e0af797f1590927b9491a2df0b46a8af4469fb71",
+    "target_text": "Hehe.[[T001:row]]Yumi's blushing![[T002:reply_variant]]Whaaa?[[T003:row]]That's mean![[T004:reply_variant]]Hmm,[[T005:row]]was it not[[T006:row]]grown-up enough?",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-67:g0005:l0002": {
+    "source_sha256": "737b76a709be8a469fe0fabed355411d712f2c84778b9cf60299b6f8b482d8e2",
+    "previous_target_sha256": "0eb97fcc83bb8b1046181f98595ce520c23a79304040c79576dd4520c34306dd",
+    "target_text": "You can eat other girls'[[T001:row]]lunches, but you can't[[T002:row]]eat Yumi's?",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-68:g0000:l0004": {
+    "source_sha256": "d29bb0fcace86e29c6b9e6dd52da33bb0940383029289512b5c4437c19641921",
+    "previous_target_sha256": "9dfb12b07a5d2cb6b87018dbb8b84fc4505978c49a8eeb0f7b48ed00b373d1d2",
+    "target_text": "It matches[[T001:row]]Yumi's!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-73:g0005:l0002": {
+    "source_sha256": "f574c26fe354f53a6b3dfa36a5e4f71f45984a54eb775fec78f6154c4dab7164",
+    "previous_target_sha256": "fa9b7c27cc98d217609bbef076292e06c82687926ae5ae4c053958319251cf59",
+    "target_text": "Yumi's always[[T001:row]]been good at this.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0016:l0000": {
+    "source_sha256": "12fd2ceaae31091307501a31fb9fc4407bbc1aa95407534cd8434cf17a26ab46",
+    "previous_target_sha256": "521b7bd9b97923317a264c5bc2e6ac30ad3e5dc1daf510a9d9c8c638a4f3c374",
+    "target_text": "Sorry![[T001:row]]Yumi's late.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0032:l0000": {
+    "source_sha256": "127c37eca4deb4b93caa9f39db28b69f44e55a04f424af50e5b323b2d8f620c0",
+    "previous_target_sha256": "d568963faea2c6fb7143948c211b3eb50588aa54cbed3faeafd98dea32847dea",
+    "target_text": "Wowww![[T001:row]]Same as Yumi's!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0032:l0002": {
+    "source_sha256": "828a96776960809447974474066b13f026786afb9e043e9b88d4a94d3d5498a3",
+    "previous_target_sha256": "a926262ac65aefb3c5a3d16491591871a3c1777227724131fb67d11e1deb4cf0",
+    "target_text": "Yumi's always[[T001:row]]been lucky[[T002:row]]with draws.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0033:l0002": {
+    "source_sha256": "57878e68388f45391d3d713f2de72764ad7c895c1bedcbb5b8468e09594bcfd8",
+    "previous_target_sha256": "bcf5b3d2634430c3321317f2a2081e6b715424d91e14e06b53e4d0f54b5dac66",
+    "target_text": "Yumi's is[[T001:row]]Best!",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0034:l0004": {
+    "source_sha256": "eef84e0088dbf3ed38c973aee1ac031a7083754aebd92784f04d49b6160d032c",
+    "previous_target_sha256": "1ee8f82f0c5742f3395aa1e2441d1fab046e46fb1b5efcae0f415512c65aa7d1",
+    "target_text": "But Yumi's[[T001:row]]never drawn one[[T002:row]]before.",
+    "ticket": "T-39538",
+    "reason": "Japanese source names Yumi; restore the missing name and grammatical self-reference while preserving control markers."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:02": {
+    "source_sha256": "c8777c23169a6cb9eee9bb63d2e303f8d753cec302536fe4bbff091408703316",
+    "previous_target_sha256": "d4ab50afc83f369c9b94a4d03ebf3cd7698b10f5e568869304060d1721031127",
+    "target_text": "Pierced Earrings",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:08": {
+    "source_sha256": "2a7892003f9e95c33474bf114048bab63ead9607d75f4e1c41e375a5a68a11bc",
+    "previous_target_sha256": "5d1bbe4af490e932b5593deb9da7dd90d259ad8a28b564a73576ca1c5fbed02e",
+    "target_text": "Horror Novel",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:10": {
+    "source_sha256": "74d01d86723271dad96885010578bb851db2c866e309d6ee74a96cfda6b18219",
+    "previous_target_sha256": "5af695ae2237cc2645ec476319d211614dc4ae014c5c1f1f3db9c04c14b72671",
+    "target_text": "Exam Study Guide",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:15": {
+    "source_sha256": "e8264401c6fdf9b436c31788d5ba61dcc9836c0ea97d60eca8a5f90847c6c65d",
+    "previous_target_sha256": "22874dd35c2e9968a62e8687ad8fde7dd1e7a5384ea483dc8335ddeac8e4bef7",
+    "target_text": "Literary Novel",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:22": {
+    "source_sha256": "0fb4fbb1a65271fde78bf885229d2123f8a8dbbd02817762f78c01dc97abf2f3",
+    "previous_target_sha256": "e8509d541207332ab29d7836f09477a5eee583fb5def3c4794c6f3e5fe7578e0",
+    "target_text": "Precision Tool Kit",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:25": {
+    "source_sha256": "1c642c83c8da8e5859d21cdbd61df00215ee4b20b9e4216f42abc0d9a3512a47",
+    "previous_target_sha256": "3f25096f5e03a6a9ac77c39204781c5d099f7734fbab9ce80ffd9fdc6195150f",
+    "target_text": "Lab Coat",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:26": {
+    "source_sha256": "4d24556700ba326c91a8e46493c766d490f3cb88c66f3a34d0656c42348e292e",
+    "previous_target_sha256": "8e193256c0dd6410ef917ef819695869a89aca78ef4d047f9e1d23fd13e31ec3",
+    "target_text": "Oil Drum",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:38": {
+    "source_sha256": "cd2256876afc00ee7521d706cee5b4ba642436cf6409077ab60602b619ce7003",
+    "previous_target_sha256": "852e7e668e86cec25e2b6df5b64599602fc767078b96fe2b6dbcb3b8278b4ff3",
+    "target_text": "Rotten Egg",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:43": {
+    "source_sha256": "e39031b28b98b44c43c0619f07acfc158ac7c289de59a7d974a5e1a55b163b0c",
+    "previous_target_sha256": "3e6cd6aa2abcad0382923d35924a183c333a2f8b314e7c4b0a0b84db77681fd8",
+    "target_text": "Hand Cream",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:53": {
+    "source_sha256": "29c267852d2b96e14e8305f5fc5040214273573e318bc3d66cb8e1c4b90fe738",
+    "previous_target_sha256": "7880701fa9dc2880de78864924862c21309c8f759200b5a79032765ad4d9f5e2",
+    "target_text": "Video Game",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:58": {
+    "source_sha256": "48c66b4ac6d9fc39f329db63bd88afec33ac45d66064d5afd2e08526b89a8d7d",
+    "previous_target_sha256": "0751552b2d6d9a6165c2cf9f48b9975a8772cc2250746e83a716dfc416240678",
+    "target_text": "Racing Goggles",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:62": {
+    "source_sha256": "1f7aa5f36b76d2368e84a2308f645c09bace438b67345baa8518534115084b81",
+    "previous_target_sha256": "38e8b74bbfd1142bd5187b4032f3164489778b93da874cc68a45a71d17252fb2",
+    "target_text": "Brass Knuckles",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:66": {
+    "source_sha256": "f1dc14b8d6166e0bc1ac9dfbc9fcb86baa75aa92bb11714344a355cdcaa274a5",
+    "previous_target_sha256": "7121aabfe7f4cebd5da12b61ed03bc021738d9cdb59df243472424b3fa5ce9b1",
+    "target_text": "Silver Ring",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:69": {
+    "source_sha256": "85b0c4a12270a7368852f515a2096eb2f91dd49575937b84e473ba7bdf5e8cf4",
+    "previous_target_sha256": "bbfc3e73823613378e7b3bee9b8fd03657b5e7f6089321c49333052602d882d4",
+    "target_text": "Platinum Cross",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:70": {
+    "source_sha256": "cbeb1f0aa87ac076212a86f82b522d8f44ae78f332f3bd1144617c1a0dc1a179",
+    "previous_target_sha256": "8fbef9dd77f567323558c8b2427ebef03811f2d80735b860b6c9ac7bcf279445",
+    "target_text": "Sewing Kit",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:78": {
+    "source_sha256": "cec19b58e193c986b1589e5b5d81377d75041b5c45da26c5b2cf1da74cc77734",
+    "previous_target_sha256": "0de5284a4e26151b3bab1e521b96abdf8ebc226d6bbcae8f0fd4b363e43481df",
+    "target_text": "Portable Videophone",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:79": {
+    "source_sha256": "8a1794c2f1977897db346f4b85a399290406a9f9252b0f5182d9db99a8be0183",
+    "previous_target_sha256": "c75a80ce4f71e2c822b10f2c390e9eac08f35ce80ab122a62d3afb3d7c9d37e9",
+    "target_text": "Pop Music CD",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:86": {
+    "source_sha256": "f53b6261e73d34c37da278b1210eece53d365843d015e6224017f0e291a91e9e",
+    "previous_target_sha256": "a937930148ac4963af94bc6bef63eb089064c300b154c0e6d63f7dd74f7537fc",
+    "target_text": "Anatomical Model",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:89": {
+    "source_sha256": "a47b121cf95de5a1a8ff309733354b5fb5a7cd1c12dae041458a8dd70f2adb92",
+    "previous_target_sha256": "f32ae7adb85e7ec5826ee9d25b6cb6afdd9d9fd2a3187b8bc0a6845e477a851e",
+    "target_text": "Sea Cucumber",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:04": {
+    "source_sha256": "5f9f83d7543b5dbdb88900fdf32b57b65270bbebbac1d01e06b0aee65f616774",
+    "previous_target_sha256": "6eb13c358c0b701f68ef52e08dbfe10658dc4f741f3ab26e68069dc9e710aaf8",
+    "target_text": "Romance Novel",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:05": {
+    "source_sha256": "c72eb13516524ac0ed9c776c6a836a47bec8672e7e87d43ccd0294936c7c60c4",
+    "previous_target_sha256": "c1a1a2a21f05527608c157d783e84db40d4a81e1c8af2a5f9a95f28d0196406e",
+    "target_text": "Sandals",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:09": {
+    "source_sha256": "a5d242a880f4e68a777077612db30ebfa83a799201d2891c82bd3a2b77629837",
+    "previous_target_sha256": "5a27e16c82120fcd4759b09037251c51eba5df41561ac2b9c374fbab55a81cf5",
+    "target_text": "Goethe Poetry Anthology",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:11": {
+    "source_sha256": "a85beb680c35fc4ca00a4d69ece4bf6537c78a73e12283161ada23dfa35a0c17",
+    "previous_target_sha256": "4ca2c88f52d0fac09f922dac5d5c7a3a43d9433781b226375a0d01f62466e862",
+    "target_text": "Fresh Softshell Turtle Blood",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:12": {
+    "source_sha256": "1feb1c6486d04be23301f111ecb9ada8a55e90a5c62cf0550ca16bd90e3f2424",
+    "previous_target_sha256": "7994a469adf8ef3527ba93047c143fa1475c6d8ff5364ee37a0f25416845c81b",
+    "target_text": "Complete Works of Shakespeare",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:14": {
+    "source_sha256": "90ba73a393f29ef6fed2fa5bde54774f8f7735642f12156be1cc887c107ab18c",
+    "previous_target_sha256": "0fe340a43bd66b87bc0645b1bd1b27d7931b39063b50ffae653a4b2b8d866937",
+    "target_text": "Anemia Medicine",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:16": {
+    "source_sha256": "bb8cffa0c5c4f499fa53bb1d332f9dcce7078576953c1708ac15af1dec9d1129",
+    "previous_target_sha256": "390a18c8dd14c23ba4fda28fea11c5a9bad40d4e041d992a5d1b258e8dc85a44",
+    "target_text": "One-Piece Dress",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:17": {
+    "source_sha256": "1b54e57ae4cb36f7da840b66b013729acc063922eade477f247ba970a0409a20",
+    "previous_target_sha256": "57f03717b2540f999475c04c50a3ddf4f5aea0b6dea7e52df86775a1b246f800",
+    "target_text": "Manga Book",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:18": {
+    "source_sha256": "508bb9b1e1b04b7479a267e41178c65e44931fec0aabe8a66d2c7a337fcb95f3",
+    "previous_target_sha256": "57db2fda55101271349253d07d5b3c89c03d07e978d03d765c6b5ea2e73639a0",
+    "target_text": "6th-Gen Computer Theory Book",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:20": {
+    "source_sha256": "7a9560abbf6e9a902c5a9cdca0e3dd3508f597687406c691cf176a006d65bf5c",
+    "previous_target_sha256": "a6315ce98224f8da6a1bae3bcdc031130c4779803b52ba2fa9236ec7f2891f1c",
+    "target_text": "Perfume",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:21": {
+    "source_sha256": "4f73f5e293bb6b9e7165fb2143ad6b6e22bbb16b9e433dc1be0b74dd84dc23ea",
+    "previous_target_sha256": "c34315bd252ed00fb18cb6a1002b4e308a358e62ee4fd1f88c9431db4c6d2a70",
+    "target_text": "High-Speed Geometry Theory Book",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:23": {
+    "source_sha256": "4ed21e9c377b026b87d4ac1aceec458996e68a8b8fe958af5bc93796158105c0",
+    "previous_target_sha256": "42c49cbaccd4a2c36cd8d58e63b2abfc0115dc8d5dc7da2e25c500a883d4551c",
+    "target_text": "Cheongsam",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:24": {
+    "source_sha256": "554cdc4afa926cce7d1cb43a2e348d6e027246d45bb58949c78e970c2dea4447",
+    "previous_target_sha256": "76ba422b22a715f72dd07691c0d3e2a1df1219798e2cb1c0aa7e822e7f0ef743",
+    "target_text": "R20000 Processor Chip",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:27": {
+    "source_sha256": "1b300b04e6056b4d3effb1cd2e035712ec1ddde96373845d4419fba903eff72a",
+    "previous_target_sha256": "88c7ac678ff617b9be3b1ff669a0edb20cf4b6cb7f2448b4e7de9a349c684b62",
+    "target_text": "Super Questionable Book",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:28": {
+    "source_sha256": "d8461bee973219651cf465ef04b3f6679d6386ea81f693bfbe6195ae5aca9b3f",
+    "previous_target_sha256": "faed17506c24462d0da791fb46754b7c7cf5cd0d4afb546859675b0246738f8b",
+    "target_text": "Beret",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:29": {
+    "source_sha256": "45eab65de5c8c52ff590a43844f18b0df1a5b7a8fa7e7c2ae895567f1662258c",
+    "previous_target_sha256": "40b9652e5b7ca6653ae0722122769e3e519ce893e9ddc6cb7924045ccbb809ff",
+    "target_text": "Backscratcher",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:30": {
+    "source_sha256": "33e09c9ec309960245e9bb9016f96d73038fc650a4df039e4e3d128776711f79",
+    "previous_target_sha256": "cf4261a77528a46a198f548f56631fe4b97dc288801f60db3c21b6116b6a19dd",
+    "target_text": "Imported Gargy Art Book",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:31": {
+    "source_sha256": "7a9560abbf6e9a902c5a9cdca0e3dd3508f597687406c691cf176a006d65bf5c",
+    "previous_target_sha256": "a6315ce98224f8da6a1bae3bcdc031130c4779803b52ba2fa9236ec7f2891f1c",
+    "target_text": "Perfume",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:32": {
+    "source_sha256": "a44c377657de6a4c94bab50152a079b3ee5531a4abb56338b54485d11262478b",
+    "previous_target_sha256": "8009b709491ce78f6b3526dc57b4fbf5b7de2fa26129dc302408b15a58bf7f67",
+    "target_text": "Swimming Goggles",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:33": {
+    "source_sha256": "42b5627c6c5ae7a7fd999b2df30f2d66c4afffbb6170532d6d2fa18408f7b3a2",
+    "previous_target_sha256": "de30813a13ad95e732718f24bd7dac49189e551de06169ed35fba999ed6572da",
+    "target_text": "Online Karaoke System",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:34": {
+    "source_sha256": "da9020d199b20c67ee74e04926c7860a08c04bad3587032d9133bcf353373dbf",
+    "previous_target_sha256": "879c5cebcdd2bfa2761221d65b9afb15b98c618f8b5153fd397c4608f775cc1b",
+    "target_text": "Munch's Scream Doll",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:35": {
+    "source_sha256": "16c30f4610bd01925a953dfaeee8f74556574ee623a82831c29796f68d7e96bc",
+    "previous_target_sha256": "60e6f6a04a5917f1f1a5bb5fe5740f4cddb43ce66253f98a7be61f6705d40641",
+    "target_text": "Camo Uniform",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:36": {
+    "source_sha256": "1a87424b1cfe01f42d3798a03a1562f69ec1a42fdd4a297297ae7712e8bb6a40",
+    "previous_target_sha256": "1aa8ba70fe6326f4ad1ee945b638a2b46e99ee2ac876e24414f5e9d12e3a1b18",
+    "target_text": "Stainless Steel Cookware Set",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:37": {
+    "source_sha256": "498dfb76fed63e64c30472a0e747124013c3ef5c2d130eca5fb9022ace4fef32",
+    "previous_target_sha256": "8eb2deb91de14dcf00a64756b9eb9ea8895266d518745944b5bcb28489d00e4a",
+    "target_text": "T-Shirt",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:40": {
+    "source_sha256": "4d6e55b545f00f0af500b20da84ba700239f721a999e037ac772c5fdd8ab92d7",
+    "previous_target_sha256": "5473a271fadecc8c334b2939f45d0e993ea3b5e33c4d30d1d21feedd78ca8f1d",
+    "target_text": "Kitchen Cleaning Set",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:41": {
+    "source_sha256": "2338c7d919236a3ee0f378dd3c5ca3957ff2486b3b22b0e2c1b60601506152df",
+    "previous_target_sha256": "fc9f023c758916a537acc0081d16df0c38a99238e84b5737b93f94633de19d3d",
+    "target_text": "Stockings",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:42": {
+    "source_sha256": "56c292683ff7ec9acb5f77f82271e0d5d816364ba390602f1b2c78c3db8e520d",
+    "previous_target_sha256": "30e6a5efe3bb6170f5bb74a3ce7fccc8f59ae03bcbe30b760015af3f91307c78",
+    "target_text": "Iron Chef Video Set (4 Vols.)",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:44": {
+    "source_sha256": "1f0e20727a96aeee019c8554cb8bf4a97383d8d50488a18ae312191ea9146a7d",
+    "previous_target_sha256": "0226c85a3f158580efd398a90ee7c765873ee4f96bae278ad809b5020ebdd78e",
+    "target_text": "1/8 Scale Nijino-san Figure",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:45": {
+    "source_sha256": "57446f72f20d861a2d981fa0766f51597cd3291a90ee007f465b5cf97141ff86",
+    "previous_target_sha256": "84406a8394ed8c3461d4a5d1b5e1af00d1f1d42174457bccf82d633e06420348",
+    "target_text": "Haniwa Clay Figure",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:46": {
+    "source_sha256": "1c01111d2ee3d3e74c1103eaaee7f293799fff2e68dbcc01c9f18370888f681b",
+    "previous_target_sha256": "9e4fc6a6584bf81594c7e9d9fde72adaa5c9f84635b034b252ae2ef783a3fad5",
+    "target_text": "Spiky Flower Frog",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:47": {
+    "source_sha256": "ccdc4a92555c4a572495ec52b2481b36a8c92bf0d35b3c3990a597ba21946f35",
+    "previous_target_sha256": "995890daecfe13793e3fae81dea21a1545dc513e2faf4fca4a51f78fa105bd32",
+    "target_text": "Rock CD",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:48": {
+    "source_sha256": "27cb82c385793d58c7419e759aaeea9da6db9e84f705bdd3a94eaf108a55d1ca",
+    "previous_target_sha256": "956a3d0555991fa10da52c9828a551eb89c51c72dfa3bf8ce31f8b8f206d57e1",
+    "target_text": "Music Box",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:49": {
+    "source_sha256": "40862447237738e8fa6a0dacfd69af9ead9ea33e1dcc68bf0ba18b5503478c2b",
+    "previous_target_sha256": "3c826c0db727a9b0f1fa2df85d90d9553135420a64142c8f8358b252ae031f20",
+    "target_text": "Hairpin",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:50": {
+    "source_sha256": "e4b61874329516edf8beffecbf894b44e39435e5059cf645053e963cb8984bd1",
+    "previous_target_sha256": "0106c866c54a3958021ad94febd52a92ed04b52669112118f2cc34c776303c75",
+    "target_text": "Frozen Crab",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:51": {
+    "source_sha256": "6db0660715a5d3263899d57afe44da47f3281e04a78fade6646a8ad598fde26b",
+    "previous_target_sha256": "37f97ce68c6924c5a76eb643bc49ed9358db35e5af63e107f70a1148015e9048",
+    "target_text": "Potted Houseplant",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:52": {
+    "source_sha256": "e7dd10ec152d8b85d0e345c66b7bd6ac977c427faa18073985a7d45630ff6f68",
+    "previous_target_sha256": "52b7c7486c20d2fc38bc881bef5167f86f7080aaa799f9b4660d3709c3026668",
+    "target_text": "Rainbow Yarn Ball",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:54": {
+    "source_sha256": "3821de5d1818ddaaaadeb7393d34861ec3653d31feaca8458f5f3a7a0bcf9ca1",
+    "previous_target_sha256": "e9ccf5579d2b6a6b7ed2d1308cea1b4b74dd12b48779610f8de8460173f13069",
+    "target_text": "Bouquet",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:55": {
+    "source_sha256": "fc0009963f2aee215c0f08bee2a234c532fc801909ea67dff0e362c7b2dad0cc",
+    "previous_target_sha256": "1250d2a9076e45ca3383a397a1038e245ece5443bc54d864b9aa7b56e7dc3a2d",
+    "target_text": "Wristband",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:56": {
+    "source_sha256": "85d2152cf7a347f4c2a24ca0249d7691db7f588ddcb2ce779ad985542fb7bbef",
+    "previous_target_sha256": "adc44c49aaf2b065cffc0e6ae8cb6cb34e19eb1d19893a033db6fbacff7d6672",
+    "target_text": "Wooden Club",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:59": {
+    "source_sha256": "433f9553878eeabd9a70f88e5a167c6cfbe6b1c3a81461da170fd574402a6c01",
+    "previous_target_sha256": "630f3ba5f1b13460f38934603006c7ed2cec0d38d8a8a0f110ed16d671358c6c",
+    "target_text": "Work Gloves",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:60": {
+    "source_sha256": "4f7aa609f46144a0751b3156c83435c26da5b71841daa561b49d0765e172c9fa",
+    "previous_target_sha256": "1419debf7d909f0b603d0b118a2d4341f3693424189b7bb874ac78c159c7a457",
+    "target_text": "Skirt",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:61": {
+    "source_sha256": "faf8ee7e353e9cc64e113898cdf16e33c254f2b53ef9f9bc1d66525595beb547",
+    "previous_target_sha256": "b986fef0b65b51c91f40e92fe0dcaaed71ac2602bae56aa86c5d8d51d7bcd55b",
+    "target_text": "Athletic Shoes",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:63": {
+    "source_sha256": "c72ab8ad58fe401074368251479b20c81b01a490856b06631d31c6735f8dc8a8",
+    "previous_target_sha256": "9a6ede1be751a9c85b60bc3328cd24174d517e6180ba472f6ed76b00426f53dc",
+    "target_text": "Gold Hair Ornament",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:64": {
+    "source_sha256": "3c9f699535cb29a0bbb1ea0028cc9157076872ed3fd4a0cf6d47b626cf847d81",
+    "previous_target_sha256": "223ddebcef23d92f3bd43278659bf8d6993fe50f41ce4564ad51a8d24f31bf50",
+    "target_text": "Pretty Boy Photo Book",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:67": {
+    "source_sha256": "135abb0c75f082cd5807a1f063b756d02455a6ac388d93f77063404fb4fe49d7",
+    "previous_target_sha256": "86a99167a79fe2b9585f0f73b9a389a7ddcbfbb9309a719dd3df7bb449d9ccfc",
+    "target_text": "Compact Mirror",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:68": {
+    "source_sha256": "3dab852de116f9a88508b63e9e95c644843250015bfca9e14e0c5abe800afda7",
+    "previous_target_sha256": "03f12991c3632639a398eedc088779c503249fc56efbf44558afb6d5c1b50a4e",
+    "target_text": "Copper Kettle",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:71": {
+    "source_sha256": "bcdfb89d39db1ae1e5deae7669afcac6172f197655a51ea65fca7b92ccb868e9",
+    "previous_target_sha256": "0cadc8852664abd0e943909da42d8b8b8c87ca47c8ee0f0085b0d45b78c03dfa",
+    "target_text": "Knit Wool Panties",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:72": {
+    "source_sha256": "f82f10f0048ebadaed6ac27c8d0a8ce804d92088cf989b42696ecb5931ca0a21",
+    "previous_target_sha256": "bd93a35fcb48ba9294f61be5af1594d738e1a9a3085618a9b6a96d791a93a255",
+    "target_text": "Yogurt Mushroom",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:73": {
+    "source_sha256": "9a59908a6de3d4b2ea20f572d8b547b65a6b05f287786dc41463d9fb030521e2",
+    "previous_target_sha256": "033413f658347d05c657be135e5120185fcf9eb0769002770d45a3b46631236e",
+    "target_text": "Gaming Magazine",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:74": {
+    "source_sha256": "5f9f83d7543b5dbdb88900fdf32b57b65270bbebbac1d01e06b0aee65f616774",
+    "previous_target_sha256": "6eb13c358c0b701f68ef52e08dbfe10658dc4f741f3ab26e68069dc9e710aaf8",
+    "target_text": "Romance Novel",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:75": {
+    "source_sha256": "50b9e67d6ac3d6003ba1ade25ad6c875988b5486bc223484c46921467aac95d3",
+    "previous_target_sha256": "d82bba20dc128dcda9bd6dbc61ad73efbe1c5c703570b83d36dca7a095504ac5",
+    "target_text": "Snowboard",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:76": {
+    "source_sha256": "0a6faecbd1e8895d8fd222d4bef777dbda5bddfd6b523a537996160e00d4bc8f",
+    "previous_target_sha256": "3f3dca20318855593bc1666af04abf88b672f7d30fffb152fedb1b0fe4bc097f",
+    "target_text": "Alarm Clock",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:77": {
+    "source_sha256": "f82f10f0048ebadaed6ac27c8d0a8ce804d92088cf989b42696ecb5931ca0a21",
+    "previous_target_sha256": "bd93a35fcb48ba9294f61be5af1594d738e1a9a3085618a9b6a96d791a93a255",
+    "target_text": "Yogurt Mushroom",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:80": {
+    "source_sha256": "50b9e67d6ac3d6003ba1ade25ad6c875988b5486bc223484c46921467aac95d3",
+    "previous_target_sha256": "d82bba20dc128dcda9bd6dbc61ad73efbe1c5c703570b83d36dca7a095504ac5",
+    "target_text": "Snowboard",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:84": {
+    "source_sha256": "a29dc9db18412c20d6a324160a52e0f1913bd1d3f33b9abc14edfcb6f313dfef",
+    "previous_target_sha256": "717d744805d97665807e7c89ea5428b93650e1111394adbbdf90a09217f91847",
+    "target_text": "Kitten Plushie",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:85": {
+    "source_sha256": "446f8f5e4c469767dba95a4e3443a2a4489e4070891929473d62bab64ea62ced",
+    "previous_target_sha256": "8c0feadc9cf0b47ee64bcc14a26cfbe42493ed8e2cb6b8a98e024240b4d76604",
+    "target_text": "TwinBee Plushie",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:87": {
+    "source_sha256": "e08e7452d9c968fa6c98576a1c77396add466a03a44029d8bc51e9a10c3ee258",
+    "previous_target_sha256": "8a377f136e8d72cf39959ad047132342ef85836140ed069ef1115076c44fb354",
+    "target_text": "Bunny Mittens",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:88": {
+    "source_sha256": "8dc11c5f3a2ccee2c42ba0b122b4b1fa915560530a1255944436ca78def4eb77",
+    "previous_target_sha256": "62ea6d10db319ee19277d5c9c46daf92149e5b661b55973be0438e32cf8cc202",
+    "target_text": "Sumo Wrestler Plushie",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:93": {
+    "source_sha256": "e2ea8693571de739f76de66d750728b7e133b3a2f923ce0fc70d4027cf7a7960",
+    "previous_target_sha256": "51d32887a3da5c8504801b904c9b43c6bb4f5c2c966585b5061fcf8812e696ef",
+    "target_text": "Chichibintarika Makeover Set",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:95": {
+    "source_sha256": "ca4d72d3befb9a0a9871f887829eabb5a6efe0b164d029e2fff82c71828bd1a4",
+    "previous_target_sha256": "4c3db7624b55d71e5b1b3b5090706e9888a4e7a4af141e29873288f97ab4a50d",
+    "target_text": "Castanets",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:96": {
+    "source_sha256": "0f5b6b20937c7d0eb2cd3403f290832d8d3a5b0d3dfb4f5697941e7738a20cda",
+    "previous_target_sha256": "58a6c7a85550352325fb7349c6e3a32af8e4db0b813cc19d1f049af9b08f9096",
+    "target_text": "Complete Fighting Spirit History",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:97": {
+    "source_sha256": "26d0abf5d59a1674f4f4afb8bbcf694043a185bfc471a86e11896509060d7af1",
+    "previous_target_sha256": "d82f2dad16543d029d7d5a01db1bc82b2905641db3d9ac343d10056a4447a7fd",
+    "target_text": "Lip Balm",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:98": {
+    "source_sha256": "5ddda38cbb16c785dcc4b8c9886c754db8c3cb1b276dda3467dc092b7f2442a0",
+    "previous_target_sha256": "33b1974171920cd026de260fcc5c493e5af17aab924a4d05738effb1afcddfd3",
+    "target_text": "Glass Marbles",
+    "ticket": "T-39541",
+    "reason": "Use the existing DATE2 gift label for the identical Japanese source and the same dialogue substitution field."
+  },
+  "c:NAME_ENT:80139440:1": {
+    "source_sha256": "37bd7838d4e7a5347f6ff5bb755da5acf286c0d1a049de2621b4dd09f3185714",
+    "previous_target_sha256": "7cb26f355a7835032fa2ffe97d39094dacfad0ba697cd5a13c774050c3ff8c70",
+    "target_text": "KONAMI",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:00019590:744809258e2c": {
+    "source_sha256": "37bd7838d4e7a5347f6ff5bb755da5acf286c0d1a049de2621b4dd09f3185714",
+    "previous_target_sha256": "7cb26f355a7835032fa2ffe97d39094dacfad0ba697cd5a13c774050c3ff8c70",
+    "target_text": "KONAMI",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:2": {
+    "source_sha256": "b818693c9ca2c7ec6eae58bd552d2361c9759d8606045733e7732a399edec6f0",
+    "previous_target_sha256": "da2e5dc515b188dcac1afa88c93f859834ad57dfd921581172c9a74ab190e9f1",
+    "target_text": "ALL",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:0001959c:1e3fc5f31f1e": {
+    "source_sha256": "b818693c9ca2c7ec6eae58bd552d2361c9759d8606045733e7732a399edec6f0",
+    "previous_target_sha256": "da2e5dc515b188dcac1afa88c93f859834ad57dfd921581172c9a74ab190e9f1",
+    "target_text": "ALL",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:3": {
+    "source_sha256": "eaf3f1e708f9c46d49b43bdc4afff4090034c2f8a0602d9c21aa6e9c026f976a",
+    "previous_target_sha256": "be131658df293df96139be8e86fa8467bf89f1993d26820db3eb588a4051b707",
+    "target_text": "FRIENDS",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195a4:49fc4d4c2c93": {
+    "source_sha256": "eaf3f1e708f9c46d49b43bdc4afff4090034c2f8a0602d9c21aa6e9c026f976a",
+    "previous_target_sha256": "be131658df293df96139be8e86fa8467bf89f1993d26820db3eb588a4051b707",
+    "target_text": "FRIENDS",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:4": {
+    "source_sha256": "5ea831dbc9c2d5a9697e04319c069f72f51047ddcd3a2f0171c3e2abd39f04ac",
+    "previous_target_sha256": "e773347afcf29c0f4c62e728f963817f2086994f2bd4742849927e179db7739b",
+    "target_text": "UPUP",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195ac:3c25b9c21544": {
+    "source_sha256": "5ea831dbc9c2d5a9697e04319c069f72f51047ddcd3a2f0171c3e2abd39f04ac",
+    "previous_target_sha256": "e773347afcf29c0f4c62e728f963817f2086994f2bd4742849927e179db7739b",
+    "target_text": "UPUP",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:5": {
+    "source_sha256": "6646a3cb19400f681d50ecf26a42bfa7387aa98faa909ae953d82795f45089da",
+    "previous_target_sha256": "260e64e84a97afb6ff3d96e8d190625a8ae0b533c7b7c640f065b21af766951f",
+    "target_text": "DNDN",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195b4:3a798ad4e2ea": {
+    "source_sha256": "6646a3cb19400f681d50ecf26a42bfa7387aa98faa909ae953d82795f45089da",
+    "previous_target_sha256": "260e64e84a97afb6ff3d96e8d190625a8ae0b533c7b7c640f065b21af766951f",
+    "target_text": "DNDN",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:6": {
+    "source_sha256": "ccb2b1afc1436a86e3d5a18c3f96e33a866aae862055b8a8da0739f54338c50d",
+    "previous_target_sha256": "0515fe8f56b7a908ed430a61056aaf39c8554d392cf221ad31987056f3f629fa",
+    "target_text": "LRLRX",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195bc:12b009aff7ec": {
+    "source_sha256": "ccb2b1afc1436a86e3d5a18c3f96e33a866aae862055b8a8da0739f54338c50d",
+    "previous_target_sha256": "0515fe8f56b7a908ed430a61056aaf39c8554d392cf221ad31987056f3f629fa",
+    "target_text": "LRLRX",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:7": {
+    "source_sha256": "dee279c6e395efbd31a351d64c15703f508bbd4fa561e6d97c10a352352c23ed",
+    "previous_target_sha256": "e773347afcf29c0f4c62e728f963817f2086994f2bd4742849927e179db7739b",
+    "target_text": "UU",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195c8:df22bcdc5325": {
+    "source_sha256": "dee279c6e395efbd31a351d64c15703f508bbd4fa561e6d97c10a352352c23ed",
+    "previous_target_sha256": "e773347afcf29c0f4c62e728f963817f2086994f2bd4742849927e179db7739b",
+    "target_text": "UU",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:8": {
+    "source_sha256": "6917ed2ebfc332d905e59194f819ba7cb5aed0509bb8816a344f1c3cb29149e6",
+    "previous_target_sha256": "260e64e84a97afb6ff3d96e8d190625a8ae0b533c7b7c640f065b21af766951f",
+    "target_text": "DD",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195d0:4fcb6c35f69d": {
+    "source_sha256": "6917ed2ebfc332d905e59194f819ba7cb5aed0509bb8816a344f1c3cb29149e6",
+    "previous_target_sha256": "260e64e84a97afb6ff3d96e8d190625a8ae0b533c7b7c640f065b21af766951f",
+    "target_text": "DD",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "c:NAME_ENT:80139440:9": {
+    "source_sha256": "5d3d3564768b950fdfbade66adda604d49c69ba1ade29726db8c1384c00eb431",
+    "previous_target_sha256": "0515fe8f56b7a908ed430a61056aaf39c8554d392cf221ad31987056f3f629fa",
+    "target_text": "LRLRX",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  },
+  "CDROM/EXEDIR/NAME_ENT.EXN:000195d8:620e239965bd": {
+    "source_sha256": "5d3d3564768b950fdfbade66adda604d49c69ba1ade29726db8c1384c00eb431",
+    "previous_target_sha256": "0515fe8f56b7a908ed430a61056aaf39c8554d392cf221ad31987056f3f629fa",
+    "target_text": "LRLRX",
+    "ticket": "T-39545",
+    "reason": "Keep the secret-name input within seven letters and distinguish the original word and arrow combinations."
+  }
+}

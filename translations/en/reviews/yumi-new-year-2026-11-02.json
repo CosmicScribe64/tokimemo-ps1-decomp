@@ -1,0 +1,39 @@
+{
+  "ticket": "T-39538",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "run": "build/emu/yumi-new-year-linked-lines",
+  "scope": "Five corrected replies through the New Year talk runner with disc-loaded SHOGATU tables; controlled line selections and linked ELF addresses. Portrait staging and natural scene traversal are not covered.",
+  "records": [
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0016:l0000",
+      "frame": 900,
+      "capture_sha256": "2a03133f6b222cc8e8521759c44af72e6bce511e9fafba301e62ee81d29b3d1a",
+      "visual_status": "verified: fitting rows, complete quote, no clipped or overlapping glyphs"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0032:l0000",
+      "frame": 1500,
+      "capture_sha256": "9be711453b05071a6a5d6690eb29e81a7f6a972cc3a2919e458b867a554c2072",
+      "visual_status": "verified: fitting rows, complete quote, no clipped or overlapping glyphs"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0032:l0002",
+      "frame": 2100,
+      "capture_sha256": "354027f7e9e2ff8acb86f16df41cd97b7ebc39b7b0e11b37a4ee86a2028a5d53",
+      "visual_status": "verified: fitting rows, complete quote, no clipped or overlapping glyphs"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0033:l0002",
+      "frame": 2700,
+      "capture_sha256": "46c14dcbcc336b6cf7273ffe65263e1ae5f0cc3dc8fcbb57145b4caaea91e692",
+      "visual_status": "verified: fitting rows, complete quote, no clipped or overlapping glyphs"
+    },
+    {
+      "id": "talk:CDROM/SERIFU/SHOGATU.BIN:table-13:g0034:l0004",
+      "frame": 3300,
+      "capture_sha256": "9d663a37816903346aa944902cb1f12a8cdb2edac936ed62defc20ef3509ec8f",
+      "visual_status": "verified: fitting rows, complete quote, no clipped or overlapping glyphs"
+    }
+  ],
+  "detail_check": "Pixel inspection confirmed the existing extended interjection has intact glyphs; it is not a player-name substitution."
+}

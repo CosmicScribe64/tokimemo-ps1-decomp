@@ -1,0 +1,72 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "scope": "Controlled camp entry through the normal unmet-heroine initializer, followed by controller-only dialogue progression. First flagged passage reached naturally within that scene. Second selected after the first had finished, with the initialized Nozomi portrait and full Kiyokawa-san substitution. Does not certify calendar traversal into camp.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-4:g0005:l0006",
+      "payload_sha256": "bb4c4e0409f1b5102b73df2e108573a54796034364e9baeb7bebce0998949902",
+      "run": "build/emu/camp-nozomi-continue",
+      "completed_text_position": 124,
+      "result": "Complete scrolling rows and final punctuation inspected; no clipping, overlap or stale glyphs.",
+      "captures": [
+        {
+          "frame": 2880,
+          "sha256": "695ed662573341e25661be0010e6a4078f525fce05a4ca7228a03e62f66a581c"
+        },
+        {
+          "frame": 3000,
+          "sha256": "b0b8117f46c3ff2a5a2318eabbf830b0bcc18671d1698819c481db9b5d4f27ac"
+        },
+        {
+          "frame": 3120,
+          "sha256": "faf0e8f73ac32652af89c1b3abf1c1d59e3e484686a0d5d979ea9fa030ab6cdb"
+        },
+        {
+          "frame": 3240,
+          "sha256": "e1aafa3e895144c6c3963a9f44643b2888dbc3b002438bfe52d698e1d14e66ee"
+        },
+        {
+          "frame": 3360,
+          "sha256": "08988214a70cfe361c6a1e12cb1b11ab9d7ccef528149dc0dc7a05089ab3c246"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-4:g0006:l0001",
+      "payload_sha256": "e523e2bb115bee6b6b03cd443f199ad77cffa38e3254d554c3e40b20ab2cf09f",
+      "run": "build/emu/camp-nozomi-long",
+      "completed_text_position": 99,
+      "result": "Complete scrolling rows and final punctuation inspected; no clipping, overlap or stale glyphs.",
+      "captures": [
+        {
+          "frame": 960,
+          "sha256": "2d252e6a289941bfb2cda7a8c59e53e2c5eb5d8aa86c584e6d6ee785fb46f32c"
+        },
+        {
+          "frame": 1080,
+          "sha256": "a86a6fd57f3fc0e2a3a2f6d22a222fb0a47a624267a0a511f22e169ac9128e71"
+        },
+        {
+          "frame": 1200,
+          "sha256": "5d27fcc9743933787dd7d317ee98200aa826cfaa74da1dd4c198e6f12e0c5eb7"
+        },
+        {
+          "frame": 1320,
+          "sha256": "ae894c0b9e92cd29066cb33d77bc8ea622b349e55eee9fef61092160e1b955e9"
+        },
+        {
+          "frame": 1800,
+          "sha256": "c02266ce647221c2c79607c7f057416b77f3115890fe98bb361fdcffd6460646"
+        }
+      ]
+    }
+  ],
+  "excluded_evidence": "Frames 120-360 of camp-nozomi-long interrupted an unfinished reply and retained stale glyphs. Not accepted as game-layout evidence. The first passage is approved only from camp-nozomi-continue, with no line-selection pokes.",
+  "name_binding_capture": {
+    "run": "build/emu/camp-nozomi-continue",
+    "frame": 2520,
+    "sha256": "0ce442c9c62649cb91dbaea18e50d3d289d9fc7e26716c460bec92ee0c9578c9",
+    "result": "Full Kiyokawa-san and correct Nozomi portrait visible."
+  }
+}

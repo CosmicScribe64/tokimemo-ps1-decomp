@@ -1,0 +1,96 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "run": "build/emu/white-long-followup",
+  "scope": "Controlled line selections after White Day scene initialization and real script loading. Actual hallway dialogue renderer; existing Ijuin portrait/name retained for the other table selections. Verifies text layout, not those scenes' natural heroine staging.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/WHITE.BIN:table-3:g0002:l0003",
+      "payload_sha256": "d580b55d8674b219faa7ac4612507d3563224b4a9fb5791f91e5abcefac3c2b8",
+      "completed_text_position": 115,
+      "result": "Opening and scrolling rows inspected, including final punctuation; no clipping, overlap or stale letters.",
+      "captures": [
+        {
+          "frame": 1320,
+          "sha256": "fda2a4585db1614a16fb62d799e2d743059616135354f4751ab45bba7b74b282"
+        },
+        {
+          "frame": 1440,
+          "sha256": "3615a0ff7306fc646314e7d21fbfaab15f32688de76195e10d49ac2862a13357"
+        },
+        {
+          "frame": 1560,
+          "sha256": "5c61e2a9221e46553db7dd40069b84a4d1ab3fd490c33a8ba337cfe244448b98"
+        },
+        {
+          "frame": 1680,
+          "sha256": "9ce85b88c9561a82a376e2c30f6ca52751f8109b4db13571fbcbcafc59625185"
+        },
+        {
+          "frame": 2040,
+          "sha256": "ccaa41bd41600279a916ee2e1de2183dabb9ff25bb07246c7ff27c0a7049574a"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/WHITE.BIN:table-7:g0003:l0002",
+      "payload_sha256": "2093158973b0822b5f8ad8693f692d0220a925116329655befca58c9147402bf",
+      "completed_text_position": 96,
+      "result": "Opening and scrolling rows inspected, including final punctuation; no clipping, overlap or stale letters.",
+      "captures": [
+        {
+          "frame": 2160,
+          "sha256": "2bf591261b78326bf4bf997b796cc0af10c3b026b596cca40f8c7c94bb2edef2"
+        },
+        {
+          "frame": 2280,
+          "sha256": "3c3f79378d0f79d6a093851203d0273dbddcac5e8a65a0259118110e99f34186"
+        },
+        {
+          "frame": 2400,
+          "sha256": "090b4e209e474a1492e82bc1ab010a2c6afb10f17c1dd84f49b2d0f37806e06d"
+        },
+        {
+          "frame": 2520,
+          "sha256": "9b996add0bd6a694d5e6c92074254aa5d16910e24e7912a4848ee5fa33b82cb3"
+        },
+        {
+          "frame": 3000,
+          "sha256": "5113fbab83a5438987445641c6fa85a1bf0075adecf518d160a4615e30592411"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/WHITE.BIN:table-10:g0001:l0006",
+      "payload_sha256": "809408ad0ccdc6ed746a0932584579b3d3c70bffb1ed3e9ebfee6e3d5cc74377",
+      "completed_text_position": 91,
+      "result": "Opening and scrolling rows inspected, including final punctuation; no clipping, overlap or stale letters.",
+      "captures": [
+        {
+          "frame": 3120,
+          "sha256": "1fac8e1d6ffc1a7b002f325bb4082fad634a3d7bdaf715e52554c816cd2af2c4"
+        },
+        {
+          "frame": 3240,
+          "sha256": "1018facee37de38d920529f7a06d471a7460e39cc3e5460fcae21feca39c62cb"
+        },
+        {
+          "frame": 3360,
+          "sha256": "34fc8565320a2b29e559f2a2baa12d1903d34f4cc9a349d6c80d33007f12b3e8"
+        },
+        {
+          "frame": 3840,
+          "sha256": "6d09c1b2babcd353581f00c3b1b453861521d790156a146b9aa236088d96d14c"
+        }
+      ]
+    }
+  ],
+  "unresolved": [
+    {
+      "record_id": "talk:CDROM/SERIFU/WHITE.BIN:table-3:g0001:l0001",
+      "result": "Readable but splits a short exclamation across rows. Exact-record override prepared under T-39537; rebuilt-disc visual verification pending.",
+      "frame": 600,
+      "capture_sha256": "004709e5a4719a84c24d6d161c6073fc1db5d8680dbeb2e6c24d55546ebcce06"
+    }
+  ]
+}

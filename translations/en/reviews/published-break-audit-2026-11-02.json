@@ -1,0 +1,19 @@
+{
+  "ticket": "T-39537",
+  "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+  "scope": "Full translated dialogue corpus, using the published build font metrics and current layout rules. Diagnostic only; no dialogue changes or new visual approvals.",
+  "totals": {
+    "records_checked": 30573,
+    "retained": 9573,
+    "retained:early_break": 9403,
+    "wrapped": 1362,
+    "wrapped:phrase_link_at_row_end": 1331,
+    "retained:short_single_word_row": 544,
+    "wrapped:early_break": 39,
+    "retained:phrase_link_at_row_end": 14,
+    "retained:punctuation_only_row": 12
+  },
+  "report_sha256": "c9d28ed7a63be439d34871ba28a02a0bbe8f3f6121f0aa3f1fb4236379576e62",
+  "report_path": "build/dialogue-break-review-published.json",
+  "interpretation": "Generated early-break candidates decreased from 42 to 39 and phrase-link candidates from 1334 to 1331 after the three festival corrections. No generated short-single-word, punctuation-only or numbered-label candidates remain. Retained source and reviewed boundaries stay separate. Remaining phrase-link flags need context and are not confirmed defects."
+}

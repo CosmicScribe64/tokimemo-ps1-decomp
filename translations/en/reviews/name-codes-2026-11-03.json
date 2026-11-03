@@ -1,0 +1,63 @@
+{
+  "ticket": "T-39545",
+  "target_sha1": "c3c205c005712aa57072053c2e3faa511c1820fa",
+  "status": "verified and published",
+  "change": "Nine secret-name comparison keys and their nine compiled extent records now use short uppercase inputs. Word and arrow variants have distinct combinations. Game logic, displayed dialogue and artwork were not edited.",
+  "tests": {
+    "focused_run": 16,
+    "focused_passed": 16,
+    "skipped": 0,
+    "method": "Compile and execute the generated name_entry_cheat_names_apply function with the production English name encoder. Check all nine parameters for 573, zero and 999; check the friendship condition, excluded girl, met flags and a mixed nonmatching code.",
+    "negative_check": "The revised encoder-aware test rejects the stale intermediate lowercase comparison keys."
+  },
+  "audits": {
+    "script_containers": 105,
+    "strings": 31471,
+    "script_pointers": 31334,
+    "executable_slots": 2940,
+    "exact_slots": 2806,
+    "pending_slots": 0,
+    "derived_records": 291,
+    "derived_pointers": 286,
+    "generated_literals": 1964,
+    "generated_files": 171,
+    "generated_snapshots": 2,
+    "original_binary_hashes": 27
+  },
+  "visual_evidence_inheritance": {
+    "scope": "All BIN, NBN, BS and EXN files plus the main executable, compared through their ISO directory entries. Movie/audio streams are outside this comparison.",
+    "previous_target_sha1": "b579f2ad31288f442436f718eba0cb61f7e359fe",
+    "unchanged_files": 991,
+    "changed_files": [
+      "CDROM/EXEDIR/NAME_ENT.EXN"
+    ],
+    "comparison_manifest_sha256": "fc079812d037795aff6d8fb3f9799be09bc447fdf573cfa9b53ebf362b3be0e2",
+    "limitation": "This is file-content comparison plus the normal artwork readback build checks, not a new emulator playthrough."
+  },
+  "standards_review": "No default-game source or raw assets changed. Corrections require source and prior-target hashes. The integration test executes production generated comparisons and name packing. All new code runs in Docker. No unresolved review finding.",
+  "logs": [
+    "build/name-code-final-build.log",
+    "build/name-code-final-tests.log",
+    "build/name-code-audits.log",
+    "build/name-code-inheritance.json",
+    "build/name-code-browser.log"
+  ],
+  "browser_checks": [
+    "wrong size",
+    "wrong source hash",
+    "corrupted patch",
+    "cancel",
+    "full patch",
+    "download hash",
+    "cue",
+    "no upload",
+    "responsive layout",
+    "invalid archive",
+    "archive drop",
+    "extraction cancel",
+    "audio download hash",
+    "archive cue",
+    "mobile result"
+  ],
+  "publication_receipt": "translations/en/reviews/published-name-codes-2026-11-03.json"
+}

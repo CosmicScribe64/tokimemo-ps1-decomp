@@ -1,0 +1,34 @@
+{
+  "ticket": "T-39533",
+  "target_sha1": "a839441add3e6dc6e72b04c4daacf8d0a59cce41",
+  "scope": "Native encoded lettering and actual scene composition. The rental lettering is covered by original foreground artwork in the bowling replay; in-game legibility of the hidden sign is not claimed.",
+  "disc_checks": [
+    {
+      "container": "CDROM/BS/I_28_02.BS",
+      "disc_file_sha256": "375db135e51f6c8bc38d802ef01dffca3195fcb597214e00a473d737be5896b1",
+      "encoded_preview_sha256": "0e9e6cbe6a02205578ac4205ba57b6f6b158d1db2c3d9151e8253d82c3e690e1",
+      "decoded_pixels_match_reviewed_preview": true
+    },
+    {
+      "container": "CDROM/BS/P_01_03.BS",
+      "disc_file_sha256": "ff94e961d5c3ec90b03f8b0d19e7c9867da19bc273049e5ccbe2ec0c13bff43f",
+      "encoded_preview_sha256": "8e1f81a89453c95042431782fc4fbd59c2a36118f65016ddf47fb1e7e9798af5",
+      "decoded_pixels_match_reviewed_preview": true
+    },
+    {
+      "container": "CDROM/BS/P_01_03B.BS",
+      "disc_file_sha256": "ca0ae62c9bd1ade6624b13e2c509a2df1b6d339fbd2ef4b56f870c5bfb9f5238",
+      "encoded_preview_sha256": "643ffbc4721e750d7378af29a47318b9aea3f1a178194efd182bbc6bc1ceeacd",
+      "decoded_pixels_match_reviewed_preview": true
+    }
+  ],
+  "bowling_run": "build/emu/sign-quality-bowling-winter",
+  "bowling_captures_inspected": 151,
+  "bowling_native_capture": {
+    "frame": 3160,
+    "sha256": "f5f3b691c5341f3a1d06fb0b4c8b3797c843d7173500ee3b10efa17a877db820"
+  },
+  "roster_run": "build/emu/sign-quality-roster",
+  "roster_captures_inspected": 50,
+  "result": "Revised letters have clearer separation at native resolution. Roster alignment remains stable during the fade. Published-disc decoded images match the reviewed previews."
+}

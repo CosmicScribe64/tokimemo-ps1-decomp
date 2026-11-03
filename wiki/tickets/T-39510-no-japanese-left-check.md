@@ -1,10 +1,10 @@
 ---
 id: T-39510
 title: Prove no Japanese is left in the English game
-status: In Progress
+status: Done
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-02
+updated: 2026-11-03
 links: ["[[tickets/T-39500-english-translation-patch]]"]
 ---
 
@@ -14,9 +14,9 @@ The owner's bar for the English patch: no Japanese on screen anywhere, apart fro
 
 ## Acceptance criteria
 
-- [ ] Text: every text container and C string in the English build is scanned for Shift-JIS glyph codes; each hit is either an approved exception, a control code, or a bug to fix.
-- [ ] Runtime: a debug option of the English build logs every 2-byte glyph the text renderer draws; the emulator route and extra save-state stops (dates, festival, exams, sports, battle, endings) run with it and report zero unexpected glyphs.
-- [ ] Art: every artwork item marked "no change required" or "no Japanese text" is checked against its decoded pixels, and every placed image is read back from the disc (T-39508's check).
+- [x] Text: every text container and C string in the English build is scanned for Shift-JIS glyph codes; each hit is either an approved exception, a control code, or a bug to fix.
+- [x] Runtime: a debug option of the English build logs every 2-byte glyph the text renderer draws; the emulator route and extra save-state stops (dates, festival, exams, sports, battle, endings) run with it and report zero unexpected glyphs.
+- [x] Art: every artwork item marked "no change required" or "no Japanese text" is checked against its decoded pixels, and every placed image is read back from the disc (T-39508's check).
 - [x] A screenshot sheet of the main screens, Japanese beside English, for the owner's review.
 
 ## Notes
@@ -84,3 +84,17 @@ Standards review of the census change found no unresolved issue. Reads are bound
 2026-11-02: `tools/patch/audit_executable_disc.py` now includes the source-only presence check. All 321 active literals are present in their owning executable with the expected NUL terminator; 28 records in unloaded units are explicitly excluded. The current published disc passes the expanded audit, retaining 2,827/2,940 exact slots, zero pending bindings, 291 derived records and 286 pointers. Twenty synthetic audit tests pass, including wrong-unit matches, missing terminators, missing targets and unloaded-unit exclusions. Receipt: `translations/en/reviews/source-only-audit-2026-11-02.json`. Reviewed against coding standards: no game code or raw sources changed, errors remain fail-closed, and the reported presence scope does not imply independent call-site proof.
 
 2026-11-02: the owner approved retaining the original ending staff credits. They are now an explicit exception in T-39500 and `translations/en/graphics/decisions/staff-credits.json`. The current disc's STAFF_R.NBN is byte-identical to the original. This does not relax the remaining gameplay text/art checks.
+
+2026-11-02: closed the prototype-sheet evidence gap. The HUD boot loader omits texture index 5, and all 174 shipped MAINROM frames (507 parts), including relocated English frames, omit that index. The retained sheet is byte-identical to the original. Receipt: `translations/en/reviews/prototype-sheet-reachability-2026-11-02.json`. The inventory exception now cites this proof; generation and consistency checks pass with unchanged counts. This proves the documented HUD/frame paths, not arbitrary memory access.
+
+## Completed verification
+
+The published-build script audit covers 105 containers, 31,471 strings and 31,334 pointers. The executable audit passes with zero pending slots and no unexplained language-census candidates; its reported remaining-check list is empty. The main-route and controlled date, festival, exams, sports, battle and ending traces above cover the runtime criterion. These are traced routes and fixtures, not every possible career playthrough.
+
+`translations/en/reviews/retained-art-current-disc-2026-11-02.json` revalidates all 24 retained menu views and all 75 retained background, portrait and SD containers against the current disc. The banner and raw opening-movie extent also remain byte-identical to their earlier verified build. Together with the prototype-sheet proof, the 254-sprite/16-still review and final-disc placement checks, this closes the listed art criterion. Original lettering retained by explicit decision remains an exception.
+
+Standards review covered the art readback verifier and build integration; failures stop the build, rewritten frames are checked through their actual executable pointers, and unrelated pixels are checked against originals. All 25 art tests pass in Docker. The first invocation omitted the tools import path and failed before running tests; the corrected invocation passes. This closeout changes only evidence and documentation, includes no game data and makes no new default-build matching claim. The prior source-audit reviews remain recorded above. Ticket and board move to Done.
+
+2026-11-03: reopened to In Review after native TwinBee title inspection found its Japanese logo outside the parent ticket exception list. The text and registered-art audits still pass, but they do not resolve this additional retained logo. The owner preference is pending; do not treat prior completion as approval for it.
+
+2026-11-03: The owner requested replacement of the TwinBee logo. T-39548 now supplies verified English lettering; no additional Japanese-logo exception is needed. The current target is b4e84775009f141b335574ae1268e49af5128fb7. All actual-disc audits pass, and the new DAT artwork has separate native and byte-level proof. The earlier text and artwork review remains applicable. The listed language-check scope is complete, with the existing approved exceptions and controlled-fixture limits retained.

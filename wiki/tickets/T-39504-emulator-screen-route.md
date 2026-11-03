@@ -1,7 +1,7 @@
 ---
 id: T-39504
 title: Script an emulator route through the main screens with screenshots
-status: In Review
+status: Done
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-02
@@ -42,3 +42,9 @@ Not covered: a separate status screen (the command screen's top panel is the sta
 ## Comments
 
 - 2026-11-01 claude: implementation and baseline done; moved to In Review. Needs a review against `CODING_STANDARDS.md` (scripts section) before Done.
+
+## Final standards review
+
+Reviewed route parsing, relinked addresses, state resumption, emulator invocation, checkpoint conversion and the Lua wait/talk termination paths. Required waits fail on timeout, a route succeeds only with reason `done`, and incomplete screenshot conversion leaves an explicit error. Talk capture waits for completed text reveal. Resume metadata preserves frame offsets and prior checkpoints; callers must still select a compatible saved state, as the controlled-fixture reports document.
+
+All 21 route tests pass. Rechecked `build/emu/route-en-final-layout/result.json`: reason `done`, 33,649 frames and 146 checkpoints with no missing image files. That historical run verifies the tool's English route through save/load; later per-build receipts identify current-disc captures separately. This review makes no claim that every game route has been played. No unresolved standards findings remain.

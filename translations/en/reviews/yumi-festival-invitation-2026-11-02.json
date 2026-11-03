@@ -1,0 +1,25 @@
+{
+  "ticket": "T-39538",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "record_id": "talk:CDROM/BUNKA/SA_S6S.BIN:main:g0006:l0002",
+  "run": "build/emu/yumi-invitation-corrected-line",
+  "scope": "Actual festival renderer with Yumi invitation resources loaded by the scene. Controlled line selection after initialization. Generic-dialogue first attempt excluded.",
+  "visual_status": "verified: corrected name, portrait, complete quote and two fitting rows; no overlap or clipping",
+  "checks": [
+    {
+      "frame": 420,
+      "sha256": "2f60ac7d1b360b913d1c842a43af622fd3219c594b8f5034dc94449c632960c9",
+      "glyphs": 71
+    },
+    {
+      "frame": 600,
+      "sha256": "13459795506fe19b9ebefd66fec1645667280a4bb8bf26ce75c05ec9366e01f7",
+      "glyphs": 71
+    },
+    {
+      "frame": 900,
+      "sha256": "d58051723d2337847fb0024e8ce9ea1d62d52cf12b9cc20d9185c375642778fd",
+      "glyphs": 71
+    }
+  ]
+}

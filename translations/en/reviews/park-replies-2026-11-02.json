@@ -1,0 +1,481 @@
+{
+  "ticket": "T-39535",
+  "target_sha1": "66d0c190c1b60f200fa9e1796d120e890a14fa86",
+  "scope": "Fresh candidate-disc park scene with controlled selection of all twelve variants in four records. Inspected 64 captures on eight sheets, including a 120-frame hold after first completion to verify runtime closing quotes.",
+  "run": "build/emu/mira-park-capacity-variants",
+  "disc_audit": {
+    "strings": 498,
+    "pointers": 498,
+    "sha256": "51226771a79bb116952cf610558fc4e85d9b9827f5b178928da005987dd7f654"
+  },
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0025:l0000",
+      "payload_sha256": "40600889cf0fa45641a660648f47ea81e21c34f13fba7448bcc3a9ef0aca962b",
+      "result": "All three replies inspected through complete final rows and closing quotes; no clipping, overlap or stale glyphs.",
+      "variants": [
+        {
+          "group": 25,
+          "variant": 0,
+          "completed_frame": 720,
+          "frames": [
+            360,
+            420,
+            480,
+            540,
+            600,
+            720
+          ],
+          "total_glyphs": 87,
+          "captures": [
+            {
+              "frame": 360,
+              "sha256": "e02a89c19367d64c08cfd2d4ac94e6fe77588dc05eba01abfdaa9f23b61deca7"
+            },
+            {
+              "frame": 420,
+              "sha256": "126089654e902186dca18f9a14b4428095fcf84e9ecb6fe4bcd7876cc72bedc3"
+            },
+            {
+              "frame": 480,
+              "sha256": "94ea5ee66088ee9a796c4e0e5d625e9f0c9cbb8b7777911cb59b9dd581055c5f"
+            },
+            {
+              "frame": 540,
+              "sha256": "8a57bfd75968d6b9d3ddf8ac21a3084a4d3400902f80b3e709e1eab393b9505e"
+            },
+            {
+              "frame": 600,
+              "sha256": "4c86ce9e8089dae0732a61e35178d6e09298754af4f3e202e41d355af2a70fac"
+            },
+            {
+              "frame": 720,
+              "sha256": "77d5a36004e4e4ed91170d38c4fc8f5cb717c6135828ad5809837811d80f3b7a"
+            }
+          ]
+        },
+        {
+          "group": 25,
+          "variant": 1,
+          "completed_frame": 1200,
+          "frames": [
+            960,
+            1020,
+            1080,
+            1200
+          ],
+          "total_glyphs": 54,
+          "captures": [
+            {
+              "frame": 960,
+              "sha256": "a16689d7cf021015b03a6b3426c7be1d97ed91a515624c2bd1be123f9a9c27dd"
+            },
+            {
+              "frame": 1020,
+              "sha256": "4063282c0295188f8bc083543d0c74ad0f7cf1f57ffd2562ea6ab4b35d3c59d2"
+            },
+            {
+              "frame": 1080,
+              "sha256": "16d0911c813449e832af2c9b951b54614f19add6192eeea24c3b1a9bec4a5cbf"
+            },
+            {
+              "frame": 1200,
+              "sha256": "614fee0e19b01853122a933090f7b075bef8e6995a1bc84635b5a4957c22f9c7"
+            }
+          ]
+        },
+        {
+          "group": 25,
+          "variant": 2,
+          "completed_frame": 1920,
+          "frames": [
+            1560,
+            1620,
+            1680,
+            1740,
+            1800,
+            1920
+          ],
+          "total_glyphs": 80,
+          "captures": [
+            {
+              "frame": 1560,
+              "sha256": "3d5f251ff58d2f801fcf2cdb798ce33dfd8ea3e8efefa8521d2a547b2ab34075"
+            },
+            {
+              "frame": 1620,
+              "sha256": "ca560c64895b1ec5d52bd2f6375618655813bbf6932daa8681de918420b1af93"
+            },
+            {
+              "frame": 1680,
+              "sha256": "8dfd858c0d259530b3886b58368c3410aba52089f0c1d5aa5e77bde052a52755"
+            },
+            {
+              "frame": 1740,
+              "sha256": "7f45aaa3eb4e97a7381fa2fb68af1f86a2051a45fc04e34e22ed75c3bd4ce82e"
+            },
+            {
+              "frame": 1800,
+              "sha256": "2ad1e6743ec6c319f46cba8eee1f0eebf8afadfcfa795d64f63486def0f5d7a2"
+            },
+            {
+              "frame": 1920,
+              "sha256": "a8ff413533eaadb53d379ee38fc6565d9c527fd53fbfb34267d5f986128dd877"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0041:l0000",
+      "payload_sha256": "40600889cf0fa45641a660648f47ea81e21c34f13fba7448bcc3a9ef0aca962b",
+      "result": "All three replies inspected through complete final rows and closing quotes; no clipping, overlap or stale glyphs.",
+      "variants": [
+        {
+          "group": 41,
+          "variant": 0,
+          "completed_frame": 2520,
+          "frames": [
+            2160,
+            2220,
+            2280,
+            2340,
+            2400,
+            2520
+          ],
+          "total_glyphs": 87,
+          "captures": [
+            {
+              "frame": 2160,
+              "sha256": "c8096b7a7e3e7542a0825ce22ae70d8e21a97115397e77513f02ef22534ad112"
+            },
+            {
+              "frame": 2220,
+              "sha256": "bd3df22e5ed1c680ee587ab8a9ab6af6b8c89d1aa02a52727927647849678ff1"
+            },
+            {
+              "frame": 2280,
+              "sha256": "65f182a330832ef36b124252c378778b6939823c06677c151567c532c5a84ac3"
+            },
+            {
+              "frame": 2340,
+              "sha256": "71e4df0be3c1fd741acf211f0e5cfc7f36215687127c46ca801163f6be60c091"
+            },
+            {
+              "frame": 2400,
+              "sha256": "32093518931c2a4f87a7eebc33127351483a11ae79c21cafa4e26272901f82a8"
+            },
+            {
+              "frame": 2520,
+              "sha256": "2bd29608d3994af227d56d61cb9ed98fea0bbaf9479f83ca9e910cfb84a37002"
+            }
+          ]
+        },
+        {
+          "group": 41,
+          "variant": 1,
+          "completed_frame": 3000,
+          "frames": [
+            2760,
+            2820,
+            2880,
+            3000
+          ],
+          "total_glyphs": 54,
+          "captures": [
+            {
+              "frame": 2760,
+              "sha256": "aa08b5f9a39a20855093f8a4f0132b4d6186ec68175a6fb8da2f1609fb2b3e00"
+            },
+            {
+              "frame": 2820,
+              "sha256": "0d41cadba8fe4ffe34e4d44a9a6852d8fa3a763db95ee643dbcdc96cb986da4f"
+            },
+            {
+              "frame": 2880,
+              "sha256": "f8ce96b5aec62805265e70d4cf6e67601253eeb2c046917cc585736681f2bd6e"
+            },
+            {
+              "frame": 3000,
+              "sha256": "16d0911c813449e832af2c9b951b54614f19add6192eeea24c3b1a9bec4a5cbf"
+            }
+          ]
+        },
+        {
+          "group": 41,
+          "variant": 2,
+          "completed_frame": 3720,
+          "frames": [
+            3360,
+            3420,
+            3480,
+            3540,
+            3600,
+            3720
+          ],
+          "total_glyphs": 80,
+          "captures": [
+            {
+              "frame": 3360,
+              "sha256": "9bcd383583b029ae62a65f98f8d78db08b90a4d63590d0b87efe659bc288256d"
+            },
+            {
+              "frame": 3420,
+              "sha256": "0cb927c5a1de969fba29916dc49bfbc261ef930ebbef1c07f9000d7431c35a95"
+            },
+            {
+              "frame": 3480,
+              "sha256": "8e1777e48e6c475da18c8bfdd43acba3ff473213b787833bb07faea233b0ffed"
+            },
+            {
+              "frame": 3540,
+              "sha256": "6f9eeb1820ec0d38b4dddaea6a78e50ffcd8f3cfd6ed2c973b346a632966f64d"
+            },
+            {
+              "frame": 3600,
+              "sha256": "48dde3553b867d33bee9f6fa7f1e221a394fb9446395556fcbdc679c07508c6c"
+            },
+            {
+              "frame": 3720,
+              "sha256": "2ad1e6743ec6c319f46cba8eee1f0eebf8afadfcfa795d64f63486def0f5d7a2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0050:l0000",
+      "payload_sha256": "bda2e302e9e784d8077add223d8bc2627f61ebca62f9103818e7db1638f7706c",
+      "result": "All three replies inspected through complete final rows and closing quotes; no clipping, overlap or stale glyphs.",
+      "variants": [
+        {
+          "group": 50,
+          "variant": 0,
+          "completed_frame": 4320,
+          "frames": [
+            3960,
+            4020,
+            4080,
+            4140,
+            4200,
+            4320
+          ],
+          "total_glyphs": 82,
+          "captures": [
+            {
+              "frame": 3960,
+              "sha256": "c3f4bcae43e2000f15fb2c7fdab8c36f4da16dc2ddc1c366c927d2882248b566"
+            },
+            {
+              "frame": 4020,
+              "sha256": "0b967772c77feddc73dc91bc75b37afb73eb3e676863f3265d7066409a83ab91"
+            },
+            {
+              "frame": 4080,
+              "sha256": "7033ab0cf69e3e254b23f1701eba539c8f6fbd30ac3adcc443548cc3cd8efaf0"
+            },
+            {
+              "frame": 4140,
+              "sha256": "d9a0fb0da9499f4b13f2621a2e2a36ed91ec98b9497e4f22018f582ed52069e9"
+            },
+            {
+              "frame": 4200,
+              "sha256": "e69639b963205ecbf42b2fd8d7339b387eeff81ea964b85f9e724ecd576bf8e4"
+            },
+            {
+              "frame": 4320,
+              "sha256": "ff0bb8c8a15a1307947d1cc90ac2a2248bad23057a3109cdfe316e0a034a2100"
+            }
+          ]
+        },
+        {
+          "group": 50,
+          "variant": 1,
+          "completed_frame": 4920,
+          "frames": [
+            4560,
+            4620,
+            4680,
+            4740,
+            4800,
+            4920
+          ],
+          "total_glyphs": 79,
+          "captures": [
+            {
+              "frame": 4560,
+              "sha256": "44c24dbba481188985709c47c3575973b69f2b52bc8b16aecd8805e9c904022f"
+            },
+            {
+              "frame": 4620,
+              "sha256": "b5af3517efe8998e0b3c011a9b8300798abb6edcb865aba373317d0d3c667414"
+            },
+            {
+              "frame": 4680,
+              "sha256": "a1d7bbf2717a61aaa1687f02165d2dd4e6b2abeac8070e85bed145536fa4b5bb"
+            },
+            {
+              "frame": 4740,
+              "sha256": "a675b3e0cceccdb3c0b6f7a2966565571e21ff21091fb6cefeb2345cd50528b3"
+            },
+            {
+              "frame": 4800,
+              "sha256": "43f9bd01a97606dfedf102d941c7fba6afa0a028a05789bd75b5b71f0091d90d"
+            },
+            {
+              "frame": 4920,
+              "sha256": "fa90071c76c420ca3f09b16b5b8b60216c1830df7b6a02e03cc311a6523aad3e"
+            }
+          ]
+        },
+        {
+          "group": 50,
+          "variant": 2,
+          "completed_frame": 5400,
+          "frames": [
+            5160,
+            5220,
+            5280,
+            5400
+          ],
+          "total_glyphs": 51,
+          "captures": [
+            {
+              "frame": 5160,
+              "sha256": "b2d2a1c33e22cb3ae3002fdb14258781e82953137c3f556afafa703f724a4205"
+            },
+            {
+              "frame": 5220,
+              "sha256": "dfdecc92bc345cfaf9126cbc174a7e990dec2f2855eb2554e206ca6b9f6d2f8b"
+            },
+            {
+              "frame": 5280,
+              "sha256": "b4de562976b6fb883b02a6791240260ad5a3497a215db0ca24ddd6d7086a62b2"
+            },
+            {
+              "frame": 5400,
+              "sha256": "78689df6d33b9fe4ba6ac6ada7166c8b07c66e19638df7a1a50562685ccfc6a9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0057:l0000",
+      "payload_sha256": "40600889cf0fa45641a660648f47ea81e21c34f13fba7448bcc3a9ef0aca962b",
+      "result": "All three replies inspected through complete final rows and closing quotes; no clipping, overlap or stale glyphs.",
+      "variants": [
+        {
+          "group": 57,
+          "variant": 0,
+          "completed_frame": 6120,
+          "frames": [
+            5760,
+            5820,
+            5880,
+            5940,
+            6000,
+            6120
+          ],
+          "total_glyphs": 87,
+          "captures": [
+            {
+              "frame": 5760,
+              "sha256": "996dcc4aa988640454741b8c1474f0d318cea3e6cf2bb6031b6deee2e541ed8d"
+            },
+            {
+              "frame": 5820,
+              "sha256": "2e5c27d0732ad19898c50650942ad53d38b4b379c7439e28981b879a6f86e02a"
+            },
+            {
+              "frame": 5880,
+              "sha256": "0945ebb16837c15af5b8dcc703e3ff7a345f0d78ae1c053ec3c4570895ea445d"
+            },
+            {
+              "frame": 5940,
+              "sha256": "9aae0376e5d397556d0cbf15bebab87c8da239a37c6e7861f567c703a9fad033"
+            },
+            {
+              "frame": 6000,
+              "sha256": "2971d788cd3205bacc307bd5b87edf4ec03258dcf23f08d41f53b87b77d630f1"
+            },
+            {
+              "frame": 6120,
+              "sha256": "8f5413084385d7ac825552e43a0caa67048954667036d1662021a1d8825f638e"
+            }
+          ]
+        },
+        {
+          "group": 57,
+          "variant": 1,
+          "completed_frame": 6600,
+          "frames": [
+            6360,
+            6420,
+            6480,
+            6600
+          ],
+          "total_glyphs": 54,
+          "captures": [
+            {
+              "frame": 6360,
+              "sha256": "d953134c697c6b9a89d1a70c1ca094e68cfba9c74d5af5fd6b9a29d96357cbc4"
+            },
+            {
+              "frame": 6420,
+              "sha256": "cb922025aee589600b995c1bd1febfbeb264ba6c40b8e1d3393cf7f414b3b32c"
+            },
+            {
+              "frame": 6480,
+              "sha256": "b7097c10d6c70a888d342dee1ec5d79b6ab54e56e664426af96a5995de7a4574"
+            },
+            {
+              "frame": 6600,
+              "sha256": "251d3be0a5e1bfa5d272c72d308f885929ff51ecb639100f8b52c23644e3ea7b"
+            }
+          ]
+        },
+        {
+          "group": 57,
+          "variant": 2,
+          "completed_frame": 7320,
+          "frames": [
+            6960,
+            7020,
+            7080,
+            7140,
+            7200,
+            7320
+          ],
+          "total_glyphs": 80,
+          "captures": [
+            {
+              "frame": 6960,
+              "sha256": "4bec5dfbcb7289553e79e374990aca87a90679b5dd40b7b07c4ad27673536494"
+            },
+            {
+              "frame": 7020,
+              "sha256": "76f70ddf6e4e3dcf7bc3833ca8b5a6e1082f88d62ebe782d9fcb8dad308ab10b"
+            },
+            {
+              "frame": 7080,
+              "sha256": "54017a9937dd05c0c876e11f1a05df6e219e7cc0f89cd84a0b5ad9aa9d3bd96e"
+            },
+            {
+              "frame": 7140,
+              "sha256": "8dee23b9c4536109d38ac1d3ebb70b632db2dff927fe907da50bf4791ba05ae0"
+            },
+            {
+              "frame": 7200,
+              "sha256": "e7fb127307fb28a491161dde6448e377f4401d100bfb6aede100e31861d56d96"
+            },
+            {
+              "frame": 7320,
+              "sha256": "185cb0a91a47b542633cbbdab7e9c4761badf61ce4a5ed1370ee7e54a1e73c32"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

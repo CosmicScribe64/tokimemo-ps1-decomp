@@ -31,7 +31,7 @@ from tools.assets import mdec_splice
 from tools.patch.art import ArtBuildError
 from tools.patch.art import items as art_items
 from tools.patch.art.items import Item
-from tools.patch.art import sprites, stills, prologue, skating, festival, sports_callouts, school_gate
+from tools.patch.art import sprites, stills, prologue, skating, festival, sports_callouts, school_gate, sign_lettering, twinbee
 
 UNSUPPORTED = {
     "CDROM/OPENXA.STR": "handled by the separate movie build step; final disc verification pending",
@@ -45,6 +45,7 @@ def plan_art(root: Path, files_root: Path, exe: bytes) -> dict:
     started = time.monotonic()
     items = art_items.load(root)
     school_gate.replace(items, root, files_root)
+    sign_lettering.replace(items, root, files_root)
     festival.replace_banners(items, root, files_root)
     items.append(skating.item(root, files_root))
     items.extend(sports_callouts.items(root, files_root))
@@ -99,6 +100,13 @@ def plan_art(root: Path, files_root: Path, exe: bytes) -> dict:
                             "images": {prologue.IMAGE_ID: "generated"}, "generator": "tools/patch/art/prologue.py"})
     report["totals"]["placed"] = report["totals"].get("placed", 0) + 1
     report["images"]["generated"] = 1
+    original_title = (files_root / twinbee.PATH).read_bytes()
+    files[twinbee.PATH], title_facts = twinbee.place(original_title)
+    containers[twinbee.PATH] = dict(title_facts, bytes=len(original_title), new_bytes=len(files[twinbee.PATH]))
+    report["items"].append({"id": twinbee.IMAGE_ID, "container": twinbee.PATH, "status": "placed",
+                            "images": {twinbee.IMAGE_ID: "generated"}, "generator": "tools/patch/art/twinbee.py"})
+    report["totals"]["placed"] += 1
+    report["images"]["generated"] += 1
     report["containers"] = containers
     report["exe_records"] = len(exe_records)
     report["seconds"] = round(time.monotonic() - started, 1)

@@ -1,0 +1,20 @@
+{
+  "ticket": "T-39538",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "run": "build/emu/yumi-visit-corrected-lines",
+  "scope": "Two corrected SA_S6 visit replies with actual disc-loaded resources and portrait; controlled line selection in the festival visit renderer.",
+  "records": [
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0038:l0000",
+      "frame": 900,
+      "capture_sha256": "46d19ffcc55929439c4a64157992e7c53c54c79d5386b72b6def8a1305fd3230",
+      "visual_status": "verified: correct name and portrait, fitting rows, full quote, no overlap/clipping"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6.BIN:main:g0039:l0000",
+      "frame": 1500,
+      "capture_sha256": "d9f4ca450cb1f23a696cc774d265ea69b16d6240a0f51ecb4882248ec5a70d67",
+      "visual_status": "verified: correct name and portrait, fitting rows, full quote, no overlap/clipping"
+    }
+  ]
+}

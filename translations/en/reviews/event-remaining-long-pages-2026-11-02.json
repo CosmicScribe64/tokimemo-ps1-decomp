@@ -1,0 +1,92 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+  "run": "build/emu/event-remaining-verified",
+  "scope": "Two controlled event-table selections through the shared DATE dialogue runner. Each script is loaded from the rebuilt disc; its header, selected tables, payload hash, advanced line index and completed text position are verified. Yumi's portrait, name binding and date background remain in this fixture. This verifies passage layout and scrolling, not natural event staging or the other heroines' artwork.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/EVENT_AS.BIN:initializer-00:g0004:l0000",
+      "payload_sha256": "c4550417df1a8d074ef3d11cdf416d0be2c53b9c9440f9c61f8a0528a9a0d60f",
+      "script_sha256": "f46db92b9d9c1af4c0cbe4b9795029f6348d8be5f8d8931fd89a47a0f9e23a9f",
+      "tables": [
+        "0x80198304",
+        "0x80198340",
+        "0x801985a4"
+      ],
+      "completed_text_position": 92,
+      "result": "Full passage and scrolling rows inspected; final punctuation retained, no overlap or clipping.",
+      "captures": [
+        {
+          "frame": 2280,
+          "sha256": "a6c910fcf9d1d4209a21177a5dfea8b9e8456fea071711475eb3eeaf5f55dbaa"
+        },
+        {
+          "frame": 2400,
+          "sha256": "821338e005adf506cad3ffe3b76cc27c68e5789428430aa3fdac95ad0a02eec0"
+        },
+        {
+          "frame": 2520,
+          "sha256": "97a4030ae3a593480376df88b1b60e713ad59c7072526c5b85c4ddd56c83a420"
+        },
+        {
+          "frame": 2640,
+          "sha256": "20491b906d8b5b98f906fa359718eb8e40aacf7cec4d0bb9ec03abb3403ff699"
+        },
+        {
+          "frame": 2760,
+          "sha256": "96ecf3ec4d79f6c115d82ceb24e91350cc73c8e604c11ef880216edb84afdb0f"
+        },
+        {
+          "frame": 2880,
+          "sha256": "a4b94af3602b97e6808759de3e0531389542d32f98984b288d529600c8827177"
+        },
+        {
+          "frame": 3240,
+          "sha256": "b7fe56e682654a092b344ba76a5d3ff6a1242247cc799200e3d75cce579f58fb"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/EVENT_FU.BIN:scene-01:g0001:l0009",
+      "payload_sha256": "7fd724b7bd2aeb18a305295924d9ec8d6377ff549cf460c0393635c29d6c58ea",
+      "script_sha256": "c761c70f815be4e0aaa885c1a99045ad48ac936c0ebffb7727c350c631759aa0",
+      "tables": [
+        "0x80198ffc",
+        "0x80199028",
+        "0x80199230"
+      ],
+      "completed_text_position": 145,
+      "result": "Full passage and scrolling rows inspected; final punctuation retained, no overlap or clipping.",
+      "captures": [
+        {
+          "frame": 3720,
+          "sha256": "6bd741b534a3583689d0b999352f9beba46fa2cf0b9a96adb4854df107755dd7"
+        },
+        {
+          "frame": 3840,
+          "sha256": "2009071aef21898da129874838c2a06f11b37deb0e55b31edc6017ac2e5e99a5"
+        },
+        {
+          "frame": 3960,
+          "sha256": "86e0599896746bd047c08f806b08e8f367066dc03675a35ef9509d7b1c793411"
+        },
+        {
+          "frame": 4080,
+          "sha256": "cb900bea15ea08e23eef3cdfea63340314263ee9ce847db9d857ba8a45487689"
+        },
+        {
+          "frame": 4200,
+          "sha256": "c502c1e00bb72300dc1b229d6e274319dac295cfb1da4b8916297094b4c6f01a"
+        },
+        {
+          "frame": 4320,
+          "sha256": "4a746d9af42e758582a4133d4fd1724d5ee732fec7c375345437291c38e43ab4"
+        },
+        {
+          "frame": 4680,
+          "sha256": "b99676576183a148e14b500ba21f31534e4f22601d08b94857ad03fdcb7aab59"
+        }
+      ]
+    }
+  ]
+}

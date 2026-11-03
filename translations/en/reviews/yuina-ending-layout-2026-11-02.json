@@ -1,0 +1,37 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+  "scope": "Controlled ending subtitle layout. The fixture retains Yukari artwork while selecting the actual Yuina script tables. Main executable, ending overlay and ending script are byte-identical to the saved-state build. Old text entries were cleared before selection; subsequent rendering and scrolling use the game code. This does not verify Yuina scene staging or voice synchronization.",
+  "discarded_probe": "ending-pending-pilot retained old fixture text and supplies no approvals.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-4:g0000:l0001",
+      "payload_sha256": "5f818d82f4d53205222100da8479e2954ff99e2899189d3648a40fa822360acb",
+      "run": "build/emu/ending-pending-clean",
+      "tables": [
+        2149520580,
+        2149520612,
+        2149521372,
+        0,
+        2
+      ],
+      "completed_frame": 510,
+      "completed_text_position": 54,
+      "result": "Opening rows, scrolling and closing punctuation inspected at native resolution. No clipped words, overlap or unintended gap. Intentional hesitation breaks retained.",
+      "captures": [
+        {
+          "frame": 30,
+          "sha256": "4ed25a199e3921039ce6cf158f887288688eae6456046e16f612ff55ff8bdc61"
+        },
+        {
+          "frame": 270,
+          "sha256": "66bae3c8dd450f9bcc9b5868d07f41303fbfbf1be2fc6a0dd7aca586786a3cd2"
+        },
+        {
+          "frame": 510,
+          "sha256": "fa44b5db09497e705c6263422bd8ccde9804011cd3a10fd2da9f36e83e04dfd3"
+        }
+      ]
+    }
+  ]
+}

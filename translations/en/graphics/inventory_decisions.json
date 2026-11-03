@@ -699,7 +699,7 @@
    "status": "deliberately-untranslated"
   },
   "mainrom-sheet-02000": {
-   "reason": "Catalog: unused prototype profile labels in VRAM, safe to leave. Not independently confirmed unused beyond the catalog statement.",
+   "reason": "Unused MAINROM texture index 5 (file offset 0x2000). The HUD boot loader does not upload it, and none of the 174 shipped frame records (507 parts) references it. Current-disc bytes remain original. Evidence: translations/en/reviews/prototype-sheet-reachability-2026-11-02.json.",
    "status": "deliberately-untranslated"
   },
   "name_ent-0016": {

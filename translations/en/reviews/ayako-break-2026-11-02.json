@@ -1,0 +1,10 @@
+{
+  "ticket": "T-39537",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "record_id": "talk:CDROM/SERIFU/DATE_KA.BIN:section-01:g0001:l0000",
+  "run": "build/emu/ayako-break-review",
+  "frame": 900,
+  "capture_sha256": "f73282315c11164ba2fb039b90d92c2f03e673591e12501712896334be7e4b29",
+  "visual_status": "verified: balanced two-row reply, full quote, no stranded word, clipping or overlap",
+  "scope": "Controlled line selection in Ayako date renderer with disc-loaded script and portrait."
+}

@@ -1,0 +1,203 @@
+{
+  "ticket": "T-39536",
+  "target_sha1": "07f0ad3b7c0c1a2bb700c6daab611381137decfc",
+  "run": "build/emu/ending-capacity-yukari",
+  "scope": "Regression review of 71 selected captures on eight sheets, covering all six previously approved long Yukari subtitle records. Largest live subtitle load remains within the atlas. No overlap, clipping, missing punctuation or stale rows observed.",
+  "maximum_sampled_glyphs": 309,
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0001",
+      "payload_sha256": "cc89c5f8f7725758f710b2852b4c92d59d7ca430b2eb8dd4573a35d18f92830c",
+      "completed_frame": 5760,
+      "captures": [
+        {
+          "frame": 4800,
+          "sha256": "af7ebf1f1a3073dabb28554a715d4fce49addb958569df9a5df0d6b0e908dad6"
+        },
+        {
+          "frame": 5040,
+          "sha256": "b9de028844cc93a0e42db1c64c4725352b150cd4542b4770a73cf8a228043b1f"
+        },
+        {
+          "frame": 5280,
+          "sha256": "7e0ccefd0635e9c43b13136656e9de6fde355e577272bdd417b3a023c1993e3f"
+        },
+        {
+          "frame": 5520,
+          "sha256": "1f02a10cb2aa20abf631e270f1871c7b1a4c0516e1dee36bf5e0d1c75ceb5d84"
+        },
+        {
+          "frame": 5760,
+          "sha256": "9678968cac4d392cb456d922896e31a967125b9bdfbc86a71974d508456c28bf"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0003",
+      "payload_sha256": "62ada5b1fdcab1109df54dd7f5a5ead78fc8b6804739bfeaadced97b56fde537",
+      "completed_frame": 6840,
+      "captures": [
+        {
+          "frame": 6360,
+          "sha256": "85aeadb0bd6b5292e6a7aa9b9acfc5b572079d8abe1459d0ea73f15e5ee93e87"
+        },
+        {
+          "frame": 6600,
+          "sha256": "cbf0a685937a13088a1339affed76cfc4031f519cd839f5881b8d397004927e0"
+        },
+        {
+          "frame": 6840,
+          "sha256": "a4dd1feae6001bc7d6c579cb2fc3283581211082c8bf67a613affaa74375c6e8"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0008",
+      "payload_sha256": "82ad20c89e3ceaf2226a5e440c5b7dfcbda83948e861101ac99f7e82f601ac70",
+      "completed_frame": 12930,
+      "captures": [
+        {
+          "frame": 9780,
+          "sha256": "6c4627df65ac199ed30ed6edef5d0571c15ec11b8a11ffc584555e573b509a43"
+        },
+        {
+          "frame": 10020,
+          "sha256": "8a42d9ec8b0cfb309c4c25487f33d312189a38412f7498c04a6f8c462dec84ea"
+        },
+        {
+          "frame": 10260,
+          "sha256": "57c1214c1aa8312f5c0dfaa6ebb152bffe8eafdba9250e9f9c5aebbbbfde9238"
+        },
+        {
+          "frame": 10500,
+          "sha256": "0629e76ef2ad1dfb90b13d36eb69feac78473a2437db2d6fb9c654b6205417a1"
+        },
+        {
+          "frame": 10740,
+          "sha256": "8d66f162939dfbd87b14a88d43e3079e3842c76edbf129f3e4a17c0b4860e8a0"
+        },
+        {
+          "frame": 10980,
+          "sha256": "91e643095ba834c10247806ada031b6f73e0ed0f9f0a5e52039920eb77c8972d"
+        },
+        {
+          "frame": 11220,
+          "sha256": "ad2df9b1a5d27ddd5465d33edb83c41e3b706a70c2d32fb62c5b73830c29bdfe"
+        },
+        {
+          "frame": 11460,
+          "sha256": "c8495c5b116e35fc256373c535c7c3be8e7e9fb2448a7d90e7780abe003572f6"
+        },
+        {
+          "frame": 11700,
+          "sha256": "6bff8d0f4621cb305dbe8009d496263cefe7853d9ad7d1efb9b89faff8611ae4"
+        },
+        {
+          "frame": 11940,
+          "sha256": "b307406d7d5ca4f36d64347bd1f22ce459749ddb2189694ccf15838e403ee050"
+        },
+        {
+          "frame": 12180,
+          "sha256": "d24af3fa6403b81c8dd4fd466a920bc10e79f71898f8560b0133a5c40c81a69e"
+        },
+        {
+          "frame": 12420,
+          "sha256": "2b5ebd48b03d3dfc9bd2c09c932e5077a1cafe04d04e8a2a543a9d1520ec28c6"
+        },
+        {
+          "frame": 12660,
+          "sha256": "43c4f727684d7741b3419aed4fd3bd238be78edd1a0435bc99a4fed451cce3d9"
+        },
+        {
+          "frame": 12900,
+          "sha256": "44b21a49cbc34f12043d2d8cfaa3154c11eba391d17a397dcfd7fd725bf12021"
+        },
+        {
+          "frame": 12930,
+          "sha256": "10f7fc314790ed5c4182ebf4546863973610773da9daceee56c3dc7c6926ee6d"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0010",
+      "payload_sha256": "e2fab1b7a19ce11c513c92ed4f3b375311640950651d357675ecf2f10b9ec3a4",
+      "completed_frame": 14430,
+      "captures": [
+        {
+          "frame": 13200,
+          "sha256": "48a906f55cc8e1c3c2dea506817442e88a4f3632e545795538d4dde572984f8d"
+        },
+        {
+          "frame": 13440,
+          "sha256": "6def4ea9135eab02c50d1c50546ad028e461e96494851be94f364d4f6e16bede"
+        },
+        {
+          "frame": 13680,
+          "sha256": "106c5a358f20714fb1c3a1ae2421f18f2006057dab56d420eb4b4d4dc5477e47"
+        },
+        {
+          "frame": 13920,
+          "sha256": "31eb98530052d728ba3aa7138e9ccfe8b7ec19f7a535bc0a164b681d868c3133"
+        },
+        {
+          "frame": 14160,
+          "sha256": "60ea2ed7f87d8fa419adffeaf2b0838667fbee1289335f0d5a5742a9786104d8"
+        },
+        {
+          "frame": 14400,
+          "sha256": "88c94a224e5380e7f9f439ffe5ae4f4f8844178c4b048dcfd33caaae824b7ea8"
+        },
+        {
+          "frame": 14430,
+          "sha256": "8594a1382642ad9574f192b4773611256076613972dfb9428b45f1718692af6c"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0012",
+      "payload_sha256": "64fdf7765cd8235e016bb9e4129877b935bc3c468e04e60d686a9253b80efb8b",
+      "completed_frame": 15900,
+      "captures": [
+        {
+          "frame": 15270,
+          "sha256": "911d449072883dd0cf3bc6343463c1fccf6742e16e7024aa2221ab0454550a70"
+        },
+        {
+          "frame": 15510,
+          "sha256": "9ec280b9082af97ce05d784d5f75316b2997c9f60faf4c657264588a410f3ca4"
+        },
+        {
+          "frame": 15750,
+          "sha256": "1c77d4adfe96dc74bc2e677eb8fa6e5af75cfa1a45ae1af333efcb5819117f42"
+        },
+        {
+          "frame": 15900,
+          "sha256": "2850b8d79b86b3e11470ba240d14ed3ceaf1f7dd2b55b312fb97e8ac182cd279"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0014",
+      "payload_sha256": "29b2e64fd30ce862349411b23a5b219a015d5bd1dadd8ccd2469994857e296f3",
+      "completed_frame": 17280,
+      "captures": [
+        {
+          "frame": 16560,
+          "sha256": "c0b02f0091b37ac1adb7276c78b45c5f5513f661fcdc365d9ae1b14dbfca4f17"
+        },
+        {
+          "frame": 16800,
+          "sha256": "f85b463eb213128e546ffa34fd20fc1623c0dffd3f28e464b97f6ad959540cb7"
+        },
+        {
+          "frame": 17040,
+          "sha256": "feb02cfff0d343d03a54225a13843f26718887e313eaa2c365beb38bf3929de3"
+        },
+        {
+          "frame": 17280,
+          "sha256": "be6b12dcf301b1fa48264815c07cbb73989f7d5982b06a4e90f973d67647e382"
+        }
+      ]
+    }
+  ]
+}

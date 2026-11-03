@@ -1,0 +1,91 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+  "scope": "Rechecked every orphan flag in the current generated payloads. Unchanged payload hashes inherit the prior contextual review; each changed payload was read in full. This is text-layout classification, not additional runtime playback or whole-script editorial approval.",
+  "prior_receipt": "translations/en/reviews/layout-orphans-2026-11-02.json",
+  "prior_receipt_sha256": "c1e6140c6ba19f8987a341ce6bfb8a96bb0db0ec303d34110dbd3985e8504a02",
+  "records_checked": 455,
+  "orphan_flags": 456,
+  "prior_payload_matches": 444,
+  "changed_payloads_reviewed": [
+    {
+      "id": "talk:CDROM/BUNKA/NI_S6W.BIN:main:g0033:l0000",
+      "payload_sha256": "f7be60485245b838edeea086384293637af97dc444f0b24c4dc83a68f9d5e46e",
+      "orphan_flags": 1,
+      "prior_review_matches": false,
+      "disposition": "Preserve the ellipsis pause before a brief reaction."
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0025:l0000",
+      "payload_sha256": "40600889cf0fa45641a660648f47ea81e21c34f13fba7448bcc3a9ef0aca962b",
+      "orphan_flags": 1,
+      "prior_review_matches": false,
+      "disposition": "Preserve a separate laughter sentence after complete speech."
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0041:l0000",
+      "payload_sha256": "40600889cf0fa45641a660648f47ea81e21c34f13fba7448bcc3a9ef0aca962b",
+      "orphan_flags": 1,
+      "prior_review_matches": false,
+      "disposition": "Preserve a separate laughter sentence after complete speech."
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0050:l0000",
+      "payload_sha256": "bda2e302e9e784d8077add223d8bc2627f61ebca62f9103818e7db1638f7706c",
+      "orphan_flags": 1,
+      "prior_review_matches": false,
+      "disposition": "Preserve a separate laughter sentence after complete speech."
+    },
+    {
+      "id": "talk:CDROM/SERIFU/DATE_KG.BIN:section-11:g0057:l0000",
+      "payload_sha256": "40600889cf0fa45641a660648f47ea81e21c34f13fba7448bcc3a9ef0aca962b",
+      "orphan_flags": 1,
+      "prior_review_matches": false,
+      "disposition": "Preserve a separate laughter sentence after complete speech."
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-4:g0000:l0004",
+      "payload_sha256": "d9ea47b73d0572fb3d2762ae94bafbc0bf64b2acf3aef4a9fd39d18258c48f26",
+      "orphan_flags": 1,
+      "prior_review_matches": false,
+      "disposition": "Preserve the short reply or hesitation after a sentence or ellipsis pause; the ending closing quote remains attached."
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-5:g0000:l0013",
+      "payload_sha256": "360969591a942eb857d5d66f76e50b6fdf5221b6b57dfad8723872d9c33a3a78",
+      "orphan_flags": 1,
+      "prior_review_matches": false,
+      "disposition": "Preserve the short reply or hesitation after a sentence or ellipsis pause; the ending closing quote remains attached."
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-6:g0000:l0020",
+      "payload_sha256": "0a6b8a8435dc881709fa606f03259f29a283b219821697a89e37818998f9cae8",
+      "orphan_flags": 1,
+      "prior_review_matches": false,
+      "disposition": "Preserve the short reply or hesitation after a sentence or ellipsis pause; the ending closing quote remains attached."
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-7:g0000:l0023",
+      "payload_sha256": "e53e1415c36070925d77d8f7f1faaff66dbf3c1a86d714c32b3639458dc3cc8d",
+      "orphan_flags": 1,
+      "prior_review_matches": false,
+      "disposition": "Preserve the short reply or hesitation after a sentence or ellipsis pause; the ending closing quote remains attached."
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-11:g0000:l0003",
+      "payload_sha256": "f69bf01226955a6b99ba8bdb10617a95877dc9cb84a57b290c88cb6ba35e6c00",
+      "orphan_flags": 1,
+      "prior_review_matches": false,
+      "disposition": "Preserve the short reply or hesitation after a sentence or ellipsis pause; the ending closing quote remains attached."
+    },
+    {
+      "id": "talk:CDROM/SERIFU/ENDING.BIN:table-14:g0000:l0014",
+      "payload_sha256": "a7d732f176eb0d71936aa6a6379467e9df0a2ef31e09c40b069ce227f325173d",
+      "orphan_flags": 1,
+      "prior_review_matches": false,
+      "disposition": "Preserve the short reply or hesitation after a sentence or ellipsis pause; the ending closing quote remains attached."
+    }
+  ],
+  "remaining_unclassified": 0,
+  "result": "Retain deliberate short replies, laughter and pauses. No additional text or line-break edit is warranted."
+}

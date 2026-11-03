@@ -1,0 +1,96 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f",
+  "run": "build/emu/saki-event-long-followup",
+  "scope": "Controlled Saki event table selections through the shared DATE dialogue runner. The loaded script header matches EVENT_NI.BIN on the published disc; table addresses, advanced line indexes and completed text positions are verified. The fixture retains Yumi's portrait, speaker binding and date background. This verifies passage layout, not natural event staging or artwork.",
+  "script_sha256": "fd521bbf54050579573e918fb6dfd71051b7613b71aee127469dfd23c0c3dc6a",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/EVENT_NI.BIN:scene-00:g0002:l0010",
+      "payload_sha256": "368c8754e3ba5ccd70bed8e21f5f7657015ff7f717bcb51b4702d70ed8ce272e",
+      "tables": [
+        "0x8019932c",
+        "0x80199360",
+        "0x80199664"
+      ],
+      "completed_text_position": 93,
+      "result": "Opening and scrolling rows inspected; intentional pauses and closing quote retained, no overlap or clipping.",
+      "captures": [
+        {
+          "frame": 1920,
+          "sha256": "bb1d21dbcff7255fd17704b948b90ec48c17fdaa9de14a542f90059464c4ab81"
+        },
+        {
+          "frame": 2040,
+          "sha256": "07af2be68d314083bfb6e76841d44bbce1d4cba68b90b30f6829fb1359f7e5f0"
+        },
+        {
+          "frame": 2160,
+          "sha256": "4a1b8c1886adafb2a4df5216535896d33c800017b7a76b5816bbce5499a99c0a"
+        },
+        {
+          "frame": 2880,
+          "sha256": "af4d4a876e0029f30c192292af58ab95e37f33dfb9e3dd6da6c816e579852c49"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/EVENT_NI.BIN:scene-00:g0003:l0005",
+      "payload_sha256": "368c8754e3ba5ccd70bed8e21f5f7657015ff7f717bcb51b4702d70ed8ce272e",
+      "tables": [
+        "0x8019932c",
+        "0x80199360",
+        "0x80199664"
+      ],
+      "completed_text_position": 93,
+      "result": "Opening and scrolling rows inspected; intentional pauses and closing quote retained, no overlap or clipping.",
+      "captures": [
+        {
+          "frame": 3240,
+          "sha256": "9964fd72a3d78c1e824a60dca479333d963563f0fd8d9cbffed0b011255320f0"
+        },
+        {
+          "frame": 3360,
+          "sha256": "75c92606046828fa391668a0415bb15d4d904f828723aaaf95929afd6c622ec0"
+        },
+        {
+          "frame": 3480,
+          "sha256": "af6537ab836dd797dbdaf03ab0272a00e49e4848f4cb81385b3f64a279c43667"
+        },
+        {
+          "frame": 4080,
+          "sha256": "8c0212fc6a6176c5f7545068d0f35a319572421776818b379ca3aed4c27a6406"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/EVENT_NI.BIN:scene-01:g0006:l0001",
+      "payload_sha256": "740dbe5c04aba0a28c286a90d54a22e670a5db3c17c353e70804ef007c5fe490",
+      "tables": [
+        "0x80199a80",
+        "0x80199acc",
+        "0x80199d90"
+      ],
+      "completed_text_position": 103,
+      "result": "Opening and scrolling rows inspected; intentional pauses and closing quote retained, no overlap or clipping.",
+      "captures": [
+        {
+          "frame": 4320,
+          "sha256": "88517d8110ad545ff4fb020396a7db1281b33efcc3b69907da0ba655990dcd02"
+        },
+        {
+          "frame": 4440,
+          "sha256": "7af3ecb8df8d638890a4b0da8c1d50607d856e89417c34f355b4216858950d34"
+        },
+        {
+          "frame": 4560,
+          "sha256": "7b5689844ef9f6cd1cb7eca7d786faa51d732b7271417febdea402e54160f1b4"
+        },
+        {
+          "frame": 5280,
+          "sha256": "10678bca89b7e68db5b29aba2f83115a8566d18d5d8d27bc9f59ddb59fb00005"
+        }
+      ]
+    }
+  ]
+}

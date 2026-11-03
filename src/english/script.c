@@ -41,6 +41,7 @@
 #define ENGLISH_SCRIPT_BYTES 1024 /* T-39517: complete long English epilogues exceed 512 bytes */
 #define ENGLISH_OPTION_BYTES 128 /* one choice option */
 #define ENGLISH_LONG_NAME_BYTES 24
+#define ENGLISH_LONG_VALUE_BYTES 64 /* T-39542: fortune labels exceed character-name storage */
 #define ENGLISH_GIRL_SHORT_BYTES 8 /* name_code_girl_short */
 #define ENGLISH_GIRL_NAME_BYTES 12 /* girl_name_buf, up to scene_place_title */
 #define ENGLISH_VALUE_O_BYTES 8    /* name_code_o, up to name_code_w */
@@ -78,8 +79,8 @@ s32 english_string_pool_bytes = ENGLISH_STRING_POOL_BYTES;
 /* Full forms of the girl names whose original buffers are too small (see english_long_name). */
 static u8 english_girl_short_long[ENGLISH_LONG_NAME_BYTES];
 static u8 english_girl_name_long[ENGLISH_LONG_NAME_BYTES];
-static u8 english_value_o_long[ENGLISH_LONG_NAME_BYTES]; /* O value (New Year fortune): name_code_o has 8 bytes */
-static u8 english_value_w_long[ENGLISH_LONG_NAME_BYTES]; /* W value (New Year wish): name_code_w has 12 bytes */
+static u8 english_value_o_long[ENGLISH_LONG_VALUE_BYTES]; /* O value (New Year fortune): name_code_o has 8 bytes */
+static u8 english_value_w_long[ENGLISH_LONG_VALUE_BYTES]; /* W value (New Year wish): name_code_w has 12 bytes */
 
 /* Bytes of the character at text: 2 for a Shift-JIS lead byte, else 1. */
 static s32 english_char_bytes(u8 *text) {
@@ -134,10 +135,10 @@ static u8 *english_long_name(u8 *buffer, u8 *long_copy, s32 size) {
 
 void english_value_set(s32 code, u8 *text) {
     if (code == ENGLISH_CODE_O) {
-        english_copy(english_value_o_long, text, ENGLISH_LONG_NAME_BYTES);
+        english_copy(english_value_o_long, text, sizeof(english_value_o_long));
         english_copy(name_code_o, english_value_o_long, ENGLISH_VALUE_O_BYTES);
     } else if (code == ENGLISH_CODE_W) {
-        english_copy(english_value_w_long, text, ENGLISH_LONG_NAME_BYTES);
+        english_copy(english_value_w_long, text, sizeof(english_value_w_long));
         english_copy(name_code_w, english_value_w_long, ENGLISH_VALUE_W_BYTES);
     }
 }

@@ -1,0 +1,678 @@
+{
+  "scope": "Direct-call coordinate census only. Table consumers and dynamic substitutions require separate evidence. Includes repeated call sites and bypassed original parser rows.",
+  "constant_x_calls": 1005,
+  "constant_x_screen_edge_candidates": 0,
+  "dynamic_calls": [
+    {
+      "id": "c:main:800782f0:2",
+      "function": "telephone_class_init",
+      "text": "Cancel",
+      "width_px": 31,
+      "disposition": "Cancel is in the final column at x=40; all displayed full names separately checked from the disc."
+    },
+    {
+      "id": "c:main:8005bcec:2",
+      "function": "settings_save_load_menu_init",
+      "text": "Save",
+      "width_px": 24,
+      "disposition": "Save and Load begin at -80 and 16, leaving a gap within the 96-pixel pitch."
+    },
+    {
+      "id": "c:main:8005bcec:3",
+      "function": "settings_save_load_menu_init",
+      "text": "Load",
+      "width_px": 24,
+      "disposition": "Save and Load begin at -80 and 16, leaving a gap within the 96-pixel pitch."
+    },
+    {
+      "id": "c:main:8005dea0:1",
+      "function": "settings_labels_draw",
+      "text": "Text Speed",
+      "width_px": 57,
+      "disposition": "Left settings column has 96 pixels; right choices begin at -4."
+    },
+    {
+      "id": "c:main:8005dea0:2",
+      "function": "settings_labels_draw",
+      "text": "Icon Mode",
+      "width_px": 51,
+      "disposition": "Left settings column has 96 pixels; right choices begin at -4."
+    },
+    {
+      "id": "c:main:8005dea0:3",
+      "function": "settings_labels_draw",
+      "text": "Mouse",
+      "width_px": 31,
+      "disposition": "Left settings column has 96 pixels; right choices begin at -4."
+    },
+    {
+      "id": "c:main:8005dea0:4",
+      "function": "settings_labels_draw",
+      "text": "Menu Mode",
+      "width_px": 56,
+      "disposition": "Left settings column has 96 pixels; right choices begin at -4."
+    },
+    {
+      "id": "c:main:8005dea0:5",
+      "function": "settings_labels_draw",
+      "text": "Cursor Speed",
+      "width_px": 67,
+      "disposition": "Left settings column has 96 pixels; right choices begin at -4."
+    },
+    {
+      "id": "c:main:8005dea0:6",
+      "function": "settings_labels_draw",
+      "text": "Voice Mode",
+      "width_px": 55,
+      "disposition": "Left settings column has 96 pixels; right choices begin at -4."
+    },
+    {
+      "id": "c:main:8005dea0:7",
+      "function": "settings_labels_draw",
+      "text": "Mascot",
+      "width_px": 35,
+      "disposition": "Left settings column has 96 pixels; right choices begin at -4."
+    },
+    {
+      "id": "c:main:8005dea0:8",
+      "function": "settings_labels_draw",
+      "text": "Exit",
+      "width_px": 19,
+      "disposition": "Left settings column has 96 pixels; right choices begin at -4."
+    },
+    {
+      "id": "c:main:8005e150:2",
+      "function": "settings_text_speed_init",
+      "text": "Slow",
+      "width_px": 22,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005e150:3",
+      "function": "settings_text_speed_init",
+      "text": "Normal",
+      "width_px": 33,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005e150:4",
+      "function": "settings_text_speed_init",
+      "text": "Fast",
+      "width_px": 22,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005e454:2",
+      "function": "settings_icon_mode_init",
+      "text": "Type A",
+      "width_px": 34,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005e454:3",
+      "function": "settings_icon_mode_init",
+      "text": "Type B",
+      "width_px": 34,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005e454:4",
+      "function": "settings_icon_mode_init",
+      "text": "Free",
+      "width_px": 23,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005e7f0:2",
+      "function": "settings_mouse_init",
+      "text": "Confirm",
+      "width_px": 38,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005e7f0:3",
+      "function": "settings_mouse_init",
+      "text": "Click Mode",
+      "width_px": 50,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005e7f0:4",
+      "function": "settings_mouse_init",
+      "text": "Click Speed",
+      "width_px": 54,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005ea38:2",
+      "function": "settings_mouse_confirm_init",
+      "text": "Right confirms",
+      "width_px": 71,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005ea38:3",
+      "function": "settings_mouse_confirm_init",
+      "text": "Left confirms",
+      "width_px": 68,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005ecb8:2",
+      "function": "settings_mouse_click_init",
+      "text": "Single Click",
+      "width_px": 52,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005ecb8:3",
+      "function": "settings_mouse_click_init",
+      "text": "Double Click",
+      "width_px": 56,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005ef44:2",
+      "function": "settings_mouse_click_speed_init",
+      "text": "Default",
+      "width_px": 36,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005ef44:3",
+      "function": "settings_mouse_click_speed_init",
+      "text": "Edit",
+      "width_px": 19,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f26c:2",
+      "function": "settings_menu_mode_init",
+      "text": "1: Mouse-like",
+      "width_px": 61,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f26c:3",
+      "function": "settings_menu_mode_init",
+      "text": "2: Menu A",
+      "width_px": 48,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f26c:4",
+      "function": "settings_menu_mode_init",
+      "text": "3: Menu B",
+      "width_px": 48,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f26c:5",
+      "function": "settings_menu_mode_init",
+      "text": "4: 1 + 2",
+      "width_px": 36,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:2",
+      "function": "settings_cursor_speed_init",
+      "text": "Very Slow",
+      "width_px": 49,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:3",
+      "function": "settings_cursor_speed_init",
+      "text": "Slow",
+      "width_px": 22,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:3",
+      "function": "settings_cursor_speed_init",
+      "text": "Slow",
+      "width_px": 22,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:4",
+      "function": "settings_cursor_speed_init",
+      "text": "Normal",
+      "width_px": 33,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:4",
+      "function": "settings_cursor_speed_init",
+      "text": "Normal",
+      "width_px": 33,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:5",
+      "function": "settings_cursor_speed_init",
+      "text": "Fast",
+      "width_px": 22,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:5",
+      "function": "settings_cursor_speed_init",
+      "text": "Fast",
+      "width_px": 22,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:6",
+      "function": "settings_cursor_speed_init",
+      "text": "Very Fast",
+      "width_px": 49,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:7",
+      "function": "settings_cursor_speed_init",
+      "text": "Slow",
+      "width_px": 22,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:7",
+      "function": "settings_cursor_speed_init",
+      "text": "Slow",
+      "width_px": 22,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:8",
+      "function": "settings_cursor_speed_init",
+      "text": "A bit slow",
+      "width_px": 48,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:9",
+      "function": "settings_cursor_speed_init",
+      "text": "Normal",
+      "width_px": 33,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:9",
+      "function": "settings_cursor_speed_init",
+      "text": "Normal",
+      "width_px": 33,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:10",
+      "function": "settings_cursor_speed_init",
+      "text": "A bit fast",
+      "width_px": 48,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:11",
+      "function": "settings_cursor_speed_init",
+      "text": "Fast",
+      "width_px": 22,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005f730:11",
+      "function": "settings_cursor_speed_init",
+      "text": "Fast",
+      "width_px": 22,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005fdec:2",
+      "function": "settings_voice_mode_init",
+      "text": "Always ON",
+      "width_px": 49,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005fdec:3",
+      "function": "settings_voice_mode_init",
+      "text": "Always OFF",
+      "width_px": 55,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:8005fdec:4",
+      "function": "settings_voice_mode_init",
+      "text": "Skip with X",
+      "width_px": 54,
+      "disposition": "Settings choices use x=-4 and a 108-pixel row; rows are 16 pixels apart."
+    },
+    {
+      "id": "c:main:80060178:2",
+      "function": "settings_mascot_init",
+      "text": "Don't show",
+      "width_px": 54,
+      "disposition": "The final mascot-disable choice has a 70-pixel slot and no following column. All 13 names separately checked from the disc."
+    },
+    {
+      "id": "c:main:800696dc:2",
+      "function": "hud_save_slot_info_show",
+      "text": "System",
+      "width_px": 36,
+      "disposition": "The 132-pixel save-summary column pitch exceeds these status-label widths."
+    },
+    {
+      "id": "c:main:800696dc:3",
+      "function": "hud_save_slot_info_show",
+      "text": "Empty",
+      "width_px": 31,
+      "disposition": "The 132-pixel save-summary column pitch exceeds these status-label widths."
+    },
+    {
+      "id": "c:main:800696dc:3",
+      "function": "hud_save_slot_info_show",
+      "text": "Empty",
+      "width_px": 31,
+      "disposition": "The 132-pixel save-summary column pitch exceeds these status-label widths."
+    },
+    {
+      "id": "c:main:800696dc:4",
+      "function": "hud_save_slot_info_show",
+      "text": "Bad data",
+      "width_px": 45,
+      "disposition": "The 132-pixel save-summary column pitch exceeds these status-label widths."
+    },
+    {
+      "id": "c:main:800696dc:4",
+      "function": "hud_save_slot_info_show",
+      "text": "Bad data",
+      "width_px": 45,
+      "disposition": "The 132-pixel save-summary column pitch exceeds these status-label widths."
+    },
+    {
+      "id": "c:main:800696dc:12",
+      "function": "hud_save_slot_info_show",
+      "text": "Empty",
+      "width_px": 31,
+      "disposition": "The 132-pixel save-summary column pitch exceeds these status-label widths."
+    },
+    {
+      "id": "c:main:800696dc:12",
+      "function": "hud_save_slot_info_show",
+      "text": "Empty",
+      "width_px": 31,
+      "disposition": "The 132-pixel save-summary column pitch exceeds these status-label widths."
+    },
+    {
+      "id": "c:main:800696dc:13",
+      "function": "hud_save_slot_info_show",
+      "text": "Bad data",
+      "width_px": 45,
+      "disposition": "The 132-pixel save-summary column pitch exceeds these status-label widths."
+    },
+    {
+      "id": "c:main:800696dc:13",
+      "function": "hud_save_slot_info_show",
+      "text": "Bad data",
+      "width_px": 45,
+      "disposition": "The 132-pixel save-summary column pitch exceeds these status-label widths."
+    },
+    {
+      "id": "c:main:8006b648:2",
+      "function": "hud_club_list_menu",
+      "text": "Cancel",
+      "width_px": 31,
+      "disposition": "Cancel is in the final column; all club names separately checked from the disc."
+    },
+    {
+      "id": "c:main:8007ef48:84",
+      "function": "talk_speak_part",
+      "text": "Fujisaki",
+      "width_px": 36,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:84",
+      "function": "talk_speak_part",
+      "text": "Fujisaki",
+      "width_px": 36,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:85",
+      "function": "talk_speak_part",
+      "text": "Fujisaki",
+      "width_px": 36,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:85",
+      "function": "talk_speak_part",
+      "text": "Fujisaki",
+      "width_px": 36,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:89",
+      "function": "talk_speak_part",
+      "text": "Fujisaki",
+      "width_px": 36,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:89",
+      "function": "talk_speak_part",
+      "text": "Fujisaki",
+      "width_px": 36,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:90",
+      "function": "talk_speak_part",
+      "text": "Fujisaki",
+      "width_px": 36,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:90",
+      "function": "talk_speak_part",
+      "text": "Fujisaki",
+      "width_px": 36,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:94",
+      "function": "talk_speak_part",
+      "text": "Yoshio",
+      "width_px": 31,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:94",
+      "function": "talk_speak_part",
+      "text": "Yoshio",
+      "width_px": 31,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:95",
+      "function": "talk_speak_part",
+      "text": "Yoshio",
+      "width_px": 31,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:95",
+      "function": "talk_speak_part",
+      "text": "Yoshio",
+      "width_px": 31,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:99",
+      "function": "talk_speak_part",
+      "text": "Yoshio",
+      "width_px": 31,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:99",
+      "function": "talk_speak_part",
+      "text": "Yoshio",
+      "width_px": 31,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:100",
+      "function": "talk_speak_part",
+      "text": "Yoshio",
+      "width_px": 31,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:main:8007ef48:100",
+      "function": "talk_speak_part",
+      "text": "Yoshio",
+      "width_px": 31,
+      "disposition": "Original parser body is bypassed by the verified English entry hook."
+    },
+    {
+      "id": "c:ENDING:80132420:1",
+      "function": "ending_dialogue_line_render",
+      "text": "\"",
+      "width_px": 5,
+      "disposition": "Opening marks at x=-94 finish before the body begins at -88."
+    },
+    {
+      "id": "c:ENDING:80132420:4",
+      "function": "ending_dialogue_line_render",
+      "text": "(",
+      "width_px": 4,
+      "disposition": "Opening marks at x=-94 finish before the body begins at -88."
+    },
+    {
+      "id": "c:ENDING:80132420:7",
+      "function": "ending_dialogue_line_render",
+      "text": "\"",
+      "width_px": 5,
+      "disposition": "Opening marks at x=-94 finish before the body begins at -88."
+    },
+    {
+      "id": "c:ENDING:80132420:10",
+      "function": "ending_dialogue_line_render",
+      "text": "\"",
+      "width_px": 5,
+      "disposition": "Opening marks at x=-94 finish before the body begins at -88."
+    },
+    {
+      "id": "c:OPTION:80132ba8:1",
+      "function": "options_main_menu_init",
+      "text": "Text Speed",
+      "width_px": 57,
+      "disposition": "options_page_row_geometry_fill uses x=-120, width=96 and a 20-pixel row pitch."
+    },
+    {
+      "id": "c:OPTION:80132ba8:2",
+      "function": "options_main_menu_init",
+      "text": "Icon Mode",
+      "width_px": 51,
+      "disposition": "options_page_row_geometry_fill uses x=-120, width=96 and a 20-pixel row pitch."
+    },
+    {
+      "id": "c:OPTION:80132ba8:3",
+      "function": "options_main_menu_init",
+      "text": "Mouse",
+      "width_px": 31,
+      "disposition": "options_page_row_geometry_fill uses x=-120, width=96 and a 20-pixel row pitch."
+    },
+    {
+      "id": "c:OPTION:80132ba8:4",
+      "function": "options_main_menu_init",
+      "text": "Menu Mode",
+      "width_px": 56,
+      "disposition": "options_page_row_geometry_fill uses x=-120, width=96 and a 20-pixel row pitch."
+    },
+    {
+      "id": "c:OPTION:80132ba8:5",
+      "function": "options_main_menu_init",
+      "text": "Cursor Speed",
+      "width_px": 67,
+      "disposition": "options_page_row_geometry_fill uses x=-120, width=96 and a 20-pixel row pitch."
+    },
+    {
+      "id": "c:OPTION:80132ba8:6",
+      "function": "options_main_menu_init",
+      "text": "Voice Mode",
+      "width_px": 55,
+      "disposition": "options_page_row_geometry_fill uses x=-120, width=96 and a 20-pixel row pitch."
+    },
+    {
+      "id": "c:OPTION:80132ba8:7",
+      "function": "options_main_menu_init",
+      "text": "Extras",
+      "width_px": 33,
+      "disposition": "options_page_row_geometry_fill uses x=-120, width=96 and a 20-pixel row pitch."
+    },
+    {
+      "id": "c:OPTION:80132ba8:8",
+      "function": "options_main_menu_init",
+      "text": "Exit Options",
+      "width_px": 59,
+      "disposition": "options_page_row_geometry_fill uses x=-120, width=96 and a 20-pixel row pitch."
+    },
+    {
+      "id": "c:OPTION:80139198:2",
+      "function": "options_debug_audio_menu_init",
+      "text": "XA Call",
+      "width_px": 32,
+      "disposition": "Actual-disc coordinate arrays use x=-64 and separate rows at -60 through 60."
+    },
+    {
+      "id": "c:OPTION:80139198:3",
+      "function": "options_debug_audio_menu_init",
+      "text": "Main VAB Transfer",
+      "width_px": 92,
+      "disposition": "Actual-disc coordinate arrays use x=-64 and separate rows at -60 through 60."
+    },
+    {
+      "id": "c:OPTION:80139198:4",
+      "function": "options_debug_audio_menu_init",
+      "text": "Sub VAB Transfer",
+      "width_px": 88,
+      "disposition": "Actual-disc coordinate arrays use x=-64 and separate rows at -60 through 60."
+    },
+    {
+      "id": "c:OPTION:80139198:5",
+      "function": "options_debug_audio_menu_init",
+      "text": "Main SEQ Call",
+      "width_px": 64,
+      "disposition": "Actual-disc coordinate arrays use x=-64 and separate rows at -60 through 60."
+    },
+    {
+      "id": "c:OPTION:80139198:6",
+      "function": "options_debug_audio_menu_init",
+      "text": "Sub SEQ Call",
+      "width_px": 60,
+      "disposition": "Actual-disc coordinate arrays use x=-64 and separate rows at -60 through 60."
+    },
+    {
+      "id": "c:OPTION:80139198:7",
+      "function": "options_debug_audio_menu_init",
+      "text": "Main SE Call",
+      "width_px": 58,
+      "disposition": "Actual-disc coordinate arrays use x=-64 and separate rows at -60 through 60."
+    },
+    {
+      "id": "c:OPTION:80139198:8",
+      "function": "options_debug_audio_menu_init",
+      "text": "SEQ-NUM",
+      "width_px": 43,
+      "disposition": "Actual-disc coordinate arrays use x=-64 and separate rows at -60 through 60."
+    }
+  ],
+  "same_row_candidates": {
+    "mutually_exclusive_speaker_cases": 5,
+    "confirmed_speaker_quote_overlaps": 2,
+    "fix_ticket": "T-39543"
+  },
+  "table_geometry": "menu-table-geometry.json"
+}

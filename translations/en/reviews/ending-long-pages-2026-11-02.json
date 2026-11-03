@@ -1,0 +1,206 @@
+{
+  "ticket": "T-39534",
+  "target_sha1": "a839441add3e6dc6e72b04c4daacf8d0a59cce41",
+  "scope": "Controlled Yukari ending entry followed by normal dialogue playback. Captures and text-state samples verify complete subtitle rows; this does not certify other routes.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0001",
+      "payload_sha256": "cc89c5f8f7725758f710b2852b4c92d59d7ca430b2eb8dd4573a35d18f92830c",
+      "run": "build/emu/ending-scoped-entry",
+      "result": "Complete rows and closing quote inspected. No clipping, overlap, stale glyphs or isolated short final row.",
+      "completed_text_position": 106,
+      "captures": [
+        {
+          "frame": 5100,
+          "sha256": "36c4a99cf0a948ff87cde7e176da4a82052e72e97f1615ef1e64563bf3577cf7"
+        },
+        {
+          "frame": 5400,
+          "sha256": "fe1bce899497c3c0e87fc61f0af91178e02530e296a6389889bc21d0af0ac87e"
+        },
+        {
+          "frame": 5760,
+          "sha256": "9678968cac4d392cb456d922896e31a967125b9bdfbc86a71974d508456c28bf"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0003",
+      "payload_sha256": "62ada5b1fdcab1109df54dd7f5a5ead78fc8b6804739bfeaadced97b56fde537",
+      "run": "build/emu/ending-scoped-entry",
+      "result": "Complete rows and closing quote inspected. No clipping, overlap, stale glyphs or isolated short final row.",
+      "completed_text_position": 54,
+      "captures": [
+        {
+          "frame": 6600,
+          "sha256": "cbf0a685937a13088a1339affed76cfc4031f519cd839f5881b8d397004927e0"
+        },
+        {
+          "frame": 6840,
+          "sha256": "a4dd1feae6001bc7d6c579cb2fc3283581211082c8bf67a613affaa74375c6e8"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0008",
+      "payload_sha256": "82ad20c89e3ceaf2226a5e440c5b7dfcbda83948e861101ac99f7e82f601ac70",
+      "run": "build/emu/ending-scoped-long",
+      "result": "All subtitle rows and final punctuation inspected. No overlap, clipped words or isolated short final row.",
+      "completed_frame": 5430,
+      "completed_text_position": 309,
+      "captures": [
+        {
+          "frame": 2280,
+          "sha256": "ef21c69b52b7208b043437655870bacce265ca743d9fae99486ebe688d408091"
+        },
+        {
+          "frame": 2520,
+          "sha256": "8fd028f8563462aa08684d24ee6b0397cbc1764e45b001175fc6653937523a9b"
+        },
+        {
+          "frame": 2760,
+          "sha256": "ff8187baf269aaa1b45533b2a615ed90d482182696c5a35b18421ecbae49ddc4"
+        },
+        {
+          "frame": 3000,
+          "sha256": "00cdb2560067d9b419551924933f3ceb2af1dc95006a6d62e70783dee7843b57"
+        },
+        {
+          "frame": 3240,
+          "sha256": "9543a394bdab83e0dc9e39ea7ecf962b2c3ce17c92f8c0f7a664990d2f9edeb6"
+        },
+        {
+          "frame": 3480,
+          "sha256": "b96fde0e1c8a97282a06ce957abdf414711bbc926dcac0a46d48e806a92b4c62"
+        },
+        {
+          "frame": 3720,
+          "sha256": "de6ed2a8433cb591228583336f2c8d8e9ddea985ea249ca04595baad7117a98b"
+        },
+        {
+          "frame": 3960,
+          "sha256": "8947625313021661187bcd46c6168b69037da1f81086c144efa02381567de415"
+        },
+        {
+          "frame": 4200,
+          "sha256": "a62f33bdaa16280d7acc8f661ec7df4e1efca2310ec930014facd1e83e3452e0"
+        },
+        {
+          "frame": 4440,
+          "sha256": "e663b97909c16cf864264e3aa3946827cef40ca6ed38618c631bcbc633c4f68d"
+        },
+        {
+          "frame": 4680,
+          "sha256": "f08af676620980e82b5ffb8f74225f00871323db67cffbcb6b4a0ea6d1e93bf7"
+        },
+        {
+          "frame": 4920,
+          "sha256": "c958313a73e5447a7e86b69c281bbf26d80a2148425118d125f9fdf9e6a6c03e"
+        },
+        {
+          "frame": 5160,
+          "sha256": "6dae82e786ca0d2526c74e73d058bfad537189cf9e6f8f600d4719005d85c1f7"
+        },
+        {
+          "frame": 5400,
+          "sha256": "fdadd8f690e666cfaca21c7b22135da0022f1a4c3e0dae46c213ced5413090bd"
+        },
+        {
+          "frame": 5430,
+          "sha256": "9d72f0361b17055ddc76fdb7d3084120d0dc2b50e66ea10457a633d104f657ef"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0010",
+      "payload_sha256": "e2fab1b7a19ce11c513c92ed4f3b375311640950651d357675ecf2f10b9ec3a4",
+      "run": "build/emu/ending-scoped-long",
+      "result": "All subtitle rows and final punctuation inspected. No overlap, clipped words or isolated short final row.",
+      "completed_frame": 6930,
+      "completed_text_position": 138,
+      "captures": [
+        {
+          "frame": 5700,
+          "sha256": "cf0e05f1d81a0701f656dda2fff1a95aa58dbeb4cecf16d348379d46a6677ac3"
+        },
+        {
+          "frame": 5940,
+          "sha256": "e5ef04c10ff1df6f1b77c8fd33bd6cddeafe032ea19201d1d14189e08807ef64"
+        },
+        {
+          "frame": 6180,
+          "sha256": "0b4e578411f4542587cb00b26e82e92cbafa2a1438e12079f9fce9220c0a5f82"
+        },
+        {
+          "frame": 6420,
+          "sha256": "a21e62c15aa29c29af91861919b1317628618fb6b8d0957165110a2d32343577"
+        },
+        {
+          "frame": 6660,
+          "sha256": "1d48a0f89d3bb4d0a00290efc3ba44a9e9cd39f860f5e9c523da5503f72ad073"
+        },
+        {
+          "frame": 6900,
+          "sha256": "2c0fdca33f9d334cc1552f68129465fec3fa85aed75d681c60d55c904795ceee"
+        },
+        {
+          "frame": 6930,
+          "sha256": "606e6b76d984216c2621b7c46171b9c07e18c5c8d447d73d85fcfec0ca69a9f1"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0012",
+      "payload_sha256": "64fdf7765cd8235e016bb9e4129877b935bc3c468e04e60d686a9253b80efb8b",
+      "run": "build/emu/ending-scoped-long",
+      "result": "All subtitle rows and final punctuation inspected. No overlap, clipped words or isolated short final row.",
+      "completed_frame": 8400,
+      "completed_text_position": 71,
+      "captures": [
+        {
+          "frame": 7770,
+          "sha256": "c9fd4dd52419ca636146c9b880930b9cd6c66b72b03f9e5dcd1de458e2139e18"
+        },
+        {
+          "frame": 8010,
+          "sha256": "ac9521fb632fba04063f032abd983ca279c736c7d65cafef4e4d7f5dc10bb7ca"
+        },
+        {
+          "frame": 8250,
+          "sha256": "97faabc24be6fba9001fa97067ea94aac8c2ba4880d7d82e365118c025925719"
+        },
+        {
+          "frame": 8400,
+          "sha256": "850ec7ef217634d67036d35230e454900c4c51fa435424c48100ed504c6447fc"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/ENDING.BIN:table-9:g0000:l0014",
+      "payload_sha256": "29b2e64fd30ce862349411b23a5b219a015d5bd1dadd8ccd2469994857e296f3",
+      "run": "build/emu/ending-scoped-long",
+      "result": "All subtitle rows and final punctuation inspected. No overlap, clipped words or isolated short final row.",
+      "completed_frame": 9780,
+      "completed_text_position": 79,
+      "captures": [
+        {
+          "frame": 9060,
+          "sha256": "1584ba3a7090d164967a1882bfbcf96dbb6573f2f13b1a3439851d1e57b0ae76"
+        },
+        {
+          "frame": 9300,
+          "sha256": "cd0f368c58539b0ea20b4c05dbd7e2f6aea86a3b4c2b9c88ba12985f3de19b7a"
+        },
+        {
+          "frame": 9540,
+          "sha256": "1a85428a07b42d5e330257a4def30ea7b0a722db4ff288c0bc96c094bb6f6f37"
+        },
+        {
+          "frame": 9780,
+          "sha256": "301834c136d164be744e2a4db72b07c739060304ac511b90ba13922882a4d902"
+        }
+      ]
+    }
+  ],
+  "continuation_header_samples_verified": 416
+}

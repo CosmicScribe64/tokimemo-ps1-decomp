@@ -1,10 +1,10 @@
 ---
 id: T-39501
 title: Rebuild the disc image with replaced files and make the xdelta patch
-status: In Review
+status: Done
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-01
+updated: 2026-11-02
 links: ["[[tickets/T-39500-english-translation-patch]]"]
 ---
 
@@ -38,3 +38,7 @@ Done (2026-11-01), branch `patch/disc`:
 - `tools/emu/run.sh` rebuilds `tokimemo-emu` on every call: the current image has no `dockerfile.sha256` label. The boot runs used the same `docker run` line directly so the shared image was not rebuilt.
 
 ## Comments
+
+## Completed source review
+
+2026-11-02: Reviewed tools/patch/disc.py, sector.py and make_patch.py against CODING_STANDARDS. Directory updates retain both ISO byte orders; relocated files move the postgap and audio reference together; stream replacements preserve non-video sectors. Patch generation applies its output and checks the target hash. The real-disc Docker suite passes all 17 tests, including unchanged and matching-executable rebuilds, relocation, EDC/ECC and xdelta round trips. No unresolved finding for the supported original-disc build. No source or game bytes changed in this review. Ticket and board move to Done.

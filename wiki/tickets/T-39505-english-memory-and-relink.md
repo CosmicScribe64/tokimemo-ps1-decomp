@@ -1,10 +1,10 @@
 ---
 id: T-39505
 title: Give the English build room to grow (memory map and free relink)
-status: In Review
+status: Done
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-01
+updated: 2026-11-02
 links: ["[[tickets/T-39500-english-translation-patch]]", "[[english-text-runtime]]"]
 ---
 
@@ -41,3 +41,7 @@ Results: [[ram-map]], [[relink]].
   - Report: placed 30,951, file_kept_original 4,718 (DATE talk files), kept_original 625, needs_relink 266 (fixed-size table slots, need code changes), moved_in_build 257, overflow 8. Executable ends at 0x8012CA60; overlays within the slot (TACO 291 bytes left).
   - DATE buffer: not growable. TAKU3.BIN sits at 0x801A4000 and another load fills 0x801A5800-0x801AE000 during a date ([[ram-map]]); the files keep their original bytes.
   - English disc route (`--relink build/en`): all checkpoints reached (144 screenshots, 30,149 frames), `build/emu/route-en/`. Default build 27/27 OK; `build/j0` still equals all default binaries and `build/jr` is unchanged.
+
+## Completed source review
+
+2026-11-02: Reviewed tools/english_link.py against CODING_STANDARDS. The linker checks section anchors, unresolved raw addresses, shared high-half rewrites, hook bounds, stable symbols between main links, and main/overlay RAM limits. Existing padded-relink route evidence above covers the runtime relocation criterion. The linker and English-build Docker suites run 56 tests: 55 pass and one optional full-disc rebuild skips. Python reports existing implicit-close ResourceWarnings in tooling; no test fails. No game code changed, so the recorded default 27/27 proof remains applicable. No unresolved correctness finding for the supported build. Ticket and board move to Done.

@@ -3855,3 +3855,600 @@ For [[tickets/T-39511-english-text-quality]], began a labelled review gallery co
 Built and opened `build/visual-review-pack/index.html`: 235 captures on 31 labelled sheets. Inspected the new festival and Kagami samples, Nijino trip, sports and ending sheets, plus all 16 patched background stills. Native inspection found cramped shoe-rental and roster lettering; created Ready ticket [[tickets/T-39533-sign-lettering-quality]]. Game images remain ignored.
 
 For [[tickets/T-39511-english-text-quality]], rejected a forced jump that retained unfinished text. A corrected probe waits for the prior page; both Kagami long passages now scroll cleanly through their closing quotes. Thirty samples match the current disc header and table pointers, with 25 post-selection group checks. Receipt `translations/en/reviews/mira-trip-long-pages-2026-11-02.json` leaves 44 of 67 long-page records pending. No patch bytes changed in this review.
+
+## [2026-11-02] decision | Refine lettering while preserving the chosen roster layout
+
+Moved [[tickets/T-39533-sign-lettering-quality]] to In Progress. The inventory records the owner's chosen rotated roster layout and shared crossfade position; preserve both while trying lighter strokes and more letter spacing. Prepared local generator previews for the roster pair and shoe-rental sign. The preceding visual-review receipts were pushed to main and patch/english at bec2b87db.
+
+## [2026-11-02] build | Check lighter sign lettering
+
+For [[tickets/T-39533-sign-lettering-quality]], implemented reproducible replacement crops and inspected original-game references and revised previews. Existing lettering tests pass (61 passed, two skipped), including roster margins and shared crossfade geometry. The rental sign passes encoding and native preview inspection; roster encoding remains live in the Docker job logged at `build/sign-quality-encode.log`. Prepared local disc readback and emulator probes for the next checks. Public patch unchanged.
+
+## [2026-11-02] query | Begin Yukari ending dialogue coverage
+
+For [[tickets/T-39511-english-text-quality]], traced ENDING table 9 to Yukari and started a current-disc controlled ending entry with timed captures and table/header samples. This is a new probe, not accepted visual evidence yet. The three pending table-9 long passages remain pending until the loaded scene and complete text are inspected.
+
+## [2026-11-02] query | Correct the ending probe's entry mode
+
+The first live preview showed the sports festival: the draft probe copied a generic script's 0x72 default instead of GAME_MODE_ENDING (0x63). Stopped that probe, kept its rejected output separate, checked the enum, and started `build/emu/ending-yukari-current`. No ending checks were credited and no game source changed for this correction.
+
+## [2026-11-02] query | Bind ending instrumentation to the relinked overlay
+
+The corrected-mode preview reaches the graduation classroom, but review of the probe found ENDING-local addresses were still original-link addresses. The main-address mapper deliberately does not translate overlays. Rejected that probe as verification evidence, stopped it, and changed the capture and saved-girl write to use `build/english-boundary-proof/ovl/ENDING.elf` symbols. The clean run is `build/emu/ending-yukari-mapped`; all long-page counts remain unchanged.
+
+## [2026-11-02] query | Capture both remaining phone passages
+
+For [[tickets/T-39511-english-text-quality]], located c:TEL:8013ac0c:2 in the answering-machine initializer and c:TEL:8013adc0:6 in the relationship report's substep 0x13. Started `build/emu/phone-long-pages` using the current disc, real telephone stage dispatch and relinked TEL function-byte samples. The mapped ending probe's frame 4250 visibly reaches Yukari's close-up; complete dialogue checks are still pending.
+
+## [2026-11-02] query | Verify the two phone long pages
+
+For [[tickets/T-39511-english-text-quality]], inspected the completed phone captures and verified 49 runtime samples against both function bodies in the current disc's TEL.EXN. Recorded `translations/en/reviews/phone-long-pages-2026-11-02.json`; 42 of 67 long-page records remain pending. The mapped Yukari ending entry completed, showing her actual artwork and initial dialogue. Started a 12,000-frame controller-only continuation from its saved state; pending ending passages are not credited yet.
+
+## [2026-11-02] query | Add the verified phone captures to the gallery
+
+Added eight phone frames and one inspected contact sheet to `build/visual-review-pack/index.html`. The local gallery now contains 243 captures across 32 sheets and shows 25 verified / 42 pending long-page records. Historical bulk-review receipt counts remain the snapshot taken before this addition.
+
+## [2026-11-02] query | Expand date coverage to Kagami at the amusement park
+
+For [[tickets/T-39511-english-text-quality]], traced DATE_KG section 11 to the amusement-park table and started `build/emu/mira-park-review`. Setup selects a met companion and the park appointment, then controller input drives the scene. Runtime table pointers and the loaded script header are sampled. Four pending records belong to this table; none are credited yet.
+
+## [2026-11-02] query | Flag missing ending subtitles during bulk review
+
+Inspected four contact sheets and native frames 5760/8160 from `build/emu/ending-yukari-dialogue`. Player replies appear, but heroine passages do not remain visibly readable in the sampled frames. Table/line samples map the three pending records to kinds 0xF/1/1. Created [[tickets/T-39534-ending-dialogue-visibility]] to trace live text/audio state and verify complete paragraphs, with voice on and off. Face-animation seams also need original comparison. No ending records were credited; the queue remains at 42 pending.
+
+## [2026-11-02] query | Identify the original ending subtitle toggle
+
+For [[tickets/T-39534-ending-dialogue-visibility]], found the explicit pad-held visibility gate in `ending_audio_level_update`; kinds 0/6 stay visible, voiced lines are hidden without input. Started `build/emu/ending-yukari-subtitles` with Circle held for inspection and asked the owner about automatic English subtitle display. The observed hidden heroine lines therefore do not by themselves establish a patch defect.
+
+## [2026-11-02] decision | Show English ending subtitles automatically
+
+The owner chose automatic English subtitle display. For [[tickets/T-39534-ending-dialogue-visibility]], added TOKIMEMO_ENGLISH guards that keep voiced text visible and require complete text plus a one-second final-row pause before the existing clear/wait and audio gates advance. The matching-language code is preserved. Runtime validation and review remain pending.
+
+## [2026-11-02] build | Finish the revised sign encodes
+
+All three [[tickets/T-39533-sign-lettering-quality]] streams finished encoding. Inspected both roster images at native size: lighter separated letters, intact margins and the same Fujisaki placement. The rental sign was already inspected. Started the local candidate-disc assembly/readback for emulator verification; these are not published assets yet.
+
+## [2026-11-02] build | Automatic ending subtitle candidate
+
+Built the sign and English ending subtitle changes into `build/sign-subtitle-release/disc`; all 252 art placements passed build verification. Started a fresh mapped ending entry for [[tickets/T-39534-ending-dialogue-visibility]]. Finished reviewing all 50 timed school-introduction captures for [[tickets/T-39533-sign-lettering-quality]]; the roster fade stays aligned and the classroom quote/parenthetical repair remains clean. This candidate is not published or signed off.
+
+## [2026-11-02] build | Ending candidate text readback
+
+The combined candidate passed script and executable disc audits with zero pending executable slots. The default ENDING binary also passed its original SHA-1. Receipts and remaining runtime checks are recorded in [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Automatic subtitles visible in ending replay
+
+Inspected candidate ending captures and confirmed heroine subtitles remain visible without a held button. Started a denser, input-free continuation for the long passages. [[tickets/T-39534-ending-dialogue-visibility]] remains In Progress; no ending long-page records have been marked verified from these early frames.
+
+## [2026-11-02] query | Ending timing and winter scene review
+
+The default build checks passed. Candidate ending captures now reach complete final rows without held input, but closing quotes and the ending text column still need attention; [[tickets/T-39534-ending-dialogue-visibility]] remains open. The winter-date replay produced 23 reviewed captures but did not reach the rental counter, so it does not close that acceptance criterion in [[tickets/T-39533-sign-lettering-quality]].
+
+## [2026-11-02] query | Input-free ending reaches epilogue
+
+The candidate ending replay completed 12,000 additional frames without controller input and reached the epilogue. All three target long passages have visible final-row evidence. Reviewed the final sheets and recorded the precise scope in [[tickets/T-39534-ending-dialogue-visibility]]; presentation findings still block sign-off and publication of this candidate.
+
+## [2026-11-02] build | Ending subtitle layout correction
+
+Replaced the generic dialogue-box width for ENDING with its actual subtitle columns, retained closing quotes in completed ending speeches, and tightened opening-mark spacing behind the English guard. Added synthetic coverage for both columns and continuation quote boundaries. Started an original Japanese ending replay for the face-animation comparison in [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Ending face seams match Japanese reference
+
+A valid original-game ending replay produced two facial animation states whose face-region pixels exactly match 96 English captures. Inspected the side-by-side images and recorded hashes in `build/ending-face-reference/comparison.json`. The observed seams are original behavior under the emulator. The wider subtitle candidate also passed both text-disc audits; runtime voice-option checks continue in [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Expand ending scrolling review to its actual viewport
+
+Reconciled the long-page queue with the candidate layout: 87 records, including 20 newly flagged ending passages. The 25 previously verified payloads remain unchanged; 62 records are pending. Extended and inspected the Japanese face comparison to seven exact matching states, including closed eyes. See [[tickets/T-39511-english-text-quality]] and [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Refine face comparison coverage
+
+The seven-crop comparison sheet includes a black transition and six facial states, not a closed-eye pose. Corrected the current ticket's scope and started a later Japanese reference capture. Open-eye seams match exactly; closed-eye comparison is still pending in [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] build | Refine ending rows after full replay review
+
+Reviewed 196 timed candidate captures across 22 sheets and compared both voice settings. Found short final subtitle rows and a speech quote placed after a trailing thought. Added ending-only final-row balancing and thought-aware quote placement, with focused tests. These findings keep [[tickets/T-39534-ending-dialogue-visibility]] open; no new long-page approvals or publication were recorded.
+
+## [2026-11-02] query | Complete original ending face comparison
+
+Inspected all seven exact facial-state pairs, now including closed eyes and excluding black transitions. The 183 matching English captures show that the observed seams are present in the Japanese game under the emulator. Saved a source-safe receipt in `translations/en/reviews/ending-face-comparison-2026-11-02.json`; [[tickets/T-39534-ending-dialogue-visibility]] still awaits the final subtitle-layout replay and code review.
+
+## [2026-11-02] query | Restrict ending subtitle rules to their actual consumers
+
+Source review identified four ENDING tables rendered in ordinary dialogue boxes rather than subtitles. Recorded the required table-specific correction and regression checks in [[tickets/T-39534-ending-dialogue-visibility]]. The in-progress candidate is not approved for publication.
+
+## [2026-11-02] build | Preserve boxed graduation dialogue
+
+Applied the table-specific subtitle rule and verified the four boxed tables retain their existing windows. The 48-case focused suites pass with one optional full-disc test skipped. Rebuilding the corrected candidate for [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Add ending sheets to the local review gallery
+
+Added the 196 inspected ending frames and 22 sheets to `build/visual-review-pack`, bringing it to 439 captures and 54 sheets. The section names its superseded candidate and outstanding findings; it does not claim final approval. Linked the original face comparison and updated the queue count for [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Verify scoped ending candidate on disc
+
+Built the table-specific balanced ending candidate and passed both text readback audits. Reconciled the queue hashes without carrying over approval to any changed payload; 25 records remain verified and 62 pending. Started denser runtime capture with text-completion samples for [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Inspect complete early ending subtitles
+
+Verified two flagged Yukari passages on the table-scoped candidate, including all rows and final quotes. Capture hashes and completed text-state evidence are recorded in `translations/en/reviews/ending-long-pages-2026-11-02.json`. The targeted queue is 27 of 87 inspected; 60 remain pending. Started a denser continuation for the remaining long ending speeches. See [[tickets/T-39534-ending-dialogue-visibility]] and [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] query | Review ending changes and refresh gallery
+
+Reviewed the English-only C and table-scoped layout changes against the coding standards; no unresolved code findings remain. Default ENDING matching and the focused suites pass. Runtime acceptance remains open. Added the current candidate's early subtitle sheets to the local gallery, now 454 captures across 56 sheets. See [[tickets/T-39534-ending-dialogue-visibility]] and [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] build | Package the current ending candidate for browser verification
+
+Packaged candidate `a839441add3e6dc6e72b04c4daacf8d0a59cce41` at `build/patcher-ending-scoped-review`. The 6,563,384-byte patch has SHA-256 `32a98f88370431ccb2d19cb621b4de3f9bd4a4e11763a86cb016d6a8e75ef4b9`. Browser acceptance is running against the original tracks; this packaging step does not publish the build. See [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] ticket | Complete ending subtitle visibility review
+
+Moved [[tickets/T-39534-ending-dialogue-visibility]] to Done after code review and runtime acceptance. Inspected 62 continuation captures across seven sheets; all rows and final punctuation pass for four further long Yukari passages. All 416 sampled script headers match the candidate disc. The broader queue is now 31 of 87 inspected, with 56 pending under [[tickets/T-39511-english-text-quality]]. The gallery contains 516 captures across 63 sheets. Browser acceptance passes for the same candidate, including ZIP drag-and-drop and exact output hashes; receipts are preserved in `build/ending-scoped-browser-proof`. No new build has been published yet.
+
+## [2026-11-02] lint | Review the release's staged records
+
+Reviewed the source comments, ticket history and visual receipts with Deslop and Humanizer. Preserved append-only log entries and their repeated cross-references. Corrected an audit-metadata error that listed the ending-summary viewport as three rows; its renderer uses ten. No payload or approved screenshot changed. Committed the art fix at f4f38569b and ending fix at 53cdad04c. See [[tickets/T-39534-ending-dialogue-visibility]] and [[tickets/T-39533-sign-lettering-quality]].
+
+## [2026-11-02] ticket | Complete source-checked Yumi corrections
+
+Completed [[tickets/T-39538-yumi-name-translation]] with source/target guards, unchanged controls and six runtime receipts covering all 39 corrected records. Full-disc audits and focused tests pass. Reviewed the staged code and prose; pushed `76d07382e` to `patch/english`. Publication and broader visual review remain open.
+
+## [2026-11-02] build | Publish the reviewed ending package
+
+Pushed the reviewed source and receipts to patch/english at 3d09cbcc3 and opened draft PR #71. Automatic approval review rejected the direct main update; main remains unchanged. The explicitly requested patcher publication is pushed to gh-pages at fa1b90a521d592da6a6e62567fcca2e04320d1f9. Pages run 41554082219 is in progress. See [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] build | Verify the live ending review build
+
+Pages deployment 41554082219 succeeded. Compared all 36 served package files byte for byte with `build/patcher-ending-scoped-review`; every file matches. The receipt is `build/ending-scoped-served-files.json`. The public patcher serves a839441add3e. Main remains unchanged; source changes are available in draft PR #71. See [[tickets/T-39534-ending-dialogue-visibility]].
+
+## [2026-11-02] query | Continue visual review with Nozomi's ending
+
+Started the published-build Nozomi ending replay with the linked overlay symbols, actual heroine dispatch and normal text timing. The run samples every 30 frames and targets 24,000 frames. Pending counts remain 31 inspected and 56 pending until the new captures are reviewed. See [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] query | Prepare ordinary park-date coverage
+
+Grouped the pending queue into 51 distinct payload/window pairs across 56 records without changing any approval. Traced Kagami's special arrival to scene flag 51 and started a fixture with that event marked visited, aiming to reach the four pending ordinary park passages. The loaded scene and complete text still need inspection. See [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] query | Reach Kagami's park and recapture the rental counter
+
+The corrected park fixture visibly reaches Kagami at the amusement park (frame 3,300). This establishes the intended scene, not complete long-passage approval. Started denser rental-counter captures with the bowling venue; the previous ski context could leave unrelated foreground art. See [[tickets/T-39511-english-text-quality]] and [[tickets/T-39533-sign-lettering-quality]].
+
+## [2026-11-02] ticket | Complete sign-lettering review
+
+Moved [[tickets/T-39533-sign-lettering-quality]] to Done after standards review, encoded-image checks, the roster fade review and the dense bowling-scene replay. All three published-disc images decode exactly to their reviewed previews. The rental lettering is covered by original foreground art in the actual scene; the receipt states that limit explicitly. Reviewed 151 bowling captures for composition and 50 roster captures for fade alignment. No whole-game sign-off is implied.
+
+## [2026-11-02] ticket | Repair awkward park reply wrapping
+
+Created [[tickets/T-39535-park-reply-wrap]] after inspecting the four pending Kagami park replies on the published disc. Reflow splits two opening sentences into awkward fragments. The fixture reaches the correct scene and completes the text, but these records remain pending until the phrase breaks are corrected and replayed. No wording change is needed.
+
+## [2026-11-02] ticket | Trace a long ending speech rendering failure
+
+Created [[tickets/T-39536-ending-continuation-glyph-capacity]] after inspecting 98 Nozomi ending captures across 11 sheets. Late continuation lines collapse beyond the 384-glyph pen/atlas capacity; sampled text totals reach 587 before reset. The next speech recovers. No Nozomi approvals were added. Updated [[english-text-runtime]] with the measured failure and the existing summary renderer's related solution.
+
+## [2026-11-02] build | Verify the scoped park phrase correction
+
+Implemented [[tickets/T-39535-park-reply-wrap]] for four exact records. Full payload comparison confirms unchanged wording, alternate replies and every unrelated payload. Existing English patch tests pass 46 cases with one optional disc test skipped. Runtime acceptance awaits a build with the continuation-capacity repair. Added the inspected Nozomi, park and bowling sheets to the local gallery, now 785 captures across 84 sheets. Defective passages are explicitly labeled and remain unapproved.
+
+## [2026-11-02] build | Bound ending continuation storage
+
+Audited 381 ending subtitle records for [[tickets/T-39536-ending-continuation-glyph-capacity]]. The longest chain contains 689 glyphs, while the largest next record plus two retained rows needs 307. Added an English-only candidate that compacts completed subtitle rows and their atlas cells before each continuation. Runtime validation is still required.
+
+## [2026-11-02] ticket | Add source-aware dialogue break review
+
+Created [[tickets/T-39537-dialogue-break-review]] to supplement screenshots with a text-level audit. It will retain provenance from the existing source-aware reflow pass, flag generated phrase splits and short rows for human review, and leave all payload bytes unchanged.
+
+## [2026-11-02] build | Review dialogue breaks across the corpus
+
+The initial [[tickets/T-39537-dialogue-break-review]] audit covered 30,573 records without changing payloads. Local review found a numbered-label split and an isolated final word; dynamic names caused false punctuation-only reports, now corrected with regression coverage. Original/intentional breaks remain separate. [[tickets/T-39536-ending-continuation-glyph-capacity]] needed two SDK imports absent from the original overlay; the linker now exports referenced main symbols missing from its existing imports. The default ENDING checksum passes; candidate runtime checks are next.
+
+## [2026-11-02] build | Freeze the continuation repair candidate
+
+Built and froze `build/ending-capacity-release` for [[tickets/T-39536-ending-continuation-glyph-capacity]] and [[tickets/T-39535-park-reply-wrap]]. The default ENDING checksum passes. Nozomi and the longest-chain route are running against the candidate; their restored main executable receives only the two verified changed bytes. The refined [[tickets/T-39537-dialogue-break-review]] scan reports 1,368 generated boundaries for contextual triage, with nine focused tests passing. No visual sign-off or new publication yet.
+
+## [2026-11-02] build | Correct two confirmed generated breaks
+
+For [[tickets/T-39537-dialogue-break-review]], scoped two wrapping corrections to exact record IDs and expected payloads. Whole-corpus comparison proves that only those two records change and only in newline placement. Inspected Nozomi frame 11850 from the continuation candidate: previously failing late speech now shows distinct glyphs and normal typewriter progression. Full-chain verification remains in progress.
+
+## [2026-11-02] build | Verify Nozomi's repaired overflow interval
+
+Inspected nine candidate captures spanning Nozomi's original glyph overflow through the completed speech and next reply. All rows remain distinct and scroll correctly. Frozen-disc script and executable audits pass; default matching, globals, renames and 64 focused tests pass (one optional test skipped). Full ending replays are still running. See [[tickets/T-39536-ending-continuation-glyph-capacity]].
+
+## [2026-11-02] build | Review two ending routes and expand contact sheets
+
+Inspected 98 Nozomi and 116 Rei captures, including both the originally corrupt interval and the longest continuation chain through its final quote. Added five hashed flagged-record approvals: 36 of 87 now have visual evidence, 51 remain pending. The local gallery has 999 captures on 108 sheets. Code review of [[tickets/T-39536-ending-continuation-glyph-capacity]] found no unresolved issue; remaining route regressions continue. The newer two-record wrapping build terminated with exit code 137; the frozen reviewed candidate is intact, and a retry waits for the active replays.
+
+## [2026-11-02] build | Finish Rei's ending dialogue review
+
+Inspected 15 tail captures through Rei's final line and closing quote. Added the sixth approval in `ending-capacity-2026-11-02.json`; the long-page queue now has 37 reviewed records and 50 pending. Both Nozomi and Rei dialogue replays are complete. The gallery now has 1,014 captures across 110 sheets. See [[tickets/T-39536-ending-continuation-glyph-capacity]] and [[tickets/T-39511-english-text-quality]].
+
+## [2026-11-02] ticket | Verify Yumi self-reference errors
+
+Created [[tickets/T-39538-yumi-name-translation]] after the break audit exposed malformed pronouns in two DATE_SA reply records. The original Japanese explicitly names Yumi. Six English targets match the two obvious patterns; audit source-name occurrences before correcting the full scope. All twelve park reply variants were visually inspected, including settled captures after the runtime adds the closing quote; their receipt is next.
+
+## [2026-11-02] ticket | Complete park reply wrapping review
+
+Moved [[tickets/T-39535-park-reply-wrap]] to Done after code review, full-payload comparison, all twelve runtime variants and actual-disc verification of 498 strings/pointers. Inspected 64 captures including settled closing quotes. The long-page queue is now 41 reviewed and 46 pending. The local gallery contains 1,078 captures across 118 sheets. The follow-up build succeeded on retry in 167.8 seconds and is frozen at `build/break-reviewed-release` (track prefix `07f0ad3b7c0c`); Yukari's largest-load regression is running on it. No new publication yet.
+
+## [2026-11-02] build | Guard source-confirmed Yumi corrections
+
+Audited 446 source-name records and reviewed 55 active-game targets containing `my`. Added 39 confirmed corrections with source/target hashes and identical protected-marker order. Whole-corpus comparison proves only those 39 payloads change; reply counts stay intact, all rows fit and no new scrolling records appear. Sixty focused tests pass with one optional disc test skipped. Build and runtime verification remain open in [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] ticket | Complete and push the ending capacity repair
+
+Moved [[tickets/T-39536-ending-continuation-glyph-capacity]] to Done after inspecting 71 Yukari captures, including the largest subtitle load at 309 live glyphs. Nozomi, Rei and Yukari regressions, default matching, disc audits and focused tests pass. Reviewed the exact staged writing with deslop; corrected one outdated generated comment. Pushed `6c83d3eb8` to `patch/english`. The gallery now has 1,149 captures across 126 sheets. Building the 39 source-verified Yumi corrections next; those remain unverified in game.
+
+## [2026-11-02] build | Build the reviewed Yumi corrections
+
+Built and froze `build/yumi-reviewed-release` with all 39 guarded corrections. The build passed in 165.8 seconds, with 252 verified artwork placements and no unmapped characters. Prepared 31 changed DATE_SA variants for controlled runtime review and started a fresh Yumi scene. Full-disc script/executable audits are running. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Explain source-aware break detection
+
+Confirmed the current audit checks 30,573 dialogue records and distinguishes retained pre-wrap boundaries from generated wrapping. Its 1,368 generated candidates are review prompts, not confirmed defects; retained breaks remain protected from automatic changes. Two reviewed wrapping corrections preserve wording and unrelated payloads, but still need runtime checks. Text measurements cannot establish the absence of renderer overlap or artwork defects, so image review remains part of sign-off. See [[tickets/T-39537-dialogue-break-review]].
+
+## [2026-11-02] build | Start corrected-reply runtime review
+
+Confirmed the latest Yumi disc passes script and executable audits, and inspected the completed fresh date fixture. Started a 31-variant date replay plus a separate festival invitation replay on that disc. Inspected three early date frames: corrected names, closing quotes and spacing look clean. Prepared a contact-sheet collector that checks actual table addresses and complete text after a 120-frame settling interval. Memory samples are written at replay completion, so partial captures remain provisional. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Verify 31 corrected date replies
+
+Inspected four contact sheets covering all 31 changed DATE_SA variants across 25 records on track `7738fcbe89bee49102c68b025a5f5104ccf6b09f`. All have complete quotes and clean spacing. Saved capture hashes, table checks and scope in `translations/en/reviews/yumi-date-replies-2026-11-02.json`. Excluded the first festival test because it selected generic dialogue; started a loader retry from its initialized state. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Verify corrected festival invitation
+
+The retry loaded Yumi's invitation through the festival scene. Inspected the corrected reply with its portrait and complete quote; character, tables and settled text checks pass. Recorded three screenshot hashes in `translations/en/reviews/yumi-festival-invitation-2026-11-02.json`. Runtime approval now covers 26 of 39 corrected records. Started festival walk and New Year loader fixtures for further coverage. See [[tickets/T-39538-yumi-name-translation]] and [[english-text-runtime]].
+
+## [2026-11-02] query | Verify corrected festival walk replies
+
+Inspected three completed SA_S6W replies and recorded their character/table checks plus screenshot hashes. T-39538 now has runtime approval for 29 of 39 corrected records. The mode-0x52 New Year test reached Ijuin's scene and was excluded; source dispatch proves mode 0x53 enters the intended handler. Started the corrected fixture and the separate festival visit loader. See [[tickets/T-39538-yumi-name-translation]] and [[english-text-runtime]].
+
+## [2026-11-02] build | Correct remaining scene fixture addresses
+
+Confirmed mode 0x53 loads the New Year home scene and SHOGATU data. Excluded a probe that used original overlay globals; the replacement reads linked symbols from the frozen ELF and asserts their layout. The other festival loader needs a second entry after initialization to load the intended Yumi script; started that retry. Approval remains 29 of 39 T-39538 corrections. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Verify five corrected New Year replies
+
+Inspected all five linked-address New Year captures; tables, line progression and complete text states pass. A pixel enlargement resolved an ambiguous-looking word as the existing interjection, with intact glyphs. Saved screenshot hashes in `translations/en/reviews/yumi-new-year-2026-11-02.json`. Runtime approval now covers 34 of 39 T-39538 corrections. The festival visit retry is still live; no approval for it yet. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] lint | Refresh current-build dialogue break audit
+
+Audited 30,573 records using the latest frozen font metrics and corrected targets. Generated candidates now total 1,365, with no generated isolated-word, punctuation-only or split-number candidates. Retained counts are unchanged. Started the three event-reply replay using actual DATE scene variables from its ELF and the real event script loader. Festival retry remains live. See [[tickets/T-39537-dialogue-break-review]] and [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Verify three corrected event replies
+
+Inspected the three completed EVENT_SA corrections in the actual mode-0x5E talk runner. Linked tables, group/line progression and complete text states pass, with clean quotes and fitting rows. Recorded screenshot hashes and the backdrop/staging scope in `translations/en/reviews/yumi-event-2026-11-02.json`. T-39538 now has approval for 37 of 39 records; the festival visit retry is still running. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] query | Diagnose paused festival visit fixture
+
+The visit retry reached its 600-second timeout. Added an ignored local pause listener using the PCSX-Redux documented event API; it recorded a frame-65 pause and unknown byte read during the forced intermediate dialogue state. Started a direct script-load entry and prepared the final two corrected visit replies. The approval count remains 37 of 39. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] build | Load the intended Yumi visit script
+
+The direct-load retry completed successfully with Yumi's portrait and the expected SA_S6 table triad. Inspected its arrival scene and started the final two corrected replies from the verified state. See [[tickets/T-39538-yumi-name-translation]].
+
+## [2026-11-02] ticket | Complete Yumi name correction review
+
+The final two SA_S6 visit replies pass actual-table and complete-text checks with clean portraits and quotes. Six runtime receipts now cover exactly all 39 corrected records on the frozen track. Reviewed the correction loader, integration, manifest and tests against CODING_STANDARDS.md; no unresolved findings. Moved [[tickets/T-39538-yumi-name-translation]] to Done and updated the board. Started an Ayako date fixture for the separate T-39537 wrapping correction. Publication and full-game visual review remain open.
+
+## [2026-11-02] build | Commit and push reviewed Yumi corrections
+
+Committed the completed correction loader, 39-record manifest, tests, six runtime receipts and consolidated ticket as `76d07382e`. Reviewed the exact staged code and writing; deslop reports zero hits after consolidating stale ticket notes. Pushed `patch/english`. The live patcher package is unchanged. Ayako's fresh date scene is visually confirmed, and the targeted T-39537 wrapping replay is running.
+
+## [2026-11-02] query | Verify Ayako's reviewed phrase wrap
+
+Inspected the corrected DATE_KA reply in Ayako's real date scene. Two balanced rows, complete quote and actual-table/completed-text checks pass. Recorded the screenshot hash in `translations/en/reviews/ayako-break-2026-11-02.json`. Started the camp scene loader for the remaining numbered-label correction. See [[tickets/T-39537-dialogue-break-review]].
+
+## [2026-11-02] ticket | Investigate shortened speaker labels
+
+The camp reply preserves the numbered label and fits three rows, but its speaker label loses leading letters after controlled selection. Opened [[tickets/T-39539-speaker-label-reuse]] to compare natural progression, name buffers and glyph entries before publication. Similar suffix-only labels in late controlled date captures may share the cause. Packaged the audited track locally at `build/patcher-yumi-reviewed`; it is not published.
+
+## [2026-11-02] query | Verify camp wrap and resolve label preview concern
+
+Confirmed the camp correction fits three rows with the numbered label intact and a full closing quote. Pixel enlargements of camp, Ayako and late date captures show complete speaker names; memory also confirms intact name glyphs and draw origins. The earlier reduced previews were misread. Closed [[tickets/T-39539-speaker-label-reuse]] without a game-code change and saved `translations/en/reviews/camp-break-2026-11-02.json`. The new patcher package passes actual browser patching, ZIP drop, cancellation, output/audio hashes, CUE and mobile-layout checks. Publication remains pending.
+
+## [2026-11-02] build | Publish the verified correction package
+
+Committed the source-aware audit, scoped wraps and review receipts at `a61fd383e` and pushed `patch/english`. Updated the Pages package at `c4c7aeb9823ac0b636ede59be32310bd7ec8a2a1`; only the xdelta and release manifest changed. The local package passes full browser acceptance with ZIP drop, cancellation, source/patch rejection, exact disc/audio hashes, CUE and responsive layout. Pages deployment 41579156701 is running. Final served-file comparison is next; full-game visual review remains open.
+
+## [2026-11-02] build | Verify the published review package
+
+Pages deployment 41579156701 succeeded for commit `c4c7aeb9823ac0b636ede59be32310bd7ec8a2a1`. All 36 public files match the browser-tested package byte for byte, including the patch and release manifest. The live page now serves track `7738fcbe89bee49102c68b025a5f5104ccf6b09f`. Receipt: `build/yumi-reviewed-served-files.json`. Broader game review remains open in [[tickets/T-39511-english-text-quality]] and [[tickets/T-39537-dialogue-break-review]].
+
+## [2026-11-02] ticket | Complete browser patcher delivery
+
+The requested review build is published, its actual browser outputs match the audited disc/audio, and all 36 live files match the tested package. Saved `translations/en/reviews/published-build-2026-11-02.json`. Completed [[tickets/T-39512-browser-patcher]] and moved its board card to Done; format support is already complete in [[tickets/T-39527-patcher-disc-inputs]]. Whole-game visual review remains open.
+
+## [2026-11-02] query | Review every generated early-break candidate
+
+For [[tickets/T-39537-dialogue-break-review]], rebuilt contextual output from the current encoded corpus in Docker and inspected all 42 generated early-break candidates. Retained 27 balanced layouts and five dynamic-name reservations; ten phrase-boundary cases remain open. Added `translations/en/reviews/early-break-triage-2026-11-02.json` with IDs and payload hashes. No game text changed. The broader visual queue still has 46 pending records across 17 containers. Updated [[english-text-runtime]]; no whole-game sign-off.
+
+## [2026-11-02] query | Inspect two more scrolling camp passages
+
+For [[tickets/T-39511-english-text-quality]], ran 2,400 frames against the published disc and inspected 20 captures on three contact sheets. Two GASSHUKU long passages show complete punctuation and clean scrolling. Verified active tables, line counters and full text reveal. Added `translations/en/reviews/camp-long-followup-2026-11-02.json` and updated the long-page queue to 44 pending layout checks. The controlled fixture retains a prior heroine-name binding, so the receipt explicitly excludes natural scene/name verification. No game bytes changed.
+
+## [2026-11-02] query | Add published-build captures to the review gallery
+
+For [[tickets/T-39511-english-text-quality]], copied 60 previously inspected captures from nine current-build receipts into `build/visual-review-pack`, verifying every image hash. Added 13 contact sheets; totals are now 1,209 captures and 139 sheets. Kept each group's build identity and limitations, including historical defect runs. Started `build/emu/camp-nozomi-entry` through the game's own scene initializer to check the heroine-name binding omitted by the earlier controlled line selections.
+
+## [2026-11-02] query | Verify Nozomi scene binding and two Yumi long passages
+
+For [[tickets/T-39511-english-text-quality]], inspected Nozomi's normal scene setup, controller progression and full name substitution. Replaced the two camp records' limited evidence with `translations/en/reviews/camp-nozomi-scenes-2026-11-02.json`. Excluded a controlled selection made during unfinished speech; it retained stale glyphs and is not a game-defect approval. Added `translations/en/reviews/yumi-event-long-pages-2026-11-02.json` for two further scrolling passages, with tables, line counters, completed text and screenshot hashes verified. The queue has 42 pending layout checks. Added the accepted captures to the gallery. No game bytes changed.
+
+## [2026-11-02] query | Inspect New Year and White Day long pages
+
+For [[tickets/T-39511-english-text-quality]], inspected 13 New Year captures and 30 White Day captures across six sheets. Approved one New Year and three White Day scrolling passages, with table and text-completion checks; White Day also matches the script header from the published disc. One White Day passage has an awkward generated phrase split and stays pending. Added an exact-record override under [[tickets/T-39537-dialogue-break-review]]; whole-corpus comparison proves unchanged wording and unrelated payloads. Rebuilt-disc visual verification of that correction remains open. The queue has 38 pending records; publication is unchanged.
+
+## [2026-11-02] build | Verify the White Day phrase correction
+
+For [[tickets/T-39537-dialogue-break-review]], built and froze `build/white-wrap-release`, target `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f`. Script and executable audits pass; 55 focused tests pass with one optional skip. Compared every in-track file extent against the published build: only WHITE.BIN changes, with 1,370 other extents and track 2 identical. Reloaded the new script through the scene CD loader and inspected the corrected phrase through its closing quote. Added `translations/en/reviews/white-day-wrap-verified-2026-11-02.json`, updated [[english-text-runtime]] and the [[tickets/T-39511-english-text-quality]] queue to 37 pending layout checks. Prepared `build/patcher-white-wrap`; browser acceptance and publication of this build remain pending.
+
+## [2026-11-02] build | Pass browser acceptance for the White Day build
+
+The `build/patcher-white-wrap` package passes all 15 browser checks on target `fd2f74c0a3bb0cc853ed7849ec6bffdf9dc84c5f`. Actual downloads match the audited disc and audio. ZIP drag/drop, cancellation, bad-source rejection, CUE output, local-only processing and mobile layout pass. Inspected desktop and mobile completion screenshots and added their hashes to `translations/en/reviews/white-day-wrap-verified-2026-11-02.json`. Reviewed the staged prose with the requested deslop skill; its three weak hits are technical uses of dynamic-name reservations. Game wording is unchanged. Publication remains pending.
+
+## [2026-11-02] build | Publish the verified White Day wrap fix
+
+Pushed `b7f25285b` to `patch/english` and published Pages commit `eaf375566dae0a2d52deeb12e686252960bf5574`. Deployment 41581825760 succeeded. All 36 public files match `build/patcher-white-wrap`, which passed all 15 browser checks. Saved `translations/en/reviews/published-white-wrap-2026-11-02.json`. The correction is live; [[tickets/T-39511-english-text-quality]] and [[tickets/T-39537-dialogue-break-review]] remain open for broader review.
+
+## [2026-11-02] query | Refresh the dialogue review sheets
+
+Added the verified New Year and White Day captures to `build/visual-review-pack/index.html`. The gallery now contains 1,252 captures across 146 sheets, including historical builds and repeated frames. These counts do not represent unique dialogue boxes or complete game coverage. Checked the current White Day grid visually; its completed rows preserve the corrected sentence and closing quote. [[tickets/T-39511-english-text-quality]] retains 37 pending long passages.
+
+## [2026-11-02] query | Check three Saki event passages
+
+For [[tickets/T-39511-english-text-quality]], inspected the actual DATE renderer's opening and scrolling rows for three EVENT_NI records on the published disc. Verified the loaded script header, table addresses, line indexes and completed text positions before recording approval. The repeated cooking reply exists in both selected records; the fixture's retained Yumi portrait does not establish a script-loading failure. Saved `translations/en/reviews/saki-event-long-pages-2026-11-02.json` and reduced the long-passage queue from 37 to 34. Natural event artwork is outside this fixture's scope.
+
+## [2026-11-02] query | Narrow the early-break follow-up
+
+For [[tickets/T-39537-dialogue-break-review]], reviewed the ten unresolved early-break candidates. Retain seven readable layouts and keep three copies of one festival reaction open for a runtime comparison at its ellipsis boundary. Saved `translations/en/reviews/early-phrase-triage-2026-11-02.json`. No payloads, intentional pauses or runtime approvals changed.
+
+## [2026-11-02] decision | Preserve four local sentence boundaries
+
+For [[tickets/T-39537-dialogue-break-review]], the event contact sheets exposed an avoidable question split in EVENT_FU initializer 13. Added an exact-ID/exact-payload override in `tools/patch/text/layout.py`, plus three copies of the festival reaction identified during early-break triage. These preserve wording and the source translation's pauses. Started the whole-corpus comparison; rebuilt-disc runtime verification remains pending.
+
+## [2026-11-02] build | Verify the event and festival wrap corrections
+
+Built and froze `build/event-festival-release` at `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4`. Verified the corrected invitation and four other event passages, reducing [[tickets/T-39511-english-text-quality]] to 29 pending long passages. Verified the festival reaction in the actual Yuina science-club renderer, with identical payload/command proof for its two other copies. Recorded receipts for both runs. Discarded the wrong-file event run and wrong-mode festival run; neither adds coverage. Source-confirmed mappings and actual loaded-script checks pass in the replacement runs.
+
+For [[tickets/T-39537-dialogue-break-review]], the exact-record overrides preserve wording and unrelated payloads. Focused tests pass 55 cases with one optional skip; the script and executable audits pass. Only four script containers change from the published build, with 1,367 other file extents and the audio unchanged. Standards review found no unresolved implementation issue. The science-room plaque visible in the festival run is the existing deliberately untranslated D_01_69 asset recorded in `translations/en/graphics/inventory_decisions.json`, rather than new clipping or corrupted lettering. Publication of this build remains pending.
+
+## [2026-11-02] query | Add the verified event and festival sheets
+
+Added the three new runtime receipts to `build/visual-review-pack/index.html`. The gallery has 1,304 captures across 153 sheets, including historical builds and repeated frames. The new groups label their build and fixture limits. No rejected fixture contributes approved captures. The current local build is `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4`; the public build remains the previous verified release pending browser acceptance.
+
+## [2026-11-02] build | Pass browser acceptance for the event and festival build
+
+The package for `fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4` passes all 15 browser checks. Actual downloads match the audited disc and audio. Inspected the desktop and mobile result screens; recorded their hashes and the checks in `translations/en/reviews/festival-ellipsis-verified-2026-11-02.json`. Reviewed the exact staged code, receipts and prose with the requested deslop skill. The edits preserve game wording; the notes state the remaining 29 long-passage checks and the limits of controlled scene fixtures. Publication is the remaining step for this build.
+
+## [2026-11-02] build | Publish the event and festival corrections
+
+Pushed source commit `4219eccc1` and published Pages commit `f1dc86c806078317797e3c1fb11d7c9b0003a320`. Deployment 41584066787 succeeded. All 36 public files match the package that passed all 15 browser checks. Saved `translations/en/reviews/published-event-festival-2026-11-02.json`. [[tickets/T-39511-english-text-quality]] and [[tickets/T-39537-dialogue-break-review]] remain open; 27 long passages still need runtime review.
+
+## [2026-11-02] query | Finish the flagged event passage batch
+
+Verified the final EVENT_AS and EVENT_FU passages on the published build and saved `translations/en/reviews/event-remaining-long-pages-2026-11-02.json`. All ten flagged EVENT_* records now have layout receipts; the overall queue is 60 reviewed and 27 pending. Added their captures to the gallery, bringing it to 1,318 captures across 155 sheets, including historical builds and repeated frames. [[tickets/T-39511-english-text-quality]] remains open for the remaining scenes.
+
+## [2026-11-02] query | Clarify the event batch count
+
+The ten EVENT_* records above are this follow-up batch; earlier Yumi event approvals remain separate. The overall count is still 60 reviewed and 27 pending. Consolidated repeated publication prose into [[tickets/T-39537-dialogue-break-review]] with a cross-reference from the visual-review ticket; the release receipt retains the complete verification record.
+
+## [2026-11-02] lint | Published dialogue audit and ending fixture check
+
+Refreshed the full dialogue break audit and verified one pending ending passage through the subtitle renderer. See [[tickets/T-39537-dialogue-break-review]] for corpus counts and [[tickets/T-39511-english-text-quality]] for the controlled fixture's scope. The first probe retained stale text and was excluded. The corrected run checks the on-disc payload, table pointers and full reveal; the visual queue is 61 reviewed and 26 pending. No game or patcher bytes changed.
+
+## [2026-11-02] query | Phrase triage and eight ending layout checks
+
+Completed contextual review of all generated phrase-link flags and inspected eight more pending ending passages. See [[tickets/T-39537-dialogue-break-review]] for the text decisions and [[tickets/T-39511-english-text-quality]] for the runtime evidence. No dialogue or artwork changed. The long-passage queue is 69 reviewed and 18 pending; the remaining ending chains are still running.
+
+## [2026-11-02] query | Complete the 87-record long-passage queue
+
+Inspected the remaining ending continuations and 17 message-box variants covering 15 records. The final queue is 87 reviewed and zero pending. Receipts distinguish natural continuation from controlled script selection and retain their artwork and scene-coverage limits. Updated [[tickets/T-39511-english-text-quality]]; the published game bytes are unchanged. Prepared a separate current-disc artwork contact sheet set for final visual review.
+
+## [2026-11-02] query | Review shipped sprites and decoded signs
+
+Visually inspected 254 shipped sprite targets and 16 translated still containers from the published build. Current-disc container hashes match the build report, and the review follows the selected fallback images. Recorded the scope and hashes in `translations/en/reviews/shipped-art-quality-2026-11-02.json` and updated [[tickets/T-39508-english-art-on-disc]]. No new art correction was required; separate movie, prologue-banner and retained-art evidence still applies.
+
+## [2026-11-02] ticket | Close generated-break review
+
+Moved [[tickets/T-39537-dialogue-break-review]] from In Progress to Done after contextual triage, published-payload hash checks and standards review. All generated candidates are fixed or explained. No source-retained break was rewritten by this audit. Broader release signoff remains open under [[tickets/T-39500-english-translation-patch]].
+
+## [2026-11-02] query | Close the prototype-sheet evidence gap
+
+Read the actual published disc's 174 MAINROM sprite frames and checked the HUD texture uploads. None uses prototype texture index 5; its original bytes remain intact. Updated the inventory exception and regenerated the inventory without count changes. Receipt and scope are recorded in [[tickets/T-39510-no-japanese-left-check]].
+
+## [2026-11-02] lint | Review movie safeguards and release status
+
+Reviewed the opening-movie pipeline against CODING_STANDARDS; Docker tests pass (18 passed, one optional full-build skip). Recorded the review in [[tickets/T-39509-opening-movie-pills]]. Confirmed the public repository description links the patcher and updated PR 71 to reflect the published target and completed dialogue/art batches. [[tickets/T-39500-english-translation-patch]] records the remaining parent-ticket reconciliation without claiming every-route playback.
+
+T-39509 moves to Done after the standards review; its board card and ticket status agree.
+
+## [2026-11-02] lint | Reconcile published-build verification
+
+Revalidated 24 retained menu views, 75 retained art containers, and the banner/movie extents against the published disc. Closed [[tickets/T-39510-no-japanese-left-check]] after reviewing the audit coverage and art verifier; all 25 art tests pass with the tools import path configured. Updated completed screenshot criteria in [[tickets/T-39508-english-art-on-disc]] and [[tickets/T-39511-english-text-quality]]. Corrected stale translation-tool claims in [[status]] and completed-break-triage status in [[english-text-runtime]]. Broader source-review and editorial criteria remain open rather than being inferred from layout tests.
+
+## [2026-11-02] lint | Complete disc writer, linker and build reviews
+
+Reviewed the disc/sector/xdelta writers, free linker, English build driver and CD remap code against CODING_STANDARDS. All 17 real-disc tests pass; linker/build suites pass 55 tests with one optional full-build skip. The published report has no data placement warnings/problems, kept data files or reverted literals. Closed [[tickets/T-39501-disc-rebuild-and-xdelta]], [[tickets/T-39505-english-memory-and-relink]] and [[tickets/T-39507-english-disc-build]], with scope and test details in each ticket. No production code or game bytes changed.
+
+## [2026-11-02] query | Recheck current orphan warnings
+
+Compared all current orphan-warning payloads with the prior review. Read all 11 changed payloads; their short final rows preserve deliberate laughter, brief replies and pauses. All 456 flags across 455 records now have dispositions. [[tickets/T-39511-english-text-quality]] links the current receipt. No game bytes changed.
+
+## [2026-11-02] lint | Complete artwork integration review
+
+Closed [[tickets/T-39508-english-art-on-disc]] after reviewing planning, sprite selection, frame relocation, still encoding and readback safeguards against CODING_STANDARDS. All 25 art tests and the published placement report pass; the existing visual receipts cover shipped images. The menu/table census for [[tickets/T-39511-english-text-quality]] now contains 4,655 records with 2,520 distinct payloads. Seventeen exceed 252 pixels before runtime formatting; their call sites and capitalization variants still need classification. No game bytes changed.
+
+## [2026-11-02] ticket | Keep the magazine button sequence together
+
+Created [[tickets/T-39540-magazine-button-sequence]] after executing the production wrapper on all 15 wide gameplay strings. All fit their rows, but the May 1997 magazine hint separates the last two buttons from the sequence. Fix the exact record and verify it in the magazine before republishing.
+
+## [2026-11-02] build | Verify and publish the magazine sequence fix
+
+[[tickets/T-39540-magazine-button-sequence]] passes production build, runtime wrapper checks, emulator inspection and all 15 browser checks. Both disc text audits pass. Only one executable payload byte changes; all other 1,370 file extents and audio match the reviewed release. Standards review found no unresolved issues; the ticket moves to Done. Publication uses target `363407c48e03ad502e830b0745a6319c62a434e9`. [[tickets/T-39511-english-text-quality]] retains the broader menu coverage limits.
+
+## [2026-11-02] lint | Close English runtime and rink wording reviews
+
+Reviewed the English glyph runtime and remaining date-ambush name changes against CODING_STANDARDS. All 27 default binaries match and all 31 text/name regressions pass. Saved emulator evidence confirms the complete ambush label and intact neighboring name. Closed [[tickets/T-39502-english-text-runtime]] and [[tickets/T-39506-english-script-runtime]]. Reinspected the rink source crop and English capture; retained the translation of the readable bus phrase without inventing its cropped suffix, closing [[tickets/T-39513-skating-rink-advertisement]]. No production code or game bytes changed.
+
+## [2026-11-02] ticket | Standardize repeated gift names
+
+Created [[tickets/T-39541-gift-name-capitalization]] after checking the DATE and DATE2 consumers of the flagged gift names. Both copy their indexed item names into the same dialogue field. Match the existing title-case forms while preserving words and controls; verify their new pixel widths and runtime display before publication.
+
+## [2026-11-02] query | Compare complete gift lookup tables
+
+All 99 Japanese gift slots match between DATE and DATE2, including six empty slots. Expanded [[tickets/T-39541-gift-name-capitalization]] to reuse the already-shipped DATE2 labels for 82 inconsistent DATE entries. The longest label fits the 33-byte table slot and 36-byte substitution field; the maximum width is 173 pixels. Runtime checks are required for the longer substitutions before publication.
+
+## [2026-11-02] lint | Complete writer and emulator route reviews
+
+Closed [[tickets/T-39503-text-container-writers]] after reviewing placement and C-literal safeguards alongside identity/coverage tests and disc audits. Closed [[tickets/T-39504-emulator-screen-route]] after checking route parsing, resumption, failure handling and screenshot capture; all 21 route tests pass. The historical English main route reports completion with 146 valid checkpoint images. Current-build visual evidence remains identified separately.
+
+## [2026-11-02] build | Verify consistent gift names
+
+[[tickets/T-39541-gift-name-capitalization]] passes all 99-slot readbacks, both disc text audits, three isolated long-name GPU checks and all 15 browser checks. Only DATE.EXN changes from the magazine release. Reviewed the source-guarded corrections and report attribution; no findings remain. [[tickets/T-39511-english-text-quality]] records all 65 case-group dispositions and the remaining horizontal-growth candidates.
+
+## [2026-11-02] build | Publish the verified gift update
+
+Pages deployment 41593310508 succeeded for target `5c761523f939755d88c720adb2360927c58fe602`. All 37 served files match the tested package. Closed [[tickets/T-39541-gift-name-capitalization]]; the publication receipt is `translations/en/reviews/published-gift-consistency-2026-11-02.json`.
+
+## [2026-11-02] ticket | Preserve long fortune substitutions
+
+Created [[tickets/T-39542-complete-dialogue-values]] after tracing the growing fortune labels to `english_value_set`. O/W backing arrays share the 24-byte character-name capacity, while the English fortune labels can be longer. Reproduce the loss with the production helper, separate value capacity from names, and verify the complete displayed result.
+
+## [2026-11-02] build | Verify complete fortune labels
+
+[[tickets/T-39542-complete-dialogue-values]] passes the production-helper regressions, both disc audits, 27 default hashes and all 15 browser checks. Controlled GPU checks show both long fortune labels with their closing punctuation. Standards review found no unresolved issues; publication remains pending. The menu-coordinate census for [[tickets/T-39511-english-text-quality]] finds 1,005 constant-X calls within the reviewed horizontal bounds; 95 dynamic calls and possible adjacent-column overlaps remain outside that check.
+
+## [2026-11-02] build | Publish complete fortune labels
+
+Closed [[tickets/T-39542-complete-dialogue-values]] after Pages deployment 41595860448 succeeded and all 37 served files matched the tested package. Target `81d34fdf65e956898051a76a72f8adeeeb7c804b` includes the visually checked substitution fix. [[tickets/T-39511-english-text-quality]] remains open for the remaining menu geometry and text-review scope.
+
+## [2026-11-02] ticket | Separate stage speaker names and quotes
+
+Created [[tickets/T-39543-stage-speaker-spacing]] for two confirmed same-row overlaps found during [[tickets/T-39511-english-text-quality]]. The other five candidates compare mutually exclusive speakers. Preserve dialogue rows and use an eight-pixel name-to-quote gap in the English build.
+
+## [2026-11-02] ticket | Restore stage dialogue commands
+
+Created [[tickets/T-39544-stage-control-prefixes]] after the [[tickets/T-39543-stage-speaker-spacing]] emulator fixture stalled. The translated BUNKA_SD rows omit their source-proven prefix bytes. All 214 prefixed views need preservation and independent audit checks; the previous pointer-equality audit did not establish this invariant.
+
+## [2026-11-02] build | Add independent stage-command checks
+
+The [[tickets/T-39544-stage-control-prefixes]] writer now restores prefixes from typed source metadata after laying out visible text. The actual-disc audit independently checks each protected prefix. The focused suite passes 69 tests with one opt-in full-build test skipped. The pre-fix stage fixture reached its timeout; a rebuilt disc and fresh-state visual checks are still required.
+
+## [2026-11-02] lint | Review native stage and mascot captures
+
+The restored stage commands advance Shiori's speech through multiple pages; Kisaragi and the other tested speaker variants render with the eight-pixel quote gap. All 214 restored prefixes preserve the previously shipped visible text, and every prefixed row fits its 196-pixel column. The first wider mascot grid was rejected because the preview sprite covered the final column. [[tickets/T-39543-stage-speaker-spacing]] now uses two columns within the notebook's right pane; its rebuilt visual check remains pending.
+
+## [2026-11-02] build | Verify stage commands and menu spacing
+
+[[tickets/T-39543-stage-speaker-spacing]] and [[tickets/T-39544-stage-control-prefixes]] pass final fresh-state visual checks, both disc audits, 27 default hashes and 15 browser checks. The player stage speech completes and returns to the festival; full names fit the frame and the mascot grid clears its preview. All 214 stage texts are unchanged apart from restored commands. Standards review found no unresolved issues. Publication remains pending.
+
+## [2026-11-03] build | Publish stage and menu corrections
+
+Closed [[tickets/T-39543-stage-speaker-spacing]] and [[tickets/T-39544-stage-control-prefixes]] after deployment 41600020995 succeeded and all 37 served files matched the tested package. Published target `b579f2ad31288f442436f718eba0cb61f7e359fe` restores stage progression and keeps full names clear of the dialogue frame and mascot preview. [[tickets/T-39511-english-text-quality]] remains open for the remaining dictionary-family and reading-review reconciliation.
+
+## [2026-11-03] lint | Review shared labels on the published build
+
+Read the distinct labels from all 27 table families in the growth census and checked their uses against substitution buffers, menu cells and relocated tables. No new correction resulted. Reinspected the final festival and mascot images. [[tickets/T-39511-english-text-quality]] records the measured limits and remaining scope; publication is complete, while full off-route editorial reading and exhaustive menu geometry remain unclaimed. No game bytes changed.
+
+## [2026-11-03] lint | Check mixed-source labels and fortune results
+
+Classified 1,154 records omitted by the Japanese-only width comparison and read all 74 distinct remaining translations. All seven formatted fortune results fit their actual buffer and display bounds; the widest is 174 pixels. The receipt at `translations/en/reviews/mixed-label-review-2026-11-03.json` records the scope and limits. No game bytes changed. [[tickets/T-39511-english-text-quality]] remains open for broader reading and geometry evidence.
+
+## [2026-11-03] ticket | Restore usable English secret names
+
+The remaining growth-candidate trace found overlong comparison keys and a collision between the zero-stat and maximum-stat name codes. Created [[tickets/T-39545-name-code-compatibility]] to restore four distinct effects with inputs that fit the English entry fields. The published build remains unchanged pending the correction and tests.
+
+## [2026-11-03] build | Verify the secret-name correction
+
+[[tickets/T-39545-name-code-compatibility]] passes 16 tests using the production name encoder and generated comparison function. Script, executable and generated-source audits pass, as do all 27 default hashes and 15 browser checks. Only NAME_ENT.EXN changes among 992 compared disc files; the previous visual evidence remains applicable. The standards review checks source guards and encoded input behavior. Publication is pending.
+
+## [2026-11-03] build | Publish the secret-name correction
+
+Closed [[tickets/T-39545-name-code-compatibility]] after Pages deployment 41604350162 succeeded on its second attempt. The first attempt received HTTP 500 from GitHub's deployment API. All 37 served files match the tested package for target `c3c205c005712aa57072053c2e3faa511c1820fa`. [[english-build]] records the current release; [[tickets/T-39511-english-text-quality]] remains open.
+
+## [2026-11-03] ticket | Separate the fortune display's name columns
+
+A controlled native capture with the widest presets shows the family and given names running together in the computer-fortune display. Created [[tickets/T-39546-fortune-name-spacing]] for a four-pixel minimum gap and a separate blood-type column. The corrected fixture uses the declared GameState name offsets; the first fixture is rejected as width evidence.
+
+## [2026-11-03] build | Verify fortune name spacing
+
+[[tickets/T-39546-fortune-name-spacing]] passes native visual and coordinate checks with both the widest presets and two full-width names. The minimum name gap is four pixels; the blood label stays twelve pixels beyond a full-width given name. All disc/source audits, 27 default hashes and 15 browser checks pass. The remaining 24 fortune-name and loot-table entries also fit. Standards review is complete; publication is pending.
+
+## [2026-11-03] build | Publish verified fortune name spacing
+
+Closed [[tickets/T-39546-fortune-name-spacing]] after standards review, native maximum-width captures and release checks. Pages run 41606770799 succeeded; all 37 public files match the tested package. Target SHA1 is 45eac0efcc5981d60102a9de7e84e30757243b4c. Updated [[english-build]] and [[kanban]]; receipts are in translations/en/reviews/. The broader [[tickets/T-39511-english-text-quality]] review remains open.
+
+## [2026-11-03] query | Trace remaining menu consumers to sprite attributes
+
+Reviewed the remaining 100 distinct growth payloads in [[tickets/T-39511-english-text-quality]]. Scene titles, lyrics and substitutions have separate layout paths. Tracing TT offset 0x27B00 found sprite texture attributes misidentified as a surname, through tt_sprite_set_6 and TtSpriteSet.attr. Opened [[tickets/T-39547-twinbee-sprite-attributes]] to preserve the data and verify affected sprites. The draft metadata receipt is translations/en/reviews/menu-consumers-2026-11-03.json; remaining dispositions are not yet final.
+
+## [2026-11-03] build | Preserve all TwinBee texture attribute arrays
+
+[[tickets/T-39547-twinbee-sprite-attributes]] now excludes all twelve attribute arrays from translation. The new actual-disc regression rejects the prior build at sprite sets 0, 6 and 8. Started the corrected build; native minigame verification and publication remain pending. No raw sources changed.
+
+## [2026-11-03] build | Verify restored TwinBee data and first-stage rendering
+
+[[tickets/T-39547-twinbee-sprite-attributes]] passes all twelve actual-disc attribute comparisons, 29 focused tests, complete text audits, 27 original hashes and 15 browser checks. Inspected four native title/gameplay captures; player graphics are clean. Boss-specific captures remain pending. The first emulator invocation rejected an unused sampling option before running; removing it allowed the normal loader fixture to complete. The Japanese TwinBee title logo remains visible and requires artwork-disposition reconciliation. Corrected build is packaged locally but not yet published.
+
+## [2026-11-03] build | Complete TwinBee sprite visual review
+
+Inspected four first-boss captures and a native preview of all three corrected sprite sets for [[tickets/T-39547-twinbee-sprite-attributes]]. Graphics are intact. The preview of set 8 does not claim a natural gameplay caller. Standards review is complete; publication is next. Asked the owner whether to preserve the original TwinBee title logo or use English lettering.
+
+## [2026-11-03] build | Publish TwinBee sprite correction
+
+Closed [[tickets/T-39547-twinbee-sprite-attributes]] after standards review and native sprite checks. Pages run 41609583646 succeeded, and all 37 public files match target 39454a5b82bcc53f05daba81040e6622a85310e1. The first readback saw the older manifest during deployment; the completed deployment passed. Updated [[english-build]] and [[kanban]]. The refreshed menu census has 827 growth records with 253 distinct payloads; sprite attributes are excluded. The original TwinBee logo preference remains pending.
+
+## [2026-11-03] query | Reconcile final menu and editorial evidence
+
+[[tickets/T-39511-english-text-quality]] now has dispositions for all 827 current menu-growth records and a documented editorial baseline plus review of every later corpus change and guarded override. Corrected the provenance caveat in [[tickets/T-28009-version-translation-overlays]]: historical narrative hashes differ from the preserved remediation commit, and the missing original reports were not independently reread. Compared 992 current disc files with the reviewed stage-controls release; 989 are identical, and the three changed overlays have current verification receipts. Confirmed the public README and repository description already explain the project and link the patcher. Updated PR 71 to describe the current published build and verification scope. The TwinBee logo preference remains pending.
+
+## [2026-11-03] decision | Close text-quality review with recorded scope
+
+Closed [[tickets/T-39511-english-text-quality]] after reconciling the current menu flags, documented historical editorial baseline, later wording changes and current-disc inheritance. Standards review found no unresolved finding in the metadata receipts. The initial scratch report script had an unmatched brace; corrected it and verified both generated receipts. [[tickets/T-39500-english-translation-patch]] still tracks the separate TwinBee title-logo decision.
+
+## [2026-11-03] ticket | Keep the retained minigame logo decision open
+
+Reopened [[tickets/T-39510-no-japanese-left-check]] to In Review because the native TwinBee title logo is outside the recorded exceptions. [[tickets/T-39500-english-translation-patch]] now records completed text and registered-art placement checks, while the logo preference and final sign-off remain open. No new approval is inferred from the earlier completed ticket.
+
+## [2026-11-03] decision | Await the remaining logo disposition
+
+PR 71 now reflects completed [[tickets/T-39511-english-text-quality]] reconciliation. The worktree is otherwise clean, and the published build remains verified. The pending owner question is whether to preserve the original TwinBee Japanese logo or replace its lettering. This decision has remained unresolved across three goal turns; [[tickets/T-39510-no-japanese-left-check]] and [[tickets/T-39500-english-translation-patch]] remain open. No further rebuild or deployment is needed while that choice is pending.
+
+## [2026-11-03] decision | Translate the TwinBee title logo
+
+The owner viewed the original logo and requested English lettering. Opened [[tickets/T-39548-twinbee-english-logo]] to replace it while retaining the title animation and subtitle. The pending preference is resolved; [[tickets/T-39500-english-translation-patch]] now awaits implementation and verification.
+
+## [2026-11-03] build | Integrate English TwinBee lettering
+
+[[tickets/T-39548-twinbee-english-logo]] now has a generated wordmark, a native 16-color preview and a source-guarded writer. Two checks prove the palette, subtitle and all non-logo bytes remain unchanged and reject an unknown source. The build's art readback now verifies the new title container. Rebuild and native animation inspection are underway.
+
+## [2026-11-03] build | Verify title-region isolation
+
+The art regression suite for [[tickets/T-39548-twinbee-english-logo]] passes 27 checks; final-disc verification waits for the rebuild. The initial test import failed because the existing modules need the tools path; the corrected Docker invocation passed. Native palette conversion is legible, and preservation checks cover both sprite-region boundaries and the unchanged subtitle data.
+
+## [2026-11-03] build | Verify the English TwinBee title on disc
+
+[[tickets/T-39548-twinbee-english-logo]] passes native title/entrance inspection, four final-disc tests, all text/source audits, 27 original hashes and 15 browser checks. Early texture-loading captures match the previous build; controlled entry is not normal-transition coverage. The standards review has no unresolved findings. The package changes only the patch payload and release manifest; publication is underway.
+
+
+## [2026-11-03] build | Publish and sign off the English patch
+
+Pages run 41665706198 published target b4e84775009f141b335574ae1268e49af5128fb7. All 37 served files match the tested package; the first early readback rejected the still-old manifest. [[tickets/T-39548-twinbee-english-logo]], [[tickets/T-39510-no-japanese-left-check]] and [[tickets/T-39500-english-translation-patch]] move to Done after standards review. [[english-build]] records the final target and scope. The owner's requested fixes, text/art review and patcher checks are complete; this does not claim every route was played end to end.
+
+## [2026-11-03] decision | Merge the verified English patch into main
+
+The owner explicitly authorized merging PR 71 into main. [[tickets/T-39548-twinbee-english-logo]] records this follow-up to the completed release. Merge preparation changes documentation only; the published target and recorded verification remain unchanged. GitHub's merge record will identify the final main commit.
+
+## [2026-11-01] ticket | Recover the interrupted Claude session
+
+Opened [[tickets/T-39600-recover-claude-session]]. Initial inspection found the project session and eight patch worktrees; main alone does not contain the ongoing English patch work. Inspecting local logs read-only and preserving worktree changes.
+
+## [2026-11-01] query | Recovered the English patch stopping point
+
+Recorded the session, eight worktrees, two uncommitted script wiki updates, unmerged script/art work, and latest surviving build/route outputs in [[tickets/T-39600-recover-claude-session]]. Claude stopped on a recorded HTTP 403 subscription-access error; some background commands finished afterward. No Docker containers remain running. Updated [[status]] to point to the branch-local campaign. Documentation reviewed against CODING_STANDARDS.md with no findings; moved the recovery ticket to Done and its board card with it. No implementation was resumed and no historical test result is claimed as a fresh run.
+
+## [2026-11-01] build | T-39506 round 2: name entry in NAME_ENT, moved strings, reflow
+
+Merged `patch/english` (free relink, art) into `patch/script`. The English name entry is now an `#ifdef TOKIMEMO_ENGLISH` block of `src/ovl/name_entry/name_entry.c` (island and `tools/english_imports.py` gone). New `tools/patch/text/retarget.py` moves over-capacity in-place strings and re-points their relocations: `needs_relink` 266 -> 0 (196 moved, fixed-stride tables given pointer views, 27 under English C literals). The ETC album LBA tables had been "translated" as text; they and the kana pages now stay original. Remaining name draw sites fixed under the flag. Dialogue line breaks are judged on the Japanese source (`tools/patch/text/reflow.py`): 21,130 of 34,029 reflowed, rows 64,602 -> 48,999; rows set balanced; `layout.json` per record. The 340 empty targets are empty sources. Open: JOHO labels, second NAME_ENT texture page, page splitting, see [[tickets/T-39506-english-script-runtime]].
+
+## [2026-11-03] ingest | Preserve the remaining worktree notes before merging
+
+All eleven local branch tips are ancestors of patch/english. The only remaining worktree edits were recovery and script-review documentation. Preserved their historical notes in [[tickets/T-39600-recover-claude-session]], [[tickets/T-39506-english-script-runtime]] and this log without restoring obsolete ticket statuses or the old claim that main has no patch. The source worktrees remain untouched. Documentation reviewed against CODING_STANDARDS.md; no unresolved findings.

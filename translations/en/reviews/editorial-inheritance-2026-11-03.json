@@ -1,0 +1,48 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "39454a5b82bcc53f05daba81040e6622a85310e1",
+  "review_baseline_commit": "ab2615137ed765fee0b387b432b93ee11c0f57bc",
+  "basis": "T-28009 documents a complete editorial review and remediation of F-001 through F-015. The preserved remediation commit is the comparison baseline. This pass reviewed every later corpus change and distinct guarded override; it does not claim a fresh manual reading of all 55,911 records.",
+  "provenance_limit": "The historical narrative hashes do not match the preserved commit files, and the original standalone review reports are unavailable here. The hashes below were computed from git show and the current files; historical review attribution rests on the ticket and remediation commit, not a claimed byte match to those missing reports.",
+  "corpora": [
+    {
+      "file": "translations/en/returned-v3.jsonl",
+      "reviewed_sha256": "ed180f9fdaab5de80648a1d508ad795675c9e3fe2b1ada0dc99c1d179b9d837e",
+      "current_sha256": "7f3ed304ca62d994e91c588680ee12c65cae7f6b81de341e00aa03c7c58f86de",
+      "records": 55403,
+      "changed_ids": [
+        "dictionary:SLPM_86.053:parameter_names:00",
+        "dictionary:SLPM_86.053:parameter_names:01",
+        "dictionary:SLPM_86.053:parameter_names:04",
+        "SLPM_86.053:00072ad0:49803ec53984",
+        "SLPM_86.053:00072ad8:83799b6407cd",
+        "SLPM_86.053:00072af0:f6d54c3f86dc"
+      ]
+    },
+    {
+      "file": "translations/en/supplemental.jsonl",
+      "reviewed_sha256": "5ce2c6692cf66fde9b1378ec5514493c255035055e97ba668a8c6d3b64a84802",
+      "current_sha256": "2614bec9d14a7e622af4b3b82ffb1af4af3c434be5fe60c72993f10c2ae20efa",
+      "records": 508,
+      "changed_ids": [
+        "supplemental:CDROM/TAIIKU/TAI_TX.BIN:0030"
+      ]
+    }
+  ],
+  "corpus_change_review": "All seven changed records reviewed: six approved stat-label replacements and one sports-event name. No further rewrite proposed.",
+  "guarded_overrides": {
+    "file_sha256": "b0bc8609640a99c4c345ac67e8c46c164633514d6147d20322302694ea8793d9",
+    "records": 139,
+    "by_ticket": {
+      "T-39538": 39,
+      "T-39541": 82,
+      "T-39545": 18
+    },
+    "distinct_texts_read": 120
+  },
+  "anomaly_repairs": {
+    "file_sha256": "dd01fc340940dbdc16e137240363ccefadd4c7efd1de203cc7845f2cf888076f",
+    "records_read": 4
+  },
+  "assessment": "Later wording preserves the approved character voices, including Yumi referring to herself by name. Gift labels have consistent title case; secret codes fit the input fields. No new wording rewrite is proposed. Layout and artwork evidence is recorded separately."
+}

@@ -1,10 +1,10 @@
 ---
 id: T-39507
 title: Build the English disc and patch in one command
-status: In Review
+status: Done
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-01
+updated: 2026-11-02
 links: ["[[tickets/T-39500-english-translation-patch]]"]
 ---
 
@@ -41,3 +41,7 @@ Done (2026-11-01), branch `patch/build`:
   - Screenshots: `build/emu/route-en/` (e.g. `016_file_select_slot_1.png`, `030_prologue_02.png`, `112_phone_answer_01.png`). The Japanese baseline is in the patch-emu worktree's `build/emu/route-jp/`.
 
 ## Comments
+
+## Completed source review
+
+2026-11-02: Reviewed tools/patch/build_english.py, cd_layout.py and src/english/cd.c against CODING_STANDARDS. The English CD wrappers use C89 and the existing SDK/game declarations; default code remains separate. Reviewed build sequencing, read-buffer limits, remap generation, binary placement, art/movie readback and xdelta verification. The published report has no data-placement problems or warnings, no retained whole data files and no reverted C literals. Its only retained record classes have the completed T-39510 audit. The linker/build suites pass 55 tests with one optional full-disc rebuild skip; the published disc and browser round-trip evidence already covers the full build. No source or game bytes changed. No unresolved finding for this release. Ticket and board move to Done.

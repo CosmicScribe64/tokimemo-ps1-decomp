@@ -1,0 +1,61 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "scope": "Two long EVENT_SA passages selected in the actual date_scene_speak renderer after disc script loading. Existing date portrait and background remain; natural event staging is not covered. Intentional thought breaks and pauses are preserved.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-67:g0006:l0003",
+      "payload_sha256": "630ce029bca60004c9c9ffa675f33612b8b5cce014d3aea0f9f7601383173f27",
+      "run": "build/emu/yumi-event-long-followup",
+      "completed_text_position": 113,
+      "result": "Complete scrolling rows and final punctuation inspected; no clipping, overlap or stale glyphs.",
+      "captures": [
+        {
+          "frame": 1920,
+          "sha256": "f62b861c39ae557a4216486c825165d7b93e83bfe989da2d1fd8f44db363d5b5"
+        },
+        {
+          "frame": 2040,
+          "sha256": "e792382b21463fb527cb83859d424aaa4fe4152beaae6e45926686791a343cca"
+        },
+        {
+          "frame": 2160,
+          "sha256": "dc54f9988d59780aa5ba9935971cc43a53d92140c6800f80c333a08d873737ea"
+        },
+        {
+          "frame": 2280,
+          "sha256": "814cff7fe14ced73a6193d48917efaef7e02c36ac616530768fd7c848a4cd96a"
+        },
+        {
+          "frame": 3000,
+          "sha256": "42c2dde24109da94395052d8a7103ab53f9840b17f85d1019f82b486dc9383f3"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/EVENT_SA.BIN:initializer-68:g0002:l0003",
+      "payload_sha256": "05922d337e4c63dac4f4d034dadf0f9b6e9146f14422dc7533181d82072a1375",
+      "run": "build/emu/yumi-event-long-followup",
+      "completed_text_position": 87,
+      "result": "Complete scrolling rows and final punctuation inspected; no clipping, overlap or stale glyphs.",
+      "captures": [
+        {
+          "frame": 3120,
+          "sha256": "fd2fa45b31299f7f2fed3779b34b5fbd86a420d048acfe684ec9e9f2ceade0b3"
+        },
+        {
+          "frame": 3240,
+          "sha256": "2620ad310dcb17e4ee6b96ff396361faa660df357b589fc26a5e0aaf4123df22"
+        },
+        {
+          "frame": 3360,
+          "sha256": "f58672ff8af6d2c0b7301688b85bc3c822e1f1d6ae5524bedba1a9133f8366a9"
+        },
+        {
+          "frame": 4200,
+          "sha256": "f1c4a96c6255dad591c26b39eada0f3ccbdbd27b0047bc887d1cb95c06f78e1b"
+        }
+      ]
+    }
+  ]
+}

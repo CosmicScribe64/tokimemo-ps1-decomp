@@ -1,0 +1,33 @@
+{
+  "ticket": "T-39510",
+  "target_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+  "item": "mainrom-sheet-02000",
+  "scope": "Static reachability check for the retained MAINROM prototype sheet. Original offset 0x2000 is texture index 5. The boot loader uploads indices 0,1,2,3,7,8,9,10; all 174 shipped MAINROM frame records were read from the actual disc executable, including relocated and grown frames. None references texture index 5. Other overlays reuse the RAM address for their own loaded resources; address reuse alone is not a reference to this sheet.",
+  "boot_upload_indices": [
+    7,
+    8,
+    9,
+    10,
+    0,
+    1,
+    2,
+    3
+  ],
+  "frame_count": 174,
+  "part_count": 507,
+  "part_texture_indices": {
+    "0": 197,
+    "1": 128,
+    "2": 46,
+    "3": 39,
+    "10": 47,
+    "7": 29,
+    "9": 10,
+    "8": 11
+  },
+  "prototype_frame_references": 0,
+  "prototype_bytes_unchanged": true,
+  "prototype_sha256": "106049e459c502f7fcd96b06b46700f712b558cca93f6be0f862aec77bf8b80e",
+  "boot_source_sha256": "414686a317585c76ed98013c3c66e5888db0fb8a23e1f631aae1f40467050862",
+  "result": "The sheet is not uploaded by the HUD boot path or selected by any shipped MAINROM sprite frame. Retaining its unused Japanese labels does not add on-screen Japanese through these paths."
+}

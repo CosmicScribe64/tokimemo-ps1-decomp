@@ -288,3 +288,26 @@ Source-generation companion: `python3 -m tools.patch.audit_generated_sources --b
 `python3 -m tools.patch.audit_script_disc --build BUILD --out REPORT.json` (Docker only) reads the ISO and follows the actual script pointer words, verifying encoded target equality and rejecting original-font bytes. Every modeled slot must be checked; fixed-table data slots use their actual offsets, including JOHO's relocated club/zodiac labels. Executable text and artwork are explicitly excluded. Six synthetic tests in `tools/test_script_disc_audit.py` cover relocated pointers/suffix aliases, corrupt pointers/text, fixed slots, profile relocation, original-font bytes and missing coverage.
 
 The first diagnostic census found three retained Japanese fragments caused by malformed original tab bytes; the remaining opaque token was a dangling apostrophe. Four hash-guarded repairs are in `translations/en/anomaly-repairs.json`, applied by `text/anomaly_repairs.py` without changing raw sources or exported rows. `build/anomaly-repair-proof` passes the final-disc audit: 105 text-data containers, 31,471 strings, 31,334 pointers, exact target equality and zero original-font bytes. Report: `build/script-disc-audit-final.json`. Executable text and broader runtime/art coverage remain open in [[tickets/T-39510-no-japanese-left-check]].
+
+## Stage and menu correction release, 2026-11-03
+
+Published target `b579f2ad31288f442436f718eba0cb61f7e359fe` restores 214 source-proven stage commands without changing the visible English. The stage speaker column adapts to full names; the mascot picker uses two columns clear of its preview. Fresh-state captures, actual-disc checks and the 15-check browser run are recorded in `translations/en/reviews/stage-controls-and-menu-spacing-2026-11-02.json`. All 37 served files match the tested package (`published-stage-controls-2026-11-03.json`). The broader quality ticket T-39511 remains open; publication does not claim every route has been played end to end.
+
+## Secret-name correction release, 2026-11-03
+
+Previous target `c3c205c005712aa57072053c2e3faa511c1820fa` restores four distinct secret-name effects with short English inputs. Only NAME_ENT.EXN changes among 992 compared disc files. The correction passes 16 tests using the real name encoder and generated comparison function, all disc/source audits, 27 default hashes and 15 browser checks. All 37 public files match the tested package. Evidence is in `translations/en/reviews/name-codes-2026-11-03.json` and `published-name-codes-2026-11-03.json`. The earlier dialogue and artwork review remains applicable.
+
+## Fortune display spacing release, 2026-11-03
+
+Previous target `45eac0efcc5981d60102a9de7e84e30757243b4c` separates full family and given names in the computer-fortune display. Native captures verify the widest presets and maximum-width inputs. The build passes the disc/source audits, all 27 original hashes and all 15 browser checks. Pages run 41606770799 succeeded, and all 37 public files match the tested package. Receipts: `translations/en/reviews/fortune-name-spacing-2026-11-03.json` and `published-fortune-spacing-2026-11-03.json`. T-39546 is Done; T-39511 remains open for the remaining review dispositions.
+
+## TwinBee sprite correction release, 2026-11-03
+
+Previous target `39454a5b82bcc53f05daba81040e6622a85310e1` preserves twelve sprite attribute arrays previously mistaken for text. Translation had changed three arrays. All twelve now match the original through their actual disc pointers. Native player, boss, ranking and controlled-preview captures are verified. The build passes 29 tests, complete text audits, 27 default hashes and 15 browser checks. All 37 served files match the package. Evidence: `translations/en/reviews/twinbee-sprite-attributes-2026-11-03.json` and `published-twinbee-sprite-attributes-2026-11-03.json`.
+
+
+## English TwinBee title and verification sign-off, 2026-11-03
+
+Current target `b4e84775009f141b335574ae1268e49af5128fb7` adds English TwinBee title lettering in the original palette and sprite animation. The subtitle and surrounding data are unchanged. Native title/entrance and first-stage captures pass inspection. All actual-disc audits, 27 default hashes and 15 browser checks pass; all 37 served files match the package. Receipts: `translations/en/reviews/twinbee-english-logo-2026-11-03.json` and `published-twinbee-english-logo-2026-11-03.json`.
+
+T-39548, T-39510 and T-39500 are Done after standards review and publication verification. Text-quality reconciliation was already completed under T-39511. This signs off the documented corpus, artwork and runtime review; the captures include controlled entry and repeated frames, not an end-to-end playthrough of every possible route.

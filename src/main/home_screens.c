@@ -2477,12 +2477,27 @@ void settings_mascot_init(void) {
     text_system_reset();
     message_window_set_title("マスコット");
     settings_labels_draw(6);
+#ifdef TOKIMEMO_ENGLISH
+    d = 2;
+#else
     d = 3;
+#endif
     for (i = 0; i < 14; i++) {
+#ifdef TOKIMEMO_ENGLISH
+        /* T-39543: two columns keep names clear of the mascot preview. */
+        x[i] = (i % d) * 0x36 - 8;
+#else
         x[i] = (i % d) * 0x2B - 8;
+#endif
+#ifdef TOKIMEMO_ENGLISH
+        y[i] = (i / d) * 0xC - 0x40;
+        w[i] = (i % d == 1) ? 0x40 : 0x32;
+        h[i] = 0xC;
+#else
         y[i] = (i / d) * 0x10 - 0x40;
         w[i] = 0x28;
         h[i] = 0x10;
+#endif
         if (i == 13) {
             w[i] = 0x46;
             set_kanji_string(x[i], y[i], 5, "表示しない", 0);

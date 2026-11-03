@@ -1,0 +1,565 @@
+{
+  "ticket": "T-39541",
+  "target_sha1": "5c761523f939755d88c720adb2360927c58fe602",
+  "scope": "99 source-identical gift slots: 82 reused DATE2 labels, 11 already matching labels, six empty slots preserved. Three long-name substitutions inspected through the actual gift-dialogue renderer in isolated controlled fixtures. Not a natural birthday playthrough.",
+  "slot_checks": {
+    "checks": [
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:02",
+        "width_px": 81,
+        "size": 16,
+        "sha256": "8d5587ecd26ba9519e2a7e64fbdd43e1155739b6b95b93cc2ce029a9a4590520"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:04",
+        "width_px": 73,
+        "size": 13,
+        "sha256": "796e214cce261c12d7e970d75f9f714ad5791333377bf45cd86418f2348cb4e9"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:05",
+        "width_px": 37,
+        "size": 7,
+        "sha256": "08205319f476c5f91e95c7060b61f59271dca6d3f7d5db53feca20a61ea71549"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:08",
+        "width_px": 63,
+        "size": 12,
+        "sha256": "cdf6ab75598ad12b3f21a85e036571dcdaae4b1c87d5f7027d06ecdfdb48b8e6"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:09",
+        "width_px": 126,
+        "size": 23,
+        "sha256": "cec4837ed0479a1e200d6f119b36ac287c5b755f45ed65475844fc27475ae218"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:10",
+        "width_px": 89,
+        "size": 16,
+        "sha256": "15f43b1fb34eb7657b623296e391ffa2dccb178af0215771dadfe0b3a2fc4127"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:11",
+        "width_px": 139,
+        "size": 28,
+        "sha256": "ff4fc21e21884a298d47205a3c40965a2468b37f98dcddce47cc1a53cf58acb0"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:12",
+        "width_px": 160,
+        "size": 29,
+        "sha256": "2aa6544cb295823e3a3c5d7d57ef0140fd0dd69ba6bd1d8c1b8a5b106b7a5a48"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:14",
+        "width_px": 79,
+        "size": 15,
+        "sha256": "8dde11b52476c7e4f0314f28c38c88ac95b1fbdcec2e82e0734c7393a781d132"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:15",
+        "width_px": 71,
+        "size": 14,
+        "sha256": "ae44e33ebc474aacc57220a7f4a87660d285e8d2ecdfb8fecc41361bb7bf387d"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:16",
+        "width_px": 79,
+        "size": 15,
+        "sha256": "bf3cc057f3a1877605f47aa82524b56cb11255271f712156790f96fcc03d9edb"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:17",
+        "width_px": 59,
+        "size": 10,
+        "sha256": "b32ac59ef21863c42f8abe1baf7432086033709eb3d203b1bd4c64927acb2888"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:18",
+        "width_px": 158,
+        "size": 28,
+        "sha256": "be2c8776f3fe96ecf058ab112602ec281cbd36859b1591ebf6031386c580c39d"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:20",
+        "width_px": 42,
+        "size": 7,
+        "sha256": "5f52aeaf76f02847682d3064662c17c721aace655c4147fd9f28e5860556e84e"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:21",
+        "width_px": 173,
+        "size": 31,
+        "sha256": "93490fce84fde3e30517c544a31d71c7ea4a2d7342e13319acd7442bcf738a0f"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:22",
+        "width_px": 84,
+        "size": 18,
+        "sha256": "184381d9549f50645a0801a2a23ef6416a3e370b013fc095a9999c37425ee5c0"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:23",
+        "width_px": 55,
+        "size": 9,
+        "sha256": "1f96933c88ba4e9b278636d74d2470e1c4227b8c435b0324eb435fc301a63931"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:24",
+        "width_px": 113,
+        "size": 21,
+        "sha256": "f560eea13fd1f03424cfeb15e85946b5ac3774954d0c6eb433e54e9d02bb26d8"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:25",
+        "width_px": 45,
+        "size": 8,
+        "sha256": "1227e235e5238bb5c2dafe296849235a9a739a8859c4d2e30d799ed6b81e3426"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:26",
+        "width_px": 39,
+        "size": 8,
+        "sha256": "5c710b3d1bb9bd3589bdc9dabac38d022bd836186fb966f918ef002eb3e6b3da"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:27",
+        "width_px": 122,
+        "size": 23,
+        "sha256": "d584becd64b876fba07c94aeca4fd449d5901be025611fcb03c201f685b558f4"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:28",
+        "width_px": 28,
+        "size": 5,
+        "sha256": "9f127a2539fd99cbc55b3feba4f6f5aba3406b0c95895636fdb5c4ee7270060c"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:29",
+        "width_px": 70,
+        "size": 13,
+        "sha256": "3e752e9bdfc8e45b1a119e0fa5a65200c8e1638c88fcb60907835904880f3c5e"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:30",
+        "width_px": 126,
+        "size": 23,
+        "sha256": "3a272dc629d9bd007be2b2e88124ef1bbcd819a58ac4307787afe3acec90e12a"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:31",
+        "width_px": 42,
+        "size": 7,
+        "sha256": "5f52aeaf76f02847682d3064662c17c721aace655c4147fd9f28e5860556e84e"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:32",
+        "width_px": 87,
+        "size": 16,
+        "sha256": "09a4a978bac4e7340330bf500c5177e1b7fa17b9de01d6b81ed005fe487f8f99"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:33",
+        "width_px": 112,
+        "size": 21,
+        "sha256": "a209c60fcb508df2d17f1f704f39cae48ee5e43008ac94a793467572d8479c65"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:34",
+        "width_px": 98,
+        "size": 19,
+        "sha256": "944fca18d3a8a281b7ea81f9ea27a5fb0fa048cc05b5095dcb17ff023e2fd43a"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:35",
+        "width_px": 68,
+        "size": 12,
+        "sha256": "6fd950cf520968c3fb2882ccf01d1278349d4d5465de843fd3f5ee0834f0a18b"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:36",
+        "width_px": 145,
+        "size": 28,
+        "sha256": "02863e19496f93c37b8cc6c211f55106a12d6b822c64a865f1d87d0c65ba9dc1"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:37",
+        "width_px": 35,
+        "size": 7,
+        "sha256": "e7f40ff08cb71910e7cf18abfa7aeb6364372fc97ec1b218dc658906808df99c"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:38",
+        "width_px": 56,
+        "size": 10,
+        "sha256": "6c3ed1050ce699053fbefb92c75fbaecbb7a9523acbb6e0351616c8048de3f55"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:40",
+        "width_px": 101,
+        "size": 20,
+        "sha256": "8416aea12045c40b1662d003921a1b11e3d4626d9a3494e9e909969616da1f76"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:41",
+        "width_px": 46,
+        "size": 9,
+        "sha256": "40f03e91657ecbe4e32b20c4ac86853272977c98c9255b59bf40c0a8ad5f03ed"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:42",
+        "width_px": 142,
+        "size": 29,
+        "sha256": "02a6e38ebeecf8f5af8ef5948e561a614369a78bc42e468e99791c7895637e43"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:43",
+        "width_px": 59,
+        "size": 10,
+        "sha256": "f2ddfa2c7092110c0d59f600c5178dd42bf69f1c0d3e5f00fc4b61610ad3c97f"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:44",
+        "width_px": 131,
+        "size": 27,
+        "sha256": "0f5d76b707b7118ecb0350c855edcaf939fb3128fc37a5c7ceaa9aee2cd8a985"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:45",
+        "width_px": 93,
+        "size": 18,
+        "sha256": "390e386dfba400c8edb403e86a85822c4c9f17771dcbe7a35fa6a31e5efddfa9"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:46",
+        "width_px": 89,
+        "size": 17,
+        "sha256": "dea22ab8df57f24af0b221fbbbc66396342682f3851934a6a0eea7e0dd3c0059"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:47",
+        "width_px": 38,
+        "size": 7,
+        "sha256": "e0366ae4f059722cefbc6fc9670a4f30452c17046a0a06fe153d78d6dd6f37c4"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:48",
+        "width_px": 48,
+        "size": 9,
+        "sha256": "8b1669ae132fb578fb0961a591288ca1901aa99f1c2290807c3e30460b41a5f5"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:49",
+        "width_px": 33,
+        "size": 7,
+        "sha256": "13159d27890ca7771c9af3927ee149f0db5a3fb985bdcd97a55f7e1c7f5d4e00"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:50",
+        "width_px": 62,
+        "size": 11,
+        "sha256": "1a472f954bb100cd699e40faff862e0c54d76d39f6fcfcd8e7518435882d099c"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:51",
+        "width_px": 92,
+        "size": 17,
+        "sha256": "51bdf963ce8758549a381ce54092b22ec5a4a7c33f98c4b0ef1248198c188ac7"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:52",
+        "width_px": 87,
+        "size": 17,
+        "sha256": "01b0cfe146b40233b50455c0c41d055fd28413602869b8a873d8530639d66b0e"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:53",
+        "width_px": 56,
+        "size": 10,
+        "sha256": "aa06dfc6f84ac3aa8d1bc7dd3c35a7a8bb3ef008e590bf10fc9cb8c5efcd4dd4"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:54",
+        "width_px": 41,
+        "size": 7,
+        "sha256": "124ec8b3756e4ff6a7e458848b0367260460124f0846dacd1238733133927a29"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:55",
+        "width_px": 49,
+        "size": 9,
+        "sha256": "5a0626061ceebf110194bf600b1ade00b14cbda734319352af1bafba789c1067"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:56",
+        "width_px": 62,
+        "size": 11,
+        "sha256": "cf93336385cd34f41e7373e0a7ebc88cc3618e7392a2c3eca790f4c9edecfdc7"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:58",
+        "width_px": 72,
+        "size": 14,
+        "sha256": "52291097eaa60f2cc93c773d6a7d941fffdf2e144c66e7a630a58563198fee7b"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:59",
+        "width_px": 59,
+        "size": 11,
+        "sha256": "b7546865cdaad9e22a203b40fa48872a521f7c195b969991bdf808621c579f99"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:60",
+        "width_px": 23,
+        "size": 5,
+        "sha256": "956bec766aaa6f23c4c760d26a19370a9fcf2ec8556f1c4094609cc34927175c"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:61",
+        "width_px": 70,
+        "size": 14,
+        "sha256": "7ae8400c976b95a70db4516670d4fe0b551ff9dd12b6c2f04a8598ddf55dea62"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:62",
+        "width_px": 72,
+        "size": 14,
+        "sha256": "d73d52e0f07ac5e4e00321587b10df9c685b5d63c66513b8d8146e857895d47a"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:63",
+        "width_px": 95,
+        "size": 18,
+        "sha256": "20ee1246dfa6b12424c17474ed893275f912573ba42d87a8e2cfd96e5f31982f"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:64",
+        "width_px": 115,
+        "size": 21,
+        "sha256": "a1016eccfd136520ec089ca30cbf398ab79d9de791998b001325c5813b416992"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:66",
+        "width_px": 51,
+        "size": 11,
+        "sha256": "fd6a7e0771190e5d419b226f0ac414348dcc324654237a3af81c1b9bac7ab1dc"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:67",
+        "width_px": 77,
+        "size": 14,
+        "sha256": "7fffddeece763e219a4a049b20b4d7166b0bfab134b7ec6838493f60734540b1"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:68",
+        "width_px": 69,
+        "size": 13,
+        "sha256": "d523d1449f04d0edd47d30e3de796688634690dd0c4c1b5af419a22fec2db4da"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:69",
+        "width_px": 72,
+        "size": 14,
+        "sha256": "06caa58c47cd3dc853db38115e1610874ec862a03f249ab6c26a99ccbbe2d4ee"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:70",
+        "width_px": 51,
+        "size": 10,
+        "sha256": "002cd44506fc153ad4901d450b6df4652c8411e08c4b8cee7655ce4be0ead69c"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:71",
+        "width_px": 85,
+        "size": 17,
+        "sha256": "d0b876b1f947e2439ef4513d6460773e6bd4e99c458fc739580fe78e3d29709e"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:72",
+        "width_px": 88,
+        "size": 15,
+        "sha256": "34e2c87e00d67bb7736739aae6a02b49709f401fbcc333d19a0ded23d08c04ab"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:73",
+        "width_px": 84,
+        "size": 15,
+        "sha256": "830f6b6c088e3d9f14d08e246c4475e7f19af5167fd41acef071a177b8310539"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:74",
+        "width_px": 73,
+        "size": 13,
+        "sha256": "796e214cce261c12d7e970d75f9f714ad5791333377bf45cd86418f2348cb4e9"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:75",
+        "width_px": 55,
+        "size": 9,
+        "sha256": "b85236f85fa982d25a14699030843329c98c52b47dc55b0c503ed71531be9f51"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:76",
+        "width_px": 55,
+        "size": 11,
+        "sha256": "bb3bc59e2e37e89f1c01c0073565be789d4168004f1b66af76679787e96188af"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:77",
+        "width_px": 88,
+        "size": 15,
+        "sha256": "34e2c87e00d67bb7736739aae6a02b49709f401fbcc333d19a0ded23d08c04ab"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:78",
+        "width_px": 102,
+        "size": 19,
+        "sha256": "5b7f4df25fbd034de79506dbfdb63ada97dc326eda15a104eeebf4f0c67842e7"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:79",
+        "width_px": 64,
+        "size": 12,
+        "sha256": "f47c9d8e4947c6efc5bb51241d37b4be5983df043ead2f6d114bc724dc54e158"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:80",
+        "width_px": 55,
+        "size": 9,
+        "sha256": "b85236f85fa982d25a14699030843329c98c52b47dc55b0c503ed71531be9f51"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:84",
+        "width_px": 67,
+        "size": 14,
+        "sha256": "d19ab20c713840d50c4c7923f5c29545d163cf501bef856e59cacf85eb8d3f1c"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:85",
+        "width_px": 77,
+        "size": 15,
+        "sha256": "e04f8cc2e773ba598b26ad52fa3452a98f335445d44764dbc0c0c05b2d2bd93a"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:86",
+        "width_px": 84,
+        "size": 16,
+        "sha256": "85b97888fc37725d55a4de9e948328da8d23c655a90084f8a870ce5b0bb8c524"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:87",
+        "width_px": 71,
+        "size": 13,
+        "sha256": "0d8960a6a3d36d458d4bbbf188d7f5056abb2ac35544a84c79cf3f7f4aeaf762"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:88",
+        "width_px": 109,
+        "size": 21,
+        "sha256": "683b090524558fe2e42983f2159d3ee79ddf0cf690ab03fe58da6265e6b89a17"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:89",
+        "width_px": 70,
+        "size": 12,
+        "sha256": "b240180dd61c756b522225377417a596491009f0cfeb4f19f662263788511a17"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:93",
+        "width_px": 143,
+        "size": 28,
+        "sha256": "1a72325db71e43244bb2155e117a74ec27558b227a24022ef2acda192b0fe555"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:95",
+        "width_px": 50,
+        "size": 9,
+        "sha256": "fa1f9f1fe12a5f18ec149c97472b76a2bdb1fd04500dcd5cb42d5aa1987b6514"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:96",
+        "width_px": 157,
+        "size": 32,
+        "sha256": "6ba084033a89f4a311fa3e12f6f456e27203f0fb35e8ceeca11b961ff7bf1618"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:97",
+        "width_px": 40,
+        "size": 8,
+        "sha256": "c7eab2deb5f00a8a7093f2f6d15c172f87394ec09ec7622844039d80b549c66b"
+      },
+      {
+        "id": "dictionary:CDROM/EXEDIR/DATE.EXN:gift_names:98",
+        "width_px": 66,
+        "size": 13,
+        "sha256": "9d80fd06dbe5c3e5bb764b5e17be5ca747e7ff54a1ce182ea7a36e1c8c1e01b2"
+      }
+    ],
+    "other_table_differences": []
+  },
+  "captures": [
+    {
+      "gift_index": 21,
+      "file": "build/emu/gift-consistency-21/shot_1080.png",
+      "sha256": "db2f00e4cefe672eecd2876316aa9e28e7999d8f2910c084505c8ac583118f4e",
+      "complete_glyph_count": 86,
+      "table_and_name_buffer_match": true,
+      "visual_review": "Complete phrase and gift name visible, with no overlap or clipping."
+    },
+    {
+      "gift_index": 12,
+      "file": "build/emu/gift-consistency-12/shot_1080.png",
+      "sha256": "119361aa825277ab135bca434abfe45ebbb49aa723079afb3e23dc6d68ce92ef",
+      "complete_glyph_count": 84,
+      "table_and_name_buffer_match": true,
+      "visual_review": "Complete phrase and gift name visible, with no overlap or clipping."
+    },
+    {
+      "gift_index": 96,
+      "file": "build/emu/gift-consistency-96/shot_1080.png",
+      "sha256": "251b993f96feb20ccac5ecdcc070ef66882b41fe5e5dae4dd1645097b0263b02",
+      "complete_glyph_count": 87,
+      "table_and_name_buffer_match": true,
+      "visual_review": "Complete phrase and gift name visible, with no overlap or clipping."
+    }
+  ],
+  "browser_checks": [
+    "wrong size",
+    "wrong source hash",
+    "corrupted patch",
+    "cancel",
+    "full patch",
+    "download hash",
+    "cue",
+    "no upload",
+    "responsive layout",
+    "invalid archive",
+    "archive drop",
+    "extraction cancel",
+    "audio download hash",
+    "archive cue",
+    "mobile result"
+  ],
+  "disc_comparison": {
+    "baseline_sha1": "363407c48e03ad502e830b0745a6319c62a434e9",
+    "target_sha1": "5c761523f939755d88c720adb2360927c58fe602",
+    "file_extents_compared": 1371,
+    "scope": "Complete raw-sector extents, including XA/STR, at identical LBAs and sector counts. All file sizes match.",
+    "external_audio_entries": [
+      "CDROM/DADIR/TR02.DA"
+    ],
+    "audio_sha1": "6cdd8500168ab4ecb18b78ef7589586d26bc4501",
+    "audio_unchanged": true,
+    "changed_files": [
+      {
+        "path": "CDROM/EXEDIR/DATE.EXN",
+        "before_extent_sha256": "512d895313679d572335623e1a2379400cca054bc04f715135e22bc1c8fb28d1",
+        "after_extent_sha256": "de94238ab422d2f99ec1c716bd4946a0003e9f22f32fc098500b5bd66c998ba9",
+        "before_file_size": 196608,
+        "after_file_size": 196608
+      }
+    ]
+  }
+}

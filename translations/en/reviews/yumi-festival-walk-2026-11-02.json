@@ -1,0 +1,26 @@
+{
+  "ticket": "T-39538",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "run": "build/emu/yumi-walk-corrected-lines",
+  "scope": "Three corrected festival-walk replies using the disc-loaded Yumi script; controlled line selection in the actual festival renderer.",
+  "records": [
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6W.BIN:main:g0029:l0000",
+      "frame": 900,
+      "capture_sha256": "2d0d3deb154fe5de4d56d8cd852099118faa513b20245049735d62044c48a5fe",
+      "visual_status": "verified: complete quote, fitting rows, no overlap or clipping"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6W.BIN:main:g0030:l0000",
+      "frame": 1500,
+      "capture_sha256": "4d18f2917e3d8e01001afabef930a2d65274167ed97f51a3f8e556559d164793",
+      "visual_status": "verified: complete quote, fitting rows, no overlap or clipping"
+    },
+    {
+      "id": "talk:CDROM/BUNKA/SA_S6W.BIN:main:g0057:l0004",
+      "frame": 2100,
+      "capture_sha256": "74ed6f8d438033042f68fd730ded071bde68834d3ff8f60a4dfa5798ca9b0e94",
+      "visual_status": "verified: complete quote, fitting rows, no overlap or clipping"
+    }
+  ]
+}

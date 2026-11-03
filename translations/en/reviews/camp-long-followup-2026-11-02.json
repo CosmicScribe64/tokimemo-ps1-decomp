@@ -1,0 +1,68 @@
+{
+  "ticket": "T-39511",
+  "target_sha1": "7738fcbe89bee49102c68b025a5f5104ccf6b09f",
+  "run": "build/emu/camp-long-followup",
+  "scope": "Controlled line selection in the camp talk runner using disc-loaded tables. Twenty captures inspected across three contact sheets. This checks scrolling and text layout, not natural scene staging. The fixture retains its prior girl-name binding (Kagami-san) in the second passage; the encoded substitution is unchanged. Correct scene-specific name binding remains a separate natural-route check.",
+  "checks": [
+    {
+      "record_id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-4:g0005:l0006",
+      "payload_sha256": "bb4c4e0409f1b5102b73df2e108573a54796034364e9baeb7bebce0998949902",
+      "completed_text_position": 123,
+      "result": "Opening rows and full scrolling passage inspected; closing punctuation present, no clipping, overlap or stale letters.",
+      "captures": [
+        {
+          "frame": 120,
+          "sha256": "88c999f514adc75bab47038b1d8fc04bb42ec59d1d8f9338db14e51ce3e4bc44"
+        },
+        {
+          "frame": 240,
+          "sha256": "b46435bd1de11552888b7db90a2740ec415f12dffb26290d098a734534783832"
+        },
+        {
+          "frame": 360,
+          "sha256": "740ac5321e011a0f0a3799abebd6abf156fd79a1a1810d49f4659eb946f73168"
+        },
+        {
+          "frame": 480,
+          "sha256": "6e75bd732e50a02fb24416f91cf9fe9dd9003c7c624e5f4aab12d93b55fb2b2f"
+        },
+        {
+          "frame": 600,
+          "sha256": "73e9455da08c878648cb53967e1c50b874654177429621ca9cede3d38ca107cc"
+        },
+        {
+          "frame": 1200,
+          "sha256": "ef5a3d53b84394a798f92a744244d50cc0fbd1a03b0c37d978418af512afa9ec"
+        }
+      ]
+    },
+    {
+      "record_id": "talk:CDROM/SERIFU/GASSHUKU.BIN:table-4:g0006:l0001",
+      "payload_sha256": "e523e2bb115bee6b6b03cd443f199ad77cffa38e3254d554c3e40b20ab2cf09f",
+      "completed_text_position": 96,
+      "result": "Opening rows and full scrolling passage inspected; closing punctuation present, no clipping, overlap or stale letters.",
+      "captures": [
+        {
+          "frame": 1320,
+          "sha256": "7b50b576832c7ab50f6af26ff5580c1fdd26c9758d466e863a93f77961257cdc"
+        },
+        {
+          "frame": 1440,
+          "sha256": "af383b8897e8122ae40adc0352b1b435952d867a0f0e6d16ea865bdbe5cd2edf"
+        },
+        {
+          "frame": 1560,
+          "sha256": "c2a7f02f0a8d2dd457eaee82209e3cbb8910f879453e7b68cbf0fe470891d67a"
+        },
+        {
+          "frame": 1680,
+          "sha256": "4470aa792f9f487842ba8fcf4fe0619c5836719859d3dd98b069724583be8d23"
+        },
+        {
+          "frame": 2400,
+          "sha256": "1977b47f8fa7df2b7cae1be22faf750c6d796d17dcbae541c9252e52433e9b3c"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,317 @@
+{
+  "ticket": "T-39546",
+  "target_sha1": "45eac0efcc5981d60102a9de7e84e30757243b4c",
+  "status": "verified and published",
+  "scope": "Controlled native fortune-handler captures using the current overlay and the prior compatible main-executable state. The bedroom background and old top dialogue row remain from the fixture. Approval covers the two added fortune rows, not scene triggering or backdrop selection. The earlier fixture with wrong name offsets is rejected.",
+  "visual_review": "Both widest presets and two maximum-width valid names have visible separation. Blood labels and values do not overlap.",
+  "fixtures": [
+    {
+      "fixture": "presets",
+      "name_widths": [
+        55,
+        51
+      ],
+      "coordinates": [
+        [
+          -128,
+          66
+        ],
+        [
+          -68,
+          66
+        ],
+        [
+          0,
+          66
+        ],
+        [
+          40,
+          66
+        ],
+        [
+          -128,
+          82
+        ],
+        [
+          -68,
+          82
+        ],
+        [
+          0,
+          82
+        ],
+        [
+          40,
+          82
+        ]
+      ],
+      "name_gap": 5,
+      "blood_label_gap": 17,
+      "screenshot": "build/emu/fortune-spacing-presets/shot_240.png",
+      "screenshot_sha256": "f2e15c423e2f7516b32e682e989e731c1d321efb1ed0d5d9d260c376a6747ce7",
+      "result_sha256": "059dfe02b33fc4098cf3b2cd2bd3ac69cba59bfff04ec5bac2d4109e4d858aaa"
+    },
+    {
+      "fixture": "maximum",
+      "name_widths": [
+        56,
+        56
+      ],
+      "coordinates": [
+        [
+          -128,
+          66
+        ],
+        [
+          -68,
+          66
+        ],
+        [
+          0,
+          66
+        ],
+        [
+          40,
+          66
+        ],
+        [
+          -128,
+          82
+        ],
+        [
+          -68,
+          82
+        ],
+        [
+          0,
+          82
+        ],
+        [
+          40,
+          82
+        ]
+      ],
+      "name_gap": 4,
+      "blood_label_gap": 12,
+      "screenshot": "build/emu/fortune-spacing-maximum/shot_240.png",
+      "screenshot_sha256": "044df445909636c5801008d6355c85907607918951ea80162bb052adc20032bb",
+      "result_sha256": "0140b5a29ef59c24de6155ebaf61ddd81c26625dd6e14bcd24ef1061cbdbd847"
+    }
+  ],
+  "additional_table_checks": [
+    {
+      "table": "rpg_loot_names_snake",
+      "index": 0,
+      "bytes_with_nul": 15,
+      "width_px": 72,
+      "right": -54,
+      "sha256": "e409dcaff944bf8d96e11db7ced723ccdd1bb4fa89230adc34e3330e0f36f926"
+    },
+    {
+      "table": "rpg_loot_names_snake",
+      "index": 1,
+      "bytes_with_nul": 15,
+      "width_px": 76,
+      "right": -50,
+      "sha256": "54edf0c24e66ba0bc8b0f7e79aef70b8893c5513c7b0d91fdc45414ae3aff74c"
+    },
+    {
+      "table": "rpg_loot_names_snake",
+      "index": 2,
+      "bytes_with_nul": 14,
+      "width_px": 67,
+      "right": -59,
+      "sha256": "a999562237c72eed381ea1375d36a2585e12d4f272b9cecdbec4576fcde0530e"
+    },
+    {
+      "table": "rpg_loot_names_snake",
+      "index": 3,
+      "bytes_with_nul": 15,
+      "width_px": 76,
+      "right": -50,
+      "sha256": "2426dc1026c14abab0343520f9926c6acd68f231a62828fba7f247e7ff0814b2"
+    },
+    {
+      "table": "rpg_loot_names_deer",
+      "index": 0,
+      "bytes_with_nul": 15,
+      "width_px": 75,
+      "right": -51,
+      "sha256": "6ec1795e69e7881fe6b9de3070a7de7d82a9db2423e0c5fb3539359158910fe9"
+    },
+    {
+      "table": "rpg_loot_names_deer",
+      "index": 1,
+      "bytes_with_nul": 12,
+      "width_px": 55,
+      "right": -71,
+      "sha256": "35cbf4d799f86b5efdce39e6c9fbb5c3e6c9b58da15f55501bec1047945f7cbd"
+    },
+    {
+      "table": "rpg_loot_names_deer",
+      "index": 2,
+      "bytes_with_nul": 14,
+      "width_px": 70,
+      "right": -56,
+      "sha256": "5f7c22bc1839226cfd3d6666856b65a45df8229c97d47fb298e9b8a966a0cde3"
+    },
+    {
+      "table": "rpg_loot_names_deer",
+      "index": 3,
+      "bytes_with_nul": 20,
+      "width_px": 100,
+      "right": -26,
+      "sha256": "9c4162cde2b6b5d655360345ed3d0b9d37535a683e3259f9c0dc921cfd23ed36"
+    },
+    {
+      "table": "rpg_loot_names_bear",
+      "index": 0,
+      "bytes_with_nul": 14,
+      "width_px": 71,
+      "right": -55,
+      "sha256": "c1c3916657758c73bb87c506a05753f663438e26ec2cc2aa86338bbd74cef033"
+    },
+    {
+      "table": "rpg_loot_names_bear",
+      "index": 1,
+      "bytes_with_nul": 14,
+      "width_px": 69,
+      "right": -57,
+      "sha256": "3f4559a6df547a880f722ce24fa895909751c52a9581c03b890a1c1e0420c9e2"
+    },
+    {
+      "table": "rpg_loot_names_bear",
+      "index": 2,
+      "bytes_with_nul": 18,
+      "width_px": 91,
+      "right": -35,
+      "sha256": "a2d69599600f683575ec5d7f72ef024046b84a7b931d85bf599ce13afdd61fe1"
+    },
+    {
+      "table": "rpg_loot_names_bear",
+      "index": 3,
+      "bytes_with_nul": 15,
+      "width_px": 68,
+      "right": -58,
+      "sha256": "7daa91c90fcf3d0d2e472ef3eefd2707ba44955d93874dea4fd4a2c6d0dbd35a"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 0,
+      "width_px": 27,
+      "sha256": "79939b65115ad2f6fd5c7b56938b1580d64f7ccd654a27b066367584668aaff0"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 1,
+      "width_px": 16,
+      "sha256": "4c8229b4d63cc5c345e154cd6d3374bee6b1d2dbd2665d48f86413a49db21113"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 2,
+      "width_px": 26,
+      "sha256": "7badc85cb50035db9dbaffe6bba16566c81e5848888cfe4d96165270c8ad9d11"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 3,
+      "width_px": 29,
+      "sha256": "e2c3de2216aee3fac1b290bbf0b6a70a48be8fa5a4603e6a2864732d5823b55b"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 4,
+      "width_px": 19,
+      "sha256": "6d68c56221c85b54049b223389d143b17075537dc32512700c438a467d34cc03"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 5,
+      "width_px": 30,
+      "sha256": "33eed601fbf60e2c38b2f4331028425c0a92fce00e7b816605ec6cca3f985979"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 6,
+      "width_px": 34,
+      "sha256": "ef04de3072c5e4dd77f177121f2e778151b9966268dc61cc2b2299fc818bcb28"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 7,
+      "width_px": 21,
+      "sha256": "ef9ee12da914a3b038e4a49e4a4e6e8f5335ae5d3ef4c2182c0e3fd8189d0ee8"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 8,
+      "width_px": 23,
+      "sha256": "ac8cb2e4deefc2e29a13bb754205141133086e60a9179e8ff2836c311b8071ae"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 9,
+      "width_px": 36,
+      "sha256": "94531c7b8df0a1611b14c0f680a8b105afb3f9c1813c1b88c4c4db1fa58d3545"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 10,
+      "width_px": 22,
+      "sha256": "3e62144e115b724909a1e847edcde72e7e0719cc3b3e954cc61af352fe98408c"
+    },
+    {
+      "table": "tour_fortune_girl_names",
+      "index": 11,
+      "width_px": 27,
+      "sha256": "79939b65115ad2f6fd5c7b56938b1580d64f7ccd654a27b066367584668aaff0"
+    }
+  ],
+  "checks": {
+    "default_binary_hashes": 27,
+    "script_containers": 105,
+    "script_strings": 31471,
+    "script_pointers": 31334,
+    "executable_slots": 2940,
+    "pending_slots": 0,
+    "generated_literals": 1964,
+    "generated_files": 171,
+    "browser_checks": [
+      "wrong size",
+      "wrong source hash",
+      "corrupted patch",
+      "cancel",
+      "full patch",
+      "download hash",
+      "cue",
+      "no upload",
+      "responsive layout",
+      "invalid archive",
+      "archive drop",
+      "extraction cancel",
+      "audio download hash",
+      "archive cue",
+      "mobile result"
+    ]
+  },
+  "standards_review": "Four English-only coordinate substitutions. Default constants and game logic are unchanged. Native memory samples establish the positions and gaps; all original hashes match. No unresolved finding.",
+  "browser_checks": [
+    "wrong size",
+    "wrong source hash",
+    "corrupted patch",
+    "cancel",
+    "full patch",
+    "download hash",
+    "cue",
+    "no upload",
+    "responsive layout",
+    "invalid archive",
+    "archive drop",
+    "extraction cancel",
+    "audio download hash",
+    "archive cue",
+    "mobile result"
+  ],
+  "publication_receipt": "translations/en/reviews/published-fortune-spacing-2026-11-03.json"
+}
