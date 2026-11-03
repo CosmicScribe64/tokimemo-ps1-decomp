@@ -33,3 +33,5 @@ Inspected eleven native captures covering the entrance, settled title and first-
 Standards review checked the writer, integration and tests against `CODING_STANDARDS.md`. Source hashes are guarded; actual-disc verification rejects unexpected changes; independent boundary tests protect the palette, subtitle and neighboring pixels. The only new image staged is generated English lettering, with no extracted original artwork. No C, symbols or matching code changed. No unresolved findings. Publication readback remains the last gate.
 
 2026-11-03: Publication verified: Pages run 41665706198 succeeded, and all 37 public files match the tested package. The first readback ran before deployment completed and correctly rejected the previous manifest. The later readback passed. The code, native review and publication gates are complete.
+
+2026-11-03: The owner explicitly requested merging PR 71 into main after publication and verification sign-off. Merge preparation adds no code or artwork changes. The PR head and GitHub checks are checked before merging; the published patch remains the verified target above.

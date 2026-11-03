@@ -4432,3 +4432,7 @@ The art regression suite for [[tickets/T-39548-twinbee-english-logo]] passes 27 
 ## [2026-11-03] build | Publish and sign off the English patch
 
 Pages run 41665706198 published target b4e84775009f141b335574ae1268e49af5128fb7. All 37 served files match the tested package; the first early readback rejected the still-old manifest. [[tickets/T-39548-twinbee-english-logo]], [[tickets/T-39510-no-japanese-left-check]] and [[tickets/T-39500-english-translation-patch]] move to Done after standards review. [[english-build]] records the final target and scope. The owner's requested fixes, text/art review and patcher checks are complete; this does not claim every route was played end to end.
+
+## [2026-11-03] decision | Merge the verified English patch into main
+
+The owner explicitly authorized merging PR 71 into main. [[tickets/T-39548-twinbee-english-logo]] records this follow-up to the completed release. Merge preparation changes documentation only; the published target and recorded verification remain unchanged. GitHub's merge record will identify the final main commit.
