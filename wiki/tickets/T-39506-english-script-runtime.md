@@ -1,7 +1,7 @@
 ---
 id: T-39506
 title: Make dialogue, choices, names and name entry work in English
-status: In Progress
+status: Done
 assignee: claude
 created: 2026-11-01
 updated: 2026-11-02
@@ -53,3 +53,9 @@ Remaining: the draw sites listed in [[english-text-runtime]] that need overlay c
 2026-11-02: repaired the date ambush's long speaker-name copy using the existing bounded runtime setter. Calling the canonical choice initializer is equivalent to the old interior entry (it skips only a NOP). Relinker repair additionally preserves selected input-section symbol definitions instead of pinning their absolute side-script aliases, and ignores discarded-section references. Full disc `build/date-name-proof` passes build/readback/xdelta gates (SHA-1 prefix c24fd36a5851); 25 focused regressions pass and original DATE matches. Fresh bootstrap/ambush GPU check is pending because main overlay entry addresses changed.
 
 2026-11-02: ambush GPU replay now verifies the full label and actual battle screen, zero original-font uploads/unknown/overflow. Samples show the original short field is safely terminated while its 24-byte backing buffer holds the complete name; the neighboring girl's name is intact. All 27 original binaries still match. The runtime fix is ready for review alongside the broader text/audit work.
+
+## Final standards review
+
+Completed the remaining review of the date ambush change in `src/ovl/date/place_scenes.c` and its bounded setter in `src/english/script.c`. The English-only branch stores the full speaker name in the 24-byte backing buffer and a terminated prefix in the original eight-byte field. The adjacent name remains intact. The named choice-table entry replaces an alternate entry that skipped only a NOP; the default branch retains its original call. C89, SDK declarations and existing state/save layouts are preserved.
+
+The prior full-name review already covers all 45 presets, editing, confirmation, save/load and the persistent pair table. Rechecked the production pair encoder/decoder and text expansion; the 31 text/name regressions pass. All 27 default binaries currently match their configured hashes (`build/runtime-closeout.log`). The 6,500-frame ambush run records zero original-font calls, unknown calls or overflow calls. Its final dumps retain the complete long label, a terminated short field and the neighboring Shiori name; capture 2450 displays the full speaker label and capture 5900 reaches battle. The current disc audit and later layout reviews cover the published runtime. No unresolved source-review findings remain; broader text quality stays in T-39511.

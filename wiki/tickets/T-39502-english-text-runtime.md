@@ -1,10 +1,10 @@
 ---
 id: T-39502
 title: Add the English text runtime behind a build flag
-status: In Review
+status: Done
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-01
+updated: 2026-11-02
 links: ["[[tickets/T-39500-english-translation-patch]]"]
 ---
 
@@ -30,3 +30,9 @@ Part of [[tickets/T-39500-english-translation-patch]]. Design, function list and
   - First English text: the NAME_ENT file select memory-card message. In the emulator it renders correctly (screenshot `build/en/shots/file_select_memory_card_check.png`, local only).
   - The default build prints OK for all 27 binaries, plus headers, symbols, globals and renames.
   - Awaiting the CODING_STANDARDS review.
+
+## Final standards review
+
+Reviewed `src/english/text.c`, English build selection in `configure.py`, and the runtime entry hooks against CODING_STANDARDS. The renderer uses the SDK primitive types, C89 declarations, bounded pen-array writes, and the original VRAM page order. Empty entries have zero glyph counts; name-pair expansion agrees between width measurement and glyph loading. English sources remain behind the English variant. The earlier pinned-address notes are superseded by T-39505's reviewed free linker.
+
+Current verification: all 27 default binaries match their configured SHA-1 values; 31 production text/name tests pass in Docker (`build/runtime-closeout.log`). The published build's disc audit verifies entry hooks, and the magazine capture in T-39540 verifies the current renderer on the shipped executable. Prior name-entry, save/load and long-dialogue captures cover the other recorded acceptance checks. No unresolved findings remain for this runtime ticket. Broader menu/editorial review stays in T-39511.

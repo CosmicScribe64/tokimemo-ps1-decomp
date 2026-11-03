@@ -4283,3 +4283,7 @@ Created [[tickets/T-39540-magazine-button-sequence]] after executing the product
 ## [2026-11-02] build | Verify and publish the magazine sequence fix
 
 [[tickets/T-39540-magazine-button-sequence]] passes production build, runtime wrapper checks, emulator inspection and all 15 browser checks. Both disc text audits pass. Only one executable payload byte changes; all other 1,370 file extents and audio match the reviewed release. Standards review found no unresolved issues; the ticket moves to Done. Publication uses target `363407c48e03ad502e830b0745a6319c62a434e9`. [[tickets/T-39511-english-text-quality]] retains the broader menu coverage limits.
+
+## [2026-11-02] lint | Close English runtime and rink wording reviews
+
+Reviewed the English glyph runtime and remaining date-ambush name changes against CODING_STANDARDS. All 27 default binaries match and all 31 text/name regressions pass. Saved emulator evidence confirms the complete ambush label and intact neighboring name. Closed [[tickets/T-39502-english-text-runtime]] and [[tickets/T-39506-english-script-runtime]]. Reinspected the rink source crop and English capture; retained the translation of the readable bus phrase without inventing its cropped suffix, closing [[tickets/T-39513-skating-rink-advertisement]]. No production code or game bytes changed.

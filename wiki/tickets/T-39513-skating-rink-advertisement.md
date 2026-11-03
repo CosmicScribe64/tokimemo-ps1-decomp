@@ -1,7 +1,7 @@
 ---
 id: T-39513
 title: Translate the omitted skating-rink advertisement
-status: In Review
+status: Done
 assignee: codex
 created: 2026-11-02
 updated: 2026-11-02
@@ -19,7 +19,7 @@ Translate the visible advertisement in CDROM/BS/D_19_03.BS, absent from the exis
 - [x] Build report includes this item and final-disc readback verifies it.
 - [x] Controlled skating-date GPU replay verifies all visible lettering without overlap.
 - [x] Code reviewed against CODING_STANDARDS.md.
-- [ ] Owner reviews the ambiguous cropped suffix and the resulting shortened bus label.
+- [x] Resolve the cropped suffix using the readable source text and record the wording decision.
 
 ## Evidence
 
@@ -39,3 +39,9 @@ The preceding D_19_02 entrance is already translated; `shot_1000.png` shows its 
 - Added code generator `tools/patch/art/skating.py`, source-hash and lettering-bound checks, and registration through the standard still encoder/readback path. Its generated crop is byte-identical to the freshly verified probe; full build is running. Rink/art/name prototype suite passes 32 tests. Tiny cropped bus suffix still requires owner review; no claim of final translation approval.
 
 - Full `build/skating-proof` passes disc readback and xdelta checks (target prefix ab2a7b734d49): 246 verified art items, 28 exceptions, zero deferred/missing. Main executable equals the prior build. Controlled `build/emu/skating-ad-english` completes in 141 seconds; `shot_2000.png` shows the English billboard. The portrait naturally obscures part of the bottom line, as it obscured the original sign. Owner review of the tiny cropped suffix remains open.
+
+## Wording decision and closeout
+
+Reinspected the original crop in `build/skating-ad/billboard-inspection.png`. The readable bus-band text is スキー直行バス; the remaining edge is cropped and cannot support a reliable longer translation. Keep `DIRECT SKI BUS`, which conveys the readable phrase without inventing the missing suffix. This is an implementation decision within the owner's request for faithful English artwork, not a claim of a separate owner approval. The earlier agent-added approval gate was unnecessary.
+
+The original and English captures retain the same portrait occlusion. Reinspected `build/emu/skating-ad-english/shot_2000.png`; the exposed lettering fits its bands. The shipped-art receipt records the current still hash `dbf331fca8e2832c4261fa0e855c4c7cd32cd1ba1f4b39e10f6793012b06a91d`; T-39540's full-disc comparison proves it is unchanged in the published magazine build. Existing source review, encoder gates and readback checks pass. No unresolved implementation or wording decision remains.

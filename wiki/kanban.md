@@ -49,7 +49,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-39511-english-text-quality|T-39511 Make the English read naturally on screen]]
 
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
-- [ ] [[tickets/T-39506-english-script-runtime|T-39506 Make dialogue, choices, names and name entry work in English]]
 
 
 - [ ] [[tickets/T-39212-english-artwork-drafts|T-39212 English WP-L: remaining artwork drafts and provenance]]
@@ -89,11 +88,9 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-39513-skating-rink-advertisement|T-39513 Translate the omitted skating-rink advertisement]]
 
 
 
-- [ ] [[tickets/T-39502-english-text-runtime|T-39502 Add the English text runtime behind a build flag]]
 - [ ] [[tickets/T-39503-text-container-writers|T-39503 Write every text container back from records]]
 - [ ] [[tickets/T-39504-emulator-screen-route|T-39504 Script an emulator route through the main screens with screenshots]]
 
@@ -115,6 +112,12 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39513-skating-rink-advertisement|T-39513 Translate the omitted skating-rink advertisement]]
+
+- [ ] [[tickets/T-39506-english-script-runtime|T-39506 Make dialogue, choices, names and name entry work in English]]
+
+- [ ] [[tickets/T-39502-english-text-runtime|T-39502 Add the English text runtime behind a build flag]]
 
 - [ ] [[tickets/T-39540-magazine-button-sequence|T-39540 Keep the magazine button sequence on one row]]
 
