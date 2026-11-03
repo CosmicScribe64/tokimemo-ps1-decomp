@@ -4259,3 +4259,7 @@ Read the actual published disc's 174 MAINROM sprite frames and checked the HUD t
 Reviewed the opening-movie pipeline against CODING_STANDARDS; Docker tests pass (18 passed, one optional full-build skip). Recorded the review in [[tickets/T-39509-opening-movie-pills]]. Confirmed the public repository description links the patcher and updated PR 71 to reflect the published target and completed dialogue/art batches. [[tickets/T-39500-english-translation-patch]] records the remaining parent-ticket reconciliation without claiming every-route playback.
 
 T-39509 moves to Done after the standards review; its board card and ticket status agree.
+
+## [2026-11-02] lint | Reconcile published-build verification
+
+Revalidated 24 retained menu views, 75 retained art containers, and the banner/movie extents against the published disc. Closed [[tickets/T-39510-no-japanese-left-check]] after reviewing the audit coverage and art verifier; all 25 art tests pass with the tools import path configured. Updated completed screenshot criteria in [[tickets/T-39508-english-art-on-disc]] and [[tickets/T-39511-english-text-quality]]. Corrected stale translation-tool claims in [[status]] and completed-break-triage status in [[english-text-runtime]]. Broader source-review and editorial criteria remain open rather than being inferred from layout tests.

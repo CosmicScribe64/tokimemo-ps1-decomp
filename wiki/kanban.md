@@ -45,7 +45,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
 
-- [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
 
 - [ ] [[tickets/T-39511-english-text-quality|T-39511 Make the English read naturally on screen]]
 
@@ -119,6 +118,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39510-no-japanese-left-check|T-39510 Prove no Japanese is left in the English game]]
 
 - [ ] [[tickets/T-39509-opening-movie-pills|T-39509 Replace the heroine name pills in the opening movie]]
 

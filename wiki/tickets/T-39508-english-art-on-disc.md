@@ -14,10 +14,10 @@ The English disc build writes every registered English image into its container 
 
 ## Acceptance criteria
 
-- [x] Every artwork item with a registered English candidate is written by `tools/patch/build_english.py`; the report lists each item as placed, deferred (with the reason) or untranslated by decision. (All 272 items; 230 placed and verified on the disc, 14 deferred with reasons.)
+- [x] Every artwork item with a registered English candidate is written by `tools/patch/build_english.py`; the report lists each item as placed, deferred (with the reason) or untranslated by decision. (Published build: 252 verified items, 28 explicit exceptions, zero deferred or missing.)
 - [x] Indexed images round-trip byte-exact with the original pixels; English pixels use only colours (and STP values) the container's palette allows.
-- [x] Stills are re-encoded to fit their read size or moved, and decode back to the intended image within the codec's error. (14 stills; 2 deferred, see Notes.)
-- [ ] The emulator route on the English disc shows the English art at the title, file select, name entry, the magazine, the opening stills and the sports card. (Title, options, file select, name-entry labels, stat bar, prologue stills shown; the magazine screen and the sports card are not on the route.)
+- [x] Stills are re-encoded to fit their read size or moved, and decode back to the intended image within the codec's error. (All 16 translated stills verified; zero deferred.)
+- [x] Emulator coverage shows the English art at the title, file select, name entry, the magazine, opening stills and sports cards. The magazine and sports cards have separate controlled runs, documented below.
 - [x] The default build still matches 27/27.
 
 ## Notes
@@ -62,3 +62,5 @@ T-39521 repairs all four omitted sports bubbles. The latest disc verifies 252 pl
 ## Published artwork quality pass
 
 Inspected all 254 shipped sprite target images, using the actual placement and fallback selections, and all 16 translated still containers decoded directly from the current disc. Container hashes match the published build report. No new clipping, overlap or damaged neighboring artwork was found. Texture-page fragments and highlight components were assessed with their assembled runtime examples; they are not standalone screens. `translations/en/reviews/shipped-art-quality-2026-11-02.json` records image hashes, current container identity and the 31 review sheets. Movie, generated prologue banner and retained-pixel evidence remain separate from this pass.
+
+2026-11-02 reconciliation: re-opened the first magazine page and prologue banner captures; the English remains legible, with the approved magazine masthead retained. Current-disc comparison preserves the banner and movie bytes. The 25 art tests pass. The published report records 252 verified items, 28 explicit exceptions and zero deferred or missing items, replacing the historical totals above. Source-review closeout remains separate from these completed visual checks.
