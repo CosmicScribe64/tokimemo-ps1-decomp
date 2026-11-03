@@ -1,0 +1,330 @@
+{
+  "ticket": "T-39540",
+  "target_sha1": "363407c48e03ad502e830b0745a6319c62a434e9",
+  "scope": "Execute the production English phone/block wrapper in a C89 harness with release font advances for the 15 over-252-pixel career and magazine strings. Assert every row fits the production speech width, at most six rows, and rejoined text is unchanged. This verifies wrapping, not additional emulator playback. Two SDK diagnostic strings are excluded from game-menu geometry.",
+  "renderer_sha256": "1dc21ac5dd886c8a12b8e077e633d0b8ce2e46f430ef2c2c1b964962572ff438",
+  "metrics_sha256": "23a5e85ce9e88b3ac55d1aa3d3b574d7b8a878503164f37c27c3b10f56535567",
+  "checks": [
+    {
+      "records": [
+        {
+          "id": "CDROM/EXEDIR/ETC.EXN:0001efc0:393963edadba",
+          "path": "CDROM/EXEDIR/ETC.EXN",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "871d15dd966f7f92328d11ed5c112da83bc9a640e13de20f0e6ff2c5109be6a9",
+      "raw_width_px": 295,
+      "rendered_row_widths_px": [
+        166,
+        125
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "CDROM/EXEDIR/ETC.EXN:0001f004:620684446129",
+          "path": "CDROM/EXEDIR/ETC.EXN",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "ec9674eb83866bf6b162ce8d812171d7106d847165d7f7ea00d6050354da364a",
+      "raw_width_px": 280,
+      "rendered_row_widths_px": [
+        156,
+        120
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "CDROM/EXEDIR/ETC.EXN:0001f04c:20ef8542af03",
+          "path": "CDROM/EXEDIR/ETC.EXN",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "a28db686bc74d42b73818accc9cac37d661c34c6780f207a5625b17ae18e5484",
+      "raw_width_px": 292,
+      "rendered_row_widths_px": [
+        189,
+        99
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "CDROM/EXEDIR/ETC.EXN:0001f090:74c4e1ab9a63",
+          "path": "CDROM/EXEDIR/ETC.EXN",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "3d321f236a72adda0b23584fd81a525829894bccd4af9551c231ade5e3b826ad",
+      "raw_width_px": 325,
+      "rendered_row_widths_px": [
+        172,
+        149
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "CDROM/EXEDIR/ETC.EXN:0001f110:d5827387dad4",
+          "path": "CDROM/EXEDIR/ETC.EXN",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "f2dc5d06756892a3d3a0fd2ec28c1790415086e6276a6bbe51aff3c454d89c7d",
+      "raw_width_px": 306,
+      "rendered_row_widths_px": [
+        188,
+        114
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "CDROM/EXEDIR/ETC.EXN:0001f154:ededc373b706",
+          "path": "CDROM/EXEDIR/ETC.EXN",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "05a07a55b8a67d2cba5369294cb32f4854e41c8be426ad49cda1a51af98342f6",
+      "raw_width_px": 294,
+      "rendered_row_widths_px": [
+        173,
+        117
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "CDROM/EXEDIR/ETC.EXN:0001f194:3496c6943b46",
+          "path": "CDROM/EXEDIR/ETC.EXN",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "db6377d6e81a03dd5517ebf0bea95f2048cc4ac4bf8164a8383eb7d2992baad1",
+      "raw_width_px": 423,
+      "rendered_row_widths_px": [
+        187,
+        188,
+        40
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "CDROM/EXEDIR/ETC.EXN:0001f1ec:957286435267",
+          "path": "CDROM/EXEDIR/ETC.EXN",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "d46016d6249d83900aa50a0faf04c90b96b3089966f77d98a3292647d36fe2d9",
+      "raw_width_px": 293,
+      "rendered_row_widths_px": [
+        176,
+        113
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "CDROM/EXEDIR/ETC.EXN:0001f22c:91749c5b1475",
+          "path": "CDROM/EXEDIR/ETC.EXN",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "b7b991bbcb84dbe2ae90f10360baa17a3075032a8a3b21dc09dbd1b5c137757d",
+      "raw_width_px": 329,
+      "rendered_row_widths_px": [
+        184,
+        141
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "CDROM/EXEDIR/ETC.EXN:0001f2d4:585340ec4f84",
+          "path": "CDROM/EXEDIR/ETC.EXN",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "cb5428036a2489a99737adf2b20e6b8743b72628e1d9f71d816814753276aa1d",
+      "raw_width_px": 331,
+      "rendered_row_widths_px": [
+        172,
+        155
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "SLPM_86.053:00075c20:8e1e6d4d402c",
+          "path": "SLPM_86.053",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "eeaa2ad1f2ca9a6f73daaf3b1d0c7fddee29221a2fb657e3838d4fea585de1d2",
+      "raw_width_px": 428,
+      "rendered_row_widths_px": [
+        181,
+        165,
+        74
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "SLPM_86.053:00075cbc:0eece0091a24",
+          "path": "SLPM_86.053",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "8d95664acd07be890e002fa729c54e2c2c6f2e6b38a7da1ea0700cfbc548bb8a",
+      "raw_width_px": 477,
+      "rendered_row_widths_px": [
+        190,
+        186,
+        93
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "SLPM_86.053:00075d20:b37d1465cade",
+          "path": "SLPM_86.053",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "400fd2d508a578ddc161bfd109f8c585a49b67eb73fa63c57935552f55c3dec8",
+      "raw_width_px": 293,
+      "rendered_row_widths_px": [
+        179,
+        110
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "SLPM_86.053:00075d74:47fa26b3287e",
+          "path": "SLPM_86.053",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "10c5f6a423ab2569a9b1d20e65a57cebb06e05a1ab12599979bb56389c53e4f7",
+      "raw_width_px": 358,
+      "rendered_row_widths_px": [
+        162,
+        129,
+        59
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    },
+    {
+      "records": [
+        {
+          "id": "SLPM_86.053:00075e0c:48a6d7d45052",
+          "path": "SLPM_86.053",
+          "kind": "source_extent"
+        }
+      ],
+      "payload_sha256": "e2c72eeb0e2608c7c88e692f6efc862e7a139178351d30912c82988ec5f8e54d",
+      "raw_width_px": 264,
+      "rendered_row_widths_px": [
+        171,
+        89,
+        100
+      ],
+      "text_preserved": true,
+      "within_six_rows": true
+    }
+  ],
+  "fixture": {
+    "changed_executable_offsets": [
+      499072
+    ],
+    "scope": "Controlled magazine menu from saved state; refreshed sole changed literal byte from current executable."
+  },
+  "visual_capture": {
+    "path": "build/emu/magazine-final-sequence/shot_1350.png",
+    "sha256": "fa695612f7776f6f988b6df28f3489d0a22081c918fa11f66f3fc2da49155786",
+    "review": "Complete ten-button sequence on one row; no clipped dialogue or overlapping glyphs. Controlled May 1997 magazine fixture, not a natural playthrough."
+  },
+  "disc_comparison": {
+    "baseline_sha1": "fbb1eb25a60fbcc51ab308c15c9d7e19777a48e4",
+    "target_sha1": "363407c48e03ad502e830b0745a6319c62a434e9",
+    "file_extents_compared": 1371,
+    "scope": "Complete raw-sector extents, including XA/STR, at identical LBAs and sector counts. All file sizes match.",
+    "external_audio_entries": [
+      "CDROM/DADIR/TR02.DA"
+    ],
+    "audio_sha1": "6cdd8500168ab4ecb18b78ef7589586d26bc4501",
+    "audio_unchanged": true,
+    "changed_files": [
+      {
+        "path": "SLPM_86.053",
+        "before_extent_sha256": "8719f0f6bf98543456364ef7e834456925e3a66e5b88cbaffe3a0c0d9ffa96b5",
+        "after_extent_sha256": "4b5596cf3a364d53b88b08b2801e213080a87d93eae612732dd0cdf2471d39c0",
+        "before_file_size": 692224,
+        "after_file_size": 692224
+      }
+    ]
+  },
+  "browser_checks": [
+    "wrong size",
+    "wrong source hash",
+    "corrupted patch",
+    "cancel",
+    "full patch",
+    "download hash",
+    "cue",
+    "no upload",
+    "responsive layout",
+    "invalid archive",
+    "archive drop",
+    "extraction cancel",
+    "audio download hash",
+    "archive cue",
+    "mobile result"
+  ],
+  "script_audit": {
+    "containers": 105,
+    "strings": 31471,
+    "pointers": 31334
+  },
+  "executable_audit": {
+    "status": "pass",
+    "slots": 2940,
+    "exact_slots": 2828,
+    "derived_records": 291,
+    "derived_pointers": 286,
+    "pending_slots": []
+  }
+}

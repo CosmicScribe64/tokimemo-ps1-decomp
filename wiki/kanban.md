@@ -45,6 +45,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-39511-english-text-quality|T-39511 Make the English read naturally on screen]]
 
 - [ ] [[tickets/T-39500-english-translation-patch|T-39500 Build and publish the English translation patch]]
@@ -114,6 +115,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-39540-magazine-button-sequence|T-39540 Keep the magazine button sequence on one row]]
 
 - [ ] [[tickets/T-39508-english-art-on-disc|T-39508 Put the English art on the disc]]
 

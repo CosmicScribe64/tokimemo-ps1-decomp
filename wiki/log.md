@@ -4275,3 +4275,11 @@ Compared all current orphan-warning payloads with the prior review. Read all 11 
 ## [2026-11-02] lint | Complete artwork integration review
 
 Closed [[tickets/T-39508-english-art-on-disc]] after reviewing planning, sprite selection, frame relocation, still encoding and readback safeguards against CODING_STANDARDS. All 25 art tests and the published placement report pass; the existing visual receipts cover shipped images. The menu/table census for [[tickets/T-39511-english-text-quality]] now contains 4,655 records with 2,520 distinct payloads. Seventeen exceed 252 pixels before runtime formatting; their call sites and capitalization variants still need classification. No game bytes changed.
+
+## [2026-11-02] ticket | Keep the magazine button sequence together
+
+Created [[tickets/T-39540-magazine-button-sequence]] after executing the production wrapper on all 15 wide gameplay strings. All fit their rows, but the May 1997 magazine hint separates the last two buttons from the sequence. Fix the exact record and verify it in the magazine before republishing.
+
+## [2026-11-02] build | Verify and publish the magazine sequence fix
+
+[[tickets/T-39540-magazine-button-sequence]] passes production build, runtime wrapper checks, emulator inspection and all 15 browser checks. Both disc text audits pass. Only one executable payload byte changes; all other 1,370 file extents and audio match the reviewed release. Standards review found no unresolved issues; the ticket moves to Done. Publication uses target `363407c48e03ad502e830b0745a6319c62a434e9`. [[tickets/T-39511-english-text-quality]] retains the broader menu coverage limits.

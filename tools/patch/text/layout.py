@@ -31,6 +31,13 @@ from . import names
 # Other containers retain conservative widths until their speaker binding is proven.
 FIXED_GIRL_LABELS = {"CDROM/BUNKA/NI_S6W.BIN": b"Nijino"}
 
+# T-39540: this literal wraps at runtime; keep its button sequence together.
+REVIEWED_LITERAL_ROWS = {
+    "SLPM_86.053:00075e0c:48a6d7d45052": (
+        b"While reading the magazine, enter the Konami Code... U U D D L R L R X O)",
+        b"While reading the magazine, enter the Konami Code...\nU U D D L R L R X O)"),
+}
+
 # T-39532: retain the invitation's date phrase on one row. Exact matching leaves
 # revised translations alone; normal wrapping still checks both rows for fit.
 REVIEWED_ROWS = {
@@ -157,6 +164,12 @@ def english_payloads(containers: dict[str, Container], targets: dict[str, dict],
                 note['source_repair'] = 'reviewed source anomaly (T-39511)'
             encoder.take_record_notes()
             payload = end_inline_label(encode(segments, encoder))
+            literal_rows = REVIEWED_LITERAL_ROWS.get(record.id)
+            if literal_rows is not None:
+                if payload != literal_rows[0]:
+                    raise ValueError("Reviewed menu literal changed: " + record.id)
+                payload = literal_rows[1]
+                note["reviewed_rows"] = "T-39540"
             if _preset_too_long(record.id, payload):
                 payload = names.pack(payload)
                 if _preset_too_long(record.id, payload):
