@@ -4,7 +4,7 @@ title: Make the English read naturally on screen
 status: In Progress
 assignee: claude
 created: 2026-11-01
-updated: 2026-11-02
+updated: 2026-11-03
 links: ["[[tickets/T-39500-english-translation-patch]]", "[[tickets/T-39506-english-script-runtime]]"]
 ---
 
@@ -166,6 +166,25 @@ All 456 orphan flags across 455 records are classified on the published build. O
 ## Menu and table census
 
 Collected 4,655 non-dialogue records with 2,520 distinct encoded payloads in ignored `build/menu-text-context.json`. Seventeen exceed 252 pixels before runtime formatting: ten career-summary strings, five magazine thoughts and two SDK diagnostic formats. These are review candidates, not confirmed clipping. The magazine thoughts enter `sndisp`; the raw width is not their rendered row width. Case/punctuation grouping also identifies gift-name title case versus sentence case, sentence fragments, debug labels and presentation headings. Call-site classification remains open; do not treat a 252-pixel scan as proof of each menu's narrower geometry.
+
+## Final shared-label pass, November 3
+
+Regenerated the growth census and shared-label inventory against published target `b579f2ad31288f442436f718eba0cb61f7e359fe`. The census still has 834 growth candidates with 258 distinct payloads. Read the distinct English labels in all 27 associated table families. No translation or layout change resulted from this pass. The inventory and maximum widths are in `build/shared-label-inventory.json` and `build/shared-label-inventory.log`.
+
+The source distinguishes several different uses of these tables:
+
+- Gift strings have at most 32 bytes, fitting their 33-byte table slots and 36-byte dialogue substitution fields. The festival `name_grid` tables also supply dialogue substitutions; their names do not describe visible menu grids.
+- Encounter phrases have at most 28 bytes and camp attack names have at most 25 bytes. Both fit the 36-byte substitution fields. Dialogue wrapping handles their visible widths.
+- Full preset names use the existing packed encoding. The largest rendered family name is 55 pixels in a 56-pixel field.
+- Telephone destination labels reach 106 pixels in 116-pixel menu cells. Profile club labels fit their 18-byte slots, and zodiac labels fit their 12-byte slots.
+- The magazine heading table uses English pointers and reaches 117 pixels from x=32, ending at x=149 within the 320-pixel screen. Its earlier runtime review remains applicable.
+- No explicit word or paired address relocation into the parameter-name pointer table appears in the main executable or 24 loaded overlays. This is a reference census, not proof against every possible computed address.
+
+Reinspected the final native festival and mascot screenshots. The festival lettering is legible, dialogue has one clean row, and the mascot names clear both the notebook divider and the preview sprite. Evidence is already recorded in `translations/en/reviews/stage-controls-and-menu-spacing-2026-11-02.json`.
+
+The published build passes its release checks. This ticket remains open because the broader criterion requests a full editorial reading of off-route text, and the conservative growth census does not prove every label's geometry. The completed screenshot and diagnostic reviews must not be described as a natural playthrough of every route or a manual reading of every translated line.
+
+The follow-up census covers the 1,154 records excluded by the Japanese-only source comparison. Of these, 836 retain the original bytes, 214 are the verified stage command rows, and 104 are other translations with 74 distinct payloads. Read all 74 translated payloads and traced their uses. The long strings feed wrapped dialogue; the short set includes formatting fragments, diagnostic output, the exam title and unloaded annual-event code. No new correction resulted. All seven active fortune-result formats also fit the 64-byte buffer and display bounds, with a maximum width of 174 pixels. `translations/en/reviews/mixed-label-review-2026-11-03.json` records the hashes, dimensions and scope. Unchanged bytes alone do not establish screen geometry. The initial scratch command failed to import the project package; rerunning it as a module completed successfully.
 
 2026-11-02: T-39540 resolves the menu census's confirmed button-sequence split. All 15 wide gameplay rows fit after the production runtime wrapper; the two remaining wide rows are SDK diagnostics. The current-disc receipt records the magazine capture and all 15 browser checks. Capitalization and narrow-slot coverage remain separate from these width checks; this result does not claim every menu geometry has been exercised.
 

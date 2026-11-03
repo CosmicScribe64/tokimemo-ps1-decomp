@@ -4343,3 +4343,11 @@ The restored stage commands advance Shiori's speech through multiple pages; Kisa
 ## [2026-11-03] build | Publish stage and menu corrections
 
 Closed [[tickets/T-39543-stage-speaker-spacing]] and [[tickets/T-39544-stage-control-prefixes]] after deployment 41600020995 succeeded and all 37 served files matched the tested package. Published target `b579f2ad31288f442436f718eba0cb61f7e359fe` restores stage progression and keeps full names clear of the dialogue frame and mascot preview. [[tickets/T-39511-english-text-quality]] remains open for the remaining dictionary-family and reading-review reconciliation.
+
+## [2026-11-03] lint | Review shared labels on the published build
+
+Read the distinct labels from all 27 table families in the growth census and checked their uses against substitution buffers, menu cells and relocated tables. No new correction resulted. Reinspected the final festival and mascot images. [[tickets/T-39511-english-text-quality]] records the measured limits and remaining scope; publication is complete, while full off-route editorial reading and exhaustive menu geometry remain unclaimed. No game bytes changed.
+
+## [2026-11-03] lint | Check mixed-source labels and fortune results
+
+Classified 1,154 records omitted by the Japanese-only width comparison and read all 74 distinct remaining translations. All seven formatted fortune results fit their actual buffer and display bounds; the widest is 174 pixels. The receipt at `translations/en/reviews/mixed-label-review-2026-11-03.json` records the scope and limits. No game bytes changed. [[tickets/T-39511-english-text-quality]] remains open for broader reading and geometry evidence.
