@@ -4307,3 +4307,11 @@ Closed [[tickets/T-39503-text-container-writers]] after reviewing placement and 
 ## [2026-11-02] build | Publish the verified gift update
 
 Pages deployment 41593310508 succeeded for target `5c761523f939755d88c720adb2360927c58fe602`. All 37 served files match the tested package. Closed [[tickets/T-39541-gift-name-capitalization]]; the publication receipt is `translations/en/reviews/published-gift-consistency-2026-11-02.json`.
+
+## [2026-11-02] ticket | Preserve long fortune substitutions
+
+Created [[tickets/T-39542-complete-dialogue-values]] after tracing the growing fortune labels to `english_value_set`. O/W backing arrays share the 24-byte character-name capacity, while the English fortune labels can be longer. Reproduce the loss with the production helper, separate value capacity from names, and verify the complete displayed result.
+
+## [2026-11-02] build | Verify complete fortune labels
+
+[[tickets/T-39542-complete-dialogue-values]] passes the production-helper regressions, both disc audits, 27 default hashes and all 15 browser checks. Controlled GPU checks show both long fortune labels with their closing punctuation. Standards review found no unresolved issues; publication remains pending. The menu-coordinate census for [[tickets/T-39511-english-text-quality]] finds 1,005 constant-X calls within the reviewed horizontal bounds; 95 dynamic calls and possible adjacent-column overlaps remain outside that check.
